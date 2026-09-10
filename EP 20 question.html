@@ -55,6 +55,9 @@
             color: #c084fc;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .input-row {
@@ -181,6 +184,73 @@
             font-weight: 700;
             cursor: pointer;
         }
+
+        /* HISTORY ARCHIVE CARD */
+        .history-card {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .history-list {
+            max-height: 280px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-right: 4px;
+        }
+        .history-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .history-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+        .history-badge {
+            background: #0284c7;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+        }
+        .history-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e2e8f0;
+            line-height: 1.35;
+        }
+        .history-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .btn-hist {
+            flex: 1;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn-hist-load { background: #0284c7; color: white; }
+        .btn-hist-down { background: #10b981; color: white; }
+        .btn-hist-del { background: #ef4444; color: white; flex: 0 0 35px; }
     </style>
 </head>
 <body>
@@ -224,15 +294,29 @@
         <div class="caption-text" id="fb-caption-box">प्रश्नों के जनरेट होते ही यहाँ आपका पोस्ट कैप्शन और हैशटैग अपने आप आ जाएगा...</div>
         <button class="btn-copy" onclick="copyCaptionText()">📋 Copy FB Caption & Hashtags</button>
     </div>
+
+    <!-- SAVED HISTORY ARCHIVE CARD -->
+    <div class="history-card">
+        <div class="card-title" style="color: #38bdf8;">
+            <span>📚 पिछली पोस्ट्स का इतिहास (Saved History Archive)</span>
+            <span id="history-count" style="font-size: 11px; color: #94a3b8;">0 पोस्ट्स</span>
+        </div>
+        <div class="history-list" id="history-list-box">
+            <!-- Dynamically Loaded -->
+        </div>
+    </div>
 </div>
 
 <script>
+    const STORAGE_KEY_API = "GEMINI_API_KEY_LOCAL";
+    const STORAGE_KEY_HISTORY = "EP_POSTS_ARCHIVE_DATA_V1";
     let selectedSub = 'H';
     const canvas = document.getElementById('posterCanvas');
     const ctx = canvas.getContext('2d');
 
-    // Default Demo Data
     let currentData = {
+        subject: "H",
+        part: 1,
         capsule: "🎯 प्राचीन भारत (भाग 1) : प्रागैतिहासिक काल | टॉपिक: सिन्धु घाटी सभ्यता",
         hook: "🔥 99% अभ्यर्थी इन 20 प्रश्नों में गलतियाँ करते हैं, परीक्षा में पूरे अंक पक्के करने हैं तो अभी रट लो!",
         questions: Array.from({length: 20}, (_, i) => ({
@@ -243,7 +327,7 @@
 
     function saveKey() {
         const k = document.getElementById('api-key').value.trim();
-        if (k) localStorage.setItem("GEMINI_API_KEY_LOCAL", k);
+        if (k) localStorage.setItem(STORAGE_KEY_API, k);
     }
 
     function selectSubject(code) {
@@ -253,7 +337,6 @@
         if (code === 'G') document.getElementById('btn-g').classList.add('active');
         if (code === 'P') document.getElementById('btn-p').classList.add('active');
 
-        // Load saved part for this subject
         const savedPart = localStorage.getItem(`EP_PART_${selectedSub}`) || 1;
         document.getElementById('current-part').value = savedPart;
         updateRangeDisplay();
@@ -267,7 +350,7 @@
     }
 
     async function generate20Questions() {
-        let apiKey = document.getElementById('api-key').value.trim() || localStorage.getItem("GEMINI_API_KEY_LOCAL");
+        let apiKey = document.getElementById('api-key').value.trim() || localStorage.getItem(STORAGE_KEY_API);
         if (!apiKey) {
             alert("कृपया पहले ऊपर Google Gemini API Key डालें!");
             return;
@@ -320,13 +403,27 @@ Output strictly valid raw JSON with this exact structure:
             const parsed = JSON.parse(text);
 
             currentData = {
+                subject: selectedSub,
+                part: part,
                 capsule: parsed.capsule,
                 hook: parsed.hook,
                 questions: parsed.questions
             };
 
-            // Set Facebook caption text
-            document.getElementById('fb-caption-box').innerText = `${parsed.caption}\n\n${parsed.hashtags}`;
+            const fullCaption = `${parsed.caption}\n\n${parsed.hashtags}`;
+            document.getElementById('fb-caption-box').innerText = fullCaption;
+
+            // Auto-Save into History Archive
+            saveToHistoryArchive({
+                id: Date.now(),
+                date: new Date().toLocaleDateString('hi-IN'),
+                subject: selectedSub,
+                part: part,
+                capsule: parsed.capsule,
+                hook: parsed.hook,
+                questions: parsed.questions,
+                caption: fullCaption
+            });
 
             // Increment and save next part
             localStorage.setItem(`EP_PART_${selectedSub}`, part + 1);
@@ -334,7 +431,8 @@ Output strictly valid raw JSON with this exact structure:
             updateRangeDisplay();
 
             drawPoster();
-            alert(`🎉 भाग ${part} के 20 प्रश्न तैयार हो गए हैं!`);
+            renderHistoryList();
+            alert(`🎉 भाग ${part} के 20 प्रश्न तैयार और हिस्ट्री में सेव हो गए हैं!`);
         } catch (e) {
             alert("त्रुटि: " + e.message);
             console.error(e);
@@ -344,19 +442,19 @@ Output strictly valid raw JSON with this exact structure:
         }
     }
 
-    /* RENDER 1080 x 1350 POSTER ON CANVAS */
+    /* RENDER HIGH CONTRAST 1080 x 1350 POSTER */
     function drawPoster() {
         ctx.clearRect(0, 0, 1080, 1350);
 
-        // 1. Background
+        // Background
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(0, 0, 1080, 1350);
 
-        // 2. Faint Watermark (45 degree tiled)
+        // Faint Watermark
         ctx.save();
         ctx.rotate(-28 * Math.PI / 180);
-        ctx.fillStyle = "rgba(15, 23, 42, 0.03)";
-        ctx.font = "800 42px 'Poppins', sans-serif";
+        ctx.fillStyle = "rgba(15, 23, 42, 0.035)";
+        ctx.font = "900 44px 'Poppins', sans-serif";
         for (let x = -600; x < 1600; x += 360) {
             for (let y = -400; y < 1800; y += 180) {
                 ctx.fillText("EXAM PREPARATION", x, y);
@@ -364,69 +462,67 @@ Output strictly valid raw JSON with this exact structure:
         }
         ctx.restore();
 
-        // 3. Top Branding Header
+        // 1. Top Header Branding
         ctx.fillStyle = "#0284c7";
-        ctx.font = "900 32px 'Poppins', sans-serif";
-        ctx.fillText("EXAM Preparation", 50, 60);
+        ctx.font = "900 40px 'Poppins', sans-serif";
+        ctx.fillText("EXAM Preparation", 45, 62);
 
         ctx.fillStyle = "#e11d48";
         ctx.font = "italic 700 24px 'Hind', sans-serif";
-        ctx.fillText("• One-Shot Revision Notes", 360, 60);
+        ctx.fillText("• One-Shot Revision Notes", 465, 62);
 
-        // 4. Topic Red Capsule
-        roundRect(ctx, 40, 85, 1000, 56, 28, "#dc2626");
+        // 2. Topic Red Capsule (28px Bold)
+        roundRect(ctx, 40, 80, 1000, 64, 32, "#dc2626");
         ctx.fillStyle = "#ffffff";
-        ctx.font = "800 23px 'Hind', sans-serif";
+        ctx.font = "800 28px 'Hind', sans-serif";
         ctx.textAlign = "center";
         ctx.fillText(currentData.capsule, 540, 122);
 
-        // 5. Hook Black Ribbon
-        roundRect(ctx, 40, 155, 1000, 48, 10, "#111827");
+        // 3. Hook Black Ribbon (22px Bold)
+        roundRect(ctx, 40, 154, 1000, 52, 12, "#111827");
         ctx.fillStyle = "#facc15";
-        ctx.font = "700 18.5px 'Hind', sans-serif";
-        ctx.fillText(currentData.hook, 540, 186);
+        ctx.font = "800 22px 'Hind', sans-serif";
+        ctx.fillText(currentData.hook, 540, 187);
         ctx.textAlign = "left";
 
-        // 6. Two Columns for 20 Questions
-        // Column 1: Q1 to Q10 | Column 2: Q11 to Q20
-        const col1X = 55;
-        const col2X = 560;
-        const startY = 250;
-        const rowGap = 100;
+        // 4. Two Columns for 20 Questions
+        const col1X = 45;
+        const col2X = 555;
+        const startY = 245;
+        const rowGap = 102;
+        const maxColWidth = 480;
 
         currentData.questions.slice(0, 10).forEach((item, i) => {
-            drawQuestionBlock(col1X, startY + (i * rowGap), item, 465);
+            drawQuestionBlock(col1X, startY + (i * rowGap), item, maxColWidth);
         });
 
         currentData.questions.slice(10, 20).forEach((item, i) => {
-            drawQuestionBlock(col2X, startY + (i * rowGap), item, 465);
+            drawQuestionBlock(col2X, startY + (i * rowGap), item, maxColWidth);
         });
 
-        // 7. Footer CTA
-        ctx.strokeStyle = "#e2e8f0";
+        // 5. Footer CTA
+        ctx.strokeStyle = "#cbd5e1";
         ctx.lineWidth = 1.5;
         ctx.beginPath();
-        ctx.moveTo(50, 1270);
-        ctx.lineTo(1030, 1270);
+        ctx.moveTo(45, 1270);
+        ctx.lineTo(1035, 1270);
         ctx.stroke();
 
-        ctx.fillStyle = "#475569";
-        ctx.font = "800 20px 'Hind', sans-serif";
+        ctx.fillStyle = "#334155";
+        ctx.font = "800 22px 'Hind', sans-serif";
         ctx.textAlign = "center";
-        ctx.fillText("- अपने उत्तर कमेंट बॉक्स में लिखें -", 540, 1310);
+        ctx.fillText("- अपने उत्तर कमेंट बॉक्स में लिखें -", 540, 1312);
         ctx.textAlign = "left";
     }
 
     function drawQuestionBlock(x, y, item, maxW) {
-        // Question Text (Dark Bold)
         ctx.fillStyle = "#0f172a";
-        ctx.font = "700 18.5px 'Hind', sans-serif";
-        wrapText(ctx, item.q, x, y, maxW, 23);
+        ctx.font = "800 21px 'Hind', sans-serif";
+        wrapText(ctx, item.q, x, y, maxW, 25);
 
-        // Answer Text (Highlighted Red)
         ctx.fillStyle = "#dc2626";
-        ctx.font = "800 18px 'Hind', sans-serif";
-        ctx.fillText(`उत्तर: ${item.a}`, x, y + 42);
+        ctx.font = "800 20.5px 'Hind', sans-serif";
+        ctx.fillText(`उत्तर: ${item.a}`, x, y + 46);
     }
 
     function roundRect(ctx, x, y, width, height, radius, fill) {
@@ -464,8 +560,7 @@ Output strictly valid raw JSON with this exact structure:
 
     function downloadPosterImage() {
         const link = document.createElement('a');
-        const part = document.getElementById('current-part').value - 1 || 1;
-        link.download = `EP_20Q_${selectedSub}_Part_${part}.png`;
+        link.download = `EP_20Q_${currentData.subject}_Part_${currentData.part}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
     }
@@ -477,11 +572,104 @@ Output strictly valid raw JSON with this exact structure:
         });
     }
 
+    /* HISTORY ARCHIVE ENGINE */
+    function getHistory() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY_HISTORY)) || [];
+        } catch(e) {
+            return [];
+        }
+    }
+
+    function saveToHistoryArchive(item) {
+        let history = getHistory();
+        history.unshift(item);
+        if (history.length > 50) history.pop();
+        localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history));
+    }
+
+    function renderHistoryList() {
+        const listContainer = document.getElementById('history-list-box');
+        const countSpan = document.getElementById('history-count');
+        const history = getHistory();
+
+        countSpan.innerText = `${history.length} पोस्ट्स`;
+
+        if (history.length === 0) {
+            listContainer.innerHTML = `<div style="text-align:center; color:#64748b; font-size:12px; padding:12px;">अभी कोई पुरानी पोस्ट नहीं है। जैसे ही आप जनरेट करेंगे, वे यहाँ सुरक्षित सेव हो जाएँगी।</div>`;
+            return;
+        }
+
+        let html = "";
+        history.forEach(item => {
+            const subName = item.subject === 'H' ? 'इतिहास' : item.subject === 'G' ? 'भूगोल' : 'राजव्यवस्था';
+            html += `
+                <div class="history-item">
+                    <div class="history-meta">
+                        <span class="history-badge">${subName} • भाग ${item.part}</span>
+                        <span style="color:#64748b; font-size:11px;">📅 ${item.date}</span>
+                    </div>
+                    <div class="history-title">${escapeHtml(item.capsule)}</div>
+                    <div class="history-actions">
+                        <button class="btn-hist btn-hist-load" onclick="loadHistoryItem(${item.id})">👁️ View / लोड करें</button>
+                        <button class="btn-hist btn-hist-down" onclick="downloadFromHistory(${item.id})">📥 Download</button>
+                        <button class="btn-hist btn-hist-del" onclick="deleteHistoryItem(${item.id})" title="Delete">🗑️</button>
+                    </div>
+                </div>
+            `;
+        });
+        listContainer.innerHTML = html;
+    }
+
+    function loadHistoryItem(id) {
+        const history = getHistory();
+        const item = history.find(x => x.id === id);
+        if (!item) return;
+
+        currentData = {
+            subject: item.subject,
+            part: item.part,
+            capsule: item.capsule,
+            hook: item.hook,
+            questions: item.questions
+        };
+
+        document.getElementById('fb-caption-box').innerText = item.caption;
+        drawPoster();
+
+        // Smooth scroll to canvas preview
+        document.querySelector('.canvas-container').scrollIntoView({ behavior: 'smooth' });
+        alert(`✅ भाग ${item.part} स्क्रीन पर लोड हो गया है! आप इसे ऊपर देख सकते हैं और कैप्शन कॉपी कर सकते हैं।`);
+    }
+
+    function downloadFromHistory(id) {
+        loadHistoryItem(id);
+        setTimeout(() => {
+            downloadPosterImage();
+        }, 150);
+    }
+
+    function deleteHistoryItem(id) {
+        if (confirm("क्या आप इस पोस्ट को इतिहास से हटाना चाहते हैं?")) {
+            let history = getHistory();
+            history = history.filter(x => x.id !== id);
+            localStorage.setItem(STORAGE_KEY_HISTORY, JSON.stringify(history));
+            renderHistoryList();
+        }
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/[&<>"']/g, function(m) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+        });
+    }
+
     window.onload = function() {
-        const k = localStorage.getItem("GEMINI_API_KEY_LOCAL");
+        const k = localStorage.getItem(STORAGE_KEY_API);
         if (k) document.getElementById('api-key').value = k;
         selectSubject('H');
         drawPoster();
+        renderHistoryList();
     };
 </script>
 
