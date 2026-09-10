@@ -920,64 +920,86 @@
             const topic = document.getElementById('gemini-topic').value;
             const btn = document.getElementById('btn-ai-trigger');
             btn.disabled = true;
-            btn.innerHTML = `<span>⏳ प्रश्न तैयार हो रहे हैं...</span>`;
+            btn.innerHTML = `<span>⏳ AI मॉडल से कनेक्ट हो रहा है...</span>`;
 
-            const promptText = `Generate 5 competitive exam GK questions and answers in Hindi for topic: "${topic}".
+            try {
+                // 1. Fetch available models for this specific API Key
+                const modelsRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+                if (!modelsRes.ok) {
+                    const errData = await modelsRes.json();
+                    throw new Error("API Key में समस्या: " + (errData.error?.message || "Invalid Key"));
+                }
+                const modelsData = await modelsRes.json();
+                
+                // Find an active model supporting generateContent (prefer Flash)
+                const availableModels = modelsData.models || [];
+                let targetModel = availableModels.find(m => 
+                    m.supportedGenerationMethods && 
+                    m.supportedGenerationMethods.includes('generateContent') && 
+                    m.name.includes('flash')
+                );
+                if (!targetModel) {
+                    targetModel = availableModels.find(m => 
+                        m.supportedGenerationMethods && 
+                        m.supportedGenerationMethods.includes('generateContent')
+                    );
+                }
+                if (!targetModel) {
+                    throw new Error("आपकी API Key पर कोई उपयुक्त Gemini मॉडल सक्रिय नहीं मिला।");
+                }
+
+                btn.innerHTML = `<span>⏳ प्रश्न तैयार हो रहे हैं...</span>`;
+
+                const promptText = `Generate 5 competitive exam GK questions and answers in Hindi for topic: "${topic}".
 Output strictly a valid JSON array of 5 objects with keys "q" (question) and "a" (short answer).
-Do not wrap in markdown or code fences. Output plain raw JSON string only. Example:
+Do not wrap in markdown or backticks. Plain raw JSON string only. Example:
 [{"q":"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?","a":"लोथल"}]`;
 
-            const endpoints = [
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-                `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`
-            ];
+                // 2. Call generateContent on the verified active model
+                const generateRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/${targetModel.name}:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptText }] }]
+                    })
+                });
 
-            let success = false;
-            let lastError = "";
-
-            for (const url of endpoints) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: promptText }] }]
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const errData = await response.json();
-                        throw new Error(errData.error?.message || `HTTP ${response.status}`);
-                    }
-
-                    const data = await response.json();
-                    let reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                    reply = reply.replace(/```json/gi, '').replace(/```/g, '').trim();
-
-                    const parsed = JSON.parse(reply);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        parsed.forEach(item => {
-                            if (item.q && item.a) {
-                                qaList.push({ q: item.q.trim(), a: item.a.trim() });
-                            }
-                        });
-                        autoSaveToStorage();
-                        renderManageList();
-                        alert(`🎉 5 नए प्रश्न सीधे ऐप में सेव हो गए हैं!`);
-                        success = true;
-                        break;
-                    }
-                } catch (err) {
-                    lastError = err.message;
+                if (!generateRes.ok) {
+                    const genErr = await generateRes.json();
+                    throw new Error(genErr.error?.message || `HTTP ${generateRes.status}`);
                 }
-            }
 
-            if (!success) {
-                alert("त्रुटि: " + lastError);
-            }
+                const data = await generateRes.json();
+                let reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+                
+                // Robust JSON extraction
+                const jsonMatch = reply.match(/\[\s*\{[\s\S]*\}\s*\]/);
+                if (jsonMatch) {
+                    reply = jsonMatch[0];
+                } else {
+                    reply = reply.replace(/```json/gi, '').replace(/```/g, '').trim();
+                }
 
-            btn.disabled = false;
-            btn.innerHTML = `<span>✨ Generate 5 Questions (AI)</span>`;
+                const parsed = JSON.parse(reply);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    parsed.forEach(item => {
+                        if (item.q && item.a) {
+                            qaList.push({ q: item.q.trim(), a: item.a.trim() });
+                        }
+                    });
+                    autoSaveToStorage();
+                    renderManageList();
+                    alert(`🎉 5 नए प्रश्न सीधे ऐप में लोड हो गए हैं!`);
+                } else {
+                    throw new Error("AI से सही फॉर्मेट में डेटा नहीं मिला।");
+                }
+            } catch (err) {
+                alert("त्रुटि: " + err.message);
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>✨ Generate 5 Questions (AI)</span>`;
+            }
         }
 
         function autoSaveToStorage() {
