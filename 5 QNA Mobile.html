@@ -740,7 +740,6 @@
 </head>
 <body>
 
-    <!-- 1. CREATOR & STORAGE SCREEN -->
     <div id="creator-screen">
         <div class="main-app-title">5 Questions Q&A Studio Pro</div>
 
@@ -920,43 +919,16 @@
             const topic = document.getElementById('gemini-topic').value;
             const btn = document.getElementById('btn-ai-trigger');
             btn.disabled = true;
-            btn.innerHTML = `<span>⏳ AI मॉडल से कनेक्ट हो रहा है...</span>`;
+            btn.innerHTML = `<span>⏳ प्रश्न तैयार हो रहे हैं...</span>`;
 
-            try {
-                // 1. Fetch available models for this specific API Key
-                const modelsRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
-                if (!modelsRes.ok) {
-                    const errData = await modelsRes.json();
-                    throw new Error("API Key में समस्या: " + (errData.error?.message || "Invalid Key"));
-                }
-                const modelsData = await modelsRes.json();
-                
-                // Find an active model supporting generateContent (prefer Flash)
-                const availableModels = modelsData.models || [];
-                let targetModel = availableModels.find(m => 
-                    m.supportedGenerationMethods && 
-                    m.supportedGenerationMethods.includes('generateContent') && 
-                    m.name.includes('flash')
-                );
-                if (!targetModel) {
-                    targetModel = availableModels.find(m => 
-                        m.supportedGenerationMethods && 
-                        m.supportedGenerationMethods.includes('generateContent')
-                    );
-                }
-                if (!targetModel) {
-                    throw new Error("आपकी API Key पर कोई उपयुक्त Gemini मॉडल सक्रिय नहीं मिला।");
-                }
-
-                btn.innerHTML = `<span>⏳ प्रश्न तैयार हो रहे हैं...</span>`;
-
-                const promptText = `Generate 5 competitive exam GK questions and answers in Hindi for topic: "${topic}".
+            const promptText = `Generate 5 competitive exam GK questions and answers in Hindi for topic: "${topic}".
 Output strictly a valid JSON array of 5 objects with keys "q" (question) and "a" (short answer).
 Do not wrap in markdown or backticks. Plain raw JSON string only. Example:
 [{"q":"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?","a":"लोथल"}]`;
 
-                // 2. Call generateContent on the verified active model
-                const generateRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/${targetModel.name}:generateContent?key=${apiKey}`, {
+            try {
+                // Directly use gemini-3.6-flash as requested by Google API
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -964,15 +936,14 @@ Do not wrap in markdown or backticks. Plain raw JSON string only. Example:
                     })
                 });
 
-                if (!generateRes.ok) {
-                    const genErr = await generateRes.json();
-                    throw new Error(genErr.error?.message || `HTTP ${generateRes.status}`);
+                if (!response.ok) {
+                    const errData = await response.json();
+                    throw new Error(errData.error?.message || `HTTP ${response.status}`);
                 }
 
-                const data = await generateRes.json();
+                const data = await response.json();
                 let reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
                 
-                // Robust JSON extraction
                 const jsonMatch = reply.match(/\[\s*\{[\s\S]*\}\s*\]/);
                 if (jsonMatch) {
                     reply = jsonMatch[0];
