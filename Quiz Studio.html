@@ -225,7 +225,7 @@
             user-select: text;
         }
 
-        /* HISTORY MODAL / OVERLAY */
+        /* HISTORY MODAL */
         #history-modal {
             display: none;
             position: fixed;
@@ -291,12 +291,12 @@
 
         <div class="box-title" style="margin-top: 4px;">🎯 विषय चुनें (Subject)</div>
         <div class="subject-grid">
-            <button class="btn-sub active" onclick="setSubject('विश्व एवं भारत का भूगोल', '🌍 WORLD GK QUIZ', '#भूगोल_GK', this)">🌍 भूगोल</button>
-            <button class="btn-sub" onclick="setSubject('भारतीय इतिहास एवं राष्ट्रीय आंदोलन', '📜 HISTORY GK QUIZ', '#इतिहास_GK', this)">📜 इतिहास</button>
-            <button class="btn-sub" onclick="setSubject('भारतीय संविधान एवं राजव्यवस्था', '⚖️ POLITY GK QUIZ', '#संविधान_GK', this)">⚖️ राजव्यवस्था</button>
-            <button class="btn-sub" onclick="setSubject('सामान्य विज्ञान (भौतिक, रसायन, जीव विज्ञान)', '🔬 SCIENCE GK QUIZ', '#विज्ञान_GK', this)">🔬 विज्ञान</button>
-            <button class="btn-sub" onclick="setSubject('स्टैटिक सामान्य ज्ञान (Static GK)', '🧠 STATIC GK QUIZ', '#सामान्य_ज्ञान', this)">🧠 स्टैटिक GK</button>
-            <button class="btn-sub" onclick="setSubject('पर्यावरण एवं पारिस्थितिकी', '🌿 ENVIRONMENT QUIZ', '#पर्यावरण_GK', this)">🌿 पर्यावरण</button>
+            <button class="btn-sub active" onclick="setSubject('विश्व एवं भारत का भूगोल', '🌍 WORLD GK QUIZ 🌍', '#GeographyGK', this)">🌍 भूगोल</button>
+            <button class="btn-sub" onclick="setSubject('भारतीय इतिहास एवं राष्ट्रीय आंदोलन', '📜 HISTORY GK QUIZ 📜', '#HistoryGK', this)">📜 इतिहास</button>
+            <button class="btn-sub" onclick="setSubject('भारतीय संविधान एवं राजव्यवस्था', '⚖️ POLITY GK QUIZ ⚖️', '#PolityGK', this)">⚖️ राजव्यवस्था</button>
+            <button class="btn-sub" onclick="setSubject('सामान्य विज्ञान (भौतिक, रसायन, जीव विज्ञान)', '🔬 SCIENCE GK QUIZ 🔬', '#ScienceGK', this)">🔬 विज्ञान</button>
+            <button class="btn-sub" onclick="setSubject('स्टैटिक सामान्य ज्ञान (Static GK)', '🧠 STATIC GK QUIZ 🧠', '#StaticGK', this)">🧠 स्टैटिक GK</button>
+            <button class="btn-sub" onclick="setSubject('पर्यावरण एवं पारिस्थितिकी', '🌿 ENVIRONMENT QUIZ 🌿', '#EnvironmentGK', this)">🌿 पर्यावरण</button>
         </div>
 
         <div class="row-flex">
@@ -326,16 +326,15 @@
                 </select>
             </div>
             <div>
-                <label>प्रश्न फ़ॉन्ट साइज़: <span id="q-size-lbl" style="color:#38bdf8;">38</span>px</label>
-                <input type="range" id="cfg-q-size" min="30" max="48" value="38" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                <label>प्रश्न फ़ॉन्ट साइज़: <span id="q-size-lbl" style="color:#38bdf8;">42</span>px</label>
+                <input type="range" id="cfg-q-size" min="32" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
-        <!-- NEW: OPTIONS FONT SIZE SLIDER -->
         <div class="row-flex">
             <div>
                 <label>उत्तर (ऑप्शन) फ़ॉन्ट साइज़: <span id="opt-size-lbl" style="color:#38bdf8;">30</span>px</label>
-                <input type="range" id="cfg-opt-size" min="24" max="40" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                <input type="range" id="cfg-opt-size" min="24" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
@@ -370,7 +369,7 @@
 
     <!-- FB CAPTION BOX -->
     <div class="detail-card">
-        <div class="box-title" style="color: #38bdf8;">📝 Facebook Caption (केवल 1 विषय हैशटैग के साथ):</div>
+        <div class="box-title" style="color: #38bdf8;">📝 Facebook Caption (केवल 1 English Hashtag):</div>
         <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
         <button class="btn-sub" style="background:#0284c7; color:white; border:none; padding:8px; margin-top:4px;" onclick="copyCaption()">📋 Copy Caption</button>
     </div>
@@ -393,12 +392,12 @@
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V3";
-    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V3";
+    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V4";
+    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V4";
 
     let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
-    let currentHeaderTitle = "🌍 WORLD GK QUIZ";
-    let currentSubjectHashtag = "#भूगोल_GK";
+    let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
+    let currentSubjectHashtag = "#GeographyGK";
     let isAnswerRevealed = false;
 
     // Current Active Quiz Data
@@ -413,19 +412,15 @@
         },
         correctOption: "B",
         explanation: "अजंता पर्वत श्रेणी महाराष्ट्र के औरंगाबाद (छत्रपति संभाजीनगर) जिले में स्थित है। इसका विस्तार केवल महाराष्ट्र राज्य में ही है, जबकि अरावली, सतपुड़ा और सह्याद्रि एक से अधिक राज्यों में फैले हुए हैं।",
-        caption: "अजंता पर्वत श्रेणी से जुड़ा यह महत्वपूर्ण प्रश्न कई बार परीक्षाओं में पूछा गया है! अपना सही उत्तर कमेंट में बताएं। 👇🔥\n\n#भूगोल_GK"
+        caption: "अजंता पर्वत श्रेणी से जुड़ा यह महत्वपूर्ण प्रश्न कई बार परीक्षाओं में पूछा गया है! अपना सही उत्तर कमेंट में बताएं। 👇🔥\n\n#GeographyGK"
     };
 
-    /* EMOJI MOVER: STRICTLY MOVES ANY EMOJI FROM START TO END */
+    /* STRICTLY MOVES ANY EMOJI FROM START TO END */
     function cleanAndMoveEmojiToEnd(text) {
         if (!text) return "";
         let clean = text.trim();
-        // Regex for emojis
         const emojiRegex = /([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}])/gu;
-        
-        // Extract all emojis
         const emojisFound = clean.match(emojiRegex);
-        // Remove emojis from text
         const textWithoutEmojis = clean.replace(emojiRegex, '').replace(/\s+/g, ' ').trim();
 
         if (emojisFound && emojisFound.length > 0) {
@@ -491,7 +486,7 @@ ${currentSubjectHashtag}`;
             counter: parseInt(document.getElementById('global-counter-val').value) || 163,
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
-            qSize: parseInt(document.getElementById('cfg-q-size').value) || 38,
+            qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
             isAnswerMode: document.getElementById('chk-answer-mode').checked
         };
@@ -532,7 +527,6 @@ ${currentSubjectHashtag}`;
                     isAnswerRevealed = p.isAnswerMode;
                 }
 
-                // Highlight correct subject button
                 document.querySelectorAll('.btn-sub').forEach(btn => {
                     if (btn.innerText.includes(currentHeaderTitle.split(' ')[1] || "भूगोल")) {
                         btn.classList.add('active');
@@ -568,7 +562,7 @@ ${currentSubjectHashtag}`;
         if (history.length === 0) {
             container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई पुराना प्रश्न सहेजा नहीं गया है।</div>`;
         } else {
-            history.forEach((h, idx) => {
+            history.forEach((h) => {
                 const div = document.createElement('div');
                 div.className = "history-item";
                 div.innerHTML = `
@@ -596,7 +590,7 @@ ${currentSubjectHashtag}`;
         document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
         updateCaptionText();
         redrawCanvas();
-        alert(`✅ प्रश्न Q.${h.questionNumber} स्क्रीन पर लोड कर दिया गया है!`);
+        alert(`✅ प्रश्न Q.${h.questionNumber} लोड कर दिया गया है!`);
     }
 
     /* GENERATE WITH GEMINI 3.6 FLASH */
@@ -619,7 +613,7 @@ STRICT RULES:
 2. Numbering: Do NOT include question number or 'Q.' in the question text.
 3. Options: Provide 4 realistic options (A, B, C, D). Put emojis strictly at the END of each option string.
 4. Explanation: Provide a comprehensive detailed explanation in pure Hindi.
-5. Caption: Write an engaging 2-line Facebook post caption inviting comments, ending with EXACTLY ONE hashtag: "${currentSubjectHashtag}".
+5. Caption: Write an engaging 2-line Facebook post caption inviting comments, ending with EXACTLY ONE hashtag in English only: "${currentSubjectHashtag}".
 
 Output strictly raw valid JSON (no markdown formatting, no code fences):
 {
@@ -700,7 +694,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
-        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 38;
+        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
         const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
 
         ctx.clearRect(0, 0, 1080, 1350);
@@ -726,23 +720,24 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.lineWidth = 14;
         roundRect(ctx, 40, 40, 1000, 1270, 36, null, true);
 
-        // 4. Header & Branding
+        // 4. HEADER WITH DUAL EMOJIS (Larger: 46px)
         ctx.textAlign = "center";
         ctx.fillStyle = "#0f172a";
-        ctx.font = `800 36px ${fontFam}`;
-        ctx.fillText(currentHeaderTitle, 540, 125);
+        ctx.font = `900 46px ${fontFam}`;
+        ctx.fillText(currentHeaderTitle, 540, 120);
 
-        roundRect(ctx, 400, 145, 280, 30, 15, "#e2e8f0", false);
-        ctx.fillStyle = "#475569";
-        ctx.font = "800 14px 'Poppins', sans-serif";
-        ctx.fillText("EXAM PREPARATION", 540, 166);
+        // SUB-BRANDING PILL: EXAM PREPARATION (Much Larger & Bold)
+        roundRect(ctx, 330, 142, 420, 44, 22, "#e2e8f0", false);
+        ctx.fillStyle = "#1e293b";
+        ctx.font = "900 20px 'Poppins', sans-serif";
+        ctx.fillText("EXAM PREPARATION", 540, 172);
 
         // 5. COLORFUL QUESTION BLOCK WITH HIGHLIGHTED KEYWORDS
         ctx.textAlign = "left";
-        const nextY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 100, 245, 880, qSize, fontFam);
+        const nextY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 100, 255, 880, qSize, fontFam);
 
         // 6. 4 COLORED OPTIONS CONTAINERS
-        const optStartY = Math.max(nextY + 35, 410);
+        const optStartY = Math.max(nextY + 35, 430);
         const optGap = 125;
         const optW = 880;
         const optH = 95;
@@ -836,15 +831,12 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
 
     /* COLORFUL QUESTION RENDERER WITH CONTRASTING KEYWORD HIGHLIGHTS */
     function drawColorfulQuestion(ctx, num, text, x, y, maxW, fontSize, fontFam) {
-        // 1. Draw Q.Num in Bold Vibrant Blue
         ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
         ctx.fillStyle = "#0284c7";
         const prefix = `Q.${num} `;
         const prefixWidth = ctx.measureText(prefix).width;
         ctx.fillText(prefix, x, y);
 
-        // 2. Highlighting Keywords in Question
-        // Key triggers to color in vibrant Crimson Red (#dc2626) vs Dark Navy (#0f172a)
         const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं"];
         
         ctx.font = `800 ${fontSize}px ${fontFam}`;
@@ -898,7 +890,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
         ctx.lineTo(x + radius, y + height);
         ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-        ctx.lineTo(x, y + radius);
+        ctx.lineTo(x + radius, y);
         ctx.quadraticCurveTo(x, y, x + radius, y);
         ctx.closePath();
         if (fill) { ctx.fillStyle = fill; ctx.fill(); }
@@ -926,10 +918,9 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
                     console.log("Share cancelled or failed", err);
                 }
             } else {
-                // Fallback: Copy caption and trigger download
                 downloadImage();
                 copyCaption();
-                alert("आपके ब्राउज़र में डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड कर दी गई है और कैप्शन कॉपी हो गया है!");
+                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड कर दी गई है और कैप्शन कॉपी हो गया है!");
             }
         });
     }
