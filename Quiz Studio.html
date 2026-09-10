@@ -326,8 +326,8 @@
                 </select>
             </div>
             <div>
-                <label>प्रश्न फ़ॉन्ट साइज़: <span id="q-size-lbl" style="color:#38bdf8;">40</span>px</label>
-                <input type="range" id="cfg-q-size" min="30" max="64" value="40" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                <label>प्रश्न फ़ॉन्ट साइज़: <span id="q-size-lbl" style="color:#38bdf8;">42</span>px</label>
+                <input type="range" id="cfg-q-size" min="30" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
@@ -390,8 +390,8 @@
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V6";
-    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V6";
+    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V7";
+    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V7";
 
     let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
     let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
@@ -480,7 +480,7 @@ ${currentSubjectHashtag}`;
             counter: parseInt(document.getElementById('global-counter-val').value) || 163,
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
-            qSize: parseInt(document.getElementById('cfg-q-size').value) || 40,
+            qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
             isAnswerMode: document.getElementById('chk-answer-mode').checked
         };
@@ -679,20 +679,20 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
     }
 
-    /* REDRAW CANVAS WITH BALANCED SPACING & LARGER BRANDING */
+    /* REDRAW CANVAS WITH FIXED GAP AND PERFECT PROPORTIONS */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
-        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 40;
+        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
         const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
 
         ctx.clearRect(0, 0, 1080, 1350);
 
-        // 1. Solid Outer Background Fill
+        // 1. Outer Background
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, 1080, 1350);
 
-        // 2. Main White Card
+        // 2. White Card Shell
         const cardX = 42;
         const cardY = 42;
         const cardW = 996;
@@ -704,7 +704,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.lineWidth = 3;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // 3. ULTRA-FAINT WATERMARK
+        // 3. Faint Watermark (clipped inside card)
         ctx.save();
         ctx.beginPath();
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
@@ -720,35 +720,38 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
         ctx.restore();
 
-        // 4. HEADER WITH DUAL EMOJIS (Larger: 52px Bold)
+        // 4. SUBJECT TITLE: MUCH LARGER (60px)
         ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
-        ctx.font = `900 52px ${fontFam}`;
-        ctx.fillText(currentHeaderTitle, 540, 126);
+        ctx.font = `900 60px ${fontFam}`;
+        ctx.fillText(currentHeaderTitle, 540, 118);
 
-        // 5. SUB-BRANDING PILL: EXAM PREPARATION (Larger & Bold: 24px)
-        const pillW = 460;
-        const pillH = 50;
+        // 5. EXAM PREPARATION PILL: MUCH LARGER (26px)
+        const pillW = 500;
+        const pillH = 56;
         const pillX = (1080 - pillW) / 2;
-        const pillY = 152;
+        const pillY = 162;
 
-        roundRect(ctx, pillX, pillY, pillW, pillH, 25, "#f1f5f9", false);
+        roundRect(ctx, pillX, pillY, pillW, pillH, 28, "#f1f5f9", false);
         ctx.strokeStyle = "#cbd5e1";
         ctx.lineWidth = 2;
-        roundRect(ctx, pillX, pillY, pillW, pillH, 25, null, true);
+        roundRect(ctx, pillX, pillY, pillW, pillH, 28, null, true);
 
         ctx.fillStyle = "#1e293b";
-        ctx.font = "900 24px 'Poppins', sans-serif";
-        ctx.fillText("EXAM PREPARATION", 540, pillY + 34);
+        ctx.font = "900 26px 'Poppins', sans-serif";
+        ctx.fillText("EXAM PREPARATION", 540, pillY + (pillH / 2));
 
-        // 6. COLORFUL QUESTION BLOCK (Separated with gap from the pill)
+        // 6. LOCKED GAP (48px Fixed Distance below Pill)
+        // Using textBaseline = "top" ensures expanding font-size grows downward, never encroaching the pill
         ctx.textAlign = "left";
-        const qStartY = 285; // Solid gap from pill (pill ends at 202px)
+        const fixedGap = 48;
+        const qStartY = pillY + pillH + fixedGap; // Fixed top anchor at 266px
         const qEndY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
 
         // 7. 4 COLORED OPTIONS CONTAINERS
-        const optStartY = qEndY + 40;
-        const optGap = 125;
+        const optStartY = qEndY + 36;
+        const optGap = 124;
         const optW = 890;
         const optH = 94;
         const optX = 95;
@@ -781,21 +784,24 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             ctx.lineWidth = (isAnswerRevealed && isCorrect) ? 4 : 2.5;
             roundRect(ctx, optX, curY, optW, optH, 20, null, true);
 
+            // Left Badge Box
             roundRect(ctx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
             ctx.fillStyle = "#ffffff";
             ctx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
             ctx.textAlign = "center";
-            ctx.fillText(badgeText, optX + 47, curY + 58);
+            ctx.textBaseline = "middle";
+            ctx.fillText(badgeText, optX + 47, curY + (optH / 2));
 
+            // Option Text (EMOJI AT THE END)
             ctx.textAlign = "left";
             ctx.fillStyle = (isAnswerRevealed && isCorrect) ? "#14532d" : st.text;
             ctx.font = `700 ${optSize}px ${fontFam}`;
             const optString = quizData.options[st.label] || "";
-            ctx.fillText(optString, optX + 96, curY + 58);
+            ctx.fillText(optString, optX + 96, curY + (optH / 2));
         });
 
-        // 8. FOOTER SECTION: HOOK RIBBON MOVED FURTHER DOWN
-        const footerY = optStartY + (4 * optGap) + 40; // Shifted lower down for balance
+        // 8. FOOTER SECTION: HOOK BANNER
+        const footerY = optStartY + (4 * optGap) + 38;
 
         if (isAnswerRevealed) {
             roundRect(ctx, 95, footerY, 890, 165, 18, "#f8fafc", false);
@@ -805,11 +811,13 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
 
             ctx.fillStyle = "#15803d";
             ctx.font = `800 24px ${fontFam}`;
-            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 38);
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 24);
 
             ctx.fillStyle = "#334155";
             ctx.font = `600 20px ${fontFam}`;
-            wrapTextSimple(ctx, quizData.explanation, 120, footerY + 74, 840, 28);
+            wrapTextSimple(ctx, quizData.explanation, 120, footerY + 68, 840, 28);
 
             ctx.fillStyle = "#64748b";
             ctx.font = `800 22px ${fontFam}`;
@@ -822,17 +830,20 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             roundRect(ctx, 110, footerY, 860, 80, 40, null, true);
 
             ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
             ctx.fillStyle = "#854d0e";
             ctx.font = `800 30px ${fontFam}`;
-            ctx.fillText("👉 Genius लोग ही Comment में उत्तर दें! 🧠", 540, footerY + 52);
+            ctx.fillText("👉 Genius लोग ही Comment में उत्तर दें! 🧠", 540, footerY + (80 / 2));
 
             ctx.fillStyle = "#0f172a";
             ctx.font = `800 28px ${fontFam}`;
-            ctx.fillText("❤️ Like | ➕ Follow 🎯", 540, footerY + 130);
+            ctx.fillText("❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
         }
     }
 
+    /* TOP-ALIGNED QUESTION RENDERER: STOPS UPWARD EXPANSION */
     function drawColorfulQuestion(ctx, num, text, x, y, maxW, fontSize, fontFam) {
+        ctx.textBaseline = "top"; // Locks the top edge, grows only downward
         ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
         ctx.fillStyle = "#0284c7";
         const prefix = `Q.${num} `;
@@ -845,7 +856,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         const words = text.split(' ');
         let curX = x + prefixWidth;
         let curY = y;
-        const lineH = fontSize * 1.38;
+        const lineH = Math.round(fontSize * 1.38);
 
         words.forEach(word => {
             const cleanWord = word.replace(/[?,.!"']/g, '');
@@ -863,10 +874,11 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             curX += wordW;
         });
 
-        return curY;
+        return curY + lineH;
     }
 
     function wrapTextSimple(ctx, text, x, y, maxW, lineH) {
+        ctx.textBaseline = "top";
         const words = text.split(' ');
         let line = '';
         for (let n = 0; n < words.length; n++) {
