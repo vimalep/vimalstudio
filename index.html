@@ -2,159 +2,170 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Master App Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Hind:wght@600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
+            background: #090d16;
+            color: #f8fafc;
             font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at top, #1e293b, #090d16 80%);
-            color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            padding: 24px 16px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 24px;
         }
         .header h1 {
-            font-size: 32px;
+            font-size: 26px;
             font-weight: 900;
             background: linear-gradient(135deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
         }
         .header p {
             color: #94a3b8;
-            font-size: 15px;
+            font-size: 13.5px;
+            font-family: 'Hind', sans-serif;
+            margin-top: 4px;
         }
 
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 24px;
             width: 100%;
-            max-width: 1000px;
-        }
-
-        .app-card {
-            background: #111827;
-            border: 2px solid #1f2937;
-            border-radius: 16px;
-            padding: 28px 24px;
+            max-width: 480px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
+            gap: 16px;
+        }
+
+        .tool-card {
+            background: #131d31;
+            border: 1.5px solid #233554;
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s, border-color 0.2s;
             text-decoration: none;
             color: inherit;
-            transition: all 0.25s ease;
-            position: relative;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
-        .app-card:hover {
-            transform: translateY(-6px);
-            border-color: #38bdf8;
-            box-shadow: 0 14px 30px rgba(56, 189, 248, 0.25);
-        }
-        .app-card:active {
+        .tool-card:active {
             transform: scale(0.98);
+            border-color: #38bdf8;
         }
 
-        .badge {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            background: #1f2937;
-            color: #94a3b8;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 20px;
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
-
-        .icon-box {
-            width: 65px;
-            height: 65px;
-            border-radius: 14px;
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            margin-bottom: 18px;
+            font-size: 26px;
+            flex-shrink: 0;
         }
-        .icon-1 { background: linear-gradient(135deg, #0284c7, #0369a1); }
-        .icon-2 { background: linear-gradient(135deg, #0f4c81, #1e3a8a); }
-        .icon-3 { background: linear-gradient(135deg, #b91c1c, #991b1b); }
+        .icon-blue { background: rgba(56, 189, 248, 0.15); border: 1px solid #0284c7; }
+        .icon-purple { background: rgba(168, 85, 247, 0.15); border: 1px solid #9333ea; }
+        .icon-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid #d97706; }
+        .icon-rose { background: rgba(244, 63, 94, 0.15); border: 1px solid #e11d48; }
 
-        .title {
-            font-size: 19px;
+        .card-info h2 {
+            font-size: 17px;
             font-weight: 800;
-            margin-bottom: 8px;
-            color: #f8fafc;
+            color: #f1f5f9;
         }
-        .desc {
-            font-size: 13px;
+        .card-info p {
+            font-size: 12.5px;
             color: #94a3b8;
-            line-height: 1.5;
-            margin-bottom: 22px;
-            flex-grow: 1;
+            font-family: 'Hind', sans-serif;
+            margin-top: 2px;
+            line-height: 1.35;
         }
 
-        .btn {
+        .btn-launch {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 11px;
+            border-radius: 10px;
+            font-size: 13.5px;
             font-weight: 800;
-            font-size: 14px;
-            color: #ffffff;
-            display: block;
+            text-align: center;
+            color: white;
+            border: none;
         }
-        .btn-1 { background: #0284c7; }
-        .btn-2 { background: #0f4c81; }
-        .btn-3 { background: #b91c1c; }
+        .btn-blue { background: #0284c7; }
+        .btn-purple { background: #9333ea; }
+        .btn-amber { background: #d97706; }
+        .btn-rose { background: #e11d48; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>Master App Dashboard</h1>
-        <p>अपनी पसंद की ऐप शुरू करने के लिए नीचे क्लिक करें:</p>
+        <p>अपनी पसंद की टूल ऐप शुरू करने के लिए नीचे क्लिक करें</p>
     </div>
 
     <div class="grid-container">
-        <!-- 1st OPTION -->
-        <a href="5 QNA Mobile.html" class="app-card">
-            <span class="badge">Option 1</span>
-            <div class="icon-box icon-1">📱</div>
-            <div class="title">5 Questions Q&A Studio</div>
-            <div class="desc">5-प्रश्नों का लाइव प्रेजेंटर, एनिमेशन ओवरले और ऑडियो साउंड सपोर्ट।</div>
-            <span class="btn btn-1">Open 1st App 🚀</span>
+        <!-- TOOL 1 -->
+        <a href="5%20QNA%20Mobile.html" class="tool-card">
+            <div class="card-top">
+                <div class="card-icon icon-blue">📱</div>
+                <div class="card-info">
+                    <h2>5 Questions Q&A Studio</h2>
+                    <p>शॉर्ट्स और रील्स वीडियो रिकॉर्डिंग के लिए 5-प्रश्नों का ऑटोमैटिक प्लेयर।</p>
+                </div>
+            </div>
+            <div class="btn-launch btn-blue">Open Studio 🚀</div>
         </a>
 
-        <!-- 2nd OPTION -->
-        <a href="Daily Current Affairs App.html" class="app-card">
-            <span class="badge">Option 2</span>
-            <div class="icon-box icon-2">📰</div>
-            <div class="title">Daily Current Affairs App</div>
-            <div class="desc">10-in-1 करंट अफेयर्स पोस्ट मेकर, लाइव कैनवास और इमेज लेआउट टूल।</div>
-            <span class="btn btn-2">Open 2nd App 🚀</span>
+        <!-- TOOL 2 -->
+        <a href="Daily%20Current%20Affairs%20App.html" class="tool-card">
+            <div class="card-top">
+                <div class="card-icon icon-purple">📰</div>
+                <div class="card-info">
+                    <h2>Daily Current Affairs App</h2>
+                    <p>10-in-1 करंट अफेयर्स पोस्ट मेकर, लाइव कैनवास और इमेज लेआउट टूल।</p>
+                </div>
+            </div>
+            <div class="btn-launch btn-purple">Open App 🚀</div>
         </a>
 
-        <!-- 3rd OPTION -->
-        <a href="EP 20 question.html" class="app-card">
-            <span class="badge">Option 3</span>
-            <div class="icon-box icon-3">📝</div>
-            <div class="title">20-in-1 Exam Notes</div>
-            <div class="desc">20 प्रश्नों की वन-पेज स्टडी शीट और हाई-रिज़ॉल्यूशन पोस्टर डाउनलोडर।</div>
-            <span class="btn btn-3">Open 3rd App 🚀</span>
+        <!-- TOOL 3 -->
+        <a href="EP%2020%20question.html" class="tool-card">
+            <div class="card-top">
+                <div class="card-icon icon-amber">📑</div>
+                <div class="card-info">
+                    <h2>EP 20 Question Study-Sheet</h2>
+                    <p>1080×1350 का 1-पेज 20-प्रश्नों का हाई-इम्पैक्ट पोस्ट मेकर और आर्काइव।</p>
+                </div>
+            </div>
+            <div class="btn-launch btn-amber">Open Studio 🚀</div>
+        </a>
+
+        <!-- TOOL 4 (NEW) -->
+        <a href="Quiz%20Studio.html" class="tool-card">
+            <div class="card-top">
+                <div class="card-icon icon-rose">🎯</div>
+                <div class="card-info">
+                    <h2>Viral MCQ Quiz Studio</h2>
+                    <p>1080×1350 फ़ेसबुक फ़ीड इमोजी क्विज़, ऑटो-कैप्शन और फॉलो हुक।</p>
+                </div>
+            </div>
+            <div class="btn-launch btn-rose">Open Quiz Tool 🚀</div>
         </a>
     </div>
 
