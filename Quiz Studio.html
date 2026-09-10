@@ -319,15 +319,15 @@
             <div>
                 <label>बैकग्राउंड थीम:</label>
                 <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="#fef9c3">Soft Warm Yellow (पीला)</option>
+                    <option value="#fef9c3">Soft Warm Yellow (हल्का पीला)</option>
                     <option value="#f8fafc">Creamy Light (ऑफ-व्हाइट)</option>
                     <option value="#ffffff">Pure White (सफेद)</option>
-                    <option value="#ecfdf5">Mint Light (हरा)</option>
+                    <option value="#ecfdf5">Mint Light (हल्का हरा)</option>
                 </select>
             </div>
             <div>
-                <label>प्रश्न फ़ॉन्ट साइज़: <span id="q-size-lbl" style="color:#38bdf8;">42</span>px</label>
-                <input type="range" id="cfg-q-size" min="32" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                <label>प्रश्न फ़ॉन्ट साइज़: <span id="q-size-lbl" style="color:#38bdf8;">40</span>px</label>
+                <input type="range" id="cfg-q-size" min="30" max="64" value="40" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
@@ -382,9 +382,7 @@
             <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 सहेजे गए प्रश्न बैंक (Question Archive)</span>
             <button onclick="document.getElementById('history-modal').style.display='none'" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
         </div>
-        <div class="history-list" id="history-items-container">
-            <!-- Dynamically populated -->
-        </div>
+        <div class="history-list" id="history-items-container"></div>
     </div>
 </div>
 
@@ -392,8 +390,8 @@
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V4";
-    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V4";
+    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V5";
+    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V5";
 
     let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
     let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
@@ -486,7 +484,7 @@ ${currentSubjectHashtag}`;
             counter: parseInt(document.getElementById('global-counter-val').value) || 163,
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
-            qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
+            qSize: parseInt(document.getElementById('cfg-q-size').value) || 40,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
             isAnswerMode: document.getElementById('chk-answer-mode').checked
         };
@@ -580,7 +578,7 @@ ${currentSubjectHashtag}`;
         modal.style.display = 'flex';
     }
 
-    function closeHistoryModal(e) {
+    function closeHistoryModal() {
         document.getElementById('history-modal').style.display = 'none';
     }
 
@@ -660,7 +658,6 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             quizData.explanation = parsed.explanation || "व्याख्या उपलब्ध नहीं है।";
             quizData.caption = parsed.caption || `इस महत्वपूर्ण प्रश्न का उत्तर कमेंट करें! 👇🔥\n\n${currentSubjectHashtag}`;
 
-            // Save to Persistent History
             saveToHistory({
                 questionNumber: currentNum,
                 questionText: quizData.questionText,
@@ -680,7 +677,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             saveAllSettings();
 
             redrawCanvas();
-            alert(`🎉 प्रश्न Q.${currentNum} सफलतापूर्वक तैयार व सहेज लिया गया!`);
+            alert(`🎉 प्रश्न Q.${currentNum} तैयार हो गया!`);
         } catch (err) {
             alert("त्रुटि: " + err.message);
             console.error(err);
@@ -690,58 +687,74 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
     }
 
-    /* REDRAW CANVAS IN 1080 x 1350 RES */
+    /* REDRAW CANVAS IN 1080 x 1350 RES - BALANCED & CLEAN */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
-        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
+        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 40;
         const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
 
         ctx.clearRect(0, 0, 1080, 1350);
 
-        // 1. Background Fill
+        // 1. Solid Outer Background Fill
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, 1080, 1350);
 
-        // 2. Anti-Copy Tiled Watermark: "EXAM PREPARATION"
+        // 2. Main White Card
+        const cardX = 42;
+        const cardY = 42;
+        const cardW = 996;
+        const cardH = 1266;
+        const cardRadius = 32;
+
+        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, "#ffffff", false);
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 3;
+        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
+
+        // 3. ULTRA-FAINT WATERMARK INSIDE WHITE CARD ONLY
         ctx.save();
+        ctx.beginPath();
+        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
+        ctx.clip(); // Ensure watermark never spills to outer background
+
         ctx.rotate(-28 * Math.PI / 180);
-        ctx.fillStyle = "rgba(15, 23, 42, 0.038)";
-        ctx.font = "900 46px 'Poppins', sans-serif";
-        for (let x = -800; x < 2000; x += 380) {
-            for (let y = -600; y < 2200; y += 170) {
+        ctx.fillStyle = "rgba(15, 23, 42, 0.02)"; // Super subtle, invisible anti-theft
+        ctx.font = "900 42px 'Poppins', sans-serif";
+        for (let x = -800; x < 1800; x += 360) {
+            for (let y = -600; y < 2000; y += 160) {
                 ctx.fillText("EXAM PREPARATION", x, y);
             }
         }
         ctx.restore();
 
-        // 3. Card Outer Border
-        ctx.strokeStyle = "#e2e8f0";
-        ctx.lineWidth = 14;
-        roundRect(ctx, 40, 40, 1000, 1270, 36, null, true);
-
-        // 4. HEADER WITH DUAL EMOJIS (Larger: 46px)
+        // 4. HEADER WITH DUAL EMOJIS (42px Bold)
         ctx.textAlign = "center";
         ctx.fillStyle = "#0f172a";
-        ctx.font = `900 46px ${fontFam}`;
-        ctx.fillText(currentHeaderTitle, 540, 120);
+        ctx.font = `900 42px ${fontFam}`;
+        ctx.fillText(currentHeaderTitle, 540, 126);
 
-        // SUB-BRANDING PILL: EXAM PREPARATION (Much Larger & Bold)
-        roundRect(ctx, 330, 142, 420, 44, 22, "#e2e8f0", false);
-        ctx.fillStyle = "#1e293b";
-        ctx.font = "900 20px 'Poppins', sans-serif";
-        ctx.fillText("EXAM PREPARATION", 540, 172);
+        // 5. SUB-BRANDING PILL: EXAM PREPARATION (Neat & Balanced)
+        roundRect(ctx, 360, 146, 360, 36, 18, "#f1f5f9", false);
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 1.5;
+        roundRect(ctx, 360, 146, 360, 36, 18, null, true);
 
-        // 5. COLORFUL QUESTION BLOCK WITH HIGHLIGHTED KEYWORDS
+        ctx.fillStyle = "#334155";
+        ctx.font = "800 16px 'Poppins', sans-serif";
+        ctx.fillText("EXAM PREPARATION", 540, 170);
+
+        // 6. COLORFUL QUESTION BLOCK (Dynamic positioning, no giant gap)
         ctx.textAlign = "left";
-        const nextY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 100, 255, 880, qSize, fontFam);
+        const qStartY = 240;
+        const qEndY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
 
-        // 6. 4 COLORED OPTIONS CONTAINERS
-        const optStartY = Math.max(nextY + 35, 430);
-        const optGap = 125;
-        const optW = 880;
-        const optH = 95;
-        const optX = 100;
+        // 7. 4 COLORED OPTIONS CONTAINERS (EXACT USER SPECIFICATION KEPT SAFE)
+        const optStartY = qEndY + 36; // Seamless flow, no forced giant blank gap
+        const optGap = 120;
+        const optW = 890;
+        const optH = 94;
+        const optX = 95;
 
         const optStyles = [
             { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
@@ -780,7 +793,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             ctx.textAlign = "center";
             ctx.fillText(badgeText, optX + 47, curY + 58);
 
-            // Option Text (EMOJI IS NOW ALWAYS AT THE END)
+            // Option Text (EMOJI AT THE END)
             ctx.textAlign = "left";
             ctx.fillStyle = (isAnswerRevealed && isCorrect) ? "#14532d" : st.text;
             ctx.font = `700 ${optSize}px ${fontFam}`;
@@ -788,44 +801,44 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             ctx.fillText(optString, optX + 96, curY + 58);
         });
 
-        // 7. FOOTER SECTION: QUIZ HOOK VS EXPLANATION CARD
-        const footerY = optStartY + (4 * optGap) + 20;
+        // 8. FOOTER SECTION: HOOK RIBBON OR EXPLANATION CARD
+        const footerY = optStartY + (4 * optGap) + 18;
 
         if (isAnswerRevealed) {
             // ANSWER MODE: RENDER EXPLANATION BOX ON CANVAS
-            roundRect(ctx, 90, footerY, 900, 160, 18, "#ffffff", false);
+            roundRect(ctx, 95, footerY, 890, 165, 18, "#f8fafc", false);
             ctx.strokeStyle = "#16a34a";
-            ctx.lineWidth = 3;
-            roundRect(ctx, 90, footerY, 900, 160, 18, null, true);
+            ctx.lineWidth = 2.5;
+            roundRect(ctx, 95, footerY, 890, 165, 18, null, true);
 
             ctx.fillStyle = "#15803d";
             ctx.font = `800 24px ${fontFam}`;
-            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 115, footerY + 38);
+            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 38);
 
             ctx.fillStyle = "#334155";
             ctx.font = `600 20px ${fontFam}`;
-            wrapTextSimple(ctx, quizData.explanation, 115, footerY + 74, 850, 27);
+            wrapTextSimple(ctx, quizData.explanation, 120, footerY + 74, 840, 28);
 
             // Micro Footer
             ctx.fillStyle = "#64748b";
             ctx.font = `800 22px ${fontFam}`;
             ctx.textAlign = "center";
-            ctx.fillText("❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 200);
+            ctx.fillText("❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
         } else {
             // QUIZ MODE: RENDER HOOK RIBBON
-            roundRect(ctx, 120, footerY + 25, 840, 75, 38, "#fef08a", false);
+            roundRect(ctx, 120, footerY + 15, 840, 74, 37, "#fef08a", false);
             ctx.strokeStyle = "#facc15";
             ctx.lineWidth = 2;
-            roundRect(ctx, 120, footerY + 25, 840, 75, 38, null, true);
+            roundRect(ctx, 120, footerY + 15, 840, 74, 37, null, true);
 
             ctx.textAlign = "center";
             ctx.fillStyle = "#854d0e";
             ctx.font = `800 28px ${fontFam}`;
-            ctx.fillText("👉 Genius लोग ही Comment में उत्तर दें! 🧠", 540, footerY + 72);
+            ctx.fillText("👉 Genius लोग ही Comment में उत्तर दें! 🧠", 540, footerY + 61);
 
             ctx.fillStyle = "#0f172a";
             ctx.font = `800 26px ${fontFam}`;
-            ctx.fillText("❤️ Like | ➕ Follow 🎯", 540, footerY + 160);
+            ctx.fillText("❤️ Like | ➕ Follow 🎯", 540, footerY + 145);
         }
     }
 
@@ -843,7 +856,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         const words = text.split(' ');
         let curX = x + prefixWidth;
         let curY = y;
-        const lineH = fontSize * 1.42;
+        const lineH = fontSize * 1.38;
 
         words.forEach(word => {
             const cleanWord = word.replace(/[?,.!"']/g, '');
@@ -890,7 +903,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
         ctx.lineTo(x + radius, y + height);
         ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-        ctx.lineTo(x + radius, y);
+        ctx.lineTo(x, y + radius);
         ctx.quadraticCurveTo(x, y, x + radius, y);
         ctx.closePath();
         if (fill) { ctx.fillStyle = fill; ctx.fill(); }
@@ -920,7 +933,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             } else {
                 downloadImage();
                 copyCaption();
-                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड कर दी गई है और कैप्शन कॉपी हो गया है!");
+                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड हो गई है और कैप्शन कॉपी कर लिया गया है!");
             }
         });
     }
