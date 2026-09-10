@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral MCQ Quiz Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            font-family: 'Hind', sans-serif;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .header-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: #38bdf8;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        input, select {
+            flex: 1;
+            padding: 9px 12px;
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+        .btn-subject {
+            padding: 9px 4px;
+            background: #0f172a;
+            border: 2px solid #475569;
+            color: #cbd5e1;
+            font-size: 12px;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn-subject.active {
+            border-color: #38bdf8;
+            background: #0284c7;
+            color: white;
+            box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .canvas-container {
+            width: 100%;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn-download {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+        }
+
+        .caption-card {
+            background: #1e293b;
+            border: 1.5px dashed #38bdf8;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .caption-text {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            min-height: 70px;
+            white-space: pre-wrap;
+            user-select: text;
+        }
+        .btn-copy {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 9px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .history-card {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .history-list {
+            max-height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .history-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .history-actions { display: flex; gap: 6px; }
+        .btn-hist {
+            flex: 1;
+            border: none;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-title">🎯 Viral MCQ Quiz Generator (1080×1350)</div>
+
+    <div class="card">
+        <div class="card-title">🔑 Google Gemini API Settings</div>
+        <input type="password" id="api-key" placeholder="Paste Gemini API Key here..." onchange="saveKey()">
+
+        <div class="card-title" style="margin-top: 4px;">🎯 विषय चुनें (Subject)</div>
+        <div class="subject-grid">
+            <button class="btn-subject active" id="sub-H" onclick="setSubject('H', 'HISTORY')">📜 History</button>
+            <button class="btn-subject" id="sub-G" onclick="setSubject('G', 'GEOGRAPHY')">🌍 Geography</button>
+            <button class="btn-subject" id="sub-P" onclick="setSubject('P', 'POLITY')">⚖️ Polity</button>
+            <button class="btn-subject" id="sub-S" onclick="setSubject('S', 'SCIENCE')">🔬 Science</button>
+            <button class="btn-subject" id="sub-CA" onclick="setSubject('CA', 'CURRENT AFFAIRS')">📰 Current Affairs</button>
+            <button class="btn-subject" id="sub-M" onclick="setSubject('M', 'STATIC')">💡 Mix GK</button>
+        </div>
+
+        <div class="input-row">
+            <label style="font-size: 12px; color: #94a3b8; font-weight: bold;">प्रश्न संख्या (Q. No.):</label>
+            <input type="number" id="q-num" value="1" min="1" style="max-width: 90px; text-align: center;">
+            <button class="btn-generate" id="btn-gen" style="flex: 2;" onclick="generateMCQQuiz()">
+                <span>✨ 1-Click Generate Quiz</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- CANVAS PREVIEW (1080 x 1350 FEED PORTRAIT) -->
+    <div class="canvas-container">
+        <canvas id="quizCanvas" width="1080" height="1350"></canvas>
+    </div>
+
+    <button class="btn-download" onclick="downloadQuizImage()">📥 Download 1080×1350 Quiz Image</button>
+
+    <div class="caption-card">
+        <div class="card-title" style="color: #38bdf8;">📝 Facebook Caption & Hashtags</div>
+        <div class="caption-text" id="fb-caption">क्विज़ जनरेट होते ही कैप्शन यहाँ आ जाएगा...</div>
+        <button class="btn-copy" onclick="copyCaption()">📋 Copy FB Caption</button>
+    </div>
+
+    <div class="history-card">
+        <div class="card-title" style="color: #38bdf8;">📚 पिछली क्विज़ हिस्ट्री (Saved Archive)</div>
+        <div class="history-list" id="history-box"></div>
+    </div>
+</div>
+
+<script>
+    let currentSubCode = 'H';
+    let currentSubLabel = 'HISTORY';
+    const canvas = document.getElementById('quizCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let quizData = {
+        header: "📜 HISTORY GK QUIZ 🧠",
+        qNum: 163,
+        question: "'फॉरवर्ड ब्लॉक' (Forward Bloc) की स्थापना 1939 में किसने की थी? 🇮🇳",
+        options: [
+            "A) रास बिहारी बोस 📜",
+            "B) सुभाष चंद्र बोस 🦁",
+            "C) चंद्रशेखर आजाद ⚔️",
+            "D) जयप्रकाश नारायण ✍️"
+        ],
+        answer: "B) सुभाष चंद्र बोस",
+        hook: "👇 Genius लोग ही Comment में उत्तर दें! 🧠",
+        footer: "❤️ Like | ➕ Follow 🎯"
+    };
+
+    function saveKey() {
+        const k = document.getElementById('api-key').value.trim();
+        if (k) localStorage.setItem("GEMINI_API_KEY_LOCAL", k);
+    }
+
+    function setSubject(code, label) {
+        currentSubCode = code;
+        currentSubLabel = label;
+        document.querySelectorAll('.btn-subject').forEach(b => b.classList.remove('active'));
+        document.getElementById(`sub-${code}`).classList.add('active');
+
+        const savedQNum = localStorage.getItem(`QUIZ_QNUM_${code}`) || 1;
+        document.getElementById('q-num').value = savedQNum;
+    }
+
+    async function generateMCQQuiz() {
+        let apiKey = document.getElementById('api-key').value.trim() || localStorage.getItem("GEMINI_API_KEY_LOCAL");
+        if (!apiKey) {
+            alert("कृपया पहले ऊपर Gemini API Key डालें!");
+            return;
+        }
+
+        const qNum = parseInt(document.getElementById('q-num').value) || 1;
+        const btn = document.getElementById('btn-gen');
+        btn.disabled = true;
+        btn.innerHTML = `<span>⏳ क्विज़ तैयार हो रही है...</span>`;
+
+        const prompt = `Act as an expert competitive exam quiz creator for Facebook.
+Generate 1 viral multiple-choice quiz in Hindi for Subject: "${currentSubLabel} GK".
+Question number is Q.${qNum}.
+The question and all 4 options MUST include suitable attractive emojis.
+Output strictly valid JSON with this exact structure:
+{
+  "header": "📜 ${currentSubLabel} GK QUIZ 🧠",
+  "question": "प्रश्न का पूरा टेक्स्ट यहाँ लिखें? [Emoji]",
+  "options": [
+    "A) विकल्प 1 [Emoji]",
+    "B) विकल्प 2 [Emoji]",
+    "C) विकल्प 3 [Emoji]",
+    "D) विकल्प 4 [Emoji]"
+  ],
+  "answer": "B) सही विकल्प",
+  "hook": "👇 Genius लोग ही Comment में उत्तर दें! 🧠",
+  "caption": "Q.${qNum} का सही उत्तर क्या होगा? 90% छात्र इसमें गलती करते हैं, अपना जवाब कमेंट करें! 👇",
+  "hashtags": "#${currentSubLabel}Quiz #GKQuiz #CompetitiveExams #DailyQuiz #GovtJobs"
+}`;
+
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.error?.message || `HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+            let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (jsonMatch) text = jsonMatch[0];
+
+            const parsed = JSON.parse(text);
+
+            quizData = {
+                header: parsed.header || `📜 ${currentSubLabel} GK QUIZ 🧠`,
+                qNum: qNum,
+                question: parsed.question,
+                options: parsed.options,
+                answer: parsed.answer,
+                hook: parsed.hook || "👇 Genius लोग ही Comment में उत्तर दें! 🧠",
+                footer: "❤️ Like | ➕ Follow 🎯"
+            };
+
+            const fullCap = `${parsed.caption}\n\n${parsed.hashtags}`;
+            document.getElementById('fb-caption').innerText = fullCap;
+
+            saveQuizToHistory({
+                id: Date.now(),
+                qNum: qNum,
+                sub: currentSubLabel,
+                data: quizData,
+                caption: fullCap
+            });
+
+            localStorage.setItem(`QUIZ_QNUM_${currentSubCode}`, qNum + 1);
+            document.getElementById('q-num').value = qNum + 1;
+
+            drawQuiz();
+            renderQuizHistory();
+            alert(`🎉 Q.${qNum} क्विज़ पोस्ट तैयार हो गई है!`);
+        } catch (e) {
+            alert("त्रुटि: " + e.message);
+            console.error(e);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<span>✨ 1-Click Generate Quiz</span>`;
+        }
+    }
+
+    /* 1080 x 1350 HIGH IMPACT DRAWING */
+    function drawQuiz() {
+        ctx.clearRect(0, 0, 1080, 1350);
+
+        // 1. Warm Clean Background
+        ctx.fillStyle = "#fffcf6";
+        ctx.fillRect(0, 0, 1080, 1350);
+
+        // Outer Border
+        ctx.strokeStyle = "#f1e5d1";
+        ctx.lineWidth = 14;
+        ctx.strokeRect(20, 20, 1040, 1310);
+
+        // 2. Top Header
+        ctx.fillStyle = "#1e293b";
+        ctx.font = "900 52px 'Poppins', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(quizData.header, 540, 170);
+
+        // Header Underline
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(140, 215);
+        ctx.lineTo(940, 215);
+        ctx.stroke();
+
+        // 3. Question Text (Q.163 ...)
+        ctx.textAlign = "left";
+        ctx.fillStyle = "#090d16";
+        ctx.font = "800 50px 'Hind', sans-serif";
+        const fullQText = `Q.${quizData.qNum} ${quizData.question}`;
+        const nextY = wrapText(ctx, fullQText, 100, 330, 880, 68);
+
+        // 4. Four Options Stack
+        const startOptY = Math.max(nextY + 80, 560);
+        const optGap = 108;
+
+        quizData.options.forEach((opt, idx) => {
+            const curY = startOptY + (idx * optGap);
+
+            // Subtle Background Box for Touch Feel
+            roundRect(ctx, 95, curY - 52, 890, 84, 18, "rgba(241, 245, 249, 0.7)");
+
+            ctx.fillStyle = "#0f172a";
+            ctx.font = "800 46px 'Hind', sans-serif";
+            ctx.fillText(opt, 130, curY + 8);
+        });
+
+        // 5. Engagement Hook Ribbon
+        roundRect(ctx, 80, 1055, 920, 92, 46, "#fef08a");
+        ctx.fillStyle = "#78350f";
+        ctx.font = "800 42px 'Hind', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(quizData.hook, 540, 1115);
+
+        // 6. Follow Footer
+        ctx.fillStyle = "#1e293b";
+        ctx.font = "900 44px 'Hind', sans-serif";
+        ctx.fillText(quizData.footer, 540, 1235);
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+        ctx.fillStyle = fill;
+        ctx.fill();
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        let curY = y;
+        for(let n = 0; n < words.length; n++) {
+            let testLine = line + words[n] + ' ';
+            let metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && n > 0) {
+                ctx.fillText(line, x, curY);
+                line = words[n] + ' ';
+                curY += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, x, curY);
+        return curY;
+    }
+
+    function downloadQuizImage() {
+        const link = document.createElement('a');
+        link.download = `Quiz_Q${quizData.qNum}_${currentSubLabel}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    function copyCaption() {
+        const text = document.getElementById('fb-caption').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("📋 फेसबुक कैप्शन कॉपी हो गया!");
+        });
+    }
+
+    function getQuizHistory() {
+        try {
+            return JSON.parse(localStorage.getItem("QUIZ_ARCHIVE_STORE_V1")) || [];
+        } catch(e) { return []; }
+    }
+
+    function saveQuizToHistory(item) {
+        let history = getQuizHistory();
+        history.unshift(item);
+        if (history.length > 50) history.pop();
+        localStorage.setItem("QUIZ_ARCHIVE_STORE_V1", JSON.stringify(history));
+    }
+
+    function renderQuizHistory() {
+        const box = document.getElementById('history-box');
+        const history = getQuizHistory();
+        if (history.length === 0) {
+            box.innerHTML = `<div style="text-align:center; color:#64748b; font-size:12px; padding:10px;">कोई हिस्ट्री नहीं है।</div>`;
+            return;
+        }
+        let html = "";
+        history.forEach(item => {
+            html += `
+                <div class="history-item">
+                    <div style="font-size:12px; font-weight:bold; color:#38bdf8;">Q.${item.qNum} • ${item.sub}</div>
+                    <div style="font-size:13px; color:#e2e8f0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.data.question}</div>
+                    <div class="history-actions">
+                        <button class="btn-hist" style="background:#0284c7; color:white;" onclick="loadQuizHistory(${item.id})">👁️ Load</button>
+                        <button class="btn-hist" style="background:#ef4444; color:white;" onclick="deleteQuizHistory(${item.id})">🗑️</button>
+                    </div>
+                </div>
+            `;
+        });
+        box.innerHTML = html;
+    }
+
+    function loadQuizHistory(id) {
+        const history = getQuizHistory();
+        const item = history.find(x => x.id === id);
+        if (!item) return;
+        quizData = item.data;
+        document.getElementById('fb-caption').innerText = item.caption;
+        drawQuiz();
+        document.querySelector('.canvas-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function deleteQuizHistory(id) {
+        let history = getQuizHistory().filter(x => x.id !== id);
+        localStorage.setItem("QUIZ_ARCHIVE_STORE_V1", JSON.stringify(history));
+        renderQuizHistory();
+    }
+
+    window.onload = function() {
+        const k = localStorage.getItem("GEMINI_API_KEY_LOCAL");
+        if (k) document.getElementById('api-key').value = k;
+        setSubject('H', 'HISTORY');
+        drawQuiz();
+        renderQuizHistory();
+    };
+</script>
+
+</body>
+</html>
