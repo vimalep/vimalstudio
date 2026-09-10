@@ -3,544 +3,487 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>20-in-1 Exam Notes Studio</title>
+    <title>EP 20 Question Sheet Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Kalam:wght@400;700&family=Mukta:wght@500;700;800&family=Noto+Sans+Devanagari:wght@400;600;700;800;900&family=Poppins:wght@500;600;700;800&family=Rozha+One&family=Tiro+Devanagari+Hindi&display=swap');
-        
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            background: #eef2f5; 
-            margin: 0; 
-            padding: 20px; 
-            color: #333; 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            font-family: 'Hind', sans-serif;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
         }
-        
-        .app-container { 
-            max-width: 980px; 
-            margin: 0 auto; 
-            background: white; 
-            border-radius: 12px; 
-            padding: 24px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
         }
 
         .header-title {
-            background-color: #0b2545;
-            color: #fff;
             text-align: center;
-            padding: 12px;
-            border-radius: 8px;
             font-size: 20px;
             font-weight: 800;
-            margin-bottom: 20px;
+            color: #38bdf8;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 8px;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .group-box { 
-            background: #fdfbf7; 
-            padding: 16px; 
-            border-radius: 8px; 
-            border: 1px solid #eedcba; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            margin-bottom: 16px;
-        }
-
-        .row { 
-            display: flex; 
-            gap: 12px; 
-            align-items: center; 
-            flex-wrap: wrap; 
-        }
-        
-        .row > div { 
-            flex: 1; 
-            min-width: 220px; 
-        }
-        
-        label { 
-            font-weight: bold; 
-            display: block; 
-            margin-bottom: 5px; 
-            font-size: 13px; 
-            color: #444; 
-        }
-        
-        input[type="text"], input[type="range"], select, textarea { 
-            width: 100%; 
-            padding: 10px; 
-            border: 1px solid #ccc; 
-            border-radius: 6px; 
-            font-size: 14px; 
-            box-sizing: border-box; 
-            background: #fff;
-        }
-
-        select {
-            cursor: pointer;
-        }
-
-        .slider-wrap {
+        /* AI CONTROL PANEL */
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 14px;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 10px;
         }
 
-        .slider-val {
-            font-weight: bold;
-            color: #c5221f;
-            min-width: 45px;
+        .card-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        textarea { 
-            height: 220px; 
-            line-height: 1.5; 
-            resize: vertical; 
-            font-family: inherit;
+        .input-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
-        
-        .btn-action { 
-            background: #c5221f; 
-            color: white; 
-            border: none; 
-            padding: 14px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            width: 100%; 
-            transition: 0.2s; 
-        }
-        .btn-action:hover { background: #9e1a17; }
 
-        .preview-box {
-            background: #2b303a;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .preview-title {
+        input, select {
+            flex: 1;
+            padding: 9px 12px;
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 8px;
             color: #ffffff;
-            font-weight: bold;
-            margin-bottom: 12px;
-            font-size: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
         }
-        canvas { 
-            display: block; 
-            margin: 0 auto; 
-            max-width: 100%; 
-            height: auto; 
-            border-radius: 8px; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+
+        /* SUBJECT SELECTOR BUTTONS (H, G, P) */
+        .subject-grid {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-subject {
+            flex: 1;
+            padding: 10px;
+            background: #0f172a;
+            border: 2px solid #475569;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .btn-subject.active {
+            border-color: #38bdf8;
+            background: #0284c7;
+            color: white;
+            box-shadow: 0 0 12px rgba(2, 132, 199, 0.4);
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-generate:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* CANVAS PREVIEW */
+        .canvas-container {
+            width: 100%;
+            background: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .btn-download {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+        }
+
+        /* FB CAPTION BOX */
+        .caption-card {
+            background: #1e293b;
+            border: 1.5px dashed #38bdf8;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .caption-text {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            min-height: 80px;
+            white-space: pre-wrap;
+            user-select: text;
+        }
+        .btn-copy {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 9px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="header-title">20-in-1 Exam Notes Post Generator</div>
+<div class="container">
+    <div class="header-title">EP 20 Question Study-Sheet AI Studio</div>
 
-    <div class="group-box">
-        <div class="row">
-            <div>
-                <label>🏷️ Brand Main Text (Left):</label>
-                <input type="text" id="brandText" value="EXAM Preparation" oninput="debouncedRefresh()">
-            </div>
-            <div>
-                <label>✍️ Cursive Tag:</label>
-                <input type="text" id="notesTag" value="Notes" oninput="debouncedRefresh()">
-            </div>
-            <div>
-                <label>🎨 Hindi Font Style:</label>
-                <select id="hindiFont" onchange="debouncedRefresh()">
-                    <option value="'Kalam', cursive">Kalam (हस्तलिखित / Handwriting)</option>
-                    <option value="'Noto Sans Devanagari', sans-serif" selected>Noto Sans Devanagari (क्लीन / Standard)</option>
-                    <option value="'Mukta', sans-serif">Mukta (आधुनिक बोल्ड / Bold Modern)</option>
-                    <option value="'Poppins', sans-serif">Poppins (ज्यामितीय / Clean)</option>
-                    <option value="'Tiro Devanagari Hindi', serif">Tiro Devanagari (पारंपरिक / Book Style)</option>
-                    <option value="'Rozha One', serif">Rozha One (प्रीमियम हेडलाइन स्टाइल)</option>
-                </select>
-            </div>
+    <!-- AI SETUP -->
+    <div class="card">
+        <div class="card-title">🔑 Google Gemini API Settings</div>
+        <input type="password" id="api-key" placeholder="Paste Gemini API Key here..." onchange="saveKey()">
+
+        <div class="card-title" style="margin-top: 4px;">🎯 विषय चुनें (H / G / P)</div>
+        <div class="subject-grid">
+            <button class="btn-subject active" id="btn-h" onclick="selectSubject('H')">📜 H (इतिहास)</button>
+            <button class="btn-subject" id="btn-g" onclick="selectSubject('G')">🌍 G (भूगोल)</button>
+            <button class="btn-subject" id="btn-p" onclick="selectSubject('P')">⚖️ P (राजव्यवस्था)</button>
         </div>
-        <div class="row">
-            <div>
-                <label>🔠 Question Font Size (px):</label>
-                <div class="slider-wrap">
-                    <input type="range" id="qFontSize" min="13" max="22" step="0.5" value="16.5" oninput="updateFontLabels(); debouncedRefresh()">
-                    <span id="qFontVal" class="slider-val">16.5px</span>
-                </div>
-            </div>
-            <div>
-                <label>🔤 Answer Font Size (px):</label>
-                <div class="slider-wrap">
-                    <input type="range" id="aFontSize" min="13" max="22" step="0.5" value="16.5" oninput="updateFontLabels(); debouncedRefresh()">
-                    <span id="aFontVal" class="slider-val">16.5px</span>
-                </div>
-            </div>
-            <div>
-                <label>🔴 Topic Capsule Font Size (px):</label>
-                <div class="slider-wrap">
-                    <input type="range" id="topicFontSize" min="18" max="36" step="1" value="27" oninput="updateFontLabels(); debouncedRefresh()">
-                    <span id="topicFontVal" class="slider-val">27px</span>
-                </div>
-            </div>
-            <div>
-                <label>🔥 Hook Banner Font Size (px):</label>
-                <div class="slider-wrap">
-                    <input type="range" id="alertFontSize" min="18" max="34" step="1" value="25" oninput="updateFontLabels(); debouncedRefresh()">
-                    <span id="alertFontVal" class="slider-val">25px</span>
-                </div>
-            </div>
+
+        <div class="input-row">
+            <label style="font-size: 12px; color: #94a3b8; font-weight: bold;">वर्तमान भाग (Part):</label>
+            <input type="number" id="current-part" value="1" min="1" style="max-width: 80px; text-align: center;" onchange="updateRangeDisplay()">
+            <span id="range-preview" style="font-size: 12px; color: #38bdf8; font-weight: bold;">प्रश्न: 1 - 20</span>
         </div>
-        <div class="row">
-            <div style="flex: 2;">
-                <label>🔴 Topic Capsule Text (Header Pill):</label>
-                <input type="text" id="topicText" value="🎯 प्राचीन भारत : बौद्ध धर्म एवं जैन धर्म (Buddhism & Jainism)" oninput="debouncedRefresh()">
-            </div>
-            <div style="flex: 2;">
-                <label>🔥 Hook Banner Alert Text (Ribbon):</label>
-                <input type="text" id="alertText" value="🔥 99% अभ्यर्थी इन 20 प्रश्नों में गलतियाँ करते हैं, अभी रट लो" oninput="debouncedRefresh()">
-            </div>
-            <div>
-                <label>💬 Bottom Text:</label>
-                <input type="text" id="footerText" value="- कमेंट -" oninput="debouncedRefresh()">
-            </div>
-        </div>
+
+        <button class="btn-generate" id="btn-gen" onclick="generate20Questions()">
+            <span>✨ Generate 20 Questions Post (AI)</span>
+        </button>
     </div>
 
-    <div class="group-box">
-        <label>📝 20 प्रश्न-उत्तर डेटा (Format: प्रश्न ऊपर, उत्तर नीचे - खाली लाइन से अलग):</label>
-        <textarea id="qaInput" oninput="debouncedRefresh()">गौतम बुद्ध का जन्म 563 ई.पू. में कहाँ हुआ था?
-लुम्बिनी (नेपाल)
-
-गौतम बुद्ध को ज्ञान की प्राप्ति किस वृक्ष के नीचे हुई थी?
-बोधि वृक्ष (पीपल), बोधगया
-
-बुद्ध ने अपना प्रथम उपदेश कहाँ दिया था (धर्मचक्रप्रवर्तन)?
-सारनाथ (ऋषिपत्तनम)
-
-महात्मा बुद्ध ने अपने सर्वाधिक उपदेश किस स्थान पर दिए?
-श्रावस्ती
-
-बौद्ध धर्म के 'त्रिरत्न' कौन से हैं?
-बुद्ध, धम्म और संघ
-
-प्रथम बौद्ध संगीति किसके शासनकाल में और कहाँ आयोजित हुई?
-अजातशत्रु (राजगृह, 483 ई.पू.)
-
-तृतीय बौद्ध संगीति किस मौर्य शासक के काल में पाटलिपुत्र में हुई?
-सम्राट अशोक
-
-चतुर्थ बौद्ध संगीति में बौद्ध धर्म किन दो भागों में बँट गया?
-हीनयान और महायान (कनिष्क के काल में)
-
-बौद्ध धर्म के पवित्र ग्रंथ 'त्रिपिटक' किस भाषा में लिखे गए हैं?
-पालि भाषा
-
-'लाइट ऑफ एशिया' (एशिया की ज्योति) किसे कहा जाता है?
-गौतम बुद्ध
-
-जैन धर्म के प्रथम तीर्थंकर एवं संस्थापक कौन थे?
-ऋषभदेव (आदिनाथ)
-
-जैन धर्म के 23वें तीर्थंकर कौन थे?
-पार्श्वनाथ
-
-भगवान महावीर जैन धर्म के कौन से तीर्थंकर थे?
-24वें एवं अंतिम तीर्थंकर
-
-महावीर स्वामी का जन्म कहाँ हुआ था?
-कुंडग्राम (वैशाली)
-
-महावीर स्वामी को किस नदी के तट पर 'कैवल्य' प्राप्त हुआ?
-ऋजुपालिका नदी (साल वृक्ष के नीचे)
-
-जैन धर्म में पूर्ण ज्ञान को क्या कहा गया है?
-कैवल्य
-
-जैन धर्म के 'त्रिरत्न' कौन-कौन से हैं?
-सम्यक् दर्शन, सम्यक् ज्ञान, सम्यक् आचरण
-
-प्रथम जैन संगीति किसकी अध्यक्षता में पाटलिपुत्र में हुई थी?
-स्थूलभद्र
-
-जैन धर्म किन दो संप्रदायों में विभाजित हुआ?
-श्वेतांबर (सफेद वस्त्र) और दिगंबर (नग्न रहने वाले)
-
-महावीर स्वामी ने अपने उपदेश मुख्य रूप से किस भाषा में दिए?
-प्राकृत (अर्धमागधी)</textarea>
-        <button class="btn-action" onclick="downloadImage()">⬇️ Download High-Res Post (1080 × 1350)</button>
+    <!-- POSTER CANVAS -->
+    <div class="canvas-container">
+        <canvas id="posterCanvas" width="1080" height="1350"></canvas>
     </div>
 
-    <div class="preview-box">
-        <div class="preview-title">👁️ LIVE CANVAS PREVIEW (1080 × 1350)</div>
-        <canvas id="canvas"></canvas>
+    <button class="btn-download" onclick="downloadPosterImage()">📥 Download 1080×1350 Poster Image</button>
+
+    <!-- FB CAPTION CARD -->
+    <div class="caption-card">
+        <div class="card-title" style="color: #38bdf8;">📝 Facebook Caption & Hashtags (अलग से कॉपी करें)</div>
+        <div class="caption-text" id="fb-caption-box">प्रश्नों के जनरेट होते ही यहाँ आपका पोस्ट कैप्शन और हैशटैग अपने आप आ जाएगा...</div>
+        <button class="btn-copy" onclick="copyCaptionText()">📋 Copy FB Caption & Hashtags</button>
     </div>
 </div>
 
 <script>
-    let debounceTimer = null;
+    let selectedSub = 'H';
+    const canvas = document.getElementById('posterCanvas');
+    const ctx = canvas.getContext('2d');
 
-    function updateFontLabels() {
-        document.getElementById('qFontVal').innerText = document.getElementById('qFontSize').value + 'px';
-        document.getElementById('aFontVal').innerText = document.getElementById('aFontSize').value + 'px';
-        if (document.getElementById('topicFontSize')) {
-            document.getElementById('topicFontVal').innerText = document.getElementById('topicFontSize').value + 'px';
+    // Default Demo Data
+    let currentData = {
+        capsule: "🎯 प्राचीन भारत (भाग 1) : प्रागैतिहासिक काल | टॉपिक: सिन्धु घाटी सभ्यता",
+        hook: "🔥 99% अभ्यर्थी इन 20 प्रश्नों में गलतियाँ करते हैं, परीक्षा में पूरे अंक पक्के करने हैं तो अभी रट लो!",
+        questions: Array.from({length: 20}, (_, i) => ({
+            q: `${i + 1}. सिन्धु सभ्यता का प्रमुख पत्तन नगर (बन्दरगाह) कौन सा था?`,
+            a: "लोथल (गुजरात)"
+        }))
+    };
+
+    function saveKey() {
+        const k = document.getElementById('api-key').value.trim();
+        if (k) localStorage.setItem("GEMINI_API_KEY_LOCAL", k);
+    }
+
+    function selectSubject(code) {
+        selectedSub = code;
+        document.querySelectorAll('.btn-subject').forEach(b => b.classList.remove('active'));
+        if (code === 'H') document.getElementById('btn-h').classList.add('active');
+        if (code === 'G') document.getElementById('btn-g').classList.add('active');
+        if (code === 'P') document.getElementById('btn-p').classList.add('active');
+
+        // Load saved part for this subject
+        const savedPart = localStorage.getItem(`EP_PART_${selectedSub}`) || 1;
+        document.getElementById('current-part').value = savedPart;
+        updateRangeDisplay();
+    }
+
+    function updateRangeDisplay() {
+        const part = parseInt(document.getElementById('current-part').value) || 1;
+        const start = (part - 1) * 20 + 1;
+        const end = part * 20;
+        document.getElementById('range-preview').innerText = `प्रश्न: ${start} - ${end}`;
+    }
+
+    async function generate20Questions() {
+        let apiKey = document.getElementById('api-key').value.trim() || localStorage.getItem("GEMINI_API_KEY_LOCAL");
+        if (!apiKey) {
+            alert("कृपया पहले ऊपर Google Gemini API Key डालें!");
+            return;
         }
-        if (document.getElementById('alertFontSize')) {
-            document.getElementById('alertFontVal').innerText = document.getElementById('alertFontSize').value + 'px';
+
+        const part = parseInt(document.getElementById('current-part').value) || 1;
+        const startQ = (part - 1) * 20 + 1;
+        const endQ = part * 20;
+
+        let subjectName = "इतिहास (History)";
+        if (selectedSub === 'G') subjectName = "भूगोल (Geography)";
+        if (selectedSub === 'P') subjectName = "भारतीय राजव्यवस्था (Indian Polity)";
+
+        const btn = document.getElementById('btn-gen');
+        btn.disabled = true;
+        btn.innerHTML = `<span>⏳ 20 प्रश्न तैयार हो रहे हैं...</span>`;
+
+        const prompt = `Act as an expert competitive exam coach.
+Generate a high-yield topic-wise set of 20 one-liner Q&A in Hindi for: ${subjectName}.
+Part number is ${part}. Numbering must strictly be sequentially from ${startQ} to ${endQ}. No questions repeated.
+Output strictly valid raw JSON with this exact structure:
+{
+  "capsule": "🎯 ${subjectName} (भाग ${part}) : [खंड नाम] | टॉपिक: [सटीक टॉपिक का नाम]",
+  "hook": "🔥 99% अभ्यर्थी इन 20 प्रश्नों में गलतियाँ करते हैं, परीक्षा में पूरे अंक पक्के करने हैं तो अभी रट लो!",
+  "questions": [
+    {"q": "${startQ}. प्रश्न का टेक्स्ट?", "a": "सटीक उत्तर"},
+    ... 20 items up to question ${endQ}
+  ],
+  "caption": "🎯 ${subjectName} (भाग ${part}) के 20 अति-महत्वपूर्ण प्रश्न जो आगामी परीक्षाओं के लिए बेहद खास हैं। पूरा पढ़ें और सुरक्षित सेव कर लें।",
+  "hashtags": "#${selectedSub === 'H' ? 'HistoryGK' : selectedSub === 'G' ? 'GeographyGK' : 'PolityGK'} #CompetitiveExams #GKQuiz #ImportantGK #ExamPreparation"
+}`;
+
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.error?.message || `HTTP ${res.status}`);
+            }
+
+            const data = await res.json();
+            let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (jsonMatch) text = jsonMatch[0];
+
+            const parsed = JSON.parse(text);
+
+            currentData = {
+                capsule: parsed.capsule,
+                hook: parsed.hook,
+                questions: parsed.questions
+            };
+
+            // Set Facebook caption text
+            document.getElementById('fb-caption-box').innerText = `${parsed.caption}\n\n${parsed.hashtags}`;
+
+            // Increment and save next part
+            localStorage.setItem(`EP_PART_${selectedSub}`, part + 1);
+            document.getElementById('current-part').value = part + 1;
+            updateRangeDisplay();
+
+            drawPoster();
+            alert(`🎉 भाग ${part} के 20 प्रश्न तैयार हो गए हैं!`);
+        } catch (e) {
+            alert("त्रुटि: " + e.message);
+            console.error(e);
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<span>✨ Generate 20 Questions Post (AI)</span>`;
         }
     }
 
-    function debouncedRefresh() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => drawCanvas(), 100);
+    /* RENDER 1080 x 1350 POSTER ON CANVAS */
+    function drawPoster() {
+        ctx.clearRect(0, 0, 1080, 1350);
+
+        // 1. Background
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, 1080, 1350);
+
+        // 2. Faint Watermark (45 degree tiled)
+        ctx.save();
+        ctx.rotate(-28 * Math.PI / 180);
+        ctx.fillStyle = "rgba(15, 23, 42, 0.03)";
+        ctx.font = "800 42px 'Poppins', sans-serif";
+        for (let x = -600; x < 1600; x += 360) {
+            for (let y = -400; y < 1800; y += 180) {
+                ctx.fillText("EXAM PREPARATION", x, y);
+            }
+        }
+        ctx.restore();
+
+        // 3. Top Branding Header
+        ctx.fillStyle = "#0284c7";
+        ctx.font = "900 32px 'Poppins', sans-serif";
+        ctx.fillText("EXAM Preparation", 50, 60);
+
+        ctx.fillStyle = "#e11d48";
+        ctx.font = "italic 700 24px 'Hind', sans-serif";
+        ctx.fillText("• One-Shot Revision Notes", 360, 60);
+
+        // 4. Topic Red Capsule
+        roundRect(ctx, 40, 85, 1000, 56, 28, "#dc2626");
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "800 23px 'Hind', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(currentData.capsule, 540, 122);
+
+        // 5. Hook Black Ribbon
+        roundRect(ctx, 40, 155, 1000, 48, 10, "#111827");
+        ctx.fillStyle = "#facc15";
+        ctx.font = "700 18.5px 'Hind', sans-serif";
+        ctx.fillText(currentData.hook, 540, 186);
+        ctx.textAlign = "left";
+
+        // 6. Two Columns for 20 Questions
+        // Column 1: Q1 to Q10 | Column 2: Q11 to Q20
+        const col1X = 55;
+        const col2X = 560;
+        const startY = 250;
+        const rowGap = 100;
+
+        currentData.questions.slice(0, 10).forEach((item, i) => {
+            drawQuestionBlock(col1X, startY + (i * rowGap), item, 465);
+        });
+
+        currentData.questions.slice(10, 20).forEach((item, i) => {
+            drawQuestionBlock(col2X, startY + (i * rowGap), item, 465);
+        });
+
+        // 7. Footer CTA
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(50, 1270);
+        ctx.lineTo(1030, 1270);
+        ctx.stroke();
+
+        ctx.fillStyle = "#475569";
+        ctx.font = "800 20px 'Hind', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("- अपने उत्तर कमेंट बॉक्स में लिखें -", 540, 1310);
+        ctx.textAlign = "left";
+    }
+
+    function drawQuestionBlock(x, y, item, maxW) {
+        // Question Text (Dark Bold)
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "700 18.5px 'Hind', sans-serif";
+        wrapText(ctx, item.q, x, y, maxW, 23);
+
+        // Answer Text (Highlighted Red)
+        ctx.fillStyle = "#dc2626";
+        ctx.font = "800 18px 'Hind', sans-serif";
+        ctx.fillText(`उत्तर: ${item.a}`, x, y + 42);
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+        ctx.fillStyle = fill;
+        ctx.fill();
     }
 
     function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-        if (!text) return y;
         const words = text.split(' ');
         let line = '';
-        let curY = y;
-        for (let n = 0; n < words.length; n++) {
+        for(let n = 0; n < words.length; n++) {
             let testLine = line + words[n] + ' ';
-            if (ctx.measureText(testLine).width > maxWidth && n > 0) {
-                ctx.fillText(line.trim(), x, curY);
+            let metrics = ctx.measureText(testLine);
+            if (metrics.width > maxWidth && n > 0) {
+                ctx.fillText(line, x, y);
                 line = words[n] + ' ';
-                curY += lineHeight;
+                y += lineHeight;
             } else {
                 line = testLine;
             }
         }
-        ctx.fillText(line.trim(), x, curY);
-        return curY;
+        ctx.fillText(line, x, y);
     }
 
-    function drawTiledWatermark(ctx, cardX, cardY, cardW, cardH, text) {
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(cardX, cardY, cardW, cardH);
-        ctx.clip();
-
-        ctx.font = "800 34px Arial, sans-serif";
-        ctx.fillStyle = "rgba(11, 37, 69, 0.038)";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        const angle = -Math.PI / 8;
-        const stepX = 320;
-        const stepY = 160;
-
-        for (let y = -200; y < 1600; y += stepY) {
-            for (let x = -200; x < 1300; x += stepX) {
-                ctx.save();
-                ctx.translate(x + ((y / stepY) % 2 === 0 ? 0 : stepX / 2), y);
-                ctx.rotate(angle);
-                ctx.fillText(text, 0, 0);
-                ctx.restore();
-            }
-        }
-        ctx.restore();
-    }
-
-    async function drawCanvas() {
-        await document.fonts.ready;
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-
-        const selectedHindiFont = document.getElementById('hindiFont').value;
-
-        canvas.width = 1080;
-        canvas.height = 1350;
-
-        // Base Yellow Background
-        ctx.fillStyle = "#f6b432";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Center White Card
-        const cardX = 30, cardY = 30, cardW = 1020, cardH = 1245, cardR = 24;
-        ctx.save();
-        ctx.shadowColor = "rgba(0,0,0,0.22)";
-        ctx.shadowBlur = 18;
-        ctx.shadowOffsetY = 6;
-        ctx.fillStyle = "#ffffff";
-        ctx.beginPath();
-        ctx.roundRect(cardX, cardY, cardW, cardH, cardR);
-        ctx.fill();
-        ctx.restore();
-
-        // Watermark Pattern
-        drawTiledWatermark(ctx, cardX, cardY, cardW, cardH, "EXAM PREPARATION");
-
-        // ----------------- HEADER ROW 1 -----------------
-        const brandFull = document.getElementById('brandText').value.trim();
-        const parts = brandFull.split(' ');
-        const mainWord = parts[0] || "EXAM";
-        const subWord = parts.slice(1).join(' ') || "Preparation";
-
-        const headerRowY = 78;
-        ctx.textBaseline = "middle";
-        ctx.textAlign = "left";
-
-        // EXAM
-        ctx.font = "900 46px Arial, sans-serif";
-        const w1 = ctx.measureText(mainWord).width;
-        const gradExam = ctx.createLinearGradient(60, 0, 60 + w1, 0);
-        gradExam.addColorStop(0, "#0052d4");
-        gradExam.addColorStop(0.5, "#4364f7");
-        gradExam.addColorStop(1, "#6fb1fc");
-
-        ctx.fillStyle = gradExam;
-        ctx.fillText(mainWord, 60, headerRowY);
-
-        // Preparation
-        ctx.font = "800 34px Arial, sans-serif";
-        const startSubX = 60 + w1 + 12;
-        const w2 = ctx.measureText(subWord).width;
-        const gradPrep = ctx.createLinearGradient(startSubX, 0, startSubX + w2, 0);
-        gradPrep.addColorStop(0, "#8e2de2");
-        gradPrep.addColorStop(1, "#f000ff");
-
-        ctx.fillStyle = gradPrep;
-        ctx.fillText(subWord, startSubX, headerRowY);
-
-        // Cursive "Notes"
-        const notesTag = document.getElementById('notesTag').value;
-        const notesShiftX = startSubX + w2 + 85; 
-        ctx.save();
-        ctx.font = "700 58px 'Caveat', cursive";
-        ctx.fillStyle = "#e67e22";
-        ctx.textBaseline = "middle";
-        ctx.translate(notesShiftX, headerRowY);
-        ctx.rotate(-0.04);
-        ctx.fillText(notesTag, 0, -4);
-        ctx.restore();
-
-        // ----------------- HEADER ROW 2: TOPIC CAPSULE -----------------
-        const topicText = document.getElementById('topicText').value.trim();
-        const maxCapW = 980;
-        const capY = 108;
-        const capH = 50;
-
-        ctx.save();
-        const baseTopicSize = parseFloat(document.getElementById('topicFontSize')?.value) || 27;
-        let fontSize = baseTopicSize;
-        ctx.font = `800 ${fontSize}px ${selectedHindiFont}`;
-        while (ctx.measureText(topicText).width > (maxCapW - 40) && fontSize > 18) {
-            fontSize -= 0.5;
-            ctx.font = `800 ${fontSize}px ${selectedHindiFont}`;
-        }
-
-        const topicW = Math.min(maxCapW, ctx.measureText(topicText).width + 50);
-        const capX = (canvas.width - topicW) / 2;
-
-        ctx.fillStyle = "#bd2120";
-        ctx.beginPath();
-        ctx.roundRect(capX, capY, topicW, capH, capH / 2);
-        ctx.fill();
-
-        ctx.fillStyle = "#ffffff";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(topicText, canvas.width / 2, capY + (capH / 2) + 1);
-        ctx.restore();
-
-        // ----------------- HEADER ROW 3: BLACK RIBBON -----------------
-        const alertText = document.getElementById('alertText').value;
-        const ribbonY = 166;
-        const ribbonH = 48;
-
-        ctx.fillStyle = "#050708";
-        ctx.fillRect(cardX, ribbonY, cardW, ribbonH);
-
-        const alertFontSize = parseFloat(document.getElementById('alertFontSize')?.value) || 25;
-        ctx.fillStyle = "#fcee21";
-        ctx.font = `900 ${alertFontSize}px ${selectedHindiFont}`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(alertText, canvas.width / 2, ribbonY + (ribbonH / 2) + 1);
-
-        // ----------------- 20 QA GRID -----------------
-        const rawData = document.getElementById('qaInput').value.trim();
-        const blocks = rawData.split(/\n\s*\n/).map(b => b.trim()).filter(b => b !== '');
-
-        let parsedItems = [];
-        blocks.forEach(block => {
-            let lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
-            if (lines.length >= 2) {
-                parsedItems.push({ q: lines[0], a: lines.slice(1).join(' ') });
-            } else if (lines.length === 1) {
-                parsedItems.push({ q: lines[0], a: "" });
-            }
-        });
-
-        const qSize = parseFloat(document.getElementById('qFontSize').value) || 16.5;
-        const aSize = parseFloat(document.getElementById('aFontSize').value) || 16.5;
-        const qLineHeight = qSize + 6;
-        const aLineHeight = aSize + 6;
-
-        const colWidth = 470;
-        const col1X = 52;
-        const col2X = 556;
-        const startY = 228;
-        const rowGap = 102;
-
-        for (let i = 0; i < 20; i++) {
-            const item = parsedItems[i] || { q: `प्रश्न क्रमांक ${i + 1}`, a: "उत्तर यहाँ आएगा" };
-            const isCol2 = i >= 10;
-            const colX = isCol2 ? col2X : col1X;
-            const rowIndex = isCol2 ? i - 10 : i;
-            const itemY = startY + (rowIndex * rowGap);
-            const qNum = `${i + 1}.`;
-
-            // Numbering
-            ctx.fillStyle = "#111111";
-            ctx.font = `800 ${qSize}px Arial, sans-serif`;
-            ctx.textAlign = "left";
-            ctx.textBaseline = "top";
-            ctx.fillText(qNum, colX, itemY);
-
-            const numOffset = ctx.measureText(qNum).width + 6;
-            const textX = colX + numOffset;
-            const textMaxW = colWidth - numOffset;
-
-            // Question (Black)
-            ctx.fillStyle = "#111111";
-            ctx.font = `600 ${qSize}px ${selectedHindiFont}`;
-            const lastQY = wrapText(ctx, item.q, textX, itemY, textMaxW, qLineHeight);
-
-            // Answer (Red)
-            let cleanAns = item.a;
-            if (!cleanAns.startsWith("उत्तर:") && !cleanAns.startsWith("उत्तर :")) {
-                cleanAns = "उत्तर: " + cleanAns;
-            }
-            ctx.fillStyle = "#d31818";
-            ctx.font = `700 ${aSize}px ${selectedHindiFont}`;
-            wrapText(ctx, cleanAns, textX, lastQY + qLineHeight + 1, textMaxW, aLineHeight);
-        }
-
-        // Bottom Footer
-        const footerText = document.getElementById('footerText').value;
-        ctx.fillStyle = "#0c1524";
-        ctx.font = `900 36px ${selectedHindiFont}`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(footerText, canvas.width / 2, 1308);
-    }
-
-    function downloadImage() {
-        const canvas = document.getElementById('canvas');
+    function downloadPosterImage() {
         const link = document.createElement('a');
-        link.download = 'Exam_Notes_FontCustom_1080x1350.jpg';
-        link.href = canvas.toDataURL('image/jpeg', 0.95);
+        const part = document.getElementById('current-part').value - 1 || 1;
+        link.download = `EP_20Q_${selectedSub}_Part_${part}.png`;
+        link.href = canvas.toDataURL('image/png');
         link.click();
     }
 
-    window.onload = () => {
-        updateFontLabels();
-        drawCanvas();
+    function copyCaptionText() {
+        const text = document.getElementById('fb-caption-box').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("📋 फेसबुक कैप्शन और हैशटैग कॉपी हो गए हैं!");
+        });
+    }
+
+    window.onload = function() {
+        const k = localStorage.getItem("GEMINI_API_KEY_LOCAL");
+        if (k) document.getElementById('api-key').value = k;
+        selectSubject('H');
+        drawPoster();
     };
 </script>
+
 </body>
 </html>
