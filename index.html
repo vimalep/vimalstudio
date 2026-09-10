@@ -3,42 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Master App Dashboard</title>
+    <title>Vimal Studio - Master App Dashboard</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Hind:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
         body {
-            background: #090d16;
-            color: #f8fafc;
+            background: #060b18;
+            color: #ffffff;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
+            padding: 20px 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 24px 16px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-        .header h1 {
-            font-size: 26px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .header p {
-            color: #94a3b8;
-            font-size: 13.5px;
-            font-family: 'Hind', sans-serif;
-            margin-top: 4px;
-        }
-
-        .grid-container {
+        .dashboard-container {
             width: 100%;
             max-width: 480px;
             display: flex;
@@ -46,29 +29,58 @@
             gap: 16px;
         }
 
-        .tool-card {
-            background: #131d31;
-            border: 1.5px solid #233554;
-            border-radius: 16px;
-            padding: 18px;
+        /* HEADER */
+        .dash-header {
+            text-align: center;
+            padding: 10px 0 16px 0;
+            border-bottom: 2px solid #1e293b;
+        }
+        .dash-logo {
+            font-size: 26px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.5px;
+        }
+        .dash-tagline {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 4px;
+            font-weight: 600;
+            font-family: 'Hind', sans-serif;
+        }
+
+        /* APP CARDS LIST */
+        .app-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            transition: transform 0.2s, border-color 0.2s;
-            text-decoration: none;
-            color: inherit;
-        }
-        .tool-card:active {
-            transform: scale(0.98);
-            border-color: #38bdf8;
         }
 
-        .card-top {
+        .app-card {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             gap: 14px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
         }
-        .card-icon {
+        .app-card:hover, .app-card:active {
+            transform: translateY(-2px);
+            border-color: #38bdf8;
+            background: #1e293b;
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .app-icon {
             width: 52px;
             height: 52px;
             border-radius: 12px;
@@ -77,97 +89,114 @@
             justify-content: center;
             font-size: 26px;
             flex-shrink: 0;
+            background: #1e293b;
+            border: 1px solid #475569;
         }
-        .icon-blue { background: rgba(56, 189, 248, 0.15); border: 1px solid #0284c7; }
-        .icon-purple { background: rgba(168, 85, 247, 0.15); border: 1px solid #9333ea; }
-        .icon-amber { background: rgba(245, 158, 11, 0.15); border: 1px solid #d97706; }
-        .icon-rose { background: rgba(244, 63, 94, 0.15); border: 1px solid #e11d48; }
 
-        .card-info h2 {
-            font-size: 17px;
-            font-weight: 800;
-            color: #f1f5f9;
+        .app-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
-        .card-info p {
-            font-size: 12.5px;
+        .app-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .app-desc {
+            font-size: 12px;
             color: #94a3b8;
+            font-weight: 600;
             font-family: 'Hind', sans-serif;
-            margin-top: 2px;
             line-height: 1.35;
         }
 
-        .btn-launch {
-            width: 100%;
-            padding: 11px;
-            border-radius: 10px;
-            font-size: 13.5px;
-            font-weight: 800;
-            text-align: center;
-            color: white;
-            border: none;
+        .arrow-badge {
+            color: #38bdf8;
+            font-size: 18px;
+            font-weight: 900;
         }
-        .btn-blue { background: #0284c7; }
-        .btn-purple { background: #9333ea; }
-        .btn-amber { background: #d97706; }
-        .btn-rose { background: #e11d48; }
+
+        /* CARD CUSTOM ACCENTS */
+        .card-5q .app-icon { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; }
+        .card-20q .app-icon { background: rgba(16, 185, 129, 0.15); border-color: #10b981; }
+        .card-1q .app-icon { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; }
+        .card-us .app-icon { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; }
+
+        /* FOOTER */
+        .dash-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Master App Dashboard</h1>
-        <p>अपनी पसंद की टूल ऐप शुरू करने के लिए नीचे क्लिक करें</p>
+<div class="dashboard-container">
+    <!-- DASHBOARD HEADER -->
+    <div class="dash-header">
+        <div class="dash-logo">VIMAL STUDIO</div>
+        <div class="dash-tagline">सोशल मीडिया और परीक्षा कंटेंट क्रिएटर टूलकिट</div>
     </div>
 
-    <div class="grid-container">
-        <!-- TOOL 1 -->
-        <a href="5%20QNA%20Mobile.html" class="tool-card">
-            <div class="card-top">
-                <div class="card-icon icon-blue">📱</div>
-                <div class="card-info">
-                    <h2>5 Questions Q&A Studio</h2>
-                    <p>शॉर्ट्स और रील्स वीडियो रिकॉर्डिंग के लिए 5-प्रश्नों का ऑटोमैटिक प्लेयर।</p>
-                </div>
+    <!-- APP DIRECTORY -->
+    <div class="app-list">
+        
+        <!-- 1. 5 QNA MOBILE APP -->
+        <a href="5 QNA Mobile.html" class="app-card card-5q">
+            <div class="app-icon">🎬</div>
+            <div class="app-info">
+                <div class="app-title">5 Questions Q&A Studio</div>
+                <div class="app-desc">मल्टी-व्यू प्रश्नोत्तरी प्लेयर, FX एनीमेशन, ऑडियो और रील्स रिकॉर्डिंग</div>
             </div>
-            <div class="btn-launch btn-blue">Open Studio 🚀</div>
+            <div class="arrow-badge">➔</div>
         </a>
 
-        <!-- TOOL 2 -->
-        <a href="Daily%20Current%20Affairs%20App.html" class="tool-card">
-            <div class="card-top">
-                <div class="card-icon icon-purple">📰</div>
-                <div class="card-info">
-                    <h2>Daily Current Affairs App</h2>
-                    <p>10-in-1 करंट अफेयर्स पोस्ट मेकर, लाइव कैनवास और इमेज लेआउट टूल।</p>
-                </div>
+        <!-- 2. 20 QUESTIONS ONE-SHOT APP -->
+        <a href="EP 20 question.html" class="app-card card-20q">
+            <div class="app-icon">📋</div>
+            <div class="app-info">
+                <div class="app-title">EP 20 Question Revision Sheet</div>
+                <div class="app-desc">1080×1350 एचडी 2-कॉलम पोस्टर (H/G/P) + 1-क्लिक FB कैप्शन</div>
             </div>
-            <div class="btn-launch btn-purple">Open App 🚀</div>
+            <div class="arrow-badge">➔</div>
         </a>
 
-        <!-- TOOL 3 -->
-        <a href="EP%2020%20question.html" class="tool-card">
-            <div class="card-top">
-                <div class="card-icon icon-amber">📑</div>
-                <div class="card-info">
-                    <h2>EP 20 Question Study-Sheet</h2>
-                    <p>1080×1350 का 1-पेज 20-प्रश्नों का हाई-इम्पैक्ट पोस्ट मेकर और आर्काइव।</p>
-                </div>
+        <!-- 3. SINGLE VIRAL QUIZ CARD STUDIO (HINDI) -->
+        <a href="Daily Current Affairs App.html" class="app-card card-1q">
+            <div class="app-icon">⚡</div>
+            <div class="app-info">
+                <div class="app-title">Viral Quiz Card Studio (Hindi)</div>
+                <div class="app-desc">ग्लोबल काउंटर, रंग-बिरंगे विकल्प, वॉटरमार्क, व्याख्या और डायरेक्ट शेयर</div>
             </div>
-            <div class="btn-launch btn-amber">Open Studio 🚀</div>
+            <div class="arrow-badge">➔</div>
         </a>
 
-        <!-- TOOL 4 (NEW) -->
-        <a href="Quiz%20Studio.html" class="tool-card">
-            <div class="card-top">
-                <div class="card-icon icon-rose">🎯</div>
-                <div class="card-info">
-                    <h2>Viral MCQ Quiz Studio</h2>
-                    <p>1080×1350 फ़ेसबुक फ़ीड इमोजी क्विज़, ऑटो-कैप्शन और फॉलो हुक।</p>
-                </div>
+        <!-- 4. US VIRAL TRIVIA STUDIO (ENGLISH) -->
+        <a href="US Quiz Studio.html" class="app-card card-us">
+            <div class="app-icon">🇺🇸</div>
+            <div class="app-info">
+                <div class="app-title">US Viral Trivia Studio</div>
+                <div class="app-desc">US Audience • 100% English • Hollywood, Sports, History & Pop Trivia</div>
             </div>
-            <div class="btn-launch btn-rose">Open Quiz Tool 🚀</div>
+            <div class="arrow-badge">➔</div>
         </a>
+
     </div>
+
+    <!-- FOOTER -->
+    <div class="dash-footer">
+        Powered by Google Gemini 3.6 Flash • Vimal Solution
+    </div>
+</div>
 
 </body>
 </html>
