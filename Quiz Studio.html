@@ -390,8 +390,8 @@
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V7";
-    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V7";
+    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V8";
+    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V8";
 
     let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
     let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
@@ -679,7 +679,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
     }
 
-    /* REDRAW CANVAS WITH FIXED GAP AND PERFECT PROPORTIONS */
+    /* REDRAW CANVAS WITH INCREASED FIXED GAP */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
@@ -720,14 +720,14 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
         ctx.restore();
 
-        // 4. SUBJECT TITLE: MUCH LARGER (60px)
+        // 4. SUBJECT TITLE: 60px Bold
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
         ctx.font = `900 60px ${fontFam}`;
         ctx.fillText(currentHeaderTitle, 540, 118);
 
-        // 5. EXAM PREPARATION PILL: MUCH LARGER (26px)
+        // 5. EXAM PREPARATION PILL: 26px Bold
         const pillW = 500;
         const pillH = 56;
         const pillX = (1080 - pillW) / 2;
@@ -742,11 +742,10 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.font = "900 26px 'Poppins', sans-serif";
         ctx.fillText("EXAM PREPARATION", 540, pillY + (pillH / 2));
 
-        // 6. LOCKED GAP (48px Fixed Distance below Pill)
-        // Using textBaseline = "top" ensures expanding font-size grows downward, never encroaching the pill
+        // 6. LOCKED GAP: INCREASED TO 72px TO PREVENT OVERLAP
         ctx.textAlign = "left";
-        const fixedGap = 48;
-        const qStartY = pillY + pillH + fixedGap; // Fixed top anchor at 266px
+        const fixedGap = 72; // Increased gap for breathing room
+        const qStartY = pillY + pillH + fixedGap; // Fixed anchor at 290px
         const qEndY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
 
         // 7. 4 COLORED OPTIONS CONTAINERS
@@ -843,7 +842,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
 
     /* TOP-ALIGNED QUESTION RENDERER: STOPS UPWARD EXPANSION */
     function drawColorfulQuestion(ctx, num, text, x, y, maxW, fontSize, fontFam) {
-        ctx.textBaseline = "top"; // Locks the top edge, grows only downward
+        ctx.textBaseline = "top";
         ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
         ctx.fillStyle = "#0284c7";
         const prefix = `Q.${num} `;
