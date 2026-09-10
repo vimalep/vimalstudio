@@ -40,6 +40,44 @@
             padding-bottom: 8px;
         }
 
+        /* GEMINI AI AUTOMATION CARD */
+        .ai-card {
+            border: 1.5px solid #8b5cf6;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .ai-title {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #c084fc;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-ai-generate {
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(139, 92, 246, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-ai-generate:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         /* BACKUP & RESTORE BOX */
         .backup-card {
             border: 1px dashed #059669;
@@ -118,7 +156,7 @@
         
         textarea {
             width: 100%;
-            height: 140px;
+            height: 120px;
             background: #0f172a;
             border: 1px solid #475569;
             border-radius: 8px;
@@ -608,7 +646,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 12px 14px; /* Widened/thickened bottom bar */
+            padding: 12px 14px;
             background: rgba(10, 15, 29, 0.98);
             border-top: 1px solid rgba(255, 255, 255, 0.14);
             display: flex;
@@ -662,7 +700,7 @@
             color: white; 
             font-size: 13px; 
             font-weight: 800;
-            padding: 8px 16px; /* Controlled, compact width */
+            padding: 8px 16px;
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(0, 132, 255, 0.4); 
         }
@@ -707,6 +745,25 @@
     <!-- 1. CREATOR & STORAGE SCREEN -->
     <div id="creator-screen">
         <div class="main-app-title">5 Questions Q&A Studio Pro</div>
+
+        <!-- GEMINI AI AUTOMATION CARD -->
+        <div class="ai-card">
+            <div class="ai-title">✨ GEMINI AI AUTO-GENERATOR (No Copy-Paste)</div>
+            <div class="input-row">
+                <input type="password" id="gemini-api-key" placeholder="Paste Gemini API Key here..." onchange="saveGeminiKey()">
+                <select id="gemini-topic">
+                    <option value="General Knowledge & Static GK">🌐 Mix GK (General Knowledge)</option>
+                    <option value="Indian History (प्राचीन, मध्यकालीन, आधुनिक इतिहास)">📜 Indian History (इतिहास)</option>
+                    <option value="Indian Polity & Constitution (भारतीय संविधान)">⚖️ Indian Polity (संविधान)</option>
+                    <option value="Geography & Rivers of India (भूगोल)">🌍 Geography (भूगोल)</option>
+                    <option value="General Science (भौतिक, रसायन, जीव विज्ञान)">🔬 General Science (विज्ञान)</option>
+                    <option value="Important Days & Inventions (महत्वपूर्ण दिवस व खोज)">💡 Important Days & Inventions</option>
+                </select>
+            </div>
+            <button class="btn-ai-generate" id="btn-ai-trigger" onclick="generateQuestionsWithGemini()">
+                <span>✨ Generate 5 Questions (AI)</span>
+            </button>
+        </div>
 
         <!-- BACKUP / RESTORE SECTION -->
         <div class="backup-card">
@@ -762,9 +819,9 @@
             </div>
         </div>
 
-        <!-- QUESTION & ANSWER PAIR INPUT -->
+        <!-- QUESTION & ANSWER PAIR MANUAL INPUT -->
         <div class="card">
-            <label>प्रश्न और उत्तर पेस्ट करें (पहले प्रश्न, ठीक नीचे उसका उत्तर):</label>
+            <label>मैन्युअल प्रश्न-उत्तर पेस्ट करें (वैकल्पिक):</label>
             <textarea id="cfg-raw-data" placeholder="यहाँ नए प्रश्न और उत्तर पेस्ट करें..."></textarea>
             <button class="btn-save-box" onclick="saveNewQuestionsFromBox()">💾 Save Questions / प्रश्न जोड़ें</button>
         </div>
@@ -820,6 +877,7 @@
 
     <script>
         const STORAGE_KEY = "QA_STUDIO_PERSISTENT_STORE_V5";
+        const GEMINI_KEY_STORAGE = "GEMINI_API_KEY_LOCAL";
         let qaList = [];
         let currentBatchIndex = 0;
         let answerRevealIndex = 0;
@@ -857,6 +915,73 @@
             }, 2500);
         }
 
+        /* GEMINI AI API FUNCTION */
+        function saveGeminiKey() {
+            const key = document.getElementById('gemini-api-key').value.trim();
+            if (key) {
+                localStorage.setItem(GEMINI_KEY_STORAGE, key);
+            }
+        }
+
+        async function generateQuestionsWithGemini() {
+            let apiKey = document.getElementById('gemini-api-key').value.trim();
+            if (!apiKey) {
+                apiKey = localStorage.getItem(GEMINI_KEY_STORAGE);
+            }
+            if (!apiKey) {
+                alert("कृपया पहले ऊपर वाले बॉक्स में अपनी Google Gemini API Key डालें!");
+                return;
+            }
+
+            const topic = document.getElementById('gemini-topic').value;
+            const btn = document.getElementById('btn-ai-trigger');
+            btn.disabled = true;
+            btn.innerHTML = `<span>⏳ प्रश्न तैयार हो रहे हैं...</span>`;
+
+            const promptText = `Generate 5 fresh, high-yield one-liner multiple-choice or direct competitive exam GK questions and answers in Hindi for topic: "${topic}".
+Output strictly valid JSON format only, an array of 5 objects with keys "q" (question in Hindi) and "a" (short, clear answer in Hindi).
+No markdown, no backticks, no other text. Example:
+[{"q":"सिंधु घाटी सभ्यता का प्रमुख बंदरगाह कौन-सा था?","a":"लोथल"}]`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: promptText }] }]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                let reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+                reply = reply.replace(/```json/gi, '').replace(/```/g, '').trim();
+
+                const parsed = JSON.parse(reply);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    parsed.forEach(item => {
+                        if (item.q && item.a) {
+                            qaList.push({ q: item.q.trim(), a: item.a.trim() });
+                        }
+                    });
+                    autoSaveToStorage();
+                    renderManageList();
+                    alert(`🎉 Gemini AI ने 5 नए प्रश्न सीधे सेव कर दिए हैं!`);
+                } else {
+                    throw new Error("Invalid format received");
+                }
+            } catch (err) {
+                alert("त्रुटि: AI से कनेक्ट नहीं हो सका। कृपया अपनी API Key चेक करें या थोड़ी देर बाद प्रयास करें।");
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>✨ Generate 5 Questions (AI)</span>`;
+            }
+        }
+
         function autoSaveToStorage() {
             const data = {
                 title: document.getElementById('cfg-title').value,
@@ -871,6 +996,11 @@
         }
 
         function autoLoadFromStorage() {
+            const savedKey = localStorage.getItem(GEMINI_KEY_STORAGE);
+            if (savedKey) {
+                document.getElementById('gemini-api-key').value = savedKey;
+            }
+
             const stored = localStorage.getItem(STORAGE_KEY);
             if(stored) {
                 try {
@@ -885,14 +1015,6 @@
                     }
                     if(parsed.savedQaList && Array.isArray(parsed.savedQaList)) {
                         qaList = parsed.savedQaList;
-                    } else if(parsed.rawData) {
-                        const lines = parsed.rawData.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-                        qaList = [];
-                        for(let i = 0; i < lines.length; i += 2) {
-                            let q = lines[i];
-                            let a = lines[i+1] || "उत्तर उपलब्ध नहीं है";
-                            qaList.push({ q, a });
-                        }
                     }
                 } catch(e){}
             }
