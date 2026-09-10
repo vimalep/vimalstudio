@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master App Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #1e293b, #090d16 80%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .header p {
+            color: #94a3b8;
+            font-size: 15px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .app-card {
+            background: #111827;
+            border: 2px solid #1f2937;
+            border-radius: 16px;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+        .app-card:hover {
+            transform: translateY(-6px);
+            border-color: #38bdf8;
+            box-shadow: 0 14px 30px rgba(56, 189, 248, 0.25);
+        }
+        .app-card:active {
+            transform: scale(0.98);
+        }
+
+        .badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: #1f2937;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .icon-box {
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+        .icon-1 { background: linear-gradient(135deg, #0284c7, #0369a1); }
+        .icon-2 { background: linear-gradient(135deg, #0f4c81, #1e3a8a); }
+        .icon-3 { background: linear-gradient(135deg, #b91c1c, #991b1b); }
+
+        .title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #f8fafc;
+        }
+        .desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 22px;
+            flex-grow: 1;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 14px;
+            color: #ffffff;
+            display: block;
+        }
+        .btn-1 { background: #0284c7; }
+        .btn-2 { background: #0f4c81; }
+        .btn-3 { background: #b91c1c; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Master App Dashboard</h1>
+        <p>अपनी पसंद की ऐप शुरू करने के लिए नीचे क्लिक करें:</p>
+    </div>
+
+    <div class="grid-container">
+        <!-- 1st OPTION -->
+        <a href="5 QNA Mobile.html" class="app-card">
+            <span class="badge">Option 1</span>
+            <div class="icon-box icon-1">📱</div>
+            <div class="title">5 Questions Q&A Studio</div>
+            <div class="desc">5-प्रश्नों का लाइव प्रेजेंटर, एनिमेशन ओवरले और ऑडियो साउंड सपोर्ट।</div>
+            <span class="btn btn-1">Open 1st App 🚀</span>
+        </a>
+
+        <!-- 2nd OPTION -->
+        <a href="Daily Current Affairs App.html" class="app-card">
+            <span class="badge">Option 2</span>
+            <div class="icon-box icon-2">📰</div>
+            <div class="title">Daily Current Affairs App</div>
+            <div class="desc">10-in-1 करंट अफेयर्स पोस्ट मेकर, लाइव कैनवास और इमेज लेआउट टूल।</div>
+            <span class="btn btn-2">Open 2nd App 🚀</span>
+        </a>
+
+        <!-- 3rd OPTION -->
+        <a href="EP 20 question.html" class="app-card">
+            <span class="badge">Option 3</span>
+            <div class="icon-box icon-3">📝</div>
+            <div class="title">20-in-1 Exam Notes</div>
+            <div class="desc">20 प्रश्नों की वन-पेज स्टडी शीट और हाई-रिज़ॉल्यूशन पोस्टर डाउनलोडर।</div>
+            <span class="btn btn-3">Open 3rd App 🚀</span>
+        </a>
+    </div>
+
+</body>
+</html>
