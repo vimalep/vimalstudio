@@ -78,6 +78,12 @@
             outline: none;
         }
 
+        input[type="range"] {
+            padding: 0;
+            cursor: pointer;
+            accent-color: #38bdf8;
+        }
+
         /* SUBJECT SELECTOR BUTTONS (H, G, P) */
         .subject-grid {
             display: flex;
@@ -276,6 +282,13 @@
             <span id="range-preview" style="font-size: 12px; color: #38bdf8; font-weight: bold;">प्रश्न: 1 - 20</span>
         </div>
 
+        <!-- FONT SIZE CONTROLLER -->
+        <div class="input-row" style="background: #0f172a; padding: 8px 12px; border-radius: 8px; border: 1px solid #334155;">
+            <label style="font-size: 12px; color: #94a3b8; font-weight: bold; white-space: nowrap;">प्रश्न फ़ॉन्ट साइज़:</label>
+            <input type="range" id="q-font-size" min="16" max="25" value="21" oninput="changeFontSize(this.value)">
+            <span id="font-size-val" style="font-size: 13px; color: #38bdf8; font-weight: 800; min-width: 45px; text-align: right;">21px</span>
+        </div>
+
         <button class="btn-generate" id="btn-gen" onclick="generate20Questions()">
             <span>✨ Generate 20 Questions Post (AI)</span>
         </button>
@@ -301,9 +314,7 @@
             <span>📚 पिछली पोस्ट्स का इतिहास (Saved History Archive)</span>
             <span id="history-count" style="font-size: 11px; color: #94a3b8;">0 पोस्ट्स</span>
         </div>
-        <div class="history-list" id="history-list-box">
-            <!-- Dynamically Loaded -->
-        </div>
+        <div class="history-list" id="history-list-box"></div>
     </div>
 </div>
 
@@ -311,6 +322,7 @@
     const STORAGE_KEY_API = "GEMINI_API_KEY_LOCAL";
     const STORAGE_KEY_HISTORY = "EP_POSTS_ARCHIVE_DATA_V1";
     let selectedSub = 'H';
+    let currentFontSize = 21;
     const canvas = document.getElementById('posterCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -347,6 +359,13 @@
         const start = (part - 1) * 20 + 1;
         const end = part * 20;
         document.getElementById('range-preview').innerText = `प्रश्न: ${start} - ${end}`;
+    }
+
+    function changeFontSize(val) {
+        currentFontSize = parseInt(val);
+        document.getElementById('font-size-val').innerText = `${currentFontSize}px`;
+        localStorage.setItem("EP_SAVED_FONT_SIZE", currentFontSize);
+        drawPoster();
     }
 
     async function generate20Questions() {
@@ -413,7 +432,6 @@ Output strictly valid raw JSON with this exact structure:
             const fullCaption = `${parsed.caption}\n\n${parsed.hashtags}`;
             document.getElementById('fb-caption-box').innerText = fullCaption;
 
-            // Auto-Save into History Archive
             saveToHistoryArchive({
                 id: Date.now(),
                 date: new Date().toLocaleDateString('hi-IN'),
@@ -425,7 +443,6 @@ Output strictly valid raw JSON with this exact structure:
                 caption: fullCaption
             });
 
-            // Increment and save next part
             localStorage.setItem(`EP_PART_${selectedSub}`, part + 1);
             document.getElementById('current-part').value = part + 1;
             updateRangeDisplay();
@@ -442,7 +459,7 @@ Output strictly valid raw JSON with this exact structure:
         }
     }
 
-    /* RENDER HIGH CONTRAST 1080 x 1350 POSTER */
+    /* RENDER 1080 x 1350 POSTER */
     function drawPoster() {
         ctx.clearRect(0, 0, 1080, 1350);
 
@@ -471,14 +488,14 @@ Output strictly valid raw JSON with this exact structure:
         ctx.font = "italic 700 24px 'Hind', sans-serif";
         ctx.fillText("• One-Shot Revision Notes", 465, 62);
 
-        // 2. Topic Red Capsule (28px Bold)
+        // 2. Topic Red Capsule
         roundRect(ctx, 40, 80, 1000, 64, 32, "#dc2626");
         ctx.fillStyle = "#ffffff";
         ctx.font = "800 28px 'Hind', sans-serif";
         ctx.textAlign = "center";
         ctx.fillText(currentData.capsule, 540, 122);
 
-        // 3. Hook Black Ribbon (22px Bold)
+        // 3. Hook Black Ribbon
         roundRect(ctx, 40, 154, 1000, 52, 12, "#111827");
         ctx.fillStyle = "#facc15";
         ctx.font = "800 22px 'Hind', sans-serif";
@@ -500,7 +517,7 @@ Output strictly valid raw JSON with this exact structure:
             drawQuestionBlock(col2X, startY + (i * rowGap), item, maxColWidth);
         });
 
-        // 5. Footer CTA
+        // 5. NEW FOOTER CTA (Follow & Share)
         ctx.strokeStyle = "#cbd5e1";
         ctx.lineWidth = 1.5;
         ctx.beginPath();
@@ -508,21 +525,24 @@ Output strictly valid raw JSON with this exact structure:
         ctx.lineTo(1035, 1270);
         ctx.stroke();
 
-        ctx.fillStyle = "#334155";
+        ctx.fillStyle = "#1e293b";
         ctx.font = "800 22px 'Hind', sans-serif";
         ctx.textAlign = "center";
-        ctx.fillText("- अपने उत्तर कमेंट बॉक्स में लिखें -", 540, 1312);
+        ctx.fillText("🔔 रोजाना ऐसे ही महत्वपूर्ण प्रश्नों के लिए Follow करें और Share करें 👍", 540, 1312);
         ctx.textAlign = "left";
     }
 
     function drawQuestionBlock(x, y, item, maxW) {
+        // Dynamic Question Size
         ctx.fillStyle = "#0f172a";
-        ctx.font = "800 21px 'Hind', sans-serif";
-        wrapText(ctx, item.q, x, y, maxW, 25);
+        ctx.font = `800 ${currentFontSize}px 'Hind', sans-serif`;
+        wrapText(ctx, item.q, x, y, maxW, currentFontSize + 4);
 
+        // Scaled Answer Size
+        const ansFontSize = Math.max(15, currentFontSize - 0.5);
         ctx.fillStyle = "#dc2626";
-        ctx.font = "800 20.5px 'Hind', sans-serif";
-        ctx.fillText(`उत्तर: ${item.a}`, x, y + 46);
+        ctx.font = `800 ${ansFontSize}px 'Hind', sans-serif`;
+        ctx.fillText(`उत्तर: ${item.a}`, x, y + currentFontSize + 25);
     }
 
     function roundRect(ctx, x, y, width, height, radius, fill) {
@@ -636,10 +656,8 @@ Output strictly valid raw JSON with this exact structure:
 
         document.getElementById('fb-caption-box').innerText = item.caption;
         drawPoster();
-
-        // Smooth scroll to canvas preview
         document.querySelector('.canvas-container').scrollIntoView({ behavior: 'smooth' });
-        alert(`✅ भाग ${item.part} स्क्रीन पर लोड हो गया है! आप इसे ऊपर देख सकते हैं और कैप्शन कॉपी कर सकते हैं।`);
+        alert(`✅ भाग ${item.part} स्क्रीन पर लोड हो गया है!`);
     }
 
     function downloadFromHistory(id) {
@@ -667,6 +685,14 @@ Output strictly valid raw JSON with this exact structure:
     window.onload = function() {
         const k = localStorage.getItem(STORAGE_KEY_API);
         if (k) document.getElementById('api-key').value = k;
+
+        const savedSize = localStorage.getItem("EP_SAVED_FONT_SIZE");
+        if (savedSize) {
+            currentFontSize = parseInt(savedSize);
+            document.getElementById('q-font-size').value = currentFontSize;
+            document.getElementById('font-size-val').innerText = `${currentFontSize}px`;
+        }
+
         selectSubject('H');
         drawPoster();
         renderHistoryList();
