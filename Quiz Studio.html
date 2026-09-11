@@ -302,7 +302,7 @@
 
     <!-- CONTROLS & SMART PASTE BOX -->
     <div class="control-box">
-        <div class="box-title">🎯 विषय चुनें (Subject)</div>
+        <div class="box-title">🎯 विषय चुनें (Subject Title)</div>
         <div class="subject-grid">
             <button class="btn-sub active" onclick="setSubject('विश्व एवं भारत का भूगोल', '🌍 WORLD GK QUIZ 🌍', '#GeographyGK', this)">🌍 भूगोल</button>
             <button class="btn-sub" onclick="setSubject('भारतीय इतिहास एवं राष्ट्रीय आंदोलन', '📜 HISTORY GK QUIZ 📜', '#HistoryGK', this)">📜 इतिहास</button>
@@ -314,8 +314,7 @@
 
         <div>
             <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Paste Raw Text):</label>
-            <textarea id="raw-paste-box">🌍 WORLD GK QUIZ 🧠
-Q.166 क्षेत्रफल की दृष्टि से विश्व का सबसे बड़ा प्रायद्वीप (Largest Peninsula) कौन-सा है? 🗺️
+            <textarea id="raw-paste-box">Q.166 क्षेत्रफल की दृष्टि से विश्व का सबसे बड़ा प्रायद्वीप (Largest Peninsula) कौन-सा है? 🗺️
 A) भारतीय प्रायद्वीप 🇮🇳
 B) अरब प्रायद्वीप 🇸🇦
 C) स्कैंडिनेवियाई प्रायद्वीप ❄️
@@ -419,8 +418,8 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V1";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V1";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V2";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V2";
 
     let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
     let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
@@ -461,7 +460,7 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
                   .trim();
     }
 
-    /* SMART PARSER: EXTRACTS EVERYTHING AUTOMATICALLY FROM TEXT */
+    /* SMART PARSER: SECURE TITLE, EXTRACTS OPTIONS, ANSWER, EXPLANATION */
     function generateFromRawText() {
         const raw = document.getElementById('raw-paste-box').value.trim();
         if (!raw) {
@@ -483,13 +482,7 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
 
-            // 1. Header (QUIZ / GK / TRIVIA)
-            if ((line.includes("QUIZ") || line.includes("GK") || line.includes("TRIVIA")) && !line.startsWith("Q.")) {
-                currentHeaderTitle = line;
-                continue;
-            }
-
-            // 2. Question number & text
+            // 1. Question number & text
             if (line.match(/^Q\.?\s*\d+/i)) {
                 const matchNum = line.match(/Q\.?\s*(\d+)/i);
                 if (matchNum) qNum = parseInt(matchNum[1]);
@@ -498,7 +491,7 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
                 continue;
             }
 
-            // 3. Options A, B, C, D
+            // 2. Options A, B, C, D
             if (line.match(/^[A-Da-d][\)\.\-]/)) {
                 let key = line.charAt(0).toUpperCase();
                 let val = line.substring(2).trim();
@@ -509,7 +502,7 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
                 continue;
             }
 
-            // 4. Answer line
+            // 3. Answer line
             if (line.toLowerCase().startsWith("answer:") || line.includes("सही उत्तर:")) {
                 let ansText = line.replace(/^(answer:|सही उत्तर:)\s*/i, '').trim();
                 let matchLetter = ansText.match(/^([A-Da-d])/);
@@ -520,14 +513,14 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
                 continue;
             }
 
-            // 5. Explanation line
+            // 4. Explanation line
             if (line.toLowerCase().startsWith("explanation:") || line.startsWith("व्याख्या:")) {
                 mode = "explanation";
                 explanationLines.push(line.replace(/^(explanation:|व्याख्या:)\s*/i, '').trim());
                 continue;
             }
 
-            // 6. Caption line
+            // 5. Caption line
             if (line.startsWith("Caption:")) {
                 mode = "caption";
                 captionLines.push(line.replace(/^Caption:\s*/, '').trim());
@@ -685,7 +678,7 @@ ${currentSubjectHashtag}`;
                     loadAllSettings();
                     updateCaptionText();
                     redrawCanvas();
-                    alert("✅ बैकअप सफलताપूर्वक रिस्टोर हो गया है!");
+                    alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
                 } catch (err) {
                     alert("त्रुटि: अमान्य JSON फ़ाइल!");
                 }
@@ -788,7 +781,7 @@ ${currentSubjectHashtag}`;
         }
         ctx.restore();
 
-        // Header Title (60px)
+        // Header Title (60px) - SECURELY CONTROLLED BY SUBJECT BUTTONS
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
