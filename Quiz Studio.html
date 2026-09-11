@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viral Quiz Card Studio HD (Smart Paste Mode)</title>
-    <!-- GOOGLE FONTS FOR HINDI -->
+    <title>Viral Quiz Card Studio HD (Smart 11-Line Parser)</title>
+    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
@@ -46,14 +46,6 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-        }
-
-        .box-title {
-            font-size: 11.5px;
-            font-weight: 800;
-            color: #c084fc;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .row-flex {
@@ -112,13 +104,18 @@
         }
 
         /* ACTION BUTTONS */
+        .btn-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
         .btn-action {
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
             color: white;
             border: none;
             padding: 12px;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 800;
             cursor: pointer;
             box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
@@ -127,12 +124,16 @@
             justify-content: center;
             gap: 6px;
         }
+        .btn-clipboard {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+        }
 
         .backup-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            margin-top: 4px;
+            margin-top: 2px;
         }
         .btn-backup {
             background: #334155;
@@ -279,13 +280,13 @@
     <!-- CONTROLS & SMART PASTE BOX -->
     <div class="control-box">
         <div>
-            <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Paste Raw Text):</label>
+            <label>📝 यहाँ अपना पूरा 11-लाइन टेक्स्ट पेस्ट करें (Raw Text):</label>
             <textarea id="raw-paste-box">📜 HISTORY GK QUIZ 🧠
 Q.168 महात्मा गांधी ने प्रसिद्ध 'दांडी मार्च' (Dandi March) की शुरुआत किस वर्ष की थी? 🚶
-A) 1928 📜
-B) 1930 🌊
-C) 1931 🏛️
-D) 1932 ⚖️
+        A) 1928 📜
+        B) 1930 🌊
+        C) 1931 🏛️
+        D) 1932 ⚖️
 👇 Genius लोग ही Comment में उत्तर दें! 🧠
 ❤️ Like | ➕ Follow 🎯
 Caption: दांडी मार्च और सविनय अवज्ञा आंदोलन / Dandi March Salt Satyagraha (1930) से संबंधित ऐतिहासिक प्रश्न! सही जवाब कमेंट करें। 👇🚀
@@ -294,9 +295,14 @@ Answer: B) 1930 🌊
 Explanation: सविनय अवज्ञा आंदोलन की शुरुआत के लिए महात्मा गांधी ने 12 मार्च 1930 को साबरमती आश्रम से दांडी मार्च शुरू किया था, जो 6 अप्रैल 1930 को नमक कानून तोड़कर पूरा हुआ।</textarea>
         </div>
 
-        <button class="btn-action" onclick="generateFromRawText()">
-            <span>✨ Generate Card from Text</span>
-        </button>
+        <div class="btn-action-grid">
+            <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
+                <span>📋 1-Click Paste & Run</span>
+            </button>
+            <button class="btn-action" onclick="generateFromRawText()">
+                <span>✨ Generate Card</span>
+            </button>
+        </div>
 
         <div class="row-flex" style="margin-top: 4px;">
             <div>
@@ -366,7 +372,7 @@ Explanation: सविनय अवज्ञा आंदोलन की शु
     <div class="detail-card">
         <div class="box-title" style="color: #38bdf8;">📝 Facebook Caption:</div>
         <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
-        <button class="btn-sub" style="background:#0284c7; color:white; border:none; padding:8px; margin-top:4px;" onclick="copyCaption()">📋 Copy Caption</button>
+        <button class="btn-action" style="background:#0284c7; color:white; border:none; padding:8px; margin-top:4px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
     </div>
 </div>
 
@@ -385,30 +391,37 @@ Explanation: सविनय अवज्ञा आंदोलन की शु
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V4";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V4";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V5";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V5";
 
-    let currentHeaderTitle = "📜 HISTORY GK QUIZ 🧠";
-    let currentSubjectHashtag = "#HistoryQuiz";
     let isAnswerRevealed = false;
 
     let quizData = {
-        questionNumber: 168,
-        questionText: "महात्मा गांधी ने प्रसिद्ध 'दांडी मार्च' (Dandi March) की शुरुआत किस वर्ष की थी?",
+        title: "📜 HISTORY GK QUIZ 🧠",
+        qPrefix: "Q.168",
+        questionText: "महात्मा गांधी ने प्रसिद्ध 'दांडी मार्च' (Dandi March) की शुरुआत किस वर्ष की थी? 🚶",
         options: {
             A: "1928 📜",
             B: "1930 🌊",
             C: "1931 🏛️",
             D: "1932 ⚖️"
         },
+        hook: "👇 Genius लोग ही Comment में उत्तर दें! 🧠",
+        social: "❤️ Like | ➕ Follow 🎯",
         correctOption: "B",
         explanation: "सविनय अवज्ञा आंदोलन की शुरुआत के लिए महात्मा गांधी ने 12 मार्च 1930 को साबरमती आश्रम से दांडी मार्च शुरू किया था, जो 6 अप्रैल 1930 को नमक कानून तोड़कर पूरा हुआ।",
         caption: "दांडी मार्च और सविनय अवज्ञा आंदोलन / Dandi March Salt Satyagraha (1930) से संबंधित ऐतिहासिक प्रश्न! सही जवाब कमेंट करें। 👇🚀\n\n#HistoryQuiz #IndianHistory #DandiMarch #ModernHistory"
     };
 
+    function cleanString(str) {
+        if (!str) return "";
+        // Strip invisible zero-width chars, non-breaking spaces, and trim leading/trailing whitespace
+        return str.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
     function cleanAndMoveEmojiToEnd(text) {
         if (!text) return "";
-        let clean = text.trim();
+        let clean = cleanString(text);
         const emojiRegex = /([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}])/gu;
         const emojisFound = clean.match(emojiRegex);
         const textWithoutEmojis = clean.replace(emojiRegex, '').replace(/\s+/g, ' ').trim();
@@ -419,132 +432,147 @@ Explanation: सविनय अवज्ञा आंदोलन की शु
         return textWithoutEmojis;
     }
 
-    function sanitizeQuestion(raw) {
-        return raw.replace(/^(Q\.?\s*\d*[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*/gi, '')
-                  .replace(/^प्रश्न\s*\d*[\.\:\-\)]*\s*/gi, '')
-                  .replace(/^[A-Za-z]\s*[\.\:\-\)]\s*/gi, '')
-                  .trim();
+    // 1-Click Clipboard Paste & Run
+    async function pasteFromClipboardAndGenerate() {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text && text.trim().length > 0) {
+                document.getElementById('raw-paste-box').value = text;
+                generateFromRawText();
+            } else {
+                alert("क्लिपबोर्ड खाली है! कृपया पहले टेक्स्ट कॉपी करें।");
+            }
+        } catch (err) {
+            alert("क्लिपबोर्ड एक्सेस की अनुमति नहीं मिली। कृपया बॉक्स में मैन्युअल पेस्ट करके 'Generate Card' दबाएं।");
+        }
     }
 
-    /* FOOLPROOF ROBUST SMART PARSER */
+    /* 11-LINE SMART HYBRID PARSER */
     function generateFromRawText() {
-        const raw = document.getElementById('raw-paste-box').value.trim();
-        if (!raw) {
+        const raw = document.getElementById('raw-paste-box').value;
+        if (!raw || !raw.trim()) {
             alert("कृपया टेक्स्ट बॉक्स में पूरा क्विज़ टेक्स्ट पेस्ट करें!");
             return;
         }
 
-        const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        // Clean out zero-width characters and separate into valid non-empty lines
+        const rawLines = raw.split(/\r?\n/)
+                            .map(l => cleanString(l))
+                            .filter(l => l.length > 0);
 
-        let title = "📜 QUIZ STUDIO 🧠";
-        let qNum = 1;
-        let qText = "";
-        let opts = { A: "", B: "", C: "", D: "" };
-        let correctOpt = "A";
-        let explanationLines = [];
-        let captionLines = [];
-        let hashtags = [];
-        let currentSection = "unknown";
+        if (rawLines.length < 5) {
+            alert("टेक्स्ट बहुत छोटा है! कृपया पूरा फ़ॉर्मेट पेस्ट करें।");
+            return;
+        }
 
-        for (let i = 0; i < lines.length; i++) {
-            let line = lines[i];
+        let parsedTitle = "";
+        let parsedPrefix = "";
+        let parsedQText = "";
+        let parsedOpts = { A: "", B: "", C: "", D: "" };
+        let parsedHook = "👉 Genius लोग ही Comment में उत्तर दें! 🧠";
+        let parsedSocial = "❤️ Like | ➕ Follow 🎯";
+        let parsedCaptionLines = [];
+        let parsedAns = "A";
+        let parsedExpLines = [];
 
-            // 1. Title check (First line if it has emojis or QUIZ/GK)
-            if (i === 0 && (line.includes("QUIZ") || line.includes("GK") || line.includes("TRIVIA") || line.match(/[\u{1F300}-\u{1FAFF}]/u))) {
-                title = line;
-                continue;
-            }
+        let i = 0;
 
-            // 2. Question check
-            let qMatch = line.match(/^Q\.?\s*(\d+)\s*[\.\:\-\)]*\s*(.*)/i);
-            if (qMatch) {
-                qNum = parseInt(qMatch[1]);
-                qText = qMatch[2].trim();
-                currentSection = "question";
-                continue;
-            }
+        // Line 1: Title
+        parsedTitle = rawLines[i++];
 
-            // 3. Option check (A), B), C), D) or A., B., C., D.)
-            let optMatch = line.match(/^([A-Da-d])[\)\.\-]\s*(.+)/);
-            if (optMatch) {
-                let key = optMatch[1].toUpperCase();
-                opts[key] = cleanAndMoveEmojiToEnd(optMatch[2].trim());
-                currentSection = "option";
-                continue;
-            }
+        // Line 2: Question (with intact Q number)
+        let qLine = rawLines[i++];
+        let qMatch = qLine.match(/^(Q\.?\s*\d+[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*(.*)/i);
+        if (qMatch) {
+            parsedPrefix = qMatch[1].trim();
+            parsedQText = qMatch[2].trim();
+        } else {
+            parsedPrefix = "Q.";
+            parsedQText = qLine;
+        }
 
-            // 4. Answer check
+        // Lines 3, 4, 5, 6: Options A, B, C, D
+        const optKeys = ["A", "B", "C", "D"];
+        for (let k = 0; k < 4 && i < rawLines.length; k++) {
+            let optLine = rawLines[i++];
+            // Remove leading A), B), A., B. or free spaces automatically
+            let stripped = optLine.replace(/^[A-Da-d][\)\.\-]\s*/, '').trim();
+            parsedOpts[optKeys[k]] = cleanAndMoveEmojiToEnd(stripped);
+        }
+
+        // Rest of the lines (7 onwards): Hook, Social, Caption, Answer, Explanation
+        let mode = "hook_search";
+
+        while (i < rawLines.length) {
+            let line = rawLines[i++];
+
+            // Check for Answer Anchor
             let ansMatch = line.match(/(?:answer|सही उत्तर)\s*[:\-]?\s*([A-Da-d])/i);
             if (ansMatch) {
-                correctOpt = ansMatch[1].toUpperCase();
-                currentSection = "answer";
+                parsedAns = ansMatch[1].toUpperCase();
+                mode = "post_answer";
                 continue;
             }
 
-            // 5. Explanation check
+            // Check for Explanation Anchor
             if (line.toLowerCase().startsWith("explanation:") || line.startsWith("व्याख्या:")) {
-                currentSection = "explanation";
-                explanationLines.push(line.replace(/^(explanation:|व्याख्या:)\s*/i, '').trim());
+                mode = "explanation";
+                parsedExpLines.push(line.replace(/^(explanation:|व्याख्या:)\s*/i, '').trim());
                 continue;
             }
 
-            // 6. Caption check
-            if (line.startsWith("Caption:")) {
-                currentSection = "caption";
-                captionLines.push(line.replace(/^Caption:\s*/, '').trim());
+            // Check for Caption Anchor
+            if (line.toLowerCase().startsWith("caption:")) {
+                mode = "caption";
+                parsedCaptionLines.push(line.replace(/^caption:\s*/i, '').trim());
                 continue;
             }
 
-            // 7. Hashtags
-            if (line.startsWith("#")) {
-                hashtags.push(line);
-                if (currentSection === "caption") {
-                    captionLines.push(line);
-                }
-                continue;
-            }
-
-            // Accumulate multi-line paragraphs
-            if (currentSection === "explanation") {
-                explanationLines.push(line);
-            } else if (currentSection === "caption") {
-                captionLines.push(line);
-            } else if (currentSection === "question" && !qText.endsWith("?")) {
-                qText += " " + line;
+            // Step through sequential lines if anchors not encountered yet
+            if (mode === "hook_search") {
+                parsedHook = line;
+                mode = "social_search";
+            } else if (mode === "social_search") {
+                parsedSocial = line;
+                mode = "caption";
+            } else if (mode === "caption") {
+                parsedCaptionLines.push(line);
+            } else if (mode === "explanation" || mode === "post_answer") {
+                parsedExpLines.push(line);
             }
         }
 
-        let finalExplanation = explanationLines.join(" ");
-        let finalCaption = captionLines.length > 0 ? captionLines.join("\n") : `${qText} का सही उत्तर कमेंट करें! 👇🔥\n\n${hashtags.join(" ")}`;
-
-        currentHeaderTitle = title;
-        if (hashtags.length > 0) currentSubjectHashtag = hashtags[0].split(" ")[0];
-
-        quizData.questionNumber = qNum;
-        quizData.questionText = sanitizeQuestion(qText);
-        if (opts.A) quizData.options.A = opts.A;
-        if (opts.B) quizData.options.B = opts.B;
-        if (opts.C) quizData.options.C = opts.C;
-        if (opts.D) quizData.options.D = opts.D;
-        quizData.correctOption = correctOpt;
-        if (finalExplanation) quizData.explanation = finalExplanation;
-        quizData.caption = finalCaption;
+        // Final consolidation
+        quizData.title = parsedTitle || "📜 QUIZ STUDIO 🧠";
+        quizData.qPrefix = parsedPrefix || "Q.";
+        quizData.questionText = parsedQText;
+        quizData.options = parsedOpts;
+        quizData.hook = parsedHook;
+        quizData.social = parsedSocial;
+        quizData.correctOption = parsedAns;
+        quizData.explanation = parsedExpLines.join(" ") || "व्याख्या उपलब्ध नहीं है।";
+        quizData.caption = parsedCaptionLines.length > 0 ? parsedCaptionLines.join("\n") : `${parsedQText} का उत्तर कमेंट करें! 👇🚀`;
 
         saveToHistory({
-            questionNumber: quizData.questionNumber,
+            title: quizData.title,
+            qPrefix: quizData.qPrefix,
             questionText: quizData.questionText,
             options: quizData.options,
             correctOption: quizData.correctOption,
             explanation: quizData.explanation,
             caption: quizData.caption,
-            headerTitle: currentHeaderTitle,
+            hook: quizData.hook,
+            social: quizData.social,
             rawText: raw
         });
 
         updateCaptionText();
         saveAllSettings();
         redrawCanvas();
-        alert(`🎉 Q.${qNum} का कार्ड सफलतापूर्वक जनरेट हो गया है!`);
+
+        // Automatically copy FB caption to clipboard for effortless workflow
+        navigator.clipboard.writeText(quizData.caption).catch(() => {});
+        alert(`🎉 ${quizData.qPrefix} का कार्ड तैयार हो गया है और फेसबुक कैप्शन क्लिपबोर्ड पर कॉपी कर दिया गया है!`);
     }
 
     function toggleAnswerMode() {
@@ -568,7 +596,7 @@ Explanation: सविनय अवज्ञा आंदोलन की शु
 
 📖 व्याख्या: ${quizData.explanation}
 
-${currentSubjectHashtag}`;
+#QuizQuestions #ExamPreparation`;
         } else {
             document.getElementById('fb-caption-box').innerText = quizData.caption;
         }
@@ -577,8 +605,6 @@ ${currentSubjectHashtag}`;
 
     function saveAllSettings() {
         const prefs = {
-            headerTitle: currentHeaderTitle,
-            hashtag: currentSubjectHashtag,
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
@@ -595,8 +621,6 @@ ${currentSubjectHashtag}`;
         if (saved) {
             try {
                 const p = JSON.parse(saved);
-                if (p.headerTitle) currentHeaderTitle = p.headerTitle;
-                if (p.hashtag) currentSubjectHashtag = p.hashtag;
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
                 if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
                 if (p.qSize) {
@@ -660,7 +684,7 @@ ${currentSubjectHashtag}`;
         try {
             history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
         } catch(e) {}
-        history = history.filter(h => h.questionNumber !== item.questionNumber);
+        history = history.filter(h => h.qPrefix !== item.qPrefix);
         history.unshift(item);
         if (history.length > 100) history.pop();
         localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
@@ -683,7 +707,7 @@ ${currentSubjectHashtag}`;
                 const div = document.createElement('div');
                 div.className = "history-item";
                 div.innerHTML = `
-                    <div class="h-item-title">Q.${h.questionNumber}: ${h.questionText}</div>
+                    <div class="h-item-title">${h.qPrefix}: ${h.questionText}</div>
                     <div class="h-item-sub">✅ सही उत्तर: [${h.correctOption}] ${h.options[h.correctOption] || ""}</div>
                     <div class="h-item-exp">📖 ${h.explanation}</div>
                 `;
@@ -704,14 +728,12 @@ ${currentSubjectHashtag}`;
     function loadFromHistory(h) {
         quizData = JSON.parse(JSON.stringify(h));
         if (h.rawText) document.getElementById('raw-paste-box').value = h.rawText;
-        if (h.headerTitle) currentHeaderTitle = h.headerTitle;
-
         updateCaptionText();
         redrawCanvas();
-        alert(`✅ प्रश्न Q.${h.questionNumber} लोड कर दिया गया है!`);
+        alert(`✅ ${h.qPrefix} लोड कर दिया गया है!`);
     }
 
-    /* CANVAS REDRAW */
+    /* REDRAW CANVAS WITH GEMINI HIGH-FIDELITY DESIGN */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
@@ -720,9 +742,11 @@ ${currentSubjectHashtag}`;
 
         ctx.clearRect(0, 0, 1080, 1350);
 
+        // Background Outer
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, 1080, 1350);
 
+        // White Container Card
         const cardX = 42;
         const cardY = 42;
         const cardW = 996;
@@ -734,7 +758,7 @@ ${currentSubjectHashtag}`;
         ctx.lineWidth = 3;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // Watermark
+        // Security Watermark
         ctx.save();
         ctx.beginPath();
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
@@ -749,14 +773,14 @@ ${currentSubjectHashtag}`;
         }
         ctx.restore();
 
-        // Header Title (Auto-extracted from line 1)
+        // Line 1: Header Title (Auto from Line 1)
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
         ctx.font = `900 52px ${fontFam}`;
-        ctx.fillText(currentHeaderTitle, 540, 118);
+        ctx.fillText(quizData.title, 540, 118);
 
-        // Exam Preparation Pill
+        // Badge Pill: "EXAM PREPARATION"
         const pillW = 500;
         const pillH = 56;
         const pillX = (1080 - pillW) / 2;
@@ -771,13 +795,13 @@ ${currentSubjectHashtag}`;
         ctx.font = "900 26px 'Poppins', sans-serif";
         ctx.fillText("EXAM PREPARATION", 540, pillY + (pillH / 2));
 
-        // Locked Gap: 72px
+        // Line 2: Question Section (Fixed 72px gap below pill)
         ctx.textAlign = "left";
         const fixedGap = 72;
         const qStartY = pillY + pillH + fixedGap;
-        const qEndY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
+        const qEndY = drawColorfulQuestion(ctx, quizData.qPrefix, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
 
-        // 4 Options Containers
+        // Lines 3-6: 4 Options Containers (A, B, C, D)
         const optStartY = qEndY + 36;
         const optGap = 124;
         const optW = 890;
@@ -812,6 +836,7 @@ ${currentSubjectHashtag}`;
             ctx.lineWidth = (isAnswerRevealed && isCorrect) ? 4 : 2.5;
             roundRect(ctx, optX, curY, optW, optH, 20, null, true);
 
+            // Badge
             roundRect(ctx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
             ctx.fillStyle = "#ffffff";
             ctx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
@@ -819,6 +844,7 @@ ${currentSubjectHashtag}`;
             ctx.textBaseline = "middle";
             ctx.fillText(badgeText, optX + 47, curY + (optH / 2));
 
+            // Option Text
             ctx.textAlign = "left";
             ctx.fillStyle = (isAnswerRevealed && isCorrect) ? "#14532d" : st.text;
             ctx.font = `700 ${optSize}px ${fontFam}`;
@@ -826,7 +852,7 @@ ${currentSubjectHashtag}`;
             ctx.fillText(optString, optX + 96, curY + (optH / 2));
         });
 
-        // Footer Section
+        // Lines 7 & 8 / Footer Section
         const footerY = optStartY + (4 * optGap) + 38;
 
         if (isAnswerRevealed) {
@@ -848,8 +874,9 @@ ${currentSubjectHashtag}`;
             ctx.fillStyle = "#64748b";
             ctx.font = `800 22px ${fontFam}`;
             ctx.textAlign = "center";
-            ctx.fillText("❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
+            ctx.fillText(quizData.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
         } else {
+            // Line 7: Hook Banner
             roundRect(ctx, 110, footerY, 860, 80, 40, "#fef08a", false);
             ctx.strokeStyle = "#facc15";
             ctx.lineWidth = 2.5;
@@ -858,22 +885,24 @@ ${currentSubjectHashtag}`;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "#854d0e";
-            ctx.font = `800 30px ${fontFam}`;
-            ctx.fillText("👉 Genius लोग ही Comment में उत्तर दें! 🧠", 540, footerY + (80 / 2));
+            ctx.font = `800 28px ${fontFam}`;
+            ctx.fillText(quizData.hook, 540, footerY + (80 / 2));
 
+            // Line 8: Social Line
             ctx.fillStyle = "#0f172a";
             ctx.font = `800 28px ${fontFam}`;
-            ctx.fillText("❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
+            ctx.fillText(quizData.social, 540, footerY + 132);
         }
     }
 
-    function drawColorfulQuestion(ctx, num, text, x, y, maxW, fontSize, fontFam) {
+    /* QUESTION TEXT WITH SEPARATE ROYAL BLUE PREFIX AND RED KEYWORDS */
+    function drawColorfulQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam) {
         ctx.textBaseline = "top";
         ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
-        ctx.fillStyle = "#0284c7";
-        const prefix = `Q.${num} `;
-        const prefixWidth = ctx.measureText(prefix).width;
-        ctx.fillText(prefix, x, y);
+        ctx.fillStyle = "#0284c7"; // Royal Sky Blue for Question Prefix
+        const fullPrefix = prefix + " ";
+        const prefixWidth = ctx.measureText(fullPrefix).width;
+        ctx.fillText(fullPrefix, x, y);
 
         const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि", "लंबी", "स्थलीय", "प्रसिद्ध", "शुरुआत", "वर्ष"];
         
@@ -885,7 +914,7 @@ ${currentSubjectHashtag}`;
 
         words.forEach(word => {
             const cleanWord = word.replace(/[?,.!"']/g, '');
-            const isHighlight = highlightTokens.some(t => cleanWord.includes(t)) || word.startsWith('"') || word.endsWith('"');
+            const isHighlight = highlightTokens.some(t => cleanWord.includes(t)) || word.startsWith("'") || word.startsWith('"');
             
             ctx.fillStyle = isHighlight ? "#dc2626" : "#0f172a";
             const wordW = ctx.measureText(word + ' ').width;
@@ -940,10 +969,10 @@ ${currentSubjectHashtag}`;
         const caption = document.getElementById('fb-caption-box').innerText;
         canvas.toBlob(async (blob) => {
             if (!blob) { alert("इमेज तैयार नहीं हो सकी!"); return; }
-            const file = new File([blob], `Quiz_Q${quizData.questionNumber}.png`, { type: 'image/png' });
+            const file = new File([blob], `Quiz_${quizData.qPrefix}.png`, { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 try {
-                    await navigator.share({ title: `Quiz Q.${quizData.questionNumber}`, text: caption, files: [file] });
+                    await navigator.share({ title: `Quiz ${quizData.qPrefix}`, text: caption, files: [file] });
                 } catch (err) {}
             } else {
                 downloadImage();
@@ -956,7 +985,7 @@ ${currentSubjectHashtag}`;
     function downloadImage() {
         const link = document.createElement('a');
         const modePrefix = isAnswerRevealed ? "Solved_" : "";
-        link.download = `${modePrefix}Quiz_Q${quizData.questionNumber}.png`;
+        link.download = `${modePrefix}Quiz_${quizData.qPrefix.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
     }
