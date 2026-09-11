@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viral Quiz Card Studio HD (Smart Text Mode)</title>
+    <title>Viral Quiz Card Studio HD (Smart Paste Mode)</title>
     <!-- GOOGLE FONTS FOR HINDI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -71,7 +71,7 @@
             margin-bottom: 3px;
         }
 
-        select, textarea {
+        input, select, textarea {
             width: 100%;
             padding: 8px 10px;
             background: #0f172a;
@@ -83,7 +83,7 @@
             outline: none;
             font-family: inherit;
         }
-        textarea { resize: vertical; min-height: 180px; font-family: monospace; font-size: 12px; line-height: 1.4; }
+        textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
 
         /* SUBJECT SELECTOR CHIPS */
         .subject-grid {
@@ -298,9 +298,9 @@
 <body>
 
 <div class="main-wrap">
-    <div class="studio-header">⚡ Viral Quiz Card Studio Pro (Smart Text Mode)</div>
+    <div class="studio-header">⚡ Viral Quiz Card Studio Pro (Smart Paste)</div>
 
-    <!-- CONTROLS & SMART TEXT BOX -->
+    <!-- CONTROLS & SMART PASTE BOX -->
     <div class="control-box">
         <div class="box-title">🎯 विषय चुनें (Subject)</div>
         <div class="subject-grid">
@@ -313,21 +313,26 @@
         </div>
 
         <div>
-            <label>📥 यहाँ अपना पूरा टेक्स्ट एक साथ पेस्ट करें:</label>
-            <textarea id="raw-input-box" placeholder="Q.161 ...\nA) ...\nB) ...\nC) ...\nD) ...\nAnswer: B\nExplanation: ...">Q.161 "स्ट्रॉम्बोली" (Stromboli) ज्वालामुखी को किस नाम से जाना जाता है? 🌋
-A) प्रशांत महासागर का चौराहा 🌊
-B) भूमध्य सागर का प्रकाश स्तंभ (Lighthouse) 💡
-C) विश्व का सुरक्षा वाल्व 🛡️
-D) मोतियों का द्वीप 🦪
+            <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Paste Raw Text):</label>
+            <textarea id="raw-paste-box">🌍 WORLD GK QUIZ 🧠
+Q.166 क्षेत्रफल की दृष्टि से विश्व का सबसे बड़ा प्रायद्वीप (Largest Peninsula) कौन-सा है? 🗺️
+A) भारतीय प्रायद्वीप 🇮🇳
+B) अरब प्रायद्वीप 🇸🇦
+C) स्कैंडिनेवियाई प्रायद्वीप ❄️
+D) अलास्का प्रायद्वीप 🏔️
 👇 सही उत्तर तुरंत Comment करें! 🔥
 ❤️ Like | ➕ Follow 🎯
-Caption: भूमध्य सागर का प्रकाश स्तंभ / Lighthouse of the Mediterranean (Stromboli Volcano) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀
-#WorldGKQuiz #GeographyGK #Stromboli #WorldGeography
-Answer: B) भूमध्य सागर का प्रकाश स्तंभ (Lighthouse) 💡
-Explanation: इटली के उत्तर में सिसिली द्वीप के पास स्थित स्ट्रॉम्बोली ज्वालामुखी से लगातार गैस और लावा निकलता रहता है, जिससे आसपास हमेशा रोशनी रहती है।</textarea>
+Caption: विश्व का सबसे बड़ा प्रायद्वीप / Largest Peninsula in the World (Arabian Peninsula) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀
+#WorldGKQuiz #GeographyGK #ArabianPeninsula #WorldGeography
+Answer: B) अरब प्रायद्वीप 🇸🇦
+Explanation: क्षेत्रफल के दृष्टिकोण से 'अरब प्रायद्वीप' विश्व का सबसे बड़ा प्रायद्वीप है, जो मुख्य रूप से पश्चिमी एशिया में स्थित है और तीन तरफ से पानी से घिरा है।</textarea>
         </div>
 
-        <div class="row-flex">
+        <button class="btn-action" onclick="generateFromRawText()">
+            <span>✨ Generate Card from Text</span>
+        </button>
+
+        <div class="row-flex" style="margin-top: 4px;">
             <div>
                 <label>फ़ॉन्ट स्टाइल:</label>
                 <select id="cfg-font" onchange="saveAllSettings(); redrawCanvas();">
@@ -364,10 +369,6 @@ Explanation: इटली के उत्तर में सिसिली �
             <span class="toggle-text">✅ उत्तर व व्याख्या फोटो में दिखाएं (Answer Mode)</span>
             <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
         </div>
-
-        <button class="btn-action" onclick="parseAndGenerateCard()">
-            <span>⚡ Parse & Generate Card</span>
-        </button>
 
         <!-- JSON BACKUP / RESTORE -->
         <div class="backup-grid">
@@ -418,8 +419,8 @@ Explanation: इटली के उत्तर में सिसिली �
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMART_PREFS_V1";
-    const STORAGE_HISTORY = "QUIZ_SMART_HISTORY_V1";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V1";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V1";
 
     let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
     let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
@@ -427,17 +428,17 @@ Explanation: इटली के उत्तर में सिसिली �
     let isAnswerRevealed = false;
 
     let quizData = {
-        questionNumber: 161,
-        questionText: '"स्ट्रॉम्बोली" (Stromboli) ज्वालामुखी को किस नाम से जाना जाता है?',
+        questionNumber: 166,
+        questionText: "क्षेत्रफल की दृष्टि से विश्व का सबसे बड़ा प्रायद्वीप (Largest Peninsula) कौन-सा है?",
         options: {
-            A: "प्रशांत महासागर का चौराहा 🌊",
-            B: "भूमध्य सागर का प्रकाश स्तंभ (Lighthouse) 💡",
-            C: "विश्व का सुरक्षा वाल्व 🛡️",
-            D: "मोतियों का द्वीप 🦪"
+            A: "भारतीय प्रायद्वीप 🇮🇳",
+            B: "अरब प्रायद्वीप 🇸🇦",
+            C: "स्कैंडिनेवियाई प्रायद्वीप ❄️",
+            D: "अलास्का प्रायद्वीप 🏔️"
         },
         correctOption: "B",
-        explanation: "इटली के उत्तर में सिसिली द्वीप के पास स्थित स्ट्रॉम्बोली ज्वालामुखी से लगातार गैस और लावा निकलता रहता है, जिससे आसपास हमेशा रोशनी रहती है।",
-        caption: "भूमध्य सागर का प्रकाश स्तंभ / Lighthouse of the Mediterranean (Stromboli Volcano) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀\n\n#WorldGKQuiz #GeographyGK #Stromboli #WorldGeography"
+        explanation: "क्षेत्रफल के दृष्टिकोण से 'अरब प्रायद्वीप' विश्व का सबसे बड़ा प्रायद्वीप है, जो मुख्य रूप से पश्चिमी एशिया में स्थित है और तीन तरफ से पानी से घिरा है।",
+        caption: "विश्व का सबसे बड़ा प्रायद्वीप / Largest Peninsula in the World (Arabian Peninsula) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀\n\n#WorldGKQuiz #GeographyGK #ArabianPeninsula #WorldGeography"
     };
 
     function cleanAndMoveEmojiToEnd(text) {
@@ -460,97 +461,115 @@ Explanation: इटली के उत्तर में सिसिली �
                   .trim();
     }
 
-    /* SMART PARSER: EXTRACTS EVERYTHING FROM SINGLE TEXT BLOCK */
-    function parseAndGenerateCard() {
-        const raw = document.getElementById('raw-input-box').value;
+    /* SMART PARSER: EXTRACTS EVERYTHING AUTOMATICALLY FROM TEXT */
+    function generateFromRawText() {
+        const raw = document.getElementById('raw-paste-box').value.trim();
+        if (!raw) {
+            alert("कृपया टेक्स्ट बॉक्स में पूरा पोस्ट डेटा पेस्ट करें!");
+            return;
+        }
+
         const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
-        let qNum = 161;
+        let qNum = 166;
         let qText = "";
         let opts = { A: "", B: "", C: "", D: "" };
-        let correct = "B";
+        let correctOpt = "B";
         let explanation = "";
-        let captionText = "";
-        let tagsList = [];
-        let currentMode = null;
+        let captionLines = [];
+        let explanationLines = [];
+        let mode = "normal";
 
-        for (let line of lines) {
-            if (/^Q\.?\s*\d+/i.test(line) || (/^\d+[\.\)]/.test(line) && !/^[A-Da-d][\.\)]/.test(line))) {
-                let clean = line.replace(/^(Q\.?\s*\d*[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*/gi, '');
-                qText = clean;
-                let numMatch = line.match(/\d+/);
-                if (numMatch) qNum = parseInt(numMatch[0]);
-                currentMode = null;
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+
+            // 1. Header (QUIZ / GK / TRIVIA)
+            if ((line.includes("QUIZ") || line.includes("GK") || line.includes("TRIVIA")) && !line.startsWith("Q.")) {
+                currentHeaderTitle = line;
+                continue;
             }
-            else if (/^A[\)\.]/i.test(line)) {
-                opts.A = line.replace(/^A[\)\.]\s*/i, '');
-                currentMode = null;
+
+            // 2. Question number & text
+            if (line.match(/^Q\.?\s*\d+/i)) {
+                const matchNum = line.match(/Q\.?\s*(\d+)/i);
+                if (matchNum) qNum = parseInt(matchNum[1]);
+                qText = line.replace(/^Q\.?\s*\d+[\.\:\-\)]*\s*/i, '').trim();
+                mode = "normal";
+                continue;
             }
-            else if (/^B[\)\.]/i.test(line)) {
-                opts.B = line.replace(/^B[\)\.]\s*/i, '');
-                currentMode = null;
-            }
-            else if (/^C[\)\.]/i.test(line)) {
-                opts.C = line.replace(/^C[\)\.]\s*/i, '');
-                currentMode = null;
-            }
-            else if (/^D[\)\.]/i.test(line)) {
-                opts.D = line.replace(/^D[\)\.]\s*/i, '');
-                currentMode = null;
-            }
-            else if (/^Answer[:\-]/i.test(line) || /^सही उत्तर[:\-]/i.test(line)) {
-                let ansPart = line.replace(/^(Answer|सही उत्तर)[:\-]\s*/i, '');
-                let letMatch = ansPart.match(/([A-Da-d])/i);
-                if (letMatch) correct = letMatch[1].toUpperCase();
-                currentMode = null;
-            }
-            else if (/^Explanation[:\-]/i.test(line) || /^व्याख्या[:\-]/i.test(line)) {
-                explanation = line.replace(/^(Explanation|व्याख्या)[:\-]\s*/i, '');
-                currentMode = 'exp';
-            }
-            else if (/^Caption[:\-]/i.test(line)) {
-                captionText = line.replace(/^Caption[:\-]\s*/i, '');
-                currentMode = 'cap';
-            }
-            else if (line.startsWith('#')) {
-                tagsList.push(line);
-                currentMode = null;
-            }
-            else {
-                if (currentMode === 'exp') {
-                    explanation += " " + line;
-                } else if (currentMode === 'cap') {
-                    captionText += " " + line;
+
+            // 3. Options A, B, C, D
+            if (line.match(/^[A-Da-d][\)\.\-]/)) {
+                let key = line.charAt(0).toUpperCase();
+                let val = line.substring(2).trim();
+                if (opts[key] !== undefined) {
+                    opts[key] = cleanAndMoveEmojiToEnd(val);
                 }
+                mode = "normal";
+                continue;
+            }
+
+            // 4. Answer line
+            if (line.toLowerCase().startsWith("answer:") || line.includes("सही उत्तर:")) {
+                let ansText = line.replace(/^(answer:|सही उत्तर:)\s*/i, '').trim();
+                let matchLetter = ansText.match(/^([A-Da-d])/);
+                if (matchLetter) {
+                    correctOpt = matchLetter[1].toUpperCase();
+                }
+                mode = "normal";
+                continue;
+            }
+
+            // 5. Explanation line
+            if (line.toLowerCase().startsWith("explanation:") || line.startsWith("व्याख्या:")) {
+                mode = "explanation";
+                explanationLines.push(line.replace(/^(explanation:|व्याख्या:)\s*/i, '').trim());
+                continue;
+            }
+
+            // 6. Caption line
+            if (line.startsWith("Caption:")) {
+                mode = "caption";
+                captionLines.push(line.replace(/^Caption:\s*/, '').trim());
+                continue;
+            }
+
+            if (mode === "caption") {
+                captionLines.push(line);
+            } else if (mode === "explanation") {
+                explanationLines.push(line);
             }
         }
 
-        let finalCaption = captionText || (qText + " सही उत्तर कमेंट करें! 👇");
-        if (tagsList.length > 0) {
-            finalCaption += "\n\n" + tagsList.join(" ");
-        } else {
-            finalCaption += "\n\n" + currentSubjectHashtag;
-        }
+        if (explanationLines.length > 0) explanation = explanationLines.join(" ");
+        let finalCaption = captionLines.length > 0 ? captionLines.join("\n") : `${qText} का सही उत्तर कमेंट करें! 👇🔥\n\n${currentSubjectHashtag}`;
 
-        quizData = {
-            questionNumber: qNum,
-            questionText: sanitizeQuestion(qText || quizData.questionText),
-            options: {
-                A: cleanAndMoveEmojiToEnd(opts.A || quizData.options.A),
-                B: cleanAndMoveEmojiToEnd(opts.B || quizData.options.B),
-                C: cleanAndMoveEmojiToEnd(opts.C || quizData.options.C),
-                D: cleanAndMoveEmojiToEnd(opts.D || quizData.options.D)
-            },
-            correctOption: correct || "B",
-            explanation: explanation || quizData.explanation,
-            caption: finalCaption
-        };
+        quizData.questionNumber = qNum;
+        quizData.questionText = sanitizeQuestion(qText);
+        if (opts.A) quizData.options.A = opts.A;
+        if (opts.B) quizData.options.B = opts.B;
+        if (opts.C) quizData.options.C = opts.C;
+        if (opts.D) quizData.options.D = opts.D;
+        quizData.correctOption = correctOpt;
+        if (explanation) quizData.explanation = explanation;
+        quizData.caption = finalCaption;
 
-        saveToHistory(quizData);
+        saveToHistory({
+            questionNumber: quizData.questionNumber,
+            questionText: quizData.questionText,
+            options: quizData.options,
+            correctOption: quizData.correctOption,
+            explanation: quizData.explanation,
+            caption: quizData.caption,
+            headerTitle: currentHeaderTitle,
+            hashtag: currentSubjectHashtag,
+            rawText: raw
+        });
+
         updateCaptionText();
         saveAllSettings();
         redrawCanvas();
-        alert(`🎉 Q.${quizData.questionNumber} का कार्ड सफलतापूर्वक तैयार हो गया!`);
+        alert(`🎉 टेक्स्ट से Q.${qNum} का कार्ड और पोस्ट सफलतापूर्वक तैयार हो गई है!`);
     }
 
     function toggleAnswerMode() {
@@ -588,7 +607,6 @@ ${currentSubjectHashtag}`;
 
         document.querySelectorAll('.btn-sub').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
-        saveAllSettings();
         redrawCanvas();
     }
 
@@ -597,12 +615,12 @@ ${currentSubjectHashtag}`;
             subjectTopic: currentSubjectTopic,
             headerTitle: currentHeaderTitle,
             hashtag: currentSubjectHashtag,
-            rawText: document.getElementById('raw-input-box').value,
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
             isAnswerMode: document.getElementById('chk-answer-mode').checked,
+            rawText: document.getElementById('raw-paste-box').value,
             currentQuiz: quizData
         };
         localStorage.setItem(STORAGE_PREFS, JSON.stringify(prefs));
@@ -616,7 +634,6 @@ ${currentSubjectHashtag}`;
                 if (p.subjectTopic) currentSubjectTopic = p.subjectTopic;
                 if (p.headerTitle) currentHeaderTitle = p.headerTitle;
                 if (p.hashtag) currentSubjectHashtag = p.hashtag;
-                if (p.rawText) document.getElementById('raw-input-box').value = p.rawText;
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
                 if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
                 if (p.qSize) {
@@ -631,20 +648,17 @@ ${currentSubjectHashtag}`;
                     document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
                     isAnswerRevealed = p.isAnswerMode;
                 }
-                if (p.currentQuiz) quizData = p.currentQuiz;
-
-                document.querySelectorAll('.btn-sub').forEach(btn => {
-                    if (btn.innerText.includes(currentHeaderTitle.split(' ')[1] || "भूगोल")) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                });
+                if (p.rawText) {
+                    document.getElementById('raw-paste-box').value = p.rawText;
+                }
+                if (p.currentQuiz) {
+                    quizData = p.currentQuiz;
+                }
             } catch(e) {}
         }
     }
 
-    /* JSON EXPORT & IMPORT BACKUP */
+    /* JSON BACKUP & RESTORE */
     function exportJSONBackup() {
         const backupData = {
             prefs: localStorage.getItem(STORAGE_PREFS),
@@ -671,7 +685,7 @@ ${currentSubjectHashtag}`;
                     loadAllSettings();
                     updateCaptionText();
                     redrawCanvas();
-                    alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
+                    alert("✅ बैकअप सफलताપूर्वक रिस्टोर हो गया है!");
                 } catch (err) {
                     alert("त्रुटि: अमान्य JSON फ़ाइल!");
                 }
@@ -727,6 +741,10 @@ ${currentSubjectHashtag}`;
 
     function loadFromHistory(h) {
         quizData = JSON.parse(JSON.stringify(h));
+        if (h.rawText) document.getElementById('raw-paste-box').value = h.rawText;
+        if (h.headerTitle) currentHeaderTitle = h.headerTitle;
+        if (h.hashtag) currentSubjectHashtag = h.hashtag;
+
         updateCaptionText();
         redrawCanvas();
         alert(`✅ प्रश्न Q.${h.questionNumber} लोड कर दिया गया है!`);
@@ -896,7 +914,7 @@ ${currentSubjectHashtag}`;
         const prefixWidth = ctx.measureText(prefix).width;
         ctx.fillText(prefix, x, y);
 
-        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "ज्वालामुखी"];
+        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि"];
         
         ctx.font = `800 ${fontSize}px ${fontFam}`;
         const words = text.split(' ');
@@ -991,7 +1009,7 @@ ${currentSubjectHashtag}`;
 
     window.onload = function() {
         loadAllSettings();
-        parseAndGenerateCard();
+        generateFromRawText();
     };
 </script>
 
