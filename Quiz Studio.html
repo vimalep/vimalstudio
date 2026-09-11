@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viral Quiz Card Studio HD</title>
+    <title>Viral Quiz Card Studio HD (Manual Mode)</title>
     <!-- GOOGLE FONTS FOR HINDI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -61,7 +61,6 @@
             gap: 8px;
             align-items: center;
         }
-
         .row-flex > div { flex: 1; }
 
         label {
@@ -72,7 +71,7 @@
             margin-bottom: 3px;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 8px 10px;
             background: #0f172a;
@@ -82,7 +81,9 @@
             font-size: 13px;
             font-weight: 600;
             outline: none;
+            font-family: inherit;
         }
+        textarea { resize: vertical; min-height: 60px; }
 
         /* SUBJECT SELECTOR CHIPS */
         .subject-grid {
@@ -134,9 +135,9 @@
             accent-color: #10b981;
         }
 
-        /* GENERATE BUTTON */
-        .btn-generate {
-            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+        /* ACTION BUTTONS */
+        .btn-action {
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
             padding: 12px;
@@ -144,13 +145,30 @@
             font-size: 15px;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
         }
-        .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        .backup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .btn-backup {
+            background: #334155;
+            color: #f1f5f9;
+            border: 1px solid #475569;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
 
         /* CANVAS PREVIEW */
         .canvas-card {
@@ -168,7 +186,6 @@
             display: block;
         }
 
-        /* ACTION BUTTONS */
         .action-grid {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
@@ -203,7 +220,6 @@
             border: 1px solid #475569;
         }
 
-        /* EXPLANATION / CAPTION CARDS */
         .detail-card {
             background: #1e293b;
             border: 1px solid #334155;
@@ -282,14 +298,11 @@
 <body>
 
 <div class="main-wrap">
-    <div class="studio-header">⚡ Viral Quiz Card Studio Pro HD</div>
+    <div class="studio-header">⚡ Viral Quiz Card Studio Pro (Manual Mode)</div>
 
-    <!-- SETTINGS & CONTROLS -->
+    <!-- CONTROLS & MANUAL FORM -->
     <div class="control-box">
-        <div class="box-title">🔑 Google Gemini API Key</div>
-        <input type="password" id="gemini-key" placeholder="Paste Gemini API Key here..." onchange="saveAllSettings()">
-
-        <div class="box-title" style="margin-top: 4px;">🎯 विषय चुनें (Subject)</div>
+        <div class="box-title">🎯 विषय चुनें (Subject)</div>
         <div class="subject-grid">
             <button class="btn-sub active" onclick="setSubject('विश्व एवं भारत का भूगोल', '🌍 WORLD GK QUIZ 🌍', '#GeographyGK', this)">🌍 भूगोल</button>
             <button class="btn-sub" onclick="setSubject('भारतीय इतिहास एवं राष्ट्रीय आंदोलन', '📜 HISTORY GK QUIZ 📜', '#HistoryGK', this)">📜 इतिहास</button>
@@ -301,9 +314,59 @@
 
         <div class="row-flex">
             <div>
-                <label>ग्लोबल प्रश्न संख्या (#):</label>
-                <input type="number" id="global-counter-val" value="163" min="1" onchange="saveAllSettings(); redrawCanvas();">
+                <label>प्रश्न संख्या (#):</label>
+                <input type="number" id="input-qnum" value="165" min="1" oninput="updateLiveFields()">
             </div>
+            <div>
+                <label>सही उत्तर (Correct Option):</label>
+                <select id="input-correct" onchange="updateLiveFields()">
+                    <option value="A">Option A</option>
+                    <option value="B">Option B</option>
+                    <option value="C">Option C</option>
+                    <option value="D">Option D</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label>प्रश्न का टेक्स्ट (Question):</label>
+            <textarea id="input-qtext" oninput="updateLiveFields()">संविधान के किस अनुच्छेद के तहत 'समान कार्य के लिए समान वेतन' सुनिश्चित किया गया है? ⚖️</textarea>
+        </div>
+
+        <div class="row-flex">
+            <div>
+                <label>Option A:</label>
+                <input type="text" id="input-optA" value="अनुच्छेद 39(d) 📜" oninput="updateLiveFields()">
+            </div>
+            <div>
+                <label>Option B:</label>
+                <input type="text" id="input-optB" value="अनुच्छेद 41 🏛️" oninput="updateLiveFields()">
+            </div>
+        </div>
+        <div class="row-flex">
+            <div>
+                <label>Option C:</label>
+                <input type="text" id="input-optC" value="अनुच्छेद 42 ⚖️" oninput="updateLiveFields()">
+            </div>
+            <div>
+                <label>Option D:</label>
+                <input type="text" id="input-optD" value="अनुच्छेद 43 🌾" oninput="updateLiveFields()">
+            </div>
+        </div>
+
+        <div>
+            <label>विस्तृत व्याख्या (Explanation):</label>
+            <textarea id="input-exp" oninput="updateLiveFields()">राज्य के नीति निर्देशक सिद्धांतों के तहत अनुच्छेद 39(d) में यह प्रावधान है कि पुरुषों और महिलाओं दोनों के लिए समान कार्य हेतु समान वेतन मिले।</textarea>
+        </div>
+
+        <div>
+            <label>फेसबुक कैप्शन (FB Caption):</label>
+            <textarea id="input-caption" oninput="updateLiveFields()">समान कार्य के लिए समान वेतन / Equal Pay for Equal Work (Article 39d DPSP) का संविधान प्रश्न! कमेंट करें। 👇🚀
+
+#PolityQuiz #IndianConstitution #DPSP #IndianPolity</textarea>
+        </div>
+
+        <div class="row-flex">
             <div>
                 <label>फ़ॉन्ट स्टाइल:</label>
                 <select id="cfg-font" onchange="saveAllSettings(); redrawCanvas();">
@@ -313,40 +376,44 @@
                     <option value="'Poppins', sans-serif">Poppins (मॉडर्न)</option>
                 </select>
             </div>
-        </div>
-
-        <div class="row-flex">
             <div>
                 <label>बैकग्राउंड थीम:</label>
                 <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="#fef9c3">Soft Warm Yellow (हल्का पीला)</option>
-                    <option value="#f8fafc">Creamy Light (ऑफ-व्हाइट)</option>
-                    <option value="#ffffff">Pure White (सफेद)</option>
-                    <option value="#ecfdf5">Mint Light (हल्का हरा)</option>
+                    <option value="#fef9c3">Soft Warm Yellow</option>
+                    <option value="#f8fafc">Creamy Light</option>
+                    <option value="#ffffff">Pure White</option>
+                    <option value="#ecfdf5">Mint Light</option>
                 </select>
-            </div>
-            <div>
-                <label>प्रश्न फ़ॉन्ट साइज़: <span id="q-size-lbl" style="color:#38bdf8;">42</span>px</label>
-                <input type="range" id="cfg-q-size" min="30" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
         <div class="row-flex">
             <div>
-                <label>उत्तर (ऑप्शन) फ़ॉन्ट साइज़: <span id="opt-size-lbl" style="color:#38bdf8;">30</span>px</label>
+                <label>प्रश्न साइज़: <span id="q-size-lbl">42</span>px</label>
+                <input type="range" id="cfg-q-size" min="30" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+            </div>
+            <div>
+                <label>ऑप्शन साइज़: <span id="opt-size-lbl">30</span>px</label>
                 <input type="range" id="cfg-opt-size" min="24" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
-        <!-- ANSWER & EXPLANATION TOGGLE -->
+        <!-- ANSWER MODE TOGGLE -->
         <div class="answer-toggle-card" onclick="toggleAnswerMode()">
             <span class="toggle-text">✅ उत्तर व व्याख्या फोटो में दिखाएं (Answer Mode)</span>
             <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
         </div>
 
-        <button class="btn-generate" id="btn-ai-trigger" onclick="generateQuizPost()">
-            <span>✨ Generate Quiz Card (AI)</span>
+        <button class="btn-action" onclick="saveCurrentAndArchive()">
+            <span>💾 Save to History & Refresh Card</span>
         </button>
+
+        <!-- JSON BACKUP / RESTORE -->
+        <div class="backup-grid">
+            <button class="btn-backup" onclick="exportJSONBackup()">📤 Export Backup (JSON)</button>
+            <button class="btn-backup" onclick="document.getElementById('import-file').click()">📥 Import Backup (JSON)</button>
+            <input type="file" id="import-file" style="display:none" accept=".json" onchange="importJSONBackup(event)">
+        </div>
     </div>
 
     <!-- CANVAS PREVIEW (1080 x 1350) -->
@@ -354,28 +421,28 @@
         <canvas id="quizCanvas" width="1080" height="1350"></canvas>
     </div>
 
-    <!-- ACTION BUTTONS: DIRECT SHARE, DOWNLOAD, HISTORY -->
+    <!-- ACTIONS -->
     <div class="action-grid">
-        <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share (WhatsApp / FB)</button>
-        <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD Image</button>
+        <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share</button>
+        <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD</button>
         <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 सहेजे गए पुराने प्रश्न (Question Bank)</button>
     </div>
 
-    <!-- PRIVATE EXPLANATION BOX (FOR USER) -->
+    <!-- PRIVATE EXPLANATION -->
     <div class="detail-card">
         <div class="box-title" style="color: #34d399;">💡 उत्तर एवं विस्तृत व्याख्या:</div>
-        <div class="detail-text" id="private-explanation">प्रश्नों के लोड होते ही यहाँ उत्तर का पूरा विस्तृत विवरण आ जाएगा।</div>
+        <div class="detail-text" id="private-explanation">यहाँ व्याख्या दिखाई देगी।</div>
     </div>
 
     <!-- FB CAPTION BOX -->
     <div class="detail-card">
-        <div class="box-title" style="color: #38bdf8;">📝 Facebook Caption (केवल 1 English Hashtag):</div>
+        <div class="box-title" style="color: #38bdf8;">📝 Facebook Caption:</div>
         <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
         <button class="btn-sub" style="background:#0284c7; color:white; border:none; padding:8px; margin-top:4px;" onclick="copyCaption()">📋 Copy Caption</button>
     </div>
 </div>
 
-<!-- HISTORY ARCHIVE MODAL -->
+<!-- HISTORY MODAL -->
 <div id="history-modal" onclick="closeHistoryModal()">
     <div class="history-content" onclick="event.stopPropagation()">
         <div class="history-header">
@@ -390,26 +457,26 @@
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_STUDIO_PERSISTENT_PREFS_V8";
-    const STORAGE_HISTORY = "QUIZ_STUDIO_ARCHIVE_ITEMS_V8";
+    const STORAGE_PREFS = "QUIZ_MANUAL_PREFS_V1";
+    const STORAGE_HISTORY = "QUIZ_MANUAL_HISTORY_V1";
 
-    let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
-    let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
-    let currentSubjectHashtag = "#GeographyGK";
+    let currentSubjectTopic = "भारतीय संविधान एवं राजव्यवस्था";
+    let currentHeaderTitle = "⚖️ POLITY GK QUIZ ⚖️";
+    let currentSubjectHashtag = "#PolityQuiz";
     let isAnswerRevealed = false;
 
     let quizData = {
-        questionNumber: 163,
-        questionText: "निम्नलिखित में से कौन-सी पर्वत श्रेणी भारत के केवल एक ही राज्य में विस्तृत है?",
+        questionNumber: 165,
+        questionText: "संविधान के किस अनुच्छेद के तहत 'समान कार्य के लिए समान वेतन' सुनिश्चित किया गया है?",
         options: {
-            A: "अरावली ⛰️",
-            B: "अजंता 🏞️",
-            C: "सतपुड़ा 🌄",
-            D: "सह्याद्रि 🌲"
+            A: "अनुच्छेद 39(d) 📜",
+            B: "अनुच्छेद 41 🏛️",
+            C: "अनुच्छेद 42 ⚖️",
+            D: "अनुच्छेद 43 🌾"
         },
-        correctOption: "B",
-        explanation: "अजंता पर्वत श्रेणी महाराष्ट्र के औरंगाबाद (छत्रपति संभाजीनगर) जिले में स्थित है। इसका विस्तार केवल महाराष्ट्र राज्य में ही है, जबकि अरावली, सतपुड़ा और सह्याद्रि एक से अधिक राज्यों में फैले हुए हैं।",
-        caption: "अजंता पर्वत श्रेणी से जुड़ा यह महत्वपूर्ण प्रश्न कई बार परीक्षाओं में पूछा गया है! अपना सही उत्तर कमेंट में बताएं। 👇🔥\n\n#GeographyGK"
+        correctOption: "A",
+        explanation: "राज्य के नीति निर्देशक सिद्धांतों के तहत अनुच्छेद 39(d) में यह प्रावधान है कि पुरुषों और महिलाओं दोनों के लिए समान कार्य हेतु समान वेतन मिले।",
+        caption: "समान कार्य के लिए समान वेतन / Equal Pay for Equal Work (Article 39d DPSP) का संविधान प्रश्न! कमेंट करें। 👇🚀\n\n#PolityQuiz #IndianConstitution #DPSP #IndianPolity"
     };
 
     function cleanAndMoveEmojiToEnd(text) {
@@ -430,6 +497,37 @@
                   .replace(/^प्रश्न\s*\d*[\.\:\-\)]*\s*/gi, '')
                   .replace(/^[A-Za-z]\s*[\.\:\-\)]\s*/gi, '')
                   .trim();
+    }
+
+    function updateLiveFields() {
+        quizData.questionNumber = parseInt(document.getElementById('input-qnum').value) || 1;
+        quizData.questionText = sanitizeQuestion(document.getElementById('input-qtext').value);
+        quizData.options.A = cleanAndMoveEmojiToEnd(document.getElementById('input-optA').value);
+        quizData.options.B = cleanAndMoveEmojiToEnd(document.getElementById('input-optB').value);
+        quizData.options.C = cleanAndMoveEmojiToEnd(document.getElementById('input-optC').value);
+        quizData.options.D = cleanAndMoveEmojiToEnd(document.getElementById('input-optD').value);
+        quizData.correctOption = document.getElementById('input-correct').value;
+        quizData.explanation = document.getElementById('input-exp').value;
+        quizData.caption = document.getElementById('input-caption').value;
+
+        updateCaptionText();
+        saveAllSettings();
+        redrawCanvas();
+    }
+
+    function saveCurrentAndArchive() {
+        updateLiveFields();
+        saveToHistory({
+            questionNumber: quizData.questionNumber,
+            questionText: quizData.questionText,
+            options: quizData.options,
+            correctOption: quizData.correctOption,
+            explanation: quizData.explanation,
+            caption: quizData.caption,
+            headerTitle: currentHeaderTitle,
+            hashtag: currentSubjectHashtag
+        });
+        alert(`✅ प्रश्न Q.${quizData.questionNumber} सेव हो गया है!`);
     }
 
     function toggleAnswerMode() {
@@ -457,6 +555,7 @@ ${currentSubjectHashtag}`;
         } else {
             document.getElementById('fb-caption-box').innerText = quizData.caption;
         }
+        document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
     }
 
     function setSubject(topicName, headerTitle, hashtag, btnElem) {
@@ -466,45 +565,33 @@ ${currentSubjectHashtag}`;
 
         document.querySelectorAll('.btn-sub').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
-        updateCaptionText();
-        saveAllSettings();
-        redrawCanvas();
+        updateLiveFields();
     }
 
     function saveAllSettings() {
         const prefs = {
-            apiKey: document.getElementById('gemini-key').value.trim(),
             subjectTopic: currentSubjectTopic,
             headerTitle: currentHeaderTitle,
             hashtag: currentSubjectHashtag,
-            counter: parseInt(document.getElementById('global-counter-val').value) || 163,
+            counter: quizData.questionNumber,
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
-            isAnswerMode: document.getElementById('chk-answer-mode').checked
+            isAnswerMode: document.getElementById('chk-answer-mode').checked,
+            currentQuiz: quizData
         };
         localStorage.setItem(STORAGE_PREFS, JSON.stringify(prefs));
-        if (prefs.apiKey) localStorage.setItem("GEMINI_API_KEY_LOCAL", prefs.apiKey);
-        quizData.questionNumber = prefs.counter;
     }
 
     function loadAllSettings() {
         const saved = localStorage.getItem(STORAGE_PREFS);
-        const savedApiKey = localStorage.getItem("GEMINI_API_KEY_LOCAL");
-        if (savedApiKey) document.getElementById('gemini-key').value = savedApiKey;
-
         if (saved) {
             try {
                 const p = JSON.parse(saved);
-                if (p.apiKey) document.getElementById('gemini-key').value = p.apiKey;
                 if (p.subjectTopic) currentSubjectTopic = p.subjectTopic;
                 if (p.headerTitle) currentHeaderTitle = p.headerTitle;
                 if (p.hashtag) currentSubjectHashtag = p.hashtag;
-                if (p.counter) {
-                    document.getElementById('global-counter-val').value = p.counter;
-                    quizData.questionNumber = p.counter;
-                }
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
                 if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
                 if (p.qSize) {
@@ -519,9 +606,21 @@ ${currentSubjectHashtag}`;
                     document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
                     isAnswerRevealed = p.isAnswerMode;
                 }
+                if (p.currentQuiz) {
+                    quizData = p.currentQuiz;
+                    document.getElementById('input-qnum').value = quizData.questionNumber;
+                    document.getElementById('input-qtext').value = quizData.questionText;
+                    document.getElementById('input-optA').value = quizData.options.A;
+                    document.getElementById('input-optB').value = quizData.options.B;
+                    document.getElementById('input-optC').value = quizData.options.C;
+                    document.getElementById('input-optD').value = quizData.options.D;
+                    document.getElementById('input-correct').value = quizData.correctOption;
+                    document.getElementById('input-exp').value = quizData.explanation;
+                    document.getElementById('input-caption').value = quizData.caption;
+                }
 
                 document.querySelectorAll('.btn-sub').forEach(btn => {
-                    if (btn.innerText.includes(currentHeaderTitle.split(' ')[1] || "भूगोल")) {
+                    if (btn.innerText.includes(currentHeaderTitle.split(' ')[1] || "राजव्यवस्था")) {
                         btn.classList.add('active');
                     } else {
                         btn.classList.remove('active');
@@ -531,11 +630,47 @@ ${currentSubjectHashtag}`;
         }
     }
 
+    /* JSON EXPORT & IMPORT BACKUP */
+    function exportJSONBackup() {
+        const backupData = {
+            prefs: localStorage.getItem(STORAGE_PREFS),
+            history: localStorage.getItem(STORAGE_HISTORY)
+        };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `QuizStudio_Backup_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    function importJSONBackup(event) {
+        const fileReader = new FileReader();
+        if (event.target.files[0]) {
+            fileReader.readAsText(event.target.files[0], "UTF-8");
+            fileReader.onload = (e) => {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.prefs) localStorage.setItem(STORAGE_PREFS, parsed.prefs);
+                    if (parsed.history) localStorage.setItem(STORAGE_HISTORY, parsed.history);
+                    loadAllSettings();
+                    updateCaptionText();
+                    redrawCanvas();
+                    alert("✅ बैकअप सफलताપूर्वक रिस्टोर हो गया है!");
+                } catch (err) {
+                    alert("त्रुटि: अमान्य JSON फ़ाइल!");
+                }
+            };
+        }
+    }
+
     function saveToHistory(item) {
         let history = [];
         try {
             history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
         } catch(e) {}
+        history = history.filter(h => h.questionNumber !== item.questionNumber);
         history.unshift(item);
         if (history.length > 100) history.pop();
         localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
@@ -578,108 +713,24 @@ ${currentSubjectHashtag}`;
 
     function loadFromHistory(h) {
         quizData = JSON.parse(JSON.stringify(h));
-        document.getElementById('global-counter-val').value = h.questionNumber;
-        document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
+        document.getElementById('input-qnum').value = h.questionNumber;
+        document.getElementById('input-qtext').value = h.questionText;
+        document.getElementById('input-optA').value = h.options.A;
+        document.getElementById('input-optB').value = h.options.B;
+        document.getElementById('input-optC').value = h.options.C;
+        document.getElementById('input-optD').value = h.options.D;
+        document.getElementById('input-correct').value = h.correctOption;
+        document.getElementById('input-exp').value = h.explanation;
+        document.getElementById('input-caption').value = h.caption;
+        if (h.headerTitle) currentHeaderTitle = h.headerTitle;
+        if (h.hashtag) currentSubjectHashtag = h.hashtag;
+
         updateCaptionText();
         redrawCanvas();
         alert(`✅ प्रश्न Q.${h.questionNumber} लोड कर दिया गया है!`);
     }
 
-    async function generateQuizPost() {
-        let apiKey = document.getElementById('gemini-key').value.trim() || localStorage.getItem("GEMINI_API_KEY_LOCAL");
-        if (!apiKey) {
-            alert("कृपया पहले Google Gemini API Key डालें!");
-            return;
-        }
-
-        const currentNum = parseInt(document.getElementById('global-counter-val').value) || 163;
-        const btn = document.getElementById('btn-ai-trigger');
-        btn.disabled = true;
-        btn.innerHTML = `<span>⏳ AI प्रश्न तैयार कर रहा है...</span>`;
-
-        const prompt = `Act as an expert competitive exam Hindi quiz maker.
-Generate 1 high-yield, authentic exam question for topic: "${currentSubjectTopic}".
-STRICT RULES:
-1. PURE HINDI ONLY: Do NOT use any English words or terms in parentheses.
-2. Numbering: Do NOT include question number or 'Q.' in the question text.
-3. Options: Provide 4 realistic options (A, B, C, D). Put emojis strictly at the END of each option string.
-4. Explanation: Provide a comprehensive detailed explanation in pure Hindi.
-5. Caption: Write an engaging 2-line Facebook post caption inviting comments, ending with EXACTLY ONE hashtag in English only: "${currentSubjectHashtag}".
-
-Output strictly raw valid JSON (no markdown formatting, no code fences):
-{
-  "question": "प्रश्न का शुद्ध हिंदी टेक्स्ट यहाँ लिखें?",
-  "options": {
-    "A": "पहला विकल्प",
-    "B": "दूसरा विकल्प",
-    "C": "तीसरा विकल्प",
-    "D": "चौथा विकल्प"
-  },
-  "correct": "B",
-  "explanation": "विस्तृत व्याख्या...",
-  "caption": "2-लाइन फेसबुक कैप्शन...\\n\\n${currentSubjectHashtag}"
-}`;
-
-        try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-            });
-
-            if (!res.ok) {
-                const errData = await res.json();
-                throw new Error(errData.error?.message || `HTTP ${res.status}`);
-            }
-
-            const data = await res.json();
-            let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-            const jsonMatch = text.match(/\{[\s\S]*\}/);
-            if (jsonMatch) text = jsonMatch[0];
-
-            const parsed = JSON.parse(text);
-
-            quizData.questionNumber = currentNum;
-            quizData.questionText = sanitizeQuestion(parsed.question);
-            quizData.options = {
-                A: cleanAndMoveEmojiToEnd(parsed.options.A),
-                B: cleanAndMoveEmojiToEnd(parsed.options.B),
-                C: cleanAndMoveEmojiToEnd(parsed.options.C),
-                D: cleanAndMoveEmojiToEnd(parsed.options.D)
-            };
-            quizData.correctOption = parsed.correct || "B";
-            quizData.explanation = parsed.explanation || "व्याख्या उपलब्ध नहीं है।";
-            quizData.caption = parsed.caption || `इस महत्वपूर्ण प्रश्न का उत्तर कमेंट करें! 👇🔥\n\n${currentSubjectHashtag}`;
-
-            saveToHistory({
-                questionNumber: currentNum,
-                questionText: quizData.questionText,
-                options: quizData.options,
-                correctOption: quizData.correctOption,
-                explanation: quizData.explanation,
-                caption: quizData.caption,
-                date: new Date().toLocaleDateString('hi-IN')
-            });
-
-            document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
-            updateCaptionText();
-
-            const nextNum = currentNum + 1;
-            document.getElementById('global-counter-val').value = nextNum;
-            saveAllSettings();
-
-            redrawCanvas();
-            alert(`🎉 प्रश्न Q.${currentNum} तैयार हो गया!`);
-        } catch (err) {
-            alert("त्रुटि: " + err.message);
-            console.error(err);
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = `<span>✨ Generate Quiz Card (AI)</span>`;
-        }
-    }
-
-    /* REDRAW CANVAS WITH INCREASED FIXED GAP */
+    /* CANVAS REDRAW WITH EXACT PREVIOUS BALANCED STYLING */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
@@ -688,11 +739,9 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
 
         ctx.clearRect(0, 0, 1080, 1350);
 
-        // 1. Outer Background
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, 1080, 1350);
 
-        // 2. White Card Shell
         const cardX = 42;
         const cardY = 42;
         const cardW = 996;
@@ -704,12 +753,11 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.lineWidth = 3;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // 3. Faint Watermark (clipped inside card)
+        // Watermark
         ctx.save();
         ctx.beginPath();
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
         ctx.clip();
-
         ctx.rotate(-28 * Math.PI / 180);
         ctx.fillStyle = "rgba(15, 23, 42, 0.02)";
         ctx.font = "900 42px 'Poppins', sans-serif";
@@ -720,14 +768,14 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
         ctx.restore();
 
-        // 4. SUBJECT TITLE: 60px Bold
+        // Header Title (60px)
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
         ctx.font = `900 60px ${fontFam}`;
         ctx.fillText(currentHeaderTitle, 540, 118);
 
-        // 5. EXAM PREPARATION PILL: 26px Bold
+        // Exam Preparation Pill (26px)
         const pillW = 500;
         const pillH = 56;
         const pillX = (1080 - pillW) / 2;
@@ -742,13 +790,13 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.font = "900 26px 'Poppins', sans-serif";
         ctx.fillText("EXAM PREPARATION", 540, pillY + (pillH / 2));
 
-        // 6. LOCKED GAP: INCREASED TO 72px TO PREVENT OVERLAP
+        // Locked Gap: 72px
         ctx.textAlign = "left";
-        const fixedGap = 72; // Increased gap for breathing room
-        const qStartY = pillY + pillH + fixedGap; // Fixed anchor at 290px
+        const fixedGap = 72;
+        const qStartY = pillY + pillH + fixedGap;
         const qEndY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
 
-        // 7. 4 COLORED OPTIONS CONTAINERS
+        // 4 Options Containers
         const optStartY = qEndY + 36;
         const optGap = 124;
         const optW = 890;
@@ -783,7 +831,6 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             ctx.lineWidth = (isAnswerRevealed && isCorrect) ? 4 : 2.5;
             roundRect(ctx, optX, curY, optW, optH, 20, null, true);
 
-            // Left Badge Box
             roundRect(ctx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
             ctx.fillStyle = "#ffffff";
             ctx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
@@ -791,7 +838,6 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             ctx.textBaseline = "middle";
             ctx.fillText(badgeText, optX + 47, curY + (optH / 2));
 
-            // Option Text (EMOJI AT THE END)
             ctx.textAlign = "left";
             ctx.fillStyle = (isAnswerRevealed && isCorrect) ? "#14532d" : st.text;
             ctx.font = `700 ${optSize}px ${fontFam}`;
@@ -799,7 +845,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
             ctx.fillText(optString, optX + 96, curY + (optH / 2));
         });
 
-        // 8. FOOTER SECTION: HOOK BANNER
+        // Footer Section
         const footerY = optStartY + (4 * optGap) + 38;
 
         if (isAnswerRevealed) {
@@ -840,7 +886,6 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
     }
 
-    /* TOP-ALIGNED QUESTION RENDERER: STOPS UPWARD EXPANSION */
     function drawColorfulQuestion(ctx, num, text, x, y, maxW, fontSize, fontFam) {
         ctx.textBaseline = "top";
         ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
@@ -849,7 +894,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         const prefixWidth = ctx.measureText(prefix).width;
         ctx.fillText(prefix, x, y);
 
-        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं"];
+        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान"];
         
         ctx.font = `800 ${fontSize}px ${fontFam}`;
         const words = text.split(' ');
@@ -913,26 +958,16 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
     async function shareDirectly() {
         const caption = document.getElementById('fb-caption-box').innerText;
         canvas.toBlob(async (blob) => {
-            if (!blob) {
-                alert("इमेज तैयार नहीं हो सकी!");
-                return;
-            }
+            if (!blob) { alert("इमेज तैयार नहीं हो सकी!"); return; }
             const file = new File([blob], `Quiz_Q${quizData.questionNumber}.png`, { type: 'image/png' });
-
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 try {
-                    await navigator.share({
-                        title: `Quiz Q.${quizData.questionNumber}`,
-                        text: caption,
-                        files: [file]
-                    });
-                } catch (err) {
-                    console.log("Share cancelled or failed", err);
-                }
+                    await navigator.share({ title: `Quiz Q.${quizData.questionNumber}`, text: caption, files: [file] });
+                } catch (err) {}
             } else {
                 downloadImage();
                 copyCaption();
-                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड हो गई है और कैप्शन कॉपी कर लिया गया है!");
+                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड और कैप्शन कॉपी हो गया है!");
             }
         });
     }
@@ -954,7 +989,6 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
 
     window.onload = function() {
         loadAllSettings();
-        document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
         updateCaptionText();
         redrawCanvas();
     };
