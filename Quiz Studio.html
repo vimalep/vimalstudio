@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viral Quiz Card Studio HD (Manual Mode)</title>
+    <title>Viral Quiz Card Studio HD (Smart Text Mode)</title>
     <!-- GOOGLE FONTS FOR HINDI -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -71,7 +71,7 @@
             margin-bottom: 3px;
         }
 
-        input, select, textarea {
+        select, textarea {
             width: 100%;
             padding: 8px 10px;
             background: #0f172a;
@@ -83,7 +83,7 @@
             outline: none;
             font-family: inherit;
         }
-        textarea { resize: vertical; min-height: 60px; }
+        textarea { resize: vertical; min-height: 180px; font-family: monospace; font-size: 12px; line-height: 1.4; }
 
         /* SUBJECT SELECTOR CHIPS */
         .subject-grid {
@@ -137,7 +137,7 @@
 
         /* ACTION BUTTONS */
         .btn-action {
-            background: linear-gradient(135deg, #10b981, #059669);
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
             color: white;
             border: none;
             padding: 12px;
@@ -145,7 +145,7 @@
             font-size: 15px;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -298,9 +298,9 @@
 <body>
 
 <div class="main-wrap">
-    <div class="studio-header">⚡ Viral Quiz Card Studio Pro (Manual Mode)</div>
+    <div class="studio-header">⚡ Viral Quiz Card Studio Pro (Smart Text Mode)</div>
 
-    <!-- CONTROLS & MANUAL FORM -->
+    <!-- CONTROLS & SMART TEXT BOX -->
     <div class="control-box">
         <div class="box-title">🎯 विषय चुनें (Subject)</div>
         <div class="subject-grid">
@@ -312,58 +312,19 @@
             <button class="btn-sub" onclick="setSubject('पर्यावरण एवं पारिस्थितिकी', '🌿 ENVIRONMENT QUIZ 🌿', '#EnvironmentGK', this)">🌿 पर्यावरण</button>
         </div>
 
-        <div class="row-flex">
-            <div>
-                <label>प्रश्न संख्या (#):</label>
-                <input type="number" id="input-qnum" value="165" min="1" oninput="updateLiveFields()">
-            </div>
-            <div>
-                <label>सही उत्तर (Correct Option):</label>
-                <select id="input-correct" onchange="updateLiveFields()">
-                    <option value="A">Option A</option>
-                    <option value="B">Option B</option>
-                    <option value="C">Option C</option>
-                    <option value="D">Option D</option>
-                </select>
-            </div>
-        </div>
-
         <div>
-            <label>प्रश्न का टेक्स्ट (Question):</label>
-            <textarea id="input-qtext" oninput="updateLiveFields()">संविधान के किस अनुच्छेद के तहत 'समान कार्य के लिए समान वेतन' सुनिश्चित किया गया है? ⚖️</textarea>
-        </div>
-
-        <div class="row-flex">
-            <div>
-                <label>Option A:</label>
-                <input type="text" id="input-optA" value="अनुच्छेद 39(d) 📜" oninput="updateLiveFields()">
-            </div>
-            <div>
-                <label>Option B:</label>
-                <input type="text" id="input-optB" value="अनुच्छेद 41 🏛️" oninput="updateLiveFields()">
-            </div>
-        </div>
-        <div class="row-flex">
-            <div>
-                <label>Option C:</label>
-                <input type="text" id="input-optC" value="अनुच्छेद 42 ⚖️" oninput="updateLiveFields()">
-            </div>
-            <div>
-                <label>Option D:</label>
-                <input type="text" id="input-optD" value="अनुच्छेद 43 🌾" oninput="updateLiveFields()">
-            </div>
-        </div>
-
-        <div>
-            <label>विस्तृत व्याख्या (Explanation):</label>
-            <textarea id="input-exp" oninput="updateLiveFields()">राज्य के नीति निर्देशक सिद्धांतों के तहत अनुच्छेद 39(d) में यह प्रावधान है कि पुरुषों और महिलाओं दोनों के लिए समान कार्य हेतु समान वेतन मिले।</textarea>
-        </div>
-
-        <div>
-            <label>फेसबुक कैप्शन (FB Caption):</label>
-            <textarea id="input-caption" oninput="updateLiveFields()">समान कार्य के लिए समान वेतन / Equal Pay for Equal Work (Article 39d DPSP) का संविधान प्रश्न! कमेंट करें। 👇🚀
-
-#PolityQuiz #IndianConstitution #DPSP #IndianPolity</textarea>
+            <label>📥 यहाँ अपना पूरा टेक्स्ट एक साथ पेस्ट करें:</label>
+            <textarea id="raw-input-box" placeholder="Q.161 ...\nA) ...\nB) ...\nC) ...\nD) ...\nAnswer: B\nExplanation: ...">Q.161 "स्ट्रॉम्बोली" (Stromboli) ज्वालामुखी को किस नाम से जाना जाता है? 🌋
+A) प्रशांत महासागर का चौराहा 🌊
+B) भूमध्य सागर का प्रकाश स्तंभ (Lighthouse) 💡
+C) विश्व का सुरक्षा वाल्व 🛡️
+D) मोतियों का द्वीप 🦪
+👇 सही उत्तर तुरंत Comment करें! 🔥
+❤️ Like | ➕ Follow 🎯
+Caption: भूमध्य सागर का प्रकाश स्तंभ / Lighthouse of the Mediterranean (Stromboli Volcano) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀
+#WorldGKQuiz #GeographyGK #Stromboli #WorldGeography
+Answer: B) भूमध्य सागर का प्रकाश स्तंभ (Lighthouse) 💡
+Explanation: इटली के उत्तर में सिसिली द्वीप के पास स्थित स्ट्रॉम्बोली ज्वालामुखी से लगातार गैस और लावा निकलता रहता है, जिससे आसपास हमेशा रोशनी रहती है।</textarea>
         </div>
 
         <div class="row-flex">
@@ -404,8 +365,8 @@
             <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
         </div>
 
-        <button class="btn-action" onclick="saveCurrentAndArchive()">
-            <span>💾 Save to History & Refresh Card</span>
+        <button class="btn-action" onclick="parseAndGenerateCard()">
+            <span>⚡ Parse & Generate Card</span>
         </button>
 
         <!-- JSON BACKUP / RESTORE -->
@@ -457,26 +418,26 @@
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_MANUAL_PREFS_V1";
-    const STORAGE_HISTORY = "QUIZ_MANUAL_HISTORY_V1";
+    const STORAGE_PREFS = "QUIZ_SMART_PREFS_V1";
+    const STORAGE_HISTORY = "QUIZ_SMART_HISTORY_V1";
 
-    let currentSubjectTopic = "भारतीय संविधान एवं राजव्यवस्था";
-    let currentHeaderTitle = "⚖️ POLITY GK QUIZ ⚖️";
-    let currentSubjectHashtag = "#PolityQuiz";
+    let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
+    let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
+    let currentSubjectHashtag = "#GeographyGK";
     let isAnswerRevealed = false;
 
     let quizData = {
-        questionNumber: 165,
-        questionText: "संविधान के किस अनुच्छेद के तहत 'समान कार्य के लिए समान वेतन' सुनिश्चित किया गया है?",
+        questionNumber: 161,
+        questionText: '"स्ट्रॉम्बोली" (Stromboli) ज्वालामुखी को किस नाम से जाना जाता है?',
         options: {
-            A: "अनुच्छेद 39(d) 📜",
-            B: "अनुच्छेद 41 🏛️",
-            C: "अनुच्छेद 42 ⚖️",
-            D: "अनुच्छेद 43 🌾"
+            A: "प्रशांत महासागर का चौराहा 🌊",
+            B: "भूमध्य सागर का प्रकाश स्तंभ (Lighthouse) 💡",
+            C: "विश्व का सुरक्षा वाल्व 🛡️",
+            D: "मोतियों का द्वीप 🦪"
         },
-        correctOption: "A",
-        explanation: "राज्य के नीति निर्देशक सिद्धांतों के तहत अनुच्छेद 39(d) में यह प्रावधान है कि पुरुषों और महिलाओं दोनों के लिए समान कार्य हेतु समान वेतन मिले।",
-        caption: "समान कार्य के लिए समान वेतन / Equal Pay for Equal Work (Article 39d DPSP) का संविधान प्रश्न! कमेंट करें। 👇🚀\n\n#PolityQuiz #IndianConstitution #DPSP #IndianPolity"
+        correctOption: "B",
+        explanation: "इटली के उत्तर में सिसिली द्वीप के पास स्थित स्ट्रॉम्बोली ज्वालामुखी से लगातार गैस और लावा निकलता रहता है, जिससे आसपास हमेशा रोशनी रहती है।",
+        caption: "भूमध्य सागर का प्रकाश स्तंभ / Lighthouse of the Mediterranean (Stromboli Volcano) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀\n\n#WorldGKQuiz #GeographyGK #Stromboli #WorldGeography"
     };
 
     function cleanAndMoveEmojiToEnd(text) {
@@ -499,35 +460,97 @@
                   .trim();
     }
 
-    function updateLiveFields() {
-        quizData.questionNumber = parseInt(document.getElementById('input-qnum').value) || 1;
-        quizData.questionText = sanitizeQuestion(document.getElementById('input-qtext').value);
-        quizData.options.A = cleanAndMoveEmojiToEnd(document.getElementById('input-optA').value);
-        quizData.options.B = cleanAndMoveEmojiToEnd(document.getElementById('input-optB').value);
-        quizData.options.C = cleanAndMoveEmojiToEnd(document.getElementById('input-optC').value);
-        quizData.options.D = cleanAndMoveEmojiToEnd(document.getElementById('input-optD').value);
-        quizData.correctOption = document.getElementById('input-correct').value;
-        quizData.explanation = document.getElementById('input-exp').value;
-        quizData.caption = document.getElementById('input-caption').value;
+    /* SMART PARSER: EXTRACTS EVERYTHING FROM SINGLE TEXT BLOCK */
+    function parseAndGenerateCard() {
+        const raw = document.getElementById('raw-input-box').value;
+        const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
+        let qNum = 161;
+        let qText = "";
+        let opts = { A: "", B: "", C: "", D: "" };
+        let correct = "B";
+        let explanation = "";
+        let captionText = "";
+        let tagsList = [];
+        let currentMode = null;
+
+        for (let line of lines) {
+            if (/^Q\.?\s*\d+/i.test(line) || (/^\d+[\.\)]/.test(line) && !/^[A-Da-d][\.\)]/.test(line))) {
+                let clean = line.replace(/^(Q\.?\s*\d*[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*/gi, '');
+                qText = clean;
+                let numMatch = line.match(/\d+/);
+                if (numMatch) qNum = parseInt(numMatch[0]);
+                currentMode = null;
+            }
+            else if (/^A[\)\.]/i.test(line)) {
+                opts.A = line.replace(/^A[\)\.]\s*/i, '');
+                currentMode = null;
+            }
+            else if (/^B[\)\.]/i.test(line)) {
+                opts.B = line.replace(/^B[\)\.]\s*/i, '');
+                currentMode = null;
+            }
+            else if (/^C[\)\.]/i.test(line)) {
+                opts.C = line.replace(/^C[\)\.]\s*/i, '');
+                currentMode = null;
+            }
+            else if (/^D[\)\.]/i.test(line)) {
+                opts.D = line.replace(/^D[\)\.]\s*/i, '');
+                currentMode = null;
+            }
+            else if (/^Answer[:\-]/i.test(line) || /^सही उत्तर[:\-]/i.test(line)) {
+                let ansPart = line.replace(/^(Answer|सही उत्तर)[:\-]\s*/i, '');
+                let letMatch = ansPart.match(/([A-Da-d])/i);
+                if (letMatch) correct = letMatch[1].toUpperCase();
+                currentMode = null;
+            }
+            else if (/^Explanation[:\-]/i.test(line) || /^व्याख्या[:\-]/i.test(line)) {
+                explanation = line.replace(/^(Explanation|व्याख्या)[:\-]\s*/i, '');
+                currentMode = 'exp';
+            }
+            else if (/^Caption[:\-]/i.test(line)) {
+                captionText = line.replace(/^Caption[:\-]\s*/i, '');
+                currentMode = 'cap';
+            }
+            else if (line.startsWith('#')) {
+                tagsList.push(line);
+                currentMode = null;
+            }
+            else {
+                if (currentMode === 'exp') {
+                    explanation += " " + line;
+                } else if (currentMode === 'cap') {
+                    captionText += " " + line;
+                }
+            }
+        }
+
+        let finalCaption = captionText || (qText + " सही उत्तर कमेंट करें! 👇");
+        if (tagsList.length > 0) {
+            finalCaption += "\n\n" + tagsList.join(" ");
+        } else {
+            finalCaption += "\n\n" + currentSubjectHashtag;
+        }
+
+        quizData = {
+            questionNumber: qNum,
+            questionText: sanitizeQuestion(qText || quizData.questionText),
+            options: {
+                A: cleanAndMoveEmojiToEnd(opts.A || quizData.options.A),
+                B: cleanAndMoveEmojiToEnd(opts.B || quizData.options.B),
+                C: cleanAndMoveEmojiToEnd(opts.C || quizData.options.C),
+                D: cleanAndMoveEmojiToEnd(opts.D || quizData.options.D)
+            },
+            correctOption: correct || "B",
+            explanation: explanation || quizData.explanation,
+            caption: finalCaption
+        };
+
+        saveToHistory(quizData);
         updateCaptionText();
         saveAllSettings();
         redrawCanvas();
-    }
-
-    function saveCurrentAndArchive() {
-        updateLiveFields();
-        saveToHistory({
-            questionNumber: quizData.questionNumber,
-            questionText: quizData.questionText,
-            options: quizData.options,
-            correctOption: quizData.correctOption,
-            explanation: quizData.explanation,
-            caption: quizData.caption,
-            headerTitle: currentHeaderTitle,
-            hashtag: currentSubjectHashtag
-        });
-        alert(`✅ प्रश्न Q.${quizData.questionNumber} सेव हो गया है!`);
+        alert(`🎉 Q.${quizData.questionNumber} का कार्ड सफलतापूर्वक तैयार हो गया!`);
     }
 
     function toggleAnswerMode() {
@@ -565,7 +588,8 @@ ${currentSubjectHashtag}`;
 
         document.querySelectorAll('.btn-sub').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
-        updateLiveFields();
+        saveAllSettings();
+        redrawCanvas();
     }
 
     function saveAllSettings() {
@@ -573,7 +597,7 @@ ${currentSubjectHashtag}`;
             subjectTopic: currentSubjectTopic,
             headerTitle: currentHeaderTitle,
             hashtag: currentSubjectHashtag,
-            counter: quizData.questionNumber,
+            rawText: document.getElementById('raw-input-box').value,
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
@@ -592,6 +616,7 @@ ${currentSubjectHashtag}`;
                 if (p.subjectTopic) currentSubjectTopic = p.subjectTopic;
                 if (p.headerTitle) currentHeaderTitle = p.headerTitle;
                 if (p.hashtag) currentSubjectHashtag = p.hashtag;
+                if (p.rawText) document.getElementById('raw-input-box').value = p.rawText;
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
                 if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
                 if (p.qSize) {
@@ -606,21 +631,10 @@ ${currentSubjectHashtag}`;
                     document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
                     isAnswerRevealed = p.isAnswerMode;
                 }
-                if (p.currentQuiz) {
-                    quizData = p.currentQuiz;
-                    document.getElementById('input-qnum').value = quizData.questionNumber;
-                    document.getElementById('input-qtext').value = quizData.questionText;
-                    document.getElementById('input-optA').value = quizData.options.A;
-                    document.getElementById('input-optB').value = quizData.options.B;
-                    document.getElementById('input-optC').value = quizData.options.C;
-                    document.getElementById('input-optD').value = quizData.options.D;
-                    document.getElementById('input-correct').value = quizData.correctOption;
-                    document.getElementById('input-exp').value = quizData.explanation;
-                    document.getElementById('input-caption').value = quizData.caption;
-                }
+                if (p.currentQuiz) quizData = p.currentQuiz;
 
                 document.querySelectorAll('.btn-sub').forEach(btn => {
-                    if (btn.innerText.includes(currentHeaderTitle.split(' ')[1] || "राजव्यवस्था")) {
+                    if (btn.innerText.includes(currentHeaderTitle.split(' ')[1] || "भूगोल")) {
                         btn.classList.add('active');
                     } else {
                         btn.classList.remove('active');
@@ -657,7 +671,7 @@ ${currentSubjectHashtag}`;
                     loadAllSettings();
                     updateCaptionText();
                     redrawCanvas();
-                    alert("✅ बैकअप सफलताપूर्वक रिस्टोर हो गया है!");
+                    alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
                 } catch (err) {
                     alert("त्रुटि: अमान्य JSON फ़ाइल!");
                 }
@@ -713,24 +727,12 @@ ${currentSubjectHashtag}`;
 
     function loadFromHistory(h) {
         quizData = JSON.parse(JSON.stringify(h));
-        document.getElementById('input-qnum').value = h.questionNumber;
-        document.getElementById('input-qtext').value = h.questionText;
-        document.getElementById('input-optA').value = h.options.A;
-        document.getElementById('input-optB').value = h.options.B;
-        document.getElementById('input-optC').value = h.options.C;
-        document.getElementById('input-optD').value = h.options.D;
-        document.getElementById('input-correct').value = h.correctOption;
-        document.getElementById('input-exp').value = h.explanation;
-        document.getElementById('input-caption').value = h.caption;
-        if (h.headerTitle) currentHeaderTitle = h.headerTitle;
-        if (h.hashtag) currentSubjectHashtag = h.hashtag;
-
         updateCaptionText();
         redrawCanvas();
         alert(`✅ प्रश्न Q.${h.questionNumber} लोड कर दिया गया है!`);
     }
 
-    /* CANVAS REDRAW WITH EXACT PREVIOUS BALANCED STYLING */
+    /* CANVAS REDRAW */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
@@ -894,7 +896,7 @@ ${currentSubjectHashtag}`;
         const prefixWidth = ctx.measureText(prefix).width;
         ctx.fillText(prefix, x, y);
 
-        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान"];
+        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "ज्वालामुखी"];
         
         ctx.font = `800 ${fontSize}px ${fontFam}`;
         const words = text.split(' ');
@@ -989,8 +991,7 @@ ${currentSubjectHashtag}`;
 
     window.onload = function() {
         loadAllSettings();
-        updateCaptionText();
-        redrawCanvas();
+        parseAndGenerateCard();
     };
 </script>
 
