@@ -83,31 +83,7 @@
             outline: none;
             font-family: inherit;
         }
-        textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
-
-        /* SUBJECT SELECTOR CHIPS */
-        .subject-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-        }
-        .btn-sub {
-            padding: 8px 4px;
-            background: #0f172a;
-            border: 1.5px solid #475569;
-            color: #cbd5e1;
-            font-size: 11.5px;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: center;
-        }
-        .btn-sub.active {
-            border-color: #38bdf8;
-            background: #0284c7;
-            color: white;
-            box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
-        }
+        textarea { resize: vertical; min-height: 160px; font-family: monospace; font-size: 12px; line-height: 1.4; }
 
         /* TOGGLE SWITCH FOR ANSWER MODE */
         .answer-toggle-card {
@@ -302,30 +278,20 @@
 
     <!-- CONTROLS & SMART PASTE BOX -->
     <div class="control-box">
-        <div class="box-title">🎯 विषय श्रेणी (Fallback Subject)</div>
-        <div class="subject-grid">
-            <button class="btn-sub active" onclick="setSubject('विश्व एवं भारत का भूगोल', '#GeographyGK', this)">🌍 भूगोल</button>
-            <button class="btn-sub" onclick="setSubject('भारतीय इतिहास एवं राष्ट्रीय आंदोलन', '#HistoryGK', this)">📜 इतिहास</button>
-            <button class="btn-sub" onclick="setSubject('भारतीय संविधान एवं राजव्यवस्था', '#PolityGK', this)">⚖️ राजव्यवस्था</button>
-            <button class="btn-sub" onclick="setSubject('सामान्य विज्ञान (भौतिक, रसायन, जीव विज्ञान)', '#ScienceGK', this)">🔬 विज्ञान</button>
-            <button class="btn-sub" onclick="setSubject('स्टैटिक सामान्य ज्ञान (Static GK)', '#StaticGK', this)">🧠 स्टैटिक GK</button>
-            <button class="btn-sub" onclick="setSubject('पर्यावरण एवं पारिस्थितिकी', '#EnvironmentGK', this)">🌿 पर्यावरण</button>
-        </div>
-
         <div>
             <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Paste Raw Text):</label>
-            <textarea id="raw-paste-box">🇮🇳 BHARAT GK QUIZ 🧠
-Q.167 भारत किस देश के साथ अपनी सबसे लंबी स्थलीय सीमा (Longest Land Border) साझा करता है? 🌐
-A) चीन 🇨🇳
-B) पाकिस्तान 🇵🇰
-C) बांग्लादेश 🇧🇩
-D) नेपाल 🇳🇵
-👇 अपना Option Comment में लिखें! 🎯
+            <textarea id="raw-paste-box">📜 HISTORY GK QUIZ 🧠
+Q.168 महात्मा गांधी ने प्रसिद्ध 'दांडी मार्च' (Dandi March) की शुरुआत किस वर्ष की थी? 🚶
+A) 1928 📜
+B) 1930 🌊
+C) 1931 🏛️
+D) 1932 ⚖️
+👇 Genius लोग ही Comment में उत्तर दें! 🧠
 ❤️ Like | ➕ Follow 🎯
-Caption: भारत की सबसे लंबी स्थलीय सीमा / Longest Land Border of India (Bangladesh) का महत्वपूर्ण सवाल! उत्तर कमेंट करें। 👇🚀
-#IndianGeography #BharatGK #IndiaBangladeshBorder #GKQuestions
-Answer: C) बांग्लादेश 🇧🇩
-Explanation: भारत अपनी सबसे लंबी स्थलीय अंतरराष्ट्रीय सीमा बांग्लादेश के साथ साझा करता है, जिसकी कुल लंबाई लगभग 4,096 किलोमीटर है।</textarea>
+Caption: दांडी मार्च और सविनय अवज्ञा आंदोलन / Dandi March Salt Satyagraha (1930) से संबंधित ऐतिहासिक प्रश्न! सही जवाब कमेंट करें। 👇🚀
+#HistoryQuiz #IndianHistory #DandiMarch #ModernHistory
+Answer: B) 1930 🌊
+Explanation: सविनय अवज्ञा आंदोलन की शुरुआत के लिए महात्मा गांधी ने 12 मार्च 1930 को साबरमती आश्रम से दांडी मार्च शुरू किया था, जो 6 अप्रैल 1930 को नमक कानून तोड़कर पूरा हुआ।</textarea>
         </div>
 
         <button class="btn-action" onclick="generateFromRawText()">
@@ -419,25 +385,25 @@ Explanation: भारत अपनी सबसे लंबी स्थली
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V3";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V3";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V4";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V4";
 
-    let currentHeaderTitle = "🇮🇳 BHARAT GK QUIZ 🧠";
-    let currentSubjectHashtag = "#IndianGeography";
+    let currentHeaderTitle = "📜 HISTORY GK QUIZ 🧠";
+    let currentSubjectHashtag = "#HistoryQuiz";
     let isAnswerRevealed = false;
 
     let quizData = {
-        questionNumber: 167,
-        questionText: "भारत किस देश के साथ अपनी सबसे लंबी स्थलीय सीमा (Longest Land Border) साझा करता है?",
+        questionNumber: 168,
+        questionText: "महात्मा गांधी ने प्रसिद्ध 'दांडी मार्च' (Dandi March) की शुरुआत किस वर्ष की थी?",
         options: {
-            A: "चीन 🇨🇳",
-            B: "पाकिस्तान 🇵🇰",
-            C: "बांग्लादेश 🇧🇩",
-            D: "नेपाल 🇳🇵"
+            A: "1928 📜",
+            B: "1930 🌊",
+            C: "1931 🏛️",
+            D: "1932 ⚖️"
         },
-        correctOption: "C",
-        explanation: "भारत अपनी सबसे लंबी स्थलीय अंतरराष्ट्रीय सीमा बांग्लादेश के साथ साझा करता है, जिसकी कुल लंबाई लगभग 4,096 किलोमीटर है।",
-        caption: "भारत की सबसे लंबी स्थलीय सीमा / Longest Land Border of India (Bangladesh) का महत्वपूर्ण सवाल! उत्तर कमेंट करें। 👇🚀\n\n#IndianGeography #BharatGK #IndiaBangladeshBorder #GKQuestions"
+        correctOption: "B",
+        explanation: "सविनय अवज्ञा आंदोलन की शुरुआत के लिए महात्मा गांधी ने 12 मार्च 1930 को साबरमती आश्रम से दांडी मार्च शुरू किया था, जो 6 अप्रैल 1930 को नमक कानून तोड़कर पूरा हुआ।",
+        caption: "दांडी मार्च और सविनय अवज्ञा आंदोलन / Dandi March Salt Satyagraha (1930) से संबंधित ऐतिहासिक प्रश्न! सही जवाब कमेंट करें। 👇🚀\n\n#HistoryQuiz #IndianHistory #DandiMarch #ModernHistory"
     };
 
     function cleanAndMoveEmojiToEnd(text) {
@@ -460,7 +426,7 @@ Explanation: भारत अपनी सबसे लंबी स्थली
                   .trim();
     }
 
-    /* SMART PARSER: EXTRACTS TITLE FROM 1ST LINE AUTOMATICALLY */
+    /* FOOLPROOF ROBUST SMART PARSER */
     function generateFromRawText() {
         const raw = document.getElementById('raw-paste-box').value.trim();
         if (!raw) {
@@ -470,87 +436,89 @@ Explanation: भारत अपनी सबसे लंबी स्थली
 
         const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
-        let qNum = 167;
+        let title = "📜 QUIZ STUDIO 🧠";
+        let qNum = 1;
         let qText = "";
         let opts = { A: "", B: "", C: "", D: "" };
-        let correctOpt = "C";
-        let explanation = "";
-        let captionLines = [];
+        let correctOpt = "A";
         let explanationLines = [];
-        let mode = "normal";
-
-        // Check if 1st line is a custom title (e.g. contains QUIZ/GK/TRIVIA or emojis)
-        if (lines.length > 0 && !lines[0].match(/^Q\.?\s*\d+/i) && (lines[0].includes("QUIZ") || lines[0].includes("GK") || lines[0].includes("TRIVIA"))) {
-            currentHeaderTitle = lines[0];
-        }
+        let captionLines = [];
+        let hashtags = [];
+        let currentSection = "unknown";
 
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
 
-            // 1. Question number & text
-            if (line.match(/^Q\.?\s*\d+/i)) {
-                const matchNum = line.match(/Q\.?\s*(\d+)/i);
-                if (matchNum) qNum = parseInt(matchNum[1]);
-                qText = line.replace(/^Q\.?\s*\d+[\.\:\-\)]*\s*/i, '').trim();
-                mode = "normal";
+            // 1. Title check (First line if it has emojis or QUIZ/GK)
+            if (i === 0 && (line.includes("QUIZ") || line.includes("GK") || line.includes("TRIVIA") || line.match(/[\u{1F300}-\u{1FAFF}]/u))) {
+                title = line;
                 continue;
             }
 
-            // 2. Options A, B, C, D
-            if (line.match(/^[A-Da-d][\)\.\-]/)) {
-                let key = line.charAt(0).toUpperCase();
-                let val = line.substring(2).trim();
-                if (opts[key] !== undefined) {
-                    opts[key] = cleanAndMoveEmojiToEnd(val);
-                }
-                mode = "normal";
+            // 2. Question check
+            let qMatch = line.match(/^Q\.?\s*(\d+)\s*[\.\:\-\)]*\s*(.*)/i);
+            if (qMatch) {
+                qNum = parseInt(qMatch[1]);
+                qText = qMatch[2].trim();
+                currentSection = "question";
                 continue;
             }
 
-            // 3. Answer line
-            if (line.toLowerCase().startsWith("answer:") || line.includes("सही उत्तर:")) {
-                let ansText = line.replace(/^(answer:|सही उत्तर:)\s*/i, '').trim();
-                let matchLetter = ansText.match(/^([A-Da-d])/);
-                if (matchLetter) {
-                    correctOpt = matchLetter[1].toUpperCase();
-                }
-                mode = "normal";
+            // 3. Option check (A), B), C), D) or A., B., C., D.)
+            let optMatch = line.match(/^([A-Da-d])[\)\.\-]\s*(.+)/);
+            if (optMatch) {
+                let key = optMatch[1].toUpperCase();
+                opts[key] = cleanAndMoveEmojiToEnd(optMatch[2].trim());
+                currentSection = "option";
                 continue;
             }
 
-            // 4. Explanation line
+            // 4. Answer check
+            let ansMatch = line.match(/(?:answer|सही उत्तर)\s*[:\-]?\s*([A-Da-d])/i);
+            if (ansMatch) {
+                correctOpt = ansMatch[1].toUpperCase();
+                currentSection = "answer";
+                continue;
+            }
+
+            // 5. Explanation check
             if (line.toLowerCase().startsWith("explanation:") || line.startsWith("व्याख्या:")) {
-                mode = "explanation";
+                currentSection = "explanation";
                 explanationLines.push(line.replace(/^(explanation:|व्याख्या:)\s*/i, '').trim());
                 continue;
             }
 
-            // 5. Caption line
+            // 6. Caption check
             if (line.startsWith("Caption:")) {
-                mode = "caption";
+                currentSection = "caption";
                 captionLines.push(line.replace(/^Caption:\s*/, '').trim());
                 continue;
             }
 
-            // 6. Hashtags capture
+            // 7. Hashtags
             if (line.startsWith("#")) {
-                if (mode === "caption") {
+                hashtags.push(line);
+                if (currentSection === "caption") {
                     captionLines.push(line);
-                } else {
-                    currentSubjectHashtag = line.split(" ")[0]; // Take first hashtag
                 }
                 continue;
             }
 
-            if (mode === "caption") {
-                captionLines.push(line);
-            } else if (mode === "explanation") {
+            // Accumulate multi-line paragraphs
+            if (currentSection === "explanation") {
                 explanationLines.push(line);
+            } else if (currentSection === "caption") {
+                captionLines.push(line);
+            } else if (currentSection === "question" && !qText.endsWith("?")) {
+                qText += " " + line;
             }
         }
 
-        if (explanationLines.length > 0) explanation = explanationLines.join(" ");
-        let finalCaption = captionLines.length > 0 ? captionLines.join("\n") : `${qText} का सही उत्तर कमेंट करें! 👇🔥\n\n${currentSubjectHashtag}`;
+        let finalExplanation = explanationLines.join(" ");
+        let finalCaption = captionLines.length > 0 ? captionLines.join("\n") : `${qText} का सही उत्तर कमेंट करें! 👇🔥\n\n${hashtags.join(" ")}`;
+
+        currentHeaderTitle = title;
+        if (hashtags.length > 0) currentSubjectHashtag = hashtags[0].split(" ")[0];
 
         quizData.questionNumber = qNum;
         quizData.questionText = sanitizeQuestion(qText);
@@ -559,7 +527,7 @@ Explanation: भारत अपनी सबसे लंबी स्थली
         if (opts.C) quizData.options.C = opts.C;
         if (opts.D) quizData.options.D = opts.D;
         quizData.correctOption = correctOpt;
-        if (explanation) quizData.explanation = explanation;
+        if (finalExplanation) quizData.explanation = finalExplanation;
         quizData.caption = finalCaption;
 
         saveToHistory({
@@ -570,14 +538,13 @@ Explanation: भारत अपनी सबसे लंबी स्थली
             explanation: quizData.explanation,
             caption: quizData.caption,
             headerTitle: currentHeaderTitle,
-            hashtag: currentSubjectHashtag,
             rawText: raw
         });
 
         updateCaptionText();
         saveAllSettings();
         redrawCanvas();
-        alert(`🎉 टेक्स्ट से Q.${qNum} का कार्ड सफलतापूर्वक तैयार हो गया है!`);
+        alert(`🎉 Q.${qNum} का कार्ड सफलतापूर्वक जनरेट हो गया है!`);
     }
 
     function toggleAnswerMode() {
@@ -606,12 +573,6 @@ ${currentSubjectHashtag}`;
             document.getElementById('fb-caption-box').innerText = quizData.caption;
         }
         document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
-    }
-
-    function setSubject(topicName, hashtag, btnElem) {
-        currentSubjectHashtag = hashtag;
-        document.querySelectorAll('.btn-sub').forEach(b => b.classList.remove('active'));
-        btnElem.classList.add('active');
     }
 
     function saveAllSettings() {
@@ -666,7 +627,6 @@ ${currentSubjectHashtag}`;
             prefs: localStorage.getItem(STORAGE_PREFS),
             history: localStorage.getItem(STORAGE_HISTORY)
         };
-        const dataStr = "data:text/json;charset=utf-8,+encodeURIComponent(JSON.stringify(backupData, null, 2));" // fixed inline
         const downloadAnchor = document.createElement('a');
         downloadAnchor.setAttribute("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2)));
         downloadAnchor.setAttribute("download", `QuizStudio_Backup_${new Date().toISOString().slice(0,10)}.json`);
@@ -745,7 +705,6 @@ ${currentSubjectHashtag}`;
         quizData = JSON.parse(JSON.stringify(h));
         if (h.rawText) document.getElementById('raw-paste-box').value = h.rawText;
         if (h.headerTitle) currentHeaderTitle = h.headerTitle;
-        if (h.hashtag) currentSubjectHashtag = h.hashtag;
 
         updateCaptionText();
         redrawCanvas();
@@ -790,14 +749,14 @@ ${currentSubjectHashtag}`;
         }
         ctx.restore();
 
-        // Header Title (60px) - AUTO EXTRACTED FROM 1ST LINE OF TEXT
+        // Header Title (Auto-extracted from line 1)
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
         ctx.font = `900 52px ${fontFam}`;
         ctx.fillText(currentHeaderTitle, 540, 118);
 
-        // Exam Preparation Pill (26px)
+        // Exam Preparation Pill
         const pillW = 500;
         const pillH = 56;
         const pillX = (1080 - pillW) / 2;
@@ -916,7 +875,7 @@ ${currentSubjectHashtag}`;
         const prefixWidth = ctx.measureText(prefix).width;
         ctx.fillText(prefix, x, y);
 
-        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि", "लंबी", "स्थलीय"];
+        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि", "लंबी", "स्थलीय", "प्रसिद्ध", "शुरुआत", "वर्ष"];
         
         ctx.font = `800 ${fontSize}px ${fontFam}`;
         const words = text.split(' ');
@@ -1011,7 +970,8 @@ ${currentSubjectHashtag}`;
 
     window.onload = function() {
         loadAllSettings();
-        generateFromRawText();
+        updateCaptionText();
+        redrawCanvas();
     };
 </script>
 
