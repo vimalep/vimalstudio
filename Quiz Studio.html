@@ -302,29 +302,30 @@
 
     <!-- CONTROLS & SMART PASTE BOX -->
     <div class="control-box">
-        <div class="box-title">🎯 विषय चुनें (Subject Title)</div>
+        <div class="box-title">🎯 विषय श्रेणी (Fallback Subject)</div>
         <div class="subject-grid">
-            <button class="btn-sub active" onclick="setSubject('विश्व एवं भारत का भूगोल', '🌍 WORLD GK QUIZ 🌍', '#GeographyGK', this)">🌍 भूगोल</button>
-            <button class="btn-sub" onclick="setSubject('भारतीय इतिहास एवं राष्ट्रीय आंदोलन', '📜 HISTORY GK QUIZ 📜', '#HistoryGK', this)">📜 इतिहास</button>
-            <button class="btn-sub" onclick="setSubject('भारतीय संविधान एवं राजव्यवस्था', '⚖️ POLITY GK QUIZ ⚖️', '#PolityGK', this)">⚖️ राजव्यवस्था</button>
-            <button class="btn-sub" onclick="setSubject('सामान्य विज्ञान (भौतिक, रसायन, जीव विज्ञान)', '🔬 SCIENCE GK QUIZ 🔬', '#ScienceGK', this)">🔬 विज्ञान</button>
-            <button class="btn-sub" onclick="setSubject('स्टैटिक सामान्य ज्ञान (Static GK)', '🧠 STATIC GK QUIZ 🧠', '#StaticGK', this)">🧠 स्टैटिक GK</button>
-            <button class="btn-sub" onclick="setSubject('पर्यावरण एवं पारिस्थितिकी', '🌿 ENVIRONMENT QUIZ 🌿', '#EnvironmentGK', this)">🌿 पर्यावरण</button>
+            <button class="btn-sub active" onclick="setSubject('विश्व एवं भारत का भूगोल', '#GeographyGK', this)">🌍 भूगोल</button>
+            <button class="btn-sub" onclick="setSubject('भारतीय इतिहास एवं राष्ट्रीय आंदोलन', '#HistoryGK', this)">📜 इतिहास</button>
+            <button class="btn-sub" onclick="setSubject('भारतीय संविधान एवं राजव्यवस्था', '#PolityGK', this)">⚖️ राजव्यवस्था</button>
+            <button class="btn-sub" onclick="setSubject('सामान्य विज्ञान (भौतिक, रसायन, जीव विज्ञान)', '#ScienceGK', this)">🔬 विज्ञान</button>
+            <button class="btn-sub" onclick="setSubject('स्टैटिक सामान्य ज्ञान (Static GK)', '#StaticGK', this)">🧠 स्टैटिक GK</button>
+            <button class="btn-sub" onclick="setSubject('पर्यावरण एवं पारिस्थितिकी', '#EnvironmentGK', this)">🌿 पर्यावरण</button>
         </div>
 
         <div>
             <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Paste Raw Text):</label>
-            <textarea id="raw-paste-box">Q.166 क्षेत्रफल की दृष्टि से विश्व का सबसे बड़ा प्रायद्वीप (Largest Peninsula) कौन-सा है? 🗺️
-A) भारतीय प्रायद्वीप 🇮🇳
-B) अरब प्रायद्वीप 🇸🇦
-C) स्कैंडिनेवियाई प्रायद्वीप ❄️
-D) अलास्का प्रायद्वीप 🏔️
-👇 सही उत्तर तुरंत Comment करें! 🔥
+            <textarea id="raw-paste-box">🇮🇳 BHARAT GK QUIZ 🧠
+Q.167 भारत किस देश के साथ अपनी सबसे लंबी स्थलीय सीमा (Longest Land Border) साझा करता है? 🌐
+A) चीन 🇨🇳
+B) पाकिस्तान 🇵🇰
+C) बांग्लादेश 🇧🇩
+D) नेपाल 🇳🇵
+👇 अपना Option Comment में लिखें! 🎯
 ❤️ Like | ➕ Follow 🎯
-Caption: विश्व का सबसे बड़ा प्रायद्वीप / Largest Peninsula in the World (Arabian Peninsula) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀
-#WorldGKQuiz #GeographyGK #ArabianPeninsula #WorldGeography
-Answer: B) अरब प्रायद्वीप 🇸🇦
-Explanation: क्षेत्रफल के दृष्टिकोण से 'अरब प्रायद्वीप' विश्व का सबसे बड़ा प्रायद्वीप है, जो मुख्य रूप से पश्चिमी एशिया में स्थित है और तीन तरफ से पानी से घिरा है।</textarea>
+Caption: भारत की सबसे लंबी स्थलीय सीमा / Longest Land Border of India (Bangladesh) का महत्वपूर्ण सवाल! उत्तर कमेंट करें। 👇🚀
+#IndianGeography #BharatGK #IndiaBangladeshBorder #GKQuestions
+Answer: C) बांग्लादेश 🇧🇩
+Explanation: भारत अपनी सबसे लंबी स्थलीय अंतरराष्ट्रीय सीमा बांग्लादेश के साथ साझा करता है, जिसकी कुल लंबाई लगभग 4,096 किलोमीटर है।</textarea>
         </div>
 
         <button class="btn-action" onclick="generateFromRawText()">
@@ -418,26 +419,25 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V2";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V2";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V3";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V3";
 
-    let currentSubjectTopic = "विश्व एवं भारत का भूगोल";
-    let currentHeaderTitle = "🌍 WORLD GK QUIZ 🌍";
-    let currentSubjectHashtag = "#GeographyGK";
+    let currentHeaderTitle = "🇮🇳 BHARAT GK QUIZ 🧠";
+    let currentSubjectHashtag = "#IndianGeography";
     let isAnswerRevealed = false;
 
     let quizData = {
-        questionNumber: 166,
-        questionText: "क्षेत्रफल की दृष्टि से विश्व का सबसे बड़ा प्रायद्वीप (Largest Peninsula) कौन-सा है?",
+        questionNumber: 167,
+        questionText: "भारत किस देश के साथ अपनी सबसे लंबी स्थलीय सीमा (Longest Land Border) साझा करता है?",
         options: {
-            A: "भारतीय प्रायद्वीप 🇮🇳",
-            B: "अरब प्रायद्वीप 🇸🇦",
-            C: "स्कैंडिनेवियाई प्रायद्वीप ❄️",
-            D: "अलास्का प्रायद्वीप 🏔️"
+            A: "चीन 🇨🇳",
+            B: "पाकिस्तान 🇵🇰",
+            C: "बांग्लादेश 🇧🇩",
+            D: "नेपाल 🇳🇵"
         },
-        correctOption: "B",
-        explanation: "क्षेत्रफल के दृष्टिकोण से 'अरब प्रायद्वीप' विश्व का सबसे बड़ा प्रायद्वीप है, जो मुख्य रूप से पश्चिमी एशिया में स्थित है और तीन तरफ से पानी से घिरा है।",
-        caption: "विश्व का सबसे बड़ा प्रायद्वीप / Largest Peninsula in the World (Arabian Peninsula) से जुड़ा महत्वपूर्ण प्रश्न! सही विकल्प कमेंट करें। 👇🚀\n\n#WorldGKQuiz #GeographyGK #ArabianPeninsula #WorldGeography"
+        correctOption: "C",
+        explanation: "भारत अपनी सबसे लंबी स्थलीय अंतरराष्ट्रीय सीमा बांग्लादेश के साथ साझा करता है, जिसकी कुल लंबाई लगभग 4,096 किलोमीटर है।",
+        caption: "भारत की सबसे लंबी स्थलीय सीमा / Longest Land Border of India (Bangladesh) का महत्वपूर्ण सवाल! उत्तर कमेंट करें। 👇🚀\n\n#IndianGeography #BharatGK #IndiaBangladeshBorder #GKQuestions"
     };
 
     function cleanAndMoveEmojiToEnd(text) {
@@ -460,24 +460,29 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
                   .trim();
     }
 
-    /* SMART PARSER: SECURE TITLE, EXTRACTS OPTIONS, ANSWER, EXPLANATION */
+    /* SMART PARSER: EXTRACTS TITLE FROM 1ST LINE AUTOMATICALLY */
     function generateFromRawText() {
         const raw = document.getElementById('raw-paste-box').value.trim();
         if (!raw) {
-            alert("कृपया टेक्स्ट बॉक्स में पूरा पोस्ट डेटा पेस्ट करें!");
+            alert("कृपया टेक्स्ट बॉक्स में पूरा क्विज़ टेक्स्ट पेस्ट करें!");
             return;
         }
 
         const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
 
-        let qNum = 166;
+        let qNum = 167;
         let qText = "";
         let opts = { A: "", B: "", C: "", D: "" };
-        let correctOpt = "B";
+        let correctOpt = "C";
         let explanation = "";
         let captionLines = [];
         let explanationLines = [];
         let mode = "normal";
+
+        // Check if 1st line is a custom title (e.g. contains QUIZ/GK/TRIVIA or emojis)
+        if (lines.length > 0 && !lines[0].match(/^Q\.?\s*\d+/i) && (lines[0].includes("QUIZ") || lines[0].includes("GK") || lines[0].includes("TRIVIA"))) {
+            currentHeaderTitle = lines[0];
+        }
 
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
@@ -527,6 +532,16 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
                 continue;
             }
 
+            // 6. Hashtags capture
+            if (line.startsWith("#")) {
+                if (mode === "caption") {
+                    captionLines.push(line);
+                } else {
+                    currentSubjectHashtag = line.split(" ")[0]; // Take first hashtag
+                }
+                continue;
+            }
+
             if (mode === "caption") {
                 captionLines.push(line);
             } else if (mode === "explanation") {
@@ -562,7 +577,7 @@ Explanation: क्षेत्रफल के दृष्टिकोण स�
         updateCaptionText();
         saveAllSettings();
         redrawCanvas();
-        alert(`🎉 टेक्स्ट से Q.${qNum} का कार्ड और पोस्ट सफलतापूर्वक तैयार हो गई है!`);
+        alert(`🎉 टेक्स्ट से Q.${qNum} का कार्ड सफलतापूर्वक तैयार हो गया है!`);
     }
 
     function toggleAnswerMode() {
@@ -593,19 +608,14 @@ ${currentSubjectHashtag}`;
         document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
     }
 
-    function setSubject(topicName, headerTitle, hashtag, btnElem) {
-        currentSubjectTopic = topicName;
-        currentHeaderTitle = headerTitle;
+    function setSubject(topicName, hashtag, btnElem) {
         currentSubjectHashtag = hashtag;
-
         document.querySelectorAll('.btn-sub').forEach(b => b.classList.remove('active'));
         btnElem.classList.add('active');
-        redrawCanvas();
     }
 
     function saveAllSettings() {
         const prefs = {
-            subjectTopic: currentSubjectTopic,
             headerTitle: currentHeaderTitle,
             hashtag: currentSubjectHashtag,
             fontFam: document.getElementById('cfg-font').value,
@@ -624,7 +634,6 @@ ${currentSubjectHashtag}`;
         if (saved) {
             try {
                 const p = JSON.parse(saved);
-                if (p.subjectTopic) currentSubjectTopic = p.subjectTopic;
                 if (p.headerTitle) currentHeaderTitle = p.headerTitle;
                 if (p.hashtag) currentSubjectHashtag = p.hashtag;
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
@@ -657,9 +666,9 @@ ${currentSubjectHashtag}`;
             prefs: localStorage.getItem(STORAGE_PREFS),
             history: localStorage.getItem(STORAGE_HISTORY)
         };
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+        const dataStr = "data:text/json;charset=utf-8,+encodeURIComponent(JSON.stringify(backupData, null, 2));" // fixed inline
         const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2)));
         downloadAnchor.setAttribute("download", `QuizStudio_Backup_${new Date().toISOString().slice(0,10)}.json`);
         document.body.appendChild(downloadAnchor);
         downloadAnchor.click();
@@ -781,11 +790,11 @@ ${currentSubjectHashtag}`;
         }
         ctx.restore();
 
-        // Header Title (60px) - SECURELY CONTROLLED BY SUBJECT BUTTONS
+        // Header Title (60px) - AUTO EXTRACTED FROM 1ST LINE OF TEXT
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
-        ctx.font = `900 60px ${fontFam}`;
+        ctx.font = `900 52px ${fontFam}`;
         ctx.fillText(currentHeaderTitle, 540, 118);
 
         // Exam Preparation Pill (26px)
@@ -907,7 +916,7 @@ ${currentSubjectHashtag}`;
         const prefixWidth = ctx.measureText(prefix).width;
         ctx.fillText(prefix, x, y);
 
-        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि"];
+        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि", "लंबी", "स्थलीय"];
         
         ctx.font = `800 ${fontSize}px ${fontFam}`;
         const words = text.split(' ');
