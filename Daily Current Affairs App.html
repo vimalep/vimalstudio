@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EP Image Studio - 10-in-1 Daily Post (Pro V4)</title>
+    <title>EP Image Studio - 10-in-1 Daily Post (Pro V5 Balanced)</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,7 +202,7 @@
 <body>
 
 <div class="app-container">
-    <div class="header">⚡ EP Image Studio - 10-in-1 Daily Post (Pro V4)</div>
+    <div class="header">⚡ EP Image Studio - 10-in-1 Daily Post (Pro V5 Balanced)</div>
 
     <!-- 1. THEME, HINDI FONT & WATERMARK -->
     <div class="group-box">
@@ -230,25 +230,25 @@
             <div>
                 <label>📐 QA लेआउट:</label>
                 <select id="gridLineLayout" onchange="debouncedRefresh()">
-                    <option value="doubleLine" selected>⬇️ 2-Line Mode (लाइन 1: Qs, लाइन 2: Ans)</option>
+                    <option value="doubleLine" selected>⬇️ 2-Line Mode (संतुलित वर्टिकल स्पेस)</option>
                     <option value="singleLine">➡️ Single Line Mode (आमने-सामने QA)</option>
                 </select>
             </div>
             <div class="slider-wrap">
-                <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">9%</span></label>
-                <input type="range" id="watermarkOpacity" min="0.04" max="0.25" step="0.01" value="0.09" oninput="document.getElementById('wmVal').innerText=Math.round(this.value*100)+'%'; debouncedRefresh();">
+                <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">4%</span></label>
+                <!-- FIXED AT 4% AS REQUESTED -->
+                <input type="range" id="watermarkOpacity" min="0.02" max="0.15" step="0.01" value="0.04" oninput="document.getElementById('wmVal').innerText=Math.round(this.value*100)+'%'; debouncedRefresh();">
             </div>
         </div>
 
-        <!-- NEW: QUESTION & ANSWER FONT SIZE CONTROLS -->
         <div class="row" style="margin-top: 4px;">
             <div class="slider-wrap">
-                <label>📏 Question Size: <span id="qSizeVal">22px</span></label>
-                <input type="range" id="qSizeInput" min="16" max="30" value="22" oninput="document.getElementById('qSizeVal').innerText=this.value+'px'; debouncedRefresh();">
+                <label>📏 Question Size: <span id="qSizeVal">21px</span></label>
+                <input type="range" id="qSizeInput" min="16" max="28" value="21" oninput="document.getElementById('qSizeVal').innerText=this.value+'px'; debouncedRefresh();">
             </div>
             <div class="slider-wrap">
                 <label>📏 Answer Size: <span id="aSizeVal">23px</span></label>
-                <input type="range" id="aSizeInput" min="16" max="30" value="23" oninput="document.getElementById('aSizeVal').innerText=this.value+'px'; debouncedRefresh();">
+                <input type="range" id="aSizeInput" min="16" max="28" value="23" oninput="document.getElementById('aSizeVal').innerText=this.value+'px'; debouncedRefresh();">
             </div>
         </div>
     </div>
@@ -273,7 +273,7 @@
 
     <!-- 3. HEADER & STATIC GK FOOTER -->
     <div class="group-box">
-        <label style="color: #38bdf8;">🧠 हेडर एवं Static GK फुटर (Engagement Booster):</label>
+        <label style="color: #38bdf8;">🧠 हेडर एवं Static GK फुटर:</label>
         <div class="row">
             <div>
                 <label>✍️ मुख्य टाइटल (ऑटो तारीख):</label>
@@ -297,9 +297,9 @@
         </div>
     </div>
 
-    <!-- 4. DATA SHEET (PRE-FILLED WITH YOUR EXACT DATA) -->
+    <!-- 4. DATA SHEET -->
     <div class="group-box">
-        <label style="color: #34d399;">📝 10 प्रश्न-उत्तर इनपुट बॉक्स (Line 1: Q, Line 2: Ans):</label>
+        <label style="color: #34d399;">📝 10 प्रश्न-उत्तर इनपुट बॉक्स:</label>
         <textarea id="qaInput" oninput="debouncedRefresh()">विश्व सेप्सिस दिवस मनाया जाता है .?
 13 सितंबर
 अंतरिक्ष शिखर सम्मेलन' कहाँ हुआ है ?
@@ -346,7 +346,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         </button>
     </div>
 
-    <!-- 7. AUTO-GENERATED FB CAPTION (EXACT REQUESTED FORMAT) -->
+    <!-- 7. AUTO-GENERATED FB CAPTION -->
     <div class="caption-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Auto Caption:</span>
@@ -469,7 +469,6 @@ ISRO ने हाल ही में किस देश की अंतर�
         debouncedRefresh();
     }
 
-    // EXACT REQUESTED CAPTION FORMAT
     function updateCaption() {
         const headerDate = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
         const footerQ = document.getElementById('footerQuestionInput').value;
@@ -573,6 +572,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         return rawA.replace(/^(?:Ans|उत्तर|Answer)\s*[:\-]\s*/i, '').trim();
     }
 
+    // WATERMARK AT 4% OPACITY
     function drawOverCardWatermark(ctx, canvas, opacity) {
         ctx.save();
         const theme = THEMES[currentThemeKey];
@@ -620,30 +620,6 @@ ISRO ने हाल ही में किस देश की अंतर�
         roundRect(ctx, x, y, w, h, radius, false, true);
     }
 
-    function drawWrappedQuestion(ctx, text, x, y, maxWidth, lineHeight) {
-        const words = text.split(' ');
-        let lines = [];
-        let curLine = '';
-
-        for (let n = 0; n < words.length; n++) {
-            let test = curLine + words[n] + ' ';
-            if (ctx.measureText(test).width > maxWidth && n > 0) {
-                lines.push(curLine.trim());
-                curLine = words[n] + ' ';
-                if (lines.length === 2) break;
-            } else {
-                curLine = test;
-            }
-        }
-        if (curLine.trim() && lines.length < 2) {
-            lines.push(curLine.trim());
-        }
-
-        lines.forEach((l, idx) => {
-            ctx.fillText(l, x, y + (idx * lineHeight));
-        });
-    }
-
     function roundRect(ctx, x, y, w, h, r, fill, stroke) {
         ctx.beginPath();
         ctx.moveTo(x + r, y);
@@ -660,15 +636,69 @@ ISRO ने हाल ही में किस देश की अंतर�
         if (stroke) ctx.stroke();
     }
 
+    // SMART BALANCED QA RENDERER
+    function renderBalancedQA(ctx, item, textStartX, currentY, actualBoxHeight, textAvailWidth, baseQSize, baseASize, hindiFont, theme) {
+        // Measure text width to detect if 1 line or 2 lines
+        ctx.font = `700 ${baseQSize}px ${hindiFont}`;
+        const words = item.q.split(' ');
+        let lines = [];
+        let curLine = '';
+
+        for (let n = 0; n < words.length; n++) {
+            let test = curLine + words[n] + ' ';
+            if (ctx.measureText(test).width > textAvailWidth && n > 0) {
+                lines.push(curLine.trim());
+                curLine = words[n] + ' ';
+                if (lines.length === 2) break;
+            } else {
+                curLine = test;
+            }
+        }
+        if (curLine.trim() && lines.length < 2) {
+            lines.push(curLine.trim());
+        }
+
+        ctx.textAlign = "left";
+
+        if (lines.length <= 1) {
+            // SINGLE LINE QUESTION: Perfect vertical balance inside the box
+            ctx.fillStyle = theme.qColor;
+            ctx.font = `700 ${baseQSize}px ${hindiFont}`;
+            ctx.textBaseline = "top";
+            ctx.fillText(item.q, textStartX, currentY + 16);
+
+            ctx.fillStyle = theme.aColor;
+            ctx.font = `800 ${baseASize}px ${hindiFont}`;
+            ctx.textBaseline = "bottom";
+            ctx.fillText("उत्तर: " + item.a, textStartX, currentY + actualBoxHeight - 12);
+        } else {
+            // TWO LINE QUESTION (E.g. Q9 with image on the right)
+            // Auto-scale slightly (1-2px) to prevent bottom collision
+            const safeQSize = Math.min(baseQSize, 19);
+            const safeASize = Math.min(baseASize, 21);
+            const lineGap = safeQSize + 4;
+
+            ctx.fillStyle = theme.qColor;
+            ctx.font = `700 ${safeQSize}px ${hindiFont}`;
+            ctx.textBaseline = "top";
+            ctx.fillText(lines[0], textStartX, currentY + 10);
+            ctx.fillText(lines[1], textStartX, currentY + 10 + lineGap);
+
+            ctx.fillStyle = theme.aColor;
+            ctx.font = `800 ${safeASize}px ${hindiFont}`;
+            ctx.textBaseline = "bottom";
+            ctx.fillText("उत्तर: " + item.a, textStartX, currentY + actualBoxHeight - 6);
+        }
+    }
+
     async function generateQA(isPreviewOnly) {
         const theme = THEMES[currentThemeKey];
         const hindiFont = document.getElementById('hindiFontSelect').value;
         const inputData = document.getElementById('qaInput').value.trim();
         const lineLayout = document.getElementById('gridLineLayout').value;
-        const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.09;
+        const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.04;
         
-        // SLIDER CONTROLLED SIZES
-        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 22;
+        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 21;
         const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 23;
 
         const lines = inputData.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
@@ -740,7 +770,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         const rowHeight = Math.floor(availableHeight / 10);
         const actualBoxHeight = rowHeight - 9;
 
-        // Draw Card Boxes FIRST
+        // Draw Card Boxes
         parsedItems.slice(0, 10).forEach((item, idx) => {
             let currentY = startY + (idx * rowHeight);
             let boxX = 45; 
@@ -764,10 +794,10 @@ ISRO ने हाल ही में किस देश की अंतर�
         if (gridImages[2]) drawCoverImage(ctx, gridImages[2], 45, startY + (4 * rowHeight) + 3, imgWidth, imgHeight, 14);
         if (gridImages[3]) drawCoverImage(ctx, gridImages[3], 840, startY + (8 * rowHeight) + 3, imgWidth, imgHeight, 14);
 
-        // 6. Draw Crisp Watermark
+        // 6. Draw Watermark at 4%
         drawOverCardWatermark(ctx, canvas, wmOpacity);
 
-        // 7. Draw Numbers and QA Text with Dynamic Font Sizes
+        // 7. Draw Numbers and Balanced QA Text
         parsedItems.slice(0, 10).forEach((item, idx) => {
             let currentY = startY + (idx * rowHeight);
             let displayNum = idx + 1;
@@ -778,10 +808,10 @@ ISRO ने हाल ही में किस देश की अंतर�
             else if ((idx === 4 || idx === 5) && gridImages[2]) { boxX = 250; boxWidth = 785; }
             else if ((idx === 8 || idx === 9) && gridImages[3]) boxWidth = 785;
 
-            // Number Badge
+            // Number Badge (Vertically Centered)
             let badgeRadius = 24;
             let badgeX = boxX + 42;
-            let badgeY = currentY + (rowHeight / 2) - 1;
+            let badgeY = currentY + (actualBoxHeight / 2) + 3;
 
             ctx.save(); 
             ctx.fillStyle = theme.badgeBg;
@@ -805,7 +835,7 @@ ISRO ने हाल ही में किस देश की अंतर�
                 ctx.font = `700 ${qFontSize}px ${hindiFont}`; 
                 ctx.textAlign = "left"; 
                 ctx.textBaseline = "middle";
-                ctx.fillText(item.q, textStartX, currentY + (rowHeight / 2) - 2); 
+                ctx.fillText(item.q, textStartX, currentY + (actualBoxHeight / 2) + 1); 
                 ctx.restore();
 
                 ctx.save(); 
@@ -813,26 +843,12 @@ ISRO ने हाल ही में किस देश की अंतर�
                 ctx.font = `800 ${aFontSize}px ${hindiFont}`; 
                 ctx.textAlign = "right"; 
                 ctx.textBaseline = "middle";
-                ctx.fillText(item.a, boxX + boxWidth - 25, currentY + (rowHeight / 2) - 2); 
+                ctx.fillText(item.a, boxX + boxWidth - 25, currentY + (actualBoxHeight / 2) + 1); 
                 ctx.restore();
             } else {
-                // 2-Line Mode
+                // Double Line: Balanced Vertical Flow
                 let textAvailWidth = boxWidth - 110;
-                ctx.save(); 
-                ctx.fillStyle = theme.qColor; 
-                ctx.font = `700 ${qFontSize}px ${hindiFont}`; 
-                ctx.textAlign = "left"; 
-                ctx.textBaseline = "top";
-                drawWrappedQuestion(ctx, item.q, textStartX, currentY + 11, textAvailWidth, qFontSize + 4); 
-                ctx.restore();
-
-                ctx.save(); 
-                ctx.fillStyle = theme.aColor; 
-                ctx.font = `800 ${aFontSize}px ${hindiFont}`; 
-                ctx.textAlign = "left"; 
-                ctx.textBaseline = "bottom";
-                ctx.fillText("उत्तर: " + item.a, textStartX, currentY + actualBoxHeight - 6); 
-                ctx.restore();
+                renderBalancedQA(ctx, item, textStartX, currentY + 3, actualBoxHeight, textAvailWidth, qFontSize, aFontSize, hindiFont, theme);
             }
         });
 
