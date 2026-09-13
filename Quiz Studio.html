@@ -362,17 +362,28 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 सहेजे गए पुराने प्रश्न (Question Bank)</button>
     </div>
 
+    <!-- NEW: FACEBOOK POLL FORMAT COPY -->
+    <div class="detail-card" style="border-color: #8b5cf6;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📊 Facebook Poll Format (1-Click Ready):</span>
+            <button class="btn-action" style="background:#8b5cf6; padding:5px 12px; font-size:12px;" onclick="copyPollFormat()">📋 Copy Poll Text</button>
+        </div>
+        <div class="detail-text" id="fb-poll-box" style="color: #c4b5fd;">पोल फॉर्मेट यहाँ दिखाई देगा...</div>
+    </div>
+
     <!-- PRIVATE EXPLANATION -->
     <div class="detail-card">
-        <div class="box-title" style="color: #34d399;">💡 उत्तर एवं विस्तृत व्याख्या:</div>
+        <div class="box-title" style="color: #34d399; font-weight: bold; font-size: 12px;">💡 उत्तर एवं विस्तृत व्याख्या:</div>
         <div class="detail-text" id="private-explanation">यहाँ व्याख्या दिखाई देगी।</div>
     </div>
 
     <!-- FB CAPTION BOX -->
     <div class="detail-card">
-        <div class="box-title" style="color: #38bdf8;">📝 Facebook Caption (Including #tags):</div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Caption (Bot Tag #ans_X Included):</span>
+            <button class="btn-action" style="background:#0284c7; padding:5px 12px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
+        </div>
         <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
-        <button class="btn-action" style="background:#0284c7; color:white; border:none; padding:8px; margin-top:4px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
     </div>
 </div>
 
@@ -431,7 +442,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         return textWithoutEmojis;
     }
 
-    // 1-Click Clipboard Paste & Run
     async function pasteFromClipboardAndGenerate() {
         try {
             const text = await navigator.clipboard.readText();
@@ -446,7 +456,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         }
     }
 
-    /* 100% BULLETPROOF STATE PARSER */
     function generateFromRawText() {
         const raw = document.getElementById('raw-paste-box').value;
         if (!raw || !raw.trim()) {
@@ -579,6 +588,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         });
 
         updateCaptionText();
+        updatePollFormatText();
         saveAllSettings();
         redrawCanvas();
 
@@ -603,7 +613,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         const hashMatches = quizData.caption.match(/#[^\s#]+/g);
         let tagsString = hashMatches ? hashMatches.join(" ") : "";
 
-        // बॉट के लिए ऑटो-टैग जोड़ना (#ans_A, #ans_B आदि)
+        // Bot Answer Tag for Automated Reply
         const botTag = `#ans_${quizData.correctOption}`;
         if (!tagsString.includes(botTag)) {
             tagsString = `${tagsString} ${botTag}`.trim();
@@ -625,6 +635,27 @@ ${tagsString}`.trim();
             document.getElementById('fb-caption-box').innerText = baseCaption.trim();
         }
         document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
+    }
+
+    // FEATURE 1: FACEBOOK POLL TEXT FORMAT
+    function updatePollFormatText() {
+        const pollText = 
+`❓ Question: ${quizData.questionText}
+
+🔹 Option 1: ${quizData.options.A}
+🔹 Option 2: ${quizData.options.B}
+🔹 Option 3: ${quizData.options.C}
+🔹 Option 4: ${quizData.options.D}
+
+👉 सही उत्तर चुनें और अपना ज्ञान परखें!`;
+        document.getElementById('fb-poll-box').innerText = pollText;
+    }
+
+    function copyPollFormat() {
+        const pollText = document.getElementById('fb-poll-box').innerText;
+        navigator.clipboard.writeText(pollText).then(() => {
+            alert("📊 फेसबुक पोल टेक्स्ट क्लिपबोर्ड पर कॉपी हो गया है!");
+        });
     }
 
     function saveAllSettings() {
@@ -669,7 +700,6 @@ ${tagsString}`.trim();
         }
     }
 
-    /* JSON BACKUP & RESTORE */
     function exportJSONBackup() {
         const backupData = {
             prefs: localStorage.getItem(STORAGE_PREFS),
@@ -694,6 +724,7 @@ ${tagsString}`.trim();
                     if (parsed.history) localStorage.setItem(STORAGE_HISTORY, parsed.history);
                     loadAllSettings();
                     updateCaptionText();
+                    updatePollFormatText();
                     redrawCanvas();
                     alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
                 } catch (err) {
@@ -753,6 +784,7 @@ ${tagsString}`.trim();
         quizData = JSON.parse(JSON.stringify(h));
         if (h.rawText) document.getElementById('raw-paste-box').value = h.rawText;
         updateCaptionText();
+        updatePollFormatText();
         redrawCanvas();
         alert(`✅ ${h.qPrefix} लोड कर दिया गया है!`);
     }
@@ -782,14 +814,14 @@ ${tagsString}`.trim();
         ctx.lineWidth = 3;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // Security Watermark
+        // FEATURE 4: SECURITY WATERMARK FIXED AT EXACTLY 4% (0.04)
         ctx.save();
         ctx.beginPath();
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
         ctx.clip();
         ctx.rotate(-28 * Math.PI / 180);
-        ctx.fillStyle = "rgba(15, 23, 42, 0.02)";
-        ctx.font = "900 42px 'Poppins', sans-serif";
+        ctx.fillStyle = "rgba(15, 23, 42, 0.04)"; // Fixed at 4%
+        ctx.font = "900 44px 'Poppins', sans-serif";
         for (let x = -800; x < 1800; x += 360) {
             for (let y = -600; y < 2000; y += 160) {
                 ctx.fillText("EXAM PREPARATION", x, y);
@@ -891,7 +923,6 @@ ${tagsString}`.trim();
             ctx.textBaseline = "top";
             ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 20);
 
-            // Updated: बड़ा फ़ॉन्ट साइज़ (24px) और लाइन हाइट (34px)
             ctx.fillStyle = "#334155";
             ctx.font = `600 24px ${fontFam}`;
             wrapTextSimple(ctx, quizData.explanation, 120, footerY + 64, 840, 34);
@@ -910,7 +941,6 @@ ${tagsString}`.trim();
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "#854d0e";
-            // Updated: बड़ा फ़ॉन्ट साइज़ (34px)
             ctx.font = `800 34px ${fontFam}`;
             ctx.fillText(quizData.hook, 540, footerY + (84 / 2));
 
@@ -921,7 +951,7 @@ ${tagsString}`.trim();
         }
     }
 
-    /* QUESTION DRAWING */
+    /* QUESTION DRAWING WITH HIGHLIGHTS */
     function drawColorfulQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam) {
         ctx.textBaseline = "top";
         ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
@@ -1026,6 +1056,7 @@ ${tagsString}`.trim();
     window.onload = function() {
         loadAllSettings();
         updateCaptionText();
+        updatePollFormatText();
         redrawCanvas();
     };
 </script>
