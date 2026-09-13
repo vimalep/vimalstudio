@@ -415,7 +415,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
 
     function cleanString(str) {
         if (!str) return "";
-        // Strip zero-width spaces, directional marks, and normalize
         return str.replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g, '').trim();
     }
 
@@ -455,7 +454,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             return;
         }
 
-        // Clean out zero-width characters and separate into valid lines
         const lines = raw.split(/\r?\n/)
                          .map(l => cleanString(l))
                          .filter(l => l.length > 0);
@@ -475,12 +473,11 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         let parsedAns = "A";
         let parsedExpLines = [];
 
-        let state = "TITLE"; // States: TITLE, QUESTION, OPTIONS, FOOTER, CAPTION, EXPLANATION
+        let state = "TITLE";
 
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
 
-            // 1. Check for Line-Starting Explicit Anchors
             if (/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]/i.test(line)) {
                 state = "ANSWER";
                 let ansMatch = line.match(/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]\s*([A-Da-d])/i);
@@ -504,7 +501,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                 continue;
             }
 
-            // 2. State-Machine Flow
             if (state === "TITLE") {
                 parsedTitle = line;
                 state = "QUESTION";
@@ -544,7 +540,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                     parsedSocial = line;
                     continue;
                 }
-                // If caption header wasn't explicit, any trailing lines become caption
                 parsedCaptionLines.push(line);
                 continue;
             }
@@ -560,7 +555,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             }
         }
 
-        // Consolidate data
         quizData.title = parsedTitle || "🏛️ POLITY GK QUIZ 🧠";
         quizData.qPrefix = parsedPrefix || "Q.";
         quizData.questionText = parsedQText;
@@ -588,7 +582,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         saveAllSettings();
         redrawCanvas();
 
-        navigator.clipboard.writeText(quizData.caption).catch(() => {});
+        navigator.clipboard.writeText(document.getElementById('fb-caption-box').innerText).catch(() => {});
         alert(`🎉 ${quizData.qPrefix} तैयार हो गया है! सही उत्तर [${quizData.correctOption}] लॉक हुआ और कैप्शन क्लिपबोर्ड पर कॉपी हो गया।`);
     }
 
@@ -606,9 +600,14 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     }
 
     function updateCaptionText() {
-        // Extract hashtags from caption
         const hashMatches = quizData.caption.match(/#[^\s#]+/g);
-        const tagsString = hashMatches ? hashMatches.join(" ") : "";
+        let tagsString = hashMatches ? hashMatches.join(" ") : "";
+
+        // बॉट के लिए ऑटो-टैग जोड़ना (#ans_A, #ans_B आदि)
+        const botTag = `#ans_${quizData.correctOption}`;
+        if (!tagsString.includes(botTag)) {
+            tagsString = `${tagsString} ${botTag}`.trim();
+        }
 
         if (isAnswerRevealed) {
             const correctText = quizData.options[quizData.correctOption] || "";
@@ -619,7 +618,11 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
 
 ${tagsString}`.trim();
         } else {
-            document.getElementById('fb-caption-box').innerText = quizData.caption;
+            let baseCaption = quizData.caption;
+            if (!baseCaption.includes(botTag)) {
+                baseCaption = `${baseCaption}\n\n${botTag}`;
+            }
+            document.getElementById('fb-caption-box').innerText = baseCaption.trim();
         }
         document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
     }
@@ -816,7 +819,7 @@ ${tagsString}`.trim();
         ctx.font = "900 26px 'Poppins', sans-serif";
         ctx.fillText("EXAM PREPARATION", 540, pillY + (pillH / 2));
 
-        // Line 2: Question Section (Fixed 72px gap below pill)
+        // Line 2: Question Section
         ctx.textAlign = "left";
         const fixedGap = 72;
         const qStartY = pillY + pillH + fixedGap;
@@ -883,14 +886,15 @@ ${tagsString}`.trim();
             roundRect(ctx, 95, footerY, 890, 165, 18, null, true);
 
             ctx.fillStyle = "#15803d";
-            ctx.font = `800 24px ${fontFam}`;
+            ctx.font = `800 26px ${fontFam}`;
             ctx.textAlign = "left";
             ctx.textBaseline = "top";
-            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 24);
+            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 20);
 
+            // Updated: बड़ा फ़ॉन्ट साइज़ (24px) और लाइन हाइट (34px)
             ctx.fillStyle = "#334155";
-            ctx.font = `600 20px ${fontFam}`;
-            wrapTextSimple(ctx, quizData.explanation, 120, footerY + 68, 840, 28);
+            ctx.font = `600 24px ${fontFam}`;
+            wrapTextSimple(ctx, quizData.explanation, 120, footerY + 64, 840, 34);
 
             ctx.fillStyle = "#64748b";
             ctx.font = `800 22px ${fontFam}`;
@@ -898,16 +902,17 @@ ${tagsString}`.trim();
             ctx.fillText(quizData.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
         } else {
             // Line 7: Hook Banner
-            roundRect(ctx, 110, footerY, 860, 80, 40, "#fef08a", false);
+            roundRect(ctx, 110, footerY, 860, 84, 42, "#fef08a", false);
             ctx.strokeStyle = "#facc15";
             ctx.lineWidth = 2.5;
-            roundRect(ctx, 110, footerY, 860, 80, 40, null, true);
+            roundRect(ctx, 110, footerY, 860, 84, 42, null, true);
 
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "#854d0e";
-            ctx.font = `800 28px ${fontFam}`;
-            ctx.fillText(quizData.hook, 540, footerY + (80 / 2));
+            // Updated: बड़ा फ़ॉन्ट साइज़ (34px)
+            ctx.font = `800 34px ${fontFam}`;
+            ctx.fillText(quizData.hook, 540, footerY + (84 / 2));
 
             // Line 8: Social Line
             ctx.fillStyle = "#0f172a";
