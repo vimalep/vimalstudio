@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EP Image Studio - 10-in-1 Daily Current Affairs Pro</title>
+    <title>EP Image Studio - 10-in-1 Daily Post (Pro)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700;800&family=Rozha+One&family=Tiro+Devanagari+Hindi:ital@0;1&family=Poppins:wght@700;800;900&display=swap');
         
@@ -26,7 +26,7 @@
         
         .app-container { 
             width: 100%;
-            max-width: 750px; 
+            max-width: 800px; 
             background: var(--card-bg); 
             border-radius: 14px; 
             padding: 18px; 
@@ -79,7 +79,7 @@
             color: #94a3b8; 
         }
         
-        select, input[type="text"], input[type="number"], textarea { 
+        select, input[type="text"], input[type="number"], input[type="file"], textarea { 
             width: 100%; 
             padding: 9px 12px; 
             background: #1e293b;
@@ -97,14 +97,21 @@
             resize: vertical; 
         }
 
-        .slider-item {
-            background: #1e293b;
-            padding: 8px 10px;
-            border-radius: 7px;
-            border: 1px solid #475569;
+        .img-input-wrap {
+            display: flex;
+            gap: 6px;
+            align-items: center;
         }
-        .slider-item label { margin-bottom: 2px; }
-        .slider-item span { font-size: 12px; float: right; color: #38bdf8; font-weight: bold; }
+        .btn-clear-img {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+        }
 
         .btn-grid {
             display: grid;
@@ -179,10 +186,10 @@
         <label style="color: #38bdf8; font-size: 13px;">🎨 थीम व लेआउट चयन:</label>
         <div class="row">
             <div>
-                <label>विज़ुअल थीम (Theme):</label>
+                <label>विज़ुअल थीम:</label>
                 <select id="gridThemeSelect" onchange="applySelectedTheme()">
-                    <option value="whiteTheme" selected>⚪ 1. White Clean Theme (डिफ़ॉल्ट)</option>
-                    <option value="instaTheme">📸 2. Instagram Pink/Rose Theme</option>
+                    <option value="whiteTheme" selected>⚪ 1. White Clean Theme</option>
+                    <option value="instaTheme">📸 2. Instagram Pink Theme</option>
                     <option value="fbTheme">📘 3. Facebook Royal Blue Theme</option>
                     <option value="darkTheme">🖤 4. Modern Dark Neon Theme</option>
                     <option value="navyGoldTheme">👑 5. Royal Navy & Gold Theme</option>
@@ -191,7 +198,7 @@
             <div>
                 <label>📐 QA लेआउट:</label>
                 <select id="gridLineLayout" onchange="debouncedRefresh()">
-                    <option value="doubleLine" selected>⬇️ 2-Line Mode (लाइन 1: Qs, लाइन 2: उत्तर)</option>
+                    <option value="doubleLine" selected>⬇️ 2-Line Mode (लाइन 1: Qs, लाइन 2: Ans)</option>
                     <option value="singleLine">➡️ Single Line Mode (आमने-सामने QA)</option>
                 </select>
             </div>
@@ -209,9 +216,37 @@
         </div>
     </div>
 
-    <!-- 2. HEADER & STATIC GK FOOTER -->
+    <!-- 2. 3 OPTIONAL LAYOUT IMAGES (वापस जोड़ा गया) -->
+    <div class="group-box" style="border-color: #f59e0b;">
+        <label style="color: #facc15; font-size: 13px;">📸 3 वैकल्पिक लेआउट तस्वीरें (इमेज न लगाने पर पूरा चौड़ा लेआउट रहेगा):</label>
+        <div class="row">
+            <div>
+                <label>🖼️ Image 1 (Q1 & Q2 - Right Side):</label>
+                <div class="img-input-wrap">
+                    <input type="file" id="gridImgFile1" accept="image/*" onchange="loadGridImages(1)">
+                    <button class="btn-clear-img" onclick="clearImage(1)" title="हटाएं">✕</button>
+                </div>
+            </div>
+            <div>
+                <label>🖼️ Image 2 (Q5 & Q6 - Left Side):</label>
+                <div class="img-input-wrap">
+                    <input type="file" id="gridImgFile2" accept="image/*" onchange="loadGridImages(2)">
+                    <button class="btn-clear-img" onclick="clearImage(2)" title="हटाएं">✕</button>
+                </div>
+            </div>
+            <div>
+                <label>🖼️ Image 3 (Q9 & Q10 - Right Side):</label>
+                <div class="img-input-wrap">
+                    <input type="file" id="gridImgFile3" accept="image/*" onchange="loadGridImages(3)">
+                    <button class="btn-clear-img" onclick="clearImage(3)" title="हटाएं">✕</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. HEADER & STATIC GK FOOTER -->
     <div class="group-box">
-        <label style="color: #facc15; font-size: 13px;">🧠 हेडर एवं Static GK फुटर (Engagement Booster):</label>
+        <label style="color: #38bdf8; font-size: 13px;">🧠 हेडर एवं Static GK फुटर (Engagement Booster):</label>
         <div class="row">
             <div>
                 <label>✍️ मुख्य टाइटल (ऑटो तारीख):</label>
@@ -235,13 +270,13 @@
         </div>
     </div>
 
-    <!-- 3. DATA SHEET & BUTTONS -->
+    <!-- 4. DATA SHEET & BUTTONS -->
     <div class="group-box">
         <label style="color: #34d399; font-size: 13px;">📝 10 प्रश्न-उत्तर इनपुट बॉक्स:</label>
         <textarea id="qaInput" oninput="debouncedRefresh()" placeholder="1. किस राज्य में स्थित जलालाबाद का नाम बदलकर परशुरामपुरी किया गया है?
 उत्तर प्रदेश
 
-2. नेमार किस खेल के प्रसिद्ध खिलाड़ी हैं जिन्होंने हाल ही में संन्यास लिया?
+2. नेमार किस खेल के प्रसिद्ध खिलाड़ी हैं जिन्होंने संन्यास लिया?
 फुटबॉल"></textarea>
         
         <div class="btn-grid">
@@ -254,12 +289,12 @@
         </div>
     </div>
 
-    <!-- 4. LIVE PREVIEW CANVAS -->
+    <!-- 5. LIVE PREVIEW CANVAS -->
     <div class="preview-box">
         <canvas id="canvas"></canvas>
     </div>
 
-    <!-- 5. ACTIONS: DOWNLOAD & SHARE -->
+    <!-- 6. ACTIONS: DOWNLOAD & SHARE -->
     <div class="btn-grid">
         <button class="btn-action btn-green" onclick="downloadImageHD()">
             <span>📥 Download HD Post (PNG)</span>
@@ -269,7 +304,7 @@
         </button>
     </div>
 
-    <!-- 6. AUTO-GENERATED FB CAPTION -->
+    <!-- 7. AUTO-GENERATED FB CAPTION -->
     <div class="caption-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Auto Caption (तारीख व सवाल सहित):</span>
@@ -280,7 +315,6 @@
 </div>
 
 <script>
-    // 30+ High-Engagement Static GK Questions for Footer
     const STATIC_GK_BANK = [
         "कर्क रेखा भारत के कितने राज्यों से होकर गुजरती है?",
         "भारत का प्रथम राष्ट्रीय उद्यान कौन सा है?",
@@ -363,6 +397,7 @@
     };
 
     let currentThemeKey = 'whiteTheme';
+    let gridImages = { 1: null, 2: null, 3: null };
     let debounceTimer = null;
 
     function getAutoFormattedDate() {
@@ -414,6 +449,28 @@
         });
     }
 
+    function loadGridImages(imgIndex) {
+        const file = document.getElementById(`gridImgFile${imgIndex}`).files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image(); 
+                img.onload = function() { 
+                    gridImages[imgIndex] = img; 
+                    debouncedRefresh(); 
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function clearImage(imgIndex) {
+        gridImages[imgIndex] = null;
+        document.getElementById(`gridImgFile${imgIndex}`).value = "";
+        debouncedRefresh();
+    }
+
     async function pasteFromClipboard() {
         try {
             const text = await navigator.clipboard.readText();
@@ -436,7 +493,6 @@
         }, 100);
     }
 
-    // Strip leading numbering like 1., Q.1, प्र. 1 etc.
     function cleanQuestionText(rawQ) {
         if (!rawQ) return "";
         return rawQ.replace(/^(?:[Qqप्र\.]*\s*\d+[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*/, '').trim();
@@ -562,7 +618,7 @@ L1 पॉइंट
         const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Canvas Background
+        // Background
         ctx.fillStyle = theme.bg;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -584,7 +640,6 @@ L1 पॉइंट
         let textWidth = ctx.measureText(dateText).width + 60;
         if (textWidth < 260) textWidth = 260;
         
-        ctx.fillStyle = theme.dateBg;
         roundRect(ctx, canvas.width / 2 - (textWidth / 2), startTopOffset + 15, textWidth, 42, 21, true, false);
         
         ctx.fillStyle = "#ffffff"; 
@@ -594,7 +649,7 @@ L1 पॉइंट
         ctx.fillText(dateText, canvas.width / 2, startTopOffset + 15 + 21); 
         ctx.restore();
 
-        // Ribbon & Part Badge (Exam Preparation)
+        // Ribbon & Exam Preparation Badge
         const ribbonY = startTopOffset + 82;
         ctx.save();
         ctx.fillStyle = theme.headerColor;
@@ -602,7 +657,6 @@ L1 पॉइंट
         ctx.textAlign = "center";
         ctx.fillText("UPPSC || SSC || RAILWAY || UP POLICE || BPSC || ALL EXAMS", canvas.width / 2 - 75, ribbonY);
 
-        // Exam Preparation Badge
         const partText = "Exam Preparation";
         const partW = 180;
         ctx.fillStyle = theme.dateBg;
@@ -613,7 +667,7 @@ L1 पॉइंट
         ctx.fillText(partText, canvas.width / 2 + 250 + (partW / 2), ribbonY - 3);
         ctx.restore();
 
-        // 10 QA Cards Area Calculation
+        // 10 QA Cards Layout Calculations
         const startY = startTopOffset + 115; 
         const footerHeight = 65;
         const availableHeight = canvas.height - startY - footerHeight - 15;
@@ -624,8 +678,17 @@ L1 पॉइंट
             let currentY = startY + (idx * rowHeight);
             let displayNum = startNum + idx;
 
+            // 3 Images के अनुसार कार्ड की चौड़ाई और स्थान का समायोजन
             let boxX = 45; 
             let boxWidth = 990;
+            if ((idx === 0 || idx === 1) && gridImages[1]) {
+                boxWidth = 785;
+            } else if ((idx === 4 || idx === 5) && gridImages[2]) {
+                boxX = 250;
+                boxWidth = 785;
+            } else if ((idx === 8 || idx === 9) && gridImages[3]) {
+                boxWidth = 785;
+            }
 
             // Box Container
             ctx.save(); 
@@ -635,7 +698,7 @@ L1 पॉइंट
             roundRect(ctx, boxX, currentY + 3, boxWidth, actualBoxHeight, 14, true, true);
             ctx.restore();
 
-            // Number Circle Badge
+            // Number Badge
             let badgeRadius = 24;
             let badgeX = boxX + 42;
             let badgeY = currentY + (rowHeight / 2) - 1;
@@ -656,7 +719,7 @@ L1 पॉइंट
             let textStartX = boxX + 85;
 
             if (lineLayout === 'singleLine') {
-                let textAvailWidth = boxWidth - 320;
+                let textAvailWidth = boxWidth - 310;
                 ctx.save(); 
                 ctx.fillStyle = theme.qColor; 
                 ctx.font = `700 24px 'Noto Sans Devanagari', sans-serif`; 
@@ -673,7 +736,6 @@ L1 पॉइंट
                 ctx.fillText(item.a, boxX + boxWidth - 25, currentY + (rowHeight / 2) - 2); 
                 ctx.restore();
             } else {
-                // 2-Line Mode (Safe Padding)
                 let textAvailWidth = boxWidth - 110;
                 ctx.save(); 
                 ctx.fillStyle = theme.qColor; 
@@ -693,7 +755,53 @@ L1 पॉइंट
             }
         });
 
-        // 7. FOOTER STRIP WITH STATIC GK ENGAGEMENT QUESTION
+        // DRAW 3 OPTIONAL LAYOUT IMAGES
+        const imgWidth = 195;
+        const imgHeight = (rowHeight * 2) - 9;
+
+        // Image 1: Right side of Q1 & Q2
+        if (gridImages[1]) {
+            let imgY = startY + 3;
+            ctx.save();
+            roundRect(ctx, 840, imgY, imgWidth, imgHeight, 14, false, false);
+            ctx.clip();
+            ctx.drawImage(gridImages[1], 840, imgY, imgWidth, imgHeight);
+            ctx.restore();
+
+            ctx.strokeStyle = "rgba(15, 76, 129, 0.35)";
+            ctx.lineWidth = 2;
+            roundRect(ctx, 840, imgY, imgWidth, imgHeight, 14, false, true);
+        }
+
+        // Image 2: Left side of Q5 & Q6
+        if (gridImages[2]) {
+            let imgY = startY + (4 * rowHeight) + 3;
+            ctx.save();
+            roundRect(ctx, 45, imgY, imgWidth, imgHeight, 14, false, false);
+            ctx.clip();
+            ctx.drawImage(gridImages[2], 45, imgY, imgWidth, imgHeight);
+            ctx.restore();
+
+            ctx.strokeStyle = "rgba(15, 76, 129, 0.35)";
+            ctx.lineWidth = 2;
+            roundRect(ctx, 45, imgY, imgWidth, imgHeight, 14, false, true);
+        }
+
+        // Image 3: Right side of Q9 & Q10
+        if (gridImages[3]) {
+            let imgY = startY + (8 * rowHeight) + 3;
+            ctx.save();
+            roundRect(ctx, 840, imgY, imgWidth, imgHeight, 14, false, false);
+            ctx.clip();
+            ctx.drawImage(gridImages[3], 840, imgY, imgWidth, imgHeight);
+            ctx.restore();
+
+            ctx.strokeStyle = "rgba(15, 76, 129, 0.35)";
+            ctx.lineWidth = 2;
+            roundRect(ctx, 840, imgY, imgWidth, imgHeight, 14, false, true);
+        }
+
+        // FOOTER WITH STATIC GK ENGAGEMENT QUESTION
         const footerQ = document.getElementById('footerQuestionInput').value;
         const footerFullText = `🧠 आज का सवाल: ${footerQ} (उत्तर कमेंट करें 👇)`;
 
@@ -701,7 +809,6 @@ L1 पॉइंट
         ctx.fillStyle = theme.footerBg; 
         ctx.fillRect(0, canvas.height - footerHeight, canvas.width, footerHeight);
         
-        // Gold accent top line
         ctx.fillStyle = "#ffcc00"; 
         ctx.fillRect(0, canvas.height - footerHeight, canvas.width, 3.5);
         
