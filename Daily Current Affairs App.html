@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EP Image Studio - Daily & Weekly/Monthly Mega Hub</title>
+    <title>EP Image Studio - Ultimate Hub</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
         
         .app-container { 
             width: 100%;
-            max-width: 840px; 
+            max-width: 860px; 
             background: var(--card-bg); 
             border-radius: 14px; 
             padding: 16px; 
@@ -136,6 +136,11 @@
             font-weight: bold;
         }
 
+        .btn-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+        }
         .btn-grid-3 {
             display: grid;
             grid-template-columns: 1.2fr 1fr 1fr;
@@ -150,15 +155,15 @@
             background: linear-gradient(135deg, #0284c7, #2563eb); 
             color: white; 
             border: none; 
-            padding: 11px; 
-            font-size: 13.5px; 
+            padding: 10px 12px; 
+            font-size: 13px; 
             font-weight: 800; 
             border-radius: 8px; 
             cursor: pointer; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 6px; 
             transition: 0.2s;
         }
         .btn-action:hover { opacity: 0.92; }
@@ -205,8 +210,8 @@
             user-select: text;
         }
 
-        /* ARCHIVE MODAL */
-        #archiveModal {
+        /* MODAL DIALOGS */
+        .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -221,8 +226,8 @@
             border: 1.5px solid #38bdf8;
             border-radius: 12px;
             width: 100%;
-            max-width: 650px;
-            max-height: 85vh;
+            max-width: 680px;
+            max-height: 88vh;
             padding: 16px;
             display: flex;
             flex-direction: column;
@@ -251,6 +256,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 8px;
+        }
+        .item-btns {
+            display: flex;
+            gap: 6px;
         }
     </style>
 </head>
@@ -259,29 +269,41 @@
 <div class="app-container">
     <div class="header">⚡ EP Image Studio - Daily & Weekly/Monthly Mega Hub</div>
 
-    <!-- 1. WEEKLY / MONTHLY SUNDAY REVISION CONTROLS -->
+    <!-- 1. MEGA HUB: ARCHIVE, BULK EXPORT & BACKUP -->
     <div class="group-box" style="border: 1.5px solid #ec4899; background: #180d24;">
-        <label style="color: #f472b6; font-size: 13px;">👑 Sunday Special: Weekly & Monthly Revision Generator</label>
-        <div class="row">
-            <div>
-                <button class="btn-action btn-mega" onclick="openArchiveModal()">
-                    <span>📚 आर्काइव देखें व Sunday रिवीजन लोड करें</span>
-                </button>
-            </div>
-            <div>
-                <button class="btn-action" style="background:#0284c7;" onclick="exportWeeklyCaption()">
-                    <span>📝 Sunday Weekly Facebook Caption</span>
-                </button>
-            </div>
+        <label style="color: #f472b6; font-size: 13px;">👑 Sunday & Monthly Hub: आर्काइव, बल्क एक्सपोर्ट व JSON बैकअप</label>
+        <div class="btn-grid-4">
+            <button class="btn-action btn-mega" onclick="openArchiveModal()">
+                <span>📚 प्रश्न आर्काइव व Edit</span>
+            </button>
+            <button class="btn-action btn-green" onclick="exportBulkDOC()">
+                <span>📄 Export Word (DOC)</span>
+            </button>
+            <button class="btn-action btn-purple" onclick="exportBulkPDF()">
+                <span>🖨️ Export / Print PDF</span>
+            </button>
+            <button class="btn-action" style="background:#0284c7;" onclick="exportWeeklyCaption()">
+                <span>📝 Auto FB Caption</span>
+            </button>
         </div>
-        <div style="font-size: 11px; color: #cbd5e1;">
-            💡 <em>टिप: जब भी आप रोज़ाना पोस्ट डाउनलोड करते हैं, वह दिन का करंट अफेयर्स अपने-आप आर्काइव में जुड़ जाता है। रविवार को आप पिछले 7 दिनों का मेगा-रिवीजन सीधे लोड कर सकते हैं!</em>
+        <div class="row" style="margin-top: 4px;">
+            <div>
+                <button class="btn-action btn-amber" style="width:100%; padding: 6px;" onclick="exportArchiveJSON()">
+                    <span>💾 Device पर बैकअप लें (Export JSON)</span>
+                </button>
+            </div>
+            <div>
+                <button class="btn-action btn-reset" style="width:100%; padding: 6px;" onclick="document.getElementById('jsonFileInput').click()">
+                    <span>📥 बैकअप रीस्टोर करें (Import JSON)</span>
+                </button>
+                <input type="file" id="jsonFileInput" accept=".json" style="display:none;" onchange="importArchiveJSON(event)">
+            </div>
         </div>
     </div>
 
-    <!-- 2. STYLE, HINDI FONT & WATERMARK -->
+    <!-- 2. STYLE, FONT & WATERMARK (3%) -->
     <div class="group-box">
-        <label style="color: #38bdf8;">🎨 स्टाइल, हिंदी फॉन्ट व वाटरमार्क सेटिंग्स:</label>
+        <label style="color: #38bdf8;">🎨 स्टाइल, हिंदी फॉन्ट व वॉटरमार्क सेटिंग्स:</label>
         <div class="row">
             <div>
                 <label>विज़ुअल थीम:</label>
@@ -310,8 +332,8 @@
                 </select>
             </div>
             <div class="slider-wrap">
-                <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">4%</span></label>
-                <input type="range" id="watermarkOpacity" min="0.02" max="0.15" step="0.01" value="0.04" oninput="document.getElementById('wmVal').innerText=Math.round(this.value*100)+'%'; savePrefsAndRefresh();">
+                <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">3%</span></label>
+                <input type="range" id="watermarkOpacity" min="0.01" max="0.10" step="0.01" value="0.03" oninput="document.getElementById('wmVal').innerText=Math.round(this.value*100)+'%'; savePrefsAndRefresh();">
             </div>
         </div>
 
@@ -415,11 +437,19 @@ ISRO ने हाल ही में किस देश की अंतर�
 
     <!-- 7. ACTIONS: DOWNLOAD & SHARE -->
     <div class="btn-grid-2">
-        <button class="btn-action btn-green" onclick="downloadImageHD()">
-            <span>📥 Download HD Post (Auto-Archives to Memory)</span>
+        <button class="btn-action btn-green" onclick="downloadImageHD('png')">
+            <span>📥 Download HD PNG (Auto-Saved)</span>
         </button>
-        <button class="btn-action" onclick="shareDirectly()">
+        <button class="btn-action btn-amber" onclick="downloadImageHD('jpeg')">
+            <span>🖼️ Download High Quality JPEG</span>
+        </button>
+    </div>
+    <div class="btn-grid-2">
+        <button class="btn-action" style="background:#0284c7;" onclick="shareDirectly()">
             <span>📲 Direct Share</span>
+        </button>
+        <button class="btn-action btn-purple" onclick="saveToDailyArchiveManual()">
+            <span>💾 Save to Archive Now</span>
         </button>
     </div>
 
@@ -433,30 +463,52 @@ ISRO ने हाल ही में किस देश की अंतर�
     </div>
 </div>
 
-<!-- ARCHIVE MODAL (SUNDAY REVISION HUB) -->
-<div id="archiveModal">
+<!-- ARCHIVE & EDIT MODAL -->
+<div id="archiveModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3 style="color:#38bdf8; font-size: 16px;">📚 सहेजा गया करंट अफेयर्स आर्काइव (Weekly Hub)</h3>
+            <h3 style="color:#38bdf8; font-size: 16px;">📚 सहेजा गया प्रश्न आर्काइव (Edit / Delete / Load)</h3>
             <button onclick="closeArchiveModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
         </div>
         <div class="row">
             <button class="btn-action btn-mega" style="font-size:12px; padding:8px;" onclick="loadLast7DaysWeekly()">
-                ⚡ लोड करें: पिछले 7 दिन (Weekly Revision)
+                ⚡ लोड करें: पिछले 7 दिन (Sunday Revision)
             </button>
-            <button class="btn-action" style="font-size:12px; padding:8px; background:#475569;" onclick="clearArchiveHistory()">
-                🗑️ आर्काइव साफ़ करें
+            <button class="btn-action" style="font-size:12px; padding:8px; background:#ef4444;" onclick="clearArchiveHistory()">
+                🗑️ पूरा आर्काइव साफ़ करें
             </button>
         </div>
         <div class="archive-list" id="archiveItemsList">
-            <!-- Saved dates appear here -->
+            <!-- Dynamic archive items -->
+        </div>
+    </div>
+</div>
+
+<!-- EDIT ITEM MODAL -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="color:#38bdf8; font-size: 16px;">✏️ प्रश्न-उत्तर एडिट करें</h3>
+            <button onclick="closeEditModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div>
+            <label>तारीख / शीर्षक:</label>
+            <input type="text" id="editDateInput">
+        </div>
+        <div>
+            <label>10 प्रश्न-उत्तर:</label>
+            <textarea id="editTextarea" style="min-height:220px;"></textarea>
+        </div>
+        <div class="row">
+            <button class="btn-action btn-green" onclick="saveEditedArchiveItem()">💾 बदलाव सुरक्षित करें</button>
+            <button class="btn-action btn-reset" onclick="closeEditModal()">रद्द करें</button>
         </div>
     </div>
 </div>
 
 <script>
     const STORAGE_PREFS = "EP_STUDIO_ULTIMATE_PREFS";
-    const STORAGE_ARCHIVE = "EP_STUDIO_DAILY_ARCHIVE_V1";
+    const STORAGE_ARCHIVE = "EP_STUDIO_DAILY_ARCHIVE_V2";
 
     const STATIC_GK_BANK = [
         "भारत का सबसे ऊँचा जलप्रपात किस राज्य में है?",
@@ -490,7 +542,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             badgeBg: '#b71c1c',
             qColor: '#0c1a30',
             aColor: '#b71c1c',
-            highlightColor: '#dc2626',
+            highlightColor: '#0284c7', // Rich Blue for Highlighted Words
             footerBg: '#0c1a30',
             footerText: '#ffcc00',
             wmColor: 'rgba(15, 23, 42, '
@@ -503,7 +555,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             badgeBg: '#e11d48',
             qColor: '#1e293b',
             aColor: '#be123c',
-            highlightColor: '#e11d48',
+            highlightColor: '#0284c7',
             footerBg: '#881337',
             footerText: '#fef08a',
             wmColor: 'rgba(136, 19, 55, '
@@ -516,7 +568,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             badgeBg: '#1d4ed8',
             qColor: '#0f172a',
             aColor: '#1d4ed8',
-            highlightColor: '#b91c1c',
+            highlightColor: '#2563eb',
             footerBg: '#1e3a8a',
             footerText: '#ffffff',
             wmColor: 'rgba(30, 58, 138, '
@@ -529,7 +581,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             badgeBg: '#0284c7',
             qColor: '#f8fafc',
             aColor: '#38bdf8',
-            highlightColor: '#f43f5e',
+            highlightColor: '#38bdf8',
             footerBg: '#0284c7',
             footerText: '#ffffff',
             wmColor: 'rgba(255, 255, 255, '
@@ -542,7 +594,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             badgeBg: '#d97706',
             qColor: '#ffffff',
             aColor: '#fbbf24',
-            highlightColor: '#f59e0b',
+            highlightColor: '#38bdf8',
             footerBg: '#1e293b',
             footerText: '#fbbf24',
             wmColor: 'rgba(245, 158, 11, '
@@ -552,6 +604,7 @@ ISRO ने हाल ही में किस देश की अंतर�
     let currentThemeKey = 'whiteTheme';
     let gridImages = { 1: null, 2: null, 3: null };
     let debounceTimer = null;
+    let editingIndex = -1;
 
     function getAutoFormattedDate() {
         const today = new Date();
@@ -580,23 +633,30 @@ ISRO ने हाल ही में किस देश की अंतर�
         const footerQ = document.getElementById('footerQuestionInput').value;
 
         const caption = `Daily Current Affairs - ${headerDate}
-📌 आज के शीर्ष 10 महत्वपूर्ण प्रश्न-उत्तर और करेंट अफेयर्स 
+📌 आज के शीर्ष 10 महत्वपूर्ण प्रश्न-उत्तर
+━━━━━━━━━━━━━━━━━━━━━━━
 🧠 आज का सवाल:
 👉 "${footerQ}"
-#currentaffairs`;
+💬 अपना उत्तर कमेंट बॉक्स में जरूर दें!
+
+📌 क्या आप इसका फ्री PDF टेलीग्राम पर चाहते हैं? कमेंट में 'YES' लिखें!
+❤️ Like | ➕ Follow | 🎯 Share
+#currentaffairs #exampreparation #gk`;
 
         document.getElementById('captionDisplay').innerText = caption;
     }
 
     function exportWeeklyCaption() {
-        const headerDate = document.getElementById('gridHeaderInput').value || "Weekly Mega Revision";
-        const caption = `🔥 Weekly Current Affairs Mega Revision (${headerDate})
+        const headerDate = document.getElementById('gridHeaderInput').value || "Mega Revision Digest";
+        const caption = `🔥 Current Affairs Mega Revision (${headerDate})
 ━━━━━━━━━━━━━━━━━━━━━━━
-📌 पूरे सप्ताह के सबसे महत्वपूर्ण प्रश्न-उत्तर एक साथ! सभी प्रतियोगी परीक्षाओं (SSC, UP Police, Railway, State Exams) के लिए अति महत्वपूर्ण रिवीजन।
+📌 पूरे सप्ताह/महीने के सबसे महत्वपूर्ण प्रश्न-उत्तर एक साथ! 
+सभी प्रतियोगी परीक्षाओं (UPPSC, SSC, UP Police, Railway, BPSC) के लिए अति महत्वपूर्ण रिवीजन।
 
-👉 सभी प्रश्नों को स्वाइप करके पूरा पढ़ें और अपनी तैयारी मजबूत करें!
+👉 सभी प्रश्नों को पूरा पढ़ें और अपनी तैयारी को मजबूत करें!
+📌 पूरा फ्री रिवीजन PDF डाउनलोड करने के लिए कमेंट में 'PDF' लिखें।
 ❤️ Like | ➕ Follow | 🎯 Share
-#currentaffairs`;
+#currentaffairs #gkquiz #exampreparation`;
 
         document.getElementById('captionDisplay').innerText = caption;
         copyCaption();
@@ -665,7 +725,7 @@ ISRO ने हाल ही में किस देश की अंतर�
                 alert("क्लिपबोर्ड खाली है!");
             }
         } catch(e) {
-            alert("क्लिपबोर्ड अनुमति नहीं मिली। कृपया बॉक्स में सीधे पेस्ट करें।");
+            alert("क्लिपबोर्ड अनुमति नहीं मिली। कृपया सीधे टेक्स्ट बॉक्स में पेस्ट करें।");
         }
     }
 
@@ -680,25 +740,39 @@ ISRO ने हाल ही में किस देश की अंतर�
         alert("✨ नए दिन के लिए स्टूडियो तैयार है!");
     }
 
-    // ARCHIVE & HISTORY LOGIC (AUTO SAVES DAILY WORK)
+    // ARCHIVE SYSTEM: AUTO SAVE, EDIT, DELETE, JSON BACKUP
+    function getArchive() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_ARCHIVE)) || [];
+        } catch(e) {
+            return [];
+        }
+    }
+
+    function setArchive(data) {
+        try {
+            localStorage.setItem(STORAGE_ARCHIVE, JSON.stringify(data));
+        } catch(e) {}
+    }
+
     function saveToDailyArchive(dateStr, qaRawText) {
         if (!qaRawText || qaRawText.trim().length < 10) return;
-        let archive = [];
-        try {
-            archive = JSON.parse(localStorage.getItem(STORAGE_ARCHIVE)) || [];
-        } catch(e) {}
-        
-        // Remove duplicate if same date exists, add fresh
+        let archive = getArchive();
         archive = archive.filter(item => item.date !== dateStr);
         archive.unshift({
             date: dateStr,
-            text: qaRawText,
+            text: qaRawText.trim(),
             timestamp: new Date().getTime()
         });
+        if (archive.length > 90) archive.pop(); // Up to 3 months storage
+        setArchive(archive);
+    }
 
-        // Keep last 45 days of data
-        if (archive.length > 45) archive.pop();
-        localStorage.setItem(STORAGE_ARCHIVE, JSON.stringify(archive));
+    function saveToDailyArchiveManual() {
+        const dateStr = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
+        const qaRawText = document.getElementById('qaInput').value;
+        saveToDailyArchive(dateStr, qaRawText);
+        alert(`💾 ${dateStr} का डेटा आर्काइव में सुरक्षित कर लिया गया है!`);
     }
 
     function openArchiveModal() {
@@ -706,13 +780,10 @@ ISRO ने हाल ही में किस देश की अंतर�
         const list = document.getElementById('archiveItemsList');
         list.innerHTML = "";
 
-        let archive = [];
-        try {
-            archive = JSON.parse(localStorage.getItem(STORAGE_ARCHIVE)) || [];
-        } catch(e) {}
+        const archive = getArchive();
 
         if (archive.length === 0) {
-            list.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई दिन सहेजा नहीं गया है। जैसे ही आप रोज़ाना HD इमेज डाउनलोड करेंगे, डाटा यहाँ जुड़ता जाएगा।</div>`;
+            list.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई दिन सहेजा नहीं गया है। जैसे ही आप इमेज डाउनलोड करेंगे या 'Save' दबाएँगे, डेटा यहाँ दिखेगा।</div>`;
         } else {
             archive.forEach((item, index) => {
                 const div = document.createElement('div');
@@ -720,11 +791,13 @@ ISRO ने हाल ही में किस देश की अंतर�
                 div.innerHTML = `
                     <div>
                         <div style="font-weight:bold; color:#38bdf8; font-size:13px;">📅 ${item.date}</div>
-                        <div style="font-size:11px; color:#94a3b8;">10 प्रश्न उपलब्ध</div>
+                        <div style="font-size:11px; color:#94a3b8;">10 प्रश्न सुरक्षित</div>
                     </div>
-                    <button class="btn-action" style="font-size:11px; padding:6px 10px;" onclick="loadSingleArchiveDay(${index})">
-                        लोड करें ➔
-                    </button>
+                    <div class="item-btns">
+                        <button class="btn-action" style="font-size:11px; padding:5px 8px;" onclick="loadSingleArchiveDay(${index})">लोड</button>
+                        <button class="btn-action btn-amber" style="font-size:11px; padding:5px 8px;" onclick="openEditModal(${index})">✏️ एडिट</button>
+                        <button class="btn-action" style="font-size:11px; padding:5px 8px; background:#ef4444;" onclick="deleteArchiveItem(${index})">🗑️</button>
+                    </div>
                 `;
                 list.appendChild(div);
             });
@@ -737,44 +810,211 @@ ISRO ने हाल ही में किस देश की अंतर�
     }
 
     function loadSingleArchiveDay(index) {
-        let archive = JSON.parse(localStorage.getItem(STORAGE_ARCHIVE)) || [];
+        const archive = getArchive();
         if (archive[index]) {
             document.getElementById('qaInput').value = archive[index].text;
             document.getElementById('gridHeaderInput').value = archive[index].date;
             savePrefsAndRefresh();
             closeArchiveModal();
-            alert(`✅ ${archive[index].date} का डेटा लोड कर दिया गया है!`);
+            alert(`✅ ${archive[index].date} का डेटा लोड हो गया!`);
         }
     }
 
+    function openEditModal(index) {
+        const archive = getArchive();
+        if (!archive[index]) return;
+        editingIndex = index;
+        document.getElementById('editDateInput').value = archive[index].date;
+        document.getElementById('editTextarea').value = archive[index].text;
+        document.getElementById('editModal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+        editingIndex = -1;
+    }
+
+    function saveEditedArchiveItem() {
+        if (editingIndex < 0) return;
+        let archive = getArchive();
+        archive[editingIndex].date = document.getElementById('editDateInput').value.trim();
+        archive[editingIndex].text = document.getElementById('editTextarea').value.trim();
+        setArchive(archive);
+        closeEditModal();
+        openArchiveModal();
+        alert("✅ प्रश्न अपडेट कर दिए गए हैं!");
+    }
+
+    function deleteArchiveItem(index) {
+        if (!confirm("क्या आप इस दिन का डेटा हटाना चाहते हैं?")) return;
+        let archive = getArchive();
+        archive.splice(index, 1);
+        setArchive(archive);
+        openArchiveModal();
+    }
+
+    function clearArchiveHistory() {
+        if (!confirm("क्या आप सचमुच पूरा आर्काइव इतिहास मिटाना चाहते हैं?")) return;
+        localStorage.removeItem(STORAGE_ARCHIVE);
+        openArchiveModal();
+    }
+
     function loadLast7DaysWeekly() {
-        let archive = JSON.parse(localStorage.getItem(STORAGE_ARCHIVE)) || [];
+        const archive = getArchive();
         if (archive.length < 2) {
-            alert("आर्काइव में कम से कम 2 से 7 दिनों का डेटा होना आवश्यक है।");
+            alert("साप्ताहिक रिवीजन के लिए आर्काइव में कम से कम 2 से 7 दिनों का डेटा होना आवश्यक है।");
             return;
         }
 
         const last7 = archive.slice(0, 7);
-        let combinedQA = [];
-        last7.forEach(d => {
-            combinedQA.push(d.text.trim());
-        });
-
-        // Load the first 10 for slide preview, and setup header
-        document.getElementById('gridHeaderInput').value = "Weekly Revision (Week 1)";
+        document.getElementById('gridHeaderInput').value = "Weekly Mega Revision";
         document.getElementById('gridDateInput').value = "Sunday Special Mega Revision";
-        document.getElementById('qaInput').value = last7[0].text; // Shows first batch
+        document.getElementById('qaInput').value = last7[0].text;
         
         savePrefsAndRefresh();
         closeArchiveModal();
         exportWeeklyCaption();
-        alert(`🎉 पिछले ${last7.length} दिनों का साप्ताहिक डेटा तैयार है! कैप्शन क्लिपबोर्ड पर कॉपी हो गया है।`);
+        alert(`🎉 पिछले ${last7.length} दिनों का डेटा तैयार है!`);
     }
 
-    function clearArchiveHistory() {
-        if (!confirm("क्या आप पूरा आर्काइव इतिहास मिटाना चाहते हैं?")) return;
-        localStorage.removeItem(STORAGE_ARCHIVE);
-        openArchiveModal();
+    // JSON BACKUP & RESTORE
+    function exportArchiveJSON() {
+        const archive = getArchive();
+        if (archive.length === 0) {
+            alert("आर्काइव में कोई डेटा नहीं है!");
+            return;
+        }
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(archive, null, 2));
+        const a = document.createElement('a');
+        a.setAttribute("href", dataStr);
+        a.setAttribute("download", `EP_CurrentAffairs_Backup_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+
+    function importArchiveJSON(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (Array.isArray(imported)) {
+                    let existing = getArchive();
+                    // Merge avoiding exact duplicates by date
+                    imported.forEach(imp => {
+                        existing = existing.filter(x => x.date !== imp.date);
+                        existing.unshift(imp);
+                    });
+                    setArchive(existing);
+                    alert("✅ बैकअप सफलतापूर्वक रीस्टोर कर लिया गया है!");
+                    openArchiveModal();
+                } else {
+                    alert("अमान्य बैकअप फ़ाइल!");
+                }
+            } catch(err) {
+                alert("JSON फ़ाइल पढ़ने में त्रुटि हुई।");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    // BULK EXPORT DOC & PDF
+    function exportBulkDOC() {
+        const archive = getArchive();
+        if (archive.length === 0) {
+            alert("एक्सपोर्ट करने के लिए आर्काइव में डेटा नहीं है!");
+            return;
+        }
+
+        let docContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head><meta charset='utf-8'><title>Current Affairs Digest</title>
+        <style>
+            body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #111; }
+            h1 { text-align: center; color: #0284c7; margin-bottom: 5px; }
+            h2 { color: #b71c1c; border-bottom: 2px solid #b71c1c; padding-bottom: 4px; margin-top: 25px; }
+            .qa-item { margin-bottom: 12px; }
+            .q { font-weight: bold; color: #0c1a30; }
+            .a { color: #b71c1c; font-weight: bold; }
+        </style>
+        </head><body>
+        <h1>Exam Preparation - Current Affairs Digest</h1>
+        <p style="text-align:center; font-size:12px; color:#555;">अखिल भारतीय प्रतियोगी परीक्षाओं (UPPSC, SSC, Railway, Police) के लिए संपूर्ण संकलन</p>
+        <hr/>`;
+
+        archive.forEach(day => {
+            docContent += `<h2>📅 ${day.date}</h2>`;
+            const lines = day.text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            let count = 1;
+            for (let i = 0; i < lines.length; i += 2) {
+                let q = cleanQuestionText(lines[i]);
+                let a = cleanAnswerText(lines[i+1]);
+                if (q) {
+                    docContent += `<div class="qa-item"><div class="q">Q${count}. ${q}</div><div class="a">उत्तर: ${a}</div></div>`;
+                    count++;
+                }
+            }
+        });
+
+        docContent += `</body></html>`;
+
+        const blob = new Blob(['\ufeff' + docContent], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `ExamPreparation_CurrentAffairs_Digest.doc`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+    }
+
+    function exportBulkPDF() {
+        const archive = getArchive();
+        if (archive.length === 0) {
+            alert("प्रिंट / PDF के लिए आर्काइव में डेटा नहीं है!");
+            return;
+        }
+
+        const printWindow = window.open('', '_blank');
+        let html = `<!DOCTYPE html><html><head><title>Current Affairs Digest</title>
+        <style>
+            body { font-family: 'Noto Sans Devanagari', Arial, sans-serif; padding: 25px; color: #111; }
+            .header { text-align: center; border-bottom: 2px solid #0284c7; padding-bottom: 10px; margin-bottom: 20px; }
+            .header h1 { color: #0284c7; margin: 0; }
+            .day-card { page-break-inside: avoid; margin-bottom: 22px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 14px; }
+            .day-title { font-size: 16px; font-weight: bold; color: #b71c1c; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+            .qa-row { margin-bottom: 8px; font-size: 13.5px; }
+            .q { font-weight: bold; color: #0f172a; }
+            .a { color: #b71c1c; font-weight: bold; margin-left: 10px; }
+            @media print { body { padding: 0; } }
+        </style></head><body>
+        <div class="header">
+            <h1>Exam Preparation - Current Affairs Digest</h1>
+            <p>UPPSC || SSC || RAILWAY || UP POLICE || ALL COMPETITIVE EXAMS</p>
+        </div>`;
+
+        archive.forEach(day => {
+            html += `<div class="day-card"><div class="day-title">📅 ${day.date}</div>`;
+            const lines = day.text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+            let count = 1;
+            for (let i = 0; i < lines.length; i += 2) {
+                let q = cleanQuestionText(lines[i]);
+                let a = cleanAnswerText(lines[i+1]);
+                if (q) {
+                    html += `<div class="qa-row"><span class="q">Q${count}. ${q}</span> <span class="a">उत्तर: ${a}</span></div>`;
+                    count++;
+                }
+            }
+            html += `</div>`;
+        });
+
+        html += `</body></html>`;
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.focus();
+        setTimeout(() => { printWindow.print(); }, 500);
     }
 
     function savePrefsAndRefresh() {
@@ -843,6 +1083,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         return rawA.replace(/^(?:Ans|उत्तर|Answer)\s*[:\-]\s*/i, '').trim();
     }
 
+    // WATERMARK (3% OPACITY)
     function drawOverCardWatermark(ctx, canvas, opacity) {
         ctx.save();
         const theme = THEMES[currentThemeKey];
@@ -908,21 +1149,29 @@ ISRO ने हाल ही में किस देश की अंतर�
 
     const HIGHLIGHT_TOKENS = ["कहाँ", "कौन-सा", "कौन-सी", "किस", "किसे", "कितने", "कब", "पहला", "पहली", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "वर्ष", "कौन"];
 
-    function drawSmartHighlightedLine(ctx, text, startX, y, theme, defaultColor) {
-        const words = text.split(' ');
+    // BLUE HIGHLIGHT & END WORD MANDATORY HIGHLIGHT
+    function drawSmartHighlightedLine(ctx, text, startX, y, theme, defaultColor, isLastLine) {
+        const words = text.split(' ').filter(w => w.length > 0);
         let curX = startX;
 
-        words.forEach((word) => {
+        words.forEach((word, idx) => {
             const clean = word.replace(/[?,.!"']/g, '');
-            const isHighlighted = HIGHLIGHT_TOKENS.some(t => clean === t || clean.includes(t)) || 
-                                  word.startsWith("'") || word.startsWith('"') || word.includes("'") || word.includes('"');
+            const isEndWord = isLastLine && (idx === words.length - 1);
+            const isKeyword = HIGHLIGHT_TOKENS.some(t => clean === t || clean.includes(t)) || 
+                              word.startsWith("'") || word.startsWith('"') || word.includes("'") || word.includes('"');
 
-            ctx.fillStyle = isHighlighted ? theme.highlightColor : defaultColor;
+            if (isEndWord || isKeyword) {
+                ctx.fillStyle = theme.highlightColor; // Rich Blue
+            } else {
+                ctx.fillStyle = defaultColor;
+            }
+            
             ctx.fillText(word + " ", curX, y);
             curX += ctx.measureText(word + " ").width;
         });
     }
 
+    // FIXED BALANCED QA (NO FONT REDUCTION IN Q5 & Q9)
     function renderBalancedQA(ctx, item, textStartX, currentY, actualBoxHeight, textAvailWidth, baseQSize, baseASize, hindiFont, theme) {
         ctx.font = `700 ${baseQSize}px ${hindiFont}`;
         const words = item.q.split(' ');
@@ -948,24 +1197,23 @@ ISRO ने हाल ही में किस देश की अंतर�
         if (lines.length <= 1) {
             ctx.font = `700 ${baseQSize}px ${hindiFont}`;
             ctx.textBaseline = "top";
-            drawSmartHighlightedLine(ctx, item.q, textStartX, currentY + 16, theme, theme.qColor);
+            drawSmartHighlightedLine(ctx, item.q, textStartX, currentY + 16, theme, theme.qColor, true);
 
             ctx.fillStyle = theme.aColor;
             ctx.font = `800 ${baseASize}px ${hindiFont}`;
             ctx.textBaseline = "bottom";
             ctx.fillText("उत्तर: " + item.a, textStartX, currentY + actualBoxHeight - 12);
         } else {
-            const safeQSize = Math.min(baseQSize, 19);
-            const safeASize = Math.min(baseASize, 21);
-            const lineGap = safeQSize + 4;
+            // Equal full font size for all cards - strictly preserving baseQSize & baseASize
+            const lineGap = baseQSize + 4;
 
-            ctx.font = `700 ${safeQSize}px ${hindiFont}`;
+            ctx.font = `700 ${baseQSize}px ${hindiFont}`;
             ctx.textBaseline = "top";
-            drawSmartHighlightedLine(ctx, lines[0], textStartX, currentY + 10, theme, theme.qColor);
-            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 10 + lineGap, theme, theme.qColor);
+            drawSmartHighlightedLine(ctx, lines[0], textStartX, currentY + 10, theme, theme.qColor, false);
+            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 10 + lineGap, theme, theme.qColor, true);
 
             ctx.fillStyle = theme.aColor;
-            ctx.font = `800 ${safeASize}px ${hindiFont}`;
+            ctx.font = `800 ${baseASize}px ${hindiFont}`;
             ctx.textBaseline = "bottom";
             ctx.fillText("उत्तर: " + item.a, textStartX, currentY + actualBoxHeight - 6);
         }
@@ -976,7 +1224,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         const hindiFont = document.getElementById('hindiFontSelect').value;
         const inputData = document.getElementById('qaInput').value.trim();
         const lineLayout = document.getElementById('gridLineLayout').value;
-        const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.04;
+        const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
         
         const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 21;
         const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 23;
@@ -1009,20 +1257,22 @@ ISRO ने हाल ही में किस देश की अंतर�
         ctx.textAlign = "center";
         ctx.fillText(headerTitle, canvas.width / 2, startTopOffset);
 
-        // 3. Date Capsule Badge
+        // 3. Date Capsule Badge (Clean & Fit)
         const dateText = document.getElementById('gridDateInput').value || "Daily Current Affairs";
         ctx.save(); 
         ctx.fillStyle = theme.dateBg;
-        let textWidth = ctx.measureText(dateText).width + 60;
-        if (textWidth < 260) textWidth = 260;
+        ctx.font = `700 22px 'Poppins', sans-serif`;
         
-        roundRect(ctx, canvas.width / 2 - (textWidth / 2), startTopOffset + 15, textWidth, 42, 21, true, false);
+        // Exact fit width without excess padding
+        let textMeas = ctx.measureText(dateText).width;
+        let fitWidth = textMeas + 36; // Perfectly tight & balanced
+        
+        roundRect(ctx, (canvas.width - fitWidth) / 2, startTopOffset + 16, fitWidth, 38, 19, true, false);
         
         ctx.fillStyle = "#ffffff"; 
-        ctx.font = `700 24px 'Poppins', sans-serif`;
-        ctx.textAlign = "center";
+        ctx.textAlign = "center"; 
         ctx.textBaseline = "middle";
-        ctx.fillText(dateText, canvas.width / 2, startTopOffset + 15 + 21); 
+        ctx.fillText(dateText, canvas.width / 2, startTopOffset + 16 + 19); 
         ctx.restore();
 
         // 4. Ribbon & Exam Preparation Badge
@@ -1073,10 +1323,10 @@ ISRO ने हाल ही में किस देश की अंतर�
         if (gridImages[2]) drawCoverImage(ctx, gridImages[2], 45, startY + (4 * rowHeight) + 3, imgWidth, imgHeight, 14);
         if (gridImages[3]) drawCoverImage(ctx, gridImages[3], 840, startY + (8 * rowHeight) + 3, imgWidth, imgHeight, 14);
 
-        // 6. Watermark at 4%
+        // 6. Watermark at 3%
         drawOverCardWatermark(ctx, canvas, wmOpacity);
 
-        // 7. Numbers and QA Text
+        // 7. Numbers and QA Text (Uniform font rendering across all cards)
         parsedItems.slice(0, 10).forEach((item, idx) => {
             let currentY = startY + (idx * rowHeight);
             let displayNum = idx + 1;
@@ -1107,11 +1357,10 @@ ISRO ने हाल ही में किस देश की अंतर�
             let textStartX = boxX + 85;
 
             if (lineLayout === 'singleLine') {
-                let textAvailWidth = boxWidth - 310;
                 ctx.font = `700 ${qFontSize}px ${hindiFont}`; 
                 ctx.textAlign = "left"; 
                 ctx.textBaseline = "middle";
-                drawSmartHighlightedLine(ctx, item.q, textStartX, currentY + (actualBoxHeight / 2) - 8, theme, theme.qColor);
+                drawSmartHighlightedLine(ctx, item.q, textStartX, currentY + (actualBoxHeight / 2) - 8, theme, theme.qColor, true);
 
                 ctx.save(); 
                 ctx.fillStyle = theme.aColor; 
@@ -1121,7 +1370,7 @@ ISRO ने हाल ही में किस देश की अंतर�
                 ctx.fillText(item.a, boxX + boxWidth - 25, currentY + (actualBoxHeight / 2) + 1); 
                 ctx.restore();
             } else {
-                let textAvailWidth = boxWidth - 110;
+                let textAvailWidth = boxWidth - 100;
                 renderBalancedQA(ctx, item, textStartX, currentY + 3, actualBoxHeight, textAvailWidth, qFontSize, aFontSize, hindiFont, theme);
             }
         });
@@ -1145,7 +1394,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         ctx.restore();
     }
 
-    function downloadImageHD() {
+    function downloadImageHD(format = 'png') {
         const headerDate = (document.getElementById('gridHeaderInput').value || getAutoFormattedDate()).replace(/\s+/g, '_');
         const rawText = document.getElementById('qaInput').value;
 
@@ -1153,8 +1402,13 @@ ISRO ने हाल ही में किस देश की अंतर�
         saveToDailyArchive(document.getElementById('gridHeaderInput').value || getAutoFormattedDate(), rawText);
 
         const link = document.createElement('a');
-        link.download = `Current_Affairs_${headerDate}.png`;
-        link.href = canvas.toDataURL('image/png');
+        if (format === 'jpeg') {
+            link.download = `Current_Affairs_${headerDate}.jpg`;
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+        } else {
+            link.download = `Current_Affairs_${headerDate}.png`;
+            link.href = canvas.toDataURL('image/png');
+        }
         link.click();
     }
 
@@ -1168,9 +1422,9 @@ ISRO ने हाल ही में किस देश की अंतर�
                     await navigator.share({ title: `Daily Current Affairs`, text: caption, files: [file] });
                 } catch(e) {}
             } else {
-                downloadImageHD();
+                downloadImageHD('png');
                 copyCaption();
-                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड और कैप्शन कॉपी हो गया है!");
+                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड और कैप्शन कॉपी कर दिया गया है!");
             }
         });
     }
