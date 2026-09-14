@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viral Quiz Studio - FB Feed Multi-Sheet Compiler</title>
+    <title>Viral Quiz Studio Pro - Single Card & Multi-Sheet Compiler</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,20 +22,37 @@
 
         .main-wrap {
             width: 100%;
-            max-width: 540px;
+            max-width: 520px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .studio-header {
             text-align: center;
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 800;
             color: #38bdf8;
             border-bottom: 2px solid #1e293b;
             padding-bottom: 6px;
             font-family: 'Poppins', sans-serif;
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            color: #818cf8;
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+        .section-divider::before, .section-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #334155;
         }
 
         .control-box {
@@ -75,7 +92,32 @@
             outline: none;
             font-family: inherit;
         }
-        textarea { resize: vertical; min-height: 130px; font-family: monospace; font-size: 12px; line-height: 1.4; }
+        textarea { resize: vertical; min-height: 150px; font-family: monospace; font-size: 12px; line-height: 1.4; }
+
+        .answer-toggle-card {
+            background: #0f172a;
+            border: 1.5px solid #10b981;
+            border-radius: 8px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .toggle-text {
+            font-size: 13px;
+            font-weight: 800;
+            color: #34d399;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #10b981;
+        }
 
         .btn-action-grid {
             display: grid;
@@ -86,11 +128,12 @@
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
             color: white;
             border: none;
-            padding: 11px;
+            padding: 12px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 800;
             cursor: pointer;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -98,50 +141,28 @@
         }
         .btn-clipboard {
             background: linear-gradient(135deg, #0284c7, #0369a1);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
 
-        /* COMPILER CARD */
-        .compiler-box {
-            background: #1e1b4b;
-            border: 1.5px solid #6366f1;
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .backup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 2px;
         }
-
-        .btn-compile {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .page-navigation {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #0f172a;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid #475569;
-        }
-        .btn-nav {
+        .btn-backup {
             background: #334155;
-            color: white;
-            border: none;
-            padding: 6px 14px;
+            color: #f1f5f9;
+            border: 1px solid #475569;
+            padding: 8px;
             border-radius: 6px;
+            font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
+            text-align: center;
         }
-        .btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
 
+        /* CANVAS STYLES */
         .canvas-card {
             width: 100%;
             background: #000;
@@ -159,25 +180,34 @@
 
         .action-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 1fr;
             gap: 8px;
         }
         .btn-act {
             border: none;
             padding: 11px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 800;
             cursor: pointer;
+            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
             color: white;
         }
-        .btn-share { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .btn-share {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 3px 10px rgba(37, 99, 235, 0.4);
+        }
         .btn-download { background: #10b981; }
-        .btn-download-all { background: #0891b2; grid-column: span 2; }
+        .btn-history-trigger {
+            background: #334155;
+            color: #f1f5f9;
+            grid-column: span 2;
+            border: 1px solid #475569;
+        }
 
         .detail-card {
             background: #1e293b;
@@ -193,25 +223,115 @@
             border: 1px solid #334155;
             border-radius: 6px;
             padding: 9px;
-            font-size: 12px;
+            font-size: 12.5px;
             line-height: 1.5;
             color: #e2e8f0;
             white-space: pre-wrap;
-            max-height: 160px;
-            overflow-y: auto;
             user-select: text;
         }
+
+        /* 10-QUESTION BATCH COMPILER STYLES */
+        .compiler-card {
+            background: #1e1b4b;
+            border: 1.5px solid #6366f1;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-compile {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13.5px;
+        }
+        .page-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0f172a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+        }
+        .btn-nav {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
+
+        /* MODAL */
+        #history-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+            padding: 16px;
+            justify-content: center;
+            align-items: center;
+        }
+        .history-content {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .history-header {
+            padding: 12px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-list {
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .history-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .h-item-title { font-size: 13px; font-weight: 800; color: #38bdf8; }
+        .h-item-sub { font-size: 11.5px; color: #10b981; margin-top: 2px; }
+        .h-item-exp { font-size: 11px; color: #94a3b8; margin-top: 4px; line-height: 1.4; }
     </style>
 </head>
 <body>
 
 <div class="main-wrap">
-    <div class="studio-header">⚡ FB Feed Multi-Sheet Compiler (1080 x 1350)</div>
+    <div class="studio-header">⚡ Viral Quiz Card Studio Pro & Sheet Compiler</div>
 
-    <!-- PASTE BOX -->
+    <!-- ==================== SECTION 1: SINGLE CARD STUDIO ==================== -->
     <div class="control-box">
         <div>
-            <label>📝 यहाँ क्विज़ टेक्स्ट पेस्ट करें (ऑटो सेव होगा):</label>
+            <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
             <textarea id="raw-paste-box">🏛️ POLITY GK QUIZ 🧠
 Q.169 संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️
 A) डॉ. राजेंद्र प्रसाद 📜
@@ -220,83 +340,198 @@ C) जवाहरलाल नेहरू 🏛️
 D) सरदार वल्लभभाई पटेल 🛡️
 👇 1 Second में सही उत्तर Comment करें! ⚡
 ❤️ Like | ➕ Follow 🎯
-Caption: संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee से जुड़ा महत्वपूर्ण प्रश्न!
-#PolityQuiz #IndianConstitution #ExamPreparation
+Caption: संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀
+#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity
 Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳
-Explanation: 29 अगस्त 1947 को गठित संविधान सभा की प्रारूप समिति में कुल 7 सदस्य थे, जिसके अध्यक्ष डॉ. भीमराव अंबेडकर थे।</textarea>
+Explanation: 29 अगस्त 1947 को गठित संविधान सभा की सबसे महत्वपूर्ण 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष डॉ. भीमराव अंबेडकर थे, जिसमें कुल 7 सदस्य थे।</textarea>
         </div>
 
         <div class="btn-action-grid">
-            <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndSave()">
-                <span>📋 1-Click Paste & Save</span>
+            <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
+                <span>📋 1-Click Paste & Run</span>
             </button>
-            <button class="btn-action" onclick="parseAndSaveQuestion()">
-                <span>💾 Save To Bank</span>
+            <button class="btn-action" onclick="generateFromRawText()">
+                <span>✨ Generate Single Card</span>
             </button>
         </div>
-        <div style="font-size:12px; color:#38bdf8; font-weight:700; text-align:center;">
-            📚 कुल सहेजे गए प्रश्न: <span id="total-saved-count">0</span>
-        </div>
-    </div>
 
-    <!-- 10-QUESTION SHEET COMPILER CONTROLS -->
-    <div class="compiler-box">
-        <div style="font-weight: 800; color: #c7d2fe; font-size: 14px;">
-            📑 Facebook Feed Sheet Generator (10Q: 5 Left + 5 Right)
+        <div class="row-flex" style="margin-top: 4px;">
+            <div>
+                <label>फ़ॉन्ट स्टाइल:</label>
+                <select id="cfg-font" onchange="saveAllSettings(); redrawCanvas();">
+                    <option value="'Hind', sans-serif">Hind (साफ बोल्ड)</option>
+                    <option value="'Kalam', cursive">Kalam (आकर्षक लिखावट)</option>
+                    <option value="'Rozha One', serif">Rozha One (क्लासिक)</option>
+                    <option value="'Poppins', sans-serif">Poppins (मॉडर्न)</option>
+                </select>
+            </div>
+            <div>
+                <label>बैकग्राउंड थीम:</label>
+                <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
+                    <option value="#fef9c3">Soft Warm Yellow</option>
+                    <option value="#f8fafc">Creamy Light</option>
+                    <option value="#ffffff">Pure White</option>
+                    <option value="#ecfdf5">Mint Light</option>
+                </select>
+            </div>
         </div>
+
         <div class="row-flex">
             <div>
-                <label>प्रारंभिक प्रश्न (Start Index):</label>
-                <input type="number" id="cfg-start-idx" min="1" value="1" onchange="updatePageEstimate()">
+                <label>प्रश्न साइज़: <span id="q-size-lbl">42</span>px</label>
+                <input type="range" id="cfg-q-size" min="30" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
             <div>
-                <label>कुल चुने गए प्रश्न (Count):</label>
-                <input type="number" id="cfg-total-count" min="1" max="100" value="10" onchange="updatePageEstimate()">
+                <label>ऑप्शन साइज़: <span id="opt-size-lbl">30</span>px</label>
+                <input type="range" id="cfg-opt-size" min="24" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
-        <div style="font-size:11.5px; color:#93c5fd;" id="page-estimate-text">
-            ℹ️ कुल पेजों की संख्या: 1 इमेज (10 प्रश्न)
+
+        <!-- ANSWER MODE TOGGLE -->
+        <div class="answer-toggle-card" onclick="toggleAnswerMode()">
+            <span class="toggle-text">✅ उत्तर व व्याख्या फोटो में दिखाएं (Answer Mode)</span>
+            <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
         </div>
 
-        <button class="btn-compile" onclick="compileBatchSheets()">🚀 इमेज तैयार करें (Compile Sheets)</button>
+        <!-- JSON BACKUP / RESTORE -->
+        <div class="backup-grid">
+            <button class="btn-backup" onclick="exportJSONBackup()">📤 Export Backup (JSON)</button>
+            <button class="btn-backup" onclick="document.getElementById('import-file').click()">📥 Import Backup (JSON)</button>
+            <input type="file" id="import-file" style="display:none" accept=".json" onchange="importJSONBackup(event)">
+        </div>
     </div>
 
-    <!-- PAGE NAVIGATION & PREVIEW -->
-    <div class="page-navigation" id="nav-container" style="display:none;">
-        <button class="btn-nav" id="btn-prev" onclick="changePage(-1)">◀ पिछला पेज</button>
-        <span style="font-size:13px; font-weight:800; color:#38bdf8;" id="page-indicator">Page 1 of 1</span>
-        <button class="btn-nav" id="btn-next" onclick="changePage(1)">अगला पेज ▶</button>
-    </div>
-
-    <!-- CANVAS PREVIEW (1080 x 1350 Feed Aspect) -->
+    <!-- CANVAS PREVIEW (SINGLE CARD: 1080 x 1350) -->
     <div class="canvas-card">
-        <canvas id="feedCanvas" width="1080" height="1350"></canvas>
+        <canvas id="quizCanvas" width="1080" height="1350"></canvas>
     </div>
 
-    <!-- ACTIONS -->
+    <!-- ACTIONS FOR SINGLE CARD -->
     <div class="action-grid">
-        <button class="btn-act btn-share" onclick="shareCurrentSheet()">📲 Share Current Page</button>
-        <button class="btn-act btn-download" onclick="downloadCurrentSheet()">📥 Download (JPG)</button>
-        <button class="btn-act btn-download-all" id="btn-download-all" onclick="downloadAllSheets()">📦 सभी पेजों को एक साथ डाउनलोड करें (Download All)</button>
+        <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share Single</button>
+        <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD Single</button>
+        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 सहेजे गए पुराने प्रश्न (Question Bank: <span id="history-total-count">0</span>)</button>
+    </div>
+
+    <!-- FACEBOOK POLL FORMAT COPY -->
+    <div class="detail-card" style="border-color: #8b5cf6;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📊 Facebook Poll Format (1-Click Ready):</span>
+            <button class="btn-action" style="background:#8b5cf6; padding:5px 12px; font-size:12px;" onclick="copyPollFormat()">📋 Copy Poll Text</button>
+        </div>
+        <div class="detail-text" id="fb-poll-box" style="color: #c4b5fd;">पोल फॉर्मेट यहाँ दिखाई देगा...</div>
+    </div>
+
+    <!-- PRIVATE EXPLANATION -->
+    <div class="detail-card">
+        <div class="box-title" style="color: #34d399; font-weight: bold; font-size: 12px;">💡 उत्तर एवं विस्तृत व्याख्या:</div>
+        <div class="detail-text" id="private-explanation">यहाँ व्याख्या दिखाई देगी।</div>
     </div>
 
     <!-- FB CAPTION BOX -->
     <div class="detail-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Post Caption:</span>
-            <button class="btn-action" style="background:#0284c7; padding:4px 10px; font-size:11.5px;" onclick="copyPostCaption()">📋 Copy Caption</button>
+            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Caption (Bot Tag #ans_X Included):</span>
+            <button class="btn-action" style="background:#0284c7; padding:5px 12px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
         </div>
-        <div class="detail-text" id="fb-caption-box">शीट कंपाइल करने के बाद यहाँ कैप्शन तैयार होगा...</div>
+        <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
+    </div>
+
+    <!-- ==================== SECTION 2: ADDITIONAL 10-Q MULTI-SHEET COMPILER ==================== -->
+    <div class="section-divider">
+        <span>📑 अतिरिक्त फ़ीचर: 10-Question FB Feed Sheet Generator</span>
+    </div>
+
+    <div class="compiler-card">
+        <div style="color:#c7d2fe; font-size:13px; font-weight:700;">
+            10 प्रश्नों की शीट (5 बाएँ + 5 दाएँ) | 20 प्रश्न चुनने पर 2 अलग इमेज बनेंगी:
+        </div>
+        <div class="row-flex">
+            <div>
+                <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
+                <input type="number" id="batch-start" min="1" value="1" onchange="calcBatchEstimate()">
+            </div>
+            <div>
+                <label>कुल प्रश्न चुनें (Count):</label>
+                <input type="number" id="batch-count" min="1" max="100" value="10" onchange="calcBatchEstimate()">
+            </div>
+        </div>
+        <div id="batch-estimate-lbl" style="font-size:11.5px; color:#a5b4fc; font-weight:600;">
+            ℹ️ कुल इमेज बनेंगी: 1 इमेज (10 प्रश्न)
+        </div>
+        <button class="btn-compile" onclick="compileBatchFeedSheets()">🚀 शीट तैयार करें (Compile Feed Sheets)</button>
+    </div>
+
+    <!-- BATCH NAVIGATION -->
+    <div class="page-nav-bar" id="batch-nav" style="display:none;">
+        <button class="btn-nav" id="btn-batch-prev" onclick="navigateBatch(-1)">◀ पिछला पेज</button>
+        <span id="batch-page-indicator" style="font-size:13px; font-weight:800; color:#38bdf8;">Page 1 of 1</span>
+        <button class="btn-nav" id="btn-batch-next" onclick="navigateBatch(1)">अगला पेज ▶</button>
+    </div>
+
+    <!-- CANVAS PREVIEW (FEED SHEET: 1080 x 1350) -->
+    <div class="canvas-card" id="sheet-preview-card" style="display:none;">
+        <canvas id="sheetCanvas" width="1080" height="1350"></canvas>
+    </div>
+
+    <!-- BATCH ACTIONS -->
+    <div class="action-grid" id="batch-actions" style="display:none;">
+        <button class="btn-act btn-share" onclick="shareCurrentBatchSheet()">📲 Share Current Feed Page</button>
+        <button class="btn-act btn-download" onclick="downloadCurrentBatchSheet()">📥 Download (JPG)</button>
+        <button class="btn-act btn-history-trigger" style="background:#0891b2;" onclick="downloadAllBatchSheets()">📦 सभी पेजों को डाउनलोड करें (Download All)</button>
+    </div>
+
+    <!-- BATCH CAPTION BOX -->
+    <div class="detail-card" id="batch-caption-card" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📝 Batch Post Facebook Caption:</span>
+            <button class="btn-action" style="background:#8b5cf6; padding:4px 10px; font-size:11.5px;" onclick="copyBatchCaption()">📋 Copy Caption</button>
+        </div>
+        <div class="detail-text" id="batch-caption-box">शीट कंपाइल करने के बाद कैप्शन तैयार होगा...</div>
+    </div>
+</div>
+
+<!-- HISTORY MODAL -->
+<div id="history-modal" onclick="closeHistoryModal()">
+    <div class="history-content" onclick="event.stopPropagation()">
+        <div class="history-header">
+            <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 सहेजे गए प्रश्न बैंक (Question Archive)</span>
+            <button onclick="closeHistoryModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div class="history-list" id="history-items-container"></div>
     </div>
 </div>
 
 <script>
-    const canvas = document.getElementById('feedCanvas');
+    const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_KEY = "EXAM_PREP_FB_FEED_QUESTIONS_V1";
-    let compiledPages = []; // Array of arrays containing up to 10 questions each
-    let currentPageIndex = 0;
+    const sheetCanvas = document.getElementById('sheetCanvas');
+    const sCtx = sheetCanvas.getContext('2d');
+
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V7";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V7";
+
+    let isAnswerRevealed = false;
+    let compiledPages = [];
+    let currentBatchPageIndex = 0;
+
+    let quizData = {
+        title: "🏛️ POLITY GK QUIZ 🧠",
+        qPrefix: "Q.169",
+        questionText: "संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️",
+        options: {
+            A: "डॉ. राजेंद्र प्रसाद 📜",
+            B: "डॉ. भीमराव अंबेडकर 🇮🇳",
+            C: "जवाहरलाल नेहरू 🏛️",
+            D: "सरदार वल्लभभाई पटेल 🛡️"
+        },
+        hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
+        social: "❤️ Like | ➕ Follow 🎯",
+        correctOption: "B",
+        explanation: "29 अगस्त 1947 को गठित संविधान सभा की सबसे महत्वपूर्ण 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष डॉ. भीमराव अंबेडकर थे, जिसमें कुल 7 सदस्य थे।",
+        caption: "संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀\n#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity"
+    };
 
     function cleanString(str) {
         if (!str) return "";
@@ -309,51 +544,50 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         const emojiRegex = /([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}])/gu;
         const emojisFound = clean.match(emojiRegex);
         const textWithoutEmojis = clean.replace(emojiRegex, '').replace(/\s+/g, ' ').trim();
+
         if (emojisFound && emojisFound.length > 0) {
             return textWithoutEmojis + " " + emojisFound.join('');
         }
         return textWithoutEmojis;
     }
 
-    function getQuestionsBank() {
-        try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { return []; }
-    }
-
-    function saveQuestionsBank(bank) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(bank));
-        document.getElementById('total-saved-count').innerText = bank.length;
-    }
-
-    async function pasteFromClipboardAndSave() {
+    async function pasteFromClipboardAndGenerate() {
         try {
             const text = await navigator.clipboard.readText();
             if (text && text.trim().length > 0) {
                 document.getElementById('raw-paste-box').value = text;
-                parseAndSaveQuestion();
+                generateFromRawText();
             } else {
-                alert("क्लिपबोर्ड खाली है!");
+                alert("क्लिपबोर्ड खाली है! कृपया पहले टेक्स्ट कॉपी करें।");
             }
         } catch (err) {
-            alert("क्लिपबोर्ड एक्सेस की अनुमति नहीं मिली। बॉक्स में सीधे पेस्ट करें।");
+            alert("क्लिपबोर्ड एक्सेस की अनुमति नहीं मिली। कृपया बॉक्स में पेस्ट करके 'Generate Single Card' दबाएं।");
         }
     }
 
-    function parseAndSaveQuestion() {
+    function generateFromRawText() {
         const raw = document.getElementById('raw-paste-box').value;
         if (!raw || !raw.trim()) {
-            alert("कृपया टेक्स्ट पेस्ट करें!");
+            alert("कृपया टेक्स्ट बॉक्स में पूरा क्विज़ टेक्स्ट पेस्ट करें!");
             return;
         }
 
-        const lines = raw.split(/\r?\n/).map(l => cleanString(l)).filter(l => l.length > 0);
+        const lines = raw.split(/\r?\n/)
+                         .map(l => cleanString(l))
+                         .filter(l => l.length > 0);
+
         if (lines.length < 4) {
-            alert("टेक्स्ट बहुत छोटा है!");
+            alert("टेक्स्ट बहुत छोटा है! कृपया पूरा फ़ॉर्मेट पेस्ट करें।");
             return;
         }
 
+        let parsedTitle = "";
         let parsedPrefix = "Q.";
         let parsedQText = "";
         let parsedOpts = { A: "", B: "", C: "", D: "" };
+        let parsedHook = "👉 Genius लोग ही Comment में उत्तर दें! 🧠";
+        let parsedSocial = "❤️ Like | ➕ Follow 🎯";
+        let parsedCaptionLines = [];
         let parsedAns = "A";
         let parsedExpLines = [];
 
@@ -376,7 +610,15 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                 continue;
             }
 
+            if (/^Caption\s*[:\-]/i.test(line)) {
+                state = "CAPTION";
+                let capText = line.replace(/^Caption\s*[:\-]\s*/i, '').trim();
+                if (capText) parsedCaptionLines.push(capText);
+                continue;
+            }
+
             if (state === "TITLE") {
+                parsedTitle = line;
                 state = "QUESTION";
                 continue;
             }
@@ -398,242 +640,478 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                 if (optMatch) {
                     let key = optMatch[1].toUpperCase();
                     parsedOpts[key] = cleanAndMoveEmojiToEnd(optMatch[2]);
+                    if (parsedOpts.A && parsedOpts.B && parsedOpts.C && parsedOpts.D) {
+                        state = "FOOTER";
+                    }
                     continue;
                 }
             }
 
+            if (state === "FOOTER") {
+                if (line.includes("👇") || line.includes("Comment")) {
+                    parsedHook = line;
+                    continue;
+                }
+                if (line.includes("Like") || line.includes("Follow")) {
+                    parsedSocial = line;
+                    continue;
+                }
+                parsedCaptionLines.push(line);
+                continue;
+            }
+
+            if (state === "CAPTION") {
+                parsedCaptionLines.push(line);
+                continue;
+            }
+
             if (state === "EXPLANATION") {
                 parsedExpLines.push(line);
+                continue;
             }
         }
 
-        const newQ = {
-            id: Date.now(),
-            prefix: parsedPrefix,
-            questionText: parsedQText,
-            options: parsedOpts,
-            correctOption: parsedAns,
-            explanation: parsedExpLines.join(" ") || "प्रामाणिक उत्तर विकल्प पर आधारित है।"
+        quizData.title = parsedTitle || "🏛️ POLITY GK QUIZ 🧠";
+        quizData.qPrefix = parsedPrefix || "Q.";
+        quizData.questionText = parsedQText;
+        quizData.options = parsedOpts;
+        quizData.hook = parsedHook;
+        quizData.social = parsedSocial;
+        quizData.correctOption = parsedAns;
+        quizData.caption = parsedCaptionLines.join("\n");
+        quizData.explanation = parsedExpLines.join(" ");
+
+        saveToHistory({
+            title: quizData.title,
+            qPrefix: quizData.qPrefix,
+            questionText: quizData.questionText,
+            options: quizData.options,
+            correctOption: quizData.correctOption,
+            explanation: quizData.explanation,
+            caption: quizData.caption,
+            hook: quizData.hook,
+            social: quizData.social,
+            rawText: raw
+        });
+
+        updateCaptionText();
+        updatePollFormatText();
+        saveAllSettings();
+        redrawCanvas();
+        calcBatchEstimate();
+
+        navigator.clipboard.writeText(document.getElementById('fb-caption-box').innerText).catch(() => {});
+        alert(`🎉 ${quizData.qPrefix} तैयार हो गया है! सही उत्तर [${quizData.correctOption}] लॉक हुआ और कैप्शन क्लिपबोर्ड पर कॉपी हो गया।`);
+    }
+
+    function toggleAnswerMode() {
+        const chk = document.getElementById('chk-answer-mode');
+        chk.checked = !chk.checked;
+        onToggleAnswerChange();
+    }
+
+    function onToggleAnswerChange() {
+        isAnswerRevealed = document.getElementById('chk-answer-mode').checked;
+        updateCaptionText();
+        saveAllSettings();
+        redrawCanvas();
+    }
+
+    function updateCaptionText() {
+        const hashMatches = quizData.caption.match(/#[^\s#]+/g);
+        let tagsString = hashMatches ? hashMatches.join(" ") : "";
+
+        const botTag = `#ans_${quizData.correctOption}`;
+        if (!tagsString.includes(botTag)) {
+            tagsString = `${tagsString} ${botTag}`.trim();
+        }
+
+        if (isAnswerRevealed) {
+            const correctText = quizData.options[quizData.correctOption] || "";
+            document.getElementById('fb-caption-box').innerText = 
+`✅ सही उत्तर: [विकल्प ${quizData.correctOption}] ${correctText}
+
+📖 व्याख्या: ${quizData.explanation}
+
+${tagsString}`.trim();
+        } else {
+            let baseCaption = quizData.caption;
+            if (!baseCaption.includes(botTag)) {
+                baseCaption = `${baseCaption}\n\n${botTag}`;
+            }
+            document.getElementById('fb-caption-box').innerText = baseCaption.trim();
+        }
+        document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
+    }
+
+    function updatePollFormatText() {
+        const pollText = 
+`❓ Question: ${quizData.questionText}
+
+🔹 Option 1: ${quizData.options.A}
+🔹 Option 2: ${quizData.options.B}
+🔹 Option 3: ${quizData.options.C}
+🔹 Option 4: ${quizData.options.D}
+
+👉 सही उत्तर चुनें और अपना ज्ञान परखें!`;
+        document.getElementById('fb-poll-box').innerText = pollText;
+    }
+
+    function copyPollFormat() {
+        navigator.clipboard.writeText(document.getElementById('fb-poll-box').innerText).then(() => {
+            alert("📊 फेसबुक पोल टेक्स्ट क्लिपबोर्ड पर कॉपी हो गया है!");
+        });
+    }
+
+    function saveAllSettings() {
+        const prefs = {
+            fontFam: document.getElementById('cfg-font').value,
+            bgColor: document.getElementById('cfg-bg-color').value,
+            qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
+            optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
+            isAnswerMode: document.getElementById('chk-answer-mode').checked,
+            rawText: document.getElementById('raw-paste-box').value,
+            currentQuiz: quizData
         };
-
-        const bank = getQuestionsBank();
-        bank.push(newQ);
-        saveQuestionsBank(bank);
-        updatePageEstimate();
-        alert(`✅ प्रश्न ${newQ.prefix} सफलतापूर्वक सेव हो गया! (कुल प्रश्न: ${bank.length})`);
+        localStorage.setItem(STORAGE_PREFS, JSON.stringify(prefs));
     }
 
-    function updatePageEstimate() {
-        const total = parseInt(document.getElementById('cfg-total-count').value) || 10;
-        const pages = Math.ceil(total / 10);
-        document.getElementById('page-estimate-text').innerText = `ℹ️ कुल पेजों की संख्या: ${pages} इमेज (${total} प्रश्न)`;
-    }
-
-    /* COMPILER LOGIC (Splits questions into 10 per page) */
-    function compileBatchSheets() {
-        const bank = getQuestionsBank();
-        if (bank.length === 0) {
-            alert("प्रश्न बैंक खाली है! कृपया पहले प्रश्न जोड़ें।");
-            return;
+    function loadAllSettings() {
+        const saved = localStorage.getItem(STORAGE_PREFS);
+        if (saved) {
+            try {
+                const p = JSON.parse(saved);
+                if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
+                if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
+                if (p.qSize) {
+                    document.getElementById('cfg-q-size').value = p.qSize;
+                    document.getElementById('q-size-lbl').innerText = p.qSize;
+                }
+                if (p.optSize) {
+                    document.getElementById('cfg-opt-size').value = p.optSize;
+                    document.getElementById('opt-size-lbl').innerText = p.optSize;
+                }
+                if (p.isAnswerMode !== undefined) {
+                    document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
+                    isAnswerRevealed = p.isAnswerMode;
+                }
+                if (p.rawText) {
+                    document.getElementById('raw-paste-box').value = p.rawText;
+                }
+                if (p.currentQuiz) {
+                    quizData = p.currentQuiz;
+                }
+            } catch(e) {}
         }
+    }
 
-        const startIdx = Math.max(0, (parseInt(document.getElementById('cfg-start-idx').value) || 1) - 1);
-        const count = parseInt(document.getElementById('cfg-total-count').value) || 10;
+    function exportJSONBackup() {
+        const backupData = {
+            prefs: localStorage.getItem(STORAGE_PREFS),
+            history: localStorage.getItem(STORAGE_HISTORY)
+        };
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2)));
+        downloadAnchor.setAttribute("download", `QuizStudio_Backup_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
 
-        const slice = bank.slice(startIdx, startIdx + count);
-        if (slice.length === 0) {
-            alert("चयनित रेंज में कोई प्रश्न उपलब्ध नहीं हैं!");
-            return;
+    function importJSONBackup(event) {
+        const fileReader = new FileReader();
+        if (event.target.files[0]) {
+            fileReader.readAsText(event.target.files[0], "UTF-8");
+            fileReader.onload = (e) => {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.prefs) localStorage.setItem(STORAGE_PREFS, parsed.prefs);
+                    if (parsed.history) localStorage.setItem(STORAGE_HISTORY, parsed.history);
+                    loadAllSettings();
+                    updateCaptionText();
+                    updatePollFormatText();
+                    redrawCanvas();
+                    calcBatchEstimate();
+                    alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
+                } catch (err) {
+                    alert("त्रुटि: अमान्य JSON फ़ाइल!");
+                }
+            };
         }
+    }
 
-        compiledPages = [];
-        for (let i = 0; i < slice.length; i += 10) {
-            compiledPages.push(slice.slice(i, i + 10));
+    function saveToHistory(item) {
+        let history = [];
+        try {
+            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+        } catch(e) {}
+        history = history.filter(h => h.qPrefix !== item.qPrefix);
+        history.unshift(item);
+        if (history.length > 200) history.pop();
+        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
+        updateHistoryCount();
+    }
+
+    function updateHistoryCount() {
+        let history = [];
+        try {
+            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+        } catch(e) {}
+        document.getElementById('history-total-count').innerText = history.length;
+    }
+
+    function openHistoryModal() {
+        const modal = document.getElementById('history-modal');
+        const container = document.getElementById('history-items-container');
+        container.innerHTML = "";
+
+        let history = [];
+        try {
+            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+        } catch(e) {}
+
+        if (history.length === 0) {
+            container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई पुराना प्रश्न सहेजा नहीं गया है।</div>`;
+        } else {
+            history.forEach((h, idx) => {
+                const div = document.createElement('div');
+                div.className = "history-item";
+                div.innerHTML = `
+                    <div class="h-item-title">[#${idx+1}] ${h.qPrefix}: ${h.questionText}</div>
+                    <div class="h-item-sub">✅ सही उत्तर: [${h.correctOption}] ${h.options[h.correctOption] || ""}</div>
+                    <div class="h-item-exp">📖 ${h.explanation}</div>
+                `;
+                div.onclick = () => {
+                    loadFromHistory(h);
+                    modal.style.display = 'none';
+                };
+                container.appendChild(div);
+            });
         }
-
-        currentPageIndex = 0;
-        document.getElementById('nav-container').style.display = compiledPages.length > 1 ? "flex" : "none";
-        renderCurrentPage();
-        generateBatchCaption(slice);
+        modal.style.display = 'flex';
     }
 
-    function changePage(delta) {
-        currentPageIndex += delta;
-        currentPageIndex = Math.max(0, Math.min(currentPageIndex, compiledPages.length - 1));
-        renderCurrentPage();
+    function closeHistoryModal() {
+        document.getElementById('history-modal').style.display = 'none';
     }
 
-    function renderCurrentPage() {
-        if (!compiledPages[currentPageIndex]) return;
-
-        document.getElementById('page-indicator').innerText = `Page ${currentPageIndex + 1} of ${compiledPages.length}`;
-        document.getElementById('btn-prev').disabled = (currentPageIndex === 0);
-        document.getElementById('btn-next').disabled = (currentPageIndex === compiledPages.length - 1);
-
-        const currentSet = compiledPages[currentPageIndex];
-        const pageNum = currentPageIndex + 1;
-        const totalPages = compiledPages.length;
-
-        drawFeedSheet(currentSet, pageNum, totalPages);
+    function loadFromHistory(h) {
+        quizData = JSON.parse(JSON.stringify(h));
+        if (h.rawText) document.getElementById('raw-paste-box').value = h.rawText;
+        updateCaptionText();
+        updatePollFormatText();
+        redrawCanvas();
+        alert(`✅ ${h.qPrefix} लोड कर दिया गया है!`);
     }
 
-    /* CANVAS DRAWING (1080 x 1350 FB Feed) */
-    function drawFeedSheet(questions, pageNum, totalPages) {
-        const W = 1080;
-        const H = 1350;
+    /* REDRAW SINGLE CARD CANVAS */
+    function redrawCanvas() {
+        const bgColor = document.getElementById('cfg-bg-color').value;
+        const fontFam = document.getElementById('cfg-font').value;
+        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
+        const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
 
-        ctx.clearRect(0, 0, W, H);
+        ctx.clearRect(0, 0, 1080, 1350);
 
-        // Background
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, W, H);
+        // Outer Background
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, 1080, 1350);
 
-        // Elegant Outer Border
+        // White Main Card Container
+        const cardX = 42;
+        const cardY = 42;
+        const cardW = 996;
+        const cardH = 1266;
+        const cardRadius = 32;
+
+        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, "#ffffff", false);
         ctx.strokeStyle = "#e2e8f0";
-        ctx.lineWidth = 4;
-        ctx.strokeRect(18, 18, W - 36, H - 36);
+        ctx.lineWidth = 3;
+        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // Security Watermark 2% (0.02)
+        // SECURITY WATERMARK FIXED AT EXACTLY 2% (0.02)
         ctx.save();
+        ctx.beginPath();
+        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
+        ctx.clip();
         ctx.rotate(-28 * Math.PI / 180);
-        ctx.fillStyle = "rgba(15, 23, 42, 0.02)";
-        ctx.font = "900 42px 'Poppins', sans-serif";
-        for (let x = -600; x < 1800; x += 360) {
+        ctx.fillStyle = "rgba(15, 23, 42, 0.02)"; // 2% Opacity
+        ctx.font = "900 44px 'Poppins', sans-serif";
+        for (let x = -800; x < 1800; x += 360) {
             for (let y = -600; y < 2000; y += 160) {
                 ctx.fillText("EXAM PREPARATION", x, y);
             }
         }
         ctx.restore();
 
-        // 🎯 1. BRANDING CAPSULE (Auto-fit to Text Width)
-        const brandText = totalPages > 1 ? `EXAM PREPARATION • PART ${pageNum}` : "EXAM PREPARATION";
-        ctx.font = "900 24px 'Poppins', sans-serif";
-        const textMetrics = ctx.measureText(brandText);
-        const padX = 24;
-        const pillW = textMetrics.width + (padX * 2);
-        const pillH = 44;
-        const pillX = (W - pillW) / 2;
-        const pillY = 32;
-
-        roundRect(ctx, pillX, pillY, pillW, pillH, 22, "#f1f5f9", false);
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.lineWidth = 1.8;
-        roundRect(ctx, pillX, pillY, pillW, pillH, 22, null, true);
-
+        // Line 1: Header Title
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(brandText, W / 2, pillY + (pillH / 2));
+        ctx.font = `900 52px ${fontFam}`;
+        ctx.fillText(quizData.title, 540, 118);
 
-        // 🎯 2. VIRAL HOOK (Directly Under Capsule)
-        const hookY = pillY + pillH + 12;
-        roundRect(ctx, 42, hookY, W - 84, 52, 14, "#fef08a", false);
-        ctx.strokeStyle = "#facc15";
+        // 🎯 DYNAMIC CAPSULE BADGE: Text की चौड़ाई के बिल्कुल बराबर (Auto-Fit)
+        const badgeText = "EXAM PREPARATION";
+        ctx.font = "900 24px 'Poppins', sans-serif";
+        const badgeWidth = ctx.measureText(badgeText).width;
+        const pillPadding = 26;
+        const pillW = badgeWidth + (pillPadding * 2);
+        const pillH = 46;
+        const pillX = (1080 - pillW) / 2;
+        const pillY = 164;
+
+        roundRect(ctx, pillX, pillY, pillW, pillH, 23, "#f1f5f9", false);
+        ctx.strokeStyle = "#cbd5e1";
         ctx.lineWidth = 2;
-        roundRect(ctx, 42, hookY, W - 84, 52, 14, null, true);
-
-        ctx.fillStyle = "#854d0e";
-        ctx.font = "800 24px 'Hind', sans-serif";
-        ctx.fillText("👇 10 में से 7 सही उत्तर देकर अपनी तैयारी परखें! ⚡", W / 2, hookY + 26);
-
-        // 🎯 3. 10 QUESTIONS GRID (5 Left + 5 Right)
-        const colW = 488;
-        const leftX = 36;
-        const rightX = W - colW - 36;
-        const gridStartY = hookY + 66;
-        const blockH = 224;
-        const blockGap = 8;
-
-        questions.forEach((q, idx) => {
-            const isRight = idx >= 5;
-            const rIdx = isRight ? (idx - 5) : idx;
-            const x = isRight ? rightX : leftX;
-            const y = gridStartY + (rIdx * (blockH + blockGap));
-
-            drawQuestionItem(ctx, q, idx + 1, x, y, colW, blockH);
-        });
-
-        // 🎯 4. FOOTER ENGAGEMENT BAR
-        const footerY = H - 68;
-        roundRect(ctx, 36, footerY, W - 72, 46, 12, "#0f172a", false);
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "800 20px 'Hind', sans-serif";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText("❤️ Like | ➕ Follow @ExamPreparation | 🎯 दोस्तों के साथ शेयर करें", W / 2, footerY + 23);
-    }
-
-    function drawQuestionItem(ctx, q, num, x, y, w, h) {
-        // Container
-        roundRect(ctx, x, y, w, h, 10, "#f8fafc", false);
-        ctx.strokeStyle = "#e2e8f0";
-        ctx.lineWidth = 1.5;
-        roundRect(ctx, x, y, w, h, 10, null, true);
-
-        // Question Title
-        ctx.textAlign = "left";
-        ctx.textBaseline = "top";
-        ctx.fillStyle = "#0284c7";
-        ctx.font = "800 18px 'Hind', sans-serif";
-        const title = `${num}. ${q.questionText}`;
-        wrapText(ctx, title, x + 10, y + 8, w - 20, 22, 2);
-
-        // Options (2 x 2)
-        const optW = (w - 26) / 2;
-        const optH = 25;
-        const optStartY = y + 56;
-        const keys = ["A", "B", "C", "D"];
-
-        keys.forEach((k, ki) => {
-            const isR = (ki % 2 === 1);
-            const isR2 = (ki >= 2);
-            const ox = isR ? (x + 16 + optW) : (x + 10);
-            const oy = isR2 ? (optStartY + optH + 4) : optStartY;
-            const isAns = (q.correctOption === k);
-
-            roundRect(ctx, ox, oy, optW, optH, 5, isAns ? "#dcfce7" : "#ffffff", false);
-            ctx.strokeStyle = isAns ? "#22c55e" : "#cbd5e1";
-            ctx.lineWidth = 1;
-            roundRect(ctx, ox, oy, optW, optH, 5, null, true);
-
-            ctx.fillStyle = isAns ? "#15803d" : "#334155";
-            ctx.font = isAns ? "800 14px 'Hind', sans-serif" : "600 14px 'Hind', sans-serif";
-            const optStr = `${k}) ${q.options[k] || ""}`;
-            ctx.fillText(truncate(ctx, optStr, optW - 10), ox + 6, oy + 4);
-        });
-
-        // Explanation Box
-        const expY = optStartY + (optH * 2) + 10;
-        const expH = (y + h - 8) - expY;
-
-        roundRect(ctx, x + 10, expY, w - 20, expH, 6, "#ecfdf5", false);
-        ctx.strokeStyle = "#a7f3d0";
-        ctx.lineWidth = 1;
-        roundRect(ctx, x + 10, expY, w - 20, expH, 6, null, true);
-
-        ctx.fillStyle = "#065f46";
-        ctx.font = "800 14px 'Hind', sans-serif";
-        ctx.fillText(`💡 उत्तर: [${q.correctOption}] | व्याख्या:`, x + 16, expY + 6);
+        roundRect(ctx, pillX, pillY, pillW, pillH, 23, null, true);
 
         ctx.fillStyle = "#1e293b";
-        ctx.font = "600 13px 'Hind', sans-serif";
-        wrapText(ctx, q.explanation, x + 16, expY + 25, w - 32, 17, 4);
+        ctx.fillText(badgeText, 540, pillY + (pillH / 2));
+
+        // Line 2: Question Section
+        ctx.textAlign = "left";
+        const fixedGap = 68;
+        const qStartY = pillY + pillH + fixedGap;
+        const qEndY = drawColorfulQuestion(ctx, quizData.qPrefix, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
+
+        // Lines 3-6: 4 Options Containers (A, B, C, D)
+        const optStartY = qEndY + 36;
+        const optGap = 124;
+        const optW = 890;
+        const optH = 94;
+        const optX = 95;
+
+        const optStyles = [
+            { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
+            { bg: "#ecfdf5", border: "#a7f3d0", badgeBg: "#059669", text: "#064e3b", label: "B" },
+            { bg: "#fffbeb", border: "#fde68a", badgeBg: "#d97706", text: "#78350f", label: "C" },
+            { bg: "#faf5ff", border: "#e9d5ff", badgeBg: "#9333ea", text: "#581c87", label: "D" }
+        ];
+
+        optStyles.forEach((st, idx) => {
+            const curY = optStartY + (idx * optGap);
+            const isCorrect = (quizData.correctOption === st.label);
+
+            let boxBg = st.bg;
+            let boxBorder = st.border;
+            let badgeBg = st.badgeBg;
+            let badgeText = st.label;
+
+            if (isAnswerRevealed && isCorrect) {
+                boxBg = "#dcfce7";
+                boxBorder = "#16a34a";
+                badgeBg = "#15803d";
+                badgeText = "✔";
+            }
+
+            roundRect(ctx, optX, curY, optW, optH, 20, boxBg, false);
+            ctx.strokeStyle = boxBorder;
+            ctx.lineWidth = (isAnswerRevealed && isCorrect) ? 4 : 2.5;
+            roundRect(ctx, optX, curY, optW, optH, 20, null, true);
+
+            // Badge Box
+            roundRect(ctx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
+            ctx.fillStyle = "#ffffff";
+            ctx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(badgeText, optX + 47, curY + (optH / 2));
+
+            // Option Text
+            ctx.textAlign = "left";
+            ctx.fillStyle = (isAnswerRevealed && isCorrect) ? "#14532d" : st.text;
+            ctx.font = `700 ${optSize}px ${fontFam}`;
+            const optString = quizData.options[st.label] || "";
+            ctx.fillText(optString, optX + 96, curY + (optH / 2));
+        });
+
+        // Lines 7 & 8 / Footer Section
+        const footerY = optStartY + (4 * optGap) + 38;
+
+        if (isAnswerRevealed) {
+            roundRect(ctx, 95, footerY, 890, 165, 18, "#f8fafc", false);
+            ctx.strokeStyle = "#16a34a";
+            ctx.lineWidth = 2.5;
+            roundRect(ctx, 95, footerY, 890, 165, 18, null, true);
+
+            ctx.fillStyle = "#15803d";
+            ctx.font = `800 26px ${fontFam}`;
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 20);
+
+            ctx.fillStyle = "#334155";
+            ctx.font = `600 24px ${fontFam}`;
+            wrapTextSimple(ctx, quizData.explanation, 120, footerY + 64, 840, 34);
+
+            ctx.fillStyle = "#64748b";
+            ctx.font = `800 22px ${fontFam}`;
+            ctx.textAlign = "center";
+            ctx.fillText(quizData.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
+        } else {
+            // Line 7: Hook Banner
+            roundRect(ctx, 110, footerY, 860, 84, 42, "#fef08a", false);
+            ctx.strokeStyle = "#facc15";
+            ctx.lineWidth = 2.5;
+            roundRect(ctx, 110, footerY, 860, 84, 42, null, true);
+
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#854d0e";
+            ctx.font = `800 34px ${fontFam}`;
+            ctx.fillText(quizData.hook, 540, footerY + (84 / 2));
+
+            // Line 8: Social Line
+            ctx.fillStyle = "#0f172a";
+            ctx.font = `800 28px ${fontFam}`;
+            ctx.fillText(quizData.social, 540, footerY + 132);
+        }
     }
 
-    function wrapText(ctx, text, x, y, maxW, lineH, maxLines = 10) {
+    function drawColorfulQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam) {
+        ctx.textBaseline = "top";
+        ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
+        ctx.fillStyle = "#0284c7";
+        const fullPrefix = prefix + " ";
+        const prefixWidth = ctx.measureText(fullPrefix).width;
+        ctx.fillText(fullPrefix, x, y);
+
+        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि", "लंबी", "स्थलीय", "प्रसिद्ध", "शुरुआत", "वर्ष", "कौन"];
+        
+        ctx.font = `800 ${fontSize}px ${fontFam}`;
+        const words = text.split(' ');
+        let curX = x + prefixWidth;
+        let curY = y;
+        const lineH = Math.round(fontSize * 1.38);
+
+        words.forEach(word => {
+            const cleanWord = word.replace(/[?,.!"']/g, '');
+            const isHighlight = highlightTokens.some(t => cleanWord.includes(t)) || word.startsWith("'") || word.startsWith('"');
+            
+            ctx.fillStyle = isHighlight ? "#dc2626" : "#0f172a";
+            const wordW = ctx.measureText(word + ' ').width;
+
+            if (curX + wordW > x + maxW) {
+                curX = x;
+                curY += lineH;
+            }
+
+            ctx.fillText(word + ' ', curX, curY);
+            curX += wordW;
+        });
+
+        return curY + lineH;
+    }
+
+    function wrapTextSimple(ctx, text, x, y, maxW, lineH) {
+        ctx.textBaseline = "top";
         const words = (text || "").split(' ');
         let line = '';
-        let lineCount = 0;
-
         for (let n = 0; n < words.length; n++) {
             let testLine = line + words[n] + ' ';
             let metrics = ctx.measureText(testLine);
             if (metrics.width > maxW && n > 0) {
-                lineCount++;
-                if (lineCount >= maxLines) {
-                    ctx.fillText(line.trim() + "...", x, y);
-                    return;
-                }
                 ctx.fillText(line, x, y);
                 line = words[n] + ' ';
                 y += lineH;
@@ -642,14 +1120,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             }
         }
         ctx.fillText(line, x, y);
-    }
-
-    function truncate(ctx, text, maxW) {
-        if (ctx.measureText(text).width <= maxW) return text;
-        while (ctx.measureText(text + "...").width > maxW && text.length > 0) {
-            text = text.substring(0, text.length - 1);
-        }
-        return text + "...";
     }
 
     function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
@@ -668,70 +1138,334 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         if (stroke) ctx.stroke();
     }
 
-    function generateBatchCaption(questions) {
+    async function shareDirectly() {
+        const caption = document.getElementById('fb-caption-box').innerText;
+        canvas.toBlob(async (blob) => {
+            if (!blob) { alert("इमेज तैयार नहीं हो सकी!"); return; }
+            const file = new File([blob], `Quiz_${quizData.qPrefix}.png`, { type: 'image/png' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({ title: `Quiz ${quizData.qPrefix}`, text: caption, files: [file] });
+                } catch (err) {}
+            } else {
+                downloadImage();
+                copyCaption();
+                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड और कैप्शन कॉपी हो गया है!");
+            }
+        });
+    }
+
+    function downloadImage() {
+        const link = document.createElement('a');
+        const modePrefix = isAnswerRevealed ? "Solved_" : "";
+        link.download = `${modePrefix}Quiz_${quizData.qPrefix.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    function copyCaption() {
+        const cap = document.getElementById('fb-caption-box').innerText;
+        navigator.clipboard.writeText(cap).then(() => {
+            alert("📋 फेसबुक कैप्शन कॉपी हो गया है!");
+        });
+    }
+
+    /* ==================== ADDITIONAL BATCH SHEET LOGIC ==================== */
+    function calcBatchEstimate() {
+        const count = parseInt(document.getElementById('batch-count').value) || 10;
+        const pages = Math.ceil(count / 10);
+        document.getElementById('batch-estimate-lbl').innerText = `ℹ️ कुल इमेज बनेंगी: ${pages} इमेज (${count} प्रश्न)`;
+    }
+
+    function compileBatchFeedSheets() {
+        let history = [];
+        try {
+            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+        } catch(e) {}
+
+        if (history.length === 0) {
+            alert("Question Bank खाली है! कृपया पहले कुछ प्रश्न जेनरेट करें।");
+            return;
+        }
+
+        const start = Math.max(0, (parseInt(document.getElementById('batch-start').value) || 1) - 1);
+        const count = parseInt(document.getElementById('batch-count').value) || 10;
+
+        const slice = history.slice(start, start + count);
+        if (slice.length === 0) {
+            alert("चयनित रेंज में कोई प्रश्न नहीं मिले!");
+            return;
+        }
+
+        compiledPages = [];
+        for (let i = 0; i < slice.length; i += 10) {
+            compiledPages.push(slice.slice(i, i + 10));
+        }
+
+        currentBatchPageIndex = 0;
+        document.getElementById('sheet-preview-card').style.display = "flex";
+        document.getElementById('batch-actions').style.display = "grid";
+        document.getElementById('batch-caption-card').style.display = "flex";
+        document.getElementById('batch-nav').style.display = compiledPages.length > 1 ? "flex" : "none";
+
+        renderBatchPage();
+        generateBatchCaptionText(slice);
+    }
+
+    function navigateBatch(delta) {
+        currentBatchPageIndex += delta;
+        currentBatchPageIndex = Math.max(0, Math.min(currentBatchPageIndex, compiledPages.length - 1));
+        renderBatchPage();
+    }
+
+    function renderBatchPage() {
+        if (!compiledPages[currentBatchPageIndex]) return;
+        document.getElementById('batch-page-indicator').innerText = `Page ${currentBatchPageIndex + 1} of ${compiledPages.length}`;
+        document.getElementById('btn-batch-prev').disabled = (currentBatchPageIndex === 0);
+        document.getElementById('btn-batch-next').disabled = (currentBatchPageIndex === compiledPages.length - 1);
+
+        const currentQuestions = compiledPages[currentBatchPageIndex];
+        draw10QFeedSheet(currentQuestions, currentBatchPageIndex + 1, compiledPages.length);
+    }
+
+    function draw10QFeedSheet(questions, pageNum, totalPages) {
+        const W = 1080;
+        const H = 1350;
+
+        sCtx.clearRect(0, 0, W, H);
+
+        // White Base
+        sCtx.fillStyle = "#ffffff";
+        sCtx.fillRect(0, 0, W, H);
+
+        // Border
+        sCtx.strokeStyle = "#e2e8f0";
+        sCtx.lineWidth = 4;
+        sCtx.strokeRect(16, 16, W - 32, H - 32);
+
+        // 2% Opacity Watermark
+        sCtx.save();
+        sCtx.rotate(-28 * Math.PI / 180);
+        sCtx.fillStyle = "rgba(15, 23, 42, 0.02)";
+        sCtx.font = "900 42px 'Poppins', sans-serif";
+        for (let x = -600; x < 1800; x += 360) {
+            for (let y = -600; y < 2000; y += 160) {
+                sCtx.fillText("EXAM PREPARATION", x, y);
+            }
+        }
+        sCtx.restore();
+
+        // 1. BRANDING CAPSULE (Auto-Fit)
+        const brandText = totalPages > 1 ? `EXAM PREPARATION • PART ${pageNum}` : "EXAM PREPARATION";
+        sCtx.font = "900 24px 'Poppins', sans-serif";
+        const brandW = sCtx.measureText(brandText).width;
+        const pillW = brandW + 48;
+        const pillH = 44;
+        const pillX = (W - pillW) / 2;
+        const pillY = 30;
+
+        roundRect(sCtx, pillX, pillY, pillW, pillH, 22, "#f1f5f9", false);
+        sCtx.strokeStyle = "#cbd5e1";
+        sCtx.lineWidth = 1.8;
+        roundRect(sCtx, pillX, pillY, pillW, pillH, 22, null, true);
+
+        sCtx.fillStyle = "#0f172a";
+        sCtx.textAlign = "center";
+        sCtx.textBaseline = "middle";
+        sCtx.fillText(brandText, W / 2, pillY + (pillH / 2));
+
+        // 2. VIRAL HOOK
+        const hookY = pillY + pillH + 10;
+        roundRect(sCtx, 36, hookY, W - 72, 50, 12, "#fef08a", false);
+        sCtx.strokeStyle = "#facc15";
+        sCtx.lineWidth = 2;
+        roundRect(sCtx, 36, hookY, W - 72, 50, 12, null, true);
+
+        sCtx.fillStyle = "#854d0e";
+        sCtx.font = "800 23px 'Hind', sans-serif";
+        sCtx.fillText("👇 10 में से 7 सही करके अपनी तैयारी साबित करें! ⚡", W / 2, hookY + 25);
+
+        // 3. 10-QUESTION GRID (5 Left + 5 Right)
+        const colW = 490;
+        const leftX = 36;
+        const rightX = W - colW - 36;
+        const gridStartY = hookY + 64;
+        const blockH = 226;
+        const gap = 8;
+
+        questions.forEach((q, idx) => {
+            const isRight = idx >= 5;
+            const rowIdx = isRight ? (idx - 5) : idx;
+            const x = isRight ? rightX : leftX;
+            const y = gridStartY + (rowIdx * (blockH + gap));
+
+            drawBatchQuestionItem(sCtx, q, idx + 1, x, y, colW, blockH);
+        });
+
+        // 4. FOOTER ENGAGEMENT
+        const footerY = H - 64;
+        roundRect(sCtx, 36, footerY, W - 72, 44, 10, "#0f172a", false);
+        sCtx.fillStyle = "#ffffff";
+        sCtx.font = "800 19px 'Hind', sans-serif";
+        sCtx.textAlign = "center";
+        sCtx.textBaseline = "middle";
+        sCtx.fillText("❤️ Like | ➕ Follow @ExamPreparation | 🎯 अपने सभी दोस्तों को शेयर करें", W / 2, footerY + 22);
+    }
+
+    function drawBatchQuestionItem(ctx, q, num, x, y, w, h) {
+        roundRect(ctx, x, y, w, h, 10, "#f8fafc", false);
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 1.5;
+        roundRect(ctx, x, y, w, h, 10, null, true);
+
+        // Question Title
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = "#0284c7";
+        ctx.font = "800 17.5px 'Hind', sans-serif";
+        const title = `${num}. ${q.questionText}`;
+        wrapTextLines(ctx, title, x + 10, y + 8, w - 20, 22, 2);
+
+        // Options (2x2)
+        const optW = (w - 26) / 2;
+        const optH = 25;
+        const optStartY = y + 56;
+        const keys = ["A", "B", "C", "D"];
+
+        keys.forEach((k, ki) => {
+            const isR = (ki % 2 === 1);
+            const isR2 = (ki >= 2);
+            const ox = isR ? (x + 16 + optW) : (x + 10);
+            const oy = isR2 ? (optStartY + optH + 4) : optStartY;
+            const isAns = (q.correctOption === k);
+
+            roundRect(ctx, ox, oy, optW, optH, 5, isAns ? "#dcfce7" : "#ffffff", false);
+            ctx.strokeStyle = isAns ? "#22c55e" : "#cbd5e1";
+            ctx.lineWidth = 1;
+            roundRect(ctx, ox, oy, optW, optH, 5, null, true);
+
+            ctx.fillStyle = isAns ? "#15803d" : "#334155";
+            ctx.font = isAns ? "800 13.5px 'Hind', sans-serif" : "600 13.5px 'Hind', sans-serif";
+            const optStr = `${k}) ${q.options[k] || ""}`;
+            ctx.fillText(truncateStr(ctx, optStr, optW - 10), ox + 6, oy + 4);
+        });
+
+        // Explanation Box
+        const expY = optStartY + (optH * 2) + 10;
+        const expH = (y + h - 8) - expY;
+
+        roundRect(ctx, x + 10, expY, w - 20, expH, 6, "#ecfdf5", false);
+        ctx.strokeStyle = "#a7f3d0";
+        ctx.lineWidth = 1;
+        roundRect(ctx, x + 10, expY, w - 20, expH, 6, null, true);
+
+        ctx.fillStyle = "#065f46";
+        ctx.font = "800 13.5px 'Hind', sans-serif";
+        ctx.fillText(`💡 उत्तर: [${q.correctOption}] | व्याख्या:`, x + 14, expY + 6);
+
+        ctx.fillStyle = "#1e293b";
+        ctx.font = "600 13px 'Hind', sans-serif";
+        wrapTextLines(ctx, q.explanation, x + 14, expY + 25, w - 28, 17, 4);
+    }
+
+    function wrapTextLines(ctx, text, x, y, maxW, lineH, maxLines = 8) {
+        const words = (text || "").split(' ');
+        let line = '';
+        let count = 0;
+        for (let n = 0; n < words.length; n++) {
+            let test = line + words[n] + ' ';
+            let metrics = ctx.measureText(test);
+            if (metrics.width > maxW && n > 0) {
+                count++;
+                if (count >= maxLines) {
+                    ctx.fillText(line.trim() + "...", x, y);
+                    return;
+                }
+                ctx.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += lineH;
+            } else {
+                line = test;
+            }
+        }
+        ctx.fillText(line, x, y);
+    }
+
+    function truncateStr(ctx, text, maxW) {
+        if (ctx.measureText(text).width <= maxW) return text;
+        while (ctx.measureText(text + "...").width > maxW && text.length > 0) {
+            text = text.substring(0, text.length - 1);
+        }
+        return text + "...";
+    }
+
+    function generateBatchCaptionText(questions) {
         let text = `🔥 EXAM SPECIAL TEST SERIES (टॉप ${questions.length} अति-महत्वपूर्ण प्रश्नोत्तर) 🎯\n\n`;
         questions.slice(0, 10).forEach((q, i) => {
             text += `${i + 1}. ${q.questionText}\n`;
         });
         if (questions.length > 10) {
-            text += `... और अन्य सभी प्रश्न ऊपर इमेज में देखें!\n`;
+            text += `... और अन्य सभी प्रश्न ऊपर स्लाइड में देखें!\n`;
         }
-        text += `\n✅ सटीक व प्रामाणिक व्याख्या प्रत्येक प्रश्न के साथ संलग्न है।\n`;
-        text += `👉 इस पोस्ट को Save करें और अपने सभी ग्रुप्स में शेयर करें!\n\n`;
-        text += `#ExamPreparation #GKQuiz #IndianPolity #UPSC #SSC #StateExams`;
+        text += `\n✅ प्रामाणिक उत्तर और व्याख्या इमेज में दी गई है।\n`;
+        text += `👉 इस पोस्ट को Save करें और अपनी तैयारी मजबूत बनाएं!\n\n`;
+        text += `#ExamPreparation #GKQuiz #IndianPolity #CompetitiveExams #StudyMaterial`;
 
-        document.getElementById('fb-caption-box').innerText = text;
+        document.getElementById('batch-caption-box').innerText = text;
     }
 
-    function copyPostCaption() {
-        navigator.clipboard.writeText(document.getElementById('fb-caption-box').innerText).then(() => {
-            alert("📋 फेसबुक कैप्शन कॉपी हो गया!");
+    function copyBatchCaption() {
+        navigator.clipboard.writeText(document.getElementById('batch-caption-box').innerText).then(() => {
+            alert("📋 बैच पोस्ट कैप्शन कॉपी हो गया!");
         });
     }
 
-    function downloadCurrentSheet() {
+    function downloadCurrentBatchSheet() {
         const link = document.createElement('a');
-        link.download = `ExamPrep_Feed_Page_${currentPageIndex + 1}.jpg`;
-        link.href = canvas.toDataURL('image/jpeg', 0.96);
+        link.download = `ExamPrep_Feed_Page_${currentBatchPageIndex + 1}.jpg`;
+        link.href = sheetCanvas.toDataURL('image/jpeg', 0.95);
         link.click();
     }
 
-    function downloadAllSheets() {
+    function downloadAllBatchSheets() {
         if (compiledPages.length === 0) return;
-        let originalIdx = currentPageIndex;
+        const initialIdx = currentBatchPageIndex;
         compiledPages.forEach((pg, idx) => {
-            currentPageIndex = idx;
-            renderCurrentPage();
+            currentBatchPageIndex = idx;
+            renderBatchPage();
             const link = document.createElement('a');
             link.download = `ExamPrep_Feed_Page_${idx + 1}.jpg`;
-            link.href = canvas.toDataURL('image/jpeg', 0.96);
+            link.href = sheetCanvas.toDataURL('image/jpeg', 0.95);
             link.click();
         });
-        currentPageIndex = originalIdx;
-        renderCurrentPage();
+        currentBatchPageIndex = initialIdx;
+        renderBatchPage();
     }
 
-    async function shareCurrentSheet() {
-        const caption = document.getElementById('fb-caption-box').innerText;
-        canvas.toBlob(async (blob) => {
+    async function shareCurrentBatchSheet() {
+        const caption = document.getElementById('batch-caption-box').innerText;
+        sheetCanvas.toBlob(async (blob) => {
             if (!blob) return;
-            const file = new File([blob], `Quiz_Sheet_P${currentPageIndex + 1}.jpg`, { type: 'image/jpeg' });
+            const file = new File([blob], `Quiz_Sheet_P${currentBatchPageIndex + 1}.jpg`, { type: 'image/jpeg' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 try {
                     await navigator.share({ title: "Exam Preparation Sheet", text: caption, files: [file] });
                 } catch (err) {}
             } else {
-                downloadCurrentSheet();
-                copyPostCaption();
+                downloadCurrentBatchSheet();
+                copyBatchCaption();
                 alert("इमेज डाउनलोड हो गई और कैप्शन कॉपी हुआ। फेसबुक पर पोस्ट करें!");
             }
-        }, 'image/jpeg', 0.96);
+        }, 'image/jpeg', 0.95);
     }
 
     window.onload = function() {
-        const bank = getQuestionsBank();
-        document.getElementById('total-saved-count').innerText = bank.length;
-        updatePageEstimate();
+        loadAllSettings();
+        updateHistoryCount();
+        updateCaptionText();
+        updatePollFormatText();
+        redrawCanvas();
+        calcBatchEstimate();
     };
 </script>
 
