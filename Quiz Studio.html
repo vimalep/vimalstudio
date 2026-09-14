@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viral Quiz Studio Pro - Single Card & Multi-Sheet Compiler</title>
+    <title>Viral Quiz Studio Pro - Full Suite & Question Manager</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -44,7 +44,7 @@
             gap: 10px;
             margin-top: 10px;
             color: #818cf8;
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 800;
             font-family: 'Poppins', sans-serif;
         }
@@ -92,7 +92,7 @@
             outline: none;
             font-family: inherit;
         }
-        textarea { resize: vertical; min-height: 150px; font-family: monospace; font-size: 12px; line-height: 1.4; }
+        textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
 
         .answer-toggle-card {
             background: #0f172a;
@@ -162,7 +162,7 @@
             text-align: center;
         }
 
-        /* CANVAS STYLES */
+        /* CANVAS PREVIEW */
         .canvas-card {
             width: 100%;
             background: #000;
@@ -230,7 +230,7 @@
             user-select: text;
         }
 
-        /* 10-QUESTION BATCH COMPILER STYLES */
+        /* 10-Q BATCH COMPILER */
         .compiler-card {
             background: #1e1b4b;
             border: 1.5px solid #6366f1;
@@ -244,7 +244,7 @@
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: white;
             border: none;
-            padding: 11px;
+            padding: 12px;
             border-radius: 8px;
             font-weight: 800;
             cursor: pointer;
@@ -271,8 +271,8 @@
         }
         .btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
 
-        /* MODAL */
-        #history-modal {
+        /* MODALS (HISTORY & CRUD EDIT) */
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
@@ -281,22 +281,22 @@
             height: 100%;
             background: rgba(0,0,0,0.85);
             z-index: 999;
-            padding: 16px;
+            padding: 14px;
             justify-content: center;
             align-items: center;
         }
-        .history-content {
+        .modal-box {
             background: #1e293b;
             border: 1px solid #475569;
             border-radius: 12px;
             width: 100%;
-            max-width: 480px;
-            max-height: 85vh;
+            max-width: 490px;
+            max-height: 88vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
         }
-        .history-header {
+        .modal-header {
             padding: 12px;
             background: #0f172a;
             border-bottom: 1px solid #334155;
@@ -304,23 +304,55 @@
             justify-content: space-between;
             align-items: center;
         }
-        .history-list {
+        .modal-body {
             padding: 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-        .history-item {
+
+        .h-item {
             background: #0f172a;
             border: 1px solid #334155;
             border-radius: 8px;
             padding: 10px;
-            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
         .h-item-title { font-size: 13px; font-weight: 800; color: #38bdf8; }
-        .h-item-sub { font-size: 11.5px; color: #10b981; margin-top: 2px; }
-        .h-item-exp { font-size: 11px; color: #94a3b8; margin-top: 4px; line-height: 1.4; }
+        .h-item-sub { font-size: 11.5px; color: #10b981; }
+        .h-item-exp { font-size: 11px; color: #94a3b8; line-height: 1.4; }
+        
+        .h-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .btn-crud {
+            padding: 5px 9px;
+            font-size: 11px;
+            font-weight: 700;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .btn-crud-load { background: #0284c7; }
+        .btn-crud-edit { background: #d97706; }
+        .btn-crud-del { background: #dc2626; }
+        .btn-add-new {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 9px;
+            border-radius: 7px;
+            font-weight: 800;
+            font-size: 12.5px;
+            cursor: pointer;
+            margin-bottom: 6px;
+        }
     </style>
 </head>
 <body>
@@ -410,7 +442,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     <div class="action-grid">
         <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share Single</button>
         <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD Single</button>
-        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 सहेजे गए पुराने प्रश्न (Question Bank: <span id="history-total-count">0</span>)</button>
+        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 प्रश्न बैंक प्रबंधन (Add, Edit, Delete) [<span id="history-total-count">0</span>]</button>
     </div>
 
     <!-- FACEBOOK POLL FORMAT COPY -->
@@ -437,14 +469,14 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
     </div>
 
-    <!-- ==================== SECTION 2: ADDITIONAL 10-Q MULTI-SHEET COMPILER ==================== -->
+    <!-- ==================== SECTION 2: 10-Q MULTI-SHEET COMPILER (ATTRACTIVE HD) ==================== -->
     <div class="section-divider">
-        <span>📑 अतिरिक्त फ़ीचर: 10-Question FB Feed Sheet Generator</span>
+        <span>📑 10-Question FB Feed Sheet Generator (Attractively Redesigned)</span>
     </div>
 
     <div class="compiler-card">
         <div style="color:#c7d2fe; font-size:13px; font-weight:700;">
-            10 प्रश्नों की शीट (5 बाएँ + 5 दाएँ) | 20 प्रश्न चुनने पर 2 अलग इमेज बनेंगी:
+            10 प्रश्नों की आकर्षक 2-कॉलम फ़ीड शीट (20 प्रश्न चुनने पर 2 अलग इमेज बनेंगी):
         </div>
         <div class="row-flex">
             <div>
@@ -459,7 +491,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         <div id="batch-estimate-lbl" style="font-size:11.5px; color:#a5b4fc; font-weight:600;">
             ℹ️ कुल इमेज बनेंगी: 1 इमेज (10 प्रश्न)
         </div>
-        <button class="btn-compile" onclick="compileBatchFeedSheets()">🚀 शीट तैयार करें (Compile Feed Sheets)</button>
+        <button class="btn-compile" onclick="compileBatchFeedSheets()">🚀 आकर्षक 10-Q शीट तैयार करें (Compile HD Sheets)</button>
     </div>
 
     <!-- BATCH NAVIGATION -->
@@ -478,7 +510,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     <div class="action-grid" id="batch-actions" style="display:none;">
         <button class="btn-act btn-share" onclick="shareCurrentBatchSheet()">📲 Share Current Feed Page</button>
         <button class="btn-act btn-download" onclick="downloadCurrentBatchSheet()">📥 Download (JPG)</button>
-        <button class="btn-act btn-history-trigger" style="background:#0891b2;" onclick="downloadAllBatchSheets()">📦 सभी पेजों को डाउनलोड करें (Download All)</button>
+        <button class="btn-act btn-history-trigger" style="background:#0891b2;" onclick="downloadAllBatchSheets()">📦 सभी पेजों को एक साथ डाउनलोड करें</button>
     </div>
 
     <!-- BATCH CAPTION BOX -->
@@ -491,14 +523,72 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     </div>
 </div>
 
-<!-- HISTORY MODAL -->
-<div id="history-modal" onclick="closeHistoryModal()">
-    <div class="history-content" onclick="event.stopPropagation()">
-        <div class="history-header">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 सहेजे गए प्रश्न बैंक (Question Archive)</span>
+<!-- ==================== MODAL 1: QUESTION BANK MANAGER ==================== -->
+<div id="history-modal" class="modal-overlay" onclick="closeHistoryModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 प्रश्न बैंक प्रबंधन (Question Bank)</span>
             <button onclick="closeHistoryModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
         </div>
-        <div class="history-list" id="history-items-container"></div>
+        <div class="modal-body">
+            <button class="btn-add-new" onclick="openAddQuestionModal()">➕ नया प्रश्न स्वयं जोड़ें (Add New Question)</button>
+            <div id="history-items-container" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODAL 2: ADD / EDIT QUESTION MODAL ==================== -->
+<div id="edit-modal" class="modal-overlay" onclick="closeEditModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span id="edit-modal-title" style="font-weight: 800; color: #38bdf8; font-size: 14px;">✏️ प्रश्न संपादित करें (Edit Question)</span>
+            <button onclick="closeEditModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="edit-q-id">
+            <div>
+                <label>प्रश्न क्रमांक (Prefix - उदा. Q.170):</label>
+                <input type="text" id="edit-q-prefix">
+            </div>
+            <div>
+                <label>प्रश्न (Question Text):</label>
+                <textarea id="edit-q-text" style="min-height:60px;"></textarea>
+            </div>
+            <div class="row-flex">
+                <div>
+                    <label>विकल्प A:</label>
+                    <input type="text" id="edit-opt-a">
+                </div>
+                <div>
+                    <label>विकल्प B:</label>
+                    <input type="text" id="edit-opt-b">
+                </div>
+            </div>
+            <div class="row-flex">
+                <div>
+                    <label>विकल्प C:</label>
+                    <input type="text" id="edit-opt-c">
+                </div>
+                <div>
+                    <label>विकल्प D:</label>
+                    <input type="text" id="edit-opt-d">
+                </div>
+            </div>
+            <div>
+                <label>सही उत्तर (Correct Answer):</label>
+                <select id="edit-correct-ans">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+            <div>
+                <label>व्याख्या (Detailed Explanation):</label>
+                <textarea id="edit-q-exp" style="min-height:70px;"></textarea>
+            </div>
+            <button class="btn-action" style="background:#10b981; margin-top:6px;" onclick="saveQuestionEditForm()">💾 सुरक्षित करें (Save Question)</button>
+        </div>
     </div>
 </div>
 
@@ -517,6 +607,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     let currentBatchPageIndex = 0;
 
     let quizData = {
+        id: "default_169",
         title: "🏛️ POLITY GK QUIZ 🧠",
         qPrefix: "Q.169",
         questionText: "संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️",
@@ -572,10 +663,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             return;
         }
 
-        const lines = raw.split(/\r?\n/)
-                         .map(l => cleanString(l))
-                         .filter(l => l.length > 0);
-
+        const lines = raw.split(/\r?\n/).map(l => cleanString(l)).filter(l => l.length > 0);
         if (lines.length < 4) {
             alert("टेक्स्ट बहुत छोटा है! कृपया पूरा फ़ॉर्मेट पेस्ट करें।");
             return;
@@ -671,28 +759,20 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             }
         }
 
-        quizData.title = parsedTitle || "🏛️ POLITY GK QUIZ 🧠";
-        quizData.qPrefix = parsedPrefix || "Q.";
-        quizData.questionText = parsedQText;
-        quizData.options = parsedOpts;
-        quizData.hook = parsedHook;
-        quizData.social = parsedSocial;
-        quizData.correctOption = parsedAns;
-        quizData.caption = parsedCaptionLines.join("\n");
-        quizData.explanation = parsedExpLines.join(" ");
+        quizData = {
+            id: "q_" + Date.now(),
+            title: parsedTitle || "🏛️ POLITY GK QUIZ 🧠",
+            qPrefix: parsedPrefix || "Q.",
+            questionText: parsedQText,
+            options: parsedOpts,
+            hook: parsedHook,
+            social: parsedSocial,
+            correctOption: parsedAns,
+            caption: parsedCaptionLines.join("\n"),
+            explanation: parsedExpLines.join(" ")
+        };
 
-        saveToHistory({
-            title: quizData.title,
-            qPrefix: quizData.qPrefix,
-            questionText: quizData.questionText,
-            options: quizData.options,
-            correctOption: quizData.correctOption,
-            explanation: quizData.explanation,
-            caption: quizData.caption,
-            hook: quizData.hook,
-            social: quizData.social,
-            rawText: raw
-        });
+        saveToHistory({ ...quizData, rawText: raw });
 
         updateCaptionText();
         updatePollFormatText();
@@ -720,7 +800,6 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     function updateCaptionText() {
         const hashMatches = quizData.caption.match(/#[^\s#]+/g);
         let tagsString = hashMatches ? hashMatches.join(" ") : "";
-
         const botTag = `#ans_${quizData.correctOption}`;
         if (!tagsString.includes(botTag)) {
             tagsString = `${tagsString} ${botTag}`.trim();
@@ -795,12 +874,8 @@ ${tagsString}`.trim();
                     document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
                     isAnswerRevealed = p.isAnswerMode;
                 }
-                if (p.rawText) {
-                    document.getElementById('raw-paste-box').value = p.rawText;
-                }
-                if (p.currentQuiz) {
-                    quizData = p.currentQuiz;
-                }
+                if (p.rawText) document.getElementById('raw-paste-box').value = p.rawText;
+                if (p.currentQuiz) quizData = p.currentQuiz;
             } catch(e) {}
         }
     }
@@ -832,6 +907,7 @@ ${tagsString}`.trim();
                     updatePollFormatText();
                     redrawCanvas();
                     calcBatchEstimate();
+                    updateHistoryCount();
                     alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
                 } catch (err) {
                     alert("त्रुटि: अमान्य JSON फ़ाइल!");
@@ -840,24 +916,33 @@ ${tagsString}`.trim();
         }
     }
 
-    function saveToHistory(item) {
-        let history = [];
+    /* ==================== QUESTION BANK CRUD (ADD, EDIT, DELETE) ==================== */
+    function getHistoryList() {
         try {
-            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
-        } catch(e) {}
-        history = history.filter(h => h.qPrefix !== item.qPrefix);
-        history.unshift(item);
-        if (history.length > 200) history.pop();
-        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
+            let hist = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+            return hist.map((item, idx) => {
+                if (!item.id) item.id = "q_" + (Date.now() + idx);
+                return item;
+            });
+        } catch(e) { return []; }
+    }
+
+    function saveHistoryList(list) {
+        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(list));
         updateHistoryCount();
     }
 
+    function saveToHistory(item) {
+        let history = getHistoryList();
+        history = history.filter(h => h.qPrefix !== item.qPrefix && h.id !== item.id);
+        history.unshift(item);
+        if (history.length > 250) history.pop();
+        saveHistoryList(history);
+    }
+
     function updateHistoryCount() {
-        let history = [];
-        try {
-            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
-        } catch(e) {}
-        document.getElementById('history-total-count').innerText = history.length;
+        const list = getHistoryList();
+        document.getElementById('history-total-count').innerText = list.length;
     }
 
     function openHistoryModal() {
@@ -865,26 +950,23 @@ ${tagsString}`.trim();
         const container = document.getElementById('history-items-container');
         container.innerHTML = "";
 
-        let history = [];
-        try {
-            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
-        } catch(e) {}
-
+        const history = getHistoryList();
         if (history.length === 0) {
-            container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई पुराना प्रश्न सहेजा नहीं गया है।</div>`;
+            container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई प्रश्न सहेजा नहीं गया है।</div>`;
         } else {
             history.forEach((h, idx) => {
                 const div = document.createElement('div');
-                div.className = "history-item";
+                div.className = "h-item";
                 div.innerHTML = `
                     <div class="h-item-title">[#${idx+1}] ${h.qPrefix}: ${h.questionText}</div>
-                    <div class="h-item-sub">✅ सही उत्तर: [${h.correctOption}] ${h.options[h.correctOption] || ""}</div>
-                    <div class="h-item-exp">📖 ${h.explanation}</div>
+                    <div class="h-item-sub">✅ उत्तर: [${h.correctOption}] ${h.options ? (h.options[h.correctOption] || '') : ''}</div>
+                    <div class="h-item-exp">📖 ${h.explanation || ''}</div>
+                    <div class="h-actions">
+                        <button class="btn-crud btn-crud-load" onclick="loadFromHistoryById('${h.id}')">👁️ लोड करें</button>
+                        <button class="btn-crud btn-crud-edit" onclick="openEditModalById('${h.id}')">✏️ एडिट</button>
+                        <button class="btn-crud btn-crud-del" onclick="deleteFromHistoryById('${h.id}')">🗑️ डिलीट</button>
+                    </div>
                 `;
-                div.onclick = () => {
-                    loadFromHistory(h);
-                    modal.style.display = 'none';
-                };
                 container.appendChild(div);
             });
         }
@@ -895,16 +977,124 @@ ${tagsString}`.trim();
         document.getElementById('history-modal').style.display = 'none';
     }
 
-    function loadFromHistory(h) {
-        quizData = JSON.parse(JSON.stringify(h));
-        if (h.rawText) document.getElementById('raw-paste-box').value = h.rawText;
-        updateCaptionText();
-        updatePollFormatText();
-        redrawCanvas();
-        alert(`✅ ${h.qPrefix} लोड कर दिया गया है!`);
+    function loadFromHistoryById(id) {
+        const list = getHistoryList();
+        const found = list.find(q => q.id === id);
+        if (found) {
+            quizData = JSON.parse(JSON.stringify(found));
+            if (found.rawText) document.getElementById('raw-paste-box').value = found.rawText;
+            updateCaptionText();
+            updatePollFormatText();
+            redrawCanvas();
+            closeHistoryModal();
+            alert(`✅ ${quizData.qPrefix} स्टूडियो में लोड कर दिया गया है!`);
+        }
     }
 
-    /* REDRAW SINGLE CARD CANVAS */
+    function deleteFromHistoryById(id) {
+        if (!confirm("क्या आप वाकई इस प्रश्न को डिलीट करना चाहते हैं?")) return;
+        let list = getHistoryList();
+        list = list.filter(q => q.id !== id);
+        saveHistoryList(list);
+        openHistoryModal();
+        calcBatchEstimate();
+    }
+
+    function openAddQuestionModal() {
+        document.getElementById('edit-modal-title').innerText = "➕ नया प्रश्न जोड़ें (Add Question)";
+        document.getElementById('edit-q-id').value = "";
+        document.getElementById('edit-q-prefix').value = "Q." + (getHistoryList().length + 1);
+        document.getElementById('edit-q-text').value = "";
+        document.getElementById('edit-opt-a').value = "";
+        document.getElementById('edit-opt-b').value = "";
+        document.getElementById('edit-opt-c').value = "";
+        document.getElementById('edit-opt-d').value = "";
+        document.getElementById('edit-correct-ans').value = "A";
+        document.getElementById('edit-q-exp').value = "";
+
+        document.getElementById('edit-modal').style.display = 'flex';
+    }
+
+    function openEditModalById(id) {
+        const list = getHistoryList();
+        const item = list.find(q => q.id === id);
+        if (!item) return;
+
+        document.getElementById('edit-modal-title').innerText = "✏️ प्रश्न संपादित करें (Edit Question)";
+        document.getElementById('edit-q-id').value = item.id;
+        document.getElementById('edit-q-prefix').value = item.qPrefix || "Q.";
+        document.getElementById('edit-q-text').value = item.questionText || "";
+        document.getElementById('edit-opt-a').value = item.options ? (item.options.A || "") : "";
+        document.getElementById('edit-opt-b').value = item.options ? (item.options.B || "") : "";
+        document.getElementById('edit-opt-c').value = item.options ? (item.options.C || "") : "";
+        document.getElementById('edit-opt-d').value = item.options ? (item.options.D || "") : "";
+        document.getElementById('edit-correct-ans').value = item.correctOption || "A";
+        document.getElementById('edit-q-exp').value = item.explanation || "";
+
+        document.getElementById('edit-modal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('edit-modal').style.display = 'none';
+    }
+
+    function saveQuestionEditForm() {
+        const id = document.getElementById('edit-q-id').value;
+        const prefix = cleanString(document.getElementById('edit-q-prefix').value) || "Q.";
+        const qText = cleanString(document.getElementById('edit-q-text').value);
+        const optA = cleanString(document.getElementById('edit-opt-a').value);
+        const optB = cleanString(document.getElementById('edit-opt-b').value);
+        const optC = cleanString(document.getElementById('edit-opt-c').value);
+        const optD = cleanString(document.getElementById('edit-opt-d').value);
+        const ans = document.getElementById('edit-correct-ans').value;
+        const exp = cleanString(document.getElementById('edit-q-exp').value);
+
+        if (!qText || !optA || !optB) {
+            alert("कृपया प्रश्न और कम से कम दो विकल्प अवश्य भरें!");
+            return;
+        }
+
+        let list = getHistoryList();
+        if (id) {
+            // Edit existing
+            list = list.map(q => {
+                if (q.id === id) {
+                    return {
+                        ...q,
+                        qPrefix: prefix,
+                        questionText: qText,
+                        options: { A: optA, B: optB, C: optC, D: optD },
+                        correctOption: ans,
+                        explanation: exp
+                    };
+                }
+                return q;
+            });
+        } else {
+            // Add new
+            const newObj = {
+                id: "q_" + Date.now(),
+                title: "🏛️ POLITY GK QUIZ 🧠",
+                qPrefix: prefix,
+                questionText: qText,
+                options: { A: optA, B: optB, C: optC, D: optD },
+                correctOption: ans,
+                explanation: exp,
+                hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
+                social: "❤️ Like | ➕ Follow 🎯",
+                caption: `${qText}\n#ExamPreparation #GKQuiz`
+            };
+            list.unshift(newObj);
+        }
+
+        saveHistoryList(list);
+        closeEditModal();
+        openHistoryModal();
+        calcBatchEstimate();
+        alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
+    }
+
+    /* ==================== SINGLE CARD DRAWING ==================== */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
@@ -913,29 +1103,22 @@ ${tagsString}`.trim();
 
         ctx.clearRect(0, 0, 1080, 1350);
 
-        // Outer Background
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, 1080, 1350);
 
-        // White Main Card Container
-        const cardX = 42;
-        const cardY = 42;
-        const cardW = 996;
-        const cardH = 1266;
-        const cardRadius = 32;
-
+        const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 32;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, "#ffffff", false);
         ctx.strokeStyle = "#e2e8f0";
         ctx.lineWidth = 3;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // SECURITY WATERMARK FIXED AT EXACTLY 2% (0.02)
+        // Security Watermark (Fixed at 2%)
         ctx.save();
         ctx.beginPath();
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
         ctx.clip();
         ctx.rotate(-28 * Math.PI / 180);
-        ctx.fillStyle = "rgba(15, 23, 42, 0.02)"; // 2% Opacity
+        ctx.fillStyle = "rgba(15, 23, 42, 0.02)";
         ctx.font = "900 44px 'Poppins', sans-serif";
         for (let x = -800; x < 1800; x += 360) {
             for (let y = -600; y < 2000; y += 160) {
@@ -944,19 +1127,18 @@ ${tagsString}`.trim();
         }
         ctx.restore();
 
-        // Line 1: Header Title
+        // Header Title
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
         ctx.font = `900 52px ${fontFam}`;
         ctx.fillText(quizData.title, 540, 118);
 
-        // 🎯 DYNAMIC CAPSULE BADGE: Text की चौड़ाई के बिल्कुल बराबर (Auto-Fit)
+        // Dynamic Capsule Auto-Fit
         const badgeText = "EXAM PREPARATION";
         ctx.font = "900 24px 'Poppins', sans-serif";
         const badgeWidth = ctx.measureText(badgeText).width;
-        const pillPadding = 26;
-        const pillW = badgeWidth + (pillPadding * 2);
+        const pillW = badgeWidth + 52;
         const pillH = 46;
         const pillX = (1080 - pillW) / 2;
         const pillY = 164;
@@ -969,18 +1151,15 @@ ${tagsString}`.trim();
         ctx.fillStyle = "#1e293b";
         ctx.fillText(badgeText, 540, pillY + (pillH / 2));
 
-        // Line 2: Question Section
+        // Question
         ctx.textAlign = "left";
-        const fixedGap = 68;
-        const qStartY = pillY + pillH + fixedGap;
+        const qStartY = pillY + pillH + 68;
         const qEndY = drawColorfulQuestion(ctx, quizData.qPrefix, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
 
-        // Lines 3-6: 4 Options Containers (A, B, C, D)
+        // 4 Options
         const optStartY = qEndY + 36;
         const optGap = 124;
-        const optW = 890;
-        const optH = 94;
-        const optX = 95;
+        const optW = 890, optH = 94, optX = 95;
 
         const optStyles = [
             { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
@@ -992,17 +1171,10 @@ ${tagsString}`.trim();
         optStyles.forEach((st, idx) => {
             const curY = optStartY + (idx * optGap);
             const isCorrect = (quizData.correctOption === st.label);
-
-            let boxBg = st.bg;
-            let boxBorder = st.border;
-            let badgeBg = st.badgeBg;
-            let badgeText = st.label;
+            let boxBg = st.bg, boxBorder = st.border, badgeBg = st.badgeBg, badgeText = st.label;
 
             if (isAnswerRevealed && isCorrect) {
-                boxBg = "#dcfce7";
-                boxBorder = "#16a34a";
-                badgeBg = "#15803d";
-                badgeText = "✔";
+                boxBg = "#dcfce7"; boxBorder = "#16a34a"; badgeBg = "#15803d"; badgeText = "✔";
             }
 
             roundRect(ctx, optX, curY, optW, optH, 20, boxBg, false);
@@ -1010,7 +1182,6 @@ ${tagsString}`.trim();
             ctx.lineWidth = (isAnswerRevealed && isCorrect) ? 4 : 2.5;
             roundRect(ctx, optX, curY, optW, optH, 20, null, true);
 
-            // Badge Box
             roundRect(ctx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
             ctx.fillStyle = "#ffffff";
             ctx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
@@ -1018,17 +1189,14 @@ ${tagsString}`.trim();
             ctx.textBaseline = "middle";
             ctx.fillText(badgeText, optX + 47, curY + (optH / 2));
 
-            // Option Text
             ctx.textAlign = "left";
             ctx.fillStyle = (isAnswerRevealed && isCorrect) ? "#14532d" : st.text;
             ctx.font = `700 ${optSize}px ${fontFam}`;
-            const optString = quizData.options[st.label] || "";
-            ctx.fillText(optString, optX + 96, curY + (optH / 2));
+            ctx.fillText(quizData.options[st.label] || "", optX + 96, curY + (optH / 2));
         });
 
-        // Lines 7 & 8 / Footer Section
+        // Footer
         const footerY = optStartY + (4 * optGap) + 38;
-
         if (isAnswerRevealed) {
             roundRect(ctx, 95, footerY, 890, 165, 18, "#f8fafc", false);
             ctx.strokeStyle = "#16a34a";
@@ -1050,7 +1218,6 @@ ${tagsString}`.trim();
             ctx.textAlign = "center";
             ctx.fillText(quizData.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
         } else {
-            // Line 7: Hook Banner
             roundRect(ctx, 110, footerY, 860, 84, 42, "#fef08a", false);
             ctx.strokeStyle = "#facc15";
             ctx.lineWidth = 2.5;
@@ -1062,7 +1229,6 @@ ${tagsString}`.trim();
             ctx.font = `800 34px ${fontFam}`;
             ctx.fillText(quizData.hook, 540, footerY + (84 / 2));
 
-            // Line 8: Social Line
             ctx.fillStyle = "#0f172a";
             ctx.font = `800 28px ${fontFam}`;
             ctx.fillText(quizData.social, 540, footerY + 132);
@@ -1088,7 +1254,6 @@ ${tagsString}`.trim();
         words.forEach(word => {
             const cleanWord = word.replace(/[?,.!"']/g, '');
             const isHighlight = highlightTokens.some(t => cleanWord.includes(t)) || word.startsWith("'") || word.startsWith('"');
-            
             ctx.fillStyle = isHighlight ? "#dc2626" : "#0f172a";
             const wordW = ctx.measureText(word + ' ').width;
 
@@ -1170,7 +1335,7 @@ ${tagsString}`.trim();
         });
     }
 
-    /* ==================== ADDITIONAL BATCH SHEET LOGIC ==================== */
+    /* ==================== 10-Q MULTI-SHEET COMPILER (ATTRACTIVE VIRAL LOOK) ==================== */
     function calcBatchEstimate() {
         const count = parseInt(document.getElementById('batch-count').value) || 10;
         const pages = Math.ceil(count / 10);
@@ -1178,20 +1343,16 @@ ${tagsString}`.trim();
     }
 
     function compileBatchFeedSheets() {
-        let history = [];
-        try {
-            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
-        } catch(e) {}
-
-        if (history.length === 0) {
-            alert("Question Bank खाली है! कृपया पहले कुछ प्रश्न जेनरेट करें।");
+        const list = getHistoryList();
+        if (list.length === 0) {
+            alert("Question Bank खाली है! पहले प्रश्न जोड़ें या पेस्ट करें।");
             return;
         }
 
         const start = Math.max(0, (parseInt(document.getElementById('batch-start').value) || 1) - 1);
         const count = parseInt(document.getElementById('batch-count').value) || 10;
 
-        const slice = history.slice(start, start + count);
+        const slice = list.slice(start, start + count);
         if (slice.length === 0) {
             alert("चयनित रेंज में कोई प्रश्न नहीं मिले!");
             return;
@@ -1228,22 +1389,28 @@ ${tagsString}`.trim();
         draw10QFeedSheet(currentQuestions, currentBatchPageIndex + 1, compiledPages.length);
     }
 
+    /* 🎯 ULTRA-ATTRACTIVE 10-QUESTION FEED SHEET (1080 x 1350) */
     function draw10QFeedSheet(questions, pageNum, totalPages) {
         const W = 1080;
         const H = 1350;
 
         sCtx.clearRect(0, 0, W, H);
 
-        // White Base
+        // Premium White Background with Double Layer Accent
         sCtx.fillStyle = "#ffffff";
         sCtx.fillRect(0, 0, W, H);
 
-        // Border
-        sCtx.strokeStyle = "#e2e8f0";
-        sCtx.lineWidth = 4;
-        sCtx.strokeRect(16, 16, W - 32, H - 32);
+        // Outer Dark Slate Border
+        sCtx.strokeStyle = "#0f172a";
+        sCtx.lineWidth = 5;
+        sCtx.strokeRect(14, 14, W - 28, H - 28);
 
-        // 2% Opacity Watermark
+        // Inner Cyan Accent Line
+        sCtx.strokeStyle = "#38bdf8";
+        sCtx.lineWidth = 2;
+        sCtx.strokeRect(20, 20, W - 40, H - 40);
+
+        // 2% Opacity Security Watermark
         sCtx.save();
         sCtx.rotate(-28 * Math.PI / 180);
         sCtx.fillStyle = "rgba(15, 23, 42, 0.02)";
@@ -1255,42 +1422,59 @@ ${tagsString}`.trim();
         }
         sCtx.restore();
 
-        // 1. BRANDING CAPSULE (Auto-Fit)
-        const brandText = totalPages > 1 ? `EXAM PREPARATION • PART ${pageNum}` : "EXAM PREPARATION";
+        // 🎯 1. TOP BRANDING BADGE
+        const brandText = totalPages > 1 ? `EXAM PREPARATION • SPECIAL PART ${pageNum}` : "EXAM PREPARATION";
         sCtx.font = "900 24px 'Poppins', sans-serif";
         const brandW = sCtx.measureText(brandText).width;
-        const pillW = brandW + 48;
-        const pillH = 44;
+        const pillW = brandW + 56;
+        const pillH = 42;
         const pillX = (W - pillW) / 2;
-        const pillY = 30;
+        const pillY = 26;
 
-        roundRect(sCtx, pillX, pillY, pillW, pillH, 22, "#f1f5f9", false);
-        sCtx.strokeStyle = "#cbd5e1";
-        sCtx.lineWidth = 1.8;
-        roundRect(sCtx, pillX, pillY, pillW, pillH, 22, null, true);
+        roundRect(sCtx, pillX, pillY, pillW, pillH, 21, "#0f172a", false);
+        sCtx.strokeStyle = "#f59e0b";
+        sCtx.lineWidth = 2;
+        roundRect(sCtx, pillX, pillY, pillW, pillH, 21, null, true);
 
-        sCtx.fillStyle = "#0f172a";
+        sCtx.fillStyle = "#f8fafc";
         sCtx.textAlign = "center";
         sCtx.textBaseline = "middle";
         sCtx.fillText(brandText, W / 2, pillY + (pillH / 2));
 
-        // 2. VIRAL HOOK
-        const hookY = pillY + pillH + 10;
-        roundRect(sCtx, 36, hookY, W - 72, 50, 12, "#fef08a", false);
-        sCtx.strokeStyle = "#facc15";
+        // 🎯 2. HIGH-IMPACT TITLE
+        sCtx.fillStyle = "#0f172a";
+        sCtx.font = "900 36px 'Hind', sans-serif";
+        sCtx.fillText("⚡ टॉप-10 अति-महत्वपूर्ण प्रश्नोत्तरी (सटीक व्याख्या सहित) 🧠", W / 2, 94);
+
+        // 🎯 3. SPECIAL EXAM TARGET LINE (REQUESTED)
+        const tagLine = "🎯 सभी प्रश्न IAS, UPPCS, UPSSSC, SSC एवं Railway परीक्षाओं के लिए अति-महत्वपूर्ण हैं";
+        const tagBoxY = 120;
+        roundRect(sCtx, 36, tagBoxY, W - 72, 38, 10, "#eff6ff", false);
+        sCtx.strokeStyle = "#3b82f6";
+        sCtx.lineWidth = 1.6;
+        roundRect(sCtx, 36, tagBoxY, W - 72, 38, 10, null, true);
+
+        sCtx.fillStyle = "#1d4ed8";
+        sCtx.font = "800 20px 'Hind', sans-serif";
+        sCtx.fillText(tagLine, W / 2, tagBoxY + 19);
+
+        // 🎯 4. VIRAL HOOK BANNER
+        const hookY = 164;
+        roundRect(sCtx, 36, hookY, W - 72, 40, 10, "#fef08a", false);
+        sCtx.strokeStyle = "#eab308";
         sCtx.lineWidth = 2;
-        roundRect(sCtx, 36, hookY, W - 72, 50, 12, null, true);
+        roundRect(sCtx, 36, hookY, W - 72, 40, 10, null, true);
 
         sCtx.fillStyle = "#854d0e";
-        sCtx.font = "800 23px 'Hind', sans-serif";
-        sCtx.fillText("👇 10 में से 7 सही करके अपनी तैयारी साबित करें! ⚡", W / 2, hookY + 25);
+        sCtx.font = "800 21px 'Hind', sans-serif";
+        sCtx.fillText("👇 10 में से 7 सही करके दिखाएं! अपनी तैयारी अभी परखें ⚡", W / 2, hookY + 20);
 
-        // 3. 10-QUESTION GRID (5 Left + 5 Right)
-        const colW = 490;
-        const leftX = 36;
-        const rightX = W - colW - 36;
-        const gridStartY = hookY + 64;
-        const blockH = 226;
+        // 🎯 5. 10-QUESTION GRID (5 Left + 5 Right)
+        const colW = 496;
+        const leftX = 32;
+        const rightX = W - colW - 32;
+        const gridStartY = 212;
+        const blockH = 210;
         const gap = 8;
 
         questions.forEach((q, idx) => {
@@ -1302,70 +1486,87 @@ ${tagsString}`.trim();
             drawBatchQuestionItem(sCtx, q, idx + 1, x, y, colW, blockH);
         });
 
-        // 4. FOOTER ENGAGEMENT
-        const footerY = H - 64;
-        roundRect(sCtx, 36, footerY, W - 72, 44, 10, "#0f172a", false);
+        // 🎯 6. FOOTER ENGAGEMENT BAR
+        const footerY = H - 56;
+        roundRect(sCtx, 32, footerY, W - 64, 42, 10, "#0f172a", false);
         sCtx.fillStyle = "#ffffff";
-        sCtx.font = "800 19px 'Hind', sans-serif";
+        sCtx.font = "800 18px 'Hind', sans-serif";
         sCtx.textAlign = "center";
         sCtx.textBaseline = "middle";
-        sCtx.fillText("❤️ Like | ➕ Follow @ExamPreparation | 🎯 अपने सभी दोस्तों को शेयर करें", W / 2, footerY + 22);
+        sCtx.fillText("❤️ Like | ➕ Follow @ExamPreparation | 🎯 अपने सभी सहपाठियों को शेयर करें", W / 2, footerY + 21);
     }
 
     function drawBatchQuestionItem(ctx, q, num, x, y, w, h) {
+        // Card container
         roundRect(ctx, x, y, w, h, 10, "#f8fafc", false);
-        ctx.strokeStyle = "#e2e8f0";
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 1.4;
         roundRect(ctx, x, y, w, h, 10, null, true);
+
+        // Top Accent strip
+        roundRect(ctx, x, y, w, 4, 2, "#0284c7", false);
+
+        // Number Badge
+        const badgeW = 34, badgeH = 22;
+        roundRect(ctx, x + 8, y + 8, badgeW, badgeH, 5, "#0284c7", false);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "900 13px 'Poppins', sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(num < 10 ? "0" + num : num, x + 8 + (badgeW / 2), y + 8 + (badgeH / 2));
 
         // Question Title
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
-        ctx.fillStyle = "#0284c7";
-        ctx.font = "800 17.5px 'Hind', sans-serif";
-        const title = `${num}. ${q.questionText}`;
-        wrapTextLines(ctx, title, x + 10, y + 8, w - 20, 22, 2);
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "800 16.5px 'Hind', sans-serif";
+        const title = `${q.questionText}`;
+        wrapTextLines(ctx, title, x + 48, y + 8, w - 56, 20, 2);
 
-        // Options (2x2)
-        const optW = (w - 26) / 2;
-        const optH = 25;
-        const optStartY = y + 56;
+        // 2x2 Options
+        const optW = (w - 24) / 2;
+        const optH = 24;
+        const optStartY = y + 54;
         const keys = ["A", "B", "C", "D"];
 
         keys.forEach((k, ki) => {
             const isR = (ki % 2 === 1);
             const isR2 = (ki >= 2);
-            const ox = isR ? (x + 16 + optW) : (x + 10);
+            const ox = isR ? (x + 14 + optW) : (x + 8);
             const oy = isR2 ? (optStartY + optH + 4) : optStartY;
             const isAns = (q.correctOption === k);
 
             roundRect(ctx, ox, oy, optW, optH, 5, isAns ? "#dcfce7" : "#ffffff", false);
-            ctx.strokeStyle = isAns ? "#22c55e" : "#cbd5e1";
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = isAns ? "#16a34a" : "#cbd5e1";
+            ctx.lineWidth = isAns ? 1.5 : 1;
             roundRect(ctx, ox, oy, optW, optH, 5, null, true);
 
             ctx.fillStyle = isAns ? "#15803d" : "#334155";
-            ctx.font = isAns ? "800 13.5px 'Hind', sans-serif" : "600 13.5px 'Hind', sans-serif";
-            const optStr = `${k}) ${q.options[k] || ""}`;
-            ctx.fillText(truncateStr(ctx, optStr, optW - 10), ox + 6, oy + 4);
+            ctx.font = isAns ? "800 13px 'Hind', sans-serif" : "600 13px 'Hind', sans-serif";
+            const optVal = q.options ? (q.options[k] || "") : "";
+            const prefix = isAns ? `✔ ${k}) ` : `${k}) `;
+            ctx.fillText(truncateStr(ctx, prefix + optVal, optW - 10), ox + 6, oy + 4);
         });
 
-        // Explanation Box
-        const expY = optStartY + (optH * 2) + 10;
-        const expH = (y + h - 8) - expY;
+        // Explanation Box with Green Left-Bar Accent
+        const expY = optStartY + (optH * 2) + 8;
+        const expH = (y + h - 6) - expY;
 
-        roundRect(ctx, x + 10, expY, w - 20, expH, 6, "#ecfdf5", false);
-        ctx.strokeStyle = "#a7f3d0";
+        roundRect(ctx, x + 8, expY, w - 16, expH, 6, "#f0fdf4", false);
+        ctx.strokeStyle = "#86efac";
         ctx.lineWidth = 1;
-        roundRect(ctx, x + 10, expY, w - 20, expH, 6, null, true);
+        roundRect(ctx, x + 8, expY, w - 16, expH, 6, null, true);
 
-        ctx.fillStyle = "#065f46";
-        ctx.font = "800 13.5px 'Hind', sans-serif";
-        ctx.fillText(`💡 उत्तर: [${q.correctOption}] | व्याख्या:`, x + 14, expY + 6);
+        // Solid green left-accent bar
+        roundRect(ctx, x + 8, expY, 4, expH, 2, "#16a34a", false);
+
+        ctx.fillStyle = "#15803d";
+        ctx.font = "800 13px 'Hind', sans-serif";
+        ctx.fillText(`💡 उत्तर: [${q.correctOption}] | व्याख्या:`, x + 16, expY + 5);
 
         ctx.fillStyle = "#1e293b";
-        ctx.font = "600 13px 'Hind', sans-serif";
-        wrapTextLines(ctx, q.explanation, x + 14, expY + 25, w - 28, 17, 4);
+        ctx.font = "600 12px 'Hind', sans-serif";
+        wrapTextLines(ctx, q.explanation || "सटीक उत्तर पर आधारित।", x + 16, expY + 22, w - 28, 16, 4);
     }
 
     function wrapTextLines(ctx, text, x, y, maxW, lineH, maxLines = 8) {
@@ -1400,16 +1601,17 @@ ${tagsString}`.trim();
     }
 
     function generateBatchCaptionText(questions) {
-        let text = `🔥 EXAM SPECIAL TEST SERIES (टॉप ${questions.length} अति-महत्वपूर्ण प्रश्नोत्तर) 🎯\n\n`;
+        let text = `🔥 EXAM SPECIAL TEST SERIES (टॉप ${questions.length} अति-महत्वपूर्ण प्रश्नोत्तर) 🎯\n`;
+        text += `📌 विशेष: IAS, UPPCS, UPSSSC, SSC एवं Railway परीक्षाओं के लिए विशेष संग्रह!\n\n`;
         questions.slice(0, 10).forEach((q, i) => {
             text += `${i + 1}. ${q.questionText}\n`;
         });
         if (questions.length > 10) {
             text += `... और अन्य सभी प्रश्न ऊपर स्लाइड में देखें!\n`;
         }
-        text += `\n✅ प्रामाणिक उत्तर और व्याख्या इमेज में दी गई है।\n`;
+        text += `\n✅ प्रामाणिक उत्तर और विस्तृत व्याख्या इमेज में संलग्न है।\n`;
         text += `👉 इस पोस्ट को Save करें और अपनी तैयारी मजबूत बनाएं!\n\n`;
-        text += `#ExamPreparation #GKQuiz #IndianPolity #CompetitiveExams #StudyMaterial`;
+        text += `#ExamPreparation #GKQuiz #IndianPolity #IAS #UPPCS #UPSSSC #SSC #Railway`;
 
         document.getElementById('batch-caption-box').innerText = text;
     }
@@ -1423,7 +1625,7 @@ ${tagsString}`.trim();
     function downloadCurrentBatchSheet() {
         const link = document.createElement('a');
         link.download = `ExamPrep_Feed_Page_${currentBatchPageIndex + 1}.jpg`;
-        link.href = sheetCanvas.toDataURL('image/jpeg', 0.95);
+        link.href = sheetCanvas.toDataURL('image/jpeg', 0.96);
         link.click();
     }
 
@@ -1435,7 +1637,7 @@ ${tagsString}`.trim();
             renderBatchPage();
             const link = document.createElement('a');
             link.download = `ExamPrep_Feed_Page_${idx + 1}.jpg`;
-            link.href = sheetCanvas.toDataURL('image/jpeg', 0.95);
+            link.href = sheetCanvas.toDataURL('image/jpeg', 0.96);
             link.click();
         });
         currentBatchPageIndex = initialIdx;
@@ -1456,7 +1658,7 @@ ${tagsString}`.trim();
                 copyBatchCaption();
                 alert("इमेज डाउनलोड हो गई और कैप्शन कॉपी हुआ। फेसबुक पर पोस्ट करें!");
             }
-        }, 'image/jpeg', 0.95);
+        }, 'image/jpeg', 0.96);
     }
 
     window.onload = function() {
