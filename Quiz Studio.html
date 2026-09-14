@@ -362,7 +362,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 सहेजे गए पुराने प्रश्न (Question Bank)</button>
     </div>
 
-    <!-- NEW: FACEBOOK POLL FORMAT COPY -->
+    <!-- FACEBOOK POLL FORMAT COPY -->
     <div class="detail-card" style="border-color: #8b5cf6;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📊 Facebook Poll Format (1-Click Ready):</span>
@@ -637,7 +637,7 @@ ${tagsString}`.trim();
         document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
     }
 
-    // FEATURE 1: FACEBOOK POLL TEXT FORMAT
+    // FACEBOOK POLL TEXT FORMAT
     function updatePollFormatText() {
         const pollText = 
 `❓ Question: ${quizData.questionText}
@@ -814,13 +814,13 @@ ${tagsString}`.trim();
         ctx.lineWidth = 3;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // FEATURE 4: SECURITY WATERMARK FIXED AT EXACTLY 4% (0.04)
+        // SECURITY WATERMARK FIXED AT EXACTLY 2% (0.02)
         ctx.save();
         ctx.beginPath();
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
         ctx.clip();
         ctx.rotate(-28 * Math.PI / 180);
-        ctx.fillStyle = "rgba(15, 23, 42, 0.04)"; // Fixed at 4%
+        ctx.fillStyle = "rgba(15, 23, 42, 0.02)"; // Fixed at 2%
         ctx.font = "900 44px 'Poppins', sans-serif";
         for (let x = -800; x < 1800; x += 360) {
             for (let y = -600; y < 2000; y += 160) {
