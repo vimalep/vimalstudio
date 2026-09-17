@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exam Preparation - 4:5 FB Post Generator</title>
+  <title>Exam Preparation - Ultimate Post & Question Manager</title>
   
-  <!-- Google Fonts for Hindi & English -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- html2canvas for HD image generation -->
+  <!-- html2canvas for 4:5 HD Image -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- jsPDF for Subject-wise PDF Export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     * {
@@ -21,37 +23,42 @@
     }
     body {
       font-family: 'Mukta', sans-serif;
-      background: #e2e8f0;
-      padding: 20px;
+      background: #f1f5f9;
+      color: #1e293b;
+      padding: 20px 15px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Control Form Panel */
-    .controls-panel {
-      background: #ffffff;
-      padding: 24px 28px;
-      border-radius: 14px;
+    /* Main Container */
+    .app-container {
       width: 100%;
-      max-width: 950px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
-    }
-    .controls-panel h2 {
-      margin-bottom: 16px;
-      font-size: 22px;
-      color: #0f172a;
-      font-family: 'Poppins', sans-serif;
-    }
-    .input-row {
+      max-width: 1120px;
       display: flex;
-      gap: 15px;
-      margin-bottom: 14px;
+      flex-direction: column;
+      gap: 20px;
     }
+
+    /* Controls Panel */
+    .panel {
+      background: #ffffff;
+      padding: 22px 25px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .panel h2 {
+      font-size: 22px;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 14px;
+      color: #0f172a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .form-group {
-      flex: 1;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     label {
       display: block;
@@ -60,7 +67,7 @@
       font-size: 14px;
       color: #475569;
     }
-    input[type="text"], textarea {
+    input[type="text"], select, textarea {
       width: 100%;
       padding: 10px 14px;
       border: 1.5px solid #cbd5e1;
@@ -69,52 +76,121 @@
       font-family: inherit;
       outline: none;
     }
-    input[type="text"]:focus, textarea:focus {
+    input[type="text"]:focus, select:focus, textarea:focus {
       border-color: #dc2626;
     }
     textarea {
-      height: 150px;
       resize: vertical;
-      line-height: 1.5;
     }
-    .btn-group {
+    .smart-paste-area {
+      height: 180px;
+      font-size: 14px;
+      line-height: 1.45;
+      background: #fafafa;
+    }
+
+    /* Buttons */
+    .btn-row {
       display: flex;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
       margin-top: 10px;
     }
     button {
-      flex: 1;
-      padding: 13px;
+      padding: 11px 18px;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      transition: 0.2s;
+      font-family: 'Poppins', 'Mukta', sans-serif;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    .btn-generate {
-      background: #2563eb;
-      color: #fff;
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-fb { background: #1877f2; color: #fff; }
+    .btn-success { background: #15803d; color: #fff; }
+    .btn-outline { background: #f8fafc; border: 1.5px solid #cbd5e1; color: #334155; }
+
+    /* Saved Library & Subject Filter */
+    .library-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
     }
-    .btn-download {
+    .tab-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .tab-btn.active {
       background: #dc2626;
       color: #fff;
+      border-color: #dc2626;
     }
-    button:hover {
-      opacity: 0.92;
+    .saved-list {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+      background: #f8fafc;
+    }
+    .saved-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: #fff;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .saved-item-title {
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .saved-item-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .btn-xs {
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
     }
 
-    /* Outer Wrapper for responsive screen view */
-    .preview-container {
+    /* Notification Banner */
+    #notification {
+      display: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+
+    /* Canvas Outer Wrapper for Responsiveness */
+    .preview-section {
       width: 100%;
       overflow-x: auto;
       display: flex;
       justify-content: center;
-      padding-bottom: 40px;
+      padding: 15px 0 35px 0;
     }
 
-    /* 4:5 Facebook Feed Ratio (1080px x 1350px) */
+    /* 4:5 Facebook Standard Feed Canvas (1080px × 1350px) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -123,8 +199,8 @@
       max-width: 1080px;
       max-height: 1350px;
       background: #ffffff;
-      padding: 30px 36px 26px 36px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      padding: 24px 34px 20px 34px;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.18);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -132,14 +208,14 @@
       overflow: hidden;
     }
 
-    /* Top Single Line Header */
+    /* Single-Line Top Header */
     .top-header-wrap {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 58px;
-      margin-bottom: 14px;
+      height: 52px;
+      margin-bottom: 10px;
     }
     .top-line-behind {
       position: absolute;
@@ -155,7 +231,7 @@
       position: relative;
       z-index: 2;
       background: #ffffff;
-      padding: 3px 18px;
+      padding: 2px 18px;
       border: 3px solid #dc2626;
       border-radius: 40px;
       display: inline-flex;
@@ -165,13 +241,13 @@
     .top-logo .logo-red {
       color: #dc2626;
       font-weight: 900;
-      font-size: 26px;
+      font-size: 25px;
       font-family: 'Poppins', sans-serif;
     }
     .top-logo .logo-black {
       color: #0f172a;
       font-weight: 900;
-      font-size: 26px;
+      font-size: 25px;
       font-family: 'Poppins', sans-serif;
       margin-left: 6px;
     }
@@ -180,11 +256,10 @@
       z-index: 2;
       background: #ffffff;
       padding: 0 16px;
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 800;
       color: #0f172a;
       white-space: nowrap;
-      letter-spacing: 0.3px;
     }
     .top-follow-pill {
       position: relative;
@@ -193,11 +268,11 @@
       color: #ffffff;
       font-size: 18px;
       font-weight: 800;
-      padding: 8px 24px;
+      padding: 6px 22px;
       border-radius: 40px;
       white-space: nowrap;
       font-family: 'Poppins', 'Mukta', sans-serif;
-      box-shadow: 0 3px 8px rgba(220, 38, 38, 0.25);
+      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
     }
 
     /* Title & Part Banner */
@@ -205,47 +280,45 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .title-pill {
       display: inline-flex;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
       align-items: stretch;
     }
     .title-main {
       background: #dc2626;
       color: #ffffff;
-      font-size: 33px;
+      font-size: 30px;
       font-weight: 800;
-      padding: 4px 30px;
-      letter-spacing: 0.5px;
+      padding: 4px 28px;
       display: flex;
       align-items: center;
     }
     .title-sub {
       background: #15803d;
       color: #ffffff;
-      font-size: 25px;
+      font-size: 23px;
       font-weight: 700;
-      padding: 4px 22px;
+      padding: 4px 20px;
       display: flex;
       align-items: center;
     }
     .title-part {
-      background: #1e3a8a; /* Deep Blue for series */
+      background: #1e3a8a;
       color: #ffffff;
-      font-size: 23px;
+      font-size: 22px;
       font-weight: 800;
-      padding: 4px 22px;
+      padding: 4px 20px;
       display: flex;
       align-items: center;
       font-family: 'Poppins', sans-serif;
-      letter-spacing: 0.5px;
     }
 
-    /* Table Section */
+    /* Table Section (Engineered for 15 Rows to fill height perfectly) */
     .table-container {
       flex: 1;
       position: relative;
@@ -256,14 +329,12 @@
       display: flex;
       flex-direction: column;
     }
-
-    /* Background Watermark */
     .watermark {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(-18deg);
-      font-size: 85px;
+      font-size: 80px;
       font-weight: 900;
       color: rgba(220, 38, 38, 0.05);
       white-space: nowrap;
@@ -274,7 +345,6 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* Table */
     table {
       width: 100%;
       height: 100%;
@@ -285,11 +355,11 @@
     }
     thead th {
       background: #f0fdf4;
-      padding: 8px 16px;
-      font-size: 24px;
+      padding: 6px 14px;
+      font-size: 22px;
       font-weight: 800;
       border-bottom: 2px solid #86efac;
-      height: 46px;
+      height: 42px;
     }
     thead th.th-q {
       color: #dc2626;
@@ -305,15 +375,16 @@
 
     tbody tr {
       border-bottom: 1.5px solid #bbf7d0;
+      height: calc((100% - 42px) / 15);
     }
     tbody tr:last-child {
       border-bottom: none;
     }
 
     td {
-      padding: 5px 14px;
-      font-size: 20px;
-      line-height: 1.32;
+      padding: 3px 12px;
+      font-size: 18.5px;
+      line-height: 1.25;
       vertical-align: middle;
     }
     .td-q {
@@ -324,57 +395,39 @@
     .q-num {
       color: #dc2626;
       font-weight: 800;
-      margin-right: 6px;
+      margin-right: 5px;
       display: inline-block;
-      min-width: 32px;
+      min-width: 28px;
     }
 
-    /* Word Coloring Styles */
-    .word-red {
-      color: #dc2626;
-      font-weight: 800;
-    }
-    .q-mark {
-      color: #dc2626;
-      font-weight: 900;
-      font-size: 22px;
-    }
+    /* Auto Color Rules */
+    .word-red { color: #dc2626; font-weight: 800; }
+    .q-mark { color: #dc2626; font-weight: 900; font-size: 21px; }
+    .ans-maroon { color: #800000; font-weight: 800; }
+    .ans-green { color: #15803d; font-weight: 700; }
 
-    /* Answer Color Styles (Maroon & Green) */
-    .ans-maroon {
-      color: #800000; /* Rich Maroon */
-      font-weight: 800;
-    }
-    .ans-green {
-      color: #15803d; /* Fresh Green */
-      font-weight: 700;
-    }
-
-    /* Last Question Comment Call-to-Action */
+    /* Last Question Comment Call-out */
     .cta-comment {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
       background: #fef2f2;
       color: #dc2626;
       border: 2px dashed #dc2626;
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 8px;
       font-weight: 800;
-      font-size: 19px;
-      letter-spacing: 0.3px;
-      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.1);
+      font-size: 17.5px;
     }
 
-    /* Footer Bar */
+    /* Footer Single-Line Bar */
     .footer-wrap {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 52px;
-      margin-top: 14px;
+      height: 48px;
+      margin-top: 10px;
     }
     .footer-line-behind {
       position: absolute;
@@ -390,17 +443,15 @@
       position: relative;
       z-index: 2;
       background: #ffffff;
-      padding: 0 16px 0 0;
+      padding: 0 14px 0 0;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
-    .footer-book-icon {
-      font-size: 28px;
-    }
+    .footer-book-icon { font-size: 26px; }
     .footer-title {
       font-family: 'Poppins', sans-serif;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 900;
     }
     .footer-title .f-red { color: #dc2626; }
@@ -411,9 +462,9 @@
       z-index: 2;
       background: #dc2626;
       color: #ffffff;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
-      padding: 8px 24px;
+      padding: 6px 20px;
       border-radius: 40px;
       white-space: nowrap;
       font-family: 'Poppins', 'Mukta', sans-serif;
@@ -422,82 +473,144 @@
 </head>
 <body>
 
-  <!-- Input Controls -->
-  <div class="controls-panel">
-    <h2>Exam Preparation - Post Creator</h2>
-    
-    <div class="input-row">
-      <div class="form-group" style="flex: 2;">
-        <label>मुख्य शीर्षक (Subject):</label>
-        <input type="text" id="inSubject" value="भारतीय भूगोल">
-      </div>
-      <div class="form-group" style="flex: 2;">
-        <label>उप-शीर्षक (Sub-Topic):</label>
-        <input type="text" id="inSubTopic" value="( महत्वपूर्ण प्रश्न )">
-      </div>
+<div class="app-container">
+
+  <!-- Control & Smart Paste Panel -->
+  <div class="panel">
+    <h2>
+      <span>⚡ स्मार्ट पोस्ट क्रिएटर (Smart Post Engine)</span>
+      <span style="font-size: 14px; color: #64748b; font-weight: 600;">FB 4:5 Ready (1080×1350)</span>
+    </h2>
+
+    <div class="form-group">
+      <label>1. स्मार्ट पेस्ट बॉक्स (यहाँ पूरा पोस्ट डायरेक्ट पेस्ट करें):</label>
+      <textarea id="smartInput" class="smart-paste-area" placeholder="🎯 इतिहास, प्राचीन भारत, भाग 1
+1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
+उत्तर: 1921 में, दयाराम साहनी द्वारा
+... (15 प्रश्न)
+प्रतियोगी परीक्षाओं के लिए... #HistoryGK">🎯 इतिहास, प्राचीन भारत, भाग 1
+1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
+उत्तर: 1921 में, दयाराम साहनी द्वारा
+2. मोहनजोदड़ो की खोज 1922 में किसने की थी?
+उत्तर: राखालदास बनर्जी
+3. सिंधु घाटी सभ्यता का प्रमुख बंदरगाह (गोदीवाड़ा) कौन सा था?
+उत्तर: लोथल (गुजरात)
+4. 'विशाल स्नानागार' (Great Bath) के साक्ष्य किस सैंधव स्थल से मिले हैं?
+उत्तर: मोहनजोदड़ो
+5. सिंधु सभ्यता की लिपि किस प्रकार की थी जिसे अब तक पढ़ा नहीं जा सका?
+उत्तर: भावचित्रात्मक (Boustrophedon)
+6. प्रसिद्ध कांस्य नर्तकी की मूर्ति किस स्थान से प्राप्त हुई थी?
+उत्तर: मोहनजोदड़ो
+7. जुते हुए खेत और सात अग्निकुंडों के साक्ष्य कहाँ मिले हैं?
+उत्तर: कालीबंगा (राजस्थान)
+8. सिंधु घाटी सभ्यता मुख्य रूप से किस युग की सभ्यता मानी जाती है?
+उत्तर: कांस्य युग (Bronze Age)
+9. सिंधु सभ्यता का सबसे पूर्वी स्थल आलमगीरपुर किस नदी के तट पर स्थित है?
+उत्तर: हिंडन नदी (मेरठ, उत्तर प्रदेश)
+10. हड़प्पा स्थल किस नदी के बाएं तट पर स्थित है?
+उत्तर: रावी नदी
+11. सिंधी भाषा में 'मोहनजोदड़ो' का शाब्दिक अर्थ क्या होता है?
+उत्तर: मृतकों का टीला
+12. जल प्रबंधन की उत्कृष्ट प्रणाली और त्रि-स्तरीय नगर योजना कहाँ मिली है?
+उत्तर: धोलावीरा (गुजरात)
+13. वर्तमान भारत में स्थित सिंधु सभ्यता का सबसे बड़ा स्थल कौन सा है?
+उत्तर: राखीगढ़ी (हरियाणा)
+14. सिंधु घाटी सभ्यता के निवासी किस धातु के उपयोग से पूरी तरह अनभिज्ञ थे?
+उत्तर: लोहा
+15. स्वतंत्रता प्राप्ति के बाद भारत में हड़प्पा संस्कृति के सर्वाधिक स्थल किस राज्य में खोजे गए?
+उत्तर: गुजरात
+प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
+#HistoryGK</textarea>
+    </div>
+
+    <!-- Parsed / Editable Controls -->
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
       <div class="form-group" style="flex: 1.2;">
-        <label>सीरीज (Part No.):</label>
-        <input type="text" id="inPart" value="Part - 01" placeholder="उदा: Part - 01">
+        <label>विषय (Subject Category):</label>
+        <select id="subjectCategory">
+          <option value="इतिहास">इतिहास (History)</option>
+          <option value="भूगोल">भूगोल (Geography)</option>
+          <option value="राजव्यवस्था">राजव्यवस्था (Polity)</option>
+          <option value="करेंट अफेयर्स">करेंट अफेयर्स (Current Affairs)</option>
+        </select>
+      </div>
+      <div class="form-group" style="flex: 1.5;">
+        <label>उप-विषय (Sub-Topic):</label>
+        <input type="text" id="inSubTopic" value="प्राचीन भारत">
+      </div>
+      <div class="form-group" style="flex: 1;">
+        <label>भाग (Part No.):</label>
+        <input type="text" id="inPart" value="भाग 1">
       </div>
     </div>
 
     <div class="form-group">
-      <label>प्रश्न और उत्तर (Format: प्रश्न | उत्तर):</label>
-      <textarea id="inQuestions">
-भारत का सबसे ऊँचा बाँध है? | टिहरी बाँध (भागीरथी नदी, उत्तराखंड)
-विश्व/भारत का सबसे लम्बा बाँध है? | हीराकुंड बाँध (महानदी, उड़ीसा)
-मेटूर बाँध है? | कावेरी नदी पर, तमिलनाडु में
-पोंग बाँध है? | व्यास नदी (हिमाचल) पर
-थीन बाँध है? | रावी नदी (पंजाब) पर
-अलमाटी बाँध है? | कृष्णा नदी (कर्नाटक) पर
-मैथन, बेलपहाड़ी, तिलैया बाँध बनाए गए हैं? | दामोदर की सहायक नदी बराकर पर
-भारत की सबसे बड़ी लैगून एवं खारे पानी की झील है? | चिल्का झील (ओडिशा)
-चिल्का झील प्रसिद्ध है? | झींगा पालन हेतु
-भारत में सबसे मीठे पानी की झील है? | वुलर (कश्मीर, इसी पर तुलबुल परियोजना है)
-भारत की सबसे बड़ी कृत्रिम झील है? | गोविन्द बल्लभ पंत सागर (हिन्द नदी पर निर्मित)
-भारत में सबसे अधिक ऊँचाई पर स्थित झील है? | चोलामू झील (सिक्किम)
-तीस्ता नदी का उद्गम है? | चोलामू झील से
-पूर्वोत्तर भारत की सबसे बड़ी मीठे पानी की झील है? | लोकटक झील (मणिपुर)
-विश्व का एकमात्र तैरता हुआ राष्ट्रीय उद्यान केबुललामजाओ स्थित है? | लोकटक झील में
-गांधी सागर (मध्य प्रदेश), राणा प्रताप सागर व जवाहर सागर (राजस्थान) झील स्थित हैं? | चंबल नदी पर</textarea>
+      <label>Facebook कैप्शन (Direct Share & Clipboard):</label>
+      <input type="text" id="fbCaption" value="प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨ #HistoryGK">
     </div>
 
-    <div class="btn-group">
-      <button class="btn-generate" onclick="renderCard()">अपडेट करें (Refresh)</button>
-      <button class="btn-download" onclick="downloadImage()">Download HD Post (4:5)</button>
+    <!-- Actions -->
+    <div class="btn-row">
+      <button class="btn-primary" onclick="parseSmartInput()">⚡ Parse & Generate Image</button>
+      <button class="btn-danger" onclick="downloadImage()">📥 Download HD Image (4:5)</button>
+      <button class="btn-fb" onclick="shareToFacebook()">🚀 Share to Facebook (Auto-Caption)</button>
+      <button class="btn-success" onclick="saveToDatabase()">💾 Auto-Save Post</button>
+    </div>
+
+    <div id="notification"></div>
+  </div>
+
+  <!-- Database & Subject Library Panel -->
+  <div class="panel">
+    <h2>📁 विषय अनुसार सहेजे गए प्रश्न (Subject Library & Backup)</h2>
+    
+    <div class="library-tabs">
+      <button class="tab-btn active" onclick="filterBySubject('इतिहास', this)">इतिहास (History)</button>
+      <button class="tab-btn" onclick="filterBySubject('भूगोल', this)">भूगोल (Geography)</button>
+      <button class="tab-btn" onclick="filterBySubject('राजव्यवस्था', this)">राजव्यवस्था (Polity)</button>
+      <button class="tab-btn" onclick="filterBySubject('करेंट अफेयर्स', this)">करेंट अफेयर्स (Current Affairs)</button>
+    </div>
+
+    <div class="saved-list" id="savedListContainer">
+      <!-- Dynamic list -->
+    </div>
+
+    <div class="btn-row" style="margin-top: 15px;">
+      <button class="btn-outline" onclick="downloadSubjectPDF()">📄 Download Subject PDF</button>
+      <button class="btn-outline" onclick="exportJSON()">📤 Backup JSON File</button>
+      <label class="btn-outline" style="cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
+        📥 Import JSON <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
+      </label>
     </div>
   </div>
 
-  <!-- Preview Container -->
-  <div class="preview-container">
+  <!-- Live 4:5 Aspect Ratio Preview Area -->
+  <div class="preview-section">
     <div id="capture-card">
       
-      <!-- Top Single Line Header -->
+      <!-- Top Single-Line Header -->
       <div class="top-header-wrap">
         <div class="top-line-behind"></div>
         
-        <!-- Logo Badge -->
         <div class="top-logo">
           <span class="logo-red">Exam</span><span class="logo-black">Preparation</span>
         </div>
 
-        <!-- Tagline -->
         <div class="top-tagline">Study Hard &nbsp;|&nbsp; Achieve More</div>
 
-        <!-- Follow Pill -->
         <div class="top-follow-pill">Exam Preparation : Follow</div>
       </div>
 
-      <!-- Title Banner -->
+      <!-- Title & Part Banner -->
       <div class="title-banner">
         <div class="title-pill">
-          <div class="title-main" id="outSubject">भारतीय भूगोल</div>
-          <div class="title-sub" id="outSubTopic">( महत्वपूर्ण प्रश्न )</div>
-          <div class="title-part" id="outPart">Part - 01</div>
+          <div class="title-main" id="outSubject">इतिहास</div>
+          <div class="title-sub" id="outSubTopic">( प्राचीन भारत )</div>
+          <div class="title-part" id="outPart">भाग 1</div>
         </div>
       </div>
 
-      <!-- Table -->
+      <!-- 15 Rows Table -->
       <div class="table-container">
         <div class="watermark">Exam Preparation</div>
         <table>
@@ -508,12 +621,12 @@
             </tr>
           </thead>
           <tbody id="qaBody">
-            <!-- Populated dynamically via JS -->
+            <!-- Dynamic 15 Rows -->
           </tbody>
         </table>
       </div>
 
-      <!-- Footer Bar -->
+      <!-- Single-Line Footer -->
       <div class="footer-wrap">
         <div class="footer-line-behind"></div>
 
@@ -530,148 +643,413 @@
     </div>
   </div>
 
-  <script>
-    // List of common Hindi question words
-    const hindiQuestionWords = new Set([
-      'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
-      'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
-      'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
-    ]);
+</div>
 
-    // Smart Question Formatter
-    function formatQuestion(qText, rowIndex) {
-      if (!qText) return '';
-      let text = qText.trim();
+<script>
+  // Global memory and state
+  let parsedQAData = [];
+  let currentSubjectFilter = 'इतिहास';
+
+  const hindiQuestionWords = new Set([
+    'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
+    'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
+    'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
+  ]);
+
+  // SMART PARSER: Automatically parse raw clipboard text
+  function parseSmartInput() {
+    const raw = document.getElementById('smartInput').value.trim();
+    if (!raw) return;
+
+    const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    parsedQAData = [];
+    let captionLines = [];
+
+    let currentQ = null;
+
+    lines.forEach((line) => {
+      // 1. Detect Header line with emojis e.g. 🎯 इतिहास, प्राचीन भारत, भाग 1
+      if (line.includes('🎯') || line.toLowerCase().includes('भाग') || (parsedQAData.length === 0 && line.includes(','))) {
+        let clean = line.replace('🎯', '').trim();
+        let parts = clean.split(',').map(s => s.trim());
+        
+        if (parts[0]) {
+          // Normalize to one of 4 subjects if possible
+          if (parts[0].includes('इतिहास')) document.getElementById('subjectCategory').value = 'इतिहास';
+          else if (parts[0].includes('भूगोल')) document.getElementById('subjectCategory').value = 'भूगोल';
+          else if (parts[0].includes('राज')) document.getElementById('subjectCategory').value = 'राजव्यवस्था';
+          else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) document.getElementById('subjectCategory').value = 'करेंट अफेयर्स';
+        }
+        if (parts[1]) document.getElementById('inSubTopic').value = parts[1];
+        if (parts[2]) document.getElementById('inPart').value = parts[2];
+        return;
+      }
+
+      // 2. Detect Question lines (starts with 1., 2., 10., etc.)
+      const qMatch = line.match(/^(\d+)[\.\)]\s*(.*)/);
+      if (qMatch) {
+        if (currentQ) parsedQAData.push(currentQ);
+        currentQ = { q: qMatch[2].trim(), a: '' };
+        return;
+      }
+
+      // 3. Detect Answer lines (starts with उत्तर:, Ans:, etc.)
+      const aMatch = line.match(/^(?:उत्तर|Ans|Answer)[:\-\s]*(.*)/i);
+      if (aMatch && currentQ) {
+        currentQ.a = aMatch[1].trim();
+        parsedQAData.push(currentQ);
+        currentQ = null;
+        return;
+      }
+
+      // 4. Trailing caption / hashtags
+      if (parsedQAData.length >= 14 || line.includes('#') || line.includes('प्रतियोगी')) {
+        captionLines.push(line);
+      }
+    });
+
+    if (currentQ) parsedQAData.push(currentQ);
+
+    if (captionLines.length > 0) {
+      document.getElementById('fbCaption').value = captionLines.join(' ');
+    }
+
+    renderCard();
+    notify("✅ स्मार्ट इनपुट सफलतापूर्वक पार्स हो गया!");
+  }
+
+  // Format Question Text
+  function formatQuestion(qText, rowIndex) {
+    if (!qText) return '';
+    let words = qText.trim().split(/\s+/);
+    if (words.length === 0) return qText;
+
+    const targetPos = (rowIndex % 2 === 0) ? 0 : (words.length > 1 ? 1 : 0);
+
+    return words.map((w, wIdx) => {
+      let hasQMark = w.includes('?');
+      let clean = w.replace(/[?,।]/g, '');
+      let punctuation = w.slice(clean.length);
+
+      let isQWord = hindiQuestionWords.has(clean);
+      let isTarget = (wIdx === targetPos);
+
+      let styled = clean;
+      if (isQWord || isTarget) {
+        styled = `<span class="word-red">${clean}</span>`;
+      }
+
+      if (hasQMark) styled += `<span class="q-mark">?</span>`;
+      else if (punctuation) styled += punctuation;
       
-      // Separate punctuation around words
-      let words = text.split(/\s+/);
-      if (words.length === 0) return text;
+      return styled;
+    }).join(' ');
+  }
 
-      // Logic: Alternating highlight for 1st word or 2nd word
-      const targetPos = (rowIndex % 2 === 0) ? 0 : (words.length > 1 ? 1 : 0);
+  // Format Answer (Maroon & Green)
+  function formatAnswer(aText) {
+    if (!aText) return '';
+    let text = aText.trim();
 
-      let formattedWords = words.map((w, wIdx) => {
-        let hasQMark = w.includes('?');
-        let cleanWord = w.replace(/[?,।]/g, '');
-        let punctuation = w.slice(cleanWord.length);
-
-        let isQWord = hindiQuestionWords.has(cleanWord);
-        let isRandomTarget = (wIdx === targetPos);
-
-        let styled = cleanWord;
-        if (isQWord || isRandomTarget) {
-          styled = `<span class="word-red">${cleanWord}</span>`;
-        }
-
-        if (hasQMark) {
-          styled += `<span class="q-mark">?</span>`;
-        } else if (punctuation) {
-          styled += punctuation;
-        }
-        return styled;
+    // Check parenthesis
+    if (text.includes('(') && text.includes(')')) {
+      return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
+        let res = '';
+        if (p1) res += `<span class="ans-maroon">${p1}</span>`;
+        if (p2) res += `<span class="ans-green">${p2}</span>`;
+        if (p3) res += `<span class="ans-maroon">${p3}</span>`;
+        return res;
       });
-
-      return formattedWords.join(' ');
     }
 
-    // Smart Answer Formatter (Maroon for main, Green for comma/brackets)
-    function formatAnswer(aText) {
-      if (!aText) return '';
-      let text = aText.trim();
-
-      // Case 1: Answer with brackets (...)
-      if (text.includes('(') && text.includes(')')) {
-        return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
-          let res = '';
-          if (p1) res += `<span class="ans-maroon">${p1}</span>`;
-          if (p2) res += `<span class="ans-green">${p2}</span>`;
-          if (p3) res += `<span class="ans-maroon">${p3}</span>`;
-          return res;
-        });
-      }
-
-      // Case 2: Answer with comma (,)
-      if (text.includes(',')) {
-        let commaIdx = text.indexOf(',');
-        let before = text.substring(0, commaIdx);
-        let after = text.substring(commaIdx);
-        return `<span class="ans-maroon">${before}</span><span class="ans-green">${after}</span>`;
-      }
-
-      // Case 3: Simple Answer
-      return `<span class="ans-maroon">${text}</span>`;
+    // Check comma
+    if (text.includes(',')) {
+      let idx = text.indexOf(',');
+      let before = text.substring(0, idx);
+      let after = text.substring(idx);
+      return `<span class="ans-maroon">${before}</span><span class="ans-green">${after}</span>`;
     }
 
-    // Render Table Content
-    function renderCard() {
-      // 1. Title, Subtitle, Part
-      document.getElementById('outSubject').innerText = document.getElementById('inSubject').value.trim();
-      document.getElementById('outSubTopic').innerText = document.getElementById('inSubTopic').value.trim();
+    return `<span class="ans-maroon">${text}</span>`;
+  }
 
-      const partVal = document.getElementById('inPart').value.trim();
-      const partElem = document.getElementById('outPart');
-      if (partVal) {
-        partElem.innerText = partVal;
-        partElem.style.display = 'flex';
+  // Render 4:5 Card
+  function renderCard() {
+    const subject = document.getElementById('subjectCategory').value;
+    const subTopic = document.getElementById('inSubTopic').value.trim();
+    const part = document.getElementById('inPart').value.trim();
+
+    document.getElementById('outSubject').innerText = subject;
+    document.getElementById('outSubTopic').innerText = subTopic ? `( ${subTopic} )` : '';
+    
+    const partElem = document.getElementById('outPart');
+    if (part) {
+      partElem.innerText = part;
+      partElem.style.display = 'flex';
+    } else {
+      partElem.style.display = 'none';
+    }
+
+    const tbody = document.getElementById('qaBody');
+    tbody.innerHTML = '';
+
+    // Standardize to 15 questions
+    const displayList = parsedQAData.slice(0, 15);
+
+    displayList.forEach((item, index) => {
+      const tr = document.createElement('tr');
+
+      const tdQ = document.createElement('td');
+      tdQ.className = 'td-q';
+      tdQ.innerHTML = `<span class="q-num">${index + 1}.</span> ${formatQuestion(item.q, index)}`;
+
+      const tdA = document.createElement('td');
+      tdA.className = 'td-a';
+
+      // 15th (last) question answer is hidden for engagement
+      if (index === 14 || index === displayList.length - 1) {
+        tdA.innerHTML = `<div class="cta-comment">👉 उत्तर कमेंट में बताएं 💬</div>`;
       } else {
-        partElem.style.display = 'none';
+        tdA.innerHTML = formatAnswer(item.a);
       }
 
-      // 2. Q&A Lines
-      const rawText = document.getElementById('inQuestions').value.trim();
-      const lines = rawText.split('\n').filter(line => line.trim().length > 0);
-      const tbody = document.getElementById('qaBody');
-      tbody.innerHTML = '';
+      tr.appendChild(tdQ);
+      tr.appendChild(tdA);
+      tbody.appendChild(tr);
+    });
+  }
 
-      lines.forEach((line, index) => {
-        const parts = line.split('|');
-        const qText = parts[0] ? parts[0].trim() : '';
-        const aText = parts[1] ? parts[1].trim() : '';
+  // Generate Canvas Blob
+  function getCardCanvas() {
+    const card = document.getElementById('capture-card');
+    return html2canvas(card, {
+      scale: 2, // 2160 x 2700 HD Output
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    });
+  }
 
-        const tr = document.createElement('tr');
+  // Download HD Image
+  function downloadImage() {
+    const sub = document.getElementById('subjectCategory').value;
+    const part = document.getElementById('inPart').value.trim() || '1';
+    
+    getCardCanvas().then(canvas => {
+      const link = document.createElement('a');
+      link.download = `Exam_Prep_${sub}_${part}.png`;
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+      notify("📥 4:5 HD इमेज सफलतापूर्वक डाउनलोड हो गई!");
+    });
+  }
 
-        // Question TD
-        const tdQ = document.createElement('td');
-        tdQ.className = 'td-q';
-        tdQ.innerHTML = `<span class="q-num">${index + 1}.</span> ${formatQuestion(qText, index)}`;
+  // Direct Share to Facebook with Auto-Caption
+  async function shareToFacebook() {
+    const caption = document.getElementById('fbCaption').value;
+    
+    // Copy caption to clipboard first
+    try {
+      await navigator.clipboard.writeText(caption);
+    } catch (e) {
+      console.log("Clipboard write fallback");
+    }
 
-        // Answer TD
-        const tdA = document.createElement('td');
-        tdA.className = 'td-a';
+    const canvas = await getCardCanvas();
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], 'exam_prep_post.png', { type: 'image/png' });
 
-        // Check if this is the LAST QUESTION -> Hide answer & show Comment CTA
-        if (index === lines.length - 1) {
-          tdA.innerHTML = `<div class="cta-comment">👉 उत्तर कमेंट में बताएं 💬</div>`;
-        } else {
-          tdA.innerHTML = formatAnswer(aText);
+      // Web Share API support (Mobile / Compatible Browsers)
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: document.getElementById('outSubject').innerText,
+            text: caption
+          });
+          notify("🚀 फेसबुक शेयर डायलॉग सफलतापूर्वक खोला गया!");
+          return;
+        } catch (err) {
+          console.log("Share canceled or failed", err);
         }
+      }
 
-        tr.appendChild(tdQ);
-        tr.appendChild(tdA);
-        tbody.appendChild(tr);
-      });
+      // Desktop Fallback: Image auto-downloaded + Caption Copied + Opens FB
+      const link = document.createElement('a');
+      link.download = 'exam_prep_post.png';
+      link.href = URL.createObjectURL(blob);
+      link.click();
+
+      window.open('https://www.facebook.com/', '_blank');
+      notify("📋 कैप्शन कॉपी हो गया और इमेज डाउनलोड हो गई! फेसबुक पर पेस्ट करें।");
+    }, 'image/png');
+  }
+
+  // Local Storage Database Handling
+  function getDB() {
+    return JSON.parse(localStorage.getItem('exam_prep_db') || '[]');
+  }
+  function saveDB(db) {
+    localStorage.setItem('exam_prep_db', JSON.stringify(db));
+  }
+
+  function saveToDatabase() {
+    if (parsedQAData.length === 0) return;
+    const db = getDB();
+    const entry = {
+      id: Date.now(),
+      subject: document.getElementById('subjectCategory').value,
+      subTopic: document.getElementById('inSubTopic').value.trim(),
+      part: document.getElementById('inPart').value.trim(),
+      caption: document.getElementById('fbCaption').value,
+      smartRaw: document.getElementById('smartInput').value,
+      questions: parsedQAData,
+      date: new Date().toLocaleDateString('hi-IN')
+    };
+
+    db.unshift(entry);
+    saveDB(db);
+    renderLibrary();
+    notify("💾 पोस्ट सफलतापूर्वक Auto-Save हो गई!");
+  }
+
+  function renderLibrary() {
+    const db = getDB();
+    const container = document.getElementById('savedListContainer');
+    container.innerHTML = '';
+
+    const filtered = db.filter(item => item.subject === currentSubjectFilter);
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="padding: 10px; color: #64748b;">इस विषय में अभी कोई सहेजी गई पोस्ट नहीं है।</div>`;
+      return;
     }
 
-    // Download HD Image function
-    function downloadImage() {
-      const card = document.getElementById('capture-card');
-      const partName = document.getElementById('inPart').value.trim() || 'Post';
+    filtered.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'saved-item';
+      div.innerHTML = `
+        <div class="saved-item-title">${item.subject} - ${item.subTopic} (${item.part}) <span style="font-size:12px; color:#64748b;">[${item.date}]</span></div>
+        <div class="saved-item-actions">
+          <button class="btn-xs btn-primary" onclick="loadItem(${item.id})">Load</button>
+          <button class="btn-xs btn-danger" onclick="deleteItem(${item.id})">Delete</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
 
-      html2canvas(card, {
-        scale: 2, // 2x gives ultra-sharp 2160x2700 HD resolution
-        useCORS: true,
-        backgroundColor: '#ffffff',
-        logging: false
-      }).then(canvas => {
-        const link = document.createElement('a');
-        link.download = `Exam_Preparation_${partName.replace(/\s+/g, '_')}.png`;
-        link.href = canvas.toDataURL('image/png', 1.0);
-        link.click();
-      });
+  function filterBySubject(subj, btn) {
+    currentSubjectFilter = subj;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLibrary();
+  }
+
+  function loadItem(id) {
+    const db = getDB();
+    const item = db.find(x => x.id === id);
+    if (!item) return;
+
+    document.getElementById('smartInput').value = item.smartRaw || '';
+    document.getElementById('subjectCategory').value = item.subject;
+    document.getElementById('inSubTopic').value = item.subTopic;
+    document.getElementById('inPart').value = item.part;
+    document.getElementById('fbCaption').value = item.caption;
+    parsedQAData = item.questions;
+
+    renderCard();
+    notify(`📖 Loaded: ${item.subject} - ${item.part}`);
+  }
+
+  function deleteItem(id) {
+    let db = getDB();
+    db = db.filter(x => x.id !== id);
+    saveDB(db);
+    renderLibrary();
+  }
+
+  // Subject-wise PDF Export using jsPDF
+  function downloadSubjectPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const db = getDB().filter(x => x.subject === currentSubjectFilter);
+
+    if (db.length === 0) {
+      alert(`विषय "${currentSubjectFilter}" में कोई प्रश्न सेव नहीं हैं!`);
+      return;
     }
 
-    // Initialize on page load
-    window.onload = renderCard;
-  </script>
+    doc.setFontSize(18);
+    doc.text(`Exam Preparation - ${currentSubjectFilter}`, 14, 20);
+    doc.setFontSize(11);
+    doc.text(`All Questions & Answer Keys`, 14, 28);
+    doc.line(14, 32, 196, 32);
+
+    let yPos = 40;
+
+    db.forEach((set, setIdx) => {
+      if (yPos > 260) { doc.addPage(); yPos = 20; }
+      doc.setFontSize(13);
+      doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
+      yPos += 8;
+
+      set.questions.forEach((qa, idx) => {
+        if (yPos > 275) { doc.addPage(); yPos = 20; }
+        doc.setFontSize(10);
+        doc.text(`Q${idx + 1}: ${qa.q}`, 16, yPos);
+        yPos += 5;
+        doc.text(`Ans: ${qa.a}`, 16, yPos);
+        yPos += 7;
+      });
+      yPos += 6;
+    });
+
+    doc.save(`Exam_Preparation_${currentSubjectFilter}.pdf`);
+    notify("📄 विषय-वार PDF सफलतापूर्वक डाउनलोड हो गया!");
+  }
+
+  // Backup & Import JSON
+  function exportJSON() {
+    const db = getDB();
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    a.download = `Exam_Prep_Backup_${Date.now()}.json`;
+    a.click();
+  }
+
+  function importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (Array.isArray(imported)) {
+          saveDB(imported);
+          renderLibrary();
+          notify("📥 JSON बैकअप डेटा सफलतापूर्वक लोड हो गया!");
+        }
+      } catch (err) {
+        alert("अमान्य JSON फाइल!");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function notify(msg) {
+    const n = document.getElementById('notification');
+    n.innerText = msg;
+    n.style.display = 'block';
+    setTimeout(() => { n.style.display = 'none'; }, 3500);
+  }
+
+  // Initial Load
+  window.onload = () => {
+    parseSmartInput();
+    renderLibrary();
+  };
+</script>
 </body>
 </html>
