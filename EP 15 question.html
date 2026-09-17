@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exam Preparation - Studio Pro</title>
   
-  <!-- Premium Hindi & English Fonts -->
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;600;700&family=Mukta:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;600;700;800&family=Mukta:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap" rel="stylesheet">
   
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -114,7 +114,7 @@
       border-color: var(--border-focus);
     }
 
-    /* Font Customization Panel */
+    /* Typography Controls */
     .typo-panel {
       background: #0b1222;
       border: 1px solid var(--border-color);
@@ -410,17 +410,19 @@
       border-bottom: 2px solid #86efac;
       height: 40px;
     }
-    thead th.th-q {
-      color: #dc2626;
-      text-align: left;
-      width: 58%;
+    
+    /* 1/3 Answer Ratio: 68% Question, 32% Answer */
+    thead th.th-q, tbody td.td-q {
+      width: 68% !important;
       border-right: 2px solid #86efac;
-    }
-    thead th.th-a {
-      color: #15803d;
       text-align: left;
-      width: 42%;
     }
+    thead th.th-a, tbody td.td-a {
+      width: 32% !important;
+      text-align: left;
+    }
+    thead th.th-q { color: #dc2626; }
+    thead th.th-a { color: #15803d; }
 
     tbody tr {
       border-bottom: 1.5px solid #bbf7d0;
@@ -434,9 +436,10 @@
       padding: 2px 10px;
       line-height: 1.25;
       vertical-align: middle;
+      overflow: hidden;
+      word-break: break-word;
     }
     .td-q {
-      border-right: 2px solid #86efac;
       color: #0f172a;
       font-size: 21px;
       font-weight: 800;
@@ -446,7 +449,7 @@
       font-weight: 900;
       margin-right: 5px;
       display: inline-block;
-      min-width: 28px;
+      min-width: 30px;
     }
 
     .word-red { color: #dc2626; font-weight: 900; }
@@ -461,14 +464,15 @@
     .cta-comment {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       background: #fef2f2;
       color: #dc2626;
       border: 2px dashed #dc2626;
-      padding: 4px 12px;
+      padding: 4px 8px;
       border-radius: 8px;
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
+      white-space: nowrap;
     }
 
     .footer-wrap {
@@ -582,38 +586,38 @@
   <div class="dark-card">
     <div class="card-title">📝 Raw Text (Smart Paste Box):</div>
     
-    <!-- oninput ensures picture updates immediately upon manual paste! -->
-    <textarea id="smartInput" oninput="parseSmartInput()" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 1
-1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
-उत्तर: 1921 में, दयाराम साहनी द्वारा
-2. मोहनजोदड़ो की खोज 1922 में किसने की थी?
-उत्तर: राखालदास बनर्जी
-3. सिंधु घाटी सभ्यता का प्रमुख बंदरगाह (गोदीवाड़ा) कौन सा था?
-उत्तर: लोथल (गुजरात)
-4. 'विशाल स्नानागार' (Great Bath) के साक्ष्य किस सैंधव स्थल से मिले हैं?
-उत्तर: मोहनजोदड़ो
-5. सिंधु सभ्यता की लिपि किस प्रकार की थी जिसे अब तक पढ़ा नहीं जा सका?
-उत्तर: भावचित्रात्मक (Boustrophedon)
-6. प्रसिद्ध कांस्य नर्तकी की मूर्ति किस स्थान से प्राप्त हुई थी?
-उत्तर: मोहनजोदड़ो
-7. जुते हुए खेत और सात अग्निकुंडों के साक्ष्य कहाँ मिले हैं?
-उत्तर: कालीबंगा (राजस्थान)
-8. सिंधु घाटी सभ्यता मुख्य रूप से किस युग की सभ्यता मानी जाती है?
-उत्तर: कांस्य युग (Bronze Age)
-9. सिंधु सभ्यता का सबसे पूर्वी स्थल आलमगीरपुर किस नदी के तट पर स्थित है?
-उत्तर: हिंडन नदी (मेरठ, उत्तर प्रदेश)
-10. हड़प्पा स्थल किस नदी के बाएं तट पर स्थित है?
-उत्तर: रावी नदी
-11. सिंधी भाषा में 'मोहनजोदड़ो' का शाब्दिक अर्थ क्या होता है?
-उत्तर: मृतकों का टीला
-12. जल प्रबंधन की उत्कृष्ट प्रणाली और त्रि-स्तरीय नगर योजना कहाँ मिली है?
-उत्तर: धोलावीरा (गुजरात)
-13. वर्तमान भारत में स्थित सिंधु सभ्यता का सबसे बड़ा स्थल कौन सा है?
-उत्तर: राखीगढ़ी (हरियाणा)
-14. सिंधु घाटी सभ्यता के निवासी किस धातु के उपयोग से पूरी तरह अनभिज्ञ थे?
-उत्तर: लोहा
-15. स्वतंत्रता प्राप्ति के बाद भारत में हड़प्पा संस्कृति के सर्वाधिक स्थल किस राज्य में खोजे गए?
+    <!-- Auto-updates on paste/type/change -->
+    <textarea id="smartInput" oninput="parseSmartInput()" onpaste="setTimeout(parseSmartInput, 100)" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 2
+16. मनके बनाने के कारखाने के साक्ष्य किन दो प्रमुख सैंधव स्थलों से मिले हैं?
+उत्तर: चन्हूदड़ो और लोथल
+17. सिंधु सभ्यता की मुहरों पर सबसे अधिक किस काल्पनिक पशु का अंकन मिलता है?
+उत्तर: एकश्रृंगी पशु (Unicorn)
+18. हड़प्पा लिपि के बड़े आकार के 10 चिह्नों वाला एक शिलालेख कहाँ से मिला है?
+उत्तर: धोलावीरा
+19. स्वतंत्रता प्राप्ति के बाद भारत में हड़प्पा संस्कृति के सर्वाधिक स्थल किस राज्य में खोजे गए?
 उत्तर: गुजरात
+20. सिंधु सभ्यता के किस स्थल से एक उन्नत जल प्रबंधन प्रणाली के साक्ष्य मिले हैं?
+उत्तर: धोलावीरा (गुजरात)
+21. चावल की खेती के प्राचीनतम साक्ष्य किस सैंधव स्थल से प्राप्त हुए हैं?
+उत्तर: लोथल और रंगपुर
+22. सैंधव सभ्यता की ईंटों का निश्चित अनुपात क्या था?
+उत्तर: 4:2:1
+23. सिंधु सभ्यता का एकमात्र ऐसा स्थल जहाँ कोई दुर्ग (किला) नहीं मिला?
+उत्तर: चन्हूदड़ो
+24. किस स्थल से 'अग्निकुंड' और 'हवन कुंड' के स्पष्ट साक्ष्य मिले हैं?
+उत्तर: लोथल एवं कालीबंगा
+25. हड़प्पा कालीन मोहरें मुख्य रूप से किस पदार्थ से बनाई जाती थीं?
+उत्तर: सेलखड़ी (Steatite)
+26. सिंधु घाटी सभ्यता के लोग किस वृक्ष की प्रमुखता से पूजा करते थे?
+उत्तर: पीपल का वृक्ष
+27. सैंधव सभ्यता में मापक तौल की इकाई किस अनुपात में थी?
+उत्तर: 16 के गुणक में
+28. सिंधु सभ्यता का सबसे उत्तरी स्थल 'मांडा' किस नदी पर स्थित है?
+उत्तर: चिनाब नदी (जम्मू)
+29. किस पशु के अवशेष सिंधु घाटी सभ्यता में अब तक प्राप्त नहीं हुए हैं?
+उत्तर: शेर (Lion)
+30. सिंधु सभ्यता का पतन मुख्य रूप से किस कारण माना जाता है?
+उत्तर: बाढ़ एवं जलवायु परिवर्तन
 प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
 #HistoryGK</textarea>
 
@@ -634,8 +638,8 @@
           <div class="typo-label">Question Boldness:</div>
           <select id="selQWeight" onchange="applyTypography()">
             <option value="700">Semi Bold (700)</option>
-            <option value="800" selected>Extra Bold (800)</option>
-            <option value="900">Ultra Bold (900)</option>
+            <option value="800">Extra Bold (800)</option>
+            <option value="900" selected>Ultra Bold (900)</option>
             <option value="600">Normal (600)</option>
           </select>
         </div>
@@ -692,7 +696,7 @@
             <div class="title-pill">
               <div class="title-main" id="outSubject">इतिहास</div>
               <div class="title-sub" id="outSubTopic">( प्राचीन भारत )</div>
-              <div class="title-part" id="outPart">भाग 1</div>
+              <div class="title-part" id="outPart">भाग 2</div>
             </div>
           </div>
 
@@ -752,7 +756,7 @@
 
 <script>
   let parsedQAData = [];
-  let currentMeta = { subject: 'इतिहास', subTopic: 'प्राचीन भारत', part: 'भाग 1', caption: '' };
+  let currentMeta = { subject: 'इतिहास', subTopic: 'प्राचीन भारत', part: 'भाग 2', caption: '' };
   let currentSubjectFilter = 'इतिहास';
 
   const hindiQuestionWords = new Set([
@@ -761,7 +765,7 @@
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
-  // Real 1-Click Clipboard Paste
+  // Robust 1-Click Clipboard Paste & Execution
   async function pasteFromClipboardAndRun() {
     try {
       if (navigator.clipboard && navigator.clipboard.readText) {
@@ -774,14 +778,13 @@
         }
       }
     } catch (err) {
-      console.warn("Clipboard access denied or unsupported", err);
+      console.warn("Clipboard access denied or restricted on browser", err);
     }
-    // Fallback: parse whatever is currently inside textarea
     parseSmartInput();
     notify("⚡ प्रश्न लोड हो गए!");
   }
 
-  // Typography & Font Adjustment Live
+  // Live Typography Adjustment
   function applyTypography() {
     const selectedFont = document.getElementById('selFontFamily').value;
     const qWeight = document.getElementById('selQWeight').value;
@@ -810,74 +813,94 @@
     });
   }
 
-  // ULTRA ROBUST PARSER (Guarantees no questions are missed)
+  // SUPER BULLETPROOF PARSER: Guaranteed to extract all Q&A pairs
   function parseSmartInput() {
-    const raw = document.getElementById('smartInput').value.trim();
-    if (!raw) return;
+    const raw = document.getElementById('smartInput').value;
+    if (!raw || !raw.trim()) return;
 
-    const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
     parsedQAData = [];
     let captionLines = [];
     let currentQ = null;
     let headerParsed = false;
 
     for (let i = 0; i < lines.length; i++) {
-      let line = lines[i];
+      const line = lines[i];
 
-      // 1. Detect Header line if present
-      if (!headerParsed && parsedQAData.length === 0 && !currentQ && (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)[\.\)\:\-\s]/)))) {
-        headerParsed = true;
-        let clean = line.replace(/^[🎯📌🔥✨\s]+/, '').trim();
-        let parts = clean.split(',').map(s => s.trim());
-        
-        if (parts[0]) {
-          if (parts[0].includes('इतिहास')) currentMeta.subject = 'इतिहास';
-          else if (parts[0].includes('भूगोल')) currentMeta.subject = 'भूगोल';
-          else if (parts[0].includes('राज')) currentMeta.subject = 'राजव्यवस्था';
-          else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) currentMeta.subject = 'करेंट अफेयर्स';
-          else currentMeta.subject = parts[0];
+      // 1. Header parsing (Only if near the start and not a question)
+      if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
+        if (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)[\.\)\:\-\s]/))) {
+          headerParsed = true;
+          const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
+          const parts = clean.split(',').map(s => s.trim());
+          
+          if (parts[0]) {
+            if (parts[0].includes('इतिहास')) currentMeta.subject = 'इतिहास';
+            else if (parts[0].includes('भूगोल')) currentMeta.subject = 'भूगोल';
+            else if (parts[0].includes('राज')) currentMeta.subject = 'राजव्यवस्था';
+            else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) currentMeta.subject = 'करेंट अफेयर्स';
+            else currentMeta.subject = parts[0];
+          }
+          if (parts[1]) currentMeta.subTopic = parts[1];
+          if (parts[2]) currentMeta.part = parts[2];
+          continue;
         }
-        if (parts[1]) currentMeta.subTopic = parts[1];
-        if (parts[2]) currentMeta.part = parts[2];
-        continue;
       }
 
       // 2. Single-line Q | A format
       if (line.includes('|')) {
         if (currentQ) { parsedQAData.push(currentQ); currentQ = null; }
-        let parts = line.split('|');
-        let qText = parts[0].replace(/^(\d+|[०-९]+)[\.\)\:\-\s]+/, '').trim();
-        let aText = parts[1].trim();
-        parsedQAData.push({ q: qText, a: aText });
+        const parts = line.split('|');
+        const numMatch = parts[0].match(/^(\d+|[०-९]+)[\.\)\:\-\s]*(.*)/);
+        const num = numMatch ? numMatch[1] : (parsedQAData.length + 1);
+        const qText = numMatch ? numMatch[2].trim() : parts[0].trim();
+        parsedQAData.push({ num: num, q: qText, a: parts[1].trim() });
         continue;
       }
 
-      // 3. Question line start (1., 1), Q.1, प्र. 1, १.)
+      // 3. Question line start (e.g. 16., 1., Q1., 1), etc.)
       const qMatch = line.match(/^(?:Q\.?|प्र\.?|प्रश्न)?\s*(\d+|[०-९]+)[\.\)\:\-\s]+(.*)/i);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
-        currentQ = { q: qMatch[2].trim(), a: '' };
-        continue;
-      }
+        const num = qMatch[1];
+        let qText = qMatch[2].trim();
 
-      // 4. Answer line start (उत्तर:, Ans:, Answer:, उ-)
-      const aMatch = line.match(/^(?:उत्तर|Ans|Answer|उ)[\:\-\s]*(.*)/i);
-      if (aMatch) {
-        if (currentQ) {
-          currentQ.a = aMatch[1].trim();
-          parsedQAData.push(currentQ);
+        // Check if answer is written on the same line
+        const inlineAnsMatch = qText.match(/(?:उत्तर|Ans|Answer)[\:\-\s]*(.*)/i);
+        if (inlineAnsMatch) {
+          const actualQ = qText.substring(0, inlineAnsMatch.index).trim();
+          parsedQAData.push({ num: num, q: actualQ, a: inlineAnsMatch[1].trim() });
           currentQ = null;
-        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
-          parsedQAData[parsedQAData.length - 1].a = aMatch[1].trim();
+        } else {
+          currentQ = { num: num, q: qText, a: '' };
         }
         continue;
       }
 
-      // 5. If question was waiting for answer line
+      // 4. Answer line start (e.g. उत्तर:, Ans:, Answer:)
+      const aMatch = line.match(/^(?:उत्तर|Ans|Answer|उ\.?|उत्तर\s*-)[\:\-\s]*(.*)/i);
+      if (aMatch) {
+        const aText = aMatch[1].trim();
+        if (currentQ) {
+          currentQ.a = aText;
+          parsedQAData.push(currentQ);
+          currentQ = null;
+        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
+          parsedQAData[parsedQAData.length - 1].a = aText;
+        }
+        continue;
+      }
+
+      // 5. If question was waiting for answer
       if (currentQ && !currentQ.a) {
-        currentQ.a = line;
-        parsedQAData.push(currentQ);
-        currentQ = null;
+        // If question doesn't end with ? and current line is continuation of question
+        if (!currentQ.q.includes('?') && (line.includes('?') || line.length < 25)) {
+          currentQ.q += ' ' + line;
+        } else {
+          currentQ.a = line;
+          parsedQAData.push(currentQ);
+          currentQ = null;
+        }
         continue;
       }
 
@@ -887,10 +910,14 @@
       }
     }
 
-    if (currentQ) parsedQAData.push(currentQ);
+    if (currentQ) {
+      parsedQAData.push(currentQ);
+    }
 
-    currentMeta.caption = captionLines.join(' ') || "प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण प्रश्न। 📚✨";
-    document.getElementById('fbCaption').value = currentMeta.caption;
+    if (captionLines.length > 0) {
+      currentMeta.caption = captionLines.join(' ');
+      document.getElementById('fbCaption').value = currentMeta.caption;
+    }
 
     renderCard();
   }
@@ -904,7 +931,7 @@
 
     return words.map((w, wIdx) => {
       let hasQMark = w.includes('?');
-      let clean = w.replace(/[?,।]/g, '');
+      let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
       let punctuation = w.slice(clean.length);
 
       let isQWord = hindiQuestionWords.has(clean);
@@ -968,13 +995,15 @@
 
       const tdQ = document.createElement('td');
       tdQ.className = 'td-q';
-      tdQ.innerHTML = `<span class="q-num">${index + 1}.</span> ${formatQuestion(item.q, index)}`;
+      const qNumToDisplay = item.num ? item.num : (index + 1);
+      tdQ.innerHTML = `<span class="q-num">${qNumToDisplay}.</span> ${formatQuestion(item.q, index)}`;
 
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
 
+      // 15th Question answer hidden with comment CTA
       if (index === 14 || index === displayList.length - 1) {
-        tdA.innerHTML = `<div class="cta-comment">👉 उत्तर कमेंट में बताएं 💬</div>`;
+        tdA.innerHTML = `<div class="cta-comment">👉 उत्तर कमेंट करें 💬</div>`;
       } else {
         tdA.innerHTML = formatAnswer(item.a);
       }
@@ -1010,7 +1039,7 @@
     const canvas = await html2canvas(card, {
       width: 1080,
       height: 1350,
-      scale: 2, // Ultra HD 2160x2700
+      scale: 2, // 2160x2700 ultra HD
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false
@@ -1066,10 +1095,10 @@
   }
 
   function getDB() {
-    return JSON.parse(localStorage.getItem('exam_prep_db_v4') || '[]');
+    return JSON.parse(localStorage.getItem('exam_prep_db_v5') || '[]');
   }
   function saveDB(db) {
-    localStorage.setItem('exam_prep_db_v4', JSON.stringify(db));
+    localStorage.setItem('exam_prep_db_v5', JSON.stringify(db));
   }
 
   function saveToDatabase() {
@@ -1174,10 +1203,10 @@
       doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
       yPos += 8;
 
-      set.questions.forEach((qa, idx) => {
+      set.questions.forEach((qa) => {
         if (yPos > 275) { doc.addPage(); yPos = 20; }
         doc.setFontSize(10);
-        doc.text(`Q${idx + 1}: ${qa.q}`, 16, yPos);
+        doc.text(`Q${qa.num || ''}: ${qa.q}`, 16, yPos);
         yPos += 5;
         doc.text(`Ans: ${qa.a}`, 16, yPos);
         yPos += 7;
