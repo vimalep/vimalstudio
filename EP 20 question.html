@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Preparation - Studio Pro (4:5 FB Post)</title>
+  <title>Exam Preparation - Clean Studio Pro</title>
   
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -23,9 +21,6 @@
       --border-focus: #3b82f6;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --accent-blue: #2563eb;
-      --accent-red: #dc2626;
-      --accent-green: #15803d;
     }
 
     * {
@@ -39,7 +34,7 @@
       font-family: 'Mukta', sans-serif;
       background-color: var(--bg-main);
       color: var(--text-main);
-      padding: 14px 10px 60px 10px;
+      padding: 12px 10px 50px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -47,27 +42,26 @@
 
     .app-shell {
       width: 100%;
-      max-width: 600px; /* Perfect sleek mobile app width */
+      max-width: 550px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
-    /* Top App Bar */
     .app-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 4px 6px;
+      padding: 2px 4px;
     }
     .app-header h1 {
-      font-size: 19px;
+      font-size: 18px;
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
       color: #38bdf8;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .app-badge {
       background: rgba(56, 189, 248, 0.12);
@@ -80,20 +74,19 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* Dark Panel */
     .dark-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 14px;
-      padding: 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
 
     .card-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--text-muted);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -101,59 +94,81 @@
       letter-spacing: 0.5px;
     }
 
-    /* Input Controls */
-    .form-group {
-      margin-bottom: 12px;
-    }
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 5px;
-    }
-    textarea, input[type="text"], select {
+    textarea, input[type="text"] {
       width: 100%;
       background: var(--bg-input);
       border: 1.5px solid var(--border-color);
       border-radius: 10px;
       color: var(--text-main);
       padding: 10px 12px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s;
     }
-    textarea:focus, input[type="text"]:focus, select:focus {
+    textarea:focus, input[type="text"]:focus {
       border-color: var(--border-focus);
     }
     .paste-area {
-      height: 140px;
-      font-size: 13px;
+      height: 130px;
       line-height: 1.45;
       resize: vertical;
     }
 
-    /* Input Grid */
-    .grid-3 {
+    /* Font Size Sliders Grid */
+    .sliders-grid {
       display: grid;
-      grid-template-columns: 1.3fr 1.3fr 1fr;
-      gap: 10px;
-      margin-bottom: 12px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      background: #0b1120;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      margin: 10px 0;
+    }
+    .slider-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .slider-box label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+    }
+    .slider-box label span {
+      color: #38bdf8;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 5px;
+      background: #1f293d;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
     }
 
     /* Buttons */
     .btn-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 8px;
       margin-top: 6px;
     }
     button {
-      padding: 12px;
+      padding: 11px;
       border: none;
       border-radius: 10px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
       font-family: 'Poppins', 'Mukta', sans-serif;
@@ -161,23 +176,10 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.2s ease;
     }
-    button:active {
-      transform: scale(0.97);
-    }
-    .btn-cyan {
-      background: linear-gradient(135deg, #06b6d4, #2563eb);
-      color: #fff;
-    }
-    .btn-purple {
-      background: linear-gradient(135deg, #8b5cf6, #6366f1);
-      color: #fff;
-    }
-    .btn-emerald {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #fff;
-    }
+    button:active { transform: scale(0.97); }
+    .btn-cyan { background: linear-gradient(135deg, #06b6d4, #2563eb); color: #fff; }
+    .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-fb {
       background: linear-gradient(135deg, #1877f2, #0d5bbd);
       color: #fff;
@@ -187,54 +189,42 @@
       background: #1e293b;
       border: 1px solid #334155;
       color: #cbd5e1;
-      font-size: 13px;
-      padding: 9px 12px;
+      font-size: 12px;
+      padding: 8px 10px;
     }
 
-    /* Notification */
     #toastMsg {
       display: none;
       position: fixed;
-      top: 15px;
+      top: 14px;
       left: 50%;
       transform: translateX(-50%);
       background: #10b981;
       color: #fff;
-      padding: 9px 20px;
+      padding: 8px 18px;
       border-radius: 30px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
       z-index: 99999;
-      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* ============================================================
-       RESPONSIVE PREVIEW VIEWPORT (Solves Mobile Cut-off completely!)
-       ============================================================ */
-    .preview-header-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
+    /* Responsive Viewport Preview */
     .preview-viewport-wrapper {
       width: 100%;
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
       background: #000;
       display: flex;
       justify-content: center;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
       border: 1px solid #1f293d;
     }
     #previewViewport {
       width: 100%;
       position: relative;
-      /* height will be automatically calculated by JS based on scale */
     }
 
-    /* 4:5 Native Canvas Element (1080px x 1350px) */
+    /* 4:5 Full HD Canvas (1080px x 1350px) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -254,7 +244,6 @@
       box-sizing: border-box;
     }
 
-    /* Card Top Header (Single Line) */
     .top-header-wrap {
       position: relative;
       display: flex;
@@ -282,7 +271,6 @@
       border-radius: 40px;
       display: inline-flex;
       align-items: center;
-      white-space: nowrap;
     }
     .top-logo .logo-red {
       color: #dc2626;
@@ -305,7 +293,6 @@
       font-size: 21px;
       font-weight: 800;
       color: #0f172a;
-      white-space: nowrap;
     }
     .top-follow-pill {
       position: relative;
@@ -316,12 +303,9 @@
       font-weight: 800;
       padding: 6px 22px;
       border-radius: 40px;
-      white-space: nowrap;
-      font-family: 'Poppins', 'Mukta', sans-serif;
-      box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+      font-family: 'Poppins', sans-serif;
     }
 
-    /* Title & Part Banner */
     .title-banner {
       display: flex;
       justify-content: center;
@@ -364,7 +348,6 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* 15 Rows Table */
     .table-container {
       flex: 1;
       position: relative;
@@ -427,7 +410,7 @@
     }
 
     td {
-      padding: 3px 12px;
+      padding: 2px 12px;
       font-size: 18.5px;
       line-height: 1.25;
       vertical-align: middle;
@@ -445,13 +428,11 @@
       min-width: 28px;
     }
 
-    /* Auto Color Rules */
     .word-red { color: #dc2626; font-weight: 800; }
-    .q-mark { color: #dc2626; font-weight: 900; font-size: 21px; }
+    .q-mark { color: #dc2626; font-weight: 900; }
     .ans-maroon { color: #800000; font-weight: 800; }
     .ans-green { color: #15803d; font-weight: 700; }
 
-    /* Comment Call-to-action */
     .cta-comment {
       display: inline-flex;
       align-items: center;
@@ -459,13 +440,12 @@
       background: #fef2f2;
       color: #dc2626;
       border: 2px dashed #dc2626;
-      padding: 5px 14px;
+      padding: 4px 12px;
       border-radius: 8px;
       font-weight: 800;
-      font-size: 17.5px;
+      font-size: 17px;
     }
 
-    /* Footer Single-Line Bar */
     .footer-wrap {
       position: relative;
       display: flex;
@@ -511,20 +491,18 @@
       font-weight: 800;
       padding: 6px 20px;
       border-radius: 40px;
-      white-space: nowrap;
-      font-family: 'Poppins', 'Mukta', sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
 
-    /* Library Accordion / Collapsible */
     .subject-pill-row {
       display: flex;
       gap: 6px;
       overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
     }
     .subj-pill {
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 700;
@@ -540,7 +518,7 @@
       border-color: #dc2626;
     }
     .library-list {
-      max-height: 160px;
+      max-height: 140px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -549,17 +527,17 @@
     .saved-row {
       background: #0f172a;
       border: 1px solid #1e293b;
-      padding: 8px 12px;
+      padding: 7px 10px;
       border-radius: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 13px;
+      font-size: 12.5px;
     }
     .btn-xs {
-      padding: 4px 8px;
+      padding: 3px 7px;
       font-size: 11px;
-      border-radius: 6px;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -569,22 +547,16 @@
 
 <div class="app-shell">
 
-  <!-- Header -->
   <div class="app-header">
-    <h1>⚡ Exam Preparation Pro</h1>
-    <span class="app-badge">FB 4:5 STUDIO</span>
+    <h1>⚡ Exam Preparation Studio</h1>
+    <span class="app-badge">FB 4:5 PRO</span>
   </div>
 
-  <!-- Main Dark Studio Box -->
+  <!-- Main Card -->
   <div class="dark-card">
-    <div class="card-title">📝 यहाँ अपना पूरा पोस्ट टेक्स्ट पेस्ट करें (Smart Paste):</div>
+    <div class="card-title">📝 Raw Text (Smart Paste):</div>
     
-    <div class="form-group">
-      <textarea id="smartInput" class="paste-area" placeholder="🎯 इतिहास, प्राचीन भारत, भाग 1
-1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
-उत्तर: 1921 में, दयाराम साहनी द्वारा
-... (15 प्रश्न)
-प्रतियोगी परीक्षाओं की तैयारी... #HistoryGK">🎯 इतिहास, प्राचीन भारत, भाग 1
+    <textarea id="smartInput" class="paste-area">🎯 इतिहास, प्राचीन भारत, भाग 1
 1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
 उत्तर: 1921 में, दयाराम साहनी द्वारा
 2. मोहनजोदड़ो की खोज 1922 में किसने की थी?
@@ -617,33 +589,25 @@
 उत्तर: गुजरात
 प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
 #HistoryGK</textarea>
-    </div>
 
-    <!-- 3-Column Input Parameters -->
-    <div class="grid-3">
-      <div>
-        <label>विषय (Subject):</label>
-        <select id="subjectCategory">
-          <option value="इतिहास">इतिहास (History)</option>
-          <option value="भूगोल">भूगोल (Geography)</option>
-          <option value="राजव्यवस्था">राजव्यवस्था (Polity)</option>
-          <option value="करेंट अफेयर्स">करेंट अफेयर्स (Current)</option>
-        </select>
+    <!-- Font Size Controls (Sliders) -->
+    <div class="sliders-grid">
+      <div class="slider-box">
+        <label>Title Size: <span id="lblTitleSize">30px</span></label>
+        <input type="range" id="rngTitleSize" min="20" max="40" value="30" oninput="applyFontSizes()">
       </div>
-      <div>
-        <label>उप-विषय (Sub-Topic):</label>
-        <input type="text" id="inSubTopic" value="प्राचीन भारत">
+      <div class="slider-box">
+        <label>Ques Size: <span id="lblQSize">18px</span></label>
+        <input type="range" id="rngQSize" min="14" max="26" value="18" oninput="applyFontSizes()">
       </div>
-      <div>
-        <label>भाग (Part No.):</label>
-        <input type="text" id="inPart" value="भाग 1">
+      <div class="slider-box">
+        <label>Ans Size: <span id="lblASize">18px</span></label>
+        <input type="range" id="rngASize" min="14" max="26" value="18" oninput="applyFontSizes()">
       </div>
     </div>
 
-    <div class="form-group">
-      <label>फेसबुक कैप्शन (ऑटो-कॉपी होगा):</label>
-      <input type="text" id="fbCaption" value="प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨ #HistoryGK">
-    </div>
+    <!-- Hidden FB caption field (handled completely automatically) -->
+    <input type="hidden" id="fbCaption" value="">
 
     <!-- Action Buttons -->
     <div class="btn-grid">
@@ -653,33 +617,26 @@
     </div>
   </div>
 
-  <!-- Live Scaled Preview Section -->
-  <div class="dark-card" style="padding: 12px;">
-    <div class="preview-header-bar">
-      <div class="card-title" style="margin: 0;">📱 लाइव मोबाइल प्रीव्यू (Live 4:5 Post)</div>
-      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● Auto-Fitted 1080×1350</span>
+  <!-- Live Scaled Preview -->
+  <div class="dark-card" style="padding: 10px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+      <div class="card-title" style="margin:0;">📱 लाइव मोबाइल प्रीव्यू</div>
+      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Aspect Ratio</span>
     </div>
 
     <div class="preview-viewport-wrapper">
       <div id="previewViewport">
-        
-        <!-- The actual 1080x1350 card -->
         <div id="capture-card">
           
-          <!-- Top Single-Line Header -->
           <div class="top-header-wrap">
             <div class="top-line-behind"></div>
-            
             <div class="top-logo">
               <span class="logo-red">Exam</span><span class="logo-black">Preparation</span>
             </div>
-
             <div class="top-tagline">Study Hard &nbsp;|&nbsp; Achieve More</div>
-
             <div class="top-follow-pill">Exam Preparation : Follow</div>
           </div>
 
-          <!-- Title Banner -->
           <div class="title-banner">
             <div class="title-pill">
               <div class="title-main" id="outSubject">इतिहास</div>
@@ -688,7 +645,6 @@
             </div>
           </div>
 
-          <!-- 15 Rows Table -->
           <div class="table-container">
             <div class="watermark">Exam Preparation</div>
             <table>
@@ -698,35 +654,29 @@
                   <th class="th-a">उत्तर</th>
                 </tr>
               </thead>
-              <tbody id="qaBody">
-                <!-- 15 Rows populated by JS -->
-              </tbody>
+              <tbody id="qaBody"></tbody>
             </table>
           </div>
 
-          <!-- Footer -->
           <div class="footer-wrap">
             <div class="footer-line-behind"></div>
-
             <div class="footer-brand">
               <span class="footer-book-icon">📖</span>
               <div class="footer-title">
                 <span class="f-red">Exam</span><span class="f-black">Preparation</span>
               </div>
             </div>
-
             <div class="footer-follow-btn">Exam Preparation : Follow</div>
           </div>
 
-        </div> <!-- /#capture-card -->
-
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Subject Bank & Storage -->
+  <!-- Library -->
   <div class="dark-card">
-    <div class="card-title">📚 प्रश्न बैंक प्रबंधन (Subject Library & Backup)</div>
+    <div class="card-title">📚 प्रश्न बैंक (Subject Archive)</div>
 
     <div class="subject-pill-row">
       <button class="subj-pill active" onclick="filterBySubject('इतिहास', this)">इतिहास</button>
@@ -737,9 +687,9 @@
 
     <div class="library-list" id="savedListContainer"></div>
 
-    <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
-      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase()">💾 Save Current</button>
-      <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 Subject PDF</button>
+    <div style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
+      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase()">💾 Save</button>
+      <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 PDF</button>
       <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
       <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; margin: 0;">
         📥 Import <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
@@ -751,6 +701,7 @@
 
 <script>
   let parsedQAData = [];
+  let currentMeta = { subject: 'इतिहास', subTopic: 'प्राचीन भारत', part: 'भाग 1', caption: '' };
   let currentSubjectFilter = 'इतिहास';
 
   const hindiQuestionWords = new Set([
@@ -759,7 +710,25 @@
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
-  // SMART PARSER (Bug-Free: strictly prevents commas in answers from corrupting subtopic)
+  // Adjust Font Sizes Live via Sliders
+  function applyFontSizes() {
+    const titleSize = document.getElementById('rngTitleSize').value;
+    const qSize = document.getElementById('rngQSize').value;
+    const aSize = document.getElementById('rngASize').value;
+
+    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
+    document.getElementById('lblQSize').innerText = qSize + 'px';
+    document.getElementById('lblASize').innerText = aSize + 'px';
+
+    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.77) + 'px';
+    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.73) + 'px';
+
+    document.querySelectorAll('.td-q').forEach(el => el.style.fontSize = qSize + 'px');
+    document.querySelectorAll('.td-a').forEach(el => el.style.fontSize = aSize + 'px');
+  }
+
+  // Smart Parser
   function parseSmartInput() {
     const raw = document.getElementById('smartInput').value.trim();
     if (!raw) return;
@@ -768,27 +737,27 @@
     parsedQAData = [];
     let captionLines = [];
     let currentQ = null;
-    let headerFound = false;
+    let headerParsed = false;
 
     lines.forEach((line) => {
-      // 1. Detect Header line ONCE at the start (🎯 or containing भाग/Part)
-      if (!headerFound && (line.includes('🎯') || (parsedQAData.length === 0 && (line.includes('भाग') || line.includes('Part'))))) {
-        headerFound = true;
+      // Extract Subject, Sub-Topic, Part from the header line
+      if (!headerParsed && (line.includes('🎯') || (parsedQAData.length === 0 && (line.includes('भाग') || line.includes('Part'))))) {
+        headerParsed = true;
         let clean = line.replace('🎯', '').trim();
         let parts = clean.split(',').map(s => s.trim());
         
         if (parts[0]) {
-          if (parts[0].includes('इतिहास')) document.getElementById('subjectCategory').value = 'इतिहास';
-          else if (parts[0].includes('भूगोल')) document.getElementById('subjectCategory').value = 'भूगोल';
-          else if (parts[0].includes('राज')) document.getElementById('subjectCategory').value = 'राजव्यवस्था';
-          else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) document.getElementById('subjectCategory').value = 'करेंट अफेयर्स';
+          if (parts[0].includes('इतिहास')) currentMeta.subject = 'इतिहास';
+          else if (parts[0].includes('भूगोल')) currentMeta.subject = 'भूगोल';
+          else if (parts[0].includes('राज')) currentMeta.subject = 'राजव्यवस्था';
+          else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) currentMeta.subject = 'करेंट अफेयर्स';
+          else currentMeta.subject = parts[0];
         }
-        if (parts[1]) document.getElementById('inSubTopic').value = parts[1];
-        if (parts[2]) document.getElementById('inPart').value = parts[2];
+        if (parts[1]) currentMeta.subTopic = parts[1];
+        if (parts[2]) currentMeta.part = parts[2];
         return;
       }
 
-      // 2. Detect Question lines (Starts with number like "1.", "1)", etc.)
       const qMatch = line.match(/^(\d+)[\.\)\:\-\s]+(.*)/);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
@@ -796,7 +765,6 @@
         return;
       }
 
-      // 3. Detect Answer lines (Starts strictly with उत्तर:, Ans:, Answer:)
       const aMatch = line.match(/^(?:उत्तर|Ans|Answer)[\:\-\s]*(.*)/i);
       if (aMatch && currentQ) {
         currentQ.a = aMatch[1].trim();
@@ -805,7 +773,6 @@
         return;
       }
 
-      // 4. Captions & Hashtags (collected at the end)
       if (parsedQAData.length >= 14 || line.includes('#') || line.includes('प्रतियोगी')) {
         captionLines.push(line);
       }
@@ -813,15 +780,13 @@
 
     if (currentQ) parsedQAData.push(currentQ);
 
-    if (captionLines.length > 0) {
-      document.getElementById('fbCaption').value = captionLines.join(' ');
-    }
+    currentMeta.caption = captionLines.join(' ') || "प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण प्रश्न। 📚✨";
+    document.getElementById('fbCaption').value = currentMeta.caption;
 
     renderCard();
     notify("✅ स्मार्ट इनपुट लोड हो गया!");
   }
 
-  // Format Question Text
   function formatQuestion(qText, rowIndex) {
     if (!qText) return '';
     let words = qText.trim().split(/\s+/);
@@ -849,7 +814,6 @@
     }).join(' ');
   }
 
-  // Format Answer (Maroon & Green)
   function formatAnswer(aText) {
     if (!aText) return '';
     let text = aText.trim();
@@ -874,18 +838,13 @@
     return `<span class="ans-maroon">${text}</span>`;
   }
 
-  // Render Table & Content
   function renderCard() {
-    const subject = document.getElementById('subjectCategory').value;
-    const subTopic = document.getElementById('inSubTopic').value.trim();
-    const part = document.getElementById('inPart').value.trim();
-
-    document.getElementById('outSubject').innerText = subject;
-    document.getElementById('outSubTopic').innerText = subTopic ? `( ${subTopic} )` : '';
+    document.getElementById('outSubject').innerText = currentMeta.subject;
+    document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
     
     const partElem = document.getElementById('outPart');
-    if (part) {
-      partElem.innerText = part;
+    if (currentMeta.part) {
+      partElem.innerText = currentMeta.part;
       partElem.style.display = 'flex';
     } else {
       partElem.style.display = 'none';
@@ -906,7 +865,6 @@
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
 
-      // 15th Question answer is hidden with Comment Call-to-action
       if (index === 14 || index === displayList.length - 1) {
         tdA.innerHTML = `<div class="cta-comment">👉 उत्तर कमेंट में बताएं 💬</div>`;
       } else {
@@ -918,10 +876,10 @@
       tbody.appendChild(tr);
     });
 
+    applyFontSizes();
     updatePreviewScale();
   }
 
-  // Auto-Scale Card Preview to Fit Any Mobile Screen Width Perfectly
   function updatePreviewScale() {
     const viewport = document.getElementById('previewViewport');
     const card = document.getElementById('capture-card');
@@ -936,49 +894,40 @@
 
   window.addEventListener('resize', updatePreviewScale);
 
-  // Generate 2160x2700 Canvas (2x scale for ultra-sharp Facebook HD output)
   async function getCardCanvas() {
     const card = document.getElementById('capture-card');
     const oldTransform = card.style.transform;
-    card.style.transform = 'none'; // Temporarily reset transform for crisp full-res rendering
+    card.style.transform = 'none';
 
     const canvas = await html2canvas(card, {
       width: 1080,
       height: 1350,
-      scale: 2, // Ultra HD
+      scale: 2,
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false
     });
 
-    card.style.transform = oldTransform; // Restore responsive mobile scaling
+    card.style.transform = oldTransform;
     return canvas;
   }
 
-  // Download HD Image
   async function downloadImage() {
-    notify("⏳ HD इमेज तैयार हो रही है...");
-    const sub = document.getElementById('subjectCategory').value;
-    const part = document.getElementById('inPart').value.trim() || '1';
-
+    notify("⏳ इमेज तैयार हो रही है...");
     const canvas = await getCardCanvas();
     const link = document.createElement('a');
-    link.download = `Exam_Prep_${sub}_${part}.png`;
+    link.download = `Exam_Prep_${currentMeta.subject}_${currentMeta.part}.png`;
     link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
-    notify("📥 4:5 HD इमेज डाउनलोड हो गई!");
+    notify("📥 HD इमेज डाउनलोड हो गई!");
   }
 
-  // Direct Share to Facebook with Auto-Caption
   async function shareToFacebook() {
-    const caption = document.getElementById('fbCaption').value;
+    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
     
-    // Auto-copy caption
     try {
       await navigator.clipboard.writeText(caption);
-    } catch (e) {
-      console.log("Clipboard fallback");
-    }
+    } catch (e) {}
 
     notify("⏳ शेयरिंग शुरू हो रही है...");
     const canvas = await getCardCanvas();
@@ -986,38 +935,33 @@
     canvas.toBlob(async (blob) => {
       const file = new File([blob], 'exam_prep_post.png', { type: 'image/png' });
 
-      // Mobile Web Share API
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
             files: [file],
-            title: document.getElementById('outSubject').innerText,
+            title: currentMeta.subject,
             text: caption
           });
-          notify("🚀 फेसबुक शेयर डायलॉग खुला!");
+          notify("🚀 शेयर डायलॉग खुला!");
           return;
-        } catch (err) {
-          console.log("Share dismissed", err);
-        }
+        } catch (err) {}
       }
 
-      // Desktop / Fallback
       const link = document.createElement('a');
       link.download = 'exam_prep_post.png';
       link.href = URL.createObjectURL(blob);
       link.click();
 
       window.open('https://www.facebook.com/', '_blank');
-      notify("📋 कैप्शन कॉपी हुआ और फोटो डाउनलोड! फेसबुक पर पेस्ट करें।");
+      notify("📋 कैप्शन कॉपी हुआ! फेसबुक पर पेस्ट करें।");
     }, 'image/png');
   }
 
-  // Database Management
   function getDB() {
-    return JSON.parse(localStorage.getItem('exam_prep_db_v2') || '[]');
+    return JSON.parse(localStorage.getItem('exam_prep_db_v3') || '[]');
   }
   function saveDB(db) {
-    localStorage.setItem('exam_prep_db_v2', JSON.stringify(db));
+    localStorage.setItem('exam_prep_db_v3', JSON.stringify(db));
   }
 
   function saveToDatabase() {
@@ -1025,10 +969,10 @@
     const db = getDB();
     const entry = {
       id: Date.now(),
-      subject: document.getElementById('subjectCategory').value,
-      subTopic: document.getElementById('inSubTopic').value.trim(),
-      part: document.getElementById('inPart').value.trim(),
-      caption: document.getElementById('fbCaption').value,
+      subject: currentMeta.subject,
+      subTopic: currentMeta.subTopic,
+      part: currentMeta.part,
+      caption: currentMeta.caption,
       smartRaw: document.getElementById('smartInput').value,
       questions: parsedQAData,
       date: new Date().toLocaleDateString('hi-IN')
@@ -1048,7 +992,7 @@
     const filtered = db.filter(item => item.subject === currentSubjectFilter);
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:13px;">इस विषय में कोई पोस्ट नहीं है।</div>`;
+      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">इस विषय में कोई पोस्ट नहीं है।</div>`;
       return;
     }
 
@@ -1057,7 +1001,7 @@
       div.className = 'saved-row';
       div.innerHTML = `
         <div><strong>${item.subTopic}</strong> (${item.part})</div>
-        <div style="display: flex; gap: 6px;">
+        <div style="display: flex; gap: 5px;">
           <button class="btn-xs btn-cyan" onclick="loadItem(${item.id})">Load</button>
           <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
         </div>
@@ -1079,10 +1023,12 @@
     if (!item) return;
 
     document.getElementById('smartInput').value = item.smartRaw || '';
-    document.getElementById('subjectCategory').value = item.subject;
-    document.getElementById('inSubTopic').value = item.subTopic;
-    document.getElementById('inPart').value = item.part;
-    document.getElementById('fbCaption').value = item.caption;
+    currentMeta = {
+      subject: item.subject,
+      subTopic: item.subTopic,
+      part: item.part,
+      caption: item.caption
+    };
     parsedQAData = item.questions;
 
     renderCard();
@@ -1096,7 +1042,6 @@
     renderLibrary();
   }
 
-  // Subject PDF
   function downloadSubjectPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -1133,10 +1078,9 @@
     });
 
     doc.save(`Exam_Preparation_${currentSubjectFilter}.pdf`);
-    notify("📄 Subject PDF डाउनलोड हो गया!");
+    notify("📄 PDF डाउनलोड हो गया!");
   }
 
-  // JSON Export / Import
   function exportJSON() {
     const db = getDB();
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
@@ -1156,7 +1100,7 @@
         if (Array.isArray(imported)) {
           saveDB(imported);
           renderLibrary();
-          notify("📥 बैकअप सफलतापूर्वक लोड हुआ!");
+          notify("📥 बैकअप लोड हुआ!");
         }
       } catch (err) {
         alert("अमान्य JSON फाइल!");
@@ -1169,7 +1113,7 @@
     const toast = document.getElementById('toastMsg');
     toast.innerText = msg;
     toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2800);
+    setTimeout(() => { toast.style.display = 'none'; }, 2600);
   }
 
   window.onload = () => {
