@@ -106,7 +106,7 @@
       font-size: 13.5px;
       font-family: inherit;
       outline: none;
-      height: 135px;
+      height: 140px;
       line-height: 1.45;
       resize: vertical;
     }
@@ -177,12 +177,12 @@
       cursor: pointer;
     }
 
-    /* Action Buttons */
+    /* Primary Action Buttons */
     .btn-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-top: 4px;
+      margin-top: 6px;
     }
     button {
       padding: 12px 10px;
@@ -198,12 +198,13 @@
       gap: 6px;
     }
     button:active { transform: scale(0.97); }
-    .btn-cyan { background: linear-gradient(135deg, #06b6d4, #2563eb); color: #fff; }
+    
+    .btn-paste { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
+    .btn-run { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; }
     .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-fb {
       background: linear-gradient(135deg, #1877f2, #0d5bbd);
       color: #fff;
-      grid-column: span 2;
     }
     .btn-dark {
       background: #1e293b;
@@ -229,7 +230,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* Live Preview Mobile Scaler */
+    /* Live Preview Scaler */
     .preview-viewport-wrapper {
       width: 100%;
       border-radius: 12px;
@@ -244,7 +245,7 @@
       position: relative;
     }
 
-    /* 4:5 Full HD Card (1080px x 1350px) */
+    /* 4:5 Full HD Card Canvas (1080px x 1350px) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -253,7 +254,7 @@
       max-width: 1080px;
       max-height: 1350px;
       background: #ffffff;
-      padding: 24px 34px 20px 34px;
+      padding: 24px 32px 20px 32px;
       position: absolute;
       top: 0;
       left: 0;
@@ -404,21 +405,21 @@
     }
     thead th {
       background: #f0fdf4;
-      padding: 4px 14px;
+      padding: 4px 12px;
       font-size: 23px;
       font-weight: 800;
       border-bottom: 2px solid #86efac;
-      height: 40px;
+      height: 38px;
     }
     
-    /* 1/3 Answer Ratio: 68% Question, 32% Answer */
+    /* 1/3 Answer Ratio: 70% Question, 30% Answer */
     thead th.th-q, tbody td.td-q {
-      width: 68% !important;
+      width: 70% !important;
       border-right: 2px solid #86efac;
       text-align: left;
     }
     thead th.th-a, tbody td.td-a {
-      width: 32% !important;
+      width: 30% !important;
       text-align: left;
     }
     thead th.th-q { color: #dc2626; }
@@ -426,7 +427,7 @@
 
     tbody tr {
       border-bottom: 1.5px solid #bbf7d0;
-      height: calc((100% - 40px) / 15);
+      height: calc((100% - 38px) / 15);
     }
     tbody tr:last-child {
       border-bottom: none;
@@ -449,7 +450,7 @@
       font-weight: 900;
       margin-right: 5px;
       display: inline-block;
-      min-width: 30px;
+      min-width: 32px;
     }
 
     .word-red { color: #dc2626; font-weight: 900; }
@@ -471,7 +472,7 @@
       padding: 4px 8px;
       border-radius: 8px;
       font-weight: 800;
-      font-size: 16px;
+      font-size: 15px;
       white-space: nowrap;
     }
 
@@ -582,12 +583,11 @@
     <span class="app-badge">FB 4:5 ULTRA HD</span>
   </div>
 
-  <!-- Main Card -->
+  <!-- Main Input Card -->
   <div class="dark-card">
     <div class="card-title">📝 Raw Text (Smart Paste Box):</div>
     
-    <!-- Auto-updates on paste/type/change -->
-    <textarea id="smartInput" oninput="parseSmartInput()" onpaste="setTimeout(parseSmartInput, 100)" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 2
+    <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 2
 16. मनके बनाने के कारखाने के साक्ष्य किन दो प्रमुख सैंधव स्थलों से मिले हैं?
 उत्तर: चन्हूदड़ो और लोथल
 17. सिंधु सभ्यता की मुहरों पर सबसे अधिक किस काल्पनिक पशु का अंकन मिलता है?
@@ -664,11 +664,12 @@
     <!-- Hidden FB Caption -->
     <input type="hidden" id="fbCaption" value="">
 
-    <!-- Action Buttons -->
+    <!-- Separate Action Buttons -->
     <div class="btn-grid">
-      <button class="btn-cyan" onclick="pasteFromClipboardAndRun()">📋 1-Click Paste & Run</button>
+      <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
+      <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
       <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
-      <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to Facebook (Auto-Caption)</button>
+      <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to FB</button>
     </div>
   </div>
 
@@ -676,7 +677,7 @@
   <div class="dark-card" style="padding: 10px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <div class="card-title" style="margin:0;">📱 लाइव मोबाइल प्रीव्यू</div>
-      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Aspect Ratio</span>
+      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Ratio (1/3 Ans)</span>
     </div>
 
     <div class="preview-viewport-wrapper">
@@ -765,26 +766,30 @@
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
-  // Robust 1-Click Clipboard Paste & Execution
-  async function pasteFromClipboardAndRun() {
+  // 1. Separate "Click Paste" Button
+  async function onlyPasteClipboard() {
     try {
       if (navigator.clipboard && navigator.clipboard.readText) {
         const text = await navigator.clipboard.readText();
         if (text && text.trim().length > 0) {
           document.getElementById('smartInput').value = text;
-          notify("📋 क्लिपबोर्ड से पेस्ट हो गया!");
-          parseSmartInput();
+          notify("📋 बॉक्स में पेस्ट हो गया! अब 'Generate / Run' दबाएँ।");
           return;
         }
       }
     } catch (err) {
-      console.warn("Clipboard access denied or restricted on browser", err);
+      console.warn("Clipboard read restricted", err);
     }
-    parseSmartInput();
-    notify("⚡ प्रश्न लोड हो गए!");
+    notify("💡 क्लिपबोर्ड ऑटो-रीड नहीं हुआ। बॉक्स में हाथ से पेस्ट करें फिर Run दबाएँ।");
   }
 
-  // Live Typography Adjustment
+  // 2. Separate "Generate / Run" Button
+  function generateCards() {
+    parseSmartInput();
+    notify("⚡ प्रश्न इमेज पर तैयार हो गए!");
+  }
+
+  // Live Typography
   function applyTypography() {
     const selectedFont = document.getElementById('selFontFamily').value;
     const qWeight = document.getElementById('selQWeight').value;
@@ -813,7 +818,7 @@
     });
   }
 
-  // SUPER BULLETPROOF PARSER: Guaranteed to extract all Q&A pairs
+  // Guaranteed Bulletproof Parser
   function parseSmartInput() {
     const raw = document.getElementById('smartInput').value;
     if (!raw || !raw.trim()) return;
@@ -827,7 +832,7 @@
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // 1. Header parsing (Only if near the start and not a question)
+      // 1. Header parsing (Line with 🎯 or starting header)
       if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
         if (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)[\.\)\:\-\s]/))) {
           headerParsed = true;
@@ -858,14 +863,14 @@
         continue;
       }
 
-      // 3. Question line start (e.g. 16., 1., Q1., 1), etc.)
+      // 3. Question line start (16., 1., Q1., 1), etc.)
       const qMatch = line.match(/^(?:Q\.?|प्र\.?|प्रश्न)?\s*(\d+|[०-९]+)[\.\)\:\-\s]+(.*)/i);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
         const num = qMatch[1];
         let qText = qMatch[2].trim();
 
-        // Check if answer is written on the same line
+        // Check if answer is inline on same line
         const inlineAnsMatch = qText.match(/(?:उत्तर|Ans|Answer)[\:\-\s]*(.*)/i);
         if (inlineAnsMatch) {
           const actualQ = qText.substring(0, inlineAnsMatch.index).trim();
@@ -877,7 +882,7 @@
         continue;
       }
 
-      // 4. Answer line start (e.g. उत्तर:, Ans:, Answer:)
+      // 4. Answer line start (उत्तर:, Ans:, Answer:, उ-)
       const aMatch = line.match(/^(?:उत्तर|Ans|Answer|उ\.?|उत्तर\s*-)[\:\-\s]*(.*)/i);
       if (aMatch) {
         const aText = aMatch[1].trim();
@@ -891,9 +896,8 @@
         continue;
       }
 
-      // 5. If question was waiting for answer
+      // 5. Continuation lines
       if (currentQ && !currentQ.a) {
-        // If question doesn't end with ? and current line is continuation of question
         if (!currentQ.q.includes('?') && (line.includes('?') || line.length < 25)) {
           currentQ.q += ' ' + line;
         } else {
@@ -904,7 +908,7 @@
         continue;
       }
 
-      // 6. Captions & Hashtags
+      // 6. Captions / Hashtags
       if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || line.includes('स्क्रीनशॉट') || parsedQAData.length >= 15) {
         captionLines.push(line);
       }
@@ -1095,10 +1099,10 @@
   }
 
   function getDB() {
-    return JSON.parse(localStorage.getItem('exam_prep_db_v5') || '[]');
+    return JSON.parse(localStorage.getItem('exam_prep_db_v6') || '[]');
   }
   function saveDB(db) {
-    localStorage.setItem('exam_prep_db_v5', JSON.stringify(db));
+    localStorage.setItem('exam_prep_db_v6', JSON.stringify(db));
   }
 
   function saveToDatabase() {
@@ -1139,7 +1143,7 @@
       div.innerHTML = `
         <div><strong>${item.subTopic}</strong> (${item.part})</div>
         <div style="display: flex; gap: 5px;">
-          <button class="btn-xs btn-cyan" onclick="loadItem(${item.id})">Load</button>
+          <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
           <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
         </div>
       `;
