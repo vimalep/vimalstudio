@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Preparation - Clean Studio Pro</title>
+  <title>Exam Preparation - Studio Pro</title>
   
+  <!-- Premium Hindi & English Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;600;700&family=Mukta:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap" rel="stylesheet">
   
+  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -18,7 +20,7 @@
       --bg-card: #111827;
       --bg-input: #0f172a;
       --border-color: #1f293d;
-      --border-focus: #3b82f6;
+      --border-focus: #38bdf8;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
     }
@@ -42,7 +44,7 @@
 
     .app-shell {
       width: 100%;
-      max-width: 550px;
+      max-width: 560px;
       display: flex;
       flex-direction: column;
       gap: 14px;
@@ -52,10 +54,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2px 4px;
+      padding: 4px 6px;
     }
     .app-header h1 {
-      font-size: 18px;
+      font-size: 19px;
       font-family: 'Poppins', sans-serif;
       font-weight: 800;
       color: #38bdf8;
@@ -64,12 +66,12 @@
       gap: 6px;
     }
     .app-badge {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
       color: #38bdf8;
       font-size: 11px;
       font-weight: 700;
-      padding: 3px 8px;
+      padding: 3px 10px;
       border-radius: 20px;
       font-family: 'Poppins', sans-serif;
     }
@@ -94,7 +96,7 @@
       letter-spacing: 0.5px;
     }
 
-    textarea, input[type="text"] {
+    textarea {
       width: 100%;
       background: var(--bg-input);
       border: 1.5px solid var(--border-color);
@@ -104,42 +106,60 @@
       font-size: 13.5px;
       font-family: inherit;
       outline: none;
-    }
-    textarea:focus, input[type="text"]:focus {
-      border-color: var(--border-focus);
-    }
-    .paste-area {
-      height: 130px;
+      height: 135px;
       line-height: 1.45;
       resize: vertical;
     }
-
-    /* Font Size Sliders Grid */
-    .sliders-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      background: #0b1120;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      margin: 10px 0;
+    textarea:focus {
+      border-color: var(--border-focus);
     }
-    .slider-box {
+
+    /* Font Customization Panel */
+    .typo-panel {
+      background: #0b1222;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 10px;
     }
-    .slider-box label {
-      font-size: 11px;
-      color: var(--text-muted);
+    .typo-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .typo-row > div {
+      flex: 1;
+    }
+    .typo-label {
+      font-size: 11.5px;
       font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
       display: flex;
       justify-content: space-between;
     }
-    .slider-box label span {
+    .typo-label span {
       color: #38bdf8;
+      font-weight: 800;
     }
+
+    select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: #f8fafc;
+      padding: 6px 8px;
+      font-size: 13px;
+      outline: none;
+    }
+    select:focus {
+      border-color: var(--border-focus);
+    }
+
     input[type="range"] {
       -webkit-appearance: none;
       width: 100%;
@@ -157,15 +177,15 @@
       cursor: pointer;
     }
 
-    /* Buttons */
+    /* Action Buttons */
     .btn-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-top: 6px;
+      margin-top: 4px;
     }
     button {
-      padding: 11px;
+      padding: 12px 10px;
       border: none;
       border-radius: 10px;
       font-size: 13.5px;
@@ -209,7 +229,7 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* Responsive Viewport Preview */
+    /* Live Preview Mobile Scaler */
     .preview-viewport-wrapper {
       width: 100%;
       border-radius: 12px;
@@ -224,7 +244,7 @@
       position: relative;
     }
 
-    /* 4:5 Full HD Canvas (1080px x 1350px) */
+    /* 4:5 Full HD Card (1080px x 1350px) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -242,6 +262,7 @@
       flex-direction: column;
       justify-content: space-between;
       box-sizing: border-box;
+      font-family: 'Mukta', sans-serif;
     }
 
     .top-header-wrap {
@@ -250,7 +271,7 @@
       align-items: center;
       justify-content: space-between;
       height: 52px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .top-line-behind {
       position: absolute;
@@ -310,7 +331,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .title-pill {
       display: inline-flex;
@@ -322,7 +343,7 @@
     .title-main {
       background: #dc2626;
       color: #ffffff;
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 800;
       padding: 4px 28px;
       display: flex;
@@ -331,7 +352,7 @@
     .title-sub {
       background: #15803d;
       color: #ffffff;
-      font-size: 23px;
+      font-size: 24px;
       font-weight: 700;
       padding: 4px 20px;
       display: flex;
@@ -383,11 +404,11 @@
     }
     thead th {
       background: #f0fdf4;
-      padding: 6px 14px;
-      font-size: 22px;
+      padding: 4px 14px;
+      font-size: 23px;
       font-weight: 800;
       border-bottom: 2px solid #86efac;
-      height: 42px;
+      height: 40px;
     }
     thead th.th-q {
       color: #dc2626;
@@ -403,33 +424,37 @@
 
     tbody tr {
       border-bottom: 1.5px solid #bbf7d0;
-      height: calc((100% - 42px) / 15);
+      height: calc((100% - 40px) / 15);
     }
     tbody tr:last-child {
       border-bottom: none;
     }
 
     td {
-      padding: 2px 12px;
-      font-size: 18.5px;
+      padding: 2px 10px;
       line-height: 1.25;
       vertical-align: middle;
     }
     .td-q {
       border-right: 2px solid #86efac;
       color: #0f172a;
-      font-weight: 700;
+      font-size: 21px;
+      font-weight: 800;
     }
     .q-num {
       color: #dc2626;
-      font-weight: 800;
+      font-weight: 900;
       margin-right: 5px;
       display: inline-block;
       min-width: 28px;
     }
 
-    .word-red { color: #dc2626; font-weight: 800; }
+    .word-red { color: #dc2626; font-weight: 900; }
     .q-mark { color: #dc2626; font-weight: 900; }
+    .td-a {
+      font-size: 21px;
+      font-weight: 700;
+    }
     .ans-maroon { color: #800000; font-weight: 800; }
     .ans-green { color: #15803d; font-weight: 700; }
 
@@ -443,7 +468,7 @@
       padding: 4px 12px;
       border-radius: 8px;
       font-weight: 800;
-      font-size: 17px;
+      font-size: 18px;
     }
 
     .footer-wrap {
@@ -452,7 +477,7 @@
       align-items: center;
       justify-content: space-between;
       height: 48px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     .footer-line-behind {
       position: absolute;
@@ -494,6 +519,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    /* Archive */
     .subject-pill-row {
       display: flex;
       gap: 6px;
@@ -549,14 +575,15 @@
 
   <div class="app-header">
     <h1>⚡ Exam Preparation Studio</h1>
-    <span class="app-badge">FB 4:5 PRO</span>
+    <span class="app-badge">FB 4:5 ULTRA HD</span>
   </div>
 
   <!-- Main Card -->
   <div class="dark-card">
-    <div class="card-title">📝 Raw Text (Smart Paste):</div>
+    <div class="card-title">📝 Raw Text (Smart Paste Box):</div>
     
-    <textarea id="smartInput" class="paste-area">🎯 इतिहास, प्राचीन भारत, भाग 1
+    <!-- oninput ensures picture updates immediately upon manual paste! -->
+    <textarea id="smartInput" oninput="parseSmartInput()" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 1
 1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
 उत्तर: 1921 में, दयाराम साहनी द्वारा
 2. मोहनजोदड़ो की खोज 1922 में किसने की थी?
@@ -590,28 +617,52 @@
 प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
 #HistoryGK</textarea>
 
-    <!-- Font Size Controls (Sliders) -->
-    <div class="sliders-grid">
-      <div class="slider-box">
-        <label>Title Size: <span id="lblTitleSize">30px</span></label>
-        <input type="range" id="rngTitleSize" min="20" max="40" value="30" oninput="applyFontSizes()">
+    <!-- Typography Controls -->
+    <div class="typo-panel">
+      <div class="typo-row">
+        <div>
+          <div class="typo-label">फ़ॉन्ट स्टाइल (Hindi Font):</div>
+          <select id="selFontFamily" onchange="applyTypography()">
+            <option value="'Mukta', sans-serif">Mukta (मॉडर्न & क्लीन)</option>
+            <option value="'Hind', sans-serif">Hind (बोल्ड & स्पष्ट)</option>
+            <option value="'Noto Sans Devanagari', sans-serif">Noto Sans (क्लासिक)</option>
+            <option value="'Tiro Devanagari Hindi', serif">Tiro (किताबी / अखबारी)</option>
+            <option value="'Yatra One', cursive">Yatra One (आकर्षक)</option>
+          </select>
+        </div>
+        <div>
+          <div class="typo-label">Question Boldness:</div>
+          <select id="selQWeight" onchange="applyTypography()">
+            <option value="700">Semi Bold (700)</option>
+            <option value="800" selected>Extra Bold (800)</option>
+            <option value="900">Ultra Bold (900)</option>
+            <option value="600">Normal (600)</option>
+          </select>
+        </div>
       </div>
-      <div class="slider-box">
-        <label>Ques Size: <span id="lblQSize">18px</span></label>
-        <input type="range" id="rngQSize" min="14" max="26" value="18" oninput="applyFontSizes()">
-      </div>
-      <div class="slider-box">
-        <label>Ans Size: <span id="lblASize">18px</span></label>
-        <input type="range" id="rngASize" min="14" max="26" value="18" oninput="applyFontSizes()">
+
+      <div class="typo-row">
+        <div>
+          <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
+          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography()">
+        </div>
+        <div>
+          <div class="typo-label">Ques Size: <span id="lblQSize">21px</span></div>
+          <input type="range" id="rngQSize" min="16" max="32" value="21" oninput="applyTypography()">
+        </div>
+        <div>
+          <div class="typo-label">Ans Size: <span id="lblASize">21px</span></div>
+          <input type="range" id="rngASize" min="16" max="32" value="21" oninput="applyTypography()">
+        </div>
       </div>
     </div>
 
-    <!-- Hidden FB caption field (handled completely automatically) -->
+    <!-- Hidden FB Caption -->
     <input type="hidden" id="fbCaption" value="">
 
     <!-- Action Buttons -->
     <div class="btn-grid">
-      <button class="btn-cyan" onclick="parseSmartInput()">⚡ 1-Click Paste & Run</button>
+      <button class="btn-cyan" onclick="pasteFromClipboardAndRun()">📋 1-Click Paste & Run</button>
       <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
       <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to Facebook (Auto-Caption)</button>
     </div>
@@ -674,9 +725,9 @@
     </div>
   </div>
 
-  <!-- Library -->
+  <!-- Database & Archive -->
   <div class="dark-card">
-    <div class="card-title">📚 प्रश्न बैंक (Subject Archive)</div>
+    <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
     <div class="subject-pill-row">
       <button class="subj-pill active" onclick="filterBySubject('इतिहास', this)">इतिहास</button>
@@ -710,8 +761,30 @@
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
-  // Adjust Font Sizes Live via Sliders
-  function applyFontSizes() {
+  // Real 1-Click Clipboard Paste
+  async function pasteFromClipboardAndRun() {
+    try {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        const text = await navigator.clipboard.readText();
+        if (text && text.trim().length > 0) {
+          document.getElementById('smartInput').value = text;
+          notify("📋 क्लिपबोर्ड से पेस्ट हो गया!");
+          parseSmartInput();
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn("Clipboard access denied or unsupported", err);
+    }
+    // Fallback: parse whatever is currently inside textarea
+    parseSmartInput();
+    notify("⚡ प्रश्न लोड हो गए!");
+  }
+
+  // Typography & Font Adjustment Live
+  function applyTypography() {
+    const selectedFont = document.getElementById('selFontFamily').value;
+    const qWeight = document.getElementById('selQWeight').value;
     const titleSize = document.getElementById('rngTitleSize').value;
     const qSize = document.getElementById('rngQSize').value;
     const aSize = document.getElementById('rngASize').value;
@@ -720,15 +793,24 @@
     document.getElementById('lblQSize').innerText = qSize + 'px';
     document.getElementById('lblASize').innerText = aSize + 'px';
 
-    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
-    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.77) + 'px';
-    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.73) + 'px';
+    const card = document.getElementById('capture-card');
+    card.style.fontFamily = selectedFont;
 
-    document.querySelectorAll('.td-q').forEach(el => el.style.fontSize = qSize + 'px');
-    document.querySelectorAll('.td-a').forEach(el => el.style.fontSize = aSize + 'px');
+    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
+    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
+
+    document.querySelectorAll('.td-q').forEach(el => {
+      el.style.fontSize = qSize + 'px';
+      el.style.fontWeight = qWeight;
+    });
+
+    document.querySelectorAll('.td-a').forEach(el => {
+      el.style.fontSize = aSize + 'px';
+    });
   }
 
-  // Smart Parser
+  // ULTRA ROBUST PARSER (Guarantees no questions are missed)
   function parseSmartInput() {
     const raw = document.getElementById('smartInput').value.trim();
     if (!raw) return;
@@ -739,11 +821,13 @@
     let currentQ = null;
     let headerParsed = false;
 
-    lines.forEach((line) => {
-      // Extract Subject, Sub-Topic, Part from the header line
-      if (!headerParsed && (line.includes('🎯') || (parsedQAData.length === 0 && (line.includes('भाग') || line.includes('Part'))))) {
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i];
+
+      // 1. Detect Header line if present
+      if (!headerParsed && parsedQAData.length === 0 && !currentQ && (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)[\.\)\:\-\s]/)))) {
         headerParsed = true;
-        let clean = line.replace('🎯', '').trim();
+        let clean = line.replace(/^[🎯📌🔥✨\s]+/, '').trim();
         let parts = clean.split(',').map(s => s.trim());
         
         if (parts[0]) {
@@ -755,28 +839,53 @@
         }
         if (parts[1]) currentMeta.subTopic = parts[1];
         if (parts[2]) currentMeta.part = parts[2];
-        return;
+        continue;
       }
 
-      const qMatch = line.match(/^(\d+)[\.\)\:\-\s]+(.*)/);
+      // 2. Single-line Q | A format
+      if (line.includes('|')) {
+        if (currentQ) { parsedQAData.push(currentQ); currentQ = null; }
+        let parts = line.split('|');
+        let qText = parts[0].replace(/^(\d+|[०-९]+)[\.\)\:\-\s]+/, '').trim();
+        let aText = parts[1].trim();
+        parsedQAData.push({ q: qText, a: aText });
+        continue;
+      }
+
+      // 3. Question line start (1., 1), Q.1, प्र. 1, १.)
+      const qMatch = line.match(/^(?:Q\.?|प्र\.?|प्रश्न)?\s*(\d+|[०-९]+)[\.\)\:\-\s]+(.*)/i);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
         currentQ = { q: qMatch[2].trim(), a: '' };
-        return;
+        continue;
       }
 
-      const aMatch = line.match(/^(?:उत्तर|Ans|Answer)[\:\-\s]*(.*)/i);
-      if (aMatch && currentQ) {
-        currentQ.a = aMatch[1].trim();
+      // 4. Answer line start (उत्तर:, Ans:, Answer:, उ-)
+      const aMatch = line.match(/^(?:उत्तर|Ans|Answer|उ)[\:\-\s]*(.*)/i);
+      if (aMatch) {
+        if (currentQ) {
+          currentQ.a = aMatch[1].trim();
+          parsedQAData.push(currentQ);
+          currentQ = null;
+        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
+          parsedQAData[parsedQAData.length - 1].a = aMatch[1].trim();
+        }
+        continue;
+      }
+
+      // 5. If question was waiting for answer line
+      if (currentQ && !currentQ.a) {
+        currentQ.a = line;
         parsedQAData.push(currentQ);
         currentQ = null;
-        return;
+        continue;
       }
 
-      if (parsedQAData.length >= 14 || line.includes('#') || line.includes('प्रतियोगी')) {
+      // 6. Captions & Hashtags
+      if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || line.includes('स्क्रीनशॉट') || parsedQAData.length >= 15) {
         captionLines.push(line);
       }
-    });
+    }
 
     if (currentQ) parsedQAData.push(currentQ);
 
@@ -784,7 +893,6 @@
     document.getElementById('fbCaption').value = currentMeta.caption;
 
     renderCard();
-    notify("✅ स्मार्ट इनपुट लोड हो गया!");
   }
 
   function formatQuestion(qText, rowIndex) {
@@ -876,7 +984,7 @@
       tbody.appendChild(tr);
     });
 
-    applyFontSizes();
+    applyTypography();
     updatePreviewScale();
   }
 
@@ -902,7 +1010,7 @@
     const canvas = await html2canvas(card, {
       width: 1080,
       height: 1350,
-      scale: 2,
+      scale: 2, // Ultra HD 2160x2700
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false
@@ -913,7 +1021,7 @@
   }
 
   async function downloadImage() {
-    notify("⏳ इमेज तैयार हो रही है...");
+    notify("⏳ HD इमेज तैयार हो रही है...");
     const canvas = await getCardCanvas();
     const link = document.createElement('a');
     link.download = `Exam_Prep_${currentMeta.subject}_${currentMeta.part}.png`;
@@ -958,10 +1066,10 @@
   }
 
   function getDB() {
-    return JSON.parse(localStorage.getItem('exam_prep_db_v3') || '[]');
+    return JSON.parse(localStorage.getItem('exam_prep_db_v4') || '[]');
   }
   function saveDB(db) {
-    localStorage.setItem('exam_prep_db_v3', JSON.stringify(db));
+    localStorage.setItem('exam_prep_db_v4', JSON.stringify(db));
   }
 
   function saveToDatabase() {
