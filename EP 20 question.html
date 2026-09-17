@@ -2,195 +2,239 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exam Preparation - Ultimate Post & Question Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Exam Preparation - Studio Pro (4:5 FB Post)</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- html2canvas for 4:5 HD Image -->
+  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- jsPDF for Subject-wise PDF Export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
+    :root {
+      --bg-main: #0a0f1d;
+      --bg-card: #111827;
+      --bg-input: #0f172a;
+      --border-color: #1f293d;
+      --border-focus: #3b82f6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #2563eb;
+      --accent-red: #dc2626;
+      --accent-green: #15803d;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
+
     body {
       font-family: 'Mukta', sans-serif;
-      background: #f1f5f9;
-      color: #1e293b;
-      padding: 20px 15px;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      padding: 14px 10px 60px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Main Container */
-    .app-container {
+    .app-shell {
       width: 100%;
-      max-width: 1120px;
+      max-width: 600px; /* Perfect sleek mobile app width */
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
-    /* Controls Panel */
-    .panel {
-      background: #ffffff;
-      padding: 22px 25px;
-      border-radius: 14px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    }
-    .panel h2 {
-      font-size: 22px;
-      font-family: 'Poppins', sans-serif;
-      margin-bottom: 14px;
-      color: #0f172a;
+    /* Top App Bar */
+    .app-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px;
+    }
+    .app-header h1 {
+      font-size: 19px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .app-badge {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #38bdf8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      font-family: 'Poppins', sans-serif;
     }
 
+    /* Dark Panel */
+    .dark-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Input Controls */
     .form-group {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     label {
       display: block;
-      font-weight: 700;
-      margin-bottom: 6px;
-      font-size: 14px;
-      color: #475569;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 5px;
     }
-    input[type="text"], select, textarea {
+    textarea, input[type="text"], select {
       width: 100%;
-      padding: 10px 14px;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 15px;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      padding: 10px 12px;
+      font-size: 14px;
       font-family: inherit;
       outline: none;
+      transition: border-color 0.2s;
     }
-    input[type="text"]:focus, select:focus, textarea:focus {
-      border-color: #dc2626;
+    textarea:focus, input[type="text"]:focus, select:focus {
+      border-color: var(--border-focus);
     }
-    textarea {
+    .paste-area {
+      height: 140px;
+      font-size: 13px;
+      line-height: 1.45;
       resize: vertical;
     }
-    .smart-paste-area {
-      height: 180px;
-      font-size: 14px;
-      line-height: 1.45;
-      background: #fafafa;
+
+    /* Input Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1.3fr 1.3fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     /* Buttons */
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 6px;
     }
     button {
-      padding: 11px 18px;
+      padding: 12px;
       border: none;
-      border-radius: 8px;
-      font-size: 15px;
+      border-radius: 10px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       font-family: 'Poppins', 'Mukta', sans-serif;
-      transition: all 0.2s ease;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      transition: all 0.2s ease;
     }
-    button:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-primary { background: #2563eb; color: #fff; }
-    .btn-danger { background: #dc2626; color: #fff; }
-    .btn-fb { background: #1877f2; color: #fff; }
-    .btn-success { background: #15803d; color: #fff; }
-    .btn-outline { background: #f8fafc; border: 1.5px solid #cbd5e1; color: #334155; }
-
-    /* Saved Library & Subject Filter */
-    .library-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
+    button:active {
+      transform: scale(0.97);
     }
-    .tab-btn {
-      padding: 8px 16px;
-      border-radius: 20px;
-      border: 1.5px solid #e2e8f0;
-      background: #f8fafc;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .tab-btn.active {
-      background: #dc2626;
+    .btn-cyan {
+      background: linear-gradient(135deg, #06b6d4, #2563eb);
       color: #fff;
-      border-color: #dc2626;
     }
-    .saved-list {
-      max-height: 200px;
-      overflow-y: auto;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 10px;
-      background: #f8fafc;
+    .btn-purple {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: #fff;
     }
-    .saved-item {
+    .btn-emerald {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+    }
+    .btn-fb {
+      background: linear-gradient(135deg, #1877f2, #0d5bbd);
+      color: #fff;
+      grid-column: span 2;
+    }
+    .btn-dark {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      font-size: 13px;
+      padding: 9px 12px;
+    }
+
+    /* Notification */
+    #toastMsg {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: #fff;
+      padding: 9px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 99999;
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       RESPONSIVE PREVIEW VIEWPORT (Solves Mobile Cut-off completely!)
+       ============================================================ */
+    .preview-header-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 12px;
-      background: #fff;
-      border-radius: 6px;
-      margin-bottom: 6px;
-      border: 1px solid #e2e8f0;
+      margin-bottom: 8px;
     }
-    .saved-item-title {
-      font-weight: 700;
-      font-size: 15px;
-    }
-    .saved-item-actions {
-      display: flex;
-      gap: 6px;
-    }
-    .btn-xs {
-      padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 4px;
-    }
-
-    /* Notification Banner */
-    #notification {
-      display: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      background: #ecfdf5;
-      color: #065f46;
-      border: 1px solid #a7f3d0;
-      margin-top: 10px;
-      font-weight: 700;
-    }
-
-    /* Canvas Outer Wrapper for Responsiveness */
-    .preview-section {
+    .preview-viewport-wrapper {
       width: 100%;
-      overflow-x: auto;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
       display: flex;
       justify-content: center;
-      padding: 15px 0 35px 0;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+      border: 1px solid #1f293d;
+    }
+    #previewViewport {
+      width: 100%;
+      position: relative;
+      /* height will be automatically calculated by JS based on scale */
     }
 
-    /* 4:5 Facebook Standard Feed Canvas (1080px × 1350px) */
+    /* 4:5 Native Canvas Element (1080px x 1350px) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -200,22 +244,24 @@
       max-height: 1350px;
       background: #ffffff;
       padding: 24px 34px 20px 34px;
-      box-shadow: 0 10px 35px rgba(0,0,0,0.18);
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: top left;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      overflow: hidden;
+      box-sizing: border-box;
     }
 
-    /* Single-Line Top Header */
+    /* Card Top Header (Single Line) */
     .top-header-wrap {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 52px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .top-line-behind {
       position: absolute;
@@ -280,7 +326,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .title-pill {
       display: inline-flex;
@@ -318,7 +364,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* Table Section (Engineered for 15 Rows to fill height perfectly) */
+    /* 15 Rows Table */
     .table-container {
       flex: 1;
       position: relative;
@@ -344,7 +390,6 @@
       text-transform: uppercase;
       font-family: 'Poppins', sans-serif;
     }
-
     table {
       width: 100%;
       height: 100%;
@@ -406,7 +451,7 @@
     .ans-maroon { color: #800000; font-weight: 800; }
     .ans-green { color: #15803d; font-weight: 700; }
 
-    /* Last Question Comment Call-out */
+    /* Comment Call-to-action */
     .cta-comment {
       display: inline-flex;
       align-items: center;
@@ -427,7 +472,7 @@
       align-items: center;
       justify-content: space-between;
       height: 48px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .footer-line-behind {
       position: absolute;
@@ -469,26 +514,77 @@
       white-space: nowrap;
       font-family: 'Poppins', 'Mukta', sans-serif;
     }
+
+    /* Library Accordion / Collapsible */
+    .subject-pill-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+    }
+    .subj-pill {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .subj-pill.active {
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
+    }
+    .library-list {
+      max-height: 160px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .saved-row {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    .btn-xs {
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
 
-<div class="app-container">
+<div id="toastMsg"></div>
 
-  <!-- Control & Smart Paste Panel -->
-  <div class="panel">
-    <h2>
-      <span>⚡ स्मार्ट पोस्ट क्रिएटर (Smart Post Engine)</span>
-      <span style="font-size: 14px; color: #64748b; font-weight: 600;">FB 4:5 Ready (1080×1350)</span>
-    </h2>
+<div class="app-shell">
 
+  <!-- Header -->
+  <div class="app-header">
+    <h1>⚡ Exam Preparation Pro</h1>
+    <span class="app-badge">FB 4:5 STUDIO</span>
+  </div>
+
+  <!-- Main Dark Studio Box -->
+  <div class="dark-card">
+    <div class="card-title">📝 यहाँ अपना पूरा पोस्ट टेक्स्ट पेस्ट करें (Smart Paste):</div>
+    
     <div class="form-group">
-      <label>1. स्मार्ट पेस्ट बॉक्स (यहाँ पूरा पोस्ट डायरेक्ट पेस्ट करें):</label>
-      <textarea id="smartInput" class="smart-paste-area" placeholder="🎯 इतिहास, प्राचीन भारत, भाग 1
+      <textarea id="smartInput" class="paste-area" placeholder="🎯 इतिहास, प्राचीन भारत, भाग 1
 1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
 उत्तर: 1921 में, दयाराम साहनी द्वारा
 ... (15 प्रश्न)
-प्रतियोगी परीक्षाओं के लिए... #HistoryGK">🎯 इतिहास, प्राचीन भारत, भाग 1
+प्रतियोगी परीक्षाओं की तैयारी... #HistoryGK">🎯 इतिहास, प्राचीन भारत, भाग 1
 1. हड़प्पा सभ्यता की खोज किस वर्ष और किसके द्वारा की गई थी?
 उत्तर: 1921 में, दयाराम साहनी द्वारा
 2. मोहनजोदड़ो की खोज 1922 में किसने की थी?
@@ -523,130 +619,137 @@
 #HistoryGK</textarea>
     </div>
 
-    <!-- Parsed / Editable Controls -->
-    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-      <div class="form-group" style="flex: 1.2;">
-        <label>विषय (Subject Category):</label>
+    <!-- 3-Column Input Parameters -->
+    <div class="grid-3">
+      <div>
+        <label>विषय (Subject):</label>
         <select id="subjectCategory">
           <option value="इतिहास">इतिहास (History)</option>
           <option value="भूगोल">भूगोल (Geography)</option>
           <option value="राजव्यवस्था">राजव्यवस्था (Polity)</option>
-          <option value="करेंट अफेयर्स">करेंट अफेयर्स (Current Affairs)</option>
+          <option value="करेंट अफेयर्स">करेंट अफेयर्स (Current)</option>
         </select>
       </div>
-      <div class="form-group" style="flex: 1.5;">
+      <div>
         <label>उप-विषय (Sub-Topic):</label>
         <input type="text" id="inSubTopic" value="प्राचीन भारत">
       </div>
-      <div class="form-group" style="flex: 1;">
+      <div>
         <label>भाग (Part No.):</label>
         <input type="text" id="inPart" value="भाग 1">
       </div>
     </div>
 
     <div class="form-group">
-      <label>Facebook कैप्शन (Direct Share & Clipboard):</label>
+      <label>फेसबुक कैप्शन (ऑटो-कॉपी होगा):</label>
       <input type="text" id="fbCaption" value="प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨ #HistoryGK">
     </div>
 
-    <!-- Actions -->
-    <div class="btn-row">
-      <button class="btn-primary" onclick="parseSmartInput()">⚡ Parse & Generate Image</button>
-      <button class="btn-danger" onclick="downloadImage()">📥 Download HD Image (4:5)</button>
-      <button class="btn-fb" onclick="shareToFacebook()">🚀 Share to Facebook (Auto-Caption)</button>
-      <button class="btn-success" onclick="saveToDatabase()">💾 Auto-Save Post</button>
-    </div>
-
-    <div id="notification"></div>
-  </div>
-
-  <!-- Database & Subject Library Panel -->
-  <div class="panel">
-    <h2>📁 विषय अनुसार सहेजे गए प्रश्न (Subject Library & Backup)</h2>
-    
-    <div class="library-tabs">
-      <button class="tab-btn active" onclick="filterBySubject('इतिहास', this)">इतिहास (History)</button>
-      <button class="tab-btn" onclick="filterBySubject('भूगोल', this)">भूगोल (Geography)</button>
-      <button class="tab-btn" onclick="filterBySubject('राजव्यवस्था', this)">राजव्यवस्था (Polity)</button>
-      <button class="tab-btn" onclick="filterBySubject('करेंट अफेयर्स', this)">करेंट अफेयर्स (Current Affairs)</button>
-    </div>
-
-    <div class="saved-list" id="savedListContainer">
-      <!-- Dynamic list -->
-    </div>
-
-    <div class="btn-row" style="margin-top: 15px;">
-      <button class="btn-outline" onclick="downloadSubjectPDF()">📄 Download Subject PDF</button>
-      <button class="btn-outline" onclick="exportJSON()">📤 Backup JSON File</button>
-      <label class="btn-outline" style="cursor: pointer; display: inline-flex; align-items: center; margin: 0;">
-        📥 Import JSON <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
-      </label>
+    <!-- Action Buttons -->
+    <div class="btn-grid">
+      <button class="btn-cyan" onclick="parseSmartInput()">⚡ 1-Click Paste & Run</button>
+      <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
+      <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to Facebook (Auto-Caption)</button>
     </div>
   </div>
 
-  <!-- Live 4:5 Aspect Ratio Preview Area -->
-  <div class="preview-section">
-    <div id="capture-card">
-      
-      <!-- Top Single-Line Header -->
-      <div class="top-header-wrap">
-        <div class="top-line-behind"></div>
+  <!-- Live Scaled Preview Section -->
+  <div class="dark-card" style="padding: 12px;">
+    <div class="preview-header-bar">
+      <div class="card-title" style="margin: 0;">📱 लाइव मोबाइल प्रीव्यू (Live 4:5 Post)</div>
+      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● Auto-Fitted 1080×1350</span>
+    </div>
+
+    <div class="preview-viewport-wrapper">
+      <div id="previewViewport">
         
-        <div class="top-logo">
-          <span class="logo-red">Exam</span><span class="logo-black">Preparation</span>
-        </div>
+        <!-- The actual 1080x1350 card -->
+        <div id="capture-card">
+          
+          <!-- Top Single-Line Header -->
+          <div class="top-header-wrap">
+            <div class="top-line-behind"></div>
+            
+            <div class="top-logo">
+              <span class="logo-red">Exam</span><span class="logo-black">Preparation</span>
+            </div>
 
-        <div class="top-tagline">Study Hard &nbsp;|&nbsp; Achieve More</div>
+            <div class="top-tagline">Study Hard &nbsp;|&nbsp; Achieve More</div>
 
-        <div class="top-follow-pill">Exam Preparation : Follow</div>
-      </div>
-
-      <!-- Title & Part Banner -->
-      <div class="title-banner">
-        <div class="title-pill">
-          <div class="title-main" id="outSubject">इतिहास</div>
-          <div class="title-sub" id="outSubTopic">( प्राचीन भारत )</div>
-          <div class="title-part" id="outPart">भाग 1</div>
-        </div>
-      </div>
-
-      <!-- 15 Rows Table -->
-      <div class="table-container">
-        <div class="watermark">Exam Preparation</div>
-        <table>
-          <thead>
-            <tr>
-              <th class="th-q">प्रश्न</th>
-              <th class="th-a">उत्तर</th>
-            </tr>
-          </thead>
-          <tbody id="qaBody">
-            <!-- Dynamic 15 Rows -->
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Single-Line Footer -->
-      <div class="footer-wrap">
-        <div class="footer-line-behind"></div>
-
-        <div class="footer-brand">
-          <span class="footer-book-icon">📖</span>
-          <div class="footer-title">
-            <span class="f-red">Exam</span><span class="f-black">Preparation</span>
+            <div class="top-follow-pill">Exam Preparation : Follow</div>
           </div>
-        </div>
 
-        <div class="footer-follow-btn">Exam Preparation : Follow</div>
+          <!-- Title Banner -->
+          <div class="title-banner">
+            <div class="title-pill">
+              <div class="title-main" id="outSubject">इतिहास</div>
+              <div class="title-sub" id="outSubTopic">( प्राचीन भारत )</div>
+              <div class="title-part" id="outPart">भाग 1</div>
+            </div>
+          </div>
+
+          <!-- 15 Rows Table -->
+          <div class="table-container">
+            <div class="watermark">Exam Preparation</div>
+            <table>
+              <thead>
+                <tr>
+                  <th class="th-q">प्रश्न</th>
+                  <th class="th-a">उत्तर</th>
+                </tr>
+              </thead>
+              <tbody id="qaBody">
+                <!-- 15 Rows populated by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Footer -->
+          <div class="footer-wrap">
+            <div class="footer-line-behind"></div>
+
+            <div class="footer-brand">
+              <span class="footer-book-icon">📖</span>
+              <div class="footer-title">
+                <span class="f-red">Exam</span><span class="f-black">Preparation</span>
+              </div>
+            </div>
+
+            <div class="footer-follow-btn">Exam Preparation : Follow</div>
+          </div>
+
+        </div> <!-- /#capture-card -->
+
       </div>
+    </div>
+  </div>
 
+  <!-- Subject Bank & Storage -->
+  <div class="dark-card">
+    <div class="card-title">📚 प्रश्न बैंक प्रबंधन (Subject Library & Backup)</div>
+
+    <div class="subject-pill-row">
+      <button class="subj-pill active" onclick="filterBySubject('इतिहास', this)">इतिहास</button>
+      <button class="subj-pill" onclick="filterBySubject('भूगोल', this)">भूगोल</button>
+      <button class="subj-pill" onclick="filterBySubject('राजव्यवस्था', this)">राजव्यवस्था</button>
+      <button class="subj-pill" onclick="filterBySubject('करेंट अफेयर्स', this)">करेंट अफेयर्स</button>
+    </div>
+
+    <div class="library-list" id="savedListContainer"></div>
+
+    <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase()">💾 Save Current</button>
+      <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 Subject PDF</button>
+      <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
+      <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; margin: 0;">
+        📥 Import <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
+      </label>
     </div>
   </div>
 
 </div>
 
 <script>
-  // Global memory and state
   let parsedQAData = [];
   let currentSubjectFilter = 'इतिहास';
 
@@ -656,7 +759,7 @@
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
-  // SMART PARSER: Automatically parse raw clipboard text
+  // SMART PARSER (Bug-Free: strictly prevents commas in answers from corrupting subtopic)
   function parseSmartInput() {
     const raw = document.getElementById('smartInput').value.trim();
     if (!raw) return;
@@ -664,17 +767,17 @@
     const lines = raw.split('\n').map(l => l.trim()).filter(l => l.length > 0);
     parsedQAData = [];
     let captionLines = [];
-
     let currentQ = null;
+    let headerFound = false;
 
     lines.forEach((line) => {
-      // 1. Detect Header line with emojis e.g. 🎯 इतिहास, प्राचीन भारत, भाग 1
-      if (line.includes('🎯') || line.toLowerCase().includes('भाग') || (parsedQAData.length === 0 && line.includes(','))) {
+      // 1. Detect Header line ONCE at the start (🎯 or containing भाग/Part)
+      if (!headerFound && (line.includes('🎯') || (parsedQAData.length === 0 && (line.includes('भाग') || line.includes('Part'))))) {
+        headerFound = true;
         let clean = line.replace('🎯', '').trim();
         let parts = clean.split(',').map(s => s.trim());
         
         if (parts[0]) {
-          // Normalize to one of 4 subjects if possible
           if (parts[0].includes('इतिहास')) document.getElementById('subjectCategory').value = 'इतिहास';
           else if (parts[0].includes('भूगोल')) document.getElementById('subjectCategory').value = 'भूगोल';
           else if (parts[0].includes('राज')) document.getElementById('subjectCategory').value = 'राजव्यवस्था';
@@ -685,16 +788,16 @@
         return;
       }
 
-      // 2. Detect Question lines (starts with 1., 2., 10., etc.)
-      const qMatch = line.match(/^(\d+)[\.\)]\s*(.*)/);
+      // 2. Detect Question lines (Starts with number like "1.", "1)", etc.)
+      const qMatch = line.match(/^(\d+)[\.\)\:\-\s]+(.*)/);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
         currentQ = { q: qMatch[2].trim(), a: '' };
         return;
       }
 
-      // 3. Detect Answer lines (starts with उत्तर:, Ans:, etc.)
-      const aMatch = line.match(/^(?:उत्तर|Ans|Answer)[:\-\s]*(.*)/i);
+      // 3. Detect Answer lines (Starts strictly with उत्तर:, Ans:, Answer:)
+      const aMatch = line.match(/^(?:उत्तर|Ans|Answer)[\:\-\s]*(.*)/i);
       if (aMatch && currentQ) {
         currentQ.a = aMatch[1].trim();
         parsedQAData.push(currentQ);
@@ -702,7 +805,7 @@
         return;
       }
 
-      // 4. Trailing caption / hashtags
+      // 4. Captions & Hashtags (collected at the end)
       if (parsedQAData.length >= 14 || line.includes('#') || line.includes('प्रतियोगी')) {
         captionLines.push(line);
       }
@@ -715,7 +818,7 @@
     }
 
     renderCard();
-    notify("✅ स्मार्ट इनपुट सफलतापूर्वक पार्स हो गया!");
+    notify("✅ स्मार्ट इनपुट लोड हो गया!");
   }
 
   // Format Question Text
@@ -751,7 +854,6 @@
     if (!aText) return '';
     let text = aText.trim();
 
-    // Check parenthesis
     if (text.includes('(') && text.includes(')')) {
       return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
         let res = '';
@@ -762,7 +864,6 @@
       });
     }
 
-    // Check comma
     if (text.includes(',')) {
       let idx = text.indexOf(',');
       let before = text.substring(0, idx);
@@ -773,7 +874,7 @@
     return `<span class="ans-maroon">${text}</span>`;
   }
 
-  // Render 4:5 Card
+  // Render Table & Content
   function renderCard() {
     const subject = document.getElementById('subjectCategory').value;
     const subTopic = document.getElementById('inSubTopic').value.trim();
@@ -793,7 +894,6 @@
     const tbody = document.getElementById('qaBody');
     tbody.innerHTML = '';
 
-    // Standardize to 15 questions
     const displayList = parsedQAData.slice(0, 15);
 
     displayList.forEach((item, index) => {
@@ -806,7 +906,7 @@
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
 
-      // 15th (last) question answer is hidden for engagement
+      // 15th Question answer is hidden with Comment Call-to-action
       if (index === 14 || index === displayList.length - 1) {
         tdA.innerHTML = `<div class="cta-comment">👉 उत्तर कमेंट में बताएं 💬</div>`;
       } else {
@@ -817,49 +917,76 @@
       tr.appendChild(tdA);
       tbody.appendChild(tr);
     });
+
+    updatePreviewScale();
   }
 
-  // Generate Canvas Blob
-  function getCardCanvas() {
+  // Auto-Scale Card Preview to Fit Any Mobile Screen Width Perfectly
+  function updatePreviewScale() {
+    const viewport = document.getElementById('previewViewport');
     const card = document.getElementById('capture-card');
-    return html2canvas(card, {
-      scale: 2, // 2160 x 2700 HD Output
+    if (!viewport || !card) return;
+
+    const containerWidth = viewport.parentElement.clientWidth;
+    const scale = containerWidth / 1080;
+    
+    card.style.transform = `scale(${scale})`;
+    viewport.style.height = `${1350 * scale}px`;
+  }
+
+  window.addEventListener('resize', updatePreviewScale);
+
+  // Generate 2160x2700 Canvas (2x scale for ultra-sharp Facebook HD output)
+  async function getCardCanvas() {
+    const card = document.getElementById('capture-card');
+    const oldTransform = card.style.transform;
+    card.style.transform = 'none'; // Temporarily reset transform for crisp full-res rendering
+
+    const canvas = await html2canvas(card, {
+      width: 1080,
+      height: 1350,
+      scale: 2, // Ultra HD
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false
     });
+
+    card.style.transform = oldTransform; // Restore responsive mobile scaling
+    return canvas;
   }
 
   // Download HD Image
-  function downloadImage() {
+  async function downloadImage() {
+    notify("⏳ HD इमेज तैयार हो रही है...");
     const sub = document.getElementById('subjectCategory').value;
     const part = document.getElementById('inPart').value.trim() || '1';
-    
-    getCardCanvas().then(canvas => {
-      const link = document.createElement('a');
-      link.download = `Exam_Prep_${sub}_${part}.png`;
-      link.href = canvas.toDataURL('image/png', 1.0);
-      link.click();
-      notify("📥 4:5 HD इमेज सफलतापूर्वक डाउनलोड हो गई!");
-    });
+
+    const canvas = await getCardCanvas();
+    const link = document.createElement('a');
+    link.download = `Exam_Prep_${sub}_${part}.png`;
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.click();
+    notify("📥 4:5 HD इमेज डाउनलोड हो गई!");
   }
 
   // Direct Share to Facebook with Auto-Caption
   async function shareToFacebook() {
     const caption = document.getElementById('fbCaption').value;
     
-    // Copy caption to clipboard first
+    // Auto-copy caption
     try {
       await navigator.clipboard.writeText(caption);
     } catch (e) {
-      console.log("Clipboard write fallback");
+      console.log("Clipboard fallback");
     }
 
+    notify("⏳ शेयरिंग शुरू हो रही है...");
     const canvas = await getCardCanvas();
+
     canvas.toBlob(async (blob) => {
       const file = new File([blob], 'exam_prep_post.png', { type: 'image/png' });
 
-      // Web Share API support (Mobile / Compatible Browsers)
+      // Mobile Web Share API
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
@@ -867,30 +994,30 @@
             title: document.getElementById('outSubject').innerText,
             text: caption
           });
-          notify("🚀 फेसबुक शेयर डायलॉग सफलतापूर्वक खोला गया!");
+          notify("🚀 फेसबुक शेयर डायलॉग खुला!");
           return;
         } catch (err) {
-          console.log("Share canceled or failed", err);
+          console.log("Share dismissed", err);
         }
       }
 
-      // Desktop Fallback: Image auto-downloaded + Caption Copied + Opens FB
+      // Desktop / Fallback
       const link = document.createElement('a');
       link.download = 'exam_prep_post.png';
       link.href = URL.createObjectURL(blob);
       link.click();
 
       window.open('https://www.facebook.com/', '_blank');
-      notify("📋 कैप्शन कॉपी हो गया और इमेज डाउनलोड हो गई! फेसबुक पर पेस्ट करें।");
+      notify("📋 कैप्शन कॉपी हुआ और फोटो डाउनलोड! फेसबुक पर पेस्ट करें।");
     }, 'image/png');
   }
 
-  // Local Storage Database Handling
+  // Database Management
   function getDB() {
-    return JSON.parse(localStorage.getItem('exam_prep_db') || '[]');
+    return JSON.parse(localStorage.getItem('exam_prep_db_v2') || '[]');
   }
   function saveDB(db) {
-    localStorage.setItem('exam_prep_db', JSON.stringify(db));
+    localStorage.setItem('exam_prep_db_v2', JSON.stringify(db));
   }
 
   function saveToDatabase() {
@@ -910,7 +1037,7 @@
     db.unshift(entry);
     saveDB(db);
     renderLibrary();
-    notify("💾 पोस्ट सफलतापूर्वक Auto-Save हो गई!");
+    notify("💾 पोस्ट Auto-Save हो गई!");
   }
 
   function renderLibrary() {
@@ -921,18 +1048,18 @@
     const filtered = db.filter(item => item.subject === currentSubjectFilter);
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div style="padding: 10px; color: #64748b;">इस विषय में अभी कोई सहेजी गई पोस्ट नहीं है।</div>`;
+      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:13px;">इस विषय में कोई पोस्ट नहीं है।</div>`;
       return;
     }
 
     filtered.forEach(item => {
       const div = document.createElement('div');
-      div.className = 'saved-item';
+      div.className = 'saved-row';
       div.innerHTML = `
-        <div class="saved-item-title">${item.subject} - ${item.subTopic} (${item.part}) <span style="font-size:12px; color:#64748b;">[${item.date}]</span></div>
-        <div class="saved-item-actions">
-          <button class="btn-xs btn-primary" onclick="loadItem(${item.id})">Load</button>
-          <button class="btn-xs btn-danger" onclick="deleteItem(${item.id})">Delete</button>
+        <div><strong>${item.subTopic}</strong> (${item.part})</div>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn-xs btn-cyan" onclick="loadItem(${item.id})">Load</button>
+          <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
         </div>
       `;
       container.appendChild(div);
@@ -941,7 +1068,7 @@
 
   function filterBySubject(subj, btn) {
     currentSubjectFilter = subj;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.subj-pill').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderLibrary();
   }
@@ -959,7 +1086,7 @@
     parsedQAData = item.questions;
 
     renderCard();
-    notify(`📖 Loaded: ${item.subject} - ${item.part}`);
+    notify(`📖 लोड हुआ: ${item.subject} (${item.part})`);
   }
 
   function deleteItem(id) {
@@ -969,7 +1096,7 @@
     renderLibrary();
   }
 
-  // Subject-wise PDF Export using jsPDF
+  // Subject PDF
   function downloadSubjectPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -988,7 +1115,7 @@
 
     let yPos = 40;
 
-    db.forEach((set, setIdx) => {
+    db.forEach((set) => {
       if (yPos > 260) { doc.addPage(); yPos = 20; }
       doc.setFontSize(13);
       doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
@@ -1006,10 +1133,10 @@
     });
 
     doc.save(`Exam_Preparation_${currentSubjectFilter}.pdf`);
-    notify("📄 विषय-वार PDF सफलतापूर्वक डाउनलोड हो गया!");
+    notify("📄 Subject PDF डाउनलोड हो गया!");
   }
 
-  // Backup & Import JSON
+  // JSON Export / Import
   function exportJSON() {
     const db = getDB();
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
@@ -1029,7 +1156,7 @@
         if (Array.isArray(imported)) {
           saveDB(imported);
           renderLibrary();
-          notify("📥 JSON बैकअप डेटा सफलतापूर्वक लोड हो गया!");
+          notify("📥 बैकअप सफलतापूर्वक लोड हुआ!");
         }
       } catch (err) {
         alert("अमान्य JSON फाइल!");
@@ -1039,16 +1166,16 @@
   }
 
   function notify(msg) {
-    const n = document.getElementById('notification');
-    n.innerText = msg;
-    n.style.display = 'block';
-    setTimeout(() => { n.style.display = 'none'; }, 3500);
+    const toast = document.getElementById('toastMsg');
+    toast.innerText = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 2800);
   }
 
-  // Initial Load
   window.onload = () => {
     parseSmartInput();
     renderLibrary();
+    setTimeout(updatePreviewScale, 300);
   };
 </script>
 </body>
