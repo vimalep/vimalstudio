@@ -596,7 +596,7 @@
     <span class="app-badge">MOBILE v3.5 AI</span>
   </div>
 
-  <!-- 1. GEMINI AI GENERATOR CARD (Optional / Instant AI) -->
+  <!-- 1. GEMINI AI GENERATOR CARD -->
   <div class="dark-card" style="border-color: #3b82f6;">
     <div class="card-title" style="color: #60a5fa;">
       <span>✨ Gemini AI Auto-Generator (15 प्रश्न)</span>
@@ -642,7 +642,7 @@
     </button>
   </div>
 
-  <!-- 2. MANUAL SMART PASTE CARD (Unchanged) -->
+  <!-- 2. MANUAL SMART PASTE CARD -->
   <div class="dark-card">
     <div class="card-title">
       <span>📝 Raw Text (Smart Paste):</span>
@@ -737,7 +737,7 @@
     </div>
   </div>
 
-  <!-- 3. LIVE PREVIEW (4:5 Ratio Card) -->
+  <!-- 3. LIVE PREVIEW -->
   <div class="dark-card" style="padding: 10px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <div class="card-title" style="margin:0;">📱 लाइव मोबाइल प्रीव्यू</div>
@@ -794,7 +794,7 @@
     </div>
   </div>
 
-  <!-- 4. ARCHIVE / QUESTION BANK -->
+  <!-- 4. ARCHIVE -->
   <div class="dark-card">
     <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
@@ -848,7 +848,7 @@
     }
   }
 
-  // GEMINI AI INTEGRATION
+  // GEMINI AI INTEGRATION (Updated to gemini-3.6-flash)
   async function generateViaGemini() {
     let key = document.getElementById('geminiApiKey').value.trim() || localStorage.getItem(STORAGE_KEY_API) || localStorage.getItem("GEMINI_API_KEY_LOCAL");
     if (!key) {
@@ -887,7 +887,7 @@ ${startNum + 1}. [प्रश्न]
 3. केवल कच्चा टेक्स्ट (raw text) दें, कोई अतिरिक्त गपशप या markdown कोड ब्लॉक (\`\`\`) न लगाएं।`;
 
     try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${key}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
@@ -906,10 +906,8 @@ ${startNum + 1}. [प्रश्न]
         document.getElementById('smartInput').value = text;
         parseSmartInput();
         
-        // Agle set ke liye sequence number update karein
         document.getElementById('aiStartNum').value = startNum + 15;
         
-        // Update part number if sequence matches (e.g. भाग 2 -> भाग 3)
         const partMatch = part.match(/\d+/);
         if (partMatch) {
           const nextPartNum = parseInt(partMatch[0]) + 1;
