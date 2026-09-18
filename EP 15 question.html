@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Preparation - Studio Pro</title>
+  <title>Exam Preparation - Studio Pro Mobile</title>
   
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,7 +91,7 @@
       margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -112,6 +112,17 @@
     }
     textarea:focus {
       border-color: var(--border-focus);
+    }
+
+    /* Live Count Indicator */
+    .status-counter {
+      font-size: 12px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* Typography Controls */
@@ -177,7 +188,7 @@
       cursor: pointer;
     }
 
-    /* Primary Action Buttons */
+    /* Buttons */
     .btn-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -228,9 +239,10 @@
       font-weight: 700;
       z-index: 99999;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      white-space: nowrap;
     }
 
-    /* Live Preview Scaler */
+    /* Preview Scaler */
     .preview-viewport-wrapper {
       width: 100%;
       border-radius: 12px;
@@ -245,7 +257,7 @@
       position: relative;
     }
 
-    /* 4:5 Full HD Card Canvas (1080px x 1350px) */
+    /* 4:5 Card Container (1080px x 1350px) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -412,7 +424,7 @@
       height: 38px;
     }
     
-    /* 1/3 Answer Ratio: 70% Question, 30% Answer */
+    /* 1/3 Ratio: Question 70%, Answer 30% */
     thead th.th-q, tbody td.td-q {
       width: 70% !important;
       border-right: 2px solid #86efac;
@@ -450,7 +462,7 @@
       font-weight: 900;
       margin-right: 5px;
       display: inline-block;
-      min-width: 32px;
+      min-width: 30px;
     }
 
     .word-red { color: #dc2626; font-weight: 900; }
@@ -580,12 +592,15 @@
 
   <div class="app-header">
     <h1>⚡ Exam Preparation Studio</h1>
-    <span class="app-badge">FB 4:5 ULTRA HD</span>
+    <span class="app-badge">MOBILE v3.0</span>
   </div>
 
-  <!-- Main Input Card -->
+  <!-- Input Card -->
   <div class="dark-card">
-    <div class="card-title">📝 Raw Text (Smart Paste Box):</div>
+    <div class="card-title">
+      <span>📝 Raw Text (Smart Paste):</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">भाग 2 डिटेक्टेड</span>
+    </div>
     
     <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 2
 16. मनके बनाने के कारखाने के साक्ष्य किन दो प्रमुख सैंधव स्थलों से मिले हैं?
@@ -620,6 +635,8 @@
 उत्तर: बाढ़ एवं जलवायु परिवर्तन
 प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
 #HistoryGK</textarea>
+
+    <div class="status-counter" id="statusCounter">📊 लोड हुए प्रश्न: 15 / 15</div>
 
     <!-- Typography Controls -->
     <div class="typo-panel">
@@ -661,10 +678,10 @@
       </div>
     </div>
 
-    <!-- Hidden FB Caption -->
+    <!-- Hidden Caption for FB -->
     <input type="hidden" id="fbCaption" value="">
 
-    <!-- Separate Action Buttons -->
+    <!-- Actions -->
     <div class="btn-grid">
       <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
       <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
@@ -673,7 +690,7 @@
     </div>
   </div>
 
-  <!-- Live Scaled Preview -->
+  <!-- Live Preview -->
   <div class="dark-card" style="padding: 10px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <div class="card-title" style="margin:0;">📱 लाइव मोबाइल प्रीव्यू</div>
@@ -730,7 +747,7 @@
     </div>
   </div>
 
-  <!-- Database & Archive -->
+  <!-- Archive -->
   <div class="dark-card">
     <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
@@ -773,20 +790,25 @@
         const text = await navigator.clipboard.readText();
         if (text && text.trim().length > 0) {
           document.getElementById('smartInput').value = text;
-          notify("📋 बॉक्स में पेस्ट हो गया! अब 'Generate / Run' दबाएँ।");
+          notify("📋 बॉक्स में पेस्ट हो गया! अब 'Generate / Run' दबाएं।");
           return;
         }
       }
     } catch (err) {
-      console.warn("Clipboard read restricted", err);
+      console.warn("Clipboard access denied", err);
     }
-    notify("💡 क्लिपबोर्ड ऑटो-रीड नहीं हुआ। बॉक्स में हाथ से पेस्ट करें फिर Run दबाएँ।");
+    notify("💡 बॉक्स में हाथ से Paste करें और फिर 'Generate / Run' दबाएं।");
+    document.getElementById('smartInput').focus();
   }
 
   // 2. Separate "Generate / Run" Button
   function generateCards() {
-    parseSmartInput();
-    notify("⚡ प्रश्न इमेज पर तैयार हो गए!");
+    try {
+      parseSmartInput();
+      notify("⚡ 15 प्रश्न इमेज पर तैयार हो गए!");
+    } catch (e) {
+      alert("Parsing Error: " + e.message);
+    }
   }
 
   // Live Typography
@@ -818,12 +840,20 @@
     });
   }
 
-  // Guaranteed Bulletproof Parser
-  function parseSmartInput() {
-    const raw = document.getElementById('smartInput').value;
-    if (!raw || !raw.trim()) return;
+  // Sanitizer for invisible spaces & line breaks
+  function cleanLine(str) {
+    return str.replace(/\u00A0/g, ' ') // Non-breaking spaces
+              .replace(/[\u200B-\u200D\uFEFF]/g, '') // Zero-width spaces
+              .trim();
+  }
 
-    const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  // BULLETPROOF PARSER
+  function parseSmartInput() {
+    let raw = document.getElementById('smartInput').value || '';
+    if (!raw.trim()) return;
+
+    // Normalize Windows/Mac line endings
+    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
     parsedQAData = [];
     let captionLines = [];
     let currentQ = null;
@@ -832,7 +862,7 @@
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // 1. Header parsing (Line with 🎯 or starting header)
+      // A. Header Parsing (First non-empty line with 🎯 or commas before questions)
       if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
         if (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)[\.\)\:\-\s]/))) {
           headerParsed = true;
@@ -848,11 +878,13 @@
           }
           if (parts[1]) currentMeta.subTopic = parts[1];
           if (parts[2]) currentMeta.part = parts[2];
+
+          document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part})`;
           continue;
         }
       }
 
-      // 2. Single-line Q | A format
+      // B. Pipe format (Question | Answer)
       if (line.includes('|')) {
         if (currentQ) { parsedQAData.push(currentQ); currentQ = null; }
         const parts = line.split('|');
@@ -863,14 +895,14 @@
         continue;
       }
 
-      // 3. Question line start (16., 1., Q1., 1), etc.)
+      // C. Question line (16., 1), Q.1, 16 -, 16 )
       const qMatch = line.match(/^(?:Q\.?|प्र\.?|प्रश्न)?\s*(\d+|[०-९]+)[\.\)\:\-\s]+(.*)/i);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
         const num = qMatch[1];
         let qText = qMatch[2].trim();
 
-        // Check if answer is inline on same line
+        // Check if answer is written on the same line
         const inlineAnsMatch = qText.match(/(?:उत्तर|Ans|Answer)[\:\-\s]*(.*)/i);
         if (inlineAnsMatch) {
           const actualQ = qText.substring(0, inlineAnsMatch.index).trim();
@@ -882,7 +914,7 @@
         continue;
       }
 
-      // 4. Answer line start (उत्तर:, Ans:, Answer:, उ-)
+      // D. Answer line (उत्तर:, Ans:, Answer:, उ-)
       const aMatch = line.match(/^(?:उत्तर|Ans|Answer|उ\.?|उत्तर\s*-)[\:\-\s]*(.*)/i);
       if (aMatch) {
         const aText = aMatch[1].trim();
@@ -896,7 +928,7 @@
         continue;
       }
 
-      // 5. Continuation lines
+      // E. Unlabelled Answer line or multiline question
       if (currentQ && !currentQ.a) {
         if (!currentQ.q.includes('?') && (line.includes('?') || line.length < 25)) {
           currentQ.q += ' ' + line;
@@ -908,7 +940,7 @@
         continue;
       }
 
-      // 6. Captions / Hashtags
+      // F. Captions
       if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || line.includes('स्क्रीनशॉट') || parsedQAData.length >= 15) {
         captionLines.push(line);
       }
@@ -923,9 +955,12 @@
       document.getElementById('fbCaption').value = currentMeta.caption;
     }
 
+    document.getElementById('statusCounter').innerText = `📊 लोड हुए प्रश्न: ${parsedQAData.length} / 15`;
+
     renderCard();
   }
 
+  // Question Formatter (Alternating 1st/2nd word red + question mark red)
   function formatQuestion(qText, rowIndex) {
     if (!qText) return '';
     let words = qText.trim().split(/\s+/);
@@ -936,7 +971,6 @@
     return words.map((w, wIdx) => {
       let hasQMark = w.includes('?');
       let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
-      let punctuation = w.slice(clean.length);
 
       let isQWord = hindiQuestionWords.has(clean);
       let isTarget = (wIdx === targetPos);
@@ -947,12 +981,11 @@
       }
 
       if (hasQMark) styled += `<span class="q-mark">?</span>`;
-      else if (punctuation) styled += punctuation;
-      
       return styled;
     }).join(' ');
   }
 
+  // Answer Formatter (Maroon & Green)
   function formatAnswer(aText) {
     if (!aText) return '';
     let text = aText.trim();
@@ -1035,6 +1068,7 @@
 
   window.addEventListener('resize', updatePreviewScale);
 
+  // Generate 2160x2700 Canvas
   async function getCardCanvas() {
     const card = document.getElementById('capture-card');
     const oldTransform = card.style.transform;
@@ -1043,7 +1077,7 @@
     const canvas = await html2canvas(card, {
       width: 1080,
       height: 1350,
-      scale: 2, // 2160x2700 ultra HD
+      scale: 2,
       useCORS: true,
       backgroundColor: '#ffffff',
       logging: false
@@ -1099,10 +1133,10 @@
   }
 
   function getDB() {
-    return JSON.parse(localStorage.getItem('exam_prep_db_v6') || '[]');
+    return JSON.parse(localStorage.getItem('exam_prep_db_v7') || '[]');
   }
   function saveDB(db) {
-    localStorage.setItem('exam_prep_db_v6', JSON.stringify(db));
+    localStorage.setItem('exam_prep_db_v7', JSON.stringify(db));
   }
 
   function saveToDatabase() {
