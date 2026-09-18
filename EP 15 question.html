@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Preparation - Studio Pro Mobile</title>
+  <title>Exam Preparation - Studio Pro Mobile + AI</title>
   
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,6 +96,36 @@
       letter-spacing: 0.5px;
     }
 
+    .row-flex {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .row-flex > div { flex: 1; }
+
+    label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    input, select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      color: #f8fafc;
+      padding: 7px 10px;
+      font-size: 13px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--border-focus);
+    }
+
     textarea {
       width: 100%;
       background: var(--bg-input);
@@ -114,7 +144,6 @@
       border-color: var(--border-focus);
     }
 
-    /* Live Count Indicator */
     .status-counter {
       font-size: 12px;
       font-weight: 700;
@@ -125,7 +154,6 @@
       gap: 6px;
     }
 
-    /* Typography Controls */
     .typo-panel {
       background: #0b1222;
       border: 1px solid var(--border-color);
@@ -157,20 +185,6 @@
       font-weight: 800;
     }
 
-    select {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      color: #f8fafc;
-      padding: 6px 8px;
-      font-size: 13px;
-      outline: none;
-    }
-    select:focus {
-      border-color: var(--border-focus);
-    }
-
     input[type="range"] {
       -webkit-appearance: none;
       width: 100%;
@@ -188,7 +202,6 @@
       cursor: pointer;
     }
 
-    /* Buttons */
     .btn-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -213,9 +226,14 @@
     .btn-paste { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
     .btn-run { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; }
     .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
-    .btn-fb {
-      background: linear-gradient(135deg, #1877f2, #0d5bbd);
+    .btn-fb { background: linear-gradient(135deg, #1877f2, #0d5bbd); color: #fff; }
+    .btn-ai {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
       color: #fff;
+      padding: 11px;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: 4px;
     }
     .btn-dark {
       background: #1e293b;
@@ -242,7 +260,6 @@
       white-space: nowrap;
     }
 
-    /* Preview Scaler */
     .preview-viewport-wrapper {
       width: 100%;
       border-radius: 12px;
@@ -257,7 +274,6 @@
       position: relative;
     }
 
-    /* 4:5 Card Container (1080px x 1350px) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -424,7 +440,6 @@
       height: 38px;
     }
     
-    /* 1/3 Ratio: Question 70%, Answer 30% */
     thead th.th-q, tbody td.td-q {
       width: 70% !important;
       border-right: 2px solid #86efac;
@@ -458,7 +473,6 @@
       font-weight: 800;
     }
     
-    /* Sequence Number: Vibrant Blue */
     .q-num {
       color: #1d4ed8;
       font-weight: 900;
@@ -512,7 +526,6 @@
     .footer-title .f-red { color: #dc2626; }
     .footer-title .f-black { color: #0f172a; }
 
-    /* Footer Right Button Text: Hindi Important for All Exams */
     .footer-follow-btn {
       position: relative;
       z-index: 2;
@@ -525,7 +538,6 @@
       font-family: 'Mukta', sans-serif;
     }
 
-    /* Archive */
     .subject-pill-row {
       display: flex;
       gap: 6px;
@@ -581,10 +593,56 @@
 
   <div class="app-header">
     <h1>⚡ Exam Preparation Studio</h1>
-    <span class="app-badge">MOBILE v3.0</span>
+    <span class="app-badge">MOBILE v3.5 AI</span>
   </div>
 
-  <!-- Input Card -->
+  <!-- 1. GEMINI AI GENERATOR CARD (Optional / Instant AI) -->
+  <div class="dark-card" style="border-color: #3b82f6;">
+    <div class="card-title" style="color: #60a5fa;">
+      <span>✨ Gemini AI Auto-Generator (15 प्रश्न)</span>
+      <span style="font-size: 10.5px; color: #93c5fd;">AI Powered</span>
+    </div>
+
+    <div style="margin-bottom: 8px;">
+      <label>🔑 Gemini API Key (Auto-Saved in Browser):</label>
+      <input type="password" id="geminiApiKey" placeholder="Paste your Gemini API key here..." onchange="saveGeminiKey()">
+    </div>
+
+    <div class="row-flex">
+      <div>
+        <label>विषय (Subject):</label>
+        <select id="aiSubject">
+          <option value="इतिहास">इतिहास</option>
+          <option value="भूगोल">भूगोल</option>
+          <option value="राजव्यवस्था">राजव्यवस्था</option>
+          <option value="सामान्य विज्ञान">सामान्य विज्ञान</option>
+          <option value="अर्थव्यवस्था">अर्थव्यवस्था</option>
+          <option value="करेंट अफेयर्स">करेंट अफेयर्स</option>
+        </select>
+      </div>
+      <div>
+        <label>उप-विषय (Sub-Topic):</label>
+        <input type="text" id="aiSubTopic" placeholder="उदा. प्राचीन भारत, नदियां" value="प्राचीन भारत">
+      </div>
+    </div>
+
+    <div class="row-flex">
+      <div>
+        <label>भाग (Part):</label>
+        <input type="text" id="aiPart" placeholder="उदा. भाग 2" value="भाग 2">
+      </div>
+      <div>
+        <label>Start Question #:</label>
+        <input type="number" id="aiStartNum" value="16" min="1">
+      </div>
+    </div>
+
+    <button class="btn-ai" id="btnAiGenerate" onclick="generateViaGemini()">
+      <span>✨ AI से 15 प्रश्न जनरेट करें</span>
+    </button>
+  </div>
+
+  <!-- 2. MANUAL SMART PASTE CARD (Unchanged) -->
   <div class="dark-card">
     <div class="card-title">
       <span>📝 Raw Text (Smart Paste):</span>
@@ -679,7 +737,7 @@
     </div>
   </div>
 
-  <!-- Live Preview -->
+  <!-- 3. LIVE PREVIEW (4:5 Ratio Card) -->
   <div class="dark-card" style="padding: 10px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <div class="card-title" style="margin:0;">📱 लाइव मोबाइल प्रीव्यू</div>
@@ -736,7 +794,7 @@
     </div>
   </div>
 
-  <!-- Archive -->
+  <!-- 4. ARCHIVE / QUESTION BANK -->
   <div class="dark-card">
     <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
@@ -745,6 +803,7 @@
       <button class="subj-pill" onclick="filterBySubject('भूगोल', this)">भूगोल</button>
       <button class="subj-pill" onclick="filterBySubject('राजव्यवस्था', this)">राजव्यवस्था</button>
       <button class="subj-pill" onclick="filterBySubject('करेंट अफेयर्स', this)">करेंट अफेयर्स</button>
+      <button class="subj-pill" onclick="filterBySubject('सामान्य विज्ञान', this)">सामान्य विज्ञान</button>
     </div>
 
     <div class="library-list" id="savedListContainer"></div>
@@ -766,11 +825,108 @@
   let currentMeta = { subject: 'इतिहास', subTopic: 'प्राचीन भारत', part: 'भाग 2', caption: '' };
   let currentSubjectFilter = 'इतिहास';
 
+  const STORAGE_KEY_API = "EP_STUDIO_GEMINI_KEY";
+
   const hindiQuestionWords = new Set([
     'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
     'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
+
+  function saveGeminiKey() {
+    const key = document.getElementById('geminiApiKey').value.trim();
+    if (key) {
+      localStorage.setItem(STORAGE_KEY_API, key);
+      notify("🔑 API Key सुरक्षित सेव हो गई!");
+    }
+  }
+
+  function loadGeminiKey() {
+    const key = localStorage.getItem(STORAGE_KEY_API) || localStorage.getItem("GEMINI_API_KEY_LOCAL");
+    if (key) {
+      document.getElementById('geminiApiKey').value = key;
+    }
+  }
+
+  // GEMINI AI INTEGRATION
+  async function generateViaGemini() {
+    let key = document.getElementById('geminiApiKey').value.trim() || localStorage.getItem(STORAGE_KEY_API) || localStorage.getItem("GEMINI_API_KEY_LOCAL");
+    if (!key) {
+      alert("कृपया पहले अपनी Gemini API Key दर्ज करें!");
+      document.getElementById('geminiApiKey').focus();
+      return;
+    }
+
+    const subject = document.getElementById('aiSubject').value;
+    const subTopic = document.getElementById('aiSubTopic').value.trim() || subject;
+    const part = document.getElementById('aiPart').value.trim() || 'भाग 1';
+    const startNum = parseInt(document.getElementById('aiStartNum').value) || 1;
+
+    const btn = document.getElementById('btnAiGenerate');
+    btn.disabled = true;
+    btn.innerHTML = `<span>⏳ 15 महत्वपूर्ण प्रश्न तैयार हो रहे हैं...</span>`;
+
+    const prompt = `आप प्रतियोगी परीक्षाओं (UPSC, SSC, State PCS) के वरिष्ठ विशेषज्ञ शिक्षक हैं।
+कृपया निम्नलिखित विवरण के अनुसार भारतीय छात्रों के लिए उच्च-गुणवत्ता वाले 15 एक-पंक्ति (One-liner) प्रश्न और सटीक उत्तर तैयार करें:
+- विषय: ${subject}
+- उप-विषय: ${subTopic}
+- भाग: ${part}
+- प्रश्न संख्या शुरू: ${startNum} से ${startNum + 14} तक
+
+कड़े नियम:
+1. भाषा: केवल प्रामाणिक और शुद्ध हिंदी।
+2. प्रारूप: नीचे दिए गए प्रारूप का अक्षरशः पालन करें:
+🎯 ${subject},${subTopic}, ${part}${startNum}. [प्रश्न]
+उत्तर: [उत्तर]
+${startNum + 1}. [प्रश्न]
+उत्तर: [उत्तर]
+... (पूरे 15 प्रश्न और उत्तर)
+प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
+#${subject.replace(/\s+/g, '')}GK
+
+3. केवल कच्चा टेक्स्ट (raw text) दें, कोई अतिरिक्त गपशप या markdown कोड ब्लॉक (\`\`\`) न लगाएं।`;
+
+    try {
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+      text = text.replace(/^```[a-z]*\r?\n?/i, '').replace(/```$/i, '').trim();
+
+      if (text.length > 50) {
+        document.getElementById('smartInput').value = text;
+        parseSmartInput();
+        
+        // Agle set ke liye sequence number update karein
+        document.getElementById('aiStartNum').value = startNum + 15;
+        
+        // Update part number if sequence matches (e.g. भाग 2 -> भाग 3)
+        const partMatch = part.match(/\d+/);
+        if (partMatch) {
+          const nextPartNum = parseInt(partMatch[0]) + 1;
+          document.getElementById('aiPart').value = part.replace(/\d+/, nextPartNum);
+        }
+
+        notify("✨ 15 प्रश्न AI द्वारा सफलतापूर्वक लोड हो गए!");
+      } else {
+        throw new Error("API से सही डेटा प्राप्त नहीं हुआ।");
+      }
+    } catch (e) {
+      alert("AI Error: " + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<span>✨ AI से 15 प्रश्न जनरेट करें</span>`;
+    }
+  }
 
   // 1. Separate "Click Paste" Button
   async function onlyPasteClipboard() {
@@ -829,7 +985,6 @@
     });
   }
 
-  // Sanitizer for invisible spaces & line breaks
   function cleanLine(str) {
     return str.replace(/\u00A0/g, ' ')
               .replace(/[\u200B-\u200D\uFEFF]/g, '')
@@ -861,6 +1016,8 @@
             if (parts[0].includes('इतिहास')) currentMeta.subject = 'इतिहास';
             else if (parts[0].includes('भूगोल')) currentMeta.subject = 'भूगोल';
             else if (parts[0].includes('राज')) currentMeta.subject = 'राजव्यवस्था';
+            else if (parts[0].includes('विज्ञान')) currentMeta.subject = 'सामान्य विज्ञान';
+            else if (parts[0].includes('अर्थ')) currentMeta.subject = 'अर्थव्यवस्था';
             else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) currentMeta.subject = 'करेंट अफेयर्स';
             else currentMeta.subject = parts[0];
           }
@@ -872,7 +1029,7 @@
         }
       }
 
-      // B. Pipe format (Question | Answer)
+      // B. Pipe format
       if (line.includes('|')) {
         if (currentQ) { parsedQAData.push(currentQ); currentQ = null; }
         const parts = line.split('|');
@@ -972,7 +1129,7 @@
     }).join(' ');
   }
 
-  // Answer Formatter (Green base + Maroon for Brackets/Comma)
+  // Answer Formatter: Green base, Maroon for parenthesis/comma
   function formatAnswer(aText) {
     if (!aText) return '';
     let text = aText.trim();
@@ -1024,7 +1181,6 @@
 
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
-      // Sabhi questions ka answer normal format mein render hoga (koi bhi hide nahi)
       tdA.innerHTML = formatAnswer(item.a);
 
       tr.appendChild(tdQ);
@@ -1273,6 +1429,7 @@
   }
 
   window.onload = () => {
+    loadGeminiKey();
     parseSmartInput();
     renderLibrary();
     setTimeout(updatePreviewScale, 300);
