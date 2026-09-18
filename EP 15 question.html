@@ -457,8 +457,10 @@
       font-size: 21px;
       font-weight: 800;
     }
+    
+    /* Sequence Number: Vibrant Blue */
     .q-num {
-      color: #dc2626;
+      color: #1d4ed8;
       font-weight: 900;
       margin-right: 5px;
       display: inline-block;
@@ -471,22 +473,8 @@
       font-size: 21px;
       font-weight: 700;
     }
-    .ans-maroon { color: #800000; font-weight: 800; }
     .ans-green { color: #15803d; font-weight: 700; }
-
-    .cta-comment {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: #fef2f2;
-      color: #dc2626;
-      border: 2px dashed #dc2626;
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 15px;
-      white-space: nowrap;
-    }
+    .ans-maroon { color: #800000; font-weight: 800; }
 
     .footer-wrap {
       position: relative;
@@ -524,16 +512,17 @@
     .footer-title .f-red { color: #dc2626; }
     .footer-title .f-black { color: #0f172a; }
 
+    /* Footer Right Button Text: Hindi Important for All Exams */
     .footer-follow-btn {
       position: relative;
       z-index: 2;
       background: #dc2626;
       color: #ffffff;
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 800;
       padding: 6px 20px;
       border-radius: 40px;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Mukta', sans-serif;
     }
 
     /* Archive */
@@ -604,7 +593,7 @@
     
     <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 2
 16. मनके बनाने के कारखाने के साक्ष्य किन दो प्रमुख सैंधव स्थलों से मिले हैं?
-उत्तर: चन्हूदड़ो और लोथल
+उत्तर: चन्हूदड़ो और लोथल
 17. सिंधु सभ्यता की मुहरों पर सबसे अधिक किस काल्पनिक पशु का अंकन मिलता है?
 उत्तर: एकश्रृंगी पशु (Unicorn)
 18. हड़प्पा लिपि के बड़े आकार के 10 चिह्नों वाला एक शिलालेख कहाँ से मिला है?
@@ -739,7 +728,7 @@
                 <span class="f-red">Exam</span><span class="f-black">Preparation</span>
               </div>
             </div>
-            <div class="footer-follow-btn">Exam Preparation : Follow</div>
+            <div class="footer-follow-btn">सभी परीक्षाओं के लिए महत्वपूर्ण</div>
           </div>
 
         </div>
@@ -842,8 +831,8 @@
 
   // Sanitizer for invisible spaces & line breaks
   function cleanLine(str) {
-    return str.replace(/\u00A0/g, ' ') // Non-breaking spaces
-              .replace(/[\u200B-\u200D\uFEFF]/g, '') // Zero-width spaces
+    return str.replace(/\u00A0/g, ' ')
+              .replace(/[\u200B-\u200D\uFEFF]/g, '')
               .trim();
   }
 
@@ -852,7 +841,6 @@
     let raw = document.getElementById('smartInput').value || '';
     if (!raw.trim()) return;
 
-    // Normalize Windows/Mac line endings
     const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
     parsedQAData = [];
     let captionLines = [];
@@ -862,7 +850,7 @@
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // A. Header Parsing (First non-empty line with 🎯 or commas before questions)
+      // A. Header Parsing
       if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
         if (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)[\.\)\:\-\s]/))) {
           headerParsed = true;
@@ -895,14 +883,13 @@
         continue;
       }
 
-      // C. Question line (16., 1), Q.1, 16 -, 16 )
+      // C. Question line
       const qMatch = line.match(/^(?:Q\.?|प्र\.?|प्रश्न)?\s*(\d+|[०-९]+)[\.\)\:\-\s]+(.*)/i);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
         const num = qMatch[1];
         let qText = qMatch[2].trim();
 
-        // Check if answer is written on the same line
         const inlineAnsMatch = qText.match(/(?:उत्तर|Ans|Answer)[\:\-\s]*(.*)/i);
         if (inlineAnsMatch) {
           const actualQ = qText.substring(0, inlineAnsMatch.index).trim();
@@ -914,7 +901,7 @@
         continue;
       }
 
-      // D. Answer line (उत्तर:, Ans:, Answer:, उ-)
+      // D. Answer line
       const aMatch = line.match(/^(?:उत्तर|Ans|Answer|उ\.?|उत्तर\s*-)[\:\-\s]*(.*)/i);
       if (aMatch) {
         const aText = aMatch[1].trim();
@@ -960,7 +947,7 @@
     renderCard();
   }
 
-  // Question Formatter (Alternating 1st/2nd word red + question mark red)
+  // Question Formatter
   function formatQuestion(qText, rowIndex) {
     if (!qText) return '';
     let words = qText.trim().split(/\s+/);
@@ -985,7 +972,7 @@
     }).join(' ');
   }
 
-  // Answer Formatter (Maroon & Green)
+  // Answer Formatter (Green base + Maroon for Brackets/Comma)
   function formatAnswer(aText) {
     if (!aText) return '';
     let text = aText.trim();
@@ -993,9 +980,9 @@
     if (text.includes('(') && text.includes(')')) {
       return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
         let res = '';
-        if (p1) res += `<span class="ans-maroon">${p1}</span>`;
-        if (p2) res += `<span class="ans-green">${p2}</span>`;
-        if (p3) res += `<span class="ans-maroon">${p3}</span>`;
+        if (p1) res += `<span class="ans-green">${p1}</span>`;
+        if (p2) res += `<span class="ans-maroon">${p2}</span>`;
+        if (p3) res += `<span class="ans-green">${p3}</span>`;
         return res;
       });
     }
@@ -1004,10 +991,10 @@
       let idx = text.indexOf(',');
       let before = text.substring(0, idx);
       let after = text.substring(idx);
-      return `<span class="ans-maroon">${before}</span><span class="ans-green">${after}</span>`;
+      return `<span class="ans-green">${before}</span><span class="ans-maroon">${after}</span>`;
     }
 
-    return `<span class="ans-maroon">${text}</span>`;
+    return `<span class="ans-green">${text}</span>`;
   }
 
   function renderCard() {
@@ -1037,13 +1024,8 @@
 
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
-
-      // 15th Question answer hidden with comment CTA
-      if (index === 14 || index === displayList.length - 1) {
-        tdA.innerHTML = `<div class="cta-comment">👉 उत्तर कमेंट करें 💬</div>`;
-      } else {
-        tdA.innerHTML = formatAnswer(item.a);
-      }
+      // Sabhi questions ka answer normal format mein render hoga (koi bhi hide nahi)
+      tdA.innerHTML = formatAnswer(item.a);
 
       tr.appendChild(tdQ);
       tr.appendChild(tdA);
@@ -1068,7 +1050,6 @@
 
   window.addEventListener('resize', updatePreviewScale);
 
-  // Generate 2160x2700 Canvas
   async function getCardCanvas() {
     const card = document.getElementById('capture-card');
     const oldTransform = card.style.transform;
