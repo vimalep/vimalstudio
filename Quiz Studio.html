@@ -230,7 +230,7 @@
             user-select: text;
         }
 
-        /* 10-Q BATCH COMPILER */
+        /* COMPILER CARD */
         .compiler-card {
             background: #1e1b4b;
             border: 1.5px solid #6366f1;
@@ -271,7 +271,7 @@
         }
         .btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
 
-        /* MODALS (HISTORY & CRUD EDIT) */
+        /* MODALS */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -469,7 +469,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
     </div>
 
-    <!-- ==================== SECTION 2: 10-Q MULTI-SHEET COMPILER (ATTRACTIVE HD) ==================== -->
+    <!-- ==================== SECTION 2: 10-Q MULTI-SHEET COMPILER ==================== -->
     <div class="section-divider">
         <span>📑 10-Question FB Feed Sheet Generator (Attractively Redesigned)</span>
     </div>
@@ -520,6 +520,47 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             <button class="btn-action" style="background:#8b5cf6; padding:4px 10px; font-size:11.5px;" onclick="copyBatchCaption()">📋 Copy Caption</button>
         </div>
         <div class="detail-text" id="batch-caption-box">शीट कंपाइल करने के बाद कैप्शन तैयार होगा...</div>
+    </div>
+
+    <!-- ==================== SECTION 3: MULTI-IMAGE RANGE SHARE (HD ANSWER MODE) ==================== -->
+    <div class="section-divider">
+        <span>🎯 Multiple Question Images Share (Solved Cards with Caption)</span>
+    </div>
+
+    <div class="compiler-card" style="background: #0f2744; border-color: #0284c7;">
+        <div style="color:#bae6fd; font-size:13px; font-weight:700;">
+            रेंज चुनें और सभी प्रश्नों की अलग-अलग HD इमेज (उत्तर व व्याख्या सहित) सीधे Facebook पर भेजें:
+        </div>
+        <div class="row-flex">
+            <div>
+                <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
+                <input type="number" id="multi-start" min="1" value="1" onchange="calcMultiEstimate()">
+            </div>
+            <div>
+                <label>अंतिम प्रश्न क्रम (End #):</label>
+                <input type="number" id="multi-end" min="1" value="5" onchange="calcMultiEstimate()">
+            </div>
+        </div>
+        <div id="multi-estimate-lbl" style="font-size:11.5px; color:#7dd3fc; font-weight:600;">
+            ℹ️ कुल HD कार्ड्स: 5 इमेज (Answer Mode Enabled)
+        </div>
+        <div class="action-grid" style="grid-template-columns: 1fr 1fr; margin-top: 4px;">
+            <button class="btn-act btn-share" style="background: linear-gradient(135deg, #0284c7, #2563eb);" onclick="shareMultiSolvedCards()">
+                🚀 Direct Share All to FB
+            </button>
+            <button class="btn-act btn-download" style="background: #059669;" onclick="downloadAllMultiSolvedCards()">
+                📥 Download All (HD)
+            </button>
+        </div>
+    </div>
+
+    <!-- MULTI CAPTION BOX -->
+    <div class="detail-card" id="multi-caption-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Multi-Post Facebook Caption (Auto Generated):</span>
+            <button class="btn-action" style="background:#0284c7; padding:4px 10px; font-size:11.5px;" onclick="copyMultiCaption()">📋 Copy Caption</button>
+        </div>
+        <div class="detail-text" id="multi-caption-box">रेंज चुनने पर यहाँ सभी प्रश्नों का कंबाइंड कैप्शन तैयार होगा...</div>
     </div>
 </div>
 
@@ -779,6 +820,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         saveAllSettings();
         redrawCanvas();
         calcBatchEstimate();
+        calcMultiEstimate();
 
         navigator.clipboard.writeText(document.getElementById('fb-caption-box').innerText).catch(() => {});
         alert(`🎉 ${quizData.qPrefix} तैयार हो गया है! सही उत्तर [${quizData.correctOption}] लॉक हुआ और कैप्शन क्लिपबोर्ड पर कॉपी हो गया।`);
@@ -907,6 +949,7 @@ ${tagsString}`.trim();
                     updatePollFormatText();
                     redrawCanvas();
                     calcBatchEstimate();
+                    calcMultiEstimate();
                     updateHistoryCount();
                     alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
                 } catch (err) {
@@ -916,7 +959,7 @@ ${tagsString}`.trim();
         }
     }
 
-    /* ==================== QUESTION BANK CRUD (ADD, EDIT, DELETE) ==================== */
+    /* ==================== QUESTION BANK CRUD ==================== */
     function getHistoryList() {
         try {
             let hist = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
@@ -998,6 +1041,7 @@ ${tagsString}`.trim();
         saveHistoryList(list);
         openHistoryModal();
         calcBatchEstimate();
+        calcMultiEstimate();
     }
 
     function openAddQuestionModal() {
@@ -1056,7 +1100,6 @@ ${tagsString}`.trim();
 
         let list = getHistoryList();
         if (id) {
-            // Edit existing
             list = list.map(q => {
                 if (q.id === id) {
                     return {
@@ -1071,7 +1114,6 @@ ${tagsString}`.trim();
                 return q;
             });
         } else {
-            // Add new
             const newObj = {
                 id: "q_" + Date.now(),
                 title: "🏛️ POLITY GK QUIZ 🧠",
@@ -1091,70 +1133,71 @@ ${tagsString}`.trim();
         closeEditModal();
         openHistoryModal();
         calcBatchEstimate();
+        calcMultiEstimate();
         alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
     }
 
-    /* ==================== SINGLE CARD DRAWING ==================== */
-    function redrawCanvas() {
-        const bgColor = document.getElementById('cfg-bg-color').value;
-        const fontFam = document.getElementById('cfg-font').value;
+    /* ==================== SINGLE CARD DRAW ENGINE (HD) ==================== */
+    function renderCardToCanvas(targetCtx, data, isRevealed) {
+        const bgColor = document.getElementById('cfg-bg-color').value || "#fef9c3";
+        const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
         const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
         const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
 
-        ctx.clearRect(0, 0, 1080, 1350);
+        targetCtx.clearRect(0, 0, 1080, 1350);
 
-        ctx.fillStyle = bgColor;
-        ctx.fillRect(0, 0, 1080, 1350);
+        targetCtx.fillStyle = bgColor;
+        targetCtx.fillRect(0, 0, 1080, 1350);
 
         const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 32;
-        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, "#ffffff", false);
-        ctx.strokeStyle = "#e2e8f0";
-        ctx.lineWidth = 3;
-        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, "#ffffff", false);
+        targetCtx.strokeStyle = "#e2e8f0";
+        targetCtx.lineWidth = 3;
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // Security Watermark (Fixed at 2%)
-        ctx.save();
-        ctx.beginPath();
-        roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, false);
-        ctx.clip();
-        ctx.rotate(-28 * Math.PI / 180);
-        ctx.fillStyle = "rgba(15, 23, 42, 0.02)";
-        ctx.font = "900 44px 'Poppins', sans-serif";
+        // Security Watermark
+        targetCtx.save();
+        targetCtx.beginPath();
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, false);
+        targetCtx.clip();
+        targetCtx.rotate(-28 * Math.PI / 180);
+        targetCtx.fillStyle = "rgba(15, 23, 42, 0.02)";
+        targetCtx.font = "900 44px 'Poppins', sans-serif";
         for (let x = -800; x < 1800; x += 360) {
             for (let y = -600; y < 2000; y += 160) {
-                ctx.fillText("EXAM PREPARATION", x, y);
+                targetCtx.fillText("EXAM PREPARATION", x, y);
             }
         }
-        ctx.restore();
+        targetCtx.restore();
 
-        // Header Title
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "#0f172a";
-        ctx.font = `900 52px ${fontFam}`;
-        ctx.fillText(quizData.title, 540, 118);
+        // Title
+        targetCtx.textAlign = "center";
+        targetCtx.textBaseline = "middle";
+        targetCtx.fillStyle = "#0f172a";
+        targetCtx.font = `900 52px ${fontFam}`;
+        targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 118);
 
-        // Dynamic Capsule Auto-Fit
+        // Capsule Badge
         const badgeText = "EXAM PREPARATION";
-        ctx.font = "900 24px 'Poppins', sans-serif";
-        const badgeWidth = ctx.measureText(badgeText).width;
+        targetCtx.font = "900 24px 'Poppins', sans-serif";
+        const badgeWidth = targetCtx.measureText(badgeText).width;
         const pillW = badgeWidth + 52;
         const pillH = 46;
         const pillX = (1080 - pillW) / 2;
         const pillY = 164;
 
-        roundRect(ctx, pillX, pillY, pillW, pillH, 23, "#f1f5f9", false);
-        ctx.strokeStyle = "#cbd5e1";
-        ctx.lineWidth = 2;
-        roundRect(ctx, pillX, pillY, pillW, pillH, 23, null, true);
+        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, "#f1f5f9", false);
+        targetCtx.strokeStyle = "#cbd5e1";
+        targetCtx.lineWidth = 2;
+        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, null, true);
 
-        ctx.fillStyle = "#1e293b";
-        ctx.fillText(badgeText, 540, pillY + (pillH / 2));
+        targetCtx.fillStyle = "#1e293b";
+        targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
 
         // Question
-        ctx.textAlign = "left";
+        targetCtx.textAlign = "left";
         const qStartY = pillY + pillH + 68;
-        const qEndY = drawColorfulQuestion(ctx, quizData.qPrefix, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
+        const qEndY = drawColorfulQuestion(targetCtx, data.qPrefix || "Q.", data.questionText || "", 95, qStartY, 890, qSize, fontFam);
 
         // 4 Options
         const optStartY = qEndY + 36;
@@ -1170,69 +1213,75 @@ ${tagsString}`.trim();
 
         optStyles.forEach((st, idx) => {
             const curY = optStartY + (idx * optGap);
-            const isCorrect = (quizData.correctOption === st.label);
+            const isCorrect = (data.correctOption === st.label);
             let boxBg = st.bg, boxBorder = st.border, badgeBg = st.badgeBg, badgeText = st.label;
 
-            if (isAnswerRevealed && isCorrect) {
+            if (isRevealed && isCorrect) {
                 boxBg = "#dcfce7"; boxBorder = "#16a34a"; badgeBg = "#15803d"; badgeText = "✔";
             }
 
-            roundRect(ctx, optX, curY, optW, optH, 20, boxBg, false);
-            ctx.strokeStyle = boxBorder;
-            ctx.lineWidth = (isAnswerRevealed && isCorrect) ? 4 : 2.5;
-            roundRect(ctx, optX, curY, optW, optH, 20, null, true);
+            roundRect(targetCtx, optX, curY, optW, optH, 20, boxBg, false);
+            targetCtx.strokeStyle = boxBorder;
+            targetCtx.lineWidth = (isRevealed && isCorrect) ? 4 : 2.5;
+            roundRect(targetCtx, optX, curY, optW, optH, 20, null, true);
 
-            roundRect(ctx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
-            ctx.fillStyle = "#ffffff";
-            ctx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(badgeText, optX + 47, curY + (optH / 2));
+            roundRect(targetCtx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
+            targetCtx.fillStyle = "#ffffff";
+            targetCtx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
+            targetCtx.textAlign = "center";
+            targetCtx.textBaseline = "middle";
+            targetCtx.fillText(badgeText, optX + 47, curY + (optH / 2));
 
-            ctx.textAlign = "left";
-            ctx.fillStyle = (isAnswerRevealed && isCorrect) ? "#14532d" : st.text;
-            ctx.font = `700 ${optSize}px ${fontFam}`;
-            ctx.fillText(quizData.options[st.label] || "", optX + 96, curY + (optH / 2));
+            targetCtx.textAlign = "left";
+            targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : st.text;
+            targetCtx.font = `700 ${optSize}px ${fontFam}`;
+            const optVal = data.options ? (data.options[st.label] || "") : "";
+            targetCtx.fillText(optVal, optX + 96, curY + (optH / 2));
         });
 
         // Footer
         const footerY = optStartY + (4 * optGap) + 38;
-        if (isAnswerRevealed) {
-            roundRect(ctx, 95, footerY, 890, 165, 18, "#f8fafc", false);
-            ctx.strokeStyle = "#16a34a";
-            ctx.lineWidth = 2.5;
-            roundRect(ctx, 95, footerY, 890, 165, 18, null, true);
+        if (isRevealed) {
+            roundRect(targetCtx, 95, footerY, 890, 165, 18, "#f8fafc", false);
+            targetCtx.strokeStyle = "#16a34a";
+            targetCtx.lineWidth = 2.5;
+            roundRect(targetCtx, 95, footerY, 890, 165, 18, null, true);
 
-            ctx.fillStyle = "#15803d";
-            ctx.font = `800 26px ${fontFam}`;
-            ctx.textAlign = "left";
-            ctx.textBaseline = "top";
-            ctx.fillText(`💡 सही उत्तर: [विकल्प ${quizData.correctOption}] ${quizData.options[quizData.correctOption]}`, 120, footerY + 20);
+            targetCtx.fillStyle = "#15803d";
+            targetCtx.font = `800 26px ${fontFam}`;
+            targetCtx.textAlign = "left";
+            targetCtx.textBaseline = "top";
+            const corrText = data.options ? (data.options[data.correctOption] || "") : "";
+            targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 120, footerY + 20);
 
-            ctx.fillStyle = "#334155";
-            ctx.font = `600 24px ${fontFam}`;
-            wrapTextSimple(ctx, quizData.explanation, 120, footerY + 64, 840, 34);
+            targetCtx.fillStyle = "#334155";
+            targetCtx.font = `600 24px ${fontFam}`;
+            wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 120, footerY + 64, 840, 34);
 
-            ctx.fillStyle = "#64748b";
-            ctx.font = `800 22px ${fontFam}`;
-            ctx.textAlign = "center";
-            ctx.fillText(quizData.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
+            targetCtx.fillStyle = "#64748b";
+            targetCtx.font = `800 22px ${fontFam}`;
+            targetCtx.textAlign = "center";
+            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
         } else {
-            roundRect(ctx, 110, footerY, 860, 84, 42, "#fef08a", false);
-            ctx.strokeStyle = "#facc15";
-            ctx.lineWidth = 2.5;
-            roundRect(ctx, 110, footerY, 860, 84, 42, null, true);
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, "#fef08a", false);
+            targetCtx.strokeStyle = "#facc15";
+            targetCtx.lineWidth = 2.5;
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, null, true);
 
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillStyle = "#854d0e";
-            ctx.font = `800 34px ${fontFam}`;
-            ctx.fillText(quizData.hook, 540, footerY + (84 / 2));
+            targetCtx.textAlign = "center";
+            targetCtx.textBaseline = "middle";
+            targetCtx.fillStyle = "#854d0e";
+            targetCtx.font = `800 34px ${fontFam}`;
+            targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + (84 / 2));
 
-            ctx.fillStyle = "#0f172a";
-            ctx.font = `800 28px ${fontFam}`;
-            ctx.fillText(quizData.social, 540, footerY + 132);
+            targetCtx.fillStyle = "#0f172a";
+            targetCtx.font = `800 28px ${fontFam}`;
+            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
         }
+    }
+
+    function redrawCanvas() {
+        renderCardToCanvas(ctx, quizData, isAnswerRevealed);
     }
 
     function drawColorfulQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam) {
@@ -1335,7 +1384,7 @@ ${tagsString}`.trim();
         });
     }
 
-    /* ==================== 10-Q MULTI-SHEET COMPILER (ATTRACTIVE VIRAL LOOK) ==================== */
+    /* ==================== 10-Q MULTI-SHEET COMPILER ==================== */
     function calcBatchEstimate() {
         const count = parseInt(document.getElementById('batch-count').value) || 10;
         const pages = Math.ceil(count / 10);
@@ -1389,28 +1438,23 @@ ${tagsString}`.trim();
         draw10QFeedSheet(currentQuestions, currentBatchPageIndex + 1, compiledPages.length);
     }
 
-    /* 🎯 ULTRA-ATTRACTIVE 10-QUESTION FEED SHEET (1080 x 1350) */
     function draw10QFeedSheet(questions, pageNum, totalPages) {
         const W = 1080;
         const H = 1350;
 
         sCtx.clearRect(0, 0, W, H);
 
-        // Premium White Background with Double Layer Accent
         sCtx.fillStyle = "#ffffff";
         sCtx.fillRect(0, 0, W, H);
 
-        // Outer Dark Slate Border
         sCtx.strokeStyle = "#0f172a";
         sCtx.lineWidth = 5;
         sCtx.strokeRect(14, 14, W - 28, H - 28);
 
-        // Inner Cyan Accent Line
         sCtx.strokeStyle = "#38bdf8";
         sCtx.lineWidth = 2;
         sCtx.strokeRect(20, 20, W - 40, H - 40);
 
-        // 2% Opacity Security Watermark
         sCtx.save();
         sCtx.rotate(-28 * Math.PI / 180);
         sCtx.fillStyle = "rgba(15, 23, 42, 0.02)";
@@ -1422,7 +1466,6 @@ ${tagsString}`.trim();
         }
         sCtx.restore();
 
-        // 🎯 1. TOP BRANDING BADGE
         const brandText = totalPages > 1 ? `EXAM PREPARATION • SPECIAL PART ${pageNum}` : "EXAM PREPARATION";
         sCtx.font = "900 24px 'Poppins', sans-serif";
         const brandW = sCtx.measureText(brandText).width;
@@ -1441,12 +1484,10 @@ ${tagsString}`.trim();
         sCtx.textBaseline = "middle";
         sCtx.fillText(brandText, W / 2, pillY + (pillH / 2));
 
-        // 🎯 2. HIGH-IMPACT TITLE
         sCtx.fillStyle = "#0f172a";
         sCtx.font = "900 36px 'Hind', sans-serif";
         sCtx.fillText("⚡ टॉप-10 अति-महत्वपूर्ण प्रश्नोत्तरी (सटीक व्याख्या सहित) 🧠", W / 2, 94);
 
-        // 🎯 3. SPECIAL EXAM TARGET LINE (REQUESTED)
         const tagLine = "🎯 सभी प्रश्न IAS, UPPCS, UPSSSC, SSC एवं Railway परीक्षाओं के लिए अति-महत्वपूर्ण हैं";
         const tagBoxY = 120;
         roundRect(sCtx, 36, tagBoxY, W - 72, 38, 10, "#eff6ff", false);
@@ -1458,7 +1499,6 @@ ${tagsString}`.trim();
         sCtx.font = "800 20px 'Hind', sans-serif";
         sCtx.fillText(tagLine, W / 2, tagBoxY + 19);
 
-        // 🎯 4. VIRAL HOOK BANNER
         const hookY = 164;
         roundRect(sCtx, 36, hookY, W - 72, 40, 10, "#fef08a", false);
         sCtx.strokeStyle = "#eab308";
@@ -1469,7 +1509,6 @@ ${tagsString}`.trim();
         sCtx.font = "800 21px 'Hind', sans-serif";
         sCtx.fillText("👇 10 में से 7 सही करके दिखाएं! अपनी तैयारी अभी परखें ⚡", W / 2, hookY + 20);
 
-        // 🎯 5. 10-QUESTION GRID (5 Left + 5 Right)
         const colW = 496;
         const leftX = 32;
         const rightX = W - colW - 32;
@@ -1486,7 +1525,6 @@ ${tagsString}`.trim();
             drawBatchQuestionItem(sCtx, q, idx + 1, x, y, colW, blockH);
         });
 
-        // 🎯 6. FOOTER ENGAGEMENT BAR
         const footerY = H - 56;
         roundRect(sCtx, 32, footerY, W - 64, 42, 10, "#0f172a", false);
         sCtx.fillStyle = "#ffffff";
@@ -1497,16 +1535,13 @@ ${tagsString}`.trim();
     }
 
     function drawBatchQuestionItem(ctx, q, num, x, y, w, h) {
-        // Card container
         roundRect(ctx, x, y, w, h, 10, "#f8fafc", false);
         ctx.strokeStyle = "#cbd5e1";
         ctx.lineWidth = 1.4;
         roundRect(ctx, x, y, w, h, 10, null, true);
 
-        // Top Accent strip
         roundRect(ctx, x, y, w, 4, 2, "#0284c7", false);
 
-        // Number Badge
         const badgeW = 34, badgeH = 22;
         roundRect(ctx, x + 8, y + 8, badgeW, badgeH, 5, "#0284c7", false);
         ctx.fillStyle = "#ffffff";
@@ -1515,7 +1550,6 @@ ${tagsString}`.trim();
         ctx.textBaseline = "middle";
         ctx.fillText(num < 10 ? "0" + num : num, x + 8 + (badgeW / 2), y + 8 + (badgeH / 2));
 
-        // Question Title
         ctx.textAlign = "left";
         ctx.textBaseline = "top";
         ctx.fillStyle = "#0f172a";
@@ -1523,7 +1557,6 @@ ${tagsString}`.trim();
         const title = `${q.questionText}`;
         wrapTextLines(ctx, title, x + 48, y + 8, w - 56, 20, 2);
 
-        // 2x2 Options
         const optW = (w - 24) / 2;
         const optH = 24;
         const optStartY = y + 54;
@@ -1548,7 +1581,6 @@ ${tagsString}`.trim();
             ctx.fillText(truncateStr(ctx, prefix + optVal, optW - 10), ox + 6, oy + 4);
         });
 
-        // Explanation Box with Green Left-Bar Accent
         const expY = optStartY + (optH * 2) + 8;
         const expH = (y + h - 6) - expY;
 
@@ -1557,7 +1589,6 @@ ${tagsString}`.trim();
         ctx.lineWidth = 1;
         roundRect(ctx, x + 8, expY, w - 16, expH, 6, null, true);
 
-        // Solid green left-accent bar
         roundRect(ctx, x + 8, expY, 4, expH, 2, "#16a34a", false);
 
         ctx.fillStyle = "#15803d";
@@ -1625,7 +1656,7 @@ ${tagsString}`.trim();
     function downloadCurrentBatchSheet() {
         const link = document.createElement('a');
         link.download = `ExamPrep_Feed_Page_${currentBatchPageIndex + 1}.jpg`;
-        link.href = sheetCanvas.toDataURL('image/jpeg', 0.96);
+        link.href = sheetCanvas.toDataURL('image/jpeg', 0.98);
         link.click();
     }
 
@@ -1637,7 +1668,7 @@ ${tagsString}`.trim();
             renderBatchPage();
             const link = document.createElement('a');
             link.download = `ExamPrep_Feed_Page_${idx + 1}.jpg`;
-            link.href = sheetCanvas.toDataURL('image/jpeg', 0.96);
+            link.href = sheetCanvas.toDataURL('image/jpeg', 0.98);
             link.click();
         });
         currentBatchPageIndex = initialIdx;
@@ -1658,7 +1689,155 @@ ${tagsString}`.trim();
                 copyBatchCaption();
                 alert("इमेज डाउनलोड हो गई और कैप्शन कॉपी हुआ। फेसबुक पर पोस्ट करें!");
             }
-        }, 'image/jpeg', 0.96);
+        }, 'image/jpeg', 0.98);
+    }
+
+    /* ==================== SECTION 3: MULTI-IMAGE RANGE SHARE (HD ANSWER MODE) ==================== */
+    function calcMultiEstimate() {
+        const list = getHistoryList();
+        const start = Math.max(1, parseInt(document.getElementById('multi-start').value) || 1);
+        let end = parseInt(document.getElementById('multi-end').value) || start;
+        if (end < start) end = start;
+
+        const count = Math.max(0, Math.min(list.length, end) - start + 1);
+        document.getElementById('multi-estimate-lbl').innerText = `ℹ️ कुल HD कार्ड्स: ${count} इमेज (Answer Mode Enabled)`;
+
+        const slice = list.slice(start - 1, end);
+        document.getElementById('multi-caption-box').innerText = generateMultiPostCaption(slice, start, end);
+    }
+
+    function generateMultiPostCaption(questions, startNum, endNum) {
+        if (!questions || questions.length === 0) {
+            return "रेंज चुनने पर यहाँ सभी प्रश्नों का कंबाइंड कैप्शन तैयार होगा...";
+        }
+
+        let cap = `🔥 EXAM SPECIAL SOLVED QUIZ SERIES [Q.${startNum} से Q.${endNum}] 🎯\n`;
+        cap += `📌 सभी प्रतियोगी परीक्षाओं (IAS, PCS, UPSSSC, SSC, Railway) के लिए अति-महत्वपूर्ण प्रश्नोत्तर!\n\n`;
+
+        questions.forEach((q, i) => {
+            cap += `${startNum + i}. ${q.questionText}\n`;
+        });
+
+        cap += `\n✅ सभी प्रश्नों के सही उत्तर और विस्तृत व्याख्या इमेज में संलग्न हैं।`;
+        cap += `\n👉 अभी पूरा सेट देखें, पोस्ट सेव करें और अपने मित्रों के साथ शेयर करें! 📚✨\n\n`;
+        cap += `#ExamPreparation #GKQuiz #ImportantGK #DailyQuiz #SolvedSeries #GeneralKnowledge`;
+
+        return cap;
+    }
+
+    function copyMultiCaption() {
+        navigator.clipboard.writeText(document.getElementById('multi-caption-box').innerText).then(() => {
+            alert("📋 मल्टी-पोस्ट कैप्शन कॉपी हो गया!");
+        });
+    }
+
+    async function getSolvedCardBlob(questionObj) {
+        const offscreen = document.createElement('canvas');
+        offscreen.width = 1080;
+        offscreen.height = 1350;
+        const offCtx = offscreen.getContext('2d');
+
+        renderCardToCanvas(offCtx, questionObj, true); // True = Solved Answer Mode
+
+        return new Promise(resolve => {
+            offscreen.toBlob(resolve, 'image/jpeg', 0.98); // 98% Ultra HD JPEG
+        });
+    }
+
+    async function shareMultiSolvedCards() {
+        const list = getHistoryList();
+        if (list.length === 0) {
+            alert("Question Bank खाली है! पहले प्रश्न जोड़ें।");
+            return;
+        }
+
+        const start = Math.max(1, parseInt(document.getElementById('multi-start').value) || 1);
+        let end = parseInt(document.getElementById('multi-end').value) || start;
+        if (end < start) end = start;
+
+        const slice = list.slice(start - 1, end);
+        if (slice.length === 0) {
+            alert("चयनित रेंज में कोई प्रश्न नहीं मिले!");
+            return;
+        }
+
+        const caption = generateMultiPostCaption(slice, start, end);
+        document.getElementById('multi-caption-box').innerText = caption;
+
+        try {
+            await navigator.clipboard.writeText(caption);
+        } catch (e) {}
+
+        alert(`⏳ कुल ${slice.length} HD इमेज तैयार हो रही हैं, कृपया कुछ सेकंड प्रतीक्षा करें...`);
+
+        const files = [];
+        for (let i = 0; i < slice.length; i++) {
+            const q = slice[i];
+            const blob = await getSolvedCardBlob(q);
+            if (blob) {
+                const prefixClean = (q.qPrefix || `Q${start + i}`).replace(/[^a-zA-Z0-9]/g, '_');
+                files.push(new File([blob], `Solved_${prefixClean}.jpg`, { type: 'image/jpeg' }));
+            }
+        }
+
+        if (navigator.canShare && navigator.canShare({ files })) {
+            try {
+                await navigator.share({
+                    title: `Exam Preparation Series (${slice.length} Questions)`,
+                    text: caption,
+                    files: files
+                });
+                return;
+            } catch (err) {
+                console.log("Share dismissed or failed", err);
+            }
+        }
+
+        // Fallback if multiple file sharing is not supported by device/browser
+        files.forEach((f, idx) => {
+            setTimeout(() => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(f);
+                a.download = f.name;
+                a.click();
+            }, idx * 250);
+        });
+
+        window.open('https://www.facebook.com/', '_blank');
+        alert(`✅ सभी ${files.length} HD इमेज डाउनलोड हो गईं और कैप्शन क्लिपबोर्ड पर कॉपी हो गया! फेसबुक पर पेस्ट करें।`);
+    }
+
+    async function downloadAllMultiSolvedCards() {
+        const list = getHistoryList();
+        if (list.length === 0) {
+            alert("Question Bank खाली है!");
+            return;
+        }
+
+        const start = Math.max(1, parseInt(document.getElementById('multi-start').value) || 1);
+        let end = parseInt(document.getElementById('multi-end').value) || start;
+        if (end < start) end = start;
+
+        const slice = list.slice(start - 1, end);
+        if (slice.length === 0) {
+            alert("चयनित रेंज में कोई प्रश्न नहीं मिले!");
+            return;
+        }
+
+        copyMultiCaption();
+        alert(`📥 ${slice.length} HD इमेज डाउनलोड हो रही हैं...`);
+
+        for (let i = 0; i < slice.length; i++) {
+            const q = slice[i];
+            const blob = await getSolvedCardBlob(q);
+            if (blob) {
+                const prefixClean = (q.qPrefix || `Q${start + i}`).replace(/[^a-zA-Z0-9]/g, '_');
+                const link = document.createElement('a');
+                link.download = `Solved_${prefixClean}.jpg`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            }
+        }
     }
 
     window.onload = function() {
@@ -1668,6 +1847,7 @@ ${tagsString}`.trim();
         updatePollFormatText();
         redrawCanvas();
         calcBatchEstimate();
+        calcMultiEstimate();
     };
 </script>
 
