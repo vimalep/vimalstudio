@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>A one Notes - Studio Pro Mobile (10 Qs Ultra Viral)</title>
+  
+  <!-- Premium English Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg-main: #0a0f1d;
+      --bg-card: #111827;
+      --bg-input: #0f172a;
+      --border-color: #1f293d;
+      --border-focus: #38bdf8;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      padding: 12px 10px 50px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 560px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px;
+    }
+    .app-header h1 {
+      font-size: 20px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .app-badge {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .dark-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .row-flex {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .row-flex > div { flex: 1; }
+
+    label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    input, select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      color: #f8fafc;
+      padding: 7px 10px;
+      font-size: 13px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--border-focus);
+    }
+
+    textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      padding: 10px 12px;
+      font-size: 13.5px;
+      font-family: inherit;
+      outline: none;
+      height: 140px;
+      line-height: 1.45;
+      resize: vertical;
+    }
+    textarea:focus {
+      border-color: var(--border-focus);
+    }
+
+    .status-counter {
+      font-size: 12px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .challenge-toggle-box {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.4);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: #f59e0b;
+      cursor: pointer;
+    }
+    .challenge-toggle-box input {
+      width: auto;
+      cursor: pointer;
+    }
+
+    .typo-panel {
+      background: #0b1222;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 10px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .typo-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .typo-row > div {
+      flex: 1;
+    }
+    .typo-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .typo-label span {
+      color: #38bdf8;
+      font-weight: 800;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 5px;
+      background: #1f293d;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    button {
+      padding: 11px 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    button:active { transform: scale(0.97); }
+    
+    .btn-paste { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
+    .btn-run { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; }
+    .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+    .btn-fb { background: linear-gradient(135deg, #1877f2, #0d5bbd); color: #fff; }
+    .btn-caption { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; grid-column: span 2; }
+    .btn-dark {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+
+    #toastMsg {
+      display: none;
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: #fff;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 12.5px;
+      font-weight: 700;
+      z-index: 99999;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+
+    .preview-viewport-wrapper {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      border: 1px solid #1f293d;
+    }
+    #previewViewport {
+      width: 100%;
+      position: relative;
+    }
+
+    #capture-card {
+      width: 1080px;
+      height: 1350px;
+      min-width: 1080px;
+      min-height: 1350px;
+      max-width: 1080px;
+      max-height: 1350px;
+      background: #ffffff;
+      padding: 24px 32px 20px 32px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-origin: top left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .top-header-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      margin-bottom: 6px;
+    }
+    .top-line-behind {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 2.5px;
+      background: #dc2626;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .top-logo {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      padding: 2px 20px;
+      border: 3px solid #dc2626;
+      border-radius: 40px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .top-logo .logo-red {
+      color: #dc2626;
+      font-weight: 900;
+      font-size: 26px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .top-logo .logo-black {
+      color: #0f172a;
+      font-weight: 900;
+      font-size: 26px;
+      font-family: 'Poppins', sans-serif;
+      margin-left: 6px;
+    }
+    
+    /* Viral Top Hook Badge */
+    .top-hook-badge {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      padding: 4px 16px;
+      font-size: 20px;
+      font-weight: 900;
+      color: #dc2626;
+      border: 2px dashed #dc2626;
+      border-radius: 30px;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.12);
+      letter-spacing: 0.3px;
+    }
+
+    .top-follow-pill {
+      position: relative;
+      z-index: 2;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 6px 22px;
+      border-radius: 40px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .title-banner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .title-pill {
+      display: inline-flex;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      align-items: stretch;
+    }
+    .title-main {
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 32px;
+      font-weight: 800;
+      padding: 4px 28px;
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+    }
+    .title-sub {
+      background: #15803d;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      padding: 4px 20px;
+      display: flex;
+      align-items: center;
+    }
+    .title-part {
+      background: #1e3a8a;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 800;
+      padding: 4px 20px;
+      display: flex;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .table-container {
+      flex: 1;
+      position: relative;
+      border: 2px solid #86efac;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-18deg);
+      font-size: 90px;
+      font-weight: 900;
+      color: rgba(220, 38, 38, 0.05);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      text-transform: uppercase;
+      font-family: 'Poppins', sans-serif;
+    }
+    table {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      position: relative;
+      z-index: 2;
+    }
+    thead th {
+      background: #f0fdf4;
+      padding: 4px 12px;
+      font-size: 24px;
+      font-weight: 800;
+      border-bottom: 2px solid #86efac;
+      height: 42px;
+    }
+    
+    thead th.th-q, tbody td.td-q {
+      width: 68% !important;
+      border-right: 2px solid #86efac;
+      text-align: left;
+    }
+    thead th.th-a, tbody td.td-a {
+      width: 32% !important;
+      text-align: left;
+    }
+    thead th.th-q { color: #dc2626; }
+    thead th.th-a { color: #15803d; }
+
+    /* 10 Questions layout */
+    tbody tr {
+      border-bottom: 1.5px solid #bbf7d0;
+      height: calc((100% - 42px) / 10);
+    }
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    td {
+      padding: 4px 12px;
+      line-height: 1.3;
+      vertical-align: middle;
+      overflow: hidden;
+      word-break: break-word;
+    }
+    .td-q {
+      color: #0f172a;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    
+    .q-num {
+      color: #1d4ed8;
+      font-weight: 900;
+      margin-right: 6px;
+      display: inline-block;
+      min-width: 34px;
+    }
+
+    .word-red { color: #dc2626; font-weight: 800; }
+    .q-mark { color: #dc2626; font-weight: 900; }
+    .td-a {
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .ans-green { color: #15803d; font-weight: 700; }
+    .ans-maroon { color: #800000; font-weight: 800; }
+    
+    .ans-challenge {
+      background: #fef3c7;
+      border: 1.5px dashed #d97706;
+      color: #b45309;
+      font-size: 17px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .footer-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+      margin-top: 6px;
+    }
+    .footer-line-behind {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 2.5px;
+      background: #dc2626;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .footer-brand {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      padding: 0 14px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .footer-book-icon { font-size: 26px; }
+    .footer-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+    }
+    .footer-title .f-red { color: #dc2626; }
+    .footer-title .f-black { color: #0f172a; }
+
+    .footer-follow-btn {
+      position: relative;
+      z-index: 2;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .subject-pill-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+    .subj-pill {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .subj-pill.active {
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
+    }
+    .library-list {
+      max-height: 140px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .saved-row {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 7px 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+    }
+    .btn-xs {
+      padding: 3px 7px;
+      font-size: 11px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="toastMsg"></div>
+
+<div class="app-shell">
+
+  <div class="app-header">
+    <h1>⚡ A one Notes Studio</h1>
+    <span class="app-badge">10 Qs ULTRA VIRAL</span>
+  </div>
+
+  <!-- MANUAL SMART PASTE CARD -->
+  <div class="dark-card">
+    <div class="card-title">
+      <span>📝 Raw Content (Smart Paste):</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">Part 1 Detected</span>
+    </div>
+
+    <!-- VIRAL HOOK SELECTOR -->
+    <div class="row-flex" style="margin-bottom: 10px;">
+      <div style="flex: 1.2;">
+        <label>🔥 Viral Header Hook:</label>
+        <select id="selViralHook" onchange="updateCustomHook(this.value)">
+          <option value="🔥 90% Aspirants Fail In Q7" selected>🔥 90% Aspirants Fail In Q7</option>
+          <option value="🎯 Top 10 Repeated Questions">🎯 Top 10 Repeated Questions</option>
+          <option value="⚡ Only Real Aspirants Score 10/10">⚡ Only Real Aspirants Score 10/10</option>
+          <option value="🧠 Daily GK Challenge: Test Yourself">🧠 Daily GK Challenge: Test Yourself</option>
+          <option value="custom">✏️ Custom Hook (Type below)...</option>
+        </select>
+      </div>
+      <div style="flex: 1;">
+        <label>Hook Text:</label>
+        <input type="text" id="txtCustomHook" value="🔥 90% Aspirants Fail In Q7" oninput="applyHookDirectly()">
+      </div>
+    </div>
+    
+    <textarea id="smartInput" placeholder="Paste 10 questions here..." oninput="autoSaveHandler()">🎯 History, Ancient India, Part 1
+1. Who was the founder of the Maurya Empire?
+Ans: Chandragupta Maurya
+2. Which Greek ambassador visited the court of Chandragupta Maurya?
+Ans: Megasthenes
+3. What is the title of the famous book written by Megasthenes?
+Ans: Indica
+4. Who was the prime minister and mentor of Chandragupta Maurya?
+Ans: Chanakya (Kautilya)
+5. Which Mauryan ruler embraced Buddhism after the Kalinga War?
+Ans: Emperor Ashoka
+6. In which year was the famous Kalinga War fought?
+Ans: 261 BC
+7. What script was predominantly used in Ashoka's rock edicts?
+Ans: Brahmi Script
+8. Who deciphered the Ashokan inscriptions for the first time in 1837?
+Ans: James Prinsep
+9. What was the capital city of the Mauryan Empire?
+Ans: Pataliputra
+10. Who was the last ruler of the Mauryan Dynasty?
+Ans: Brihadratha
+Essential top 10 questions for competitive exam preparation. Save and share with your friends! 📚✨
+#AoneNotes #GeneralKnowledge</textarea>
+
+    <div class="status-counter">
+      <span id="statusCounter">📊 Loaded Questions: 10 / 10</span>
+    </div>
+
+    <!-- VIRAL CHALLENGE TOGGLE -->
+    <label class="challenge-toggle-box" for="chkChallengeMode">
+      <span>🎯 Q10 Comment Challenge Mode (Boosts Viral Reach)</span>
+      <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
+    </label>
+
+    <!-- Typography Controls -->
+    <div class="typo-panel">
+      <div class="typo-row">
+        <div>
+          <div class="typo-label">Font Family:</div>
+          <select id="selFontFamily" onchange="applyTypography()">
+            <option value="'Poppins', sans-serif" selected>Poppins (Clean & Bold)</option>
+            <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
+            <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
+            <option value="'Roboto', sans-serif">Roboto (Classic)</option>
+            <option value="'Merriweather', serif">Merriweather (Editorial)</option>
+          </select>
+        </div>
+        <div>
+          <div class="typo-label">Question Boldness:</div>
+          <select id="selQWeight" onchange="applyTypography()">
+            <option value="700" selected>Bold (700)</option>
+            <option value="800">Extra Bold (800)</option>
+            <option value="900">Black (900)</option>
+            <option value="600">Semi Bold (600)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="typo-row">
+        <div>
+          <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
+          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography()">
+        </div>
+        <div>
+          <div class="typo-label">Ques Size: <span id="lblQSize">22px</span></div>
+          <input type="range" id="rngQSize" min="16" max="32" value="22" oninput="applyTypography()">
+        </div>
+        <div>
+          <div class="typo-label">Ans Size: <span id="lblASize">22px</span></div>
+          <input type="range" id="rngASize" min="16" max="32" value="22" oninput="applyTypography()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden Caption for FB -->
+    <input type="hidden" id="fbCaption" value="">
+
+    <!-- Actions -->
+    <div class="btn-grid">
+      <button class="btn-caption" onclick="copyViralCaption()">📋 Copy FB Viral Caption</button>
+      <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
+      <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
+      <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
+      <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to FB</button>
+    </div>
+  </div>
+
+  <!-- LIVE PREVIEW -->
+  <div class="dark-card" style="padding: 10px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+      <div class="card-title" style="margin:0;">📱 Live Mobile Preview</div>
+      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Ratio (10 Qs Ultra)</span>
+    </div>
+
+    <div class="preview-viewport-wrapper">
+      <div id="previewViewport">
+        <div id="capture-card">
+          
+          <div class="top-header-wrap">
+            <div class="top-line-behind"></div>
+            <div class="top-logo">
+              <span class="logo-red">A one</span><span class="logo-black">Notes</span>
+            </div>
+            
+            <!-- VIRAL HOOK DISPLAY -->
+            <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
+
+            <div class="top-follow-pill">A one Notes : Follow</div>
+          </div>
+
+          <div class="title-banner">
+            <div class="title-pill">
+              <div class="title-main" id="outSubject">HISTORY</div>
+              <div class="title-sub" id="outSubTopic">( Ancient India )</div>
+              <div class="title-part" id="outPart">Part 1</div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <div class="watermark">A one Notes</div>
+            <table>
+              <thead>
+                <tr>
+                  <th class="th-q">Questions</th>
+                  <th class="th-a">Answers</th>
+                </tr>
+              </thead>
+              <tbody id="qaBody"></tbody>
+            </table>
+          </div>
+
+          <div class="footer-wrap">
+            <div class="footer-line-behind"></div>
+            <div class="footer-brand">
+              <span class="footer-book-icon">📖</span>
+              <div class="footer-title">
+                <span class="f-red">A one</span><span class="f-black">Notes</span>
+              </div>
+            </div>
+            <div class="footer-follow-btn">Important For All Exams</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHIVE -->
+  <div class="dark-card">
+    <div class="card-title">📚 Question Bank (Archive)</div>
+
+    <div class="subject-pill-row">
+      <button class="subj-pill active" onclick="filterBySubject('History', this)">History</button>
+      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
+      <button class="subj-pill" onclick="filterBySubject('Polity', this)">Polity</button>
+      <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
+      <button class="subj-pill" onclick="filterBySubject('Economics', this)">Economics</button>
+    </div>
+
+    <div class="library-list" id="savedListContainer"></div>
+
+    <div style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
+      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase(true)">💾 Save</button>
+      <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 PDF</button>
+      <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
+      <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; margin: 0;">
+        📥 Import <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
+      </label>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let parsedQAData = [];
+  let currentMeta = { 
+    subject: 'History', 
+    subTopic: 'Ancient India', 
+    part: 'Part 1', 
+    caption: '',
+    hook: '🔥 90% Aspirants Fail In Q7'
+  };
+  let currentSubjectFilter = 'History';
+  let autoSaveTimer = null;
+  let isChallengeMode = true;
+
+  // 10 Distinct Soft Pastel Background Colors for rows
+  const pastelRowColors = [
+    '#ffffff', // Row 1: Crisp Pure White
+    '#f8fafc', // Row 2: Soft Slate
+    '#f0fdf4', // Row 3: Soft Mint Green
+    '#fefce8', // Row 4: Soft Warm Ivory
+    '#eff6ff', // Row 5: Soft Ice Blue
+    '#faf5ff', // Row 6: Soft Lavender
+    '#fff7ed', // Row 7: Soft Peach Cream
+    '#f0fdfa', // Row 8: Soft Aqua Mist
+    '#fdf2f8', // Row 9: Soft Rose Blush
+    '#fffbeb'  // Row 10: Soft Pale Amber
+  ];
+
+  // Question words (Primary Red)
+  const questionWords = new Set([
+    'what', 'where', 'when', 'who', 'whom', 'whose', 'which', 'why', 'how', 'name',
+    'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
+    'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
+    'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
+  ]);
+
+  // Common stop words to exclude from keyword red-highlight
+  const stopWords = new Set([
+    'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'in', 'of', 'for', 'to', 'from',
+    'by', 'with', 'was', 'were', 'has', 'had', 'been', 'be', 'are', 'this', 'that', 'these', 'those'
+  ]);
+
+  function updateCustomHook(val) {
+    if (val !== 'custom') {
+      document.getElementById('txtCustomHook').value = val;
+    }
+    applyHookDirectly();
+  }
+
+  function applyHookDirectly() {
+    const val = document.getElementById('txtCustomHook').value.trim() || '🔥 90% Aspirants Fail In Q7';
+    currentMeta.hook = val;
+    document.getElementById('outHookBadge').innerText = val;
+    saveToDatabase(false);
+  }
+
+  function toggleChallengeMode() {
+    isChallengeMode = document.getElementById('chkChallengeMode').checked;
+    renderCard();
+    saveToDatabase(false);
+    notify(isChallengeMode ? "🎯 Q10 Challenge Mode Activated!" : "Standard Q10 Mode Activated!");
+  }
+
+  async function copyViralCaption() {
+    const subj = currentMeta.subject;
+    const sub = currentMeta.subTopic ? `(${currentMeta.subTopic})` : '';
+    const part = currentMeta.part ? `- ${currentMeta.part}` : '';
+    
+    let captionText = `${currentMeta.hook}\n`;
+    captionText += `🎯 ${subj} ${sub} ${part}\n\n`;
+    captionText += `🔥 Top 10 High-Yield Questions for Competitive Exams!\n`;
+    if (isChallengeMode) {
+      captionText += `👉 Q10 is a CHALLENGE for you! Drop your answer in the comments below 👇\n\n`;
+    } else {
+      captionText += `👉 Read, Save & Share with your fellow aspirants!\n\n`;
+    }
+    captionText += `📌 Save this post for your quick revision.\n`;
+    captionText += `❤️ Follow @AoneNotes for daily notes & quizzes!\n\n`;
+    captionText += `#AoneNotes #${subj.replace(/\s+/g, '')} #ExamPreparation #GeneralKnowledge #UPSC #SSCCGL #GovernmentExams`;
+
+    try {
+      await navigator.clipboard.writeText(captionText);
+      notify("📋 Viral Caption Copied to Clipboard!");
+    } catch (e) {
+      notify("❌ Failed to copy caption.");
+    }
+  }
+
+  async function onlyPasteClipboard() {
+    try {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        const text = await navigator.clipboard.readText();
+        if (text && text.trim().length > 0) {
+          document.getElementById('smartInput').value = text;
+          generateCards();
+          notify("📋 Content pasted & auto-saved!");
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn("Clipboard access denied", err);
+    }
+    notify("💡 Paste text manually, then tap 'Generate / Run'");
+    document.getElementById('smartInput').focus();
+  }
+
+  function generateCards() {
+    try {
+      parseSmartInput();
+      saveToDatabase(false);
+      notify("⚡ 10 Questions generated & saved!");
+    } catch (e) {
+      alert("Parsing Error: " + e.message);
+    }
+  }
+
+  function autoSaveHandler() {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => {
+      parseSmartInput();
+      saveToDatabase(false);
+    }, 1200);
+  }
+
+  function applyTypography() {
+    const selectedFont = document.getElementById('selFontFamily').value;
+    const qWeight = document.getElementById('selQWeight').value;
+    const titleSize = document.getElementById('rngTitleSize').value;
+    const qSize = document.getElementById('rngQSize').value;
+    const aSize = document.getElementById('rngASize').value;
+
+    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
+    document.getElementById('lblQSize').innerText = qSize + 'px';
+    document.getElementById('lblASize').innerText = aSize + 'px';
+
+    const card = document.getElementById('capture-card');
+    card.style.fontFamily = selectedFont;
+
+    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
+    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
+
+    document.querySelectorAll('.td-q').forEach(el => {
+      el.style.fontSize = qSize + 'px';
+      el.style.fontWeight = qWeight;
+    });
+
+    document.querySelectorAll('.td-a').forEach(el => {
+      el.style.fontSize = aSize + 'px';
+    });
+  }
+
+  function cleanLine(str) {
+    return str.replace(/\u00A0/g, ' ')
+              .replace(/[\u200B-\u200D\uFEFF]/g, '')
+              .trim();
+  }
+
+  function parseSmartInput() {
+    let raw = document.getElementById('smartInput').value || '';
+    if (!raw.trim()) return;
+
+    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
+    parsedQAData = [];
+    let captionLines = [];
+    let currentQ = null;
+    let headerParsed = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // Header Parsing
+      if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
+        if (line.includes('🎯') || line.toLowerCase().includes('part') || line.includes('भाग') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
+          headerParsed = true;
+          const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
+          const parts = clean.split(',').map(s => s.trim());
+          
+          if (parts[0]) {
+            const low = parts[0].toLowerCase();
+            if (low.includes('history') || low.includes('इतिहास')) currentMeta.subject = 'History';
+            else if (low.includes('geography') || low.includes('भूगोल')) currentMeta.subject = 'Geography';
+            else if (low.includes('polity') || low.includes('राज')) currentMeta.subject = 'Polity';
+            else if (low.includes('science') || low.includes('विज्ञान')) currentMeta.subject = 'Science';
+            else if (low.includes('eco') || low.includes('अर्थ')) currentMeta.subject = 'Economics';
+            else currentMeta.subject = parts[0];
+          }
+          if (parts[1]) currentMeta.subTopic = parts[1];
+          if (parts[2]) currentMeta.part = parts[2];
+
+          document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part})`;
+          continue;
+        }
+      }
+
+      // Question Start
+      const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
+      if (qStartMatch) {
+        if (currentQ) {
+          parsedQAData.push(currentQ);
+        }
+        const num = qStartMatch[1];
+        let restOfLine = qStartMatch[2].trim();
+
+        const qMarkIdx = restOfLine.indexOf('?');
+        if (qMarkIdx !== -1) {
+          const actualQ = restOfLine.substring(0, qMarkIdx).trim();
+          const afterQ = restOfLine.substring(qMarkIdx + 1).trim();
+          
+          const sameLineAnsMatch = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
+          if (sameLineAnsMatch) {
+            parsedQAData.push({ num: num, q: actualQ, a: sameLineAnsMatch[1].trim() });
+            currentQ = null;
+            continue;
+          } else if (afterQ.length > 0) {
+            parsedQAData.push({ num: num, q: actualQ, a: afterQ });
+            currentQ = null;
+            continue;
+          } else {
+            currentQ = { num: num, q: actualQ, a: '' };
+            continue;
+          }
+        } else {
+          currentQ = { num: num, q: restOfLine, a: '' };
+          continue;
+        }
+      }
+
+      // Answer Line
+      const ansMatch = line.match(/^(?:Ans|Answer|उत्तर|उ\.?)[\:\-\s]*(.*)/i);
+      if (ansMatch) {
+        const ansText = ansMatch[1].trim();
+        if (currentQ) {
+          currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+          currentQ.a = ansText;
+          parsedQAData.push(currentQ);
+          currentQ = null;
+        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
+          parsedQAData[parsedQAData.length - 1].a = ansText;
+        }
+        continue;
+      }
+
+      // Continuation
+      if (currentQ && !currentQ.a) {
+        const qMarkIdx = line.indexOf('?');
+        if (qMarkIdx !== -1) {
+          currentQ.q += ' ' + line.substring(0, qMarkIdx).trim();
+          const afterQ = line.substring(qMarkIdx + 1).trim();
+          const inlineAns = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
+          if (inlineAns) {
+            currentQ.a = inlineAns[1].trim();
+            parsedQAData.push(currentQ);
+            currentQ = null;
+          } else if (afterQ.length > 0) {
+            currentQ.a = afterQ;
+            parsedQAData.push(currentQ);
+            currentQ = null;
+          }
+        } else {
+          currentQ.q += ' ' + line;
+        }
+        continue;
+      }
+
+      // Footer/Captions
+      if (line.includes('#') || line.toLowerCase().includes('exam') || line.toLowerCase().includes('share') || line.includes('प्रतियोगी') || parsedQAData.length >= 10) {
+        captionLines.push(line);
+      }
+    }
+
+    if (currentQ) {
+      currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+      parsedQAData.push(currentQ);
+    }
+
+    if (captionLines.length > 0) {
+      currentMeta.caption = captionLines.join(' ');
+      document.getElementById('fbCaption').value = currentMeta.caption;
+    }
+
+    document.getElementById('statusCounter').innerText = `📊 Loaded Questions: ${parsedQAData.length} / 10`;
+
+    renderCard();
+  }
+
+  /* Question Formatter with Smart Red Word Highlights:
+     1. Question Words (What, Who, Where...) are always Red.
+     2. 1-2 Key Subject/Action words are randomly yet consistently highlighted in Red.
+  */
+  function formatQuestion(qText, rowIndex) {
+    if (!qText) return '';
+    let words = qText.trim().split(/\s+/);
+    if (words.length === 0) return qText;
+
+    // Pick a deterministic key word index based on row index and length
+    const candidateIndices = [];
+    words.forEach((w, idx) => {
+      const clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '').toLowerCase();
+      if (!questionWords.has(clean) && !stopWords.has(clean) && clean.length > 3) {
+        candidateIndices.push(idx);
+      }
+    });
+
+    const targetKeyIndex = candidateIndices.length > 0 ? candidateIndices[rowIndex % candidateIndices.length] : -1;
+
+    return words.map((w, wIdx) => {
+      let hasQMark = w.includes('?');
+      let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
+
+      let isQWord = questionWords.has(clean.toLowerCase());
+      let isKeyTarget = (wIdx === targetKeyIndex);
+
+      let styled = clean;
+      if (isQWord || isKeyTarget) {
+        styled = `<span class="word-red">${clean}</span>`;
+      }
+
+      if (hasQMark) styled += `<span class="q-mark">?</span>`;
+      return styled;
+    }).join(' ') + `<span class="q-mark">?</span>`;
+  }
+
+  function formatAnswer(aText, isTenthItem) {
+    if (isTenthItem && isChallengeMode) {
+      return `<span class="ans-challenge">💬 Comment your answer 👇</span>`;
+    }
+
+    if (!aText) return '';
+    let text = aText.trim();
+
+    if (text.includes('(') && text.includes(')')) {
+      return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
+        let res = '';
+        if (p1) res += `<span class="ans-green">${p1}</span>`;
+        if (p2) res += `<span class="ans-maroon">${p2}</span>`;
+        if (p3) res += `<span class="ans-green">${p3}</span>`;
+        return res;
+      });
+    }
+
+    if (text.includes(',')) {
+      let idx = text.indexOf(',');
+      let before = text.substring(0, idx);
+      let after = text.substring(idx);
+      return `<span class="ans-green">${before}</span><span class="ans-maroon">${after}</span>`;
+    }
+
+    return `<span class="ans-green">${text}</span>`;
+  }
+
+  function renderCard() {
+    document.getElementById('outSubject').innerText = currentMeta.subject;
+    document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
+    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🔥 90% Aspirants Fail In Q7';
+    
+    const partElem = document.getElementById('outPart');
+    if (currentMeta.part) {
+      partElem.innerText = currentMeta.part;
+      partElem.style.display = 'flex';
+    } else {
+      partElem.style.display = 'none';
+    }
+
+    const tbody = document.getElementById('qaBody');
+    tbody.innerHTML = '';
+
+    const displayList = parsedQAData.slice(0, 10);
+
+    displayList.forEach((item, index) => {
+      const tr = document.createElement('tr');
+      
+      // Apply unique subtle pastel background color for each of the 10 rows
+      tr.style.backgroundColor = pastelRowColors[index % pastelRowColors.length];
+
+      const tdQ = document.createElement('td');
+      tdQ.className = 'td-q';
+      const qNumToDisplay = item.num ? item.num : (index + 1);
+      tdQ.innerHTML = `<span class="q-num">${qNumToDisplay}.</span> ${formatQuestion(item.q, index)}`;
+
+      const tdA = document.createElement('td');
+      tdA.className = 'td-a';
+      tdA.innerHTML = formatAnswer(item.a, index === 9);
+
+      tr.appendChild(tdQ);
+      tr.appendChild(tdA);
+      tbody.appendChild(tr);
+    });
+
+    applyTypography();
+    updatePreviewScale();
+  }
+
+  function updatePreviewScale() {
+    const viewport = document.getElementById('previewViewport');
+    const card = document.getElementById('capture-card');
+    if (!viewport || !card) return;
+
+    const containerWidth = viewport.parentElement.clientWidth;
+    const scale = containerWidth / 1080;
+    
+    card.style.transform = `scale(${scale})`;
+    viewport.style.height = `${1350 * scale}px`;
+  }
+
+  window.addEventListener('resize', updatePreviewScale);
+
+  async function getCardCanvas() {
+    const card = document.getElementById('capture-card');
+    const oldTransform = card.style.transform;
+    card.style.transform = 'none';
+
+    const canvas = await html2canvas(card, {
+      width: 1080,
+      height: 1350,
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    });
+
+    card.style.transform = oldTransform;
+    return canvas;
+  }
+
+  async function downloadImage() {
+    notify("⏳ Generating HD Image...");
+    const canvas = await getCardCanvas();
+    const link = document.createElement('a');
+    link.download = `A_one_Notes_${currentMeta.subject}_${currentMeta.part}.png`;
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.click();
+    notify("📥 HD Image Downloaded!");
+  }
+
+  async function shareToFacebook() {
+    await copyViralCaption();
+    notify("⏳ Preparing direct share...");
+    const canvas = await getCardCanvas();
+
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], 'aone_notes_post.png', { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: `A one Notes - ${currentMeta.subject}`
+          });
+          notify("🚀 Share dialog opened!");
+          return;
+        } catch (err) {}
+      }
+
+      const link = document.createElement('a');
+      link.download = 'aone_notes_post.png';
+      link.href = URL.createObjectURL(blob);
+      link.click();
+
+      window.open('https://www.facebook.com/', '_blank');
+      notify("📋 Caption copied! Paste it on Facebook.");
+    }, 'image/png');
+  }
+
+  function getDB() {
+    return JSON.parse(localStorage.getItem('aone_notes_db_v1') || '[]');
+  }
+  function saveDB(db) {
+    localStorage.setItem('aone_notes_db_v1', JSON.stringify(db));
+  }
+
+  function saveToDatabase(isManual = false) {
+    if (parsedQAData.length === 0) return;
+    const db = getDB();
+    const rawVal = document.getElementById('smartInput').value;
+
+    const existingIndex = db.findIndex(item => 
+      item.subject === currentMeta.subject && 
+      item.subTopic === currentMeta.subTopic && 
+      item.part === currentMeta.part
+    );
+
+    const entry = {
+      id: existingIndex >= 0 ? db[existingIndex].id : Date.now(),
+      subject: currentMeta.subject,
+      subTopic: currentMeta.subTopic,
+      part: currentMeta.part,
+      caption: currentMeta.caption,
+      hook: currentMeta.hook,
+      smartRaw: rawVal,
+      questions: parsedQAData.slice(0, 10),
+      isChallengeMode: isChallengeMode,
+      date: new Date().toLocaleDateString('en-US')
+    };
+
+    if (existingIndex >= 0) {
+      db[existingIndex] = entry;
+    } else {
+      db.unshift(entry);
+    }
+
+    saveDB(db);
+    renderLibrary();
+    if (isManual) notify("💾 Saved to Archive!");
+  }
+
+  function renderLibrary() {
+    const db = getDB();
+    const container = document.getElementById('savedListContainer');
+    container.innerHTML = '';
+
+    const filtered = db.filter(item => item.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">No posts saved for ${currentSubjectFilter}.</div>`;
+      return;
+    }
+
+    filtered.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'saved-row';
+      div.innerHTML = `
+        <div><strong>${item.subTopic}</strong> (${item.part})</div>
+        <div style="display: flex; gap: 5px;">
+          <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
+          <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function filterBySubject(subj, btn) {
+    currentSubjectFilter = subj;
+    document.querySelectorAll('.subj-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLibrary();
+  }
+
+  function loadItem(id) {
+    const db = getDB();
+    const item = db.find(x => x.id === id);
+    if (!item) return;
+
+    document.getElementById('smartInput').value = item.smartRaw || '';
+    currentMeta = {
+      subject: item.subject,
+      subTopic: item.subTopic,
+      part: item.part,
+      caption: item.caption,
+      hook: item.hook || '🔥 90% Aspirants Fail In Q7'
+    };
+    parsedQAData = item.questions;
+    isChallengeMode = item.isChallengeMode !== undefined ? item.isChallengeMode : true;
+    document.getElementById('chkChallengeMode').checked = isChallengeMode;
+    document.getElementById('txtCustomHook').value = currentMeta.hook;
+
+    renderCard();
+    notify(`📖 Loaded: ${item.subject} (${item.part})`);
+  }
+
+  function deleteItem(id) {
+    let db = getDB();
+    db = db.filter(x => x.id !== id);
+    saveDB(db);
+    renderLibrary();
+  }
+
+  function downloadSubjectPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const db = getDB().filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+
+    if (db.length === 0) {
+      alert(`No notes saved under "${currentSubjectFilter}"!`);
+      return;
+    }
+
+    doc.setFontSize(18);
+    doc.text(`A one Notes - ${currentSubjectFilter}`, 14, 20);
+    doc.setFontSize(11);
+    doc.text(`10 Question Sets & Answer Key`, 14, 28);
+    doc.line(14, 32, 196, 32);
+
+    let yPos = 40;
+
+    db.forEach((set) => {
+      if (yPos > 260) { doc.addPage(); yPos = 20; }
+      doc.setFontSize(13);
+      doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
+      yPos += 8;
+
+      set.questions.forEach((qa, idx) => {
+        if (yPos > 275) { doc.addPage(); yPos = 20; }
+        doc.setFontSize(10);
+        doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
+        yPos += 5;
+        doc.text(`Ans: ${qa.a}`, 16, yPos);
+        yPos += 7;
+      });
+      yPos += 6;
+    });
+
+    doc.save(`A_one_Notes_${currentSubjectFilter}.pdf`);
+    notify("📄 PDF Downloaded!");
+  }
+
+  function exportJSON() {
+    const db = getDB();
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    a.download = `A_one_Notes_Backup_${Date.now()}.json`;
+    a.click();
+  }
+
+  function importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (Array.isArray(imported)) {
+          saveDB(imported);
+          renderLibrary();
+          notify("📥 Backup imported successfully!");
+        }
+      } catch (err) {
+        alert("Invalid JSON file!");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function notify(msg) {
+    const toast = document.getElementById('toastMsg');
+    toast.innerText = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 2600);
+  }
+
+  window.onload = () => {
+    parseSmartInput();
+    saveToDatabase(false);
+    renderLibrary();
+    setTimeout(updatePreviewScale, 300);
+  };
+</script>
+</body>
+</html>
