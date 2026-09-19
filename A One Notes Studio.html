@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>A one Notes - Studio Pro Mobile (10 Qs Ultra Viral)</title>
+  <title>A one Notes - Studio Pro Mobile (10 Qs)</title>
   
   <!-- Premium English Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -348,7 +348,6 @@
       margin-left: 6px;
     }
     
-    /* Viral Top Hook Badge */
     .top-hook-badge {
       position: relative;
       z-index: 2;
@@ -472,7 +471,6 @@
     thead th.th-q { color: #dc2626; }
     thead th.th-a { color: #15803d; }
 
-    /* 10 Questions layout */
     tbody tr {
       border-bottom: 1.5px solid #bbf7d0;
       height: calc((100% - 42px) / 10);
@@ -654,28 +652,28 @@
     </div>
     
     <textarea id="smartInput" placeholder="Paste 10 questions here..." oninput="autoSaveHandler()">🎯 History, Ancient India, Part 1
-1. Who was the founder of the Maurya Empire?
+1. Which was the first site discovered in the Indus Valley Civilization?
+Ans: Harappa
+2. Who was the founder of the Maurya Empire?
 Ans: Chandragupta Maurya
-2. Which Greek ambassador visited the court of Chandragupta Maurya?
-Ans: Megasthenes
-3. What is the title of the famous book written by Megasthenes?
-Ans: Indica
-4. Who was the prime minister and mentor of Chandragupta Maurya?
+3. The famous Gayatri Mantra is found in which Veda?
+Ans: Rigveda
+4. At which place did Gautama Buddha attain enlightenment?
+Ans: Bodh Gaya
+5. Who is known as the 'Napoleon of India'?
+Ans: Samudragupta
+6. Which ruler convened the Fourth Buddhist Council in Kashmir?
+Ans: Kanishka
+7. Who was the author of the famous book 'Arthashastra'?
 Ans: Chanakya (Kautilya)
-5. Which Mauryan ruler embraced Buddhism after the Kalinga War?
-Ans: Emperor Ashoka
-6. In which year was the famous Kalinga War fought?
-Ans: 261 BC
-7. What script was predominantly used in Ashoka's rock edicts?
-Ans: Brahmi Script
-8. Who deciphered the Ashokan inscriptions for the first time in 1837?
-Ans: James Prinsep
-9. What was the capital city of the Mauryan Empire?
-Ans: Pataliputra
-10. Who was the last ruler of the Mauryan Dynasty?
-Ans: Brihadratha
-Essential top 10 questions for competitive exam preparation. Save and share with your friends! 📚✨
-#AoneNotes #GeneralKnowledge</textarea>
+8. Which Indus Valley site is famous for its dockyard?
+Ans: Lothal
+9. Who was the court poet of King Harsha and author of 'Harshacharita'?
+Ans: Banabhatta
+10. Who was the 24th Tirthankara of Jainism?
+Ans: Mahavira
+How many did you get right out of 10? Drop your score in the comments and share this with your fellow aspirants!
+#HistoryGK</textarea>
 
     <div class="status-counter">
       <span id="statusCounter">📊 Loaded Questions: 10 / 10</span>
@@ -757,7 +755,6 @@ Essential top 10 questions for competitive exam preparation. Save and share with
               <span class="logo-red">A one</span><span class="logo-black">Notes</span>
             </div>
             
-            <!-- VIRAL HOOK DISPLAY -->
             <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
 
             <div class="top-follow-pill">A one Notes : Follow</div>
@@ -839,21 +836,11 @@ Essential top 10 questions for competitive exam preparation. Save and share with
   let autoSaveTimer = null;
   let isChallengeMode = true;
 
-  // 10 Distinct Soft Pastel Background Colors for rows
   const pastelRowColors = [
-    '#ffffff', // Row 1: Crisp Pure White
-    '#f8fafc', // Row 2: Soft Slate
-    '#f0fdf4', // Row 3: Soft Mint Green
-    '#fefce8', // Row 4: Soft Warm Ivory
-    '#eff6ff', // Row 5: Soft Ice Blue
-    '#faf5ff', // Row 6: Soft Lavender
-    '#fff7ed', // Row 7: Soft Peach Cream
-    '#f0fdfa', // Row 8: Soft Aqua Mist
-    '#fdf2f8', // Row 9: Soft Rose Blush
-    '#fffbeb'  // Row 10: Soft Pale Amber
+    '#ffffff', '#f8fafc', '#f0fdf4', '#fefce8', '#eff6ff',
+    '#faf5ff', '#fff7ed', '#f0fdfa', '#fdf2f8', '#fffbeb'
   ];
 
-  // Question words (Primary Red)
   const questionWords = new Set([
     'what', 'where', 'when', 'who', 'whom', 'whose', 'which', 'why', 'how', 'name',
     'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
@@ -861,7 +848,6 @@ Essential top 10 questions for competitive exam preparation. Save and share with
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
-  // Common stop words to exclude from keyword red-highlight
   const stopWords = new Set([
     'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'in', 'of', 'for', 'to', 'from',
     'by', 'with', 'was', 'were', 'has', 'had', 'been', 'be', 'are', 'this', 'that', 'these', 'those'
@@ -889,25 +875,10 @@ Essential top 10 questions for competitive exam preparation. Save and share with
   }
 
   async function copyViralCaption() {
-    const subj = currentMeta.subject;
-    const sub = currentMeta.subTopic ? `(${currentMeta.subTopic})` : '';
-    const part = currentMeta.part ? `- ${currentMeta.part}` : '';
-    
-    let captionText = `${currentMeta.hook}\n`;
-    captionText += `🎯 ${subj} ${sub} ${part}\n\n`;
-    captionText += `🔥 Top 10 High-Yield Questions for Competitive Exams!\n`;
-    if (isChallengeMode) {
-      captionText += `👉 Q10 is a CHALLENGE for you! Drop your answer in the comments below 👇\n\n`;
-    } else {
-      captionText += `👉 Read, Save & Share with your fellow aspirants!\n\n`;
-    }
-    captionText += `📌 Save this post for your quick revision.\n`;
-    captionText += `❤️ Follow @AoneNotes for daily notes & quizzes!\n\n`;
-    captionText += `#AoneNotes #${subj.replace(/\s+/g, '')} #ExamPreparation #GeneralKnowledge #UPSC #SSCCGL #GovernmentExams`;
-
+    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
     try {
-      await navigator.clipboard.writeText(captionText);
-      notify("📋 Viral Caption Copied to Clipboard!");
+      await navigator.clipboard.writeText(caption);
+      notify("📋 Caption Copied to Clipboard!");
     } catch (e) {
       notify("❌ Failed to copy caption.");
     }
@@ -983,6 +954,9 @@ Essential top 10 questions for competitive exam preparation. Save and share with
               .trim();
   }
 
+  /* BULLETPROOF PARSER:
+     Exactly matches original logic so full bottom caption is captured seamlessly!
+  */
   function parseSmartInput() {
     let raw = document.getElementById('smartInput').value || '';
     if (!raw.trim()) return;
@@ -996,7 +970,7 @@ Essential top 10 questions for competitive exam preparation. Save and share with
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // Header Parsing
+      // A. Header
       if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
         if (line.includes('🎯') || line.toLowerCase().includes('part') || line.includes('भाग') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
           headerParsed = true;
@@ -1020,7 +994,7 @@ Essential top 10 questions for competitive exam preparation. Save and share with
         }
       }
 
-      // Question Start
+      // B. Question Line
       const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
       if (qStartMatch) {
         if (currentQ) {
@@ -1053,7 +1027,7 @@ Essential top 10 questions for competitive exam preparation. Save and share with
         }
       }
 
-      // Answer Line
+      // C. Answer Line
       const ansMatch = line.match(/^(?:Ans|Answer|उत्तर|उ\.?)[\:\-\s]*(.*)/i);
       if (ansMatch) {
         const ansText = ansMatch[1].trim();
@@ -1068,7 +1042,7 @@ Essential top 10 questions for competitive exam preparation. Save and share with
         continue;
       }
 
-      // Continuation
+      // D. Multi-line continuation
       if (currentQ && !currentQ.a) {
         const qMarkIdx = line.indexOf('?');
         if (qMarkIdx !== -1) {
@@ -1090,8 +1064,8 @@ Essential top 10 questions for competitive exam preparation. Save and share with
         continue;
       }
 
-      // Footer/Captions
-      if (line.includes('#') || line.toLowerCase().includes('exam') || line.toLowerCase().includes('share') || line.includes('प्रतियोगी') || parsedQAData.length >= 10) {
+      // E. Captions: Collect everything after 10 questions or hashtag lines
+      if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || parsedQAData.length >= 10) {
         captionLines.push(line);
       }
     }
@@ -1102,7 +1076,7 @@ Essential top 10 questions for competitive exam preparation. Save and share with
     }
 
     if (captionLines.length > 0) {
-      currentMeta.caption = captionLines.join(' ');
+      currentMeta.caption = captionLines.join('\n');
       document.getElementById('fbCaption').value = currentMeta.caption;
     }
 
@@ -1111,16 +1085,11 @@ Essential top 10 questions for competitive exam preparation. Save and share with
     renderCard();
   }
 
-  /* Question Formatter with Smart Red Word Highlights:
-     1. Question Words (What, Who, Where...) are always Red.
-     2. 1-2 Key Subject/Action words are randomly yet consistently highlighted in Red.
-  */
   function formatQuestion(qText, rowIndex) {
     if (!qText) return '';
     let words = qText.trim().split(/\s+/);
     if (words.length === 0) return qText;
 
-    // Pick a deterministic key word index based on row index and length
     const candidateIndices = [];
     words.forEach((w, idx) => {
       const clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '').toLowerCase();
@@ -1196,8 +1165,6 @@ Essential top 10 questions for competitive exam preparation. Save and share with
 
     displayList.forEach((item, index) => {
       const tr = document.createElement('tr');
-      
-      // Apply unique subtle pastel background color for each of the 10 rows
       tr.style.backgroundColor = pastelRowColors[index % pastelRowColors.length];
 
       const tdQ = document.createElement('td');
@@ -1260,9 +1227,15 @@ Essential top 10 questions for competitive exam preparation. Save and share with
     notify("📥 HD Image Downloaded!");
   }
 
+  /* EXACT SAME WORKING SHARE LOGIC FROM YOUR PREVIOUS APP */
   async function shareToFacebook() {
-    await copyViralCaption();
-    notify("⏳ Preparing direct share...");
+    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
+    
+    try {
+      await navigator.clipboard.writeText(caption);
+    } catch (e) {}
+
+    notify("⏳ Sharing post...");
     const canvas = await getCardCanvas();
 
     canvas.toBlob(async (blob) => {
@@ -1272,7 +1245,8 @@ Essential top 10 questions for competitive exam preparation. Save and share with
         try {
           await navigator.share({
             files: [file],
-            title: `A one Notes - ${currentMeta.subject}`
+            title: currentMeta.subject,
+            text: caption
           });
           notify("🚀 Share dialog opened!");
           return;
