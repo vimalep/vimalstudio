@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Preparation - Studio Pro Mobile + AI</title>
+  <title>Exam Preparation - Studio Pro Mobile</title>
   
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -227,14 +227,6 @@
     .btn-run { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; }
     .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-fb { background: linear-gradient(135deg, #1877f2, #0d5bbd); color: #fff; }
-    .btn-ai {
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
-      color: #fff;
-      padding: 11px;
-      border-radius: 8px;
-      width: 100%;
-      margin-top: 4px;
-    }
     .btn-dark {
       background: #1e293b;
       border: 1px solid #334155;
@@ -593,63 +585,17 @@
 
   <div class="app-header">
     <h1>⚡ Exam Preparation Studio</h1>
-    <span class="app-badge">MOBILE v3.5 AI</span>
+    <span class="app-badge">MOBILE v3.5 PRO</span>
   </div>
 
-  <!-- 1. GEMINI AI GENERATOR CARD -->
-  <div class="dark-card" style="border-color: #3b82f6;">
-    <div class="card-title" style="color: #60a5fa;">
-      <span>✨ Gemini AI Auto-Generator (15 प्रश्न)</span>
-      <span style="font-size: 10.5px; color: #93c5fd;">AI Powered</span>
-    </div>
-
-    <div style="margin-bottom: 8px;">
-      <label>🔑 Gemini API Key (Auto-Saved in Browser):</label>
-      <input type="password" id="geminiApiKey" placeholder="Paste your Gemini API key here..." onchange="saveGeminiKey()">
-    </div>
-
-    <div class="row-flex">
-      <div>
-        <label>विषय (Subject):</label>
-        <select id="aiSubject">
-          <option value="इतिहास">इतिहास</option>
-          <option value="भूगोल">भूगोल</option>
-          <option value="राजव्यवस्था">राजव्यवस्था</option>
-          <option value="सामान्य विज्ञान">सामान्य विज्ञान</option>
-          <option value="अर्थव्यवस्था">अर्थव्यवस्था</option>
-          <option value="करेंट अफेयर्स">करेंट अफेयर्स</option>
-        </select>
-      </div>
-      <div>
-        <label>उप-विषय (Sub-Topic):</label>
-        <input type="text" id="aiSubTopic" placeholder="उदा. प्राचीन भारत, नदियां" value="प्राचीन भारत">
-      </div>
-    </div>
-
-    <div class="row-flex">
-      <div>
-        <label>भाग (Part):</label>
-        <input type="text" id="aiPart" placeholder="उदा. भाग 2" value="भाग 2">
-      </div>
-      <div>
-        <label>Start Question #:</label>
-        <input type="number" id="aiStartNum" value="16" min="1">
-      </div>
-    </div>
-
-    <button class="btn-ai" id="btnAiGenerate" onclick="generateViaGemini()">
-      <span>✨ AI से 15 प्रश्न जनरेट करें</span>
-    </button>
-  </div>
-
-  <!-- 2. MANUAL SMART PASTE CARD -->
+  <!-- MANUAL SMART PASTE CARD -->
   <div class="dark-card">
     <div class="card-title">
       <span>📝 Raw Text (Smart Paste):</span>
       <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">भाग 2 डिटेक्टेड</span>
     </div>
     
-    <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें...">🎯 इतिहास, प्राचीन भारत, भाग 2
+    <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें..." oninput="autoSaveHandler()">🎯 इतिहास, प्राचीन भारत, भाग 2
 16. मनके बनाने के कारखाने के साक्ष्य किन दो प्रमुख सैंधव स्थलों से मिले हैं?
 उत्तर: चन्हूदड़ो और लोथल
 17. सिंधु सभ्यता की मुहरों पर सबसे अधिक किस काल्पनिक पशु का अंकन मिलता है?
@@ -737,7 +683,7 @@
     </div>
   </div>
 
-  <!-- 3. LIVE PREVIEW -->
+  <!-- LIVE PREVIEW -->
   <div class="dark-card" style="padding: 10px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <div class="card-title" style="margin:0;">📱 लाइव मोबाइल प्रीव्यू</div>
@@ -794,7 +740,7 @@
     </div>
   </div>
 
-  <!-- 4. ARCHIVE -->
+  <!-- ARCHIVE -->
   <div class="dark-card">
     <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
@@ -809,7 +755,7 @@
     <div class="library-list" id="savedListContainer"></div>
 
     <div style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
-      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase()">💾 Save</button>
+      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase(true)">💾 Save</button>
       <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 PDF</button>
       <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
       <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; margin: 0;">
@@ -824,8 +770,7 @@
   let parsedQAData = [];
   let currentMeta = { subject: 'इतिहास', subTopic: 'प्राचीन भारत', part: 'भाग 2', caption: '' };
   let currentSubjectFilter = 'इतिहास';
-
-  const STORAGE_KEY_API = "EP_STUDIO_GEMINI_KEY";
+  let autoSaveTimer = null;
 
   const hindiQuestionWords = new Set([
     'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
@@ -833,107 +778,14 @@
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
-  function saveGeminiKey() {
-    const key = document.getElementById('geminiApiKey').value.trim();
-    if (key) {
-      localStorage.setItem(STORAGE_KEY_API, key);
-      notify("🔑 API Key सुरक्षित सेव हो गई!");
-    }
-  }
-
-  function loadGeminiKey() {
-    const key = localStorage.getItem(STORAGE_KEY_API) || localStorage.getItem("GEMINI_API_KEY_LOCAL");
-    if (key) {
-      document.getElementById('geminiApiKey').value = key;
-    }
-  }
-
-  // GEMINI AI INTEGRATION (Updated to gemini-3.6-flash)
-  async function generateViaGemini() {
-    let key = document.getElementById('geminiApiKey').value.trim() || localStorage.getItem(STORAGE_KEY_API) || localStorage.getItem("GEMINI_API_KEY_LOCAL");
-    if (!key) {
-      alert("कृपया पहले अपनी Gemini API Key दर्ज करें!");
-      document.getElementById('geminiApiKey').focus();
-      return;
-    }
-
-    const subject = document.getElementById('aiSubject').value;
-    const subTopic = document.getElementById('aiSubTopic').value.trim() || subject;
-    const part = document.getElementById('aiPart').value.trim() || 'भाग 1';
-    const startNum = parseInt(document.getElementById('aiStartNum').value) || 1;
-
-    const btn = document.getElementById('btnAiGenerate');
-    btn.disabled = true;
-    btn.innerHTML = `<span>⏳ 15 महत्वपूर्ण प्रश्न तैयार हो रहे हैं...</span>`;
-
-    const prompt = `आप प्रतियोगी परीक्षाओं (UPSC, SSC, State PCS) के वरिष्ठ विशेषज्ञ शिक्षक हैं।
-कृपया निम्नलिखित विवरण के अनुसार भारतीय छात्रों के लिए उच्च-गुणवत्ता वाले 15 एक-पंक्ति (One-liner) प्रश्न और सटीक उत्तर तैयार करें:
-- विषय: ${subject}
-- उप-विषय: ${subTopic}
-- भाग: ${part}
-- प्रश्न संख्या शुरू: ${startNum} से ${startNum + 14} तक
-
-कड़े नियम:
-1. भाषा: केवल प्रामाणिक और शुद्ध हिंदी।
-2. प्रारूप: नीचे दिए गए प्रारूप का अक्षरशः पालन करें:
-🎯 ${subject},${subTopic}, ${part}${startNum}. [प्रश्न]
-उत्तर: [उत्तर]
-${startNum + 1}. [प्रश्न]
-उत्तर: [उत्तर]
-... (पूरे 15 प्रश्न और उत्तर)
-प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
-#${subject.replace(/\s+/g, '')}GK
-
-3. केवल कच्चा टेक्स्ट (raw text) दें, कोई अतिरिक्त गपशप या markdown कोड ब्लॉक (\`\`\`) न लगाएं।`;
-
-    try {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${key}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error?.message || `HTTP ${res.status}`);
-      }
-
-      const data = await res.json();
-      let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-      text = text.replace(/^```[a-z]*\r?\n?/i, '').replace(/```$/i, '').trim();
-
-      if (text.length > 50) {
-        document.getElementById('smartInput').value = text;
-        parseSmartInput();
-        
-        document.getElementById('aiStartNum').value = startNum + 15;
-        
-        const partMatch = part.match(/\d+/);
-        if (partMatch) {
-          const nextPartNum = parseInt(partMatch[0]) + 1;
-          document.getElementById('aiPart').value = part.replace(/\d+/, nextPartNum);
-        }
-
-        notify("✨ 15 प्रश्न AI द्वारा सफलतापूर्वक लोड हो गए!");
-      } else {
-        throw new Error("API से सही डेटा प्राप्त नहीं हुआ।");
-      }
-    } catch (e) {
-      alert("AI Error: " + e.message);
-    } finally {
-      btn.disabled = false;
-      btn.innerHTML = `<span>✨ AI से 15 प्रश्न जनरेट करें</span>`;
-    }
-  }
-
-  // 1. Separate "Click Paste" Button
   async function onlyPasteClipboard() {
     try {
       if (navigator.clipboard && navigator.clipboard.readText) {
         const text = await navigator.clipboard.readText();
         if (text && text.trim().length > 0) {
           document.getElementById('smartInput').value = text;
-          notify("📋 बॉक्स में पेस्ट हो गया! अब 'Generate / Run' दबाएं।");
+          generateCards();
+          notify("📋 पेस्ट होकर सुरक्षित सेव हो गया!");
           return;
         }
       }
@@ -944,17 +796,24 @@ ${startNum + 1}. [प्रश्न]
     document.getElementById('smartInput').focus();
   }
 
-  // 2. Separate "Generate / Run" Button
   function generateCards() {
     try {
       parseSmartInput();
-      notify("⚡ 15 प्रश्न इमेज पर तैयार हो गए!");
+      saveToDatabase(false); // ऑटो-सेव बिना मैनुअल अलर्ट के
+      notify("⚡ 15 प्रश्न इमेज पर तैयार और सुरक्षित सेव हो गए!");
     } catch (e) {
       alert("Parsing Error: " + e.message);
     }
   }
 
-  // Live Typography
+  function autoSaveHandler() {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => {
+      parseSmartInput();
+      saveToDatabase(false);
+    }, 1200);
+  }
+
   function applyTypography() {
     const selectedFont = document.getElementById('selFontFamily').value;
     const qWeight = document.getElementById('selQWeight').value;
@@ -989,7 +848,6 @@ ${startNum + 1}. [प्रश्न]
               .trim();
   }
 
-  // BULLETPROOF PARSER
   function parseSmartInput() {
     let raw = document.getElementById('smartInput').value || '';
     if (!raw.trim()) return;
@@ -1003,7 +861,6 @@ ${startNum + 1}. [प्रश्न]
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // A. Header Parsing
       if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
         if (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)[\.\)\:\-\s]/))) {
           headerParsed = true;
@@ -1027,7 +884,6 @@ ${startNum + 1}. [प्रश्न]
         }
       }
 
-      // B. Pipe format
       if (line.includes('|')) {
         if (currentQ) { parsedQAData.push(currentQ); currentQ = null; }
         const parts = line.split('|');
@@ -1038,7 +894,6 @@ ${startNum + 1}. [प्रश्न]
         continue;
       }
 
-      // C. Question line
       const qMatch = line.match(/^(?:Q\.?|प्र\.?|प्रश्न)?\s*(\d+|[०-९]+)[\.\)\:\-\s]+(.*)/i);
       if (qMatch) {
         if (currentQ) parsedQAData.push(currentQ);
@@ -1056,7 +911,6 @@ ${startNum + 1}. [प्रश्न]
         continue;
       }
 
-      // D. Answer line
       const aMatch = line.match(/^(?:उत्तर|Ans|Answer|उ\.?|उत्तर\s*-)[\:\-\s]*(.*)/i);
       if (aMatch) {
         const aText = aMatch[1].trim();
@@ -1070,7 +924,6 @@ ${startNum + 1}. [प्रश्न]
         continue;
       }
 
-      // E. Unlabelled Answer line or multiline question
       if (currentQ && !currentQ.a) {
         if (!currentQ.q.includes('?') && (line.includes('?') || line.length < 25)) {
           currentQ.q += ' ' + line;
@@ -1082,7 +935,6 @@ ${startNum + 1}. [प्रश्न]
         continue;
       }
 
-      // F. Captions
       if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || line.includes('स्क्रीनशॉट') || parsedQAData.length >= 15) {
         captionLines.push(line);
       }
@@ -1102,7 +954,6 @@ ${startNum + 1}. [प्रश्न]
     renderCard();
   }
 
-  // Question Formatter
   function formatQuestion(qText, rowIndex) {
     if (!qText) return '';
     let words = qText.trim().split(/\s+/);
@@ -1127,7 +978,6 @@ ${startNum + 1}. [प्रश्न]
     }).join(' ');
   }
 
-  // Answer Formatter: Green base, Maroon for parenthesis/comma
   function formatAnswer(aText) {
     if (!aText) return '';
     let text = aText.trim();
@@ -1274,24 +1124,37 @@ ${startNum + 1}. [प्रश्न]
     localStorage.setItem('exam_prep_db_v7', JSON.stringify(db));
   }
 
-  function saveToDatabase() {
+  function saveToDatabase(isManual = false) {
     if (parsedQAData.length === 0) return;
     const db = getDB();
+    const rawVal = document.getElementById('smartInput').value;
+
+    const existingIndex = db.findIndex(item => 
+      item.subject === currentMeta.subject && 
+      item.subTopic === currentMeta.subTopic && 
+      item.part === currentMeta.part
+    );
+
     const entry = {
-      id: Date.now(),
+      id: existingIndex >= 0 ? db[existingIndex].id : Date.now(),
       subject: currentMeta.subject,
       subTopic: currentMeta.subTopic,
       part: currentMeta.part,
       caption: currentMeta.caption,
-      smartRaw: document.getElementById('smartInput').value,
+      smartRaw: rawVal,
       questions: parsedQAData,
       date: new Date().toLocaleDateString('hi-IN')
     };
 
-    db.unshift(entry);
+    if (existingIndex >= 0) {
+      db[existingIndex] = entry;
+    } else {
+      db.unshift(entry);
+    }
+
     saveDB(db);
     renderLibrary();
-    notify("💾 पोस्ट Auto-Save हो गई!");
+    if (isManual) notify("💾 पोस्ट सुरक्षित सेव हो गई!");
   }
 
   function renderLibrary() {
@@ -1427,8 +1290,8 @@ ${startNum + 1}. [प्रश्न]
   }
 
   window.onload = () => {
-    loadGeminiKey();
     parseSmartInput();
+    saveToDatabase(false);
     renderLibrary();
     setTimeout(updatePreviewScale, 300);
   };
