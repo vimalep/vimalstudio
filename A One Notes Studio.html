@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>A one Notes - Studio Pro Mobile (10 Qs)</title>
+  <title>A one Notes - Studio Pro Mobile (10 Qs Auto-Save)</title>
   
   <!-- Premium English Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -677,6 +677,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
 
     <div class="status-counter">
       <span id="statusCounter">📊 Loaded Questions: 10 / 10</span>
+      <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
     </div>
 
     <!-- VIRAL CHALLENGE TOGGLE -->
@@ -891,7 +892,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
         if (text && text.trim().length > 0) {
           document.getElementById('smartInput').value = text;
           generateCards();
-          notify("📋 Content pasted & auto-saved!");
           return;
         }
       }
@@ -906,18 +906,22 @@ How many did you get right out of 10? Drop your score in the comments and share 
     try {
       parseSmartInput();
       saveToDatabase(false);
-      notify("⚡ 10 Questions generated & saved!");
+      notify("⚡ 10 Questions Generated & Auto-Saved!");
     } catch (e) {
       alert("Parsing Error: " + e.message);
     }
   }
 
+  // AUTO-SAVE HANDLER (Saves silently when typing pauses for 1 second)
   function autoSaveHandler() {
+    const ind = document.getElementById('autoSaveIndicator');
+    if (ind) ind.innerText = "⏳ Saving...";
     clearTimeout(autoSaveTimer);
     autoSaveTimer = setTimeout(() => {
       parseSmartInput();
       saveToDatabase(false);
-    }, 1200);
+      if (ind) ind.innerText = "● Auto-Saved";
+    }, 1000);
   }
 
   function applyTypography() {
@@ -946,6 +950,9 @@ How many did you get right out of 10? Drop your score in the comments and share 
     document.querySelectorAll('.td-a').forEach(el => {
       el.style.fontSize = aSize + 'px';
     });
+
+    // Typography change ko bhi auto-save karein
+    saveToDatabase(false);
   }
 
   function cleanLine(str) {
@@ -954,9 +961,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
               .trim();
   }
 
-  /* BULLETPROOF PARSER:
-     Exactly matches original logic so full bottom caption is captured seamlessly!
-  */
   function parseSmartInput() {
     let raw = document.getElementById('smartInput').value || '';
     if (!raw.trim()) return;
@@ -1064,7 +1068,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
         continue;
       }
 
-      // E. Captions: Collect everything after 10 questions or hashtag lines
+      // E. Captions
       if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || parsedQAData.length >= 10) {
         captionLines.push(line);
       }
@@ -1181,7 +1185,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
       tbody.appendChild(tr);
     });
 
-    applyTypography();
     updatePreviewScale();
   }
 
@@ -1227,7 +1230,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
     notify("📥 HD Image Downloaded!");
   }
 
-  /* EXACT SAME WORKING SHARE LOGIC FROM YOUR PREVIOUS APP */
   async function shareToFacebook() {
     const caption = document.getElementById('fbCaption').value || currentMeta.caption;
     
@@ -1270,6 +1272,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
     localStorage.setItem('aone_notes_db_v1', JSON.stringify(db));
   }
 
+  // AUTO-SAVE ENGINE
   function saveToDatabase(isManual = false) {
     if (parsedQAData.length === 0) return;
     const db = getDB();
@@ -1391,7 +1394,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
       doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
       yPos += 8;
 
-      set.questions.forEach((qa, idx) => {
+      set.questions.forEach((qa) => {
         if (yPos > 275) { doc.addPage(); yPos = 20; }
         doc.setFontSize(10);
         doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
