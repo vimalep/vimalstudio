@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Arena by Vimal Sir - Ultimate Edition</title>
+  <title>Exam Arena by Vimal Sir</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,8 +24,8 @@
       --text-muted: #cbd5e1;
       --card-bg: rgba(30, 27, 75, 0.9);
       --card-border: rgba(167, 139, 250, 0.35);
-      --header-bg: linear-gradient(135deg, rgba(67, 56, 202, 0.9), rgba(126, 34, 206, 0.9));
-      --header-border: rgba(216, 180, 254, 0.4);
+      --header-bg: linear-gradient(135deg, rgba(67, 56, 202, 0.95), rgba(126, 34, 206, 0.95));
+      --header-border: rgba(216, 180, 254, 0.45);
       --ticker-bg: linear-gradient(90deg, #1e1b4b, #312e81, #1e1b4b);
       --profile-bg: linear-gradient(135deg, rgba(49, 46, 129, 0.92), rgba(30, 27, 75, 0.95));
       --quiz-card-bg: linear-gradient(145deg, #1e1b4b, #2d236b);
@@ -121,7 +121,7 @@
       gap: 13px;
     }
 
-    /* HEADER & THEME TOGGLE */
+    /* HEADER & CRISP NON-FADED TITLE */
     .arena-header {
       text-align: center;
       padding: 16px 14px;
@@ -137,7 +137,7 @@
       top: 12px;
       right: 12px;
       background: rgba(255, 255, 255, 0.25);
-      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(4px);
       width: 38px;
       height: 38px;
@@ -152,28 +152,34 @@
     }
     .theme-toggle-btn:active { transform: scale(0.9); }
 
+    /* SOLID & VIBRANT EXAM ARENA TITLE (NO FADING) */
     .arena-title {
       font-family: 'Fredoka', cursive, sans-serif;
-      font-size: 27px;
+      font-size: 28px;
       font-weight: 800;
-      letter-spacing: 1.2px;
-      background: linear-gradient(135deg, #f59e0b, #ec4899, #38bdf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+      text-shadow: 0 0 16px rgba(254, 240, 138, 0.75), 0 3px 8px rgba(0, 0, 0, 0.6);
       text-transform: uppercase;
     }
+    body.light-theme .arena-title {
+      color: #1e1b4b;
+      text-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+    }
+
+    /* BADGE (BY VIMAL SIR ONLY) */
     .vimal-badge {
       display: inline-block;
       background: linear-gradient(135deg, #f59e0b, #ef4444);
       border: 1.5px solid #fef08a;
       color: #ffffff;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 900;
-      padding: 3px 14px;
+      padding: 3px 16px;
       border-radius: 20px;
-      margin-top: 4px;
+      margin-top: 5px;
       box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
     }
 
     /* FLASH ALERT CARD */
@@ -713,11 +719,11 @@
 <!-- MAIN CONTAINER -->
 <div class="arena-container">
 
-  <!-- HEADER WITH THEME TOGGLE -->
+  <!-- HEADER WITH SHARP TITLE & SIMPLIFIED BADGE -->
   <div class="arena-header">
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
     <div class="arena-title">🎮 EXAM ARENA</div>
-    <div class="vimal-badge">⭐ BY VIMAL SIR • MASTER EDITION ⭐</div>
+    <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
   </div>
 
   <!-- FLASH ALERT CARD -->
@@ -834,7 +840,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: QUIZ ARENA (PREV + NEXT + 60s TIMER) -->
+  <!-- SCREEN 3: QUIZ ARENA (WITH PREV & NEXT + 60s TIMER) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Test</button>
@@ -890,7 +896,7 @@
       </div>
 
       <div style="display:flex; gap:12px; margin-top:16px;">
-        <button class="btn-action btn-next" style="background:#4338ca; color:#fff;" onclick="navigateTo('screenSets')">Sets List</button>
+        <button class="btn-action btn-next" style="background:#4338ca; color:#fff;" onclick="openSubjectSets(currentSubject)">Sets List</button>
         <button class="btn-action btn-next" id="btnNextLevelAction" onclick="goToNextLevelOrRetry()">Next Set ➔</button>
       </div>
     </div>
@@ -972,10 +978,6 @@
 
   /* ============================================================
      ADVANCED FORMULA, GREEK & MATH SYMBOL FORMATTER
-     - alpha -> α, beta -> β, gamma -> γ, theta -> θ, delta -> Δ, pi -> π, lambda -> λ, omega -> Ω
-     - sqrt -> √, cbrt -> ∛
-     - * -> ×
-     - ^2 -> ², _2 -> ₂
   ============================================================ */
   function formatMathFormula(text) {
     if (!text) return '';
@@ -1279,7 +1281,7 @@
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
     const sets = quizDatabase[currentSubject] || [];
-    const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
+    const unlockedMax = Number((currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject])) || 1;
 
     if (sets.length === 0) {
       container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Sheet से सवाल लोड हो रहे हैं...</div>`;
@@ -1287,7 +1289,8 @@
     }
 
     sets.forEach(set => {
-      const isLocked = set.level > unlockedMax;
+      const setLvl = Number(set.level);
+      const isLocked = setLvl > unlockedMax;
       const row = document.createElement('div');
       row.className = 'set-row-card ' + (isLocked ? 'locked' : 'unlocked');
       row.innerHTML = `
@@ -1309,16 +1312,16 @@
   }
 
   function startQuizSet(lvl) {
-    currentLevel = lvl;
+    currentLevel = Number(lvl);
     userAnswers = {};
-    const setObj = quizDatabase[currentSubject].find(s => s.level === lvl);
-    document.getElementById('activeQuizSetTitle').innerText = `${currentSubject} - ${setObj ? setObj.title : 'Set ' + lvl}`;
+    const setObj = quizDatabase[currentSubject].find(s => Number(s.level) === currentLevel);
+    document.getElementById('activeQuizSetTitle').innerText = `${currentSubject} - ${setObj ? setObj.title : 'Set ' + currentLevel}`;
     navigateTo('screenQuiz');
     loadQuestion(0);
   }
 
   function getCurrentQuestions() {
-    const setObj = quizDatabase[currentSubject].find(s => s.level === currentLevel);
+    const setObj = quizDatabase[currentSubject].find(s => Number(s.level) === currentLevel);
     return setObj ? setObj.questions : [];
   }
 
@@ -1329,8 +1332,6 @@
     const qData = questions[idx];
 
     document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
-    
-    // Auto-formatted Question Text
     document.getElementById('qText').innerHTML = `${idx + 1}. ${formatMathFormula(qData.q)}`;
 
     const container = document.getElementById('optionsContainer');
@@ -1339,7 +1340,6 @@
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
       
-      // Kahoot Badges with Auto-formatted Options
       btn.innerHTML = `
         <span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span>
         <span>${formatMathFormula(opt)}</span>
@@ -1349,7 +1349,7 @@
       container.appendChild(btn);
     });
 
-    // Handle Previous & Next/Submit Button Visibility
+    // Handle Previous & Next/Submit Buttons
     document.getElementById('btnPrev').style.display = (idx > 0) ? 'flex' : 'none';
     const isLast = (idx === questions.length - 1);
     document.getElementById('btnNext').style.display = isLast ? 'none' : 'flex';
@@ -1371,7 +1371,7 @@
     }
   }
 
-  // 60 SECONDS TIMER FUNCTION
+  // 60 SECONDS TIMER
   function startTimer() {
     qTimeLeft = 60;
     const timerSecsEl = document.getElementById('qTimerSecs');
@@ -1392,10 +1392,14 @@
     }, 1000);
   }
 
+  // QUIT TEST -> RE-RENDER SETS SCREEN DIRECTLY
   function confirmExitQuiz() {
-    if (confirm("टेस्ट छोड़कर बाहर जाना चाहते हैं?")) navigateTo('screenSets');
+    if (confirm("टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
+      openSubjectSets(currentSubject);
+    }
   }
 
+  // SUBMIT TEST WITH PERMANENT UNLOCK LOGIC
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const questions = getCurrentQuestions();
@@ -1405,14 +1409,19 @@
     const percent = (score / questions.length) * 100;
     const passed = percent >= 50;
     const earnedXP = score * 20;
-    currentUser.totalXP = (currentUser.totalXP || 0) + earnedXP;
+    currentUser.totalXP = (Number(currentUser.totalXP) || 0) + earnedXP;
 
-    const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
+    let unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
     let newLevelUnlocked = false;
 
-    if (passed && currentLevel === unlockedMax && currentLevel < quizDatabase[currentSubject].length) {
-      currentUser.unlockedLevels[currentSubject] = currentLevel + 1;
-      newLevelUnlocked = true;
+    // PERMANENT UNLOCK CHECK
+    if (passed) {
+      const nextLvl = currentLevel + 1;
+      if (nextLvl > unlockedMax) {
+        currentUser.unlockedLevels[currentSubject] = nextLvl;
+        unlockedMax = nextLvl;
+        newLevelUnlocked = true;
+      }
     }
 
     localStorage.setItem('vimal_arena_user_final', JSON.stringify(currentUser));
@@ -1429,7 +1438,7 @@
     if (passed) {
       banner.className = "unlock-banner unlock-success";
       banner.innerHTML = newLevelUnlocked 
-        ? `🎉 शानदार! Score: ${percent.toFixed(0)}%. अगला सेट ${currentLevel + 1} UNLOCK हो गया! 🔓`
+        ? `🎉 शानदार! Score: ${percent.toFixed(0)}%. अगला सेट ${currentLevel + 1} हमेशा के लिए UNLOCK हो गया! 🔓`
         : `✅ उत्तीर्ण! Score: ${percent.toFixed(0)}%. Set Mastered!`;
       nextBtn.innerText = `Next Set ➔`;
     } else {
@@ -1440,9 +1449,7 @@
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    /* ============================================================
-       RENDER DETAILED QUESTION-BY-QUESTION REVIEW
-    ============================================================ */
+    // DETAILED ANSWER REVIEW LIST
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
@@ -1477,7 +1484,7 @@
       });
     }
 
-    // Sync score & levels to Sheet
+    // Sync score & updated unlocked levels to Google Sheet
     callAppsScript({
       action: "submit_score",
       username: currentUser.username,
@@ -1495,8 +1502,12 @@
     const questions = getCurrentQuestions();
     let score = 0;
     questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
-    if ((score / questions.length) * 100 >= 50 && currentLevel < quizDatabase[currentSubject].length) {
-      currentLevel++;
+    if ((score / questions.length) * 100 >= 50) {
+      const nextLvl = currentLevel + 1;
+      const sets = quizDatabase[currentSubject] || [];
+      if (nextLvl <= sets.length) {
+        currentLevel = nextLvl;
+      }
     }
     startQuizSet(currentLevel);
   }
