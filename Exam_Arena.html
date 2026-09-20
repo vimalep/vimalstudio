@@ -11,10 +11,9 @@
 
   <style>
     /* ============================================================
-       THEME COLOR VARIABLES (DARK & LIGHT PALETTES)
+       THEME COLOR VARIABLES
     ============================================================ */
     :root {
-      /* Dark / Gamified Palette (Default) */
       --bg-body: #181438;
       --bg-radial-1: rgba(99, 102, 241, 0.35);
       --bg-radial-2: rgba(236, 72, 153, 0.3);
@@ -46,21 +45,18 @@
       --screen-bar-bg: linear-gradient(135deg, #312e81, #1e1b4b);
       --score-inner-bg: #1e1b4b;
 
-      /* Subject Gradients */
       --grad-math: linear-gradient(135deg, #2563eb, #0284c7, #06b6d4);
       --grad-sci: linear-gradient(135deg, #059669, #10b981, #84cc16);
       --grad-gk: linear-gradient(135deg, #ea580c, #f43f5e, #fbbf24);
       --grad-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
       --grad-btn: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
 
-      /* Kahoot-Style Colors */
       --opt-a: #0284c7;
       --opt-b: #059669;
       --opt-c: #d97706;
       --opt-d: #db2777;
     }
 
-    /* Light Theme Palette */
     body.light-theme {
       --bg-body: #f8fafc;
       --bg-radial-1: rgba(99, 102, 241, 0.12);
@@ -121,7 +117,7 @@
       gap: 13px;
     }
 
-    /* HEADER & CRISP NON-FADED TITLE */
+    /* HEADER */
     .arena-header {
       text-align: center;
       padding: 16px 14px;
@@ -152,7 +148,6 @@
     }
     .theme-toggle-btn:active { transform: scale(0.9); }
 
-    /* SOLID & VIBRANT EXAM ARENA TITLE */
     .arena-title {
       font-family: 'Fredoka', cursive, sans-serif;
       font-size: 28px;
@@ -167,7 +162,6 @@
       text-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
     }
 
-    /* BADGE (BY VIMAL SIR ONLY) */
     .vimal-badge {
       display: inline-block;
       background: linear-gradient(135deg, #f59e0b, #ef4444);
@@ -233,7 +227,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* LIVE TICKER */
+    /* TICKER */
     .live-ticker-wrap {
       width: 100%;
       background: var(--ticker-bg);
@@ -332,6 +326,24 @@
       font-weight: 900;
       cursor: pointer;
       margin-left: 8px;
+    }
+
+    /* LEADERBOARD VIEW BUTTON ON HOME */
+    .btn-view-ranks {
+      width: 100%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border: 1.5px solid #a855f7;
+      color: #ffffff;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.35);
     }
 
     /* ADSTERRA BOX */
@@ -530,7 +542,7 @@
     sup { font-size: 0.78em; vertical-align: super; line-height: 0; }
     sub { font-size: 0.78em; vertical-align: sub; line-height: 0; }
 
-    /* NAVIGATION BUTTONS (PREV + NEXT/SUBMIT) */
+    /* NAVIGATION BUTTONS */
     .nav-actions { display: flex; gap: 12px; margin-top: 20px; }
     .btn-action {
       flex: 1; padding: 14px 16px; border-radius: 16px; font-size: 15px; font-weight: 900;
@@ -593,22 +605,33 @@
       background: rgba(148, 163, 184, 0.08);
     }
 
-    /* LEADERBOARD BOX */
+    /* LEADERBOARD BOX & ITEMS WITH MEDALS */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg);
       border: 2px solid var(--card-border); border-radius: 20px; padding: 16px; text-align: left;
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
-    .lb-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 900; color: #d97706; margin-bottom: 12px; }
+    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 900; color: #d97706; margin-bottom: 12px; }
     body:not(.light-theme) .lb-header { color: #fde047; }
     .lb-item {
-      display: flex; justify-content: space-between; padding: 10px 14px; border-radius: 12px;
+      display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 12px;
       font-size: 13.5px; font-weight: 800; margin-bottom: 6px; background: var(--lb-item-bg);
       color: var(--lb-item-text);
-      border: 1px solid var(--card-border);
+      border: 1.5px solid var(--card-border);
+      transition: transform 0.15s ease;
+    }
+    .lb-item.is-me {
+      border-color: #38bdf8 !important;
+      background: rgba(56, 189, 248, 0.15) !important;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+    }
+    .medal-icon {
+      font-size: 16px;
+      margin-right: 6px;
+      display: inline-block;
     }
 
-    /* 1-CLICK INSTANT NAME MODAL */
+    /* INSTANT NAME MODAL */
     #userModal {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
@@ -646,7 +669,7 @@
 <!-- MAIN CONTAINER -->
 <div class="arena-container">
 
-  <!-- HEADER WITH SHARP NON-FADED TITLE & SIMPLIFIED BADGE -->
+  <!-- HEADER -->
   <div class="arena-header">
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
     <div class="arena-title">🎮 EXAM ARENA</div>
@@ -663,7 +686,7 @@
     <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Play ➔</button>
   </div>
 
-  <!-- LIVE RUNNING TICKER -->
+  <!-- LIVE TICKER -->
   <div class="live-ticker-wrap">
     <div class="ticker-pill">LIVE 🟢</div>
     <div class="ticker-content" id="liveTickerText">Online: Loading active students from Google Sheet...</div>
@@ -687,8 +710,13 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: 3 SUBJECTS -->
+  <!-- SCREEN 1: HOME -->
   <div class="app-screen" id="screenHome">
+    <!-- VIEW FULL RANKERS BUTTON -->
+    <button class="btn-view-ranks" onclick="navigateTo('screenLeaderboard')">
+      <span>🏆</span> Live All Rankers Leaderboard देखें ➔
+    </button>
+
     <div class="section-title">🎯 अपना विषय चुनें (Choose Subject):</div>
     <div class="subject-cards-grid">
       <!-- 1. MATH -->
@@ -743,7 +771,23 @@
     </div>
   </div>
 
-  <!-- SCREEN 2: SETS -->
+  <!-- SCREEN 2: FULL LEADERBOARD / RANKERS LIST -->
+  <div class="app-screen" id="screenLeaderboard" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#d97706;">🏆 Full Rankers Board</span>
+    </div>
+    
+    <div class="leaderboard-box">
+      <div class="lb-header">
+        <span>🌟 ऑल रैंकर्स सूची (Live Positions)</span>
+        <span style="font-size:12px; color:#0284c7; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
+      </div>
+      <div id="fullLeaderboardList"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: SETS -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
@@ -767,7 +811,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: QUIZ ARENA (WITH PREV & NEXT + 60s TIMER) -->
+  <!-- SCREEN 4: QUIZ ARENA (WITH PREV & NEXT + 60s TIMER) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Test</button>
@@ -790,7 +834,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: RESULT + DETAILED ANSWER REVIEW -->
+  <!-- SCREEN 5: RESULT + DETAILED ANSWER REVIEW -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:24px;">🎉 परिणाम घोषित!</h3>
@@ -813,13 +857,13 @@
         <div id="reviewQuestionsList" style="display:flex; flex-direction:column; gap:10px;"></div>
       </div>
       
-      <!-- LEADERBOARD -->
+      <!-- RESULT SCREEN MINI LEADERBOARD -->
       <div class="leaderboard-box" style="margin-top:16px;">
         <div class="lb-header">
-          <span>🏆 Top Champions</span>
+          <span>🏆 Top Rankers Board</span>
           <span style="font-size:12px; color:#0284c7; cursor:pointer;" onclick="fetchCloudData()">🔄 Sync</span>
         </div>
-        <div id="leaderboardList"></div>
+        <div id="resultLeaderboardList"></div>
       </div>
 
       <div style="display:flex; gap:12px; margin-top:16px;">
@@ -877,15 +921,12 @@
   let qTimeLeft = 60;
   let latestTargetSubj = 'Science';
 
-  // Player State
   let currentUser = {
     name: '', totalXP: 0, currentRank: '--',
     unlockedLevels: { Math: 1, Science: 1, GK: 1 }
   };
 
-  /* ============================================================
-     THEME TOGGLE SYSTEM (DARK & LIGHT MODE)
-  ============================================================ */
+  /* THEME SYSTEM */
   function initTheme() {
     const savedTheme = localStorage.getItem('vimal_arena_theme') || 'dark';
     if (savedTheme === 'light') {
@@ -904,9 +945,7 @@
     document.getElementById('themeToggleBtn').innerText = isLight ? '🌙' : '☀️';
   }
 
-  /* ============================================================
-     GREEK, FORMULA & MATH SYMBOL FORMATTER
-  ============================================================ */
+  /* GREEK & MATH SYMBOL FORMATTER */
   function formatMathFormula(text) {
     if (!text) return '';
     return text
@@ -926,9 +965,7 @@
       .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>');
   }
 
-  /* ============================================================
-     INSTANT 1-CLICK NAME LOGIN
-  ============================================================ */
+  /* INSTANT 1-CLICK NAME LOGIN */
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
     if (!entered) {
@@ -973,10 +1010,12 @@
 
   function navigateTo(screenId) {
     clearInterval(qTimerInterval);
-    ['screenHome', 'screenSets', 'screenQuiz', 'resultScreen'].forEach(id => {
-      document.getElementById(id).style.display = 'none';
+    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
     });
-    document.getElementById(screenId).style.display = 'flex';
+    const target = document.getElementById(screenId);
+    if (target) target.style.display = 'flex';
   }
 
   async function fetchCloudData() {
@@ -1006,7 +1045,8 @@
         document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Competing Live!";
       }
 
-      renderLeaderboardUI(data);
+      // Render Leaderboard in both places
+      renderLeaderboardUI(data.leaderboard || []);
     } catch (e) {
       console.warn("Cloud Sync Note: ", e);
     }
@@ -1016,29 +1056,51 @@
     openSubjectSets(latestTargetSubj || 'Science');
   }
 
-  function renderLeaderboardUI(data) {
-    const listEl = document.getElementById('leaderboardList');
-    if (!listEl) return;
-    const topList = data.top5 || [];
-    listEl.innerHTML = '';
-    if (topList.length === 0) {
-      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center;">Abhi koi records nahi hain.</div>`;
+  /* RENDER DETAILED LEADERBOARD WITH MEDALS */
+  function renderLeaderboardUI(rankList) {
+    const fullListEl = document.getElementById('fullLeaderboardList');
+    const resultListEl = document.getElementById('resultLeaderboardList');
+
+    if (!rankList || rankList.length === 0) {
+      const emptyMsg = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center; padding:12px;">अभी कोई रैंकर्स डेटा नहीं है। पहला टेस्ट देकर #1 बनें!</div>`;
+      if (fullListEl) fullListEl.innerHTML = emptyMsg;
+      if (resultListEl) resultListEl.innerHTML = emptyMsg;
       return;
     }
-    topList.forEach(item => {
+
+    let fullHtml = '';
+    let resultHtml = '';
+
+    rankList.forEach((item, index) => {
       const isMe = item.name.toLowerCase() === (currentUser.name || '').toLowerCase();
       if (isMe) {
         currentUser.currentRank = item.rank;
         document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
       }
-      const div = document.createElement('div');
-      div.className = 'lb-item';
-      div.innerHTML = `
-        <div><span style="font-weight:900; margin-right:8px; color:#f59e0b;">#${item.rank}</span> ${item.name} ${isMe ? '(You)' : ''}</div>
-        <div style="color:#0284c7; font-weight:900;">${item.totalXP} XP</div>
+
+      let medal = `<span style="font-weight:900; margin-right:6px; color:#f59e0b;">#${item.rank}</span>`;
+      if (item.rank === 1) medal = `<span class="medal-icon">🥇</span>`;
+      else if (item.rank === 2) medal = `<span class="medal-icon">🥈</span>`;
+      else if (item.rank === 3) medal = `<span class="medal-icon">🥉</span>`;
+
+      const rowHtml = `
+        <div class="lb-item ${isMe ? 'is-me' : ''}">
+          <div style="display:flex; align-items:center;">
+            ${medal}
+            <span>${item.name} ${isMe ? '<b>(You)</b>' : ''}</span>
+          </div>
+          <div style="color:#0284c7; font-weight:900;">${item.totalXP} XP</div>
+        </div>
       `;
-      listEl.appendChild(div);
+
+      fullHtml += rowHtml;
+      if (index < 5 || isMe) {
+        resultHtml += rowHtml; // Result screen shows Top 5 + current user
+      }
     });
+
+    if (fullListEl) fullListEl.innerHTML = fullHtml;
+    if (resultListEl) resultListEl.innerHTML = resultHtml;
   }
 
   function openSubjectSets(subj) {
@@ -1049,9 +1111,6 @@
     navigateTo('screenSets');
   }
 
-  /* ============================================================
-     RE-RENDER SETS LIST (ALWAYS SHOWS UNLOCKED STATUS CLEANLY)
-  ============================================================ */
   function renderSetsList() {
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
@@ -1161,13 +1220,10 @@
 
   function confirmExitQuiz() {
     if (confirm("टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
-      openSubjectSets(currentSubject); // Re-renders cleanly
+      openSubjectSets(currentSubject);
     }
   }
 
-  /* ============================================================
-     PERMANENT UNLOCK LOGIC UPON SCORING >= 50%
-  ============================================================ */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const questions = getCurrentQuestions();
@@ -1182,7 +1238,6 @@
     let unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
     let newLevelUnlocked = false;
 
-    // Permanent Unlock Execution
     if (passed) {
       const nextLvl = currentLevel + 1;
       if (nextLvl > unlockedMax) {
@@ -1217,7 +1272,7 @@
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    // Render Detailed Answer Sheet
+    // Render Answer Sheet
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
@@ -1252,7 +1307,7 @@
       });
     }
 
-    // Background sync to Google Sheet
+    // Submit score & recalculate live rank from Sheet
     fetch(SCRIPT_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1262,12 +1317,11 @@
         subject: `${currentSubject}_Set${currentLevel}`,
         score: score,
         totalQuestions: questions.length,
-        xpEarned: earnedXP,
-        unlockedLevels: currentUser.unlockedLevels
+        xpEarned: earnedXP
       })
-    }).catch(e => console.warn("Background sync note:", e));
-
-    setTimeout(fetchCloudData, 1500);
+    }).then(() => {
+      setTimeout(fetchCloudData, 1200);
+    }).catch(e => console.warn(e));
   }
 
   function goToNextLevelOrRetry() {
