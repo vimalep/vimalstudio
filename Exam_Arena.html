@@ -116,12 +116,12 @@
       max-width: 520px;
       display: flex;
       flex-direction: column;
-      gap: 13px;
+      gap: 12px;
     }
 
     .arena-header {
       text-align: center;
-      padding: 16px 14px;
+      padding: 15px 14px;
       background: var(--header-bg);
       backdrop-filter: blur(14px);
       border: 2px solid var(--header-border);
@@ -187,7 +187,7 @@
       background: linear-gradient(135deg, #ef4444, #f97316, #f59e0b);
       border: 2px solid #fef08a;
       border-radius: 16px;
-      padding: 11px 14px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -199,53 +199,50 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-3px); }
     }
-    .flash-icon-box { font-size: 26px; }
+    .flash-icon-box { font-size: 24px; }
     .flash-text-wrap { flex: 1; text-align: left; }
     .flash-badge {
       display: inline-block;
       background: #ffffff;
       color: #ef4444;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 900;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       margin-bottom: 2px;
     }
     .flash-msg {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 800;
       color: #ffffff;
-      line-height: 1.35;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      line-height: 1.3;
     }
     .flash-btn {
       background: #ffffff;
       color: #b91c1c;
       border: none;
-      padding: 8px 14px;
-      border-radius: 12px;
-      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-size: 11.5px;
       font-weight: 900;
       cursor: pointer;
       flex-shrink: 0;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* TICKER OVERFLOW BUG FIX */
+    /* TICKER OVERFLOW PROTECTED */
     .live-ticker-wrap {
       width: 100%;
       background: var(--ticker-bg);
       border: 1.5px solid rgba(99, 102, 241, 0.5);
       border-radius: 14px;
-      padding: 8px 12px;
+      padding: 7px 12px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      position: relative;
     }
     .ticker-pill {
       background: #10b981;
@@ -256,7 +253,6 @@
       border-radius: 8px;
       flex-shrink: 0;
       animation: pulse 1.4s infinite;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
       z-index: 2;
     }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.96); } }
@@ -264,11 +260,10 @@
       flex: 1;
       overflow: hidden;
       white-space: nowrap;
-      position: relative;
     }
     .ticker-content {
       white-space: nowrap;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       color: #0284c7;
       display: inline-block;
@@ -277,69 +272,68 @@
     body:not(.light-theme) .ticker-content { color: #38bdf8; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* PLAYER PROFILE BAR */
+    /* PROFILE BAR */
     .player-profile-card {
       background: var(--profile-bg);
       border: 2px solid var(--card-border);
-      border-radius: 18px;
-      padding: 12px 16px;
+      border-radius: 16px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
-    .profile-info { display: flex; align-items: center; gap: 12px; }
+    .profile-info { display: flex; align-items: center; gap: 10px; }
     .avatar-circle {
-      width: 46px;
-      height: 46px;
+      width: 42px;
+      height: 42px;
       background: var(--grad-gold);
       border: 2px solid #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
       color: #1e1b4b;
-      box-shadow: 0 0 14px rgba(245, 158, 11, 0.5);
     }
     .user-tag { display: flex; flex-direction: column; }
-    .u-name { font-size: 15px; font-weight: 900; color: var(--text-main); }
+    .u-name { font-size: 14.5px; font-weight: 900; color: var(--text-main); }
     .user-rank-badge {
       color: #b45309;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 800;
       background: rgba(245, 158, 11, 0.2);
       border: 1px solid #f59e0b;
-      padding: 1px 7px;
+      padding: 1px 6px;
       border-radius: 6px;
       display: inline-block;
       width: fit-content;
-      margin-top: 2px;
+      margin-top: 1px;
     }
     body:not(.light-theme) .user-rank-badge { color: #fef08a; }
 
     .stat-badge {
       background: rgba(56, 189, 248, 0.15);
       border: 1.5px solid #0284c7;
-      padding: 6px 14px;
-      border-radius: 14px;
+      padding: 5px 12px;
+      border-radius: 12px;
       text-align: right;
     }
-    .stat-badge .xp-num { font-size: 17px; font-weight: 900; color: #0284c7; line-height: 1; }
+    .stat-badge .xp-num { font-size: 16px; font-weight: 900; color: #0284c7; line-height: 1; }
     body:not(.light-theme) .stat-badge .xp-num { color: #38bdf8; }
-    .stat-badge .xp-lbl { font-size: 10px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
+    .stat-badge .xp-lbl { font-size: 9.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
     
     .btn-logout {
       background: rgba(239, 68, 68, 0.15);
       border: 1.5px solid #ef4444;
       color: #ef4444;
-      padding: 9px 12px;
-      border-radius: 12px;
-      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 12px;
       font-weight: 900;
       cursor: pointer;
-      margin-left: 8px;
+      margin-left: 6px;
     }
 
     .btn-view-ranks {
@@ -347,9 +341,9 @@
       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
       border: 1.5px solid #a855f7;
       color: #ffffff;
-      padding: 11px 14px;
+      padding: 10px 14px;
       border-radius: 14px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 800;
       cursor: pointer;
       display: flex;
@@ -366,60 +360,86 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      margin: 6px 0;
+      margin: 4px 0;
       border-radius: 16px;
       background: rgba(0,0,0,0.03);
       border: 1px dashed var(--card-border);
     }
 
-    .app-screen { display: flex; flex-direction: column; gap: 13px; width: 100%; }
-    .section-title { font-size: 15px; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 8px; }
+    .app-screen { display: flex; flex-direction: column; gap: 11px; width: 100%; }
+    .section-title { font-size: 14px; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 6px; }
     body:not(.light-theme) .section-title { color: #fde047; }
 
-    /* 5 SUBJECT CARDS */
-    .subject-cards-grid { display: flex; flex-direction: column; gap: 12px; }
+    /* ============================================================
+       COMPACT 2-COLUMN GRID TILES (NO-SCROLL LAYOUT)
+    ============================================================ */
+    .subject-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
     .subject-card {
-      border-radius: 20px;
-      padding: 16px 18px;
+      border-radius: 18px;
+      padding: 14px 10px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      text-align: center;
       cursor: pointer;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
       border: 2px solid rgba(255,255,255,0.4);
       transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+      min-height: 108px;
     }
-    .subject-card:active { transform: scale(0.97); }
+    .subject-card:active { transform: scale(0.96); }
+    
+    .subject-card.full-width {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 12px 18px;
+      min-height: auto;
+    }
+    .subject-card.full-width .sc-info {
+      flex-direction: row;
+      text-align: left;
+      gap: 12px;
+    }
+
     .sc-math { background: var(--grad-math); }
     .sc-sci { background: var(--grad-sci); }
     .sc-sst { background: var(--grad-sst); }
     .sc-eng { background: var(--grad-eng); }
     .sc-gk { background: var(--grad-gk); }
 
-    .sc-info { display: flex; align-items: center; gap: 14px; }
     .sc-icon {
-      width: 50px;
-      height: 50px;
+      width: 44px;
+      height: 44px;
       background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(6px);
       border: 1.5px solid rgba(255, 255, 255, 0.4);
-      border-radius: 14px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+      font-size: 24px;
+      margin-bottom: 6px;
     }
-    .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 17.5px; font-weight: 700; color: #ffffff; }
-    .sc-text p { font-size: 12px; color: rgba(255,255,255,0.95); font-weight: 600; }
+    .subject-card.full-width .sc-icon { margin-bottom: 0; }
+
+    .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 15.5px; font-weight: 700; color: #ffffff; line-height: 1.2; }
+    .sc-text p { font-size: 11px; color: rgba(255,255,255,0.95); font-weight: 600; margin-top: 2px; }
     .sc-arrow {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       background: rgba(255,255,255,0.3);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 900;
       color: #fff;
     }
@@ -465,20 +485,20 @@
     }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
-    /* QUIZ ARENA (60s TIMER + URGENCY BEAT) */
+    /* QUIZ CARD */
     .quiz-card {
       background: var(--quiz-card-bg);
       border: 2px solid var(--quiz-card-border);
       border-radius: 24px;
-      padding: 20px;
+      padding: 18px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.25);
       transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
-    .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .q-counter {
-      font-size: 13px; font-weight: 900; color: #0284c7;
+      font-size: 12.5px; font-weight: 900; color: #0284c7;
       background: rgba(56, 189, 248, 0.18); border: 1px solid #0284c7;
-      padding: 5px 14px; border-radius: 14px;
+      padding: 5px 12px; border-radius: 14px;
     }
     body:not(.light-theme) .q-counter { color: #38bdf8; border-color: #38bdf8; }
 
@@ -486,9 +506,9 @@
       background: linear-gradient(135deg, #f59e0b, #d97706);
       border: 2px solid #fef08a;
       color: #ffffff;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 900;
-      padding: 5px 16px;
+      padding: 5px 14px;
       border-radius: 25px;
       box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
       transition: all 0.3s ease;
@@ -505,23 +525,22 @@
     }
 
     .q-text {
-      font-size: 17.5px;
+      font-size: 16.5px;
       font-weight: 800;
-      line-height: 1.55;
-      margin-bottom: 20px;
+      line-height: 1.5;
+      margin-bottom: 18px;
       color: var(--text-main);
     }
 
-    /* 4-COLOR OPTION BUTTONS */
-    .options-grid { display: flex; flex-direction: column; gap: 12px; }
+    .options-grid { display: flex; flex-direction: column; gap: 11px; }
     .option-btn {
       width: 100%;
       background: var(--opt-btn-bg);
       border: 2px solid var(--opt-btn-border);
       color: var(--opt-btn-text);
-      padding: 14px 16px;
+      padding: 13px 15px;
       border-radius: 16px;
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       text-align: left;
       cursor: pointer;
@@ -531,14 +550,14 @@
       box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
     .opt-letter-badge {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: 10px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 14px;
+      font-size: 13.5px;
       color: #fff;
       margin-right: 12px;
       flex-shrink: 0;
@@ -562,17 +581,17 @@
     sup { font-size: 0.78em; vertical-align: super; line-height: 0; }
     sub { font-size: 0.78em; vertical-align: sub; line-height: 0; }
 
-    .nav-actions { display: flex; gap: 12px; margin-top: 20px; }
+    .nav-actions { display: flex; gap: 10px; margin-top: 18px; }
     .btn-action {
-      flex: 1; padding: 14px 16px; border-radius: 16px; font-size: 15px; font-weight: 900;
+      flex: 1; padding: 13px 15px; border-radius: 14px; font-size: 14.5px; font-weight: 900;
       cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
     .btn-prev {
       background: rgba(99, 102, 241, 0.2);
       border: 1.5px solid #6366f1;
       color: #818cf8;
-      max-width: 140px;
+      max-width: 130px;
     }
     body.light-theme .btn-prev {
       background: #e0e7ff;
@@ -582,27 +601,26 @@
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
-    /* RESULT SCREEN & FAILURE SHAKE */
-    #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 15px; }
+    /* RESULT SCREEN */
+    #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
     .score-circle {
-      width: 130px; height: 130px; border-radius: 50%;
+      width: 125px; height: 125px; border-radius: 50%;
       background: conic-gradient(#10b981 var(--score-angle, 0deg), #e2e8f0 0deg);
       display: flex; align-items: center; justify-content: center; margin: 10px auto;
       box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
     }
     body:not(.light-theme) .score-circle { background: conic-gradient(#10b981 var(--score-angle, 0deg), #312e81 0deg); }
     .score-inner {
-      width: 104px; height: 104px; border-radius: 50%; background: var(--score-inner-bg);
+      width: 100px; height: 100px; border-radius: 50%; background: var(--score-inner-bg);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .score-num { font-family: 'Fredoka', sans-serif; font-size: 34px; font-weight: 800; color: var(--text-main); }
-    .unlock-banner { width: 100%; padding: 14px 18px; border-radius: 16px; font-size: 14px; font-weight: 900; }
+    .score-num { font-family: 'Fredoka', sans-serif; font-size: 32px; font-weight: 800; color: var(--text-main); }
+    .unlock-banner { width: 100%; padding: 13px 16px; border-radius: 14px; font-size: 13.5px; font-weight: 900; }
     .unlock-success { background: rgba(16, 185, 129, 0.2); border: 2px solid #10b981; color: #059669; }
     body:not(.light-theme) .unlock-success { color: #34d399; }
     .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #dc2626; }
     body:not(.light-theme) .unlock-failed { color: #fca5a5; }
 
-    /* FAILURE CARD RED GLOW & SHAKE ANIMATION */
     .quiz-card.failure-glow-shake {
       border-color: #ef4444 !important;
       box-shadow: 0 0 35px rgba(239, 68, 68, 0.6) !important;
@@ -620,9 +638,9 @@
       background: #25d366;
       border: none;
       color: #ffffff;
-      padding: 13px 16px;
+      padding: 12px 16px;
       border-radius: 14px;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 900;
       cursor: pointer;
       display: flex;
@@ -631,15 +649,14 @@
       gap: 8px;
       box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
       text-decoration: none;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
-    /* DETAILED ANSWER REVIEW */
     .review-card {
       background: var(--opt-btn-bg);
       border: 1.5px solid var(--card-border);
-      border-radius: 16px;
-      padding: 13px 15px;
+      border-radius: 14px;
+      padding: 12px 14px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       text-align: left;
     }
@@ -647,26 +664,26 @@
     .review-card.rev-wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.08); }
     .review-card.rev-skipped { border-color: #94a3b8; background: rgba(148, 163, 184, 0.08); }
 
-    /* LEADERBOARD & SUBJECT TABS */
+    /* LEADERBOARD */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg);
-      border: 2px solid var(--card-border); border-radius: 20px; padding: 16px; text-align: left;
+      border: 2px solid var(--card-border); border-radius: 18px; padding: 14px; text-align: left;
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
-    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 900; color: #d97706; margin-bottom: 12px; }
+    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 13.5px; font-weight: 900; color: #d97706; margin-bottom: 10px; }
     body:not(.light-theme) .lb-header { color: #fde047; }
     
     .lb-tabs-bar {
       display: flex;
       gap: 6px;
       overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
     }
     .lb-tab-btn {
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 11.5px;
+      padding: 5px 11px;
+      border-radius: 9px;
+      font-size: 11px;
       font-weight: 800;
       white-space: nowrap;
       cursor: pointer;
@@ -681,8 +698,8 @@
     }
 
     .lb-item {
-      display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 12px;
-      font-size: 13.5px; font-weight: 800; margin-bottom: 6px; background: var(--lb-item-bg);
+      display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border-radius: 11px;
+      font-size: 13px; font-weight: 800; margin-bottom: 5px; background: var(--lb-item-bg);
       color: var(--lb-item-text);
       border: 1.5px solid var(--card-border);
     }
@@ -691,26 +708,25 @@
       background: rgba(56, 189, 248, 0.15) !important;
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
     }
-    .medal-icon { font-size: 16px; margin-right: 6px; display: inline-block; }
+    .medal-icon { font-size: 15px; margin-right: 5px; display: inline-block; }
 
-    /* 1-CLICK INSTANT NAME MODAL */
     #userModal {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
     }
     .modal-box {
       background: var(--modal-bg);
-      border: 2px solid var(--modal-border); padding: 26px 22px;
-      border-radius: 24px; width: 100%; max-width: 400px; text-align: center;
+      border: 2px solid var(--modal-border); padding: 24px 20px;
+      border-radius: 22px; width: 100%; max-width: 390px; text-align: center;
       box-shadow: 0 15px 50px rgba(0,0,0,0.4);
     }
     .form-input {
-      width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 14px 16px;
-      border-radius: 14px; color: var(--input-text); font-size: 15px; font-weight: 700; margin-bottom: 14px; outline: none;
+      width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 13px 15px;
+      border-radius: 13px; color: var(--input-text); font-size: 14.5px; font-weight: 700; margin-bottom: 12px; outline: none;
     }
     .form-btn-main {
-      width: 100%; background: var(--grad-btn); border: none; padding: 14px;
-      border-radius: 14px; color: #fff; font-weight: 900; font-size: 16px; cursor: pointer;
+      width: 100%; background: var(--grad-btn); border: none; padding: 13px;
+      border-radius: 13px; color: #fff; font-weight: 900; font-size: 15px; cursor: pointer;
       box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
     }
   </style>
@@ -720,8 +736,8 @@
 <!-- 1-CLICK INSTANT NAME ENTRY MODAL -->
 <div id="userModal">
   <div class="modal-box">
-    <div style="font-family:'Fredoka',sans-serif; font-size:25px; font-weight:800; color:#f59e0b; margin-bottom:4px;">⚡ EXAM ARENA</div>
-    <div style="font-size:12.5px; color:#a855f7; font-weight:700; margin-bottom:18px;">Live Quiz Challenge by Vimal Sir ⭐</div>
+    <div style="font-family:'Fredoka',sans-serif; font-size:24px; font-weight:800; color:#f59e0b; margin-bottom:4px;">⚡ EXAM ARENA</div>
+    <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">Live Quiz Challenge by Vimal Sir ⭐</div>
 
     <input type="text" class="form-input" id="studentQuickName" placeholder="अपना नाम लिखें (उदा. Aman Sharma)" autofocus>
     <button class="form-btn-main" onclick="saveQuickPlayerName()">क्विज़ शुरू करें ➔</button>
@@ -751,7 +767,7 @@
     <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Play ➔</button>
   </div>
 
-  <!-- LIVE TICKER (OVERFLOW PROTECTED) -->
+  <!-- LIVE TICKER -->
   <div class="live-ticker-wrap">
     <div class="ticker-pill">LIVE 🟢</div>
     <div class="ticker-track">
@@ -777,68 +793,58 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: HOME (5 SUBJECTS) -->
+  <!-- SCREEN 1: HOME (2-COLUMN COMPACT TILES) -->
   <div class="app-screen" id="screenHome">
     <button class="btn-view-ranks" onclick="navigateTo('screenLeaderboard')">
       <span>🏆</span> Live All Rankers Leaderboard देखें ➔
     </button>
 
     <div class="section-title">🎯 अपना विषय चुनें (Choose Subject):</div>
+    
+    <!-- 2x2 Grid + Full Width GK -->
     <div class="subject-cards-grid">
-      <!-- 1. MATH -->
+      <!-- 1. Maths -->
       <div class="subject-card sc-math" onclick="openSubjectSets('Math')">
-        <div class="sc-info">
-          <div class="sc-icon">📐</div>
-          <div class="sc-text">
-            <h3>Mathematics (गणित)</h3>
-            <p id="mathSetsSub">Live sets loading...</p>
-          </div>
+        <div class="sc-icon">📐</div>
+        <div class="sc-text">
+          <h3>Maths</h3>
+          <p id="mathSetsSub">Live sets loading...</p>
         </div>
-        <div class="sc-arrow">➔</div>
       </div>
 
-      <!-- 2. SCIENCE -->
+      <!-- 2. Class X Science -->
       <div class="subject-card sc-sci" onclick="openSubjectSets('Science')">
-        <div class="sc-info">
-          <div class="sc-icon">🔬</div>
-          <div class="sc-text">
-            <h3>General Science (विज्ञान)</h3>
-            <p id="sciSetsSub">Live sets loading...</p>
-          </div>
+        <div class="sc-icon">🔬</div>
+        <div class="sc-text">
+          <h3>Class X Science</h3>
+          <p id="sciSetsSub">Live sets loading...</p>
         </div>
-        <div class="sc-arrow">➔</div>
       </div>
 
-      <!-- 3. SOCIAL SCIENCE (CLASS 10) -->
+      <!-- 3. Class X SST -->
       <div class="subject-card sc-sst" onclick="openSubjectSets('SocialScience')">
-        <div class="sc-info">
-          <div class="sc-icon">📜</div>
-          <div class="sc-text">
-            <h3>Class 10 Social Science</h3>
-            <p id="sstSetsSub">Live sets loading...</p>
-          </div>
+        <div class="sc-icon">📜</div>
+        <div class="sc-text">
+          <h3>Class X SST</h3>
+          <p id="sstSetsSub">Live sets loading...</p>
         </div>
-        <div class="sc-arrow">➔</div>
       </div>
 
-      <!-- 4. ENGLISH GRAMMAR -->
+      <!-- 4. Grammar -->
       <div class="subject-card sc-eng" onclick="openSubjectSets('English')">
-        <div class="sc-info">
-          <div class="sc-icon">✍️</div>
-          <div class="sc-text">
-            <h3>English Grammar</h3>
-            <p id="engSetsSub">Live sets loading...</p>
-          </div>
+        <div class="sc-icon">✍️</div>
+        <div class="sc-text">
+          <h3>Grammar</h3>
+          <p id="engSetsSub">Live sets loading...</p>
         </div>
-        <div class="sc-arrow">➔</div>
       </div>
 
-      <!-- 5. GK -->
-      <div class="subject-card sc-gk" onclick="openSubjectSets('GK')">
+      <!-- 5. GK (Full-Width Bottom Tile) -->
+      <div class="subject-card sc-gk full-width" onclick="openSubjectSets('GK')">
         <div class="sc-info">
           <div class="sc-icon">🌍</div>
           <div class="sc-text">
-            <h3>सामान्य ज्ञान (General Knowledge)</h3>
+            <h3>GK</h3>
             <p id="gkSetsSub">Live sets loading...</p>
           </div>
         </div>
@@ -870,17 +876,16 @@
     
     <div class="leaderboard-box">
       <div class="lb-header">
-        <span>🌟 रैंकर्स सूची</span>
+        <span>🌟 विषय अनुसार रैंकर्स</span>
         <span style="font-size:12px; color:#0284c7; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
       </div>
 
-      <!-- Subject Tabs -->
       <div class="lb-tabs-bar">
         <button class="lb-tab-btn active" onclick="switchLeaderboardTab('overall', this)">🏆 Overall</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Math</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Science</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 SST</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Maths</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Class X Science</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 Class X SST</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ Grammar</button>
         <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 GK</button>
       </div>
 
@@ -912,7 +917,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: QUIZ ARENA (WITH PREV & NEXT + 60s TIMER) -->
+  <!-- SCREEN 4: QUIZ ARENA (60s TIMER + BEEP + AUTO-NEXT) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Test</button>
@@ -934,10 +939,10 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: RESULT -->
+  <!-- SCREEN 5: RESULT (CONFETTI, AUDIO, SHAKE & REVIEW) -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
-      <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:24px;" id="resHeadingText">🎉 परिणाम घोषित!</h3>
+      <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 परिणाम घोषित!</h3>
       <p style="font-size:13px; color:var(--text-muted); margin-top:2px;" id="resSubjTag">Set 1</p>
       
       <div class="score-circle" id="scoreCircleWheel">
@@ -949,17 +954,17 @@
       
       <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
 
-      <!-- WhatsApp Challenge Share Button -->
+      <!-- WhatsApp Share Challenge -->
       <a href="#" class="btn-whatsapp-share" id="btnWhatsappShare" target="_blank">
         <span>📲</span> दोस्तों को चुनौती दें (WhatsApp Share)
       </a>
 
       <!-- Answer Review -->
       <div style="width:100%; text-align:left; margin-top:16px;">
-        <div style="font-size:14.5px; font-weight:900; color:var(--text-main); margin-bottom:10px;">
+        <div style="font-size:14px; font-weight:900; color:var(--text-main); margin-bottom:8px;">
           <span>📝 उत्तर समीक्षा (Answer Sheet):</span>
         </div>
-        <div id="reviewQuestionsList" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div id="reviewQuestionsList" style="display:flex; flex-direction:column; gap:9px;"></div>
       </div>
 
       <div style="display:flex; gap:12px; margin-top:16px;">
@@ -974,7 +979,7 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  // Built-in Questions for all 5 Subjects
+  // Built-in Banks with Renamed Subjects
   let quizDatabase = {
     Math: [
       {
@@ -1047,9 +1052,7 @@
     unlockedLevels: { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 }
   };
 
-  /* ============================================================
-     WEB AUDIO API SYNTHESIZER (NO EXTERNAL AUDIO FILES NEEDED)
-  ============================================================ */
+  /* WEB AUDIO API SYNTH */
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
   function playTone(freq, duration, type = 'sine') {
@@ -1075,7 +1078,7 @@
 
   function playVictorySound() {
     if (!isSoundEnabled) return;
-    const notes = [261.63, 329.63, 392.00, 523.25]; // C - E - G - C
+    const notes = [261.63, 329.63, 392.00, 523.25];
     notes.forEach((freq, idx) => {
       setTimeout(() => playTone(freq, 0.25, 'triangle'), idx * 120);
     });
@@ -1083,7 +1086,7 @@
 
   function playFailureSound() {
     if (!isSoundEnabled) return;
-    const notes = [392.00, 349.23, 311.13, 261.63]; // Gentle descending sad melody
+    const notes = [392.00, 349.23, 311.13, 261.63];
     notes.forEach((freq, idx) => {
       setTimeout(() => playTone(freq, 0.35, 'sine'), idx * 160);
     });
@@ -1112,14 +1115,11 @@
     document.getElementById('themeToggleBtn').innerText = isLight ? '🌙' : '☀️';
   }
 
-  /* ============================================================
-     SMART AUTO-SUBSCRIPTING FOR CHEMISTRY & MATH FORMULAS
-  ============================================================ */
+  /* CHEMISTRY & MATH FORMULA FORMATTER */
   function formatMathFormula(text) {
     if (!text) return '';
     return text
       .toString()
-      // Greek Symbols
       .replace(/\balpha\b/gi, 'α')
       .replace(/\bbeta\b/gi, 'β')
       .replace(/\bgamma\b/gi, 'γ')
@@ -1128,13 +1128,10 @@
       .replace(/\blambda\b/gi, 'λ')
       .replace(/\bomega\b/gi, 'Ω')
       .replace(/\bpi\b/gi, 'π')
-      // Roots & Multiply
       .replace(/sqrt\s*/gi, '√')
       .replace(/cbrt\s*/gi, '∛')
       .replace(/\s*\*\s*/g, ' × ')
-      // Math Exponents: e.g. V^2 -> V²
       .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')
-      // Chemistry Auto-Subscript: Element symbols (Fe, C, O, H, etc.) or ')' followed by number
       .replace(/([A-Z][a-z]?|\))(\d+)/g, '$1<sub>$2</sub>');
   }
 
@@ -1236,7 +1233,7 @@
     openSubjectSets(latestTargetSubj || 'Science');
   }
 
-  /* LEADERBOARD TABS SWITCHING */
+  /* LEADERBOARD TABS */
   function switchLeaderboardTab(tabKey, btnEl) {
     document.querySelectorAll('.lb-tab-btn').forEach(b => b.classList.remove('active'));
     if (btnEl) btnEl.classList.add('active');
@@ -1249,7 +1246,7 @@
     if (!listEl) return;
 
     if (!rankList || rankList.length === 0) {
-      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center; padding:12px;">इस विषय में अभी कोई रिकॉर्ड नहीं है। पहला टेस्ट देकर #1 बनें!</div>`;
+      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12px; text-align:center; padding:12px;">इस विषय में अभी कोई रिकॉर्ड नहीं है। पहला टेस्ट देकर #1 बनें!</div>`;
       return;
     }
 
@@ -1282,11 +1279,11 @@
   function openSubjectSets(subj) {
     currentSubject = subj;
     const titles = {
-      Math: '📐 Mathematics Sets',
-      Science: '🔬 General Science Sets',
-      SocialScience: '📜 Class 10 Social Science Sets',
-      English: '✍️ English Grammar Sets',
-      GK: '🌍 सामान्य ज्ञान (GK) Sets'
+      Math: '📐 Maths Sets',
+      Science: '🔬 Class X Science Sets',
+      SocialScience: '📜 Class X SST Sets',
+      English: '✍️ Grammar Sets',
+      GK: '🌍 GK Sets'
     };
     document.getElementById('selectedSubjHeading').innerText = titles[subj] || 'Sets';
     renderSetsList();
@@ -1313,8 +1310,8 @@
         <div style="display:flex; align-items:center; gap:14px;">
           <span style="font-size:22px;">${isLocked ? '🔒' : '🔓'}</span>
           <div>
-            <h4 style="font-size:15px; font-weight:800;">${set.title}</h4>
-            <span style="font-size:12px; color:var(--text-muted);">${set.questions.length} Questions • 60s Timer</span>
+            <h4 style="font-size:14.5px; font-weight:800;">${set.title}</h4>
+            <span style="font-size:11.5px; color:var(--text-muted);">${set.questions.length} Questions • 60s Timer</span>
           </div>
         </div>
         <div class="set-action-pill">${isLocked ? 'Locked' : 'Start ▶'}</div>
@@ -1383,7 +1380,6 @@
     if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
   }
 
-  /* 60s TIMER WITH AUDIO & AUTO-NEXT LOGIC */
   function startTimer() {
     qTimeLeft = 60;
     const timerSecsEl = document.getElementById('qTimerSecs');
@@ -1395,13 +1391,11 @@
       qTimeLeft--;
       timerSecsEl.innerText = qTimeLeft;
       
-      // Last 10s: Beep + Glowing Urgency Beat
       if (qTimeLeft <= 10 && qTimeLeft > 0) {
         timerPillEl.classList.add('urgent');
         playTickSound();
       }
 
-      // Timer Over: Auto-Next Question or Submit
       if (qTimeLeft <= 0) {
         clearInterval(qTimerInterval);
         const questions = getCurrentQuestions();
@@ -1420,9 +1414,6 @@
     }
   }
 
-  /* ============================================================
-     SUBMIT QUIZ: GAMIFIED AUDIO, CONFETTI & ENCOURAGING FAILURE
-  ============================================================ */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const questions = getCurrentQuestions();
@@ -1467,13 +1458,11 @@
         : `✅ उत्तीर्ण! Score: ${percent.toFixed(0)}%. Set Mastered!`;
       nextBtn.innerText = `Next Set ➔`;
 
-      // 👏 Audio + 🎊 Confetti Burst
       playVictorySound();
       if (typeof confetti === 'function') {
         confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
       }
     } else {
-      // ⚠️ Gentle Failure Tone + Soft Red Glow & Shake
       document.getElementById('resHeadingText').innerText = "🎯 परिणाम घोषित!";
       banner.className = "unlock-banner unlock-failed";
       banner.innerHTML = `🌟 कोई बात नहीं! आप मंज़िल के बहुत करीब थे 🎯<br><span style="font-size:12px; opacity:0.9;">अगला सेट खोलने के लिए 50% चाहिए (आपका स्कोर: ${percent.toFixed(0)}%)।</span>`;
@@ -1485,11 +1474,9 @@
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    // WhatsApp Challenge Link Setup
     const shareText = `मैंने विमल सर के Exam Arena में ${currentSubject} (Set ${currentLevel}) में ${percent.toFixed(0)}% स्कोर किया! क्या तुम मुझे हरा सकते हो? अभी टेस्ट दो 👉 ${window.location.href}`;
     document.getElementById('btnWhatsappShare').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
 
-    // Render Answer Key
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
@@ -1508,14 +1495,14 @@
         const correctAnsText = `<b>${String.fromCharCode(65 + q.ans)}.</b> ${formatMathFormula(q.options[q.ans])}`;
 
         card.innerHTML = `
-          <div style="font-weight:800; font-size:14px; color:var(--text-main); margin-bottom:8px;">
+          <div style="font-weight:800; font-size:13.5px; color:var(--text-main); margin-bottom:6px;">
             ${qIdx + 1}. ${formatMathFormula(q.q)}
           </div>
-          <div style="font-size:12.5px; margin-bottom:4px; color:${isCorrect ? '#10b981' : '#ef4444'}; font-weight:700;">
+          <div style="font-size:12px; margin-bottom:3px; color:${isCorrect ? '#10b981' : '#ef4444'}; font-weight:700;">
             ${isCorrect ? '✅ आपका उत्तर सही है:' : '❌ आपका उत्तर:'} ${userAnsText}
           </div>
           ${!isCorrect ? `
-            <div style="font-size:12.5px; color:#10b981; font-weight:800; margin-top:2px;">
+            <div style="font-size:12px; color:#10b981; font-weight:800; margin-top:2px;">
               👉 सही उत्तर: ${correctAnsText}
             </div>
           ` : ''}
@@ -1524,7 +1511,6 @@
       });
     }
 
-    // Submit to Sheet
     fetch(SCRIPT_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
