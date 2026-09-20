@@ -1,1043 +1,237 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Arena by Vimal Sir - Ultimate Master Edition</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&family=Yantramanav:wght@700;900&display=swap" rel="stylesheet">
+function doGet(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var quizBank = { Math: [], Science: [], GK: [] };
 
-  <style>
-    :root {
-      --bg-dark: #070a14;
-      --card-bg: #0d1527;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-color: #1e293b;
+    // Function to read individual subject sheets
+    function parseSubjectSheet(sheetName, subjKey) {
+      var sh = ss.getSheetByName(sheetName);
+      if (!sh || sh.getLastRow() <= 1) return;
+      var rows = sh.getRange(2, 1, sh.getLastRow() - 1, 8).getValues();
+      var optMap = { "A": 0, "B": 1, "C": 2, "D": 3, "a": 0, "b": 1, "c": 2, "d": 3, "1": 0, "2": 1, "3": 2, "4": 3 };
+      var grouped = {};
+
+      for (var k = 0; k < rows.length; k++) {
+        var r = rows[k];
+        var lvl = Number(r[0]) || 1;
+        var sTitle = (r[1] || ("Set " + lvl)).toString().trim();
+        var qText = (r[2] || "").toString().trim();
+        var oA = (r[3] || "").toString().trim();
+        var oB = (r[4] || "").toString().trim();
+        var oC = (r[5] || "").toString().trim();
+        var oD = (r[6] || "").toString().trim();
+        var ansLetter = (r[7] || "A").toString().trim();
+        var ansIdx = (optMap[ansLetter] !== undefined) ? optMap[ansLetter] : 0;
+
+        if (!qText) continue;
+        if (!grouped[lvl]) {
+          grouped[lvl] = { level: lvl, title: sTitle, questions: [] };
+        }
+        grouped[lvl].questions.push({ q: qText, options: [oA, oB, oC, oD], ans: ansIdx });
+      }
+
+      for (var l in grouped) {
+        quizBank[subjKey].push(grouped[l]);
+      }
+      quizBank[subjKey].sort(function(a, b) { return a.level - b.level; });
+    }
+
+    parseSubjectSheet("Math_Bank", "Math");
+    parseSubjectSheet("Science_Bank", "Science");
+    parseSubjectSheet("GK_Bank", "GK");
+
+    // Leaderboard & Live Active Users from Users_DB
+    var uSheet = ss.getSheetByName("Users_DB");
+    var top5 = [], activeUsers = [];
+    if (uSheet && uSheet.getLastRow() > 1) {
+      var uRows = uSheet.getRange(2, 1, uSheet.getLastRow() - 1, 10).getValues();
       
-      /* Vibrant Glow Gradients */
-      --grad-math: linear-gradient(135deg, #1e3a8a, #3b82f6, #06b6d4);
-      --grad-sci: linear-gradient(135deg, #064e3b, #10b981, #34d399);
-      --grad-gk: linear-gradient(135deg, #7c2d12, #ea580c, #f59e0b);
-      --grad-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
-      --grad-btn: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+      // Filter out empty rows
+      var validUsers = [];
+      for (var v = 0; v < uRows.length; v++) {
+        if (uRows[v][0]) validUsers.push(uRows[v]);
+      }
+
+      // Sort by XP descending
+      validUsers.sort(function(a, b) { return (Number(b[5]) || 0) - (Number(a[5]) || 0); });
+
+      for (var i = 0; i < Math.min(5, validUsers.length); i++) {
+        top5.push({ rank: i + 1, name: validUsers[i][2] || validUsers[i][0], totalXP: Number(validUsers[i][5]) || 0 });
+      }
+
+      for (var u = 0; u < Math.min(8, validUsers.length); u++) {
+        activeUsers.push(validUsers[u][2] || validUsers[u][0]);
+      }
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', sans-serif; }
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "success",
+      quizzes: quizBank,
+      top5: top5,
+      activeUsers: activeUsers
+    })).setMimeType(ContentService.MimeType.JSON);
 
-    body {
-      background: radial-gradient(circle at top, #111d38 0%, var(--bg-dark) 65%);
-      color: var(--text-main);
-      padding: 10px 10px 50px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
 
-    .arena-container {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    /* HEADER */
-    .arena-header {
-      text-align: center;
-      padding: 14px 12px;
-      background: rgba(13, 21, 39, 0.85);
-      backdrop-filter: blur(10px);
-      border: 1.5px solid #223254;
-      border-radius: 18px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-    }
-    .arena-title {
-      font-size: 24px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #38bdf8, #c084fc, #f43f5e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-transform: uppercase;
-    }
-    .vimal-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(245, 158, 11, 0.2));
-      border: 1px solid #f87171;
-      color: #fca5a5;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 2px 12px;
-      border-radius: 20px;
-      margin-top: 4px;
-    }
-
-    /* LIVE RUNNING TICKER */
-    .live-ticker-wrap {
-      width: 100%;
-      background: linear-gradient(90deg, #111e38, #0b1325);
-      border: 1px solid #233559;
-      border-radius: 12px;
-      padding: 7px 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .ticker-pill {
-      background: #ef4444;
-      color: #fff;
-      font-size: 10px;
-      font-weight: 900;
-      padding: 2px 8px;
-      border-radius: 6px;
-      flex-shrink: 0;
-      animation: pulse 1.4s infinite;
-    }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .ticker-content {
-      white-space: nowrap;
-      font-size: 12px;
-      font-weight: 700;
-      color: #38bdf8;
-      display: inline-block;
-      animation: scrollText 18s linear infinite;
-    }
-    @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-    /* PLAYER PROFILE BAR */
-    .player-profile-card {
-      background: linear-gradient(135deg, #132244, #0e172e);
-      border: 1.5px solid #283e6b;
-      border-radius: 16px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
-    .profile-info { display: flex; align-items: center; gap: 12px; }
-    .avatar-circle {
-      width: 44px;
-      height: 44px;
-      background: var(--grad-gold);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 900;
-      color: #111;
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
-    }
-    .user-tag { display: flex; flex-direction: column; }
-    .u-name { font-size: 14.5px; font-weight: 800; color: #fff; }
-    .user-rank-badge { color: #38bdf8; font-size: 11px; font-weight: 800; }
-    .stat-badge {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      padding: 6px 12px;
-      border-radius: 12px;
-      text-align: right;
-    }
-    .stat-badge .xp-num { font-size: 16px; font-weight: 900; color: #38bdf8; line-height: 1; }
-    .stat-badge .xp-lbl { font-size: 9.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
-    .btn-logout {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      color: #f87171;
-      padding: 8px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-      margin-left: 8px;
-    }
-
-    /* ADS CONTAINER */
-    .ad-banner-box {
-      width: 100%;
-      min-height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin: 8px 0;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.02);
-    }
-
-    /* SCREENS */
-    .app-screen { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-    .section-title { font-size: 14px; font-weight: 800; color: #fbbf24; display: flex; align-items: center; gap: 6px; }
-
-    /* VIBRANT 3 SUBJECT CARDS */
-    .subject-cards-grid { display: flex; flex-direction: column; gap: 12px; }
-    .subject-card {
-      border-radius: 18px;
-      padding: 16px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-      border: 1.5px solid rgba(255,255,255,0.15);
-      transition: transform 0.15s ease;
-    }
-    .subject-card:active { transform: scale(0.98); }
-    .sc-math { background: var(--grad-math); }
-    .sc-sci { background: var(--grad-sci); }
-    .sc-gk { background: var(--grad-gk); }
-
-    .sc-info { display: flex; align-items: center; gap: 14px; }
-    .sc-icon {
-      width: 50px;
-      height: 50px;
-      background: rgba(0, 0, 0, 0.25);
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-    }
-    .sc-text h3 { font-size: 17px; font-weight: 900; color: #fff; }
-    .sc-text p { font-size: 12px; color: rgba(255,255,255,0.85); font-weight: 600; }
-    .sc-arrow {
-      width: 34px;
-      height: 34px;
-      background: rgba(255,255,255,0.2);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 900;
-      color: #fff;
-    }
-
-    /* SCREEN 2: SETS */
-    .screen-header-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 10px 14px;
-    }
-    .btn-back {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      padding: 7px 14px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
-    }
-    .sets-list-container { display: flex; flex-direction: column; gap: 10px; }
-    .set-row-card {
-      background: var(--card-bg);
-      border: 1.5px solid #1e293b;
-      border-radius: 16px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-    }
-    .set-row-card.locked { opacity: 0.55; cursor: not-allowed; }
-    .set-action-pill { font-size: 12px; font-weight: 800; padding: 6px 14px; border-radius: 20px; }
-    .set-row-card:not(.locked) .set-action-pill { background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; }
-    .set-row-card.locked .set-action-pill { background: #1e293b; color: #64748b; }
-
-    /* QUIZ ARENA */
-    .quiz-card {
-      background: var(--card-bg);
-      border: 1.5px solid #223254;
-      border-radius: 20px;
-      padding: 18px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-    }
-    .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .q-counter { font-size: 12.5px; font-weight: 800; color: #38bdf8; background: rgba(56, 189, 248, 0.12); padding: 4px 12px; border-radius: 14px; }
-    .timer-pill { background: rgba(245, 158, 11, 0.15); border: 1.5px solid var(--accent-gold); color: #fbbf24; font-size: 13px; font-weight: 900; padding: 4px 14px; border-radius: 20px; }
-    .timer-pill.urgent { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); color: #f87171; }
-    .q-text { font-size: 16.5px; font-weight: 700; line-height: 1.5; margin-bottom: 18px; color: #f8fafc; }
-    .options-grid { display: flex; flex-direction: column; gap: 11px; }
-    .option-btn {
-      width: 100%;
-      background: #152238;
-      border: 1.5px solid #283e6b;
-      color: #f1f5f9;
-      padding: 14px 16px;
-      border-radius: 14px;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: left;
-      cursor: pointer;
-    }
-    .option-btn.selected { border-color: #38bdf8; background: rgba(56, 189, 248, 0.18); color: #38bdf8; }
-    .nav-actions { display: flex; gap: 10px; margin-top: 18px; }
-    .btn-action {
-      flex: 1; padding: 14px; border-radius: 12px; font-size: 14.5px; font-weight: 800;
-      cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
-    }
-    .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
-    .btn-next { background: linear-gradient(135deg, #38bdf8, #0284c7); color: #fff; }
-
-    /* RESULT */
-    #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
-    .score-circle {
-      width: 120px; height: 120px; border-radius: 50%;
-      background: conic-gradient(#10b981 var(--score-angle, 0deg), #1e293d 0deg);
-      display: flex; align-items: center; justify-content: center; margin: 8px auto;
-    }
-    .score-inner {
-      width: 96px; height: 96px; border-radius: 50%; background: #0d1527;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    .score-num { font-size: 30px; font-weight: 900; color: #fff; }
-    .unlock-banner { width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 13.5px; font-weight: 800; }
-    .unlock-success { background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; color: #34d399; }
-    .unlock-failed { background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; color: #f87171; }
-
-    /* LEADERBOARD */
-    .leaderboard-box {
-      width: 100%; background: #080f1e; border: 1.5px solid #1e293b; border-radius: 16px; padding: 14px; text-align: left;
-    }
-    .lb-header { display: flex; justify-content: space-between; font-size: 13.5px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
-    .lb-item { display: flex; justify-content: space-between; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; margin-bottom: 5px; background: #131e36; }
-
-    /* AUTH MODAL & TABS */
-    #userModal {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.92);
-      display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
-    }
-    .modal-box {
-      background: #0d1527; border: 1.5px solid #283e6b; padding: 22px 18px;
-      border-radius: 20px; width: 100%; max-width: 400px; text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-    }
-    .auth-tab-bar { display: flex; gap: 8px; margin-bottom: 16px; background: #152238; padding: 4px; border-radius: 12px; }
-    .auth-tab-btn {
-      flex: 1; padding: 8px; border-radius: 8px; font-size: 12.5px; font-weight: 800;
-      cursor: pointer; border: none; background: transparent; color: #94a3b8;
-    }
-    .auth-tab-btn.active { background: #38bdf8; color: #000; }
+function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var data = JSON.parse(e.postData.contents);
     
-    .form-input {
-      width: 100%; background: #16243d; border: 1.5px solid #2a3e66; padding: 12px 14px;
-      border-radius: 12px; color: #fff; font-size: 13.5px; margin-bottom: 10px; outline: none;
+    var uSheet = ss.getSheetByName("Users_DB");
+    if (!uSheet) {
+      uSheet = ss.insertSheet("Users_DB");
+      uSheet.appendRow(["Username", "PIN", "StudentName", "FatherName", "DOB", "TotalXP", "MathUnlocked", "ScienceUnlocked", "GKUnlocked", "LastActive"]);
     }
-    .form-input:focus { border-color: #38bdf8; }
-    .form-btn-main {
-      width: 100%; background: var(--grad-btn); border: none; padding: 13px;
-      border-radius: 12px; color: #fff; font-weight: 900; font-size: 14.5px; cursor: pointer;
-    }
-    .form-note { font-size: 11px; color: #94a3b8; margin-top: -6px; margin-bottom: 10px; text-align: left; padding-left: 4px; }
-    .err-msg { color: #f87171; font-size: 12px; font-weight: 700; margin-top: 8px; display: none; }
-    .succ-msg { color: #34d399; font-size: 12px; font-weight: 800; margin-top: 8px; display: none; }
-
-    /* RECOVERY MODAL */
-    #recoveryModal {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.92);
-      display: none; align-items: center; justify-content: center; padding: 16px; z-index: 10000;
-    }
-  </style>
-</head>
-<body>
-
-<!-- 1. LOGIN & REGISTER MODAL -->
-<div id="userModal">
-  <div class="modal-box">
-    <div style="font-size:20px; font-weight:900; color:#38bdf8; margin-bottom:4px;">⚡ EXAM ARENA PORTAL</div>
-    <div style="font-size:11.5px; color:#94a3b8; margin-bottom:14px;">Master Challenge by Vimal Sir</div>
-
-    <div class="auth-tab-bar">
-      <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">लॉगिन (Login)</button>
-      <button class="auth-tab-btn" id="tabRegBtn" onclick="switchAuthTab('reg')">नया अकाउंट (Register)</button>
-    </div>
-
-    <!-- LOGIN FORM -->
-    <div id="loginFormSection">
-      <input type="text" class="form-input no-space-input" id="loginUsername" placeholder="Username (उदा. aman10)">
-      <div class="form-note">⚠️ बिना स्पेस के यूज़रनेम लिखें</div>
-      <input type="password" maxlength="4" class="form-input" id="loginPin" placeholder="4-Digit Security PIN (उदा. 1234)">
-      <button class="form-btn-main" id="btnLoginAct" onclick="submitLogin()">लॉगिन करें ➔</button>
-      <div style="margin-top:14px; font-size:12px;">
-        <span style="color:#f59e0b; cursor:pointer; font-weight:800;" onclick="openRecoveryModal()">🔑 PIN या Username भूल गए?</span>
-      </div>
-    </div>
-
-    <!-- REGISTER FORM -->
-    <div id="regFormSection" style="display:none;">
-      <input type="text" class="form-input" id="regFullName" placeholder="विद्यार्थी का नाम (Student Name)">
-      <input type="text" class="form-input" id="regFatherName" placeholder="पिता का नाम (Father's Name)">
-      <input type="date" class="form-input" id="regDOB" placeholder="जन्मतिथि (DOB)">
-      <div class="form-note">📅 जन्मतिथि चुनें (रिकवरी के लिए ज़रूरी)</div>
-      <input type="text" class="form-input no-space-input" id="regUsername" placeholder="Username बनाएं (उदा. rahul05)">
-      <div class="form-note">⚠️ स्पेस न दें, सिर्फ अक्षर और अंक</div>
-      <input type="password" maxlength="4" class="form-input" id="regPin" placeholder="4-Digit PIN बनाएं (उदा. 5678)">
-      <button class="form-btn-main" id="btnRegAct" onclick="submitRegistration()">अकाउंट बनाएं और शुरू करें ➔</button>
-    </div>
-
-    <div class="err-msg" id="authErrorBox"></div>
-  </div>
-</div>
-
-<!-- 2. FORGOT PIN / RECOVERY MODAL -->
-<div id="recoveryModal">
-  <div class="modal-box">
-    <div style="font-size:18px; font-weight:900; color:#fbbf24; margin-bottom:6px;">🔑 PIN व Username रिकवरी</div>
-    <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">अकाउंट बनाते समय भरा गया डेटा दर्ज करें:</p>
     
-    <input type="text" class="form-input" id="recSName" placeholder="विद्यार्थी का नाम">
-    <input type="text" class="form-input" id="recFName" placeholder="पिता का नाम">
-    <input type="date" class="form-input" id="recDOB">
+    var rows = uSheet.getLastRow() > 1 ? uSheet.getRange(2, 1, uSheet.getLastRow() - 1, 10).getValues() : [];
 
-    <button class="form-btn-main" style="background:linear-gradient(135deg, #10b981, #059669);" id="btnRecAct" onclick="submitRecovery()">वेरिफाई करके PIN देखें ➔</button>
-    
-    <div class="succ-msg" id="recSuccessBox"></div>
-    <div class="err-msg" id="recErrorBox"></div>
-
-    <div style="margin-top:14px; border-top:1px solid #223254; padding-top:12px;">
-      <p style="font-size:11.5px; color:#94a3b8; margin-bottom:8px;">यदि स्पेलिंग याद नहीं आ रही है:</p>
-      <!-- विमल सर का WhatsApp हेल्प बटन -->
-      <a href="https://wa.me/919876543210?text=नमस्ते%20विमल%20सर,%20मैं%20Exam%20Arena%20का%20PIN%20भूल%20गया%20हूँ।%20कृपया%20मेरी%20मदद%20करें।" target="_blank" style="background:#25d366; color:#fff; padding:8px 14px; border-radius:10px; font-size:12px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
-        📲 विमल सर से WhatsApp पर पूछें
-      </a>
-    </div>
-
-    <div style="margin-top:12px;">
-      <button style="background:transparent; border:none; color:#cbd5e1; font-size:12px; cursor:pointer;" onclick="closeRecoveryModal()">⬅ वापस लॉगिन पर जाएं</button>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN CONTAINER -->
-<div class="arena-container">
-
-  <!-- HEADER -->
-  <div class="arena-header">
-    <div class="arena-title">EXAM ARENA</div>
-    <div class="vimal-badge">BY VIMAL SIR • MASTER LIVE EDITION</div>
-  </div>
-
-  <!-- LIVE RUNNING TICKER -->
-  <div class="live-ticker-wrap">
-    <div class="ticker-pill">LIVE</div>
-    <div class="ticker-content" id="liveTickerText">🟢 Online: Loading active students from Google Sheet...</div>
-  </div>
-
-  <!-- PROFILE BAR -->
-  <div class="player-profile-card">
-    <div class="profile-info">
-      <div class="avatar-circle" id="userInitial">V</div>
-      <div class="user-tag">
-        <span class="u-name" id="dispName">Student</span>
-        <span class="user-rank-badge" id="topUserRank">Rank #--</span>
-      </div>
-    </div>
-    <div style="display:flex; align-items:center;">
-      <div class="stat-badge">
-        <div class="xp-num" id="dispXP">0 XP</div>
-        <div class="xp-lbl">Total Score</div>
-      </div>
-      <button class="btn-logout" onclick="logoutUser()">🚪</button>
-    </div>
-  </div>
-
-  <!-- SCREEN 1: 3 VIBRANT SUBJECTS -->
-  <div class="app-screen" id="screenHome">
-    <div class="section-title">📚 अपना विषय चुनें (Select Subject):</div>
-    <div class="subject-cards-grid">
-      <!-- 1. MATH -->
-      <div class="subject-card sc-math" onclick="openSubjectSets('Math')">
-        <div class="sc-info">
-          <div class="sc-icon">📐</div>
-          <div class="sc-text">
-            <h3>Mathematics (गणित)</h3>
-            <p id="mathSetsSub">Live sets loading...</p>
-          </div>
-        </div>
-        <div class="sc-arrow">➔</div>
-      </div>
-
-      <!-- 2. SCIENCE -->
-      <div class="subject-card sc-sci" onclick="openSubjectSets('Science')">
-        <div class="sc-info">
-          <div class="sc-icon">🔬</div>
-          <div class="sc-text">
-            <h3>General Science (विज्ञान)</h3>
-            <p id="sciSetsSub">Live sets loading...</p>
-          </div>
-        </div>
-        <div class="sc-arrow">➔</div>
-      </div>
-
-      <!-- 3. GENERAL KNOWLEDGE -->
-      <div class="subject-card sc-gk" onclick="openSubjectSets('GK')">
-        <div class="sc-info">
-          <div class="sc-icon">🌍</div>
-          <div class="sc-text">
-            <h3>सामान्य ज्ञान (General Knowledge)</h3>
-            <p id="gkSetsSub">Live sets loading...</p>
-          </div>
-        </div>
-        <div class="sc-arrow">➔</div>
-      </div>
-    </div>
-
-    <!-- ADSTERRA AD SLOT 1 -->
-    <div class="ad-banner-box">
-      <script>
-        atOptions = {
-          'key' : 'd79925c62cdb9ae65373e56a45850972',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
-  </div>
-
-  <!-- SCREEN 2: SETS -->
-  <div class="app-screen" id="screenSets" style="display:none;">
-    <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:800; font-size:13.5px;" id="selectedSubjHeading">Sets</span>
-    </div>
-    <div class="section-title">🎯 सेट चुनें (≥50% स्कोर पर अगला सेट खुलेगा):</div>
-    <div class="sets-list-container" id="setsListRenderBox"></div>
-
-    <!-- ADSTERRA AD SLOT 2 -->
-    <div class="ad-banner-box">
-      <script>
-        atOptions = {
-          'key' : 'd79925c62cdb9ae65373e56a45850972',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
-  </div>
-
-  <!-- SCREEN 3: QUIZ ARENA -->
-  <div class="app-screen" id="screenQuiz" style="display:none;">
-    <div class="screen-header-bar">
-      <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Test</button>
-      <span style="font-size:12.5px; font-weight:800; color:#fbbf24;" id="activeQuizSetTitle">Set 1</span>
-    </div>
-    <div class="quiz-card">
-      <div class="q-meta">
-        <span class="q-counter" id="qCounter">Q 1/5</span>
-        <div class="timer-pill" id="qTimerPill">⏱️ <span id="qTimerSecs">30</span>s</div>
-      </div>
-      <div class="q-text" id="qText">Loading question...</div>
-      <div class="options-grid" id="optionsContainer"></div>
-      <div class="nav-actions">
-        <button class="btn-action btn-next" id="btnNext" onclick="nextQuestion()">Next ➔</button>
-        <button class="btn-action btn-submit" id="btnSubmit" onclick="submitQuiz()" style="display:none;">Submit Quiz 🏆</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCREEN 4: RESULT -->
-  <div class="app-screen" id="resultScreen">
-    <div class="quiz-card" style="text-align:center;">
-      <h3 style="color:#10b981; font-size:20px;">🎉 टेस्ट परिणाम घोषित!</h3>
-      <p style="font-size:12.5px; color:var(--text-muted); margin-top:2px;" id="resSubjTag">Set 1</p>
-      
-      <div class="score-circle" id="scoreCircleWheel">
-        <div class="score-inner">
-          <span class="score-num" id="resScore">0</span>
-          <span style="font-size:11px; color:#94a3b8;" id="resTotalQ">out of 5</span>
-        </div>
-      </div>
-      
-      <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
-      
-      <div class="leaderboard-box" style="margin-top:14px;">
-        <div class="lb-header">
-          <span>🏆 Top Champions</span>
-          <span style="font-size:11px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Sync</span>
-        </div>
-        <div id="leaderboardList"></div>
-      </div>
-
-      <div style="display:flex; gap:10px; margin-top:14px;">
-        <button class="btn-action btn-next" style="background:#1e293b; color:#cbd5e1;" onclick="navigateTo('screenSets')">Sets List</button>
-        <button class="btn-action btn-next" id="btnNextLevelAction" onclick="goToNextLevelOrRetry()">Next Set ➔</button>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<script>
-  const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
-
-  let quizDatabase = { Math: [], Science: [], GK: [] };
-  let currentSubject = 'Math';
-  let currentLevel = 1;
-  let currentQIdx = 0;
-  let userAnswers = {};
-  let qTimerInterval = null;
-  let qTimeLeft = 30;
-
-  let currentUser = {
-    username: '', studentName: '', totalXP: 0, currentRank: '--',
-    unlockedLevels: { Math: 1, Science: 1, GK: 1 }
-  };
-
-  // Prevent spaces in usernames automatically
-  document.querySelectorAll('.no-space-input').forEach(input => {
-    input.addEventListener('input', function() {
-      this.value = this.value.replace(/\s+/g, '');
-    });
-  });
-
-  function switchAuthTab(tab) {
-    const isLogin = tab === 'login';
-    document.getElementById('tabLoginBtn').className = 'auth-tab-btn ' + (isLogin ? 'active' : '');
-    document.getElementById('tabRegBtn').className = 'auth-tab-btn ' + (!isLogin ? 'active' : '');
-    document.getElementById('loginFormSection').style.display = isLogin ? 'block' : 'none';
-    document.getElementById('regFormSection').style.display = !isLogin ? 'block' : 'none';
-    document.getElementById('authErrorBox').style.display = 'none';
-  }
-
-  function openRecoveryModal() {
-    document.getElementById('recoveryModal').style.display = 'flex';
-    document.getElementById('recSuccessBox').style.display = 'none';
-    document.getElementById('recErrorBox').style.display = 'none';
-  }
-
-  function closeRecoveryModal() {
-    document.getElementById('recoveryModal').style.display = 'none';
-  }
-
-  async function submitLogin() {
-    const u = document.getElementById('loginUsername').value.trim();
-    const p = document.getElementById('loginPin').value.trim();
-    const errBox = document.getElementById('authErrorBox');
-    const btn = document.getElementById('btnLoginAct');
-
-    if (!u || p.length !== 4) {
-      errBox.innerText = "कृपया सही Username और 4-अंकों का PIN दर्ज करें!";
-      errBox.style.display = 'block';
-      return;
-    }
-
-    btn.innerText = "Checking...";
-    btn.disabled = true;
-
-    try {
-      const resp = await fetch(SCRIPT_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: "login", username: u, pin: p })
-      });
-      const res = await resp.json();
-
-      if (res.status === "success") {
-        currentUser = res.user;
-        currentUser.currentRank = '--';
-        localStorage.setItem('vimal_arena_user_v2', JSON.stringify(currentUser));
-        document.getElementById('userModal').style.display = 'none';
-        updatePlayerUI();
-        navigateTo('screenHome');
-        fetchCloudData();
-      } else {
-        errBox.innerText = res.message || "लॉगिन विफल रहा!";
-        errBox.style.display = 'block';
+    // Helper function for date matching
+    function normalizeDate(val) {
+      if (!val) return "";
+      if (val instanceof Date) {
+        var y = val.getFullYear();
+        var m = ("0" + (val.getMonth() + 1)).slice(-2);
+        var d = ("0" + val.getDate()).slice(-2);
+        return y + "-" + m + "-" + d;
       }
-    } catch (e) {
-      errBox.innerText = "इंटरनेट कनेक्शन जांचें!";
-      errBox.style.display = 'block';
-    } finally {
-      btn.innerText = "लॉगिन करें ➔";
-      btn.disabled = false;
-    }
-  }
-
-  async function submitRegistration() {
-    const sName = document.getElementById('regFullName').value.trim();
-    const fName = document.getElementById('regFatherName').value.trim();
-    const dob = document.getElementById('regDOB').value;
-    const u = document.getElementById('regUsername').value.trim();
-    const p = document.getElementById('regPin').value.trim();
-    const errBox = document.getElementById('authErrorBox');
-    const btn = document.getElementById('btnRegAct');
-
-    if (!sName || !fName || !dob || !u || p.length !== 4) {
-      errBox.innerText = "कृपया सभी 5 विवरण सही भरें (4-अंकों का PIN)!";
-      errBox.style.display = 'block';
-      return;
+      return val.toString().trim();
     }
 
-    btn.innerText = "अकाउंट बन रहा है...";
-    btn.disabled = true;
-
-    try {
-      const resp = await fetch(SCRIPT_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: "register",
-          studentName: sName,
-          fatherName: fName,
-          dob: dob,
-          username: u,
-          pin: p
-        })
-      });
-      const res = await resp.json();
-
-      if (res.status === "success") {
-        currentUser = res.user;
-        currentUser.currentRank = '--';
-        localStorage.setItem('vimal_arena_user_v2', JSON.stringify(currentUser));
-        document.getElementById('userModal').style.display = 'none';
-        updatePlayerUI();
-        navigateTo('screenHome');
-        fetchCloudData();
-      } else {
-        errBox.innerText = res.message || "रजिस्ट्रेशन विफल रहा!";
-        errBox.style.display = 'block';
-      }
-    } catch (e) {
-      errBox.innerText = "इंटरनेट समस्या! दोबारा प्रयास करें।";
-      errBox.style.display = 'block';
-    } finally {
-      btn.innerText = "अकाउंट बनाएं और शुरू करें ➔";
-      btn.disabled = false;
-    }
-  }
-
-  async function submitRecovery() {
-    const sName = document.getElementById('recSName').value.trim();
-    const fName = document.getElementById('recFName').value.trim();
-    const dob = document.getElementById('recDOB').value;
-    const sBox = document.getElementById('recSuccessBox');
-    const eBox = document.getElementById('recErrorBox');
-    const btn = document.getElementById('btnRecAct');
-
-    sBox.style.display = 'none';
-    eBox.style.display = 'none';
-
-    if (!sName || !fName || !dob) {
-      eBox.innerText = "कृपया तीनों विवरण सही भरें!";
-      eBox.style.display = 'block';
-      return;
-    }
-
-    btn.innerText = "Checking Sheet...";
-    btn.disabled = true;
-
-    try {
-      const resp = await fetch(SCRIPT_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: "recover_pin", studentName: sName, fatherName: fName, dob: dob })
-      });
-      const res = await resp.json();
-
-      if (res.status === "success") {
-        sBox.innerHTML = `✅ अकाउंट मिल गया!<br><b>Username:</b> ${res.username}<br><b>PIN:</b> ${res.pin}`;
-        sBox.style.display = 'block';
-      } else {
-        eBox.innerText = res.message || "डेटा मैच नहीं हुआ!";
-        eBox.style.display = 'block';
-      }
-    } catch (e) {
-      eBox.innerText = "इंटरनेट समस्या!";
-      eBox.style.display = 'block';
-    } finally {
-      btn.innerText = "वेरिफाई करके PIN देखें ➔";
-      btn.disabled = false;
-    }
-  }
-
-  function initApp() {
-    const saved = localStorage.getItem('vimal_arena_user_v2');
-    if (saved) {
-      currentUser = JSON.parse(saved);
-      if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, GK: 1 };
-      document.getElementById('userModal').style.display = 'none';
-      updatePlayerUI();
-      navigateTo('screenHome');
-      fetchCloudData();
-    } else {
-      document.getElementById('userModal').style.display = 'flex';
-    }
-  }
-
-  function logoutUser() {
-    if (!confirm("Logout करना चाहते हैं?")) return;
-    localStorage.removeItem('vimal_arena_user_v2');
-    location.reload();
-  }
-
-  function updatePlayerUI() {
-    document.getElementById('dispName').innerText = currentUser.studentName || currentUser.username;
-    document.getElementById('userInitial').innerText = (currentUser.studentName || currentUser.username || 'V')[0].toUpperCase();
-    document.getElementById('dispXP').innerText = `${currentUser.totalXP} XP`;
-    document.getElementById('topUserRank').innerText = currentUser.currentRank ? `Rank #${currentUser.currentRank}` : 'Rank #--';
-  }
-
-  function navigateTo(screenId) {
-    clearInterval(qTimerInterval);
-    ['screenHome', 'screenSets', 'screenQuiz', 'resultScreen'].forEach(id => {
-      document.getElementById(id).style.display = 'none';
-    });
-    document.getElementById(screenId).style.display = 'flex';
-  }
-
-  async function fetchCloudData() {
-    try {
-      const resp = await fetch(SCRIPT_WEBHOOK_URL);
-      const data = await resp.json();
-
-      if (data.quizzes) {
-        quizDatabase.Math = data.quizzes.Math || [];
-        quizDatabase.Science = data.quizzes.Science || [];
-        quizDatabase.GK = data.quizzes.GK || [];
-
-        document.getElementById('mathSetsSub').innerText = `${quizDatabase.Math.length} Sets Live`;
-        document.getElementById('sciSetsSub').innerText = `${quizDatabase.Science.length} Sets Live`;
-        document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
+    // 1. REGISTER NEW ACCOUNT
+    if (data.action === "register") {
+      var reqUser = (data.username || "").toLowerCase().trim().replace(/\s+/g, '');
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i][0].toString().toLowerCase().trim() === reqUser) {
+          return ContentService.createTextOutput(JSON.stringify({
+            status: "error",
+            message: "❌ यह Username पहले से मौजूद है! कृपया दूसरा यूज़रनेम चुनें।"
+          })).setMimeType(ContentService.MimeType.JSON);
+        }
       }
 
-      if (data.activeUsers && data.activeUsers.length > 0) {
-        document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Competing in Exam Arena!";
+      uSheet.appendRow([
+        reqUser,
+        data.pin.toString().trim(),
+        data.studentName.trim(),
+        data.fatherName.trim(),
+        "'" + data.dob.toString().trim(), // Quote prevents auto-date mess
+        0, 1, 1, 1, new Date()
+      ]);
+
+      return ContentService.createTextOutput(JSON.stringify({
+        status: "success",
+        user: {
+          username: reqUser,
+          studentName: data.studentName.trim(),
+          totalXP: 0,
+          unlockedLevels: { Math: 1, Science: 1, GK: 1 }
+        }
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 2. LOGIN
+    if (data.action === "login") {
+      var lUser = (data.username || "").toLowerCase().trim().replace(/\s+/g, '');
+      var foundIdx = -1;
+      var foundRow = null;
+
+      for (var j = 0; j < rows.length; j++) {
+        if (rows[j][0].toString().toLowerCase().trim() === lUser) {
+          foundIdx = j + 2;
+          foundRow = rows[j];
+          break;
+        }
       }
 
-      renderLeaderboardUI(data);
-    } catch (e) {
-      console.warn(e);
-    }
-  }
-
-  function renderLeaderboardUI(data) {
-    const listEl = document.getElementById('leaderboardList');
-    if (!listEl) return;
-    const topList = data.mathTop5 || [];
-    listEl.innerHTML = '';
-    if (topList.length === 0) {
-      listEl.innerHTML = `<div style="color:#94a3b8; font-size:12px; text-align:center;">Abhi koi records nahi hain.</div>`;
-      return;
-    }
-    topList.forEach(item => {
-      const isMe = item.name.toLowerCase() === (currentUser.studentName || currentUser.username).toLowerCase();
-      if (isMe) {
-        currentUser.currentRank = item.rank;
-        document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
+      if (foundIdx === -1) {
+        return ContentService.createTextOutput(JSON.stringify({
+          status: "error",
+          message: "❌ यह Username रजिस्टर नहीं है! कृपया स्पेलिंग जांचें या नया अकाउंट बनाएं।"
+        })).setMimeType(ContentService.MimeType.JSON);
       }
-      const div = document.createElement('div');
-      div.className = 'lb-item';
-      div.innerHTML = `
-        <div><span style="font-weight:900; margin-right:6px; color:#fbbf24;">#${item.rank}</span> ${item.name} ${isMe ? '(You)' : ''}</div>
-        <div style="color:#38bdf8; font-weight:800;">${item.totalXP} XP</div>
-      `;
-      listEl.appendChild(div);
-    });
-  }
 
-  function openSubjectSets(subj) {
-    currentSubject = subj;
-    const titles = { Math: '📐 Mathematics Sets', Science: '🔬 General Science Sets', GK: '🌍 सामान्य ज्ञान (GK) Sets' };
-    document.getElementById('selectedSubjHeading').innerText = titles[subj] || 'Sets';
-    renderSetsList();
-    navigateTo('screenSets');
-  }
-
-  function renderSetsList() {
-    const container = document.getElementById('setsListRenderBox');
-    container.innerHTML = '';
-    const sets = quizDatabase[currentSubject] || [];
-    const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
-
-    if (sets.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">इस विषय में अभी Google Sheet से सवाल लोड हो रहे हैं...</div>`;
-      return;
-    }
-
-    sets.forEach(set => {
-      const isLocked = set.level > unlockedMax;
-      const row = document.createElement('div');
-      row.className = 'set-row-card ' + (isLocked ? 'locked' : 'unlocked');
-      row.innerHTML = `
-        <div style="display:flex; align-items:center; gap:12px;">
-          <span style="font-size:20px;">${isLocked ? '🔒' : '🔓'}</span>
-          <div>
-            <h4 style="font-size:14.5px; font-weight:800; color:#fff;">${set.title}</h4>
-            <span style="font-size:11.5px; color:#94a3b8;">${set.questions.length} Questions • 30s Timer</span>
-          </div>
-        </div>
-        <div class="set-action-pill">${isLocked ? 'Locked' : 'Start ▶'}</div>
-      `;
-      row.onclick = () => {
-        if (isLocked) return alert(`🔒 Set ${set.level} locked है! पिछला सेट पास (≥50%) करें।`);
-        startQuizSet(set.level);
-      };
-      container.appendChild(row);
-    });
-  }
-
-  function startQuizSet(lvl) {
-    currentLevel = lvl;
-    userAnswers = {};
-    const setObj = quizDatabase[currentSubject].find(s => s.level === lvl);
-    document.getElementById('activeQuizSetTitle').innerText = `${currentSubject} - ${setObj ? setObj.title : 'Set ' + lvl}`;
-    navigateTo('screenQuiz');
-    loadQuestion(0);
-  }
-
-  function getCurrentQuestions() {
-    const setObj = quizDatabase[currentSubject].find(s => s.level === currentLevel);
-    return setObj ? setObj.questions : [];
-  }
-
-  function loadQuestion(idx) {
-    clearInterval(qTimerInterval);
-    currentQIdx = idx;
-    const questions = getCurrentQuestions();
-    const qData = questions[idx];
-
-    document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
-    document.getElementById('qText').innerText = `${idx + 1}. ${qData.q}`;
-
-    const container = document.getElementById('optionsContainer');
-    container.innerHTML = '';
-    qData.options.forEach((opt, oIdx) => {
-      const btn = document.createElement('button');
-      btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
-      btn.innerHTML = `<span style="opacity:0.6; margin-right:6px;">${String.fromCharCode(65 + oIdx)}.</span> ${opt}`;
-      btn.onclick = () => { userAnswers[idx] = oIdx; loadQuestion(idx); };
-      container.appendChild(btn);
-    });
-
-    const isLast = (idx === questions.length - 1);
-    document.getElementById('btnNext').style.display = isLast ? 'none' : 'flex';
-    document.getElementById('btnSubmit').style.display = isLast ? 'flex' : 'none';
-
-    startTimer();
-  }
-
-  function startTimer() {
-    qTimeLeft = 30;
-    const timerSecsEl = document.getElementById('qTimerSecs');
-    const timerPillEl = document.getElementById('qTimerPill');
-    timerSecsEl.innerText = qTimeLeft;
-    timerPillEl.classList.remove('urgent');
-
-    qTimerInterval = setInterval(() => {
-      qTimeLeft--;
-      timerSecsEl.innerText = qTimeLeft;
-      if (qTimeLeft <= 10) timerPillEl.classList.add('urgent');
-      if (qTimeLeft <= 0) {
-        clearInterval(qTimerInterval);
-        const questions = getCurrentQuestions();
-        if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
-        else submitQuiz();
+      if (foundRow[1].toString().trim() !== data.pin.toString().trim()) {
+        return ContentService.createTextOutput(JSON.stringify({
+          status: "error",
+          message: "❌ गलत 4-Digit PIN! यदि PIN भूल गए हैं तो 'Forgot PIN' से रिकवर करें।"
+        })).setMimeType(ContentService.MimeType.JSON);
       }
-    }, 1000);
-  }
 
-  function nextQuestion() {
-    const questions = getCurrentQuestions();
-    if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
-  }
+      uSheet.getRange(foundIdx, 10).setValue(new Date());
 
-  function confirmExitQuiz() {
-    if (confirm("टेस्ट छोड़कर बाहर जाना चाहते हैं?")) navigateTo('screenSets');
-  }
-
-  async function submitQuiz() {
-    clearInterval(qTimerInterval);
-    const questions = getCurrentQuestions();
-    let score = 0;
-    questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
-
-    const percent = (score / questions.length) * 100;
-    const passed = percent >= 50;
-    const earnedXP = score * 20;
-    currentUser.totalXP = (currentUser.totalXP || 0) + earnedXP;
-
-    const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
-    let newLevelUnlocked = false;
-
-    if (passed && currentLevel === unlockedMax && currentLevel < quizDatabase[currentSubject].length) {
-      currentUser.unlockedLevels[currentSubject] = currentLevel + 1;
-      newLevelUnlocked = true;
+      return ContentService.createTextOutput(JSON.stringify({
+        status: "success",
+        user: {
+          username: foundRow[0],
+          studentName: foundRow[2] || foundRow[0],
+          totalXP: Number(foundRow[5]) || 0,
+          unlockedLevels: {
+            Math: Number(foundRow[6]) || 1,
+            Science: Number(foundRow[7]) || 1,
+            GK: Number(foundRow[8]) || 1
+          }
+        }
+      })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    localStorage.setItem('vimal_arena_user_v2', JSON.stringify(currentUser));
-    updatePlayerUI();
+    // 3. RECOVER PIN
+    if (data.action === "recover_pin") {
+      var sName = (data.studentName || "").toLowerCase().trim();
+      var fName = (data.fatherName || "").toLowerCase().trim();
+      var dobTarget = (data.dob || "").toString().trim();
 
-    navigateTo('resultScreen');
-    document.getElementById('resSubjTag').innerText = `${currentSubject} - Set ${currentLevel}`;
-    document.getElementById('resScore').innerText = score;
-    document.getElementById('resTotalQ').innerText = `out of ${questions.length}`;
+      for (var k = 0; k < rows.length; k++) {
+        var rowSName = rows[k][2].toString().toLowerCase().trim();
+        var rowFName = rows[k][3].toString().toLowerCase().trim();
+        var rowDOB = normalizeDate(rows[k][4]);
 
-    const banner = document.getElementById('unlockResultBanner');
-    const nextBtn = document.getElementById('btnNextLevelAction');
+        if (rowSName === sName && rowFName === fName && (rowDOB === dobTarget || rowDOB.indexOf(dobTarget) !== -1)) {
+          return ContentService.createTextOutput(JSON.stringify({
+            status: "success",
+            username: rows[k][0],
+            pin: rows[k][1]
+          })).setMimeType(ContentService.MimeType.JSON);
+        }
+      }
 
-    if (passed) {
-      banner.className = "unlock-banner unlock-success";
-      banner.innerHTML = newLevelUnlocked 
-        ? `🎉 शानदार! Score: ${percent.toFixed(0)}%. अगला सेट ${currentLevel + 1} UNLOCK हो गया! 🔓`
-        : `✅ उत्तीर्ण! Score: ${percent.toFixed(0)}%. Set Mastered!`;
-      nextBtn.innerText = `Next Set ➔`;
-    } else {
-      banner.className = "unlock-banner unlock-failed";
-      banner.innerHTML = `⚠️ Score: ${percent.toFixed(0)}%. अगला सेट खोलने के लिए कम से कम 50% चाहिए! 🔒`;
-      nextBtn.innerText = `Retry Set 🔄`;
+      return ContentService.createTextOutput(JSON.stringify({
+        status: "error",
+        message: "❌ डेटा मैच नहीं हुआ! नाम, पिता का नाम और जन्मतिथि जांचें या WhatsApp पर पूछें।"
+      })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
+    // 4. SUBMIT SCORE
+    if (data.action === "submit_score") {
+      var allSheet = ss.getSheetByName("All_Submissions") || ss.getSheets()[0];
+      allSheet.appendRow([
+        new Date(), data.username, data.subject,
+        Number(data.score) || 0, Number(data.totalQuestions) || 5, Number(data.xpEarned) || 0
+      ]);
 
-    // Sync score & levels to Sheet
-    fetch(SCRIPT_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: "submit_score",
-        username: currentUser.username,
-        subject: `${currentSubject}_Set${currentLevel}`,
-        score: score,
-        totalQuestions: questions.length,
-        xpEarned: earnedXP,
-        unlockedLevels: currentUser.unlockedLevels
-      })
-    });
+      for (var m = 0; m < rows.length; m++) {
+        if (rows[m][0].toString().toLowerCase().trim() === (data.username || "").toLowerCase().trim()) {
+          var rowNum = m + 2;
+          var newXP = (Number(rows[m][5]) || 0) + (Number(data.xpEarned) || 0);
+          uSheet.getRange(rowNum, 6).setValue(newXP);
+          if (data.unlockedLevels) {
+            uSheet.getRange(rowNum, 7).setValue(data.unlockedLevels.Math || 1);
+            uSheet.getRange(rowNum, 8).setValue(data.unlockedLevels.Science || 1);
+            uSheet.getRange(rowNum, 9).setValue(data.unlockedLevels.GK || 1);
+          }
+          uSheet.getRange(rowNum, 10).setValue(new Date());
+          break;
+        }
+      }
 
-    setTimeout(fetchCloudData, 1500);
-  }
-
-  function goToNextLevelOrRetry() {
-    const questions = getCurrentQuestions();
-    let score = 0;
-    questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
-    if ((score / questions.length) * 100 >= 50 && currentLevel < quizDatabase[currentSubject].length) {
-      currentLevel++;
+      return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
     }
-    startQuizSet(currentLevel);
+
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() })).setMimeType(ContentService.MimeType.JSON);
   }
-
-  window.onload = initApp;
-</script>
-
-</body>
-</html>
+}
