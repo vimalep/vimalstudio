@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Arena by Vimal Sir - Master Live Edition</title>
+  <title>Exam Arena by Vimal Sir - Ultimate Live Edition</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,6 +74,59 @@
       padding: 2px 12px;
       border-radius: 20px;
       margin-top: 4px;
+    }
+
+    /* NEW QUIZ FLASH ALERT CARD (GLOWING ANIMATED) */
+    .flash-alert-card {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(245, 158, 11, 0.22));
+      border: 1.5px solid #f59e0b;
+      border-radius: 14px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+      animation: flashGlow 2s infinite alternate ease-in-out;
+    }
+    @keyframes flashGlow {
+      0% { box-shadow: 0 0 8px rgba(245, 158, 11, 0.25); border-color: #f59e0b; }
+      100% { box-shadow: 0 0 22px rgba(239, 68, 68, 0.65); border-color: #ef4444; }
+    }
+    .flash-icon-box {
+      font-size: 24px;
+      animation: bounce 1.2s infinite alternate;
+    }
+    @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-4px); } }
+    .flash-text-wrap { flex: 1; text-align: left; }
+    .flash-badge {
+      display: inline-block;
+      background: #ef4444;
+      color: #fff;
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 1px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .flash-msg {
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.35;
+    }
+    .flash-btn {
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #fff;
+      border: none;
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 900;
+      cursor: pointer;
+      flex-shrink: 0;
     }
 
     /* LIVE RUNNING TICKER */
@@ -408,7 +461,6 @@
 
     <div style="margin-top:14px; border-top:1px solid #223254; padding-top:12px;">
       <p style="font-size:11.5px; color:#94a3b8; margin-bottom:8px;">यदि विवरण याद नहीं आ रहा है:</p>
-      <!-- Direct WhatsApp Support -->
       <a href="https://api.whatsapp.com/send?text=नमस्ते%20विमल%20सर,%20मैं%20Exam%20Arena%20का%20PIN%20भूल%20गया%20हूँ।%20कृपया%20मेरी%20मदद%20करें।" target="_blank" style="background:#25d366; color:#fff; padding:8px 14px; border-radius:10px; font-size:12px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
         📲 विमल सर से WhatsApp पर पूछें
       </a>
@@ -427,6 +479,16 @@
   <div class="arena-header">
     <div class="arena-title">EXAM ARENA</div>
     <div class="vimal-badge">BY VIMAL SIR • MASTER LIVE EDITION</div>
+  </div>
+
+  <!-- FLASH ALERT NOTIFICATION CARD (CHAMAKTA HUA BANNER) -->
+  <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
+    <div class="flash-icon-box">🔥</div>
+    <div class="flash-text-wrap">
+      <div class="flash-badge">NEW QUIZ ALERT</div>
+      <div class="flash-msg" id="flashNoticeText">नया क्विज़ लाइव हो गया है!</div>
+    </div>
+    <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Play ➔</button>
   </div>
 
   <!-- LIVE RUNNING TICKER -->
@@ -588,7 +650,6 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  // Fallback local questions in case sheet is still loading
   let quizDatabase = {
     Math: [
       {
@@ -629,13 +690,14 @@
   let userAnswers = {};
   let qTimerInterval = null;
   let qTimeLeft = 30;
+  let latestTargetSubj = 'Science';
 
   let currentUser = {
     username: '', studentName: '', totalXP: 0, currentRank: '--',
     unlockedLevels: { Math: 1, Science: 1, GK: 1 }
   };
 
-  // Prevent spaces in usernames automatically
+  // Prevent spaces automatically
   document.querySelectorAll('.no-space-input').forEach(input => {
     input.addEventListener('input', function() {
       this.value = this.value.replace(/\s+/g, '');
@@ -661,7 +723,7 @@
     document.getElementById('recoveryModal').style.display = 'none';
   }
 
-  // Safe Post Helper to prevent CORS Preflight Block
+  // Safe Post Helper for CORS
   async function callAppsScript(payload) {
     const resp = await fetch(SCRIPT_WEBHOOK_URL, {
       method: 'POST',
@@ -702,7 +764,7 @@
         errBox.style.display = 'block';
       }
     } catch (e) {
-      errBox.innerText = "नेटवर्क कनेक्शन समस्या! कृपया पुनः प्रयास करें।";
+      errBox.innerText = "नेटवर्क समस्या! कृपया पुनः प्रयास करें।";
       errBox.style.display = 'block';
     } finally {
       btn.innerText = "लॉगिन करें ➔";
@@ -795,7 +857,7 @@
         eBox.style.display = 'block';
       }
     } catch (e) {
-      eBox.innerText = "नेटवर्क समस्या! कृपया पुनः प्रयास करें।";
+      eBox.innerText = "नेटवर्क समस्या! पुनः प्रयास करें।";
       eBox.style.display = 'block';
     } finally {
       btn.innerText = "वेरिफाई करके PIN देखें ➔";
@@ -853,6 +915,16 @@
         document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
       }
 
+      // FLASH MESSAGE NOTIFICATION
+      if (data.flashNotice) {
+        document.getElementById('flashNoticeText').innerText = data.flashNotice;
+        document.getElementById('newQuizFlashCard').style.display = 'flex';
+        if (data.latestQuiz && data.latestQuiz.subject) {
+          latestTargetSubj = data.latestQuiz.subject;
+        }
+      }
+
+      // LIVE RUNNING TICKER
       if (data.activeUsers && data.activeUsers.length > 0) {
         document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Competing Live!";
       }
@@ -861,6 +933,10 @@
     } catch (e) {
       console.warn(e);
     }
+  }
+
+  function handleFlashClick() {
+    openSubjectSets(latestTargetSubj || 'Science');
   }
 
   function renderLeaderboardUI(data) {
@@ -903,7 +979,7 @@
     const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
 
     if (sets.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">Sheet se sawal load ho rahe hain...</div>`;
+      container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px;">Sheet से सवाल लोड हो रहे हैं...</div>`;
       return;
     }
 
@@ -1042,7 +1118,7 @@
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    // Sync to Sheet
+    // Sync score & levels to Sheet
     callAppsScript({
       action: "submit_score",
       username: currentUser.username,
