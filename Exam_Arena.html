@@ -8,11 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
-    /* ============================================================
-       THEME COLOR VARIABLES
-    ============================================================ */
     :root {
       --bg-body: #181438;
       --bg-radial-1: rgba(99, 102, 241, 0.35);
@@ -47,7 +47,9 @@
 
       --grad-math: linear-gradient(135deg, #2563eb, #0284c7, #06b6d4);
       --grad-sci: linear-gradient(135deg, #059669, #10b981, #84cc16);
-      --grad-gk: linear-gradient(135deg, #ea580c, #f43f5e, #fbbf24);
+      --grad-sst: linear-gradient(135deg, #854d0e, #d97706, #f59e0b);
+      --grad-eng: linear-gradient(135deg, #6d28d9, #9333ea, #c084fc);
+      --grad-gk: linear-gradient(135deg, #be123c, #f43f5e, #fb7185);
       --grad-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
       --grad-btn: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
 
@@ -117,7 +119,6 @@
       gap: 13px;
     }
 
-    /* HEADER */
     .arena-header {
       text-align: center;
       padding: 16px 14px;
@@ -128,25 +129,30 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.2);
       position: relative;
     }
-    .theme-toggle-btn {
+    
+    .header-ctrls {
       position: absolute;
       top: 12px;
       right: 12px;
+      display: flex;
+      gap: 6px;
+    }
+    .ctrl-btn {
       background: rgba(255, 255, 255, 0.25);
       border: 1.5px solid rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(4px);
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 16px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .theme-toggle-btn:active { transform: scale(0.9); }
+    .ctrl-btn:active { transform: scale(0.9); }
 
     .arena-title {
       font-family: 'Fredoka', cursive, sans-serif;
@@ -227,7 +233,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* TICKER */
+    /* TICKER OVERFLOW BUG FIX */
     .live-ticker-wrap {
       width: 100%;
       background: var(--ticker-bg);
@@ -236,9 +242,10 @@
       padding: 8px 12px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      position: relative;
     }
     .ticker-pill {
       background: #10b981;
@@ -250,15 +257,22 @@
       flex-shrink: 0;
       animation: pulse 1.4s infinite;
       box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+      z-index: 2;
     }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.96); } }
+    .ticker-track {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
     .ticker-content {
       white-space: nowrap;
       font-size: 12px;
       font-weight: 700;
       color: #0284c7;
       display: inline-block;
-      animation: scrollText 18s linear infinite;
+      animation: scrollText 20s linear infinite;
     }
     body:not(.light-theme) .ticker-content { color: #38bdf8; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
@@ -328,15 +342,14 @@
       margin-left: 8px;
     }
 
-    /* LEADERBOARD VIEW BUTTON ON HOME */
     .btn-view-ranks {
       width: 100%;
       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
       border: 1.5px solid #a855f7;
       color: #ffffff;
-      padding: 10px 14px;
+      padding: 11px 14px;
       border-radius: 14px;
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 800;
       cursor: pointer;
       display: flex;
@@ -346,7 +359,6 @@
       box-shadow: 0 4px 15px rgba(139, 92, 246, 0.35);
     }
 
-    /* ADSTERRA BOX */
     .ad-banner-box {
       width: 100%;
       min-height: 250px;
@@ -360,58 +372,58 @@
       border: 1px dashed var(--card-border);
     }
 
-    /* SCREENS */
     .app-screen { display: flex; flex-direction: column; gap: 13px; width: 100%; }
     .section-title { font-size: 15px; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 8px; }
     body:not(.light-theme) .section-title { color: #fde047; }
 
-    /* 3 SUBJECT CARDS */
-    .subject-cards-grid { display: flex; flex-direction: column; gap: 13px; }
+    /* 5 SUBJECT CARDS */
+    .subject-cards-grid { display: flex; flex-direction: column; gap: 12px; }
     .subject-card {
       border-radius: 20px;
-      padding: 18px 20px;
+      padding: 16px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.2);
       border: 2px solid rgba(255,255,255,0.4);
       transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .subject-card:active { transform: scale(0.97); }
-    .sc-math { background: var(--grad-math); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); }
-    .sc-sci { background: var(--grad-sci); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); }
-    .sc-gk { background: var(--grad-gk); box-shadow: 0 8px 20px rgba(244, 63, 94, 0.35); }
+    .sc-math { background: var(--grad-math); }
+    .sc-sci { background: var(--grad-sci); }
+    .sc-sst { background: var(--grad-sst); }
+    .sc-eng { background: var(--grad-eng); }
+    .sc-gk { background: var(--grad-gk); }
 
-    .sc-info { display: flex; align-items: center; gap: 15px; }
+    .sc-info { display: flex; align-items: center; gap: 14px; }
     .sc-icon {
-      width: 54px;
-      height: 54px;
+      width: 50px;
+      height: 50px;
       background: rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(6px);
       border: 1.5px solid rgba(255, 255, 255, 0.4);
-      border-radius: 16px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 26px;
     }
-    .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 18.5px; font-weight: 700; color: #ffffff; }
-    .sc-text p { font-size: 12.5px; color: rgba(255,255,255,0.95); font-weight: 600; }
+    .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 17.5px; font-weight: 700; color: #ffffff; }
+    .sc-text p { font-size: 12px; color: rgba(255,255,255,0.95); font-weight: 600; }
     .sc-arrow {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       background: rgba(255,255,255,0.3);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       color: #fff;
     }
 
-    /* SCREEN 2: SETS */
     .screen-header-bar {
       display: flex;
       align-items: center;
@@ -453,13 +465,14 @@
     }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
-    /* SCREEN 3: QUIZ ARENA (WITH PREV & NEXT + 60s TIMER) */
+    /* QUIZ ARENA (60s TIMER + URGENCY BEAT) */
     .quiz-card {
       background: var(--quiz-card-bg);
       border: 2px solid var(--quiz-card-border);
       border-radius: 24px;
       padding: 20px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
     .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .q-counter {
@@ -478,12 +491,19 @@
       padding: 5px 16px;
       border-radius: 25px;
       box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
+      transition: all 0.3s ease;
     }
     .timer-pill.urgent {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
-      border-color: #fca5a5;
-      animation: pulse 0.7s infinite;
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      border-color: #fca5a5 !important;
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.85) !important;
+      animation: pulseUrgent 0.6s infinite alternate;
     }
+    @keyframes pulseUrgent {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+
     .q-text {
       font-size: 17.5px;
       font-weight: 800;
@@ -542,7 +562,6 @@
     sup { font-size: 0.78em; vertical-align: super; line-height: 0; }
     sub { font-size: 0.78em; vertical-align: sub; line-height: 0; }
 
-    /* NAVIGATION BUTTONS */
     .nav-actions { display: flex; gap: 12px; margin-top: 20px; }
     .btn-action {
       flex: 1; padding: 14px 16px; border-radius: 16px; font-size: 15px; font-weight: 900;
@@ -563,7 +582,7 @@
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
-    /* RESULT & REVIEW SCREEN */
+    /* RESULT SCREEN & FAILURE SHAKE */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 15px; }
     .score-circle {
       width: 130px; height: 130px; border-radius: 50%;
@@ -583,7 +602,39 @@
     .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #dc2626; }
     body:not(.light-theme) .unlock-failed { color: #fca5a5; }
 
-    /* DETAILED ANSWER REVIEW STYLES */
+    /* FAILURE CARD RED GLOW & SHAKE ANIMATION */
+    .quiz-card.failure-glow-shake {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.6) !important;
+      animation: shakeAnim 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes shakeAnim {
+      10%, 90% { transform: translate3d(-2px, 0, 0); }
+      20%, 80% { transform: translate3d(3px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+
+    .btn-whatsapp-share {
+      width: 100%;
+      background: #25d366;
+      border: none;
+      color: #ffffff;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    /* DETAILED ANSWER REVIEW */
     .review-card {
       background: var(--opt-btn-bg);
       border: 1.5px solid var(--card-border);
@@ -592,20 +643,11 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       text-align: left;
     }
-    .review-card.rev-correct {
-      border-color: #10b981;
-      background: rgba(16, 185, 129, 0.08);
-    }
-    .review-card.rev-wrong {
-      border-color: #ef4444;
-      background: rgba(239, 68, 68, 0.08);
-    }
-    .review-card.rev-skipped {
-      border-color: #94a3b8;
-      background: rgba(148, 163, 184, 0.08);
-    }
+    .review-card.rev-correct { border-color: #10b981; background: rgba(16, 185, 129, 0.08); }
+    .review-card.rev-wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.08); }
+    .review-card.rev-skipped { border-color: #94a3b8; background: rgba(148, 163, 184, 0.08); }
 
-    /* LEADERBOARD BOX & ITEMS WITH MEDALS */
+    /* LEADERBOARD & SUBJECT TABS */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg);
       border: 2px solid var(--card-border); border-radius: 20px; padding: 16px; text-align: left;
@@ -613,25 +655,45 @@
     }
     .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 900; color: #d97706; margin-bottom: 12px; }
     body:not(.light-theme) .lb-header { color: #fde047; }
+    
+    .lb-tabs-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .lb-tab-btn {
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      border: 1.5px solid var(--card-border);
+      background: transparent;
+      color: var(--text-muted);
+    }
+    .lb-tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #3b82f6);
+      color: #fff;
+      border-color: #38bdf8;
+    }
+
     .lb-item {
       display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: 12px;
       font-size: 13.5px; font-weight: 800; margin-bottom: 6px; background: var(--lb-item-bg);
       color: var(--lb-item-text);
       border: 1.5px solid var(--card-border);
-      transition: transform 0.15s ease;
     }
     .lb-item.is-me {
       border-color: #38bdf8 !important;
       background: rgba(56, 189, 248, 0.15) !important;
       box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
     }
-    .medal-icon {
-      font-size: 16px;
-      margin-right: 6px;
-      display: inline-block;
-    }
+    .medal-icon { font-size: 16px; margin-right: 6px; display: inline-block; }
 
-    /* INSTANT NAME MODAL */
+    /* 1-CLICK INSTANT NAME MODAL */
     #userModal {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
@@ -671,7 +733,10 @@
 
   <!-- HEADER -->
   <div class="arena-header">
-    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
+    <div class="header-ctrls">
+      <button class="ctrl-btn" id="soundToggleBtn" onclick="toggleSound()" title="Sound On/Off">🔊</button>
+      <button class="ctrl-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Theme Switch">☀️</button>
+    </div>
     <div class="arena-title">🎮 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
   </div>
@@ -686,10 +751,12 @@
     <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Play ➔</button>
   </div>
 
-  <!-- LIVE TICKER -->
+  <!-- LIVE TICKER (OVERFLOW PROTECTED) -->
   <div class="live-ticker-wrap">
     <div class="ticker-pill">LIVE 🟢</div>
-    <div class="ticker-content" id="liveTickerText">Online: Loading active students from Google Sheet...</div>
+    <div class="ticker-track">
+      <div class="ticker-content" id="liveTickerText">Online: Loading active students from Google Sheet...</div>
+    </div>
   </div>
 
   <!-- PLAYER PROFILE CARD -->
@@ -710,9 +777,8 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: HOME -->
+  <!-- SCREEN 1: HOME (5 SUBJECTS) -->
   <div class="app-screen" id="screenHome">
-    <!-- VIEW FULL RANKERS BUTTON -->
     <button class="btn-view-ranks" onclick="navigateTo('screenLeaderboard')">
       <span>🏆</span> Live All Rankers Leaderboard देखें ➔
     </button>
@@ -743,7 +809,31 @@
         <div class="sc-arrow">➔</div>
       </div>
 
-      <!-- 3. GENERAL KNOWLEDGE -->
+      <!-- 3. SOCIAL SCIENCE (CLASS 10) -->
+      <div class="subject-card sc-sst" onclick="openSubjectSets('SocialScience')">
+        <div class="sc-info">
+          <div class="sc-icon">📜</div>
+          <div class="sc-text">
+            <h3>Class 10 Social Science</h3>
+            <p id="sstSetsSub">Live sets loading...</p>
+          </div>
+        </div>
+        <div class="sc-arrow">➔</div>
+      </div>
+
+      <!-- 4. ENGLISH GRAMMAR -->
+      <div class="subject-card sc-eng" onclick="openSubjectSets('English')">
+        <div class="sc-info">
+          <div class="sc-icon">✍️</div>
+          <div class="sc-text">
+            <h3>English Grammar</h3>
+            <p id="engSetsSub">Live sets loading...</p>
+          </div>
+        </div>
+        <div class="sc-arrow">➔</div>
+      </div>
+
+      <!-- 5. GK -->
       <div class="subject-card sc-gk" onclick="openSubjectSets('GK')">
         <div class="sc-info">
           <div class="sc-icon">🌍</div>
@@ -771,18 +861,29 @@
     </div>
   </div>
 
-  <!-- SCREEN 2: FULL LEADERBOARD / RANKERS LIST -->
+  <!-- SCREEN 2: FULL LEADERBOARD (SUBJECT TABS) -->
   <div class="app-screen" id="screenLeaderboard" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#d97706;">🏆 Full Rankers Board</span>
+      <span style="font-weight:900; font-size:14px; color:#d97706;">🏆 Rankers Board</span>
     </div>
     
     <div class="leaderboard-box">
       <div class="lb-header">
-        <span>🌟 ऑल रैंकर्स सूची (Live Positions)</span>
+        <span>🌟 रैंकर्स सूची</span>
         <span style="font-size:12px; color:#0284c7; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
       </div>
+
+      <!-- Subject Tabs -->
+      <div class="lb-tabs-bar">
+        <button class="lb-tab-btn active" onclick="switchLeaderboardTab('overall', this)">🏆 Overall</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Math</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Science</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 SST</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 GK</button>
+      </div>
+
       <div id="fullLeaderboardList"></div>
     </div>
   </div>
@@ -817,7 +918,7 @@
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Test</button>
       <span style="font-size:13px; font-weight:900; color:#d97706;" id="activeQuizSetTitle">Set 1</span>
     </div>
-    <div class="quiz-card">
+    <div class="quiz-card" id="activeQuizCard">
       <div class="q-meta">
         <span class="q-counter" id="qCounter">Q 1/5</span>
         <div class="timer-pill" id="qTimerPill">⏱️ <span id="qTimerSecs">60</span>s</div>
@@ -825,7 +926,6 @@
       <div class="q-text" id="qText">Loading question...</div>
       <div class="options-grid" id="optionsContainer"></div>
       
-      <!-- PREVIOUS, NEXT & SUBMIT BUTTONS -->
       <div class="nav-actions">
         <button class="btn-action btn-prev" id="btnPrev" onclick="prevQuestion()" style="display:none;">⬅ Previous</button>
         <button class="btn-action btn-next" id="btnNext" onclick="nextQuestion()">Next ➔</button>
@@ -834,10 +934,10 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: RESULT + DETAILED ANSWER REVIEW -->
+  <!-- SCREEN 5: RESULT -->
   <div class="app-screen" id="resultScreen">
-    <div class="quiz-card" style="text-align:center;">
-      <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:24px;">🎉 परिणाम घोषित!</h3>
+    <div class="quiz-card" id="resultMainCard" style="text-align:center;">
+      <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:24px;" id="resHeadingText">🎉 परिणाम घोषित!</h3>
       <p style="font-size:13px; color:var(--text-muted); margin-top:2px;" id="resSubjTag">Set 1</p>
       
       <div class="score-circle" id="scoreCircleWheel">
@@ -849,21 +949,17 @@
       
       <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
 
-      <!-- DETAILED ANSWER KEY / REVIEW LIST -->
+      <!-- WhatsApp Challenge Share Button -->
+      <a href="#" class="btn-whatsapp-share" id="btnWhatsappShare" target="_blank">
+        <span>📲</span> दोस्तों को चुनौती दें (WhatsApp Share)
+      </a>
+
+      <!-- Answer Review -->
       <div style="width:100%; text-align:left; margin-top:16px;">
-        <div style="font-size:14.5px; font-weight:900; color:var(--text-main); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+        <div style="font-size:14.5px; font-weight:900; color:var(--text-main); margin-bottom:10px;">
           <span>📝 उत्तर समीक्षा (Answer Sheet):</span>
         </div>
         <div id="reviewQuestionsList" style="display:flex; flex-direction:column; gap:10px;"></div>
-      </div>
-      
-      <!-- RESULT SCREEN MINI LEADERBOARD -->
-      <div class="leaderboard-box" style="margin-top:16px;">
-        <div class="lb-header">
-          <span>🏆 Top Rankers Board</span>
-          <span style="font-size:12px; color:#0284c7; cursor:pointer;" onclick="fetchCloudData()">🔄 Sync</span>
-        </div>
-        <div id="resultLeaderboardList"></div>
       </div>
 
       <div style="display:flex; gap:12px; margin-top:16px;">
@@ -878,6 +974,7 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
+  // Built-in Questions for all 5 Subjects
   let quizDatabase = {
     Math: [
       {
@@ -893,11 +990,33 @@
     Science: [
       {
         level: 1,
-        title: "Set 1: General Science",
+        title: "Set 1: Chemical Reactions & Science",
         questions: [
-          { q: "प्रकाश संश्लेषण में कौन सी गैस निकलती है?", options: ["कार्बन डाइऑक्साइड", "नाइट्रोजन", "ऑक्सीजन", "हाइड्रोजन"], ans: 2 },
+          { q: "जंग (Rust) का सही रासायनिक सूत्र क्या है?", options: ["FeO", "Fe2O3 · xH2O", "Fe3O4", "Fe(OH)2"], ans: 1 },
           { q: "alpha, beta और gamma किरणों में सबसे अधिक वेधन क्षमता किसकी है?", options: ["alpha", "beta", "gamma", "सभी की समान"], ans: 2 },
-          { q: "साधारण नमक का रासायनिक सूत्र क्या है?", options: ["HCl", "NaOH", "NaCl", "KCl"], ans: 2 }
+          { q: "बुझे हुए चूने (Slaked Lime) का रासायनिक सूत्र क्या है?", options: ["CaO", "CaCO3", "Ca(OH)2", "CaCl2"], ans: 2 }
+        ]
+      }
+    ],
+    SocialScience: [
+      {
+        level: 1,
+        title: "Set 1: Class 10 SST (इतिहास व भूगोल)",
+        questions: [
+          { q: "जर्मनी के एकीकरण का श्रेय किसे जाता है?", options: ["ऑटो वॉन बिस्मार्क", "गैरीबाल्डी", "नेपोलियन", "मेत्सिनी"], ans: 0 },
+          { q: "भारत में जलियांवाला बाग हत्याकांड किस वर्ष हुआ था?", options: ["1917", "1919", "1921", "1925"], ans: 1 },
+          { q: "काली मृदा किस फसल की खेती के लिए सबसे उपयुक्त मानी जाती है?", options: ["गेहूं", "कपास", "चावल", "गन्ना"], ans: 1 }
+        ]
+      }
+    ],
+    English: [
+      {
+        level: 1,
+        title: "Set 1: English Grammar Basics",
+        questions: [
+          { q: "Identify the correct conjunction: She worked hard _______ she failed.", options: ["and", "but", "so", "because"], ans: 1 },
+          { q: "Choose the correct past participle of 'Write':", options: ["Wrote", "Writing", "Written", "Writes"], ans: 2 },
+          { q: "He is _______ honest man. (Fill in the article)", options: ["a", "an", "the", "no article"], ans: 1 }
         ]
       }
     ],
@@ -913,18 +1032,67 @@
     ]
   };
 
-  let currentSubject = 'Math';
+  let currentSubject = 'Science';
   let currentLevel = 1;
   let currentQIdx = 0;
   let userAnswers = {};
   let qTimerInterval = null;
   let qTimeLeft = 60;
   let latestTargetSubj = 'Science';
+  let cloudLeaderboards = {};
+  let isSoundEnabled = true;
 
   let currentUser = {
     name: '', totalXP: 0, currentRank: '--',
-    unlockedLevels: { Math: 1, Science: 1, GK: 1 }
+    unlockedLevels: { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 }
   };
+
+  /* ============================================================
+     WEB AUDIO API SYNTHESIZER (NO EXTERNAL AUDIO FILES NEEDED)
+  ============================================================ */
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  function playTone(freq, duration, type = 'sine') {
+    if (!isSoundEnabled) return;
+    try {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e){}
+  }
+
+  function playTickSound() {
+    playTone(900, 0.06, 'triangle');
+  }
+
+  function playVictorySound() {
+    if (!isSoundEnabled) return;
+    const notes = [261.63, 329.63, 392.00, 523.25]; // C - E - G - C
+    notes.forEach((freq, idx) => {
+      setTimeout(() => playTone(freq, 0.25, 'triangle'), idx * 120);
+    });
+  }
+
+  function playFailureSound() {
+    if (!isSoundEnabled) return;
+    const notes = [392.00, 349.23, 311.13, 261.63]; // Gentle descending sad melody
+    notes.forEach((freq, idx) => {
+      setTimeout(() => playTone(freq, 0.35, 'sine'), idx * 160);
+    });
+  }
+
+  function toggleSound() {
+    isSoundEnabled = !isSoundEnabled;
+    document.getElementById('soundToggleBtn').innerText = isSoundEnabled ? '🔊' : '🔇';
+  }
 
   /* THEME SYSTEM */
   function initTheme() {
@@ -940,16 +1108,18 @@
 
   function toggleTheme() {
     const isLight = document.body.classList.toggle('light-theme');
-    const newTheme = isLight ? 'light' : 'dark';
-    localStorage.setItem('vimal_arena_theme', newTheme);
+    localStorage.setItem('vimal_arena_theme', isLight ? 'light' : 'dark');
     document.getElementById('themeToggleBtn').innerText = isLight ? '🌙' : '☀️';
   }
 
-  /* GREEK & MATH SYMBOL FORMATTER */
+  /* ============================================================
+     SMART AUTO-SUBSCRIPTING FOR CHEMISTRY & MATH FORMULAS
+  ============================================================ */
   function formatMathFormula(text) {
     if (!text) return '';
     return text
       .toString()
+      // Greek Symbols
       .replace(/\balpha\b/gi, 'α')
       .replace(/\bbeta\b/gi, 'β')
       .replace(/\bgamma\b/gi, 'γ')
@@ -958,14 +1128,17 @@
       .replace(/\blambda\b/gi, 'λ')
       .replace(/\bomega\b/gi, 'Ω')
       .replace(/\bpi\b/gi, 'π')
+      // Roots & Multiply
       .replace(/sqrt\s*/gi, '√')
       .replace(/cbrt\s*/gi, '∛')
       .replace(/\s*\*\s*/g, ' × ')
+      // Math Exponents: e.g. V^2 -> V²
       .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')
-      .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>');
+      // Chemistry Auto-Subscript: Element symbols (Fe, C, O, H, etc.) or ')' followed by number
+      .replace(/([A-Z][a-z]?|\))(\d+)/g, '$1<sub>$2</sub>');
   }
 
-  /* INSTANT 1-CLICK NAME LOGIN */
+  /* INSTANT NAME LOGIN */
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
     if (!entered) {
@@ -985,7 +1158,9 @@
     const saved = localStorage.getItem('vimal_arena_quick_player');
     if (saved) {
       currentUser = JSON.parse(saved);
-      if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, GK: 1 };
+      if (!currentUser.unlockedLevels) {
+        currentUser.unlockedLevels = { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 };
+      }
       document.getElementById('userModal').style.display = 'none';
       updatePlayerUI();
       navigateTo('screenHome');
@@ -1024,12 +1199,15 @@
       const data = await resp.json();
 
       if (data.quizzes) {
-        if (data.quizzes.Math && data.quizzes.Math.length > 0) quizDatabase.Math = data.quizzes.Math;
-        if (data.quizzes.Science && data.quizzes.Science.length > 0) quizDatabase.Science = data.quizzes.Science;
-        if (data.quizzes.GK && data.quizzes.GK.length > 0) quizDatabase.GK = data.quizzes.GK;
-
+        for (let subj in data.quizzes) {
+          if (data.quizzes[subj] && data.quizzes[subj].length > 0) {
+            quizDatabase[subj] = data.quizzes[subj];
+          }
+        }
         document.getElementById('mathSetsSub').innerText = `${quizDatabase.Math.length} Sets Live`;
         document.getElementById('sciSetsSub').innerText = `${quizDatabase.Science.length} Sets Live`;
+        document.getElementById('sstSetsSub').innerText = `${quizDatabase.SocialScience.length} Sets Live`;
+        document.getElementById('engSetsSub').innerText = `${quizDatabase.English.length} Sets Live`;
         document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
       }
 
@@ -1045,8 +1223,10 @@
         document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Competing Live!";
       }
 
-      // Render Leaderboard in both places
-      renderLeaderboardUI(data.leaderboard || []);
+      if (data.leaderboards) {
+        cloudLeaderboards = data.leaderboards;
+        renderLeaderboardList(cloudLeaderboards.overall || []);
+      }
     } catch (e) {
       console.warn("Cloud Sync Note: ", e);
     }
@@ -1056,22 +1236,25 @@
     openSubjectSets(latestTargetSubj || 'Science');
   }
 
-  /* RENDER DETAILED LEADERBOARD WITH MEDALS */
-  function renderLeaderboardUI(rankList) {
-    const fullListEl = document.getElementById('fullLeaderboardList');
-    const resultListEl = document.getElementById('resultLeaderboardList');
+  /* LEADERBOARD TABS SWITCHING */
+  function switchLeaderboardTab(tabKey, btnEl) {
+    document.querySelectorAll('.lb-tab-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    const targetList = cloudLeaderboards[tabKey] || [];
+    renderLeaderboardList(targetList);
+  }
+
+  function renderLeaderboardList(rankList) {
+    const listEl = document.getElementById('fullLeaderboardList');
+    if (!listEl) return;
 
     if (!rankList || rankList.length === 0) {
-      const emptyMsg = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center; padding:12px;">अभी कोई रैंकर्स डेटा नहीं है। पहला टेस्ट देकर #1 बनें!</div>`;
-      if (fullListEl) fullListEl.innerHTML = emptyMsg;
-      if (resultListEl) resultListEl.innerHTML = emptyMsg;
+      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center; padding:12px;">इस विषय में अभी कोई रिकॉर्ड नहीं है। पहला टेस्ट देकर #1 बनें!</div>`;
       return;
     }
 
-    let fullHtml = '';
-    let resultHtml = '';
-
-    rankList.forEach((item, index) => {
+    let html = '';
+    rankList.forEach(item => {
       const isMe = item.name.toLowerCase() === (currentUser.name || '').toLowerCase();
       if (isMe) {
         currentUser.currentRank = item.rank;
@@ -1083,7 +1266,7 @@
       else if (item.rank === 2) medal = `<span class="medal-icon">🥈</span>`;
       else if (item.rank === 3) medal = `<span class="medal-icon">🥉</span>`;
 
-      const rowHtml = `
+      html += `
         <div class="lb-item ${isMe ? 'is-me' : ''}">
           <div style="display:flex; align-items:center;">
             ${medal}
@@ -1092,20 +1275,19 @@
           <div style="color:#0284c7; font-weight:900;">${item.totalXP} XP</div>
         </div>
       `;
-
-      fullHtml += rowHtml;
-      if (index < 5 || isMe) {
-        resultHtml += rowHtml; // Result screen shows Top 5 + current user
-      }
     });
-
-    if (fullListEl) fullListEl.innerHTML = fullHtml;
-    if (resultListEl) resultListEl.innerHTML = resultHtml;
+    listEl.innerHTML = html;
   }
 
   function openSubjectSets(subj) {
     currentSubject = subj;
-    const titles = { Math: '📐 Mathematics Sets', Science: '🔬 General Science Sets', GK: '🌍 सामान्य ज्ञान (GK) Sets' };
+    const titles = {
+      Math: '📐 Mathematics Sets',
+      Science: '🔬 General Science Sets',
+      SocialScience: '📜 Class 10 Social Science Sets',
+      English: '✍️ English Grammar Sets',
+      GK: '🌍 सामान्य ज्ञान (GK) Sets'
+    };
     document.getElementById('selectedSubjHeading').innerText = titles[subj] || 'Sets';
     renderSetsList();
     navigateTo('screenSets');
@@ -1177,7 +1359,10 @@
         <span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span>
         <span>${formatMathFormula(opt)}</span>
       `;
-      btn.onclick = () => { userAnswers[idx] = oIdx; loadQuestion(idx); };
+      btn.onclick = () => {
+        userAnswers[idx] = oIdx;
+        loadQuestion(idx);
+      };
       container.appendChild(btn);
     });
 
@@ -1198,6 +1383,7 @@
     if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
   }
 
+  /* 60s TIMER WITH AUDIO & AUTO-NEXT LOGIC */
   function startTimer() {
     qTimeLeft = 60;
     const timerSecsEl = document.getElementById('qTimerSecs');
@@ -1208,12 +1394,22 @@
     qTimerInterval = setInterval(() => {
       qTimeLeft--;
       timerSecsEl.innerText = qTimeLeft;
-      if (qTimeLeft <= 15) timerPillEl.classList.add('urgent');
+      
+      // Last 10s: Beep + Glowing Urgency Beat
+      if (qTimeLeft <= 10 && qTimeLeft > 0) {
+        timerPillEl.classList.add('urgent');
+        playTickSound();
+      }
+
+      // Timer Over: Auto-Next Question or Submit
       if (qTimeLeft <= 0) {
         clearInterval(qTimerInterval);
         const questions = getCurrentQuestions();
-        if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
-        else submitQuiz();
+        if (currentQIdx < questions.length - 1) {
+          loadQuestion(currentQIdx + 1);
+        } else {
+          submitQuiz();
+        }
       }
     }, 1000);
   }
@@ -1224,6 +1420,9 @@
     }
   }
 
+  /* ============================================================
+     SUBMIT QUIZ: GAMIFIED AUDIO, CONFETTI & ENCOURAGING FAILURE
+  ============================================================ */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const questions = getCurrentQuestions();
@@ -1257,22 +1456,40 @@
 
     const banner = document.getElementById('unlockResultBanner');
     const nextBtn = document.getElementById('btnNextLevelAction');
+    const resultCard = document.getElementById('resultMainCard');
 
     if (passed) {
+      resultCard.classList.remove('failure-glow-shake');
+      document.getElementById('resHeadingText').innerText = "🎉 शानदार! परिणाम घोषित!";
       banner.className = "unlock-banner unlock-success";
       banner.innerHTML = newLevelUnlocked 
-        ? `🎉 शानदार! Score: ${percent.toFixed(0)}%. अगला सेट ${currentLevel + 1} हमेशा के लिए UNLOCK हो गया! 🔓`
+        ? `🎉 शानदार प्रदर्शन! Score: ${percent.toFixed(0)}%. अगला सेट ${currentLevel + 1} UNLOCK हो गया! 🔓`
         : `✅ उत्तीर्ण! Score: ${percent.toFixed(0)}%. Set Mastered!`;
       nextBtn.innerText = `Next Set ➔`;
+
+      // 👏 Audio + 🎊 Confetti Burst
+      playVictorySound();
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
+      }
     } else {
+      // ⚠️ Gentle Failure Tone + Soft Red Glow & Shake
+      document.getElementById('resHeadingText').innerText = "🎯 परिणाम घोषित!";
       banner.className = "unlock-banner unlock-failed";
-      banner.innerHTML = `⚠️ Score: ${percent.toFixed(0)}%. अगला सेट खोलने के लिए कम से कम 50% चाहिए! 🔒`;
-      nextBtn.innerText = `Retry Set 🔄`;
+      banner.innerHTML = `🌟 कोई बात नहीं! आप मंज़िल के बहुत करीब थे 🎯<br><span style="font-size:12px; opacity:0.9;">अगला सेट खोलने के लिए 50% चाहिए (आपका स्कोर: ${percent.toFixed(0)}%)।</span>`;
+      nextBtn.innerText = `🔄 तुरंत दोबारा खेलें (Retry Set)`;
+
+      resultCard.classList.add('failure-glow-shake');
+      playFailureSound();
     }
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    // Render Answer Sheet
+    // WhatsApp Challenge Link Setup
+    const shareText = `मैंने विमल सर के Exam Arena में ${currentSubject} (Set ${currentLevel}) में ${percent.toFixed(0)}% स्कोर किया! क्या तुम मुझे हरा सकते हो? अभी टेस्ट दो 👉 ${window.location.href}`;
+    document.getElementById('btnWhatsappShare').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+
+    // Render Answer Key
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
@@ -1307,7 +1524,7 @@
       });
     }
 
-    // Submit score & recalculate live rank from Sheet
+    // Submit to Sheet
     fetch(SCRIPT_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1331,9 +1548,7 @@
     if ((score / questions.length) * 100 >= 50) {
       const nextLvl = currentLevel + 1;
       const sets = quizDatabase[currentSubject] || [];
-      if (nextLvl <= sets.length) {
-        currentLevel = nextLvl;
-      }
+      if (nextLvl <= sets.length) currentLevel = nextLvl;
     }
     startQuizSet(currentLevel);
   }
