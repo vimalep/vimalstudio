@@ -395,17 +395,25 @@
     }
     .subject-card:active { transform: scale(0.96); }
     
+    /* 5TH CARD: FULL-WIDTH ROW WITH ICON ON LEFT & TEXT ON RIGHT */
     .subject-card.full-width {
       grid-column: 1 / -1;
-      flex-direction: row;
+      flex-direction: row !important;
       justify-content: space-between;
+      align-items: center;
       padding: 12px 18px;
       min-height: auto;
     }
     .subject-card.full-width .sc-info {
-      flex-direction: row;
-      text-align: left;
-      gap: 12px;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      text-align: left !important;
+      gap: 14px;
+    }
+    .subject-card.full-width .sc-icon {
+      margin-bottom: 0 !important;
+      flex-shrink: 0;
     }
 
     .sc-math { background: var(--grad-math); }
@@ -427,7 +435,6 @@
       font-size: 24px;
       margin-bottom: 6px;
     }
-    .subject-card.full-width .sc-icon { margin-bottom: 0; }
 
     .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 15.5px; font-weight: 700; color: #ffffff; line-height: 1.2; }
     .sc-text p { font-size: 11px; color: rgba(255,255,255,0.95); font-weight: 600; margin-top: 2px; }
@@ -830,21 +837,21 @@
         </div>
       </div>
 
-      <!-- 4. Grammar -->
+      <!-- 4. English Grammar -->
       <div class="subject-card sc-eng" onclick="openSubjectSets('English')">
         <div class="sc-icon">✍️</div>
         <div class="sc-text">
-          <h3>Grammar</h3>
+          <h3>English Grammar</h3>
           <p id="engSetsSub">Live sets loading...</p>
         </div>
       </div>
 
-      <!-- 5. GK (Full-Width Bottom Tile) -->
+      <!-- 5. सामान्य ज्ञान (GK) (Full-Width Bottom Tile with Icon on Left & Text on Right) -->
       <div class="subject-card sc-gk full-width" onclick="openSubjectSets('GK')">
         <div class="sc-info">
           <div class="sc-icon">🌍</div>
           <div class="sc-text">
-            <h3>GK</h3>
+            <h3>सामान्य ज्ञान (GK)</h3>
             <p id="gkSetsSub">Live sets loading...</p>
           </div>
         </div>
@@ -885,8 +892,8 @@
         <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Maths</button>
         <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Class X Science</button>
         <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 Class X SST</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ Grammar</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 GK</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English Grammar</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 सामान्य ज्ञान (GK)</button>
       </div>
 
       <div id="fullLeaderboardList"></div>
@@ -979,7 +986,6 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  // Built-in Banks with Renamed Subjects
   let quizDatabase = {
     Math: [
       {
@@ -1282,8 +1288,8 @@
       Math: '📐 Maths Sets',
       Science: '🔬 Class X Science Sets',
       SocialScience: '📜 Class X SST Sets',
-      English: '✍️ Grammar Sets',
-      GK: '🌍 GK Sets'
+      English: '✍️ English Grammar Sets',
+      GK: '🌍 सामान्य ज्ञान (GK) Sets'
     };
     document.getElementById('selectedSubjHeading').innerText = titles[subj] || 'Sets';
     renderSetsList();
