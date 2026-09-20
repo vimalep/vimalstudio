@@ -3,44 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Arena by Vimal Sir - Kids Gamified Edition</title>
+  <title>Exam Arena by Vimal Sir - Ultimate Edition</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
+    /* ============================================================
+       THEME COLOR VARIABLES (DARK & LIGHT PALETTES)
+    ============================================================ */
     :root {
-      /* Playful & Vibrant Kids Gamified Palette */
-      --bg-gradient: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #1e1b4b 100%);
-      --card-bg: rgba(30, 27, 75, 0.85);
-      --card-border: rgba(167, 139, 250, 0.35);
+      /* Dark / Kids Gaming Palette (Default) */
+      --bg-body: #181438;
+      --bg-radial-1: rgba(99, 102, 241, 0.35);
+      --bg-radial-2: rgba(236, 72, 153, 0.3);
+      --bg-radial-3: rgba(16, 185, 129, 0.2);
+      --bg-radial-4: rgba(245, 158, 11, 0.25);
       --text-main: #ffffff;
       --text-muted: #cbd5e1;
-      
-      /* Subject 3D Gradients */
+      --card-bg: rgba(30, 27, 75, 0.9);
+      --card-border: rgba(167, 139, 250, 0.35);
+      --header-bg: linear-gradient(135deg, rgba(67, 56, 202, 0.9), rgba(126, 34, 206, 0.9));
+      --header-border: rgba(216, 180, 254, 0.4);
+      --ticker-bg: linear-gradient(90deg, #1e1b4b, #312e81, #1e1b4b);
+      --profile-bg: linear-gradient(135deg, rgba(49, 46, 129, 0.92), rgba(30, 27, 75, 0.95));
+      --quiz-card-bg: linear-gradient(145deg, #1e1b4b, #2d236b);
+      --quiz-card-border: #818cf8;
+      --opt-btn-bg: rgba(30, 27, 75, 0.85);
+      --opt-btn-border: rgba(255, 255, 255, 0.18);
+      --opt-btn-text: #ffffff;
+      --modal-bg: linear-gradient(145deg, #1e1b4b, #2e266f);
+      --modal-border: #a855f7;
+      --input-bg: rgba(49, 46, 129, 0.9);
+      --input-border: #6366f1;
+      --input-text: #ffffff;
+      --lb-box-bg: linear-gradient(135deg, #1e1b4b, #2d236b);
+      --lb-item-bg: rgba(49, 46, 129, 0.85);
+      --lb-item-text: #ffffff;
+      --set-card-bg: linear-gradient(135deg, rgba(49, 46, 129, 0.85), rgba(30, 27, 75, 0.95));
+      --set-card-border: rgba(165, 180, 252, 0.35);
+      --screen-bar-bg: linear-gradient(135deg, #312e81, #1e1b4b);
+      --score-inner-bg: #1e1b4b;
+
+      /* Subject 3D Gradients & Kahoot Option Colors */
       --grad-math: linear-gradient(135deg, #2563eb, #0284c7, #06b6d4);
       --grad-sci: linear-gradient(135deg, #059669, #10b981, #84cc16);
       --grad-gk: linear-gradient(135deg, #ea580c, #f43f5e, #fbbf24);
       --grad-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
       --grad-btn: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
 
-      /* Kahoot-Style Option Colors */
       --opt-a: #0284c7;
       --opt-b: #059669;
       --opt-c: #d97706;
       --opt-d: #db2777;
     }
 
+    /* Light Theme Palette */
+    body.light-theme {
+      --bg-body: #f8fafc;
+      --bg-radial-1: rgba(99, 102, 241, 0.12);
+      --bg-radial-2: rgba(236, 72, 153, 0.1);
+      --bg-radial-3: rgba(16, 185, 129, 0.1);
+      --bg-radial-4: rgba(245, 158, 11, 0.12);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --card-border: #cbd5e1;
+      --header-bg: linear-gradient(135deg, #e0e7ff, #f3e8ff);
+      --header-border: #c7d2fe;
+      --ticker-bg: linear-gradient(90deg, #e0e7ff, #ede9fe, #e0e7ff);
+      --profile-bg: #ffffff;
+      --quiz-card-bg: #ffffff;
+      --quiz-card-border: #c7d2fe;
+      --opt-btn-bg: #f8fafc;
+      --opt-btn-border: #cbd5e1;
+      --opt-btn-text: #0f172a;
+      --modal-bg: #ffffff;
+      --modal-border: #c084fc;
+      --input-bg: #f1f5f9;
+      --input-border: #94a3b8;
+      --input-text: #0f172a;
+      --lb-box-bg: #ffffff;
+      --lb-item-bg: #f1f5f9;
+      --lb-item-text: #0f172a;
+      --set-card-bg: #ffffff;
+      --set-card-border: #cbd5e1;
+      --screen-bar-bg: #ffffff;
+      --score-inner-bg: #ffffff;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', sans-serif; }
 
     body {
-      background: #181438;
+      background: var(--bg-body);
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.35) 0%, transparent 35%),
-        radial-gradient(circle at 85% 85%, rgba(236, 72, 153, 0.3) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.2) 0%, transparent 55%),
-        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.25) 0%, transparent 35%);
+        radial-gradient(circle at 15% 15%, var(--bg-radial-1) 0%, transparent 35%),
+        radial-gradient(circle at 85% 85%, var(--bg-radial-2) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, var(--bg-radial-3) 0%, transparent 55%),
+        radial-gradient(circle at 80% 20%, var(--bg-radial-4) 0%, transparent 35%);
       background-attachment: fixed;
       color: var(--text-main);
       padding: 12px 10px 45px 10px;
@@ -48,6 +109,7 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .arena-container {
@@ -58,34 +120,45 @@
       gap: 13px;
     }
 
-    /* 3D PLAYFUL HEADER */
+    /* HEADER & THEME TOGGLE */
     .arena-header {
       text-align: center;
       padding: 16px 14px;
-      background: linear-gradient(135deg, rgba(67, 56, 202, 0.85), rgba(126, 34, 206, 0.85));
+      background: var(--header-bg);
       backdrop-filter: blur(14px);
-      border: 2px solid rgba(216, 180, 254, 0.4);
+      border: 2px solid var(--header-border);
       border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.2);
       position: relative;
-      overflow: hidden;
     }
-    .arena-header::before {
-      content: '';
+    .theme-toggle-btn {
       position: absolute;
-      top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
-      pointer-events: none;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.25);
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(4px);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+    .theme-toggle-btn:active { transform: scale(0.9); }
+
     .arena-title {
       font-family: 'Fredoka', cursive, sans-serif;
       font-size: 27px;
       font-weight: 800;
       letter-spacing: 1.2px;
-      background: linear-gradient(135deg, #fef08a, #f472b6, #38bdf8);
+      background: linear-gradient(135deg, #f59e0b, #ec4899, #38bdf8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 2px 12px rgba(244, 114, 182, 0.35);
       text-transform: uppercase;
     }
     .vimal-badge {
@@ -98,11 +171,11 @@
       padding: 3px 14px;
       border-radius: 20px;
       margin-top: 4px;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.45);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
       letter-spacing: 0.5px;
     }
 
-    /* COLORFUL FLASH ALERT CARD */
+    /* FLASH ALERT CARD */
     .flash-alert-card {
       background: linear-gradient(135deg, #ef4444, #f97316, #f59e0b);
       border: 2px solid #fef08a;
@@ -112,7 +185,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.45);
+      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
       animation: bounceCard 2.4s infinite ease-in-out;
     }
     @keyframes bounceCard {
@@ -138,7 +211,7 @@
       font-weight: 800;
       color: #ffffff;
       line-height: 1.35;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
     .flash-btn {
       background: #ffffff;
@@ -150,21 +223,21 @@
       font-weight: 900;
       cursor: pointer;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* LIVE RUNNING TICKER */
+    /* LIVE TICKER */
     .live-ticker-wrap {
       width: 100%;
-      background: linear-gradient(90deg, #1e1b4b, #312e81, #1e1b4b);
-      border: 1.5px solid #6366f1;
+      background: var(--ticker-bg);
+      border: 1.5px solid rgba(99, 102, 241, 0.5);
       border-radius: 14px;
       padding: 8px 12px;
       display: flex;
       align-items: center;
       gap: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
     .ticker-pill {
       background: #10b981;
@@ -175,29 +248,30 @@
       border-radius: 8px;
       flex-shrink: 0;
       animation: pulse 1.4s infinite;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
     }
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.96); } }
     .ticker-content {
       white-space: nowrap;
       font-size: 12px;
       font-weight: 700;
-      color: #38bdf8;
+      color: #0284c7;
       display: inline-block;
       animation: scrollText 18s linear infinite;
     }
+    body:not(.light-theme) .ticker-content { color: #38bdf8; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* GAMIFIED PLAYER PROFILE BAR */
+    /* PLAYER PROFILE BAR */
     .player-profile-card {
-      background: linear-gradient(135deg, rgba(49, 46, 129, 0.9), rgba(30, 27, 75, 0.95));
-      border: 2px solid rgba(192, 132, 252, 0.4);
+      background: var(--profile-bg);
+      border: 2px solid var(--card-border);
       border-radius: 18px;
       padding: 12px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
     .profile-info { display: flex; align-items: center; gap: 12px; }
     .avatar-circle {
@@ -212,15 +286,15 @@
       font-size: 22px;
       font-weight: 900;
       color: #1e1b4b;
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.5);
     }
     .user-tag { display: flex; flex-direction: column; }
-    .u-name { font-size: 15px; font-weight: 900; color: #ffffff; }
+    .u-name { font-size: 15px; font-weight: 900; color: var(--text-main); }
     .user-rank-badge {
-      color: #fef08a;
+      color: #b45309;
       font-size: 11.5px;
       font-weight: 800;
-      background: rgba(245, 158, 11, 0.25);
+      background: rgba(245, 158, 11, 0.2);
       border: 1px solid #f59e0b;
       padding: 1px 7px;
       border-radius: 6px;
@@ -228,21 +302,24 @@
       width: fit-content;
       margin-top: 2px;
     }
+    body:not(.light-theme) .user-rank-badge { color: #fef08a; }
+
     .stat-badge {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.25));
-      border: 1.5px solid #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1.5px solid #0284c7;
       padding: 6px 14px;
       border-radius: 14px;
       text-align: right;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
     }
-    .stat-badge .xp-num { font-size: 17px; font-weight: 900; color: #38bdf8; line-height: 1; }
-    .stat-badge .xp-lbl { font-size: 10px; color: #cbd5e1; font-weight: 700; margin-top: 2px; }
+    .stat-badge .xp-num { font-size: 17px; font-weight: 900; color: #0284c7; line-height: 1; }
+    body:not(.light-theme) .stat-badge .xp-num { color: #38bdf8; }
+    .stat-badge .xp-lbl { font-size: 10px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
+    
     .btn-logout {
-      background: rgba(239, 68, 68, 0.25);
-      border: 1.5px solid #f87171;
-      color: #fca5a5;
-      padding: 9px 11px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1.5px solid #ef4444;
+      color: #ef4444;
+      padding: 9px 12px;
       border-radius: 12px;
       font-size: 13px;
       font-weight: 900;
@@ -260,15 +337,16 @@
       overflow: hidden;
       margin: 6px 0;
       border-radius: 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px dashed rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.03);
+      border: 1px dashed var(--card-border);
     }
 
     /* SCREENS */
     .app-screen { display: flex; flex-direction: column; gap: 13px; width: 100%; }
-    .section-title { font-size: 15px; font-weight: 800; color: #fde047; display: flex; align-items: center; gap: 8px; }
+    .section-title { font-size: 15px; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 8px; }
+    body:not(.light-theme) .section-title { color: #fde047; }
 
-    /* 3 COLORFUL 3D SUBJECT CARDS (FOR KIDS) */
+    /* 3 SUBJECT CARDS */
     .subject-cards-grid { display: flex; flex-direction: column; gap: 13px; }
     .subject-card {
       border-radius: 20px;
@@ -277,14 +355,14 @@
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      border: 2px solid rgba(255,255,255,0.4);
       transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     .subject-card:active { transform: scale(0.97); }
-    .sc-math { background: var(--grad-math); box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45); }
-    .sc-sci { background: var(--grad-sci); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45); }
-    .sc-gk { background: var(--grad-gk); box-shadow: 0 10px 25px rgba(244, 63, 94, 0.45); }
+    .sc-math { background: var(--grad-math); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); }
+    .sc-sci { background: var(--grad-sci); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); }
+    .sc-gk { background: var(--grad-gk); box-shadow: 0 8px 20px rgba(244, 63, 94, 0.35); }
 
     .sc-info { display: flex; align-items: center; gap: 15px; }
     .sc-icon {
@@ -312,7 +390,6 @@
       font-size: 18px;
       font-weight: 900;
       color: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
     /* SCREEN 2: SETS */
@@ -320,11 +397,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(135deg, #312e81, #1e1b4b);
-      border: 1.5px solid #6366f1;
+      background: var(--screen-bar-bg);
+      border: 1.5px solid var(--card-border);
       border-radius: 16px;
       padding: 10px 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
     .btn-back {
       background: #4338ca;
@@ -338,40 +415,41 @@
     }
     .sets-list-container { display: flex; flex-direction: column; gap: 11px; }
     .set-row-card {
-      background: linear-gradient(135deg, rgba(49, 46, 129, 0.85), rgba(30, 27, 75, 0.95));
-      border: 2px solid rgba(165, 180, 252, 0.35);
+      background: var(--set-card-bg);
+      border: 2px solid var(--set-card-border);
       border-radius: 18px;
       padding: 15px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
     }
-    .set-row-card.locked { opacity: 0.5; cursor: not-allowed; border-color: rgba(148, 163, 184, 0.25); }
+    .set-row-card.locked { opacity: 0.55; cursor: not-allowed; }
     .set-action-pill { font-size: 12.5px; font-weight: 900; padding: 7px 16px; border-radius: 20px; }
     .set-row-card:not(.locked) .set-action-pill {
       background: linear-gradient(135deg, #06b6d4, #3b82f6);
       color: #fff;
       box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
     }
-    .set-row-card.locked .set-action-pill { background: #334155; color: #94a3b8; }
+    .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
-    /* SCREEN 3: QUIZ ARENA (VIBRANT GAMIFIED) */
+    /* SCREEN 3: QUIZ ARENA (60s TIMER) */
     .quiz-card {
-      background: linear-gradient(145deg, #1e1b4b, #2d236b);
-      border: 2px solid #818cf8;
+      background: var(--quiz-card-bg);
+      border: 2px solid var(--quiz-card-border);
       border-radius: 24px;
       padding: 20px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.2);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
     }
     .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .q-counter {
-      font-size: 13px; font-weight: 900; color: #38bdf8;
-      background: rgba(56, 189, 248, 0.18); border: 1px solid #38bdf8;
+      font-size: 13px; font-weight: 900; color: #0284c7;
+      background: rgba(56, 189, 248, 0.18); border: 1px solid #0284c7;
       padding: 5px 14px; border-radius: 14px;
     }
-    /* 60 SECONDS TIMER PILL */
+    body:not(.light-theme) .q-counter { color: #38bdf8; border-color: #38bdf8; }
+
     .timer-pill {
       background: linear-gradient(135deg, #f59e0b, #d97706);
       border: 2px solid #fef08a;
@@ -380,12 +458,11 @@
       font-weight: 900;
       padding: 5px 16px;
       border-radius: 25px;
-      box-shadow: 0 0 14px rgba(245, 158, 11, 0.5);
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
     }
     .timer-pill.urgent {
       background: linear-gradient(135deg, #ef4444, #dc2626);
       border-color: #fca5a5;
-      box-shadow: 0 0 18px rgba(239, 68, 68, 0.8);
       animation: pulse 0.7s infinite;
     }
     .q-text {
@@ -393,17 +470,16 @@
       font-weight: 800;
       line-height: 1.55;
       margin-bottom: 20px;
-      color: #ffffff;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      color: var(--text-main);
     }
 
-    /* 4-COLOR OPTION BUTTONS (KAHOOT / QUIZIZZ STYLE) */
+    /* 4-COLOR OPTION BUTTONS */
     .options-grid { display: flex; flex-direction: column; gap: 12px; }
     .option-btn {
       width: 100%;
-      background: rgba(30, 27, 75, 0.85);
-      border: 2px solid rgba(255,255,255,0.18);
-      color: #ffffff;
+      background: var(--opt-btn-bg);
+      border: 2px solid var(--opt-btn-border);
+      color: var(--opt-btn-text);
       padding: 14px 16px;
       border-radius: 16px;
       font-size: 14.5px;
@@ -413,7 +489,7 @@
       display: flex;
       align-items: center;
       transition: all 0.15s ease;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     }
     .opt-letter-badge {
       width: 32px;
@@ -428,23 +504,21 @@
       margin-right: 12px;
       flex-shrink: 0;
     }
-    /* Individual Option Colors */
-    .option-btn:nth-child(1) .opt-letter-badge { background: var(--opt-a); box-shadow: 0 2px 8px rgba(2, 132, 199, 0.5); }
-    .option-btn:nth-child(2) .opt-letter-badge { background: var(--opt-b); box-shadow: 0 2px 8px rgba(5, 150, 105, 0.5); }
-    .option-btn:nth-child(3) .opt-letter-badge { background: var(--opt-c); box-shadow: 0 2px 8px rgba(217, 119, 6, 0.5); }
-    .option-btn:nth-child(4) .opt-letter-badge { background: var(--opt-d); box-shadow: 0 2px 8px rgba(219, 39, 119, 0.5); }
+    .option-btn:nth-child(1) .opt-letter-badge { background: var(--opt-a); }
+    .option-btn:nth-child(2) .opt-letter-badge { background: var(--opt-b); }
+    .option-btn:nth-child(3) .opt-letter-badge { background: var(--opt-c); }
+    .option-btn:nth-child(4) .opt-letter-badge { background: var(--opt-d); }
 
-    .option-btn:hover { border-color: rgba(255,255,255,0.4); transform: translateY(-1px); }
+    .option-btn:hover { border-color: rgba(99, 102, 241, 0.4); transform: translateY(-1px); }
     
-    /* Selected Option Highlights */
     .option-btn.selected {
-      border-color: #fef08a !important;
-      box-shadow: 0 0 20px rgba(254, 240, 138, 0.6) !important;
+      border-color: #f59e0b !important;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.5) !important;
     }
-    .option-btn:nth-child(1).selected { background: linear-gradient(135deg, #0369a1, #0284c7); }
-    .option-btn:nth-child(2).selected { background: linear-gradient(135deg, #047857, #059669); }
-    .option-btn:nth-child(3).selected { background: linear-gradient(135deg, #b45309, #d97706); }
-    .option-btn:nth-child(4).selected { background: linear-gradient(135deg, #be185d, #db2777); }
+    .option-btn:nth-child(1).selected { background: linear-gradient(135deg, #0369a1, #0284c7); color: #fff; }
+    .option-btn:nth-child(2).selected { background: linear-gradient(135deg, #047857, #059669); color: #fff; }
+    .option-btn:nth-child(3).selected { background: linear-gradient(135deg, #b45309, #d97706); color: #fff; }
+    .option-btn:nth-child(4).selected { background: linear-gradient(135deg, #be185d, #db2777); color: #fff; }
 
     sup { font-size: 0.78em; vertical-align: super; line-height: 0; }
     sub { font-size: 0.78em; vertical-align: sub; line-height: 0; }
@@ -453,79 +527,82 @@
     .btn-action {
       flex: 1; padding: 15px; border-radius: 16px; font-size: 15px; font-weight: 900;
       cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
-    .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5); }
-    .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5); }
+    .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+    .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
     /* RESULT SCREEN */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 15px; }
     .score-circle {
       width: 130px; height: 130px; border-radius: 50%;
-      background: conic-gradient(#10b981 var(--score-angle, 0deg), #312e81 0deg);
+      background: conic-gradient(#10b981 var(--score-angle, 0deg), #e2e8f0 0deg);
       display: flex; align-items: center; justify-content: center; margin: 10px auto;
-      box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
     }
+    body:not(.light-theme) .score-circle { background: conic-gradient(#10b981 var(--score-angle, 0deg), #312e81 0deg); }
     .score-inner {
-      width: 104px; height: 104px; border-radius: 50%; background: #1e1b4b;
+      width: 104px; height: 104px; border-radius: 50%; background: var(--score-inner-bg);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .score-num { font-family: 'Fredoka', sans-serif; font-size: 34px; font-weight: 800; color: #fff; }
+    .score-num { font-family: 'Fredoka', sans-serif; font-size: 34px; font-weight: 800; color: var(--text-main); }
     .unlock-banner { width: 100%; padding: 14px 18px; border-radius: 16px; font-size: 14px; font-weight: 900; }
-    .unlock-success { background: rgba(16, 185, 129, 0.25); border: 2px solid #10b981; color: #34d399; box-shadow: 0 0 18px rgba(16, 185, 129, 0.3); }
-    .unlock-failed { background: rgba(239, 68, 68, 0.25); border: 2px solid #ef4444; color: #fca5a5; }
+    .unlock-success { background: rgba(16, 185, 129, 0.2); border: 2px solid #10b981; color: #059669; }
+    body:not(.light-theme) .unlock-success { color: #34d399; }
+    .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #dc2626; }
+    body:not(.light-theme) .unlock-failed { color: #fca5a5; }
 
     /* LEADERBOARD BOX */
     .leaderboard-box {
-      width: 100%; background: linear-gradient(135deg, #1e1b4b, #2d236b);
-      border: 2px solid #818cf8; border-radius: 20px; padding: 16px; text-align: left;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      width: 100%; background: var(--lb-box-bg);
+      border: 2px solid var(--card-border); border-radius: 20px; padding: 16px; text-align: left;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
-    .lb-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 900; color: #fde047; margin-bottom: 12px; }
+    .lb-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 900; color: #d97706; margin-bottom: 12px; }
+    body:not(.light-theme) .lb-header { color: #fde047; }
     .lb-item {
       display: flex; justify-content: space-between; padding: 10px 14px; border-radius: 12px;
-      font-size: 13.5px; font-weight: 800; margin-bottom: 6px; background: rgba(49, 46, 129, 0.85);
-      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 13.5px; font-weight: 800; margin-bottom: 6px; background: var(--lb-item-bg);
+      color: var(--lb-item-text);
+      border: 1px solid var(--card-border);
     }
 
-    /* COLORFUL LOGIN / REGISTER MODAL */
+    /* MODAL */
     #userModal {
-      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.94); backdrop-filter: blur(8px);
+      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.9); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
     }
     .modal-box {
-      background: linear-gradient(145deg, #1e1b4b, #2e266f);
-      border: 2px solid #a855f7; padding: 24px 20px;
+      background: var(--modal-bg);
+      border: 2px solid var(--modal-border); padding: 24px 20px;
       border-radius: 24px; width: 100%; max-width: 410px; text-align: center;
-      box-shadow: 0 15px 50px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.4);
     }
-    .auth-tab-bar { display: flex; gap: 8px; margin-bottom: 18px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 14px; }
+    .auth-tab-bar { display: flex; gap: 8px; margin-bottom: 18px; background: rgba(0,0,0,0.1); padding: 5px; border-radius: 14px; }
     .auth-tab-btn {
       flex: 1; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 900;
-      cursor: pointer; border: none; background: transparent; color: #cbd5e1;
+      cursor: pointer; border: none; background: transparent; color: var(--text-muted);
     }
     .auth-tab-btn.active {
       background: linear-gradient(135deg, #06b6d4, #3b82f6);
       color: #fff;
-      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
     }
     
     .form-input {
-      width: 100%; background: rgba(49, 46, 129, 0.9); border: 2px solid #6366f1; padding: 13px 15px;
-      border-radius: 14px; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none;
+      width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 13px 15px;
+      border-radius: 14px; color: var(--input-text); font-size: 14px; margin-bottom: 12px; outline: none;
     }
-    .form-input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.5); }
     .form-btn-main {
       width: 100%; background: var(--grad-btn); border: none; padding: 14px;
       border-radius: 14px; color: #fff; font-weight: 900; font-size: 15px; cursor: pointer;
-      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
     }
-    .form-note { font-size: 11.5px; color: #fde047; margin-top: -6px; margin-bottom: 12px; text-align: left; padding-left: 4px; font-weight: 700; }
-    .err-msg { color: #fca5a5; font-size: 12.5px; font-weight: 800; margin-top: 10px; display: none; }
-    .succ-msg { color: #34d399; font-size: 13px; font-weight: 900; margin-top: 10px; display: none; }
+    .form-note { font-size: 11.5px; color: #d97706; margin-top: -6px; margin-bottom: 12px; text-align: left; padding-left: 4px; font-weight: 700; }
+    body:not(.light-theme) .form-note { color: #fde047; }
+    .err-msg { color: #ef4444; font-size: 12.5px; font-weight: 800; margin-top: 10px; display: none; }
+    .succ-msg { color: #10b981; font-size: 13px; font-weight: 900; margin-top: 10px; display: none; }
 
     #recoveryModal {
-      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.94); backdrop-filter: blur(8px);
+      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.9); backdrop-filter: blur(8px);
       display: none; align-items: center; justify-content: center; padding: 16px; z-index: 10000;
     }
   </style>
@@ -535,8 +612,8 @@
 <!-- 1. LOGIN & REGISTER MODAL -->
 <div id="userModal">
   <div class="modal-box">
-    <div style="font-family:'Fredoka',sans-serif; font-size:23px; font-weight:800; color:#fde047; margin-bottom:4px;">⚡ EXAM ARENA PORTAL</div>
-    <div style="font-size:12px; color:#c084fc; font-weight:700; margin-bottom:16px;">Gamified Challenge by Vimal Sir ⭐</div>
+    <div style="font-family:'Fredoka',sans-serif; font-size:23px; font-weight:800; color:#f59e0b; margin-bottom:4px;">⚡ EXAM ARENA PORTAL</div>
+    <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">Gamified Challenge by Vimal Sir ⭐</div>
 
     <div class="auth-tab-bar">
       <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">लॉगिन (Login)</button>
@@ -550,7 +627,7 @@
       <input type="password" maxlength="4" class="form-input" id="loginPin" placeholder="4-Digit Security PIN (उदा. 1234)">
       <button class="form-btn-main" id="btnLoginAct" onclick="submitLogin()">लॉगिन करें ➔</button>
       <div style="margin-top:15px; font-size:12.5px;">
-        <span style="color:#fde047; cursor:pointer; font-weight:800;" onclick="openRecoveryModal()">🔑 PIN या Username भूल गए?</span>
+        <span style="color:#d97706; cursor:pointer; font-weight:800;" onclick="openRecoveryModal()">🔑 PIN या Username भूल गए?</span>
       </div>
     </div>
 
@@ -573,8 +650,8 @@
 <!-- 2. FORGOT PIN / RECOVERY MODAL -->
 <div id="recoveryModal">
   <div class="modal-box">
-    <div style="font-family:'Fredoka',sans-serif; font-size:20px; font-weight:800; color:#fbbf24; margin-bottom:6px;">🔑 PIN व Username रिकवरी</div>
-    <p style="font-size:12.5px; color:#cbd5e1; margin-bottom:14px;">अकाउंट बनाते समय भरा गया विवरण दर्ज करें:</p>
+    <div style="font-family:'Fredoka',sans-serif; font-size:20px; font-weight:800; color:#f59e0b; margin-bottom:6px;">🔑 PIN व Username रिकवरी</div>
+    <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">अकाउंट बनाते समय भरा गया विवरण दर्ज करें:</p>
     
     <input type="text" class="form-input" id="recSName" placeholder="विद्यार्थी का नाम">
     <input type="text" class="form-input" id="recFName" placeholder="पिता का नाम">
@@ -585,15 +662,15 @@
     <div class="succ-msg" id="recSuccessBox"></div>
     <div class="err-msg" id="recErrorBox"></div>
 
-    <div style="margin-top:16px; border-top:1px solid rgba(255,255,255,0.15); padding-top:14px;">
-      <p style="font-size:12px; color:#cbd5e1; margin-bottom:8px;">यदि विवरण याद नहीं आ रहा है:</p>
-      <a href="https://api.whatsapp.com/send?text=नमस्ते%20विमल%20सर,%20मैं%20Exam%20Arena%20का%20PIN%20भूल%20गया%20हूँ।%20कृपया%20मेरी%20मदद%20करें।" target="_blank" style="background:#25d366; color:#fff; padding:9px 16px; border-radius:12px; font-size:12.5px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(37,211,102,0.4);">
+    <div style="margin-top:16px; border-top:1px solid rgba(0,0,0,0.1); padding-top:14px;">
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">यदि विवरण याद नहीं आ रहा है:</p>
+      <a href="https://api.whatsapp.com/send?text=नमस्ते%20विमल%20सर,%20मैं%20Exam%20Arena%20का%20PIN%20भूल%20गया%20हूँ।%20कृपया%20मेरी%20मदद%20करें।" target="_blank" style="background:#25d366; color:#fff; padding:9px 16px; border-radius:12px; font-size:12.5px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
         📲 विमल सर से WhatsApp पर पूछें
       </a>
     </div>
 
     <div style="margin-top:14px;">
-      <button style="background:transparent; border:none; color:#cbd5e1; font-size:12.5px; cursor:pointer;" onclick="closeRecoveryModal()">⬅ वापस लॉगिन पर जाएं</button>
+      <button style="background:transparent; border:none; color:var(--text-muted); font-size:12.5px; cursor:pointer;" onclick="closeRecoveryModal()">⬅ वापस लॉगिन पर जाएं</button>
     </div>
   </div>
 </div>
@@ -601,13 +678,14 @@
 <!-- MAIN CONTAINER -->
 <div class="arena-container">
 
-  <!-- HEADER -->
+  <!-- HEADER WITH THEME TOGGLE BUTTON -->
   <div class="arena-header">
+    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
     <div class="arena-title">🎮 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR • MASTER EDITION ⭐</div>
   </div>
 
-  <!-- FLASH ALERT NOTIFICATION CARD -->
+  <!-- FLASH ALERT CARD -->
   <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
     <div class="flash-icon-box">🔥</div>
     <div class="flash-text-wrap">
@@ -623,7 +701,7 @@
     <div class="ticker-content" id="liveTickerText">Online: Loading active students from Google Sheet...</div>
   </div>
 
-  <!-- PROFILE BAR -->
+  <!-- PLAYER BAR -->
   <div class="player-profile-card">
     <div class="profile-info">
       <div class="avatar-circle" id="userInitial">V</div>
@@ -641,7 +719,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: 3 VIBRANT SUBJECTS -->
+  <!-- SCREEN 1: 3 SUBJECTS -->
   <div class="app-screen" id="screenHome">
     <div class="section-title">🎯 अपना विषय चुनें (Choose Subject):</div>
     <div class="subject-cards-grid">
@@ -701,7 +779,7 @@
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#fde047;" id="selectedSubjHeading">Sets</span>
+      <span style="font-weight:900; font-size:14px; color:#d97706;" id="selectedSubjHeading">Sets</span>
     </div>
     <div class="section-title">🏆 सेट चुनें (≥50% स्कोर पर अगला सेट खुलेगा):</div>
     <div class="sets-list-container" id="setsListRenderBox"></div>
@@ -725,12 +803,11 @@
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Test</button>
-      <span style="font-size:13px; font-weight:900; color:#fde047;" id="activeQuizSetTitle">Set 1</span>
+      <span style="font-size:13px; font-weight:900; color:#d97706;" id="activeQuizSetTitle">Set 1</span>
     </div>
     <div class="quiz-card">
       <div class="q-meta">
         <span class="q-counter" id="qCounter">Q 1/5</span>
-        <!-- 60 SECONDS TIMER -->
         <div class="timer-pill" id="qTimerPill">⏱️ <span id="qTimerSecs">60</span>s</div>
       </div>
       <div class="q-text" id="qText">Loading question...</div>
@@ -746,12 +823,12 @@
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:24px;">🎉 परिणाम घोषित!</h3>
-      <p style="font-size:13px; color:#cbd5e1; margin-top:2px;" id="resSubjTag">Set 1</p>
+      <p style="font-size:13px; color:var(--text-muted); margin-top:2px;" id="resSubjTag">Set 1</p>
       
       <div class="score-circle" id="scoreCircleWheel">
         <div class="score-inner">
           <span class="score-num" id="resScore">0</span>
-          <span style="font-size:11.5px; color:#94a3b8; font-weight:700;" id="resTotalQ">out of 5</span>
+          <span style="font-size:11.5px; color:var(--text-muted); font-weight:700;" id="resTotalQ">out of 5</span>
         </div>
       </div>
       
@@ -760,13 +837,13 @@
       <div class="leaderboard-box" style="margin-top:16px;">
         <div class="lb-header">
           <span>🏆 Top Champions</span>
-          <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Sync</span>
+          <span style="font-size:12px; color:#0284c7; cursor:pointer;" onclick="fetchCloudData()">🔄 Sync</span>
         </div>
         <div id="leaderboardList"></div>
       </div>
 
       <div style="display:flex; gap:12px; margin-top:16px;">
-        <button class="btn-action btn-next" style="background:#312e81; color:#cbd5e1;" onclick="navigateTo('screenSets')">Sets List</button>
+        <button class="btn-action btn-next" style="background:#4338ca; color:#fff;" onclick="navigateTo('screenSets')">Sets List</button>
         <button class="btn-action btn-next" id="btnNextLevelAction" onclick="goToNextLevelOrRetry()">Next Set ➔</button>
       </div>
     </div>
@@ -785,7 +862,7 @@
         questions: [
           { q: "(25 * 4) + (15 * 2) का मान क्या होगा?", options: ["120", "130", "140", "150"], ans: 1 },
           { q: "12 cm भुजा वाले वर्ग का परिमाप क्या होगा?", options: ["24 cm", "48 cm", "144 cm", "96 cm"], ans: 1 },
-          { q: "√625 का वर्गमूल क्या है?", options: ["15", "25", "35", "20"], ans: 1 }
+          { q: "sqrt(625) का मान क्या है?", options: ["15", "25", "35", "20"], ans: 1 }
         ]
       }
     ],
@@ -824,14 +901,43 @@
     unlockedLevels: { Math: 1, Science: 1, GK: 1 }
   };
 
-  // SMART FORMULA & SCIENTIFIC NOTATION FORMATTER
+  /* ============================================================
+     THEME TOGGLE SYSTEM (DARK & LIGHT MODE)
+  ============================================================ */
+  function initTheme() {
+    const savedTheme = localStorage.getItem('vimal_arena_theme') || 'dark';
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-theme');
+      document.getElementById('themeToggleBtn').innerText = '🌙';
+    } else {
+      document.body.classList.remove('light-theme');
+      document.getElementById('themeToggleBtn').innerText = '☀️';
+    }
+  }
+
+  function toggleTheme() {
+    const isLight = document.body.classList.toggle('light-theme');
+    const newTheme = isLight ? 'light' : 'dark';
+    localStorage.setItem('vimal_arena_theme', newTheme);
+    document.getElementById('themeToggleBtn').innerText = isLight ? '🌙' : '☀️';
+  }
+
+  /* ============================================================
+     SQRT & FORMULA AUTO-FORMATTER
+     - Converts 'sqrt(625)' or 'sqrt 25' into '√(625)' or '√25'
+     - Converts '*' into neat multiplication '×'
+     - Converts '^2' into '²' (power/superscript)
+     - Converts '_2' into '₂' (subscript)
+  ============================================================ */
   function formatMathFormula(text) {
     if (!text) return '';
     return text
       .toString()
-      .replace(/\s*\*\s*/g, ' × ')
-      .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')
-      .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>');
+      .replace(/sqrt\s*/gi, '√')                         // 'sqrt' -> '√'
+      .replace(/cbrt\s*/gi, '∛')                         // 'cbrt' -> '∛'
+      .replace(/\s*\*\s*/g, ' × ')                       // '*' -> '×'
+      .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')   // '^2' -> '²'
+      .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>');   // '_2' -> '₂'
   }
 
   // Prevent spaces automatically
@@ -1003,6 +1109,7 @@
   }
 
   function initApp() {
+    initTheme();
     const saved = localStorage.getItem('vimal_arena_user_final');
     if (saved) {
       currentUser = JSON.parse(saved);
@@ -1082,7 +1189,7 @@
     const topList = data.top5 || [];
     listEl.innerHTML = '';
     if (topList.length === 0) {
-      listEl.innerHTML = `<div style="color:#cbd5e1; font-size:12.5px; text-align:center;">Abhi koi records nahi hain.</div>`;
+      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center;">Abhi koi records nahi hain.</div>`;
       return;
     }
     topList.forEach(item => {
@@ -1094,8 +1201,8 @@
       const div = document.createElement('div');
       div.className = 'lb-item';
       div.innerHTML = `
-        <div><span style="font-weight:900; margin-right:8px; color:#fde047;">#${item.rank}</span> ${item.name} ${isMe ? '(You)' : ''}</div>
-        <div style="color:#38bdf8; font-weight:900;">${item.totalXP} XP</div>
+        <div><span style="font-weight:900; margin-right:8px; color:#f59e0b;">#${item.rank}</span> ${item.name} ${isMe ? '(You)' : ''}</div>
+        <div style="color:#0284c7; font-weight:900;">${item.totalXP} XP</div>
       `;
       listEl.appendChild(div);
     });
@@ -1116,7 +1223,7 @@
     const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
 
     if (sets.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:#cbd5e1; padding:20px;">Sheet से सवाल लोड हो रहे हैं...</div>`;
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Sheet से सवाल लोड हो रहे हैं...</div>`;
       return;
     }
 
@@ -1128,8 +1235,8 @@
         <div style="display:flex; align-items:center; gap:14px;">
           <span style="font-size:22px;">${isLocked ? '🔒' : '🔓'}</span>
           <div>
-            <h4 style="font-size:15px; font-weight:800; color:#fff;">${set.title}</h4>
-            <span style="font-size:12px; color:#cbd5e1;">${set.questions.length} Questions • 60s Timer</span>
+            <h4 style="font-size:15px; font-weight:800;">${set.title}</h4>
+            <span style="font-size:12px; color:var(--text-muted);">${set.questions.length} Questions • 60s Timer</span>
           </div>
         </div>
         <div class="set-action-pill">${isLocked ? 'Locked' : 'Start ▶'}</div>
@@ -1163,6 +1270,8 @@
     const qData = questions[idx];
 
     document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
+    
+    // Auto-formatted Question Text
     document.getElementById('qText').innerHTML = `${idx + 1}. ${formatMathFormula(qData.q)}`;
 
     const container = document.getElementById('optionsContainer');
@@ -1171,7 +1280,7 @@
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
       
-      // KAHOOT-STYLE 4-COLOR OPTION BADGES
+      // Auto-formatted Options with Kahoot Badges
       btn.innerHTML = `
         <span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span>
         <span>${formatMathFormula(opt)}</span>
