@@ -14,7 +14,7 @@
        THEME COLOR VARIABLES (DARK & LIGHT PALETTES)
     ============================================================ */
     :root {
-      /* Dark / Kids Gaming Palette (Default) */
+      /* Dark / Gamified Palette (Default) */
       --bg-body: #181438;
       --bg-radial-1: rgba(99, 102, 241, 0.35);
       --bg-radial-2: rgba(236, 72, 153, 0.3);
@@ -46,13 +46,14 @@
       --screen-bar-bg: linear-gradient(135deg, #312e81, #1e1b4b);
       --score-inner-bg: #1e1b4b;
 
-      /* Subject 3D Gradients & Kahoot Option Colors */
+      /* Subject Gradients */
       --grad-math: linear-gradient(135deg, #2563eb, #0284c7, #06b6d4);
       --grad-sci: linear-gradient(135deg, #059669, #10b981, #84cc16);
       --grad-gk: linear-gradient(135deg, #ea580c, #f43f5e, #fbbf24);
       --grad-gold: linear-gradient(135deg, #f59e0b, #fbbf24);
       --grad-btn: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
 
+      /* Kahoot-Style Colors */
       --opt-a: #0284c7;
       --opt-b: #059669;
       --opt-c: #d97706;
@@ -434,7 +435,7 @@
     }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
-    /* SCREEN 3: QUIZ ARENA (60s TIMER) */
+    /* SCREEN 3: QUIZ ARENA (WITH PREV & NEXT + 60s TIMER) */
     .quiz-card {
       background: var(--quiz-card-bg);
       border: 2px solid var(--quiz-card-border);
@@ -523,16 +524,28 @@
     sup { font-size: 0.78em; vertical-align: super; line-height: 0; }
     sub { font-size: 0.78em; vertical-align: sub; line-height: 0; }
 
+    /* NAVIGATION BUTTONS (PREV + NEXT/SUBMIT) */
     .nav-actions { display: flex; gap: 12px; margin-top: 20px; }
     .btn-action {
-      flex: 1; padding: 15px; border-radius: 16px; font-size: 15px; font-weight: 900;
+      flex: 1; padding: 14px 16px; border-radius: 16px; font-size: 15px; font-weight: 900;
       cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .btn-prev {
+      background: rgba(99, 102, 241, 0.2);
+      border: 1.5px solid #6366f1;
+      color: #818cf8;
+      max-width: 140px;
+    }
+    body.light-theme .btn-prev {
+      background: #e0e7ff;
+      color: #4338ca;
+      border-color: #818cf8;
     }
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
-    /* RESULT SCREEN */
+    /* RESULT & REVIEW SCREEN */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 15px; }
     .score-circle {
       width: 130px; height: 130px; border-radius: 50%;
@@ -551,6 +564,28 @@
     body:not(.light-theme) .unlock-success { color: #34d399; }
     .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #dc2626; }
     body:not(.light-theme) .unlock-failed { color: #fca5a5; }
+
+    /* DETAILED ANSWER REVIEW STYLES */
+    .review-card {
+      background: var(--opt-btn-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 13px 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      text-align: left;
+    }
+    .review-card.rev-correct {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .review-card.rev-wrong {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.08);
+    }
+    .review-card.rev-skipped {
+      border-color: #94a3b8;
+      background: rgba(148, 163, 184, 0.08);
+    }
 
     /* LEADERBOARD BOX */
     .leaderboard-box {
@@ -678,7 +713,7 @@
 <!-- MAIN CONTAINER -->
 <div class="arena-container">
 
-  <!-- HEADER WITH THEME TOGGLE BUTTON -->
+  <!-- HEADER WITH THEME TOGGLE -->
   <div class="arena-header">
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
     <div class="arena-title">🎮 EXAM ARENA</div>
@@ -701,7 +736,7 @@
     <div class="ticker-content" id="liveTickerText">Online: Loading active students from Google Sheet...</div>
   </div>
 
-  <!-- PLAYER BAR -->
+  <!-- PLAYER PROFILE CARD -->
   <div class="player-profile-card">
     <div class="profile-info">
       <div class="avatar-circle" id="userInitial">V</div>
@@ -799,7 +834,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: QUIZ ARENA (WITH 60s TIMER) -->
+  <!-- SCREEN 3: QUIZ ARENA (PREV + NEXT + 60s TIMER) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Test</button>
@@ -812,14 +847,17 @@
       </div>
       <div class="q-text" id="qText">Loading question...</div>
       <div class="options-grid" id="optionsContainer"></div>
+      
+      <!-- PREVIOUS, NEXT & SUBMIT BUTTONS -->
       <div class="nav-actions">
+        <button class="btn-action btn-prev" id="btnPrev" onclick="prevQuestion()" style="display:none;">⬅ Previous</button>
         <button class="btn-action btn-next" id="btnNext" onclick="nextQuestion()">Next ➔</button>
         <button class="btn-action btn-submit" id="btnSubmit" onclick="submitQuiz()" style="display:none;">Submit Quiz 🏆</button>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 4: RESULT -->
+  <!-- SCREEN 4: RESULT + DETAILED ANSWER REVIEW -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:24px;">🎉 परिणाम घोषित!</h3>
@@ -833,7 +871,16 @@
       </div>
       
       <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
+
+      <!-- DETAILED ANSWER KEY / REVIEW LIST -->
+      <div style="width:100%; text-align:left; margin-top:16px;">
+        <div style="font-size:14.5px; font-weight:900; color:var(--text-main); margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span>📝 उत्तर समीक्षा (Answer Sheet):</span>
+        </div>
+        <div id="reviewQuestionsList" style="display:flex; flex-direction:column; gap:10px;"></div>
+      </div>
       
+      <!-- LEADERBOARD -->
       <div class="leaderboard-box" style="margin-top:16px;">
         <div class="lb-header">
           <span>🏆 Top Champions</span>
@@ -860,9 +907,9 @@
         level: 1,
         title: "Set 1: Basic Arithmetic",
         questions: [
+          { q: "यदि alpha और beta द्विघात समीकरण के मूल हैं, तो sqrt(625) का मान क्या है?", options: ["15", "25", "35", "20"], ans: 1 },
           { q: "(25 * 4) + (15 * 2) का मान क्या होगा?", options: ["120", "130", "140", "150"], ans: 1 },
-          { q: "12 cm भुजा वाले वर्ग का परिमाप क्या होगा?", options: ["24 cm", "48 cm", "144 cm", "96 cm"], ans: 1 },
-          { q: "sqrt(625) का मान क्या है?", options: ["15", "25", "35", "20"], ans: 1 }
+          { q: "12 cm भुजा वाले वर्ग का परिमाप क्या होगा?", options: ["24 cm", "48 cm", "144 cm", "96 cm"], ans: 1 }
         ]
       }
     ],
@@ -872,6 +919,7 @@
         title: "Set 1: General Science",
         questions: [
           { q: "प्रकाश संश्लेषण में कौन सी गैस निकलती है?", options: ["कार्बन डाइऑक्साइड", "नाइट्रोजन", "ऑक्सीजन", "हाइड्रोजन"], ans: 2 },
+          { q: "alpha, beta और gamma किरणों में सबसे अधिक वेधन क्षमता किसकी है?", options: ["alpha", "beta", "gamma", "सभी की समान"], ans: 2 },
           { q: "साधारण नमक का रासायनिक सूत्र क्या है?", options: ["HCl", "NaOH", "NaCl", "KCl"], ans: 2 }
         ]
       }
@@ -923,24 +971,36 @@
   }
 
   /* ============================================================
-     SQRT & FORMULA AUTO-FORMATTER
-     - Converts 'sqrt(625)' or 'sqrt 25' into '√(625)' or '√25'
-     - Converts '*' into neat multiplication '×'
-     - Converts '^2' into '²' (power/superscript)
-     - Converts '_2' into '₂' (subscript)
+     ADVANCED FORMULA, GREEK & MATH SYMBOL FORMATTER
+     - alpha -> α, beta -> β, gamma -> γ, theta -> θ, delta -> Δ, pi -> π, lambda -> λ, omega -> Ω
+     - sqrt -> √, cbrt -> ∛
+     - * -> ×
+     - ^2 -> ², _2 -> ₂
   ============================================================ */
   function formatMathFormula(text) {
     if (!text) return '';
     return text
       .toString()
-      .replace(/sqrt\s*/gi, '√')                         // 'sqrt' -> '√'
-      .replace(/cbrt\s*/gi, '∛')                         // 'cbrt' -> '∛'
-      .replace(/\s*\*\s*/g, ' × ')                       // '*' -> '×'
-      .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')   // '^2' -> '²'
-      .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>');   // '_2' -> '₂'
+      // Greek Symbols
+      .replace(/\balpha\b/gi, 'α')
+      .replace(/\bbeta\b/gi, 'β')
+      .replace(/\bgamma\b/gi, 'γ')
+      .replace(/\btheta\b/gi, 'θ')
+      .replace(/\bdelta\b/gi, 'Δ')
+      .replace(/\blambda\b/gi, 'λ')
+      .replace(/\bomega\b/gi, 'Ω')
+      .replace(/\bpi\b/gi, 'π')
+      // Roots
+      .replace(/sqrt\s*/gi, '√')
+      .replace(/cbrt\s*/gi, '∛')
+      // Multiplication
+      .replace(/\s*\*\s*/g, ' × ')
+      // Powers & Subscripts
+      .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')
+      .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>');
   }
 
-  // Prevent spaces automatically
+  // Prevent spaces in username
   document.querySelectorAll('.no-space-input').forEach(input => {
     input.addEventListener('input', function() {
       this.value = this.value.replace(/\s+/g, '');
@@ -966,7 +1026,6 @@
     document.getElementById('recoveryModal').style.display = 'none';
   }
 
-  // Safe Post Helper for CORS
   async function callAppsScript(payload) {
     const resp = await fetch(SCRIPT_WEBHOOK_URL, {
       method: 'POST',
@@ -1159,7 +1218,7 @@
         document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
       }
 
-      // FLASH MESSAGE NOTIFICATION
+      // Flash notification
       if (data.flashNotice) {
         document.getElementById('flashNoticeText').innerText = data.flashNotice;
         document.getElementById('newQuizFlashCard').style.display = 'flex';
@@ -1168,7 +1227,7 @@
         }
       }
 
-      // LIVE RUNNING TICKER
+      // Live ticker
       if (data.activeUsers && data.activeUsers.length > 0) {
         document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Competing Live!";
       }
@@ -1280,7 +1339,7 @@
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
       
-      // Auto-formatted Options with Kahoot Badges
+      // Kahoot Badges with Auto-formatted Options
       btn.innerHTML = `
         <span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span>
         <span>${formatMathFormula(opt)}</span>
@@ -1290,11 +1349,26 @@
       container.appendChild(btn);
     });
 
+    // Handle Previous & Next/Submit Button Visibility
+    document.getElementById('btnPrev').style.display = (idx > 0) ? 'flex' : 'none';
     const isLast = (idx === questions.length - 1);
     document.getElementById('btnNext').style.display = isLast ? 'none' : 'flex';
     document.getElementById('btnSubmit').style.display = isLast ? 'flex' : 'none';
 
     startTimer();
+  }
+
+  function prevQuestion() {
+    if (currentQIdx > 0) {
+      loadQuestion(currentQIdx - 1);
+    }
+  }
+
+  function nextQuestion() {
+    const questions = getCurrentQuestions();
+    if (currentQIdx < questions.length - 1) {
+      loadQuestion(currentQIdx + 1);
+    }
   }
 
   // 60 SECONDS TIMER FUNCTION
@@ -1316,11 +1390,6 @@
         else submitQuiz();
       }
     }, 1000);
-  }
-
-  function nextQuestion() {
-    const questions = getCurrentQuestions();
-    if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
   }
 
   function confirmExitQuiz() {
@@ -1370,6 +1439,43 @@
     }
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
+
+    /* ============================================================
+       RENDER DETAILED QUESTION-BY-QUESTION REVIEW
+    ============================================================ */
+    const reviewListEl = document.getElementById('reviewQuestionsList');
+    if (reviewListEl) {
+      reviewListEl.innerHTML = '';
+      questions.forEach((q, qIdx) => {
+        const userAnsIdx = userAnswers[qIdx];
+        const isCorrect = (userAnsIdx === q.ans);
+        const isAttempted = (userAnsIdx !== undefined);
+
+        const card = document.createElement('div');
+        card.className = 'review-card ' + (isCorrect ? 'rev-correct' : (isAttempted ? 'rev-wrong' : 'rev-skipped'));
+
+        const userAnsText = isAttempted 
+          ? `<b>${String.fromCharCode(65 + userAnsIdx)}.</b> ${formatMathFormula(q.options[userAnsIdx])}`
+          : `<span style="opacity:0.7;">छोड़ा गया (Not Attempted)</span>`;
+        
+        const correctAnsText = `<b>${String.fromCharCode(65 + q.ans)}.</b> ${formatMathFormula(q.options[q.ans])}`;
+
+        card.innerHTML = `
+          <div style="font-weight:800; font-size:14px; color:var(--text-main); margin-bottom:8px;">
+            ${qIdx + 1}. ${formatMathFormula(q.q)}
+          </div>
+          <div style="font-size:12.5px; margin-bottom:4px; color:${isCorrect ? '#10b981' : '#ef4444'}; font-weight:700;">
+            ${isCorrect ? '✅ आपका उत्तर सही है:' : '❌ आपका उत्तर:'} ${userAnsText}
+          </div>
+          ${!isCorrect ? `
+            <div style="font-size:12.5px; color:#10b981; font-weight:800; margin-top:2px;">
+              👉 सही उत्तर: ${correctAnsText}
+            </div>
+          ` : ''}
+        `;
+        reviewListEl.appendChild(card);
+      });
+    }
 
     // Sync score & levels to Sheet
     callAppsScript({
