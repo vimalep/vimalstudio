@@ -152,7 +152,7 @@
     }
     .theme-toggle-btn:active { transform: scale(0.9); }
 
-    /* SOLID & VIBRANT EXAM ARENA TITLE (NO FADING) */
+    /* SOLID & VIBRANT EXAM ARENA TITLE */
     .arena-title {
       font-family: 'Fredoka', cursive, sans-serif;
       font-size: 28px;
@@ -608,118 +608,45 @@
       border: 1px solid var(--card-border);
     }
 
-    /* MODAL */
+    /* 1-CLICK INSTANT NAME MODAL */
     #userModal {
-      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.9); backdrop-filter: blur(8px);
+      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
     }
     .modal-box {
       background: var(--modal-bg);
-      border: 2px solid var(--modal-border); padding: 24px 20px;
-      border-radius: 24px; width: 100%; max-width: 410px; text-align: center;
+      border: 2px solid var(--modal-border); padding: 26px 22px;
+      border-radius: 24px; width: 100%; max-width: 400px; text-align: center;
       box-shadow: 0 15px 50px rgba(0,0,0,0.4);
     }
-    .auth-tab-bar { display: flex; gap: 8px; margin-bottom: 18px; background: rgba(0,0,0,0.1); padding: 5px; border-radius: 14px; }
-    .auth-tab-btn {
-      flex: 1; padding: 10px; border-radius: 10px; font-size: 13px; font-weight: 900;
-      cursor: pointer; border: none; background: transparent; color: var(--text-muted);
-    }
-    .auth-tab-btn.active {
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      color: #fff;
-    }
-    
     .form-input {
-      width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 13px 15px;
-      border-radius: 14px; color: var(--input-text); font-size: 14px; margin-bottom: 12px; outline: none;
+      width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 14px 16px;
+      border-radius: 14px; color: var(--input-text); font-size: 15px; font-weight: 700; margin-bottom: 14px; outline: none;
     }
     .form-btn-main {
       width: 100%; background: var(--grad-btn); border: none; padding: 14px;
-      border-radius: 14px; color: #fff; font-weight: 900; font-size: 15px; cursor: pointer;
-    }
-    .form-note { font-size: 11.5px; color: #d97706; margin-top: -6px; margin-bottom: 12px; text-align: left; padding-left: 4px; font-weight: 700; }
-    body:not(.light-theme) .form-note { color: #fde047; }
-    .err-msg { color: #ef4444; font-size: 12.5px; font-weight: 800; margin-top: 10px; display: none; }
-    .succ-msg { color: #10b981; font-size: 13px; font-weight: 900; margin-top: 10px; display: none; }
-
-    #recoveryModal {
-      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.9); backdrop-filter: blur(8px);
-      display: none; align-items: center; justify-content: center; padding: 16px; z-index: 10000;
+      border-radius: 14px; color: #fff; font-weight: 900; font-size: 16px; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
     }
   </style>
 </head>
 <body>
 
-<!-- 1. LOGIN & REGISTER MODAL -->
+<!-- 1-CLICK INSTANT NAME ENTRY MODAL -->
 <div id="userModal">
   <div class="modal-box">
-    <div style="font-family:'Fredoka',sans-serif; font-size:23px; font-weight:800; color:#f59e0b; margin-bottom:4px;">⚡ EXAM ARENA PORTAL</div>
-    <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">Gamified Challenge by Vimal Sir ⭐</div>
+    <div style="font-family:'Fredoka',sans-serif; font-size:25px; font-weight:800; color:#f59e0b; margin-bottom:4px;">⚡ EXAM ARENA</div>
+    <div style="font-size:12.5px; color:#a855f7; font-weight:700; margin-bottom:18px;">Live Quiz Challenge by Vimal Sir ⭐</div>
 
-    <div class="auth-tab-bar">
-      <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">लॉगिन (Login)</button>
-      <button class="auth-tab-btn" id="tabRegBtn" onclick="switchAuthTab('reg')">नया अकाउंट (Register)</button>
-    </div>
-
-    <!-- LOGIN FORM -->
-    <div id="loginFormSection">
-      <input type="text" class="form-input no-space-input" id="loginUsername" placeholder="Username (उदा. aman10)">
-      <div class="form-note">⚠️ बिना स्पेस के यूज़रनेम लिखें</div>
-      <input type="password" maxlength="4" class="form-input" id="loginPin" placeholder="4-Digit Security PIN (उदा. 1234)">
-      <button class="form-btn-main" id="btnLoginAct" onclick="submitLogin()">लॉगिन करें ➔</button>
-      <div style="margin-top:15px; font-size:12.5px;">
-        <span style="color:#d97706; cursor:pointer; font-weight:800;" onclick="openRecoveryModal()">🔑 PIN या Username भूल गए?</span>
-      </div>
-    </div>
-
-    <!-- REGISTER FORM -->
-    <div id="regFormSection" style="display:none;">
-      <input type="text" class="form-input" id="regFullName" placeholder="विद्यार्थी का पूरा नाम (Student Name)">
-      <input type="text" class="form-input" id="regFatherName" placeholder="पिता का नाम (Father's Name)">
-      <input type="date" class="form-input" id="regDOB">
-      <div class="form-note">📅 जन्मतिथि चुनें (रिकवरी के लिए आवश्यक)</div>
-      <input type="text" class="form-input no-space-input" id="regUsername" placeholder="Username बनाएं (उदा. rahul05)">
-      <div class="form-note">⚠️ स्पेस न दें, केवल अक्षर और अंक</div>
-      <input type="password" maxlength="4" class="form-input" id="regPin" placeholder="4-Digit Security PIN बनाएं">
-      <button class="form-btn-main" id="btnRegAct" onclick="submitRegistration()">अकाउंट बनाएं और शुरू करें ➔</button>
-    </div>
-
-    <div class="err-msg" id="authErrorBox"></div>
-  </div>
-</div>
-
-<!-- 2. FORGOT PIN / RECOVERY MODAL -->
-<div id="recoveryModal">
-  <div class="modal-box">
-    <div style="font-family:'Fredoka',sans-serif; font-size:20px; font-weight:800; color:#f59e0b; margin-bottom:6px;">🔑 PIN व Username रिकवरी</div>
-    <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">अकाउंट बनाते समय भरा गया विवरण दर्ज करें:</p>
-    
-    <input type="text" class="form-input" id="recSName" placeholder="विद्यार्थी का नाम">
-    <input type="text" class="form-input" id="recFName" placeholder="पिता का नाम">
-    <input type="date" class="form-input" id="recDOB">
-
-    <button class="form-btn-main" style="background:linear-gradient(135deg, #10b981, #059669);" id="btnRecAct" onclick="submitRecovery()">वेरिफाई करके PIN देखें ➔</button>
-    
-    <div class="succ-msg" id="recSuccessBox"></div>
-    <div class="err-msg" id="recErrorBox"></div>
-
-    <div style="margin-top:16px; border-top:1px solid rgba(0,0,0,0.1); padding-top:14px;">
-      <p style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">यदि विवरण याद नहीं आ रहा है:</p>
-      <a href="https://api.whatsapp.com/send?text=नमस्ते%20विमल%20सर,%20मैं%20Exam%20Arena%20का%20PIN%20भूल%20गया%20हूँ।%20कृपया%20मेरी%20मदद%20करें।" target="_blank" style="background:#25d366; color:#fff; padding:9px 16px; border-radius:12px; font-size:12.5px; font-weight:800; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
-        📲 विमल सर से WhatsApp पर पूछें
-      </a>
-    </div>
-
-    <div style="margin-top:14px;">
-      <button style="background:transparent; border:none; color:var(--text-muted); font-size:12.5px; cursor:pointer;" onclick="closeRecoveryModal()">⬅ वापस लॉगिन पर जाएं</button>
-    </div>
+    <input type="text" class="form-input" id="studentQuickName" placeholder="अपना नाम लिखें (उदा. Aman Sharma)" autofocus>
+    <button class="form-btn-main" onclick="saveQuickPlayerName()">क्विज़ शुरू करें ➔</button>
   </div>
 </div>
 
 <!-- MAIN CONTAINER -->
 <div class="arena-container">
 
-  <!-- HEADER WITH SHARP TITLE & SIMPLIFIED BADGE -->
+  <!-- HEADER WITH SHARP NON-FADED TITLE & SIMPLIFIED BADGE -->
   <div class="arena-header">
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Theme">☀️</button>
     <div class="arena-title">🎮 EXAM ARENA</div>
@@ -947,11 +874,12 @@
   let currentQIdx = 0;
   let userAnswers = {};
   let qTimerInterval = null;
-  let qTimeLeft = 60; // 60 SECONDS TIMER
+  let qTimeLeft = 60;
   let latestTargetSubj = 'Science';
 
+  // Player State
   let currentUser = {
-    username: '', studentName: '', totalXP: 0, currentRank: '--',
+    name: '', totalXP: 0, currentRank: '--',
     unlockedLevels: { Math: 1, Science: 1, GK: 1 }
   };
 
@@ -977,13 +905,12 @@
   }
 
   /* ============================================================
-     ADVANCED FORMULA, GREEK & MATH SYMBOL FORMATTER
+     GREEK, FORMULA & MATH SYMBOL FORMATTER
   ============================================================ */
   function formatMathFormula(text) {
     if (!text) return '';
     return text
       .toString()
-      // Greek Symbols
       .replace(/\balpha\b/gi, 'α')
       .replace(/\bbeta\b/gi, 'β')
       .replace(/\bgamma\b/gi, 'γ')
@@ -992,186 +919,33 @@
       .replace(/\blambda\b/gi, 'λ')
       .replace(/\bomega\b/gi, 'Ω')
       .replace(/\bpi\b/gi, 'π')
-      // Roots
       .replace(/sqrt\s*/gi, '√')
       .replace(/cbrt\s*/gi, '∛')
-      // Multiplication
       .replace(/\s*\*\s*/g, ' × ')
-      // Powers & Subscripts
       .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')
       .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>');
   }
 
-  // Prevent spaces in username
-  document.querySelectorAll('.no-space-input').forEach(input => {
-    input.addEventListener('input', function() {
-      this.value = this.value.replace(/\s+/g, '');
-    });
-  });
-
-  function switchAuthTab(tab) {
-    const isLogin = tab === 'login';
-    document.getElementById('tabLoginBtn').className = 'auth-tab-btn ' + (isLogin ? 'active' : '');
-    document.getElementById('tabRegBtn').className = 'auth-tab-btn ' + (!isLogin ? 'active' : '');
-    document.getElementById('loginFormSection').style.display = isLogin ? 'block' : 'none';
-    document.getElementById('regFormSection').style.display = !isLogin ? 'block' : 'none';
-    document.getElementById('authErrorBox').style.display = 'none';
-  }
-
-  function openRecoveryModal() {
-    document.getElementById('recoveryModal').style.display = 'flex';
-    document.getElementById('recSuccessBox').style.display = 'none';
-    document.getElementById('recErrorBox').style.display = 'none';
-  }
-
-  function closeRecoveryModal() {
-    document.getElementById('recoveryModal').style.display = 'none';
-  }
-
-  async function callAppsScript(payload) {
-    const resp = await fetch(SCRIPT_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    });
-    return await resp.json();
-  }
-
-  async function submitLogin() {
-    const u = document.getElementById('loginUsername').value.trim().replace(/\s+/g, '');
-    const p = document.getElementById('loginPin').value.trim();
-    const errBox = document.getElementById('authErrorBox');
-    const btn = document.getElementById('btnLoginAct');
-
-    if (!u || p.length !== 4) {
-      errBox.innerText = "कृपया सही Username और 4-अंकों का PIN दर्ज करें!";
-      errBox.style.display = 'block';
+  /* ============================================================
+     INSTANT 1-CLICK NAME LOGIN
+  ============================================================ */
+  function saveQuickPlayerName() {
+    const entered = document.getElementById('studentQuickName').value.trim();
+    if (!entered) {
+      alert("कृपया अपना नाम लिखें!");
       return;
     }
-
-    btn.innerText = "जांच हो रही है...";
-    btn.disabled = true;
-
-    try {
-      const res = await callAppsScript({ action: "login", username: u, pin: p });
-
-      if (res.status === "success") {
-        currentUser = res.user;
-        currentUser.currentRank = '--';
-        localStorage.setItem('vimal_arena_user_final', JSON.stringify(currentUser));
-        document.getElementById('userModal').style.display = 'none';
-        updatePlayerUI();
-        navigateTo('screenHome');
-        fetchCloudData();
-      } else {
-        errBox.innerText = res.message || "लॉगिन विफल रहा!";
-        errBox.style.display = 'block';
-      }
-    } catch (e) {
-      errBox.innerText = "नेटवर्क समस्या! कृपया पुनः प्रयास करें।";
-      errBox.style.display = 'block';
-    } finally {
-      btn.innerText = "लॉगिन करें ➔";
-      btn.disabled = false;
-    }
-  }
-
-  async function submitRegistration() {
-    const sName = document.getElementById('regFullName').value.trim();
-    const fName = document.getElementById('regFatherName').value.trim();
-    const dob = document.getElementById('regDOB').value;
-    const u = document.getElementById('regUsername').value.trim().replace(/\s+/g, '');
-    const p = document.getElementById('regPin').value.trim();
-    const errBox = document.getElementById('authErrorBox');
-    const btn = document.getElementById('btnRegAct');
-
-    if (!sName || !fName || !dob || !u || p.length !== 4) {
-      errBox.innerText = "कृपया सभी विवरण सही भरें (4-अंकों का PIN अनिवार्य)!";
-      errBox.style.display = 'block';
-      return;
-    }
-
-    btn.innerText = "अकाउंट बन रहा है...";
-    btn.disabled = true;
-
-    try {
-      const res = await callAppsScript({
-        action: "register",
-        studentName: sName,
-        fatherName: fName,
-        dob: dob,
-        username: u,
-        pin: p
-      });
-
-      if (res.status === "success") {
-        currentUser = res.user;
-        currentUser.currentRank = '--';
-        localStorage.setItem('vimal_arena_user_final', JSON.stringify(currentUser));
-        document.getElementById('userModal').style.display = 'none';
-        updatePlayerUI();
-        navigateTo('screenHome');
-        fetchCloudData();
-      } else {
-        errBox.innerText = res.message || "रजिस्ट्रेशन विफल रहा!";
-        errBox.style.display = 'block';
-      }
-    } catch (e) {
-      errBox.innerText = "नेटवर्क कनेक्शन समस्या! दोबारा प्रयास करें।";
-      errBox.style.display = 'block';
-    } finally {
-      btn.innerText = "अकाउंट बनाएं और शुरू करें ➔";
-      btn.disabled = false;
-    }
-  }
-
-  async function submitRecovery() {
-    const sName = document.getElementById('recSName').value.trim();
-    const fName = document.getElementById('recFName').value.trim();
-    const dob = document.getElementById('recDOB').value;
-    const sBox = document.getElementById('recSuccessBox');
-    const eBox = document.getElementById('recErrorBox');
-    const btn = document.getElementById('btnRecAct');
-
-    sBox.style.display = 'none';
-    eBox.style.display = 'none';
-
-    if (!sName || !fName || !dob) {
-      eBox.innerText = "कृपया तीनों विवरण सही भरें!";
-      eBox.style.display = 'block';
-      return;
-    }
-
-    btn.innerText = "जांच हो रही है...";
-    btn.disabled = true;
-
-    try {
-      const res = await callAppsScript({
-        action: "recover_pin",
-        studentName: sName,
-        fatherName: fName,
-        dob: dob
-      });
-
-      if (res.status === "success") {
-        sBox.innerHTML = `✅ अकाउंट मिल गया!<br><b>Username:</b> ${res.username}<br><b>PIN:</b> ${res.pin}`;
-        sBox.style.display = 'block';
-      } else {
-        eBox.innerText = res.message || "डेटा मैच नहीं हुआ!";
-        eBox.style.display = 'block';
-      }
-    } catch (e) {
-      eBox.innerText = "नेटवर्क समस्या! पुनः प्रयास करें।";
-      eBox.style.display = 'block';
-    } finally {
-      btn.innerText = "वेरिफाई करके PIN देखें ➔";
-      btn.disabled = false;
-    }
+    currentUser.name = entered;
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+    document.getElementById('userModal').style.display = 'none';
+    updatePlayerUI();
+    navigateTo('screenHome');
+    fetchCloudData();
   }
 
   function initApp() {
     initTheme();
-    const saved = localStorage.getItem('vimal_arena_user_final');
+    const saved = localStorage.getItem('vimal_arena_quick_player');
     if (saved) {
       currentUser = JSON.parse(saved);
       if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, GK: 1 };
@@ -1185,15 +959,15 @@
   }
 
   function logoutUser() {
-    if (!confirm("Logout करना चाहते हैं?")) return;
-    localStorage.removeItem('vimal_arena_user_final');
+    if (!confirm("क्या आप नाम बदलकर दोबारा शुरू करना चाहते हैं?")) return;
+    localStorage.removeItem('vimal_arena_quick_player');
     location.reload();
   }
 
   function updatePlayerUI() {
-    document.getElementById('dispName').innerText = currentUser.studentName || currentUser.username;
-    document.getElementById('userInitial').innerText = (currentUser.studentName || currentUser.username || 'V')[0].toUpperCase();
-    document.getElementById('dispXP').innerText = `${currentUser.totalXP} XP`;
+    document.getElementById('dispName').innerText = currentUser.name || "Student";
+    document.getElementById('userInitial').innerText = (currentUser.name || 'V')[0].toUpperCase();
+    document.getElementById('dispXP').innerText = `${currentUser.totalXP || 0} XP`;
     document.getElementById('topUserRank').innerText = currentUser.currentRank ? `Rank #${currentUser.currentRank}` : 'Rank #--';
   }
 
@@ -1220,7 +994,6 @@
         document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
       }
 
-      // Flash notification
       if (data.flashNotice) {
         document.getElementById('flashNoticeText').innerText = data.flashNotice;
         document.getElementById('newQuizFlashCard').style.display = 'flex';
@@ -1229,14 +1002,13 @@
         }
       }
 
-      // Live ticker
       if (data.activeUsers && data.activeUsers.length > 0) {
         document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Competing Live!";
       }
 
       renderLeaderboardUI(data);
     } catch (e) {
-      console.warn(e);
+      console.warn("Cloud Sync Note: ", e);
     }
   }
 
@@ -1254,7 +1026,7 @@
       return;
     }
     topList.forEach(item => {
-      const isMe = item.name.toLowerCase() === (currentUser.studentName || currentUser.username).toLowerCase();
+      const isMe = item.name.toLowerCase() === (currentUser.name || '').toLowerCase();
       if (isMe) {
         currentUser.currentRank = item.rank;
         document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
@@ -1277,6 +1049,9 @@
     navigateTo('screenSets');
   }
 
+  /* ============================================================
+     RE-RENDER SETS LIST (ALWAYS SHOWS UNLOCKED STATUS CLEANLY)
+  ============================================================ */
   function renderSetsList() {
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
@@ -1339,17 +1114,14 @@
     qData.options.forEach((opt, oIdx) => {
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
-      
       btn.innerHTML = `
         <span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span>
         <span>${formatMathFormula(opt)}</span>
       `;
-      
       btn.onclick = () => { userAnswers[idx] = oIdx; loadQuestion(idx); };
       container.appendChild(btn);
     });
 
-    // Handle Previous & Next/Submit Buttons
     document.getElementById('btnPrev').style.display = (idx > 0) ? 'flex' : 'none';
     const isLast = (idx === questions.length - 1);
     document.getElementById('btnNext').style.display = isLast ? 'none' : 'flex';
@@ -1359,19 +1131,14 @@
   }
 
   function prevQuestion() {
-    if (currentQIdx > 0) {
-      loadQuestion(currentQIdx - 1);
-    }
+    if (currentQIdx > 0) loadQuestion(currentQIdx - 1);
   }
 
   function nextQuestion() {
     const questions = getCurrentQuestions();
-    if (currentQIdx < questions.length - 1) {
-      loadQuestion(currentQIdx + 1);
-    }
+    if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
   }
 
-  // 60 SECONDS TIMER
   function startTimer() {
     qTimeLeft = 60;
     const timerSecsEl = document.getElementById('qTimerSecs');
@@ -1392,14 +1159,15 @@
     }, 1000);
   }
 
-  // QUIT TEST -> RE-RENDER SETS SCREEN DIRECTLY
   function confirmExitQuiz() {
     if (confirm("टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
-      openSubjectSets(currentSubject);
+      openSubjectSets(currentSubject); // Re-renders cleanly
     }
   }
 
-  // SUBMIT TEST WITH PERMANENT UNLOCK LOGIC
+  /* ============================================================
+     PERMANENT UNLOCK LOGIC UPON SCORING >= 50%
+  ============================================================ */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const questions = getCurrentQuestions();
@@ -1414,7 +1182,7 @@
     let unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
     let newLevelUnlocked = false;
 
-    // PERMANENT UNLOCK CHECK
+    // Permanent Unlock Execution
     if (passed) {
       const nextLvl = currentLevel + 1;
       if (nextLvl > unlockedMax) {
@@ -1424,7 +1192,7 @@
       }
     }
 
-    localStorage.setItem('vimal_arena_user_final', JSON.stringify(currentUser));
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
     updatePlayerUI();
 
     navigateTo('resultScreen');
@@ -1449,7 +1217,7 @@
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    // DETAILED ANSWER REVIEW LIST
+    // Render Detailed Answer Sheet
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
@@ -1484,16 +1252,20 @@
       });
     }
 
-    // Sync score & updated unlocked levels to Google Sheet
-    callAppsScript({
-      action: "submit_score",
-      username: currentUser.username,
-      subject: `${currentSubject}_Set${currentLevel}`,
-      score: score,
-      totalQuestions: questions.length,
-      xpEarned: earnedXP,
-      unlockedLevels: currentUser.unlockedLevels
-    });
+    // Background sync to Google Sheet
+    fetch(SCRIPT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: "submit_score",
+        username: currentUser.name,
+        subject: `${currentSubject}_Set${currentLevel}`,
+        score: score,
+        totalQuestions: questions.length,
+        xpEarned: earnedXP,
+        unlockedLevels: currentUser.unlockedLevels
+      })
+    }).catch(e => console.warn("Background sync note:", e));
 
     setTimeout(fetchCloudData, 1500);
   }
