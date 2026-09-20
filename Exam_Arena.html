@@ -138,17 +138,12 @@
 
     .ad-banner-box {
       width: 100%;
-      min-height: 52px;
-      background: #080e1a;
-      border: 1px dashed #334155;
-      border-radius: 10px;
+      min-height: 250px;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #64748b;
-      font-size: 11px;
-      font-weight: 700;
       overflow: hidden;
+      margin: 10px 0;
     }
 
     .app-screen { display: flex; flex-direction: column; gap: 12px; width: 100%; }
@@ -364,7 +359,20 @@
         <div class="sc-arrow">➔</div>
       </div>
     </div>
-    <div class="ad-banner-box"><span>📢 Sponsor Banner Ad (320x50 Responsive)</span></div>
+
+    <!-- ADSTERRA AD SLOT 1 -->
+    <div class="ad-banner-box">
+      <script>
+        atOptions = {
+          'key' : 'd79925c62cdb9ae65373e56a45850972',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
   </div>
 
   <!-- SCREEN 2: SETS -->
@@ -375,7 +383,20 @@
     </div>
     <div class="section-title">🎯 Select Quiz Set (≥50% to Unlock Next):</div>
     <div class="sets-list-container" id="setsListRenderBox"></div>
-    <div class="ad-banner-box"><span>📢 Sponsor Banner Ad (320x50)</span></div>
+
+    <!-- ADSTERRA AD SLOT 2 -->
+    <div class="ad-banner-box">
+      <script>
+        atOptions = {
+          'key' : 'd79925c62cdb9ae65373e56a45850972',
+          'format' : 'iframe',
+          'height' : 250,
+          'width' : 300,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
   </div>
 
   <!-- SCREEN 3: QUIZ ARENA -->
@@ -429,7 +450,6 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  // DEFAULT BACKUP QUESTIONS (In case sheet is empty)
   let quizDatabase = {
     Math: [
       {
