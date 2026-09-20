@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Arena by Vimal Sir - Live Quiz & XP Battles</title>
+  <title>Exam Arena by Vimal Sir - Master Edition</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,7 +43,6 @@
       gap: 14px;
     }
 
-    /* HEADER */
     .arena-header {
       text-align: center;
       padding: 12px 14px;
@@ -51,6 +50,7 @@
       border: 1px solid var(--border-color);
       border-radius: 16px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: relative;
     }
     .arena-title {
       font-size: 22px;
@@ -72,7 +72,6 @@
       margin-top: 4px;
     }
 
-    /* PROFILE BAR */
     .player-profile-card {
       background: linear-gradient(135deg, #111e38, #0b1329);
       border: 1px solid #2a3a5e;
@@ -137,7 +136,6 @@
       cursor: pointer;
     }
 
-    /* AD BANNER */
     .ad-banner-box {
       width: 100%;
       min-height: 52px;
@@ -153,15 +151,8 @@
       overflow: hidden;
     }
 
-    /* SCREEN FLOW WRAPPER */
-    .app-screen {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
+    .app-screen { display: flex; flex-direction: column; gap: 12px; width: 100%; }
 
-    /* 1. HOME SCREEN (SUBJECT CARDS) */
     .section-title {
       font-size: 14px;
       font-weight: 800;
@@ -170,11 +161,7 @@
       align-items: center;
       gap: 6px;
     }
-    .subject-cards-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .subject-cards-grid { display: flex; flex-direction: column; gap: 10px; }
     .subject-card {
       background: var(--card-bg);
       border: 1.5px solid var(--border-color);
@@ -184,19 +171,9 @@
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      transition: all 0.2s ease;
       box-shadow: 0 4px 14px rgba(0,0,0,0.25);
     }
-    .subject-card:hover, .subject-card:active {
-      transform: translateY(-2px);
-      border-color: var(--accent-blue);
-      background: #131d35;
-    }
-    .sc-info {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+    .sc-info { display: flex; align-items: center; gap: 14px; }
     .sc-icon {
       width: 50px;
       height: 50px;
@@ -212,7 +189,6 @@
     .sc-text p { font-size: 12px; color: var(--text-muted); font-weight: 600; }
     .sc-arrow { font-size: 18px; font-weight: 900; color: var(--accent-blue); }
 
-    /* 2. SETS SELECTION SCREEN */
     .screen-header-bar {
       display: flex;
       align-items: center;
@@ -231,15 +207,8 @@
       font-size: 12px;
       font-weight: 800;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
-    .sets-list-container {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
+    .sets-list-container { display: flex; flex-direction: column; gap: 9px; }
     .set-row-card {
       background: var(--card-bg);
       border: 1.5px solid var(--border-color);
@@ -249,37 +218,15 @@
       align-items: center;
       justify-content: space-between;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
-    .set-row-card.unlocked:hover, .set-row-card.unlocked:active {
-      border-color: var(--accent-blue);
-      background: #131d35;
-    }
-    .set-row-card.locked {
-      opacity: 0.55;
-      cursor: not-allowed;
-      border-color: #1a2333;
-    }
-    .set-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .set-status-badge {
-      font-size: 18px;
-    }
+    .set-row-card.locked { opacity: 0.55; cursor: not-allowed; }
+    .set-title-wrap { display: flex; align-items: center; gap: 10px; }
     .set-info h4 { font-size: 14.5px; font-weight: 800; color: #fff; }
     .set-info span { font-size: 11px; color: var(--text-muted); font-weight: 600; }
-    .set-action-pill {
-      font-size: 11.5px;
-      font-weight: 800;
-      padding: 5px 12px;
-      border-radius: 20px;
-    }
-    .set-row-card.unlocked .set-action-pill { background: #0284c7; color: #fff; }
+    .set-action-pill { font-size: 11.5px; font-weight: 800; padding: 5px 12px; border-radius: 20px; }
+    .set-row-card:not(.locked) .set-action-pill { background: #0284c7; color: #fff; }
     .set-row-card.locked .set-action-pill { background: #1e293b; color: #64748b; }
 
-    /* 3. QUIZ SCREEN WITH 30s TIMER */
     .quiz-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -287,234 +234,77 @@
       padding: 16px;
       box-shadow: 0 6px 24px rgba(0,0,0,0.4);
     }
-    .q-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
+    .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .q-counter {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--accent-blue);
-      background: rgba(56, 189, 248, 0.1);
-      padding: 3px 10px;
-      border-radius: 12px;
+      font-size: 12px; font-weight: 800; color: var(--accent-blue);
+      background: rgba(56, 189, 248, 0.1); padding: 3px 10px; border-radius: 12px;
     }
     .timer-pill {
-      background: rgba(245, 158, 11, 0.15);
-      border: 1.5px solid var(--accent-gold);
-      color: #fbbf24;
-      font-size: 13px;
-      font-weight: 900;
-      padding: 3px 12px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      background: rgba(245, 158, 11, 0.15); border: 1.5px solid var(--accent-gold);
+      color: #fbbf24; font-size: 13px; font-weight: 900; padding: 3px 12px; border-radius: 20px;
     }
-    .timer-pill.urgent {
-      border-color: var(--accent-red);
-      background: rgba(239, 68, 68, 0.2);
-      color: #f87171;
-      animation: pulse 1s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    .q-text {
-      font-size: 16.5px;
-      font-weight: 700;
-      line-height: 1.45;
-      margin-bottom: 16px;
-      color: #f8fafc;
-    }
-
+    .timer-pill.urgent { border-color: var(--accent-red); background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    .q-text { font-size: 16.5px; font-weight: 700; line-height: 1.45; margin-bottom: 16px; color: #f8fafc; }
     .options-grid { display: flex; flex-direction: column; gap: 10px; }
     .option-btn {
-      width: 100%;
-      background: #1e293b;
-      border: 1.5px solid #334155;
-      color: #f1f5f9;
-      padding: 13px 14px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.15s ease;
+      width: 100%; background: #1e293b; border: 1.5px solid #334155; color: #f1f5f9;
+      padding: 13px 14px; border-radius: 12px; font-size: 14px; font-weight: 700;
+      text-align: left; cursor: pointer;
     }
-    .option-btn.selected {
-      border-color: var(--accent-blue);
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-    }
-
+    .option-btn.selected { border-color: var(--accent-blue); background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
     .nav-actions { display: flex; gap: 8px; margin-top: 16px; }
     .btn-action {
-      flex: 1;
-      padding: 13px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      flex: 1; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 800;
+      cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
     }
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #0284c7); color: #fff; }
 
-    /* 4. RESULT SCREEN */
-    #resultScreen {
-      display: none;
-      text-align: center;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
+    #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 12px; }
     .score-circle {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
+      width: 110px; height: 110px; border-radius: 50%;
       background: conic-gradient(#10b981 var(--score-angle, 0deg), #1e293d 0deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 6px 0;
+      display: flex; align-items: center; justify-content: center; margin: 6px auto;
     }
     .score-inner {
-      width: 88px;
-      height: 88px;
-      border-radius: 50%;
-      background: #0f172a;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      width: 88px; height: 88px; border-radius: 50%; background: #0f172a;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .score-num { font-size: 26px; font-weight: 900; color: #fff; line-height: 1; }
+    .score-num { font-size: 26px; font-weight: 900; color: #fff; }
     .score-tot { font-size: 11px; color: var(--text-muted); font-weight: 700; }
-
     .unlock-banner {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 800;
     }
     .unlock-success { background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; color: #34d399; }
     .unlock-failed { background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; color: #f87171; }
 
     .leaderboard-box {
-      width: 100%;
-      background: #091122;
-      border: 1px solid #1e293b;
-      border-radius: 14px;
-      padding: 12px;
-      text-align: left;
+      width: 100%; background: #091122; border: 1px solid #1e293b; border-radius: 14px; padding: 12px; text-align: left;
     }
-    .lb-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      font-weight: 800;
-      color: #f59e0b;
-      margin-bottom: 8px;
-      border-bottom: 1px solid #1e293b;
-      padding-bottom: 6px;
-    }
-    .lb-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 7px 10px;
-      border-radius: 8px;
-      font-size: 12.5px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      background: #0f172a;
-    }
-    .lb-item.rank-1 { background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; color: #fbbf24; }
+    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 800; color: #f59e0b; margin-bottom: 8px; }
+    .lb-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 700; margin-bottom: 4px; background: #0f172a; }
 
-    .btn-wa-share {
-      width: 100%;
-      background: #25d366;
-      color: #fff;
-      padding: 13px;
-      border-radius: 12px;
-      font-weight: 800;
-      border: none;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    /* LOGIN MODAL */
     #userModal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.88);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 9999;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.88);
+      display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
     }
     .modal-box {
-      background: #0f172a;
-      border: 1px solid #334155;
-      padding: 24px 20px;
-      border-radius: 18px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
+      background: #0f172a; border: 1px solid #334155; padding: 24px 20px; border-radius: 18px; width: 100%; max-width: 380px; text-align: center;
     }
-    .modal-box h2 { font-size: 20px; margin-bottom: 6px; color: #38bdf8; font-weight: 900; }
-    .modal-box p { font-size: 12.5px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; }
     .modal-box input {
-      width: 100%;
-      background: #1e293b;
-      border: 1px solid #475569;
-      padding: 12px 14px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 14px;
-      margin-bottom: 12px;
-      outline: none;
+      width: 100%; background: #1e293b; border: 1px solid #475569; padding: 12px 14px; border-radius: 10px; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none;
     }
     .modal-box button {
-      width: 100%;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      border: none;
-      padding: 13px;
-      border-radius: 10px;
-      color: #fff;
-      font-weight: 800;
-      font-size: 15px;
-      cursor: pointer;
+      width: 100%; background: linear-gradient(135deg, #38bdf8, #2563eb); border: none; padding: 13px; border-radius: 10px; color: #fff; font-weight: 800; font-size: 15px; cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<!-- LOGIN MODAL -->
 <div id="userModal">
   <div class="modal-box">
-    <h2>⚡ Exam Arena Login</h2>
-    <p>Apna Naam aur Number daalein taaki aapki Live Rank aur Unlocked Levels save rahein!</p>
+    <h2 style="color:#38bdf8; margin-bottom:6px;">⚡ Exam Arena Login</h2>
+    <p style="color:#94a3b8; font-size:12.5px; margin-bottom:14px;">Name aur Mobile number daal kar live rank dekhein!</p>
     <input type="text" id="regName" placeholder="Student Name (उदा. Aman Sharma)" required>
     <input type="tel" id="regPhone" placeholder="Mobile / WhatsApp Number" required>
     <button onclick="saveUserProfile()">Login & Go to Home ➔</button>
@@ -523,13 +313,11 @@
 
 <div class="arena-container">
 
-  <!-- MAIN HEADER -->
   <div class="arena-header">
     <div class="arena-title">EXAM ARENA</div>
-    <div class="vimal-badge">BY VIMAL SIR • LEARN & COMPETE</div>
+    <div class="vimal-badge">BY VIMAL SIR • MASTER LIVE EDITION</div>
   </div>
 
-  <!-- PLAYER STATS BAR -->
   <div class="player-profile-card">
     <div class="profile-info">
       <div class="avatar-circle" id="userInitial">V</div>
@@ -550,142 +338,99 @@
     </div>
   </div>
 
-  <!-- ==================================================== -->
-  <!-- SCREEN 1: HOME PAGE (CHOOSE SUBJECT) -->
-  <!-- ==================================================== -->
+  <!-- SCREEN 1: HOME -->
   <div class="app-screen" id="screenHome">
     <div class="section-title">📚 Choose Subject to Begin:</div>
-
     <div class="subject-cards-grid">
-      <!-- MATH CARD -->
       <div class="subject-card sc-math" onclick="openSubjectSets('Math')">
         <div class="sc-info">
           <div class="sc-icon">📐</div>
           <div class="sc-text">
             <h3>Mathematics</h3>
-            <p id="mathSetsSub">Arithmetic, Algebra & Geometry Sets</p>
+            <p id="mathSetsSub">Loading live sets from Sheet...</p>
           </div>
         </div>
         <div class="sc-arrow">➔</div>
       </div>
 
-      <!-- SCIENCE CARD -->
       <div class="subject-card sc-sci" onclick="openSubjectSets('Science')">
         <div class="sc-info">
           <div class="sc-icon">🔬</div>
           <div class="sc-text">
             <h3>General Science</h3>
-            <p id="sciSetsSub">Physics, Chemistry & Biology Sets</p>
+            <p id="sciSetsSub">Loading live sets from Sheet...</p>
           </div>
         </div>
         <div class="sc-arrow">➔</div>
       </div>
     </div>
-
-    <!-- SPONSOR AD -->
-    <div class="ad-banner-box">
-      <span>📢 Sponsor Banner Ad (320x50 Responsive)</span>
-    </div>
+    <div class="ad-banner-box"><span>📢 Sponsor Banner Ad (320x50 Responsive)</span></div>
   </div>
 
-  <!-- ==================================================== -->
-  <!-- SCREEN 2: QUIZ SETS SELECTION SCREEN -->
-  <!-- ==================================================== -->
+  <!-- SCREEN 2: SETS -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:800; font-size:13.5px;" id="selectedSubjHeading">Mathematics Sets</span>
+      <span style="font-weight:800; font-size:13.5px;" id="selectedSubjHeading">Sets</span>
     </div>
-
     <div class="section-title">🎯 Select Quiz Set (≥50% to Unlock Next):</div>
     <div class="sets-list-container" id="setsListRenderBox"></div>
-
-    <div class="ad-banner-box">
-      <span>📢 Sponsor Banner Ad (320x50)</span>
-    </div>
+    <div class="ad-banner-box"><span>📢 Sponsor Banner Ad (320x50)</span></div>
   </div>
 
-  <!-- ==================================================== -->
-  <!-- SCREEN 3: LIVE QUIZ SCREEN (WITH 30s TIMER) -->
-  <!-- ==================================================== -->
+  <!-- SCREEN 3: QUIZ ARENA -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
-      <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit Quiz</button>
-      <span style="font-size:12.5px; font-weight:800; color:var(--accent-gold);" id="activeQuizSetTitle">Math - Set 1</span>
+      <button class="btn-back" onclick="confirmExitQuiz()">⬅ Quit</button>
+      <span style="font-size:12.5px; font-weight:800; color:var(--accent-gold);" id="activeQuizSetTitle">Set 1</span>
     </div>
-
     <div class="quiz-card">
       <div class="q-meta">
         <span class="q-counter" id="qCounter">Question 1 / 5</span>
         <div class="timer-pill" id="qTimerPill">⏱️ <span id="qTimerSecs">30</span>s</div>
       </div>
-
       <div class="q-text" id="qText">Loading question...</div>
       <div class="options-grid" id="optionsContainer"></div>
-
       <div class="nav-actions">
         <button class="btn-action btn-next" id="btnNext" onclick="nextQuestion()">Next ➔</button>
         <button class="btn-action btn-submit" id="btnSubmit" onclick="submitQuiz()" style="display:none;">Finish & Submit 🏆</button>
       </div>
     </div>
-
-    <div class="ad-banner-box">
-      <span>📢 Sponsor Banner Ad (320x50)</span>
-    </div>
   </div>
 
-  <!-- ==================================================== -->
-  <!-- SCREEN 4: RESULT & LEADERBOARD SCREEN -->
-  <!-- ==================================================== -->
+  <!-- SCREEN 4: RESULT -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" style="text-align:center;">
       <h3 style="color:#10b981;">🎉 Result Declared!</h3>
-      <p style="font-size:12px; color:var(--text-muted); margin-top:2px;" id="resSubjTag">Mathematics - Set 1</p>
-
-      <div class="score-circle" id="scoreCircleWheel" style="margin: 10px auto;">
+      <p style="font-size:12px; color:var(--text-muted); margin-top:2px;" id="resSubjTag">Set 1</p>
+      <div class="score-circle" id="scoreCircleWheel">
         <div class="score-inner">
           <span class="score-num" id="resScore">0</span>
           <span class="score-tot" id="resTotalQ">out of 5</span>
         </div>
       </div>
-
-      <div id="unlockResultBanner" class="unlock-banner unlock-success">
-        🔓 Congratulations! Agla Level Unlock Ho Gaya!
-      </div>
-
+      <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
       <div class="leaderboard-box" style="margin-top:12px;">
         <div class="lb-header">
-          <span>🏆 Live Top 5 (<span id="lbSubjTitle">Math</span>)</span>
-          <span style="font-size:11px; color:#38bdf8; cursor:pointer;" onclick="fetchLeaderboard()">🔄 Sync</span>
+          <span>🏆 Top 5 Champions (<span id="lbSubjTitle">Math</span>)</span>
+          <span style="font-size:11px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Sync</span>
         </div>
-        <div id="leaderboardList">
-          <div style="color:#64748b; font-size:12px; text-align:center;">Updating leaderboard...</div>
-        </div>
+        <div id="leaderboardList"></div>
       </div>
-
-      <button class="btn-wa-share" style="margin-top:10px;" onclick="shareOnWhatsApp()">📲 WhatsApp par Doston ko Challenge karein</button>
-      
-      <div style="display:flex; gap:8px; margin-top:8px;">
-        <button class="btn-action btn-next" style="background:#1e293b; color:#cbd5e1;" onclick="navigateTo('screenSets')">Sets List 📋</button>
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <button class="btn-action btn-next" style="background:#1e293b; color:#cbd5e1;" onclick="navigateTo('screenSets')">Sets List</button>
         <button class="btn-action btn-next" id="btnNextLevelAction" onclick="goToNextLevelOrRetry()">Next Set ➔</button>
       </div>
-    </div>
-
-    <div class="ad-banner-box" style="min-height: 70px;">
-      <span>📢 High-Yield Result Ad (Adsterra / AdSense)</span>
     </div>
   </div>
 
 </div>
 
 <script>
-  // YOUR ACTIVE APPS SCRIPT WEBHOOK URL
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  // ====================================================
-  // QUIZ DATABASE (Yahan aap asaani se naye Sets jod sakte hain)
-  // ====================================================
-  const quizDatabase = {
+  // DEFAULT BACKUP QUESTIONS (In case sheet is empty)
+  let quizDatabase = {
     Math: [
       {
         level: 1,
@@ -693,56 +438,17 @@
         questions: [
           { q: "What is (25 × 4) + (15 × 2)?", options: ["120", "130", "140", "150"], ans: 1 },
           { q: "Perimeter of square with side 12 cm?", options: ["24 cm", "48 cm", "144 cm", "96 cm"], ans: 1 },
-          { q: "If x + 5 = 12, value of 2x - 4?", options: ["10", "14", "7", "8"], ans: 0 },
-          { q: "Square root of 625?", options: ["15", "25", "35", "20"], ans: 1 },
-          { q: "Sum of all angles of a triangle?", options: ["90°", "180°", "360°", "270°"], ans: 1 }
-        ]
-      },
-      {
-        level: 2,
-        title: "Set 2: Algebra & Geometry",
-        questions: [
-          { q: "What is the formula for area of a circle?", options: ["2πr", "πr²", "πd", "2πr²"], ans: 1 },
-          { q: "Solve for y: 3y - 9 = 21", options: ["10", "8", "12", "7"], ans: 0 },
-          { q: "What is the value of 2³ × 3²?", options: ["72", "48", "36", "64"], ans: 0 },
-          { q: "Hypotenuse of triangle with sides 3cm and 4cm?", options: ["5 cm", "6 cm", "7 cm", "8 cm"], ans: 0 },
-          { q: "What is 15% of 200?", options: ["25", "30", "35", "40"], ans: 1 }
-        ]
-      },
-      {
-        level: 3,
-        title: "Set 3: Advanced Math",
-        questions: [
-          { q: "If a car travels 120 km in 2 hours, what is its speed?", options: ["50 km/h", "60 km/h", "70 km/h", "80 km/h"], ans: 1 },
-          { q: "What is the cube root of 512?", options: ["6", "7", "8", "9"], ans: 2 },
-          { q: "What is the value of sin 30°?", options: ["1", "1/2", "√3/2", "0"], ans: 1 },
-          { q: "Average of 10, 20, 30, 40, 50?", options: ["25", "30", "35", "20"], ans: 1 },
-          { q: "HCF of 24 and 36 is?", options: ["6", "12", "18", "4"], ans: 1 }
+          { q: "Square root of 625?", options: ["15", "25", "35", "20"], ans: 1 }
         ]
       }
     ],
-
     Science: [
       {
         level: 1,
         title: "Set 1: Life Science",
         questions: [
           { q: "Which gas is released during photosynthesis?", options: ["CO2", "Nitrogen", "Oxygen", "Hydrogen"], ans: 2 },
-          { q: "Chemical formula of common salt?", options: ["HCl", "NaOH", "NaCl", "KCl"], ans: 2 },
-          { q: "Brain part controlling balance and posture?", options: ["Cerebrum", "Cerebellum", "Medulla", "Spine"], ans: 1 },
-          { q: "SI unit of Electric Current?", options: ["Volt", "Ohm", "Ampere", "Watt"], ans: 2 },
-          { q: "Powerhouse of the Cell?", options: ["Ribosome", "Mitochondria", "Nucleus", "Golgi"], ans: 1 }
-        ]
-      },
-      {
-        level: 2,
-        title: "Set 2: Physics & Chemistry",
-        questions: [
-          { q: "What is the speed of light in vacuum?", options: ["3×10⁸ m/s", "3×10⁶ m/s", "3×10⁴ m/s", "1.5×10⁸ m/s"], ans: 0 },
-          { q: "Which acid is present in lemon?", options: ["Citric acid", "Acetic acid", "Tartaric acid", "Lactic acid"], ans: 0 },
-          { q: "Atomic number of Carbon is?", options: ["4", "6", "8", "12"], ans: 1 },
-          { q: "Acceleration due to gravity (g) on Earth?", options: ["9.8 m/s²", "8.9 m/s²", "10.8 m/s²", "9.1 m/s²"], ans: 0 },
-          { q: "Which metal is liquid at room temperature?", options: ["Iron", "Mercury", "Copper", "Silver"], ans: 1 }
+          { q: "Chemical formula of salt?", options: ["HCl", "NaOH", "NaCl", "KCl"], ans: 2 }
         ]
       }
     ]
@@ -752,29 +458,23 @@
   let currentLevel = 1;
   let currentQIdx = 0;
   let userAnswers = {};
-  let currentUser = { 
-    name: '', 
-    phone: '', 
-    totalXP: 0, 
-    currentRank: '--',
-    unlockedLevels: { Math: 1, Science: 1 }
-  };
-
-  // 30-SECOND TIMER VARIABLES
   let qTimerInterval = null;
   let qTimeLeft = 30;
+
+  let currentUser = { 
+    name: '', phone: '', totalXP: 0, currentRank: '--',
+    unlockedLevels: { Math: 1, Science: 1 }
+  };
 
   function loadUserProfile() {
     const saved = localStorage.getItem('vimal_arena_player');
     if (saved) {
       currentUser = JSON.parse(saved);
-      if (!currentUser.unlockedLevels) {
-        currentUser.unlockedLevels = { Math: 1, Science: 1 };
-      }
+      if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1 };
       document.getElementById('userModal').style.display = 'none';
       updatePlayerStatsUI();
       navigateTo('screenHome');
-      fetchLeaderboard();
+      fetchCloudData();
     } else {
       document.getElementById('userModal').style.display = 'flex';
     }
@@ -783,27 +483,17 @@
   function saveUserProfile() {
     const name = document.getElementById('regName').value.trim();
     const phone = document.getElementById('regPhone').value.trim();
-    if (!name || !phone) {
-      alert("Please enter Name and Mobile Number!");
-      return;
-    }
-    currentUser = { 
-      name: name, 
-      phone: phone, 
-      totalXP: 0, 
-      currentRank: '--',
-      unlockedLevels: { Math: 1, Science: 1 }
-    };
+    if (!name || !phone) return alert("Name aur Number daalein!");
+    currentUser = { name: name, phone: phone, totalXP: 0, currentRank: '--', unlockedLevels: { Math: 1, Science: 1 } };
     localStorage.setItem('vimal_arena_player', JSON.stringify(currentUser));
     document.getElementById('userModal').style.display = 'none';
     updatePlayerStatsUI();
     navigateTo('screenHome');
-    fetchLeaderboard();
+    fetchCloudData();
   }
 
   function logoutUser() {
-    if (!confirm("Kya aap Logout karna chahte hain?")) return;
-    clearInterval(qTimerInterval);
+    if (!confirm("Logout karna chahte hain?")) return;
     localStorage.removeItem('vimal_arena_player');
     location.reload();
   }
@@ -813,31 +503,61 @@
     document.getElementById('userInitial').innerText = (currentUser.name || "V")[0].toUpperCase();
     document.getElementById('dispXP').innerText = `${currentUser.totalXP} XP`;
     document.getElementById('topUserRank').innerText = currentUser.currentRank ? `Rank #${currentUser.currentRank}` : 'Rank #--';
-
-    const xp = currentUser.totalXP;
-    let badge = "⭐ Novice Champion";
-    if (xp >= 500) badge = "🏆 Grandmaster Legend";
-    else if (xp >= 250) badge = "🔥 Master Scholar";
-    else if (xp >= 100) badge = "⚡ Rising Star";
-    document.getElementById('dispBadge').innerText = badge;
   }
 
-  // NAVIGATION ENGINE
   function navigateTo(screenId) {
     clearInterval(qTimerInterval);
-    document.getElementById('screenHome').style.display = 'none';
-    document.getElementById('screenSets').style.display = 'none';
-    document.getElementById('screenQuiz').style.display = 'none';
-    document.getElementById('resultScreen').style.display = 'none';
-
+    ['screenHome', 'screenSets', 'screenQuiz', 'resultScreen'].forEach(id => {
+      document.getElementById(id).style.display = 'none';
+    });
     document.getElementById(screenId).style.display = 'flex';
+  }
 
-    if (screenId === 'screenHome') {
-      fetchLeaderboard();
+  async function fetchCloudData() {
+    try {
+      const resp = await fetch(SCRIPT_WEBHOOK_URL);
+      const data = await resp.json();
+
+      if (data.quizzes) {
+        if (data.quizzes.Math && data.quizzes.Math.length > 0) quizDatabase.Math = data.quizzes.Math;
+        if (data.quizzes.Science && data.quizzes.Science.length > 0) quizDatabase.Science = data.quizzes.Science;
+        
+        document.getElementById('mathSetsSub').innerText = `${quizDatabase.Math.length} Sets Available`;
+        document.getElementById('sciSetsSub').innerText = `${quizDatabase.Science.length} Sets Available`;
+      }
+
+      renderLeaderboardUI(data);
+    } catch (e) {
+      console.warn("Cloud Sync Error", e);
     }
   }
 
-  // OPEN SETS LIST FOR SELECTED SUBJECT
+  function renderLeaderboardUI(data) {
+    const listEl = document.getElementById('leaderboardList');
+    if (!listEl) return;
+    const topList = currentSubject === 'Math' ? data.mathTop5 : data.scienceTop5;
+    if (!topList || topList.length === 0) {
+      listEl.innerHTML = `<div style="color:#94a3b8; font-size:12px; text-align:center;">Abhi koi data nahi hai.</div>`;
+      return;
+    }
+    listEl.innerHTML = '';
+    topList.forEach(item => {
+      const isMe = item.name.toLowerCase() === currentUser.name.toLowerCase();
+      if (isMe) {
+        currentUser.currentRank = item.rank;
+        document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
+        localStorage.setItem('vimal_arena_player', JSON.stringify(currentUser));
+      }
+      const div = document.createElement('div');
+      div.className = 'lb-item';
+      div.innerHTML = `
+        <div><span style="font-weight:900; margin-right:6px;">#${item.rank}</span> ${item.name} ${isMe ? '(You)' : ''}</div>
+        <div style="font-size:12px; font-weight:800; color:#38bdf8;">${item.totalXP} XP</div>
+      `;
+      listEl.appendChild(div);
+    });
+  }
+
   function openSubjectSets(subj) {
     currentSubject = subj;
     document.getElementById('selectedSubjHeading').innerText = `${subj === 'Math' ? '📐 Mathematics' : '🔬 General Science'} Sets`;
@@ -848,39 +568,31 @@
   function renderSetsList() {
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
-
-    const sets = quizDatabase[currentSubject];
+    const sets = quizDatabase[currentSubject] || [];
     const unlockedMax = currentUser.unlockedLevels[currentSubject] || 1;
 
     sets.forEach(set => {
       const isLocked = set.level > unlockedMax;
       const row = document.createElement('div');
       row.className = 'set-row-card ' + (isLocked ? 'locked' : 'unlocked');
-
       row.innerHTML = `
         <div class="set-title-wrap">
-          <span class="set-status-badge">${isLocked ? '🔒' : '🔓'}</span>
+          <span style="font-size:18px;">${isLocked ? '🔒' : '🔓'}</span>
           <div class="set-info">
             <h4>${set.title}</h4>
-            <span>${set.questions.length} Questions • 30s per Question</span>
+            <span>${set.questions.length} Questions • 30s Timer</span>
           </div>
         </div>
         <div class="set-action-pill">${isLocked ? 'Locked' : 'Start ▶'}</div>
       `;
-
       row.onclick = () => {
-        if (isLocked) {
-          alert(`🔒 Set ${set.level} locked hai! Isko kholne ke liye pehle Set ${set.level - 1} me 50% score karein.`);
-          return;
-        }
+        if (isLocked) return alert(`🔒 Set ${set.level} locked hai! Pichle set me 50% score karein.`);
         startQuizSet(set.level);
       };
-
       container.appendChild(row);
     });
   }
 
-  // START QUIZ
   function startQuizSet(lvl) {
     currentLevel = lvl;
     userAnswers = {};
@@ -892,7 +604,7 @@
 
   function getCurrentQuestions() {
     const setObj = quizDatabase[currentSubject].find(s => s.level === currentLevel);
-    return setObj ? setObj.questions : quizDatabase[currentSubject][0].questions;
+    return setObj ? setObj.questions : [];
   }
 
   function loadQuestion(idx) {
@@ -906,12 +618,14 @@
 
     const container = document.getElementById('optionsContainer');
     container.innerHTML = '';
-
     qData.options.forEach((opt, oIdx) => {
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
       btn.innerHTML = `<span style="opacity:0.6;">${String.fromCharCode(65 + oIdx)}.</span> ${opt}`;
-      btn.onclick = () => selectOption(idx, oIdx);
+      btn.onclick = () => {
+        userAnswers[idx] = oIdx;
+        loadQuestion(idx);
+      };
       container.appendChild(btn);
     });
 
@@ -919,11 +633,10 @@
     document.getElementById('btnNext').style.display = isLast ? 'none' : 'flex';
     document.getElementById('btnSubmit').style.display = isLast ? 'flex' : 'none';
 
-    // START 30-SECOND COUNTDOWN
-    startTimerForQuestion();
+    startTimer();
   }
 
-  function startTimerForQuestion() {
+  function startTimer() {
     qTimeLeft = 30;
     const timerSecsEl = document.getElementById('qTimerSecs');
     const timerPillEl = document.getElementById('qTimerPill');
@@ -933,64 +646,36 @@
     qTimerInterval = setInterval(() => {
       qTimeLeft--;
       timerSecsEl.innerText = qTimeLeft;
-
-      if (qTimeLeft <= 10) {
-        timerPillEl.classList.add('urgent');
-      }
-
+      if (qTimeLeft <= 10) timerPillEl.classList.add('urgent');
       if (qTimeLeft <= 0) {
         clearInterval(qTimerInterval);
-        autoAdvanceTimeout();
+        const questions = getCurrentQuestions();
+        if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
+        else submitQuiz();
       }
     }, 1000);
   }
 
-  function autoAdvanceTimeout() {
-    const questions = getCurrentQuestions();
-    if (currentQIdx < questions.length - 1) {
-      loadQuestion(currentQIdx + 1);
-    } else {
-      submitQuiz();
-    }
-  }
-
-  function selectOption(qIdx, oIdx) {
-    userAnswers[qIdx] = oIdx;
-    const options = document.querySelectorAll('.option-btn');
-    options.forEach((btn, idx) => {
-      btn.classList.toggle('selected', idx === oIdx);
-    });
-  }
-
   function nextQuestion() {
     const questions = getCurrentQuestions();
-    if (currentQIdx < questions.length - 1) {
-      loadQuestion(currentQIdx + 1);
-    }
+    if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
   }
 
   function confirmExitQuiz() {
-    if (confirm("Kya aap beech me test chhod kar bahar aana chahte hain?")) {
-      clearInterval(qTimerInterval);
-      navigateTo('screenSets');
-    }
+    if (confirm("Test chhod kar bahar jana chahte hain?")) navigateTo('screenSets');
   }
 
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const questions = getCurrentQuestions();
     let score = 0;
-    questions.forEach((q, idx) => {
-      if (userAnswers[idx] === q.ans) score++;
-    });
+    questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
 
     const percent = (score / questions.length) * 100;
     const passed = percent >= 50;
-
     const earnedXP = score * 20;
     currentUser.totalXP = (currentUser.totalXP || 0) + earnedXP;
 
-    // 50% PASS RULE FOR UNLOCKING NEXT LEVEL
     const unlockedMax = currentUser.unlockedLevels[currentSubject] || 1;
     let newLevelUnlocked = false;
 
@@ -1002,7 +687,6 @@
     localStorage.setItem('vimal_arena_player', JSON.stringify(currentUser));
     updatePlayerStatsUI();
 
-    // SHOW RESULT SCREEN
     navigateTo('resultScreen');
     document.getElementById('resSubjTag').innerText = `${currentSubject} - Set ${currentLevel}`;
     document.getElementById('resScore').innerText = score;
@@ -1014,108 +698,46 @@
 
     if (passed) {
       banner.className = "unlock-banner unlock-success";
-      if (newLevelUnlocked) {
-        banner.innerHTML = `🎉 Shandar! Score: ${percent.toFixed(0)}% (≥50%). Agla Set ${currentLevel + 1} UNLOCK ho gaya! 🔓`;
-        nextBtn.innerText = `Set ${currentLevel + 1} Khelein ➔`;
-      } else {
-        banner.innerHTML = `✅ Passed! Score: ${percent.toFixed(0)}%. Set Mastered!`;
-        nextBtn.innerText = `Next Set ➔`;
-      }
+      banner.innerHTML = newLevelUnlocked 
+        ? `🎉 Shandar! Score: ${percent.toFixed(0)}%. Set ${currentLevel + 1} UNLOCK ho gaya! 🔓`
+        : `✅ Passed! Score: ${percent.toFixed(0)}%. Set Mastered!`;
+      nextBtn.innerText = `Next Set ➔`;
     } else {
       banner.className = "unlock-banner unlock-failed";
-      banner.innerHTML = `⚠️ Score: ${percent.toFixed(0)}%. Agla Set kholne ke liye kam se kam 50% chahiye. Dobara koshish karein! 🔒`;
-      nextBtn.innerText = `Dobara Koshish Karein 🔄`;
+      banner.innerHTML = `⚠️ Score: ${percent.toFixed(0)}%. Kam se kam 50% chahiye agla level kholne ke liye! 🔒`;
+      nextBtn.innerText = `Retry Set 🔄`;
     }
 
-    const angle = (score / questions.length) * 360;
-    document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${angle}deg`);
+    document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    // AUTO-LOG DATA TO GOOGLE SHEET
-    const payload = {
-      studentName: currentUser.name,
-      mobileNumber: currentUser.phone,
-      subject: `${currentSubject}_Set${currentLevel}`,
-      score: score,
-      totalQuestions: questions.length,
-      xpEarned: earnedXP
-    };
+    fetch(SCRIPT_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        studentName: currentUser.name,
+        mobileNumber: currentUser.phone,
+        subject: `${currentSubject}_Set${currentLevel}`,
+        score: score,
+        totalQuestions: questions.length,
+        xpEarned: earnedXP
+      })
+    });
 
-    try {
-      await fetch(SCRIPT_WEBHOOK_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (e) {}
-
-    setTimeout(fetchLeaderboard, 1200);
+    setTimeout(fetchCloudData, 1500);
   }
 
   function goToNextLevelOrRetry() {
     const questions = getCurrentQuestions();
     let score = 0;
-    questions.forEach((q, idx) => {
-      if (userAnswers[idx] === q.ans) score++;
-    });
-
-    const percent = (score / questions.length) * 100;
-    const maxSets = quizDatabase[currentSubject].length;
-
-    if (percent >= 50 && currentLevel < maxSets) {
+    questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
+    if ((score / questions.length) * 100 >= 50 && currentLevel < quizDatabase[currentSubject].length) {
       currentLevel++;
     }
     startQuizSet(currentLevel);
   }
 
-  async function fetchLeaderboard() {
-    const listEl = document.getElementById('leaderboardList');
-    if (!listEl) return;
-    listEl.innerHTML = `<div style="color:#64748b; font-size:12px; text-align:center;">Updating leaderboard...</div>`;
-
-    try {
-      const resp = await fetch(SCRIPT_WEBHOOK_URL);
-      const data = await resp.json();
-      
-      const topList = currentSubject === 'Math' ? data.mathTop5 : data.scienceTop5;
-      
-      if (!topList || topList.length === 0) {
-        listEl.innerHTML = `<div style="color:#94a3b8; font-size:12px; text-align:center;">Abhi koi data nahi hai.</div>`;
-        return;
-      }
-
-      listEl.innerHTML = '';
-      topList.forEach((item) => {
-        const div = document.createElement('div');
-        div.className = `lb-item rank-${item.rank}`;
-        const isMe = item.name.toLowerCase() === currentUser.name.toLowerCase();
-        
-        if (isMe) {
-          currentUser.currentRank = item.rank;
-          document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
-          localStorage.setItem('vimal_arena_player', JSON.stringify(currentUser));
-        }
-
-        div.innerHTML = `
-          <div><span style="font-weight:900; margin-right:6px;">#${item.rank}</span> ${item.name} ${isMe ? '(You)' : ''}</div>
-          <div style="font-size:12px; font-weight:800; color:#38bdf8;">${item.totalXP} XP</div>
-        `;
-        listEl.appendChild(div);
-      });
-    } catch (err) {
-      listEl.innerHTML = `<div style="color:#f87171; font-size:12px; text-align:center;">Leaderboard sync failed.</div>`;
-    }
-  }
-
-  function shareOnWhatsApp() {
-    const score = document.getElementById('resScore').innerText;
-    const msg = `⚡ Maine "Exam Arena by Vimal Sir" par ${currentSubject} (Set ${currentLevel}) me ${score} marks score kiye! Mera total score ${currentUser.totalXP} XP ho gaya hai. Kya aap agla level unlock kar sakte hain? 🏆`;
-    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
-  }
-
-  window.onload = () => {
-    loadUserProfile();
-  };
+  window.onload = loadUserProfile;
 </script>
 
 </body>
