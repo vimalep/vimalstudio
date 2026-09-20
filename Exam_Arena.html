@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Exam Arena by Vimal Sir - Master Edition</title>
+  <title>Exam Arena by Vimal Sir - Live Pro</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -28,281 +28,148 @@
       font-family: 'Poppins', sans-serif;
       background-color: var(--bg-dark);
       color: var(--text-main);
-      padding: 12px 10px 40px 10px;
+      padding: 10px 10px 40px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
     }
 
-    .arena-container {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    .arena-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
 
     .arena-header {
-      text-align: center;
-      padding: 12px 14px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      position: relative;
+      text-align: center; padding: 12px; background: var(--card-bg);
+      border: 1px solid var(--border-color); border-radius: 16px;
     }
     .arena-title {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 0.5px;
+      font-size: 22px; font-weight: 900;
       background: linear-gradient(135deg, #38bdf8, #818cf8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .vimal-badge {
-      display: inline-block;
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      color: #f87171;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 2px 10px;
-      border-radius: 20px;
-      margin-top: 4px;
+      display: inline-block; background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171;
+      font-size: 10.5px; font-weight: 800; padding: 2px 10px; border-radius: 20px; margin-top: 3px;
     }
+
+    /* RUNNING TICKER */
+    .live-ticker-wrap {
+      width: 100%; background: #0b1426; border: 1px solid #1e293b; border-radius: 10px;
+      padding: 7px 10px; display: flex; align-items: center; gap: 8px; overflow: hidden;
+    }
+    .ticker-pill {
+      background: #ef4444; color: #fff; font-size: 10px; font-weight: 900;
+      padding: 2px 7px; border-radius: 6px; flex-shrink: 0; text-transform: uppercase;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .ticker-content {
+      white-space: nowrap; font-size: 11.5px; font-weight: 700; color: #38bdf8;
+      display: inline-block; animation: scrollText 18s linear infinite;
+    }
+    @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
     .player-profile-card {
-      background: linear-gradient(135deg, #111e38, #0b1329);
-      border: 1px solid #2a3a5e;
-      border-radius: 14px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      background: linear-gradient(135deg, #111e38, #0b1329); border: 1px solid #2a3a5e;
+      border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;
     }
-    .profile-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-    }
+    .profile-info { display: flex; align-items: center; gap: 10px; }
     .avatar-circle {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 900;
-      flex-shrink: 0;
+      width: 42px; height: 42px; background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900;
     }
-    .user-tag { display: flex; flex-direction: column; gap: 2px; }
-    .name-rank-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .user-tag .u-name { font-size: 14px; font-weight: 800; color: #fff; }
-    .user-rank-badge {
-      background: rgba(56, 189, 248, 0.2);
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
-      font-size: 10.5px;
-      font-weight: 800;
-      padding: 1px 7px;
-      border-radius: 6px;
-    }
-    .user-tag .u-level { font-size: 11px; font-weight: 700; color: var(--accent-gold); }
-
-    .right-profile-actions { display: flex; align-items: center; gap: 8px; }
+    .user-tag { display: flex; flex-direction: column; }
+    .u-name { font-size: 14px; font-weight: 800; color: #fff; }
+    .user-rank-badge { color: #38bdf8; font-size: 11px; font-weight: 800; }
     .stat-badge {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      padding: 5px 10px;
-      border-radius: 10px;
-      text-align: right;
+      background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 5px 10px; border-radius: 10px; text-align: right;
     }
-    .stat-badge .xp-num { font-size: 15px; font-weight: 900; color: #38bdf8; line-height: 1.1; }
-    .stat-badge .xp-lbl { font-size: 9.5px; color: var(--text-muted); font-weight: 700; }
-
+    .stat-badge .xp-num { font-size: 15px; font-weight: 900; color: #38bdf8; }
+    .stat-badge .xp-lbl { font-size: 9.5px; color: var(--text-muted); }
     .btn-logout {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      color: #f87171;
-      padding: 6px 9px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
+      background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171; padding: 6px 9px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; margin-left: 8px;
     }
 
-    .ad-banner-box {
-      width: 100%;
-      min-height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin: 10px 0;
-    }
+    .ad-banner-box { width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 8px 0; }
 
     .app-screen { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .section-title { font-size: 13.5px; font-weight: 800; color: var(--accent-gold); }
 
-    .section-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--accent-gold);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
     .subject-cards-grid { display: flex; flex-direction: column; gap: 10px; }
     .subject-card {
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 14px;
+      padding: 15px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
     }
     .sc-info { display: flex; align-items: center; gap: 14px; }
-    .sc-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-    }
+    .sc-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
     .sc-math .sc-icon { background: rgba(59, 130, 246, 0.15); border: 1px solid #3b82f6; }
     .sc-sci .sc-icon { background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; }
-    .sc-text h3 { font-size: 16px; font-weight: 800; color: #fff; }
-    .sc-text p { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-    .sc-arrow { font-size: 18px; font-weight: 900; color: var(--accent-blue); }
 
     .screen-header-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 8px 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 8px 12px;
     }
     .btn-back {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 800;
-      cursor: pointer;
+      background: #1e293b; border: 1px solid #334155; color: #cbd5e1; padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer;
     }
+
     .sets-list-container { display: flex; flex-direction: column; gap: 9px; }
     .set-row-card {
-      background: var(--card-bg);
-      border: 1.5px solid var(--border-color);
-      border-radius: 14px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
+      background: var(--card-bg); border: 1.5px solid var(--border-color); border-radius: 14px;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
     }
     .set-row-card.locked { opacity: 0.55; cursor: not-allowed; }
-    .set-title-wrap { display: flex; align-items: center; gap: 10px; }
-    .set-info h4 { font-size: 14.5px; font-weight: 800; color: #fff; }
-    .set-info span { font-size: 11px; color: var(--text-muted); font-weight: 600; }
     .set-action-pill { font-size: 11.5px; font-weight: 800; padding: 5px 12px; border-radius: 20px; }
     .set-row-card:not(.locked) .set-action-pill { background: #0284c7; color: #fff; }
     .set-row-card.locked .set-action-pill { background: #1e293b; color: #64748b; }
 
-    .quiz-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.4);
-    }
+    .quiz-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; }
     .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .q-counter {
-      font-size: 12px; font-weight: 800; color: var(--accent-blue);
-      background: rgba(56, 189, 248, 0.1); padding: 3px 10px; border-radius: 12px;
-    }
-    .timer-pill {
-      background: rgba(245, 158, 11, 0.15); border: 1.5px solid var(--accent-gold);
-      color: #fbbf24; font-size: 13px; font-weight: 900; padding: 3px 12px; border-radius: 20px;
-    }
+    .q-counter { font-size: 12px; font-weight: 800; color: var(--accent-blue); background: rgba(56, 189, 248, 0.1); padding: 3px 10px; border-radius: 12px; }
+    .timer-pill { background: rgba(245, 158, 11, 0.15); border: 1.5px solid var(--accent-gold); color: #fbbf24; font-size: 13px; font-weight: 900; padding: 3px 12px; border-radius: 20px; }
     .timer-pill.urgent { border-color: var(--accent-red); background: rgba(239, 68, 68, 0.2); color: #f87171; }
-    .q-text { font-size: 16.5px; font-weight: 700; line-height: 1.45; margin-bottom: 16px; color: #f8fafc; }
+    .q-text { font-size: 16px; font-weight: 700; line-height: 1.45; margin-bottom: 16px; }
     .options-grid { display: flex; flex-direction: column; gap: 10px; }
-    .option-btn {
-      width: 100%; background: #1e293b; border: 1.5px solid #334155; color: #f1f5f9;
-      padding: 13px 14px; border-radius: 12px; font-size: 14px; font-weight: 700;
-      text-align: left; cursor: pointer;
-    }
+    .option-btn { width: 100%; background: #1e293b; border: 1.5px solid #334155; color: #f1f5f9; padding: 13px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: left; cursor: pointer; }
     .option-btn.selected { border-color: var(--accent-blue); background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+
     .nav-actions { display: flex; gap: 8px; margin-top: 16px; }
-    .btn-action {
-      flex: 1; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 800;
-      cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
-    }
+    .btn-action { flex: 1; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; border: none; }
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #0284c7); color: #fff; }
 
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 12px; }
-    .score-circle {
-      width: 110px; height: 110px; border-radius: 50%;
-      background: conic-gradient(#10b981 var(--score-angle, 0deg), #1e293d 0deg);
-      display: flex; align-items: center; justify-content: center; margin: 6px auto;
-    }
-    .score-inner {
-      width: 88px; height: 88px; border-radius: 50%; background: #0f172a;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    .score-num { font-size: 26px; font-weight: 900; color: #fff; }
-    .score-tot { font-size: 11px; color: var(--text-muted); font-weight: 700; }
-    .unlock-banner {
-      width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 800;
-    }
+    .score-circle { width: 110px; height: 110px; border-radius: 50%; background: conic-gradient(#10b981 var(--score-angle, 0deg), #1e293d 0deg); display: flex; align-items: center; justify-content: center; margin: 6px auto; }
+    .score-inner { width: 88px; height: 88px; border-radius: 50%; background: #0f172a; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .score-num { font-size: 26px; font-weight: 900; }
+    .unlock-banner { width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 800; }
     .unlock-success { background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; color: #34d399; }
     .unlock-failed { background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; color: #f87171; }
 
-    .leaderboard-box {
-      width: 100%; background: #091122; border: 1px solid #1e293b; border-radius: 14px; padding: 12px; text-align: left;
-    }
-    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 800; color: #f59e0b; margin-bottom: 8px; }
-    .lb-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 700; margin-bottom: 4px; background: #0f172a; }
+    .leaderboard-box { width: 100%; background: #091122; border: 1px solid #1e293b; border-radius: 14px; padding: 12px; text-align: left; }
+    .lb-header { display: flex; justify-content: space-between; font-size: 13px; font-weight: 800; color: #f59e0b; margin-bottom: 8px; }
+    .lb-item { display: flex; justify-content: space-between; padding: 7px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 700; margin-bottom: 4px; background: #0f172a; }
 
-    #userModal {
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.88);
-      display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
-    }
-    .modal-box {
-      background: #0f172a; border: 1px solid #334155; padding: 24px 20px; border-radius: 18px; width: 100%; max-width: 380px; text-align: center;
-    }
-    .modal-box input {
-      width: 100%; background: #1e293b; border: 1px solid #475569; padding: 12px 14px; border-radius: 10px; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none;
-    }
-    .modal-box button {
-      width: 100%; background: linear-gradient(135deg, #38bdf8, #2563eb); border: none; padding: 13px; border-radius: 10px; color: #fff; font-weight: 800; font-size: 15px; cursor: pointer;
-    }
+    /* AUTH MODAL */
+    #userModal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999; }
+    .modal-box { background: #0f172a; border: 1px solid #334155; padding: 24px 20px; border-radius: 18px; width: 100%; max-width: 380px; text-align: center; }
+    .modal-box input { width: 100%; background: #1e293b; border: 1px solid #475569; padding: 12px; border-radius: 10px; color: #fff; font-size: 14px; margin-bottom: 12px; outline: none; }
+    .modal-box button { width: 100%; background: linear-gradient(135deg, #38bdf8, #2563eb); border: none; padding: 13px; border-radius: 10px; color: #fff; font-weight: 800; font-size: 15px; cursor: pointer; }
   </style>
 </head>
 <body>
 
+<!-- LOGIN / SIGNUP MODAL -->
 <div id="userModal">
   <div class="modal-box">
-    <h2 style="color:#38bdf8; margin-bottom:6px;">⚡ Exam Arena Login</h2>
-    <p style="color:#94a3b8; font-size:12.5px; margin-bottom:14px;">Name aur Mobile number daal kar live rank dekhein!</p>
-    <input type="text" id="regName" placeholder="Student Name (उदा. Aman Sharma)" required>
-    <input type="tel" id="regPhone" placeholder="Mobile / WhatsApp Number" required>
-    <button onclick="saveUserProfile()">Login & Go to Home ➔</button>
+    <h2 style="color:#38bdf8; margin-bottom:6px;">⚡ Student Account</h2>
+    <p style="color:#94a3b8; font-size:12.5px; margin-bottom:14px;">Apna Username aur 4-digit PIN banayein / enter karein:</p>
+    <input type="text" id="authUsername" placeholder="Enter Username (उदा. Aman10)" required>
+    <input type="password" id="authPin" maxlength="4" placeholder="4-Digit PIN (उदा. 1234)" required>
+    <button id="btnAuth" onclick="handleAuthSubmit()">Login / Register Account ➔</button>
+    <p id="authErr" style="color:#f87171; font-size:12px; margin-top:8px; display:none;"></p>
   </div>
 </div>
 
@@ -310,53 +177,57 @@
 
   <div class="arena-header">
     <div class="arena-title">EXAM ARENA</div>
-    <div class="vimal-badge">BY VIMAL SIR • MASTER LIVE EDITION</div>
+    <div class="vimal-badge">BY VIMAL SIR • LIVE EDITION</div>
   </div>
 
+  <!-- RUNNING LIVE TICKER -->
+  <div class="live-ticker-wrap">
+    <div class="ticker-pill">LIVE</div>
+    <div class="ticker-content" id="liveTickerText">🟢 Loading online students...</div>
+  </div>
+
+  <!-- PLAYER CARD -->
   <div class="player-profile-card">
     <div class="profile-info">
-      <div class="avatar-circle" id="userInitial">V</div>
+      <div class="avatar-circle" id="userInitial">U</div>
       <div class="user-tag">
-        <div class="name-rank-row">
-          <span class="u-name" id="dispName">Student</span>
-          <span class="user-rank-badge" id="topUserRank">Rank #--</span>
-        </div>
-        <span class="u-level" id="dispBadge">⭐ Novice Champion</span>
+        <span class="u-name" id="dispName">Student</span>
+        <span class="user-rank-badge" id="topUserRank">Rank #--</span>
       </div>
     </div>
-    <div class="right-profile-actions">
+    <div style="display:flex; align-items:center;">
       <div class="stat-badge">
         <div class="xp-num" id="dispXP">0 XP</div>
         <div class="xp-lbl">Total Score</div>
       </div>
-      <button class="btn-logout" onclick="logoutUser()">🚪 Exit</button>
+      <button class="btn-logout" onclick="logoutUser()">🚪</button>
     </div>
   </div>
 
   <!-- SCREEN 1: HOME -->
   <div class="app-screen" id="screenHome">
-    <div class="section-title">📚 Choose Subject to Begin:</div>
+    <div class="section-title">📚 Select Subject:</div>
     <div class="subject-cards-grid">
       <div class="subject-card sc-math" onclick="openSubjectSets('Math')">
         <div class="sc-info">
           <div class="sc-icon">📐</div>
-          <div class="sc-text">
+          <div>
             <h3>Mathematics</h3>
-            <p id="mathSetsSub">Loading live sets from Sheet...</p>
+            <p id="mathSetsSub" style="color:#94a3b8; font-size:12px;">Live Sets from Sheet...</p>
           </div>
         </div>
-        <div class="sc-arrow">➔</div>
+        <span style="color:#38bdf8; font-weight:900;">➔</span>
       </div>
 
       <div class="subject-card sc-sci" onclick="openSubjectSets('Science')">
         <div class="sc-info">
           <div class="sc-icon">🔬</div>
-          <div class="sc-text">
+          <div>
             <h3>General Science</h3>
-            <p id="sciSetsSub">Loading live sets from Sheet...</p>
+            <p id="sciSetsSub" style="color:#94a3b8; font-size:12px;">Live Sets from Sheet...</p>
           </div>
         </div>
-        <div class="sc-arrow">➔</div>
+        <span style="color:#38bdf8; font-weight:900;">➔</span>
       </div>
     </div>
 
@@ -378,10 +249,10 @@
   <!-- SCREEN 2: SETS -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:800; font-size:13.5px;" id="selectedSubjHeading">Sets</span>
+      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Home</button>
+      <span style="font-weight:800; font-size:13px;" id="selectedSubjHeading">Sets</span>
     </div>
-    <div class="section-title">🎯 Select Quiz Set (≥50% to Unlock Next):</div>
+    <div class="section-title">🎯 Choose Set (Pass ≥50% to Unlock Next):</div>
     <div class="sets-list-container" id="setsListRenderBox"></div>
 
     <!-- ADSTERRA AD SLOT 2 -->
@@ -407,14 +278,14 @@
     </div>
     <div class="quiz-card">
       <div class="q-meta">
-        <span class="q-counter" id="qCounter">Question 1 / 5</span>
+        <span class="q-counter" id="qCounter">Q 1/5</span>
         <div class="timer-pill" id="qTimerPill">⏱️ <span id="qTimerSecs">30</span>s</div>
       </div>
       <div class="q-text" id="qText">Loading question...</div>
       <div class="options-grid" id="optionsContainer"></div>
       <div class="nav-actions">
         <button class="btn-action btn-next" id="btnNext" onclick="nextQuestion()">Next ➔</button>
-        <button class="btn-action btn-submit" id="btnSubmit" onclick="submitQuiz()" style="display:none;">Finish & Submit 🏆</button>
+        <button class="btn-action btn-submit" id="btnSubmit" onclick="submitQuiz()" style="display:none;">Submit 🏆</button>
       </div>
     </div>
   </div>
@@ -427,13 +298,13 @@
       <div class="score-circle" id="scoreCircleWheel">
         <div class="score-inner">
           <span class="score-num" id="resScore">0</span>
-          <span class="score-tot" id="resTotalQ">out of 5</span>
+          <span style="font-size:11px; color:#94a3b8;" id="resTotalQ">out of 5</span>
         </div>
       </div>
       <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
       <div class="leaderboard-box" style="margin-top:12px;">
         <div class="lb-header">
-          <span>🏆 Top 5 Champions (<span id="lbSubjTitle">Math</span>)</span>
+          <span>🏆 Top Champions</span>
           <span style="font-size:11px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Sync</span>
         </div>
         <div id="leaderboardList"></div>
@@ -450,30 +321,7 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  let quizDatabase = {
-    Math: [
-      {
-        level: 1,
-        title: "Set 1: Basic Arithmetic",
-        questions: [
-          { q: "What is (25 × 4) + (15 × 2)?", options: ["120", "130", "140", "150"], ans: 1 },
-          { q: "Perimeter of square with side 12 cm?", options: ["24 cm", "48 cm", "144 cm", "96 cm"], ans: 1 },
-          { q: "Square root of 625?", options: ["15", "25", "35", "20"], ans: 1 }
-        ]
-      }
-    ],
-    Science: [
-      {
-        level: 1,
-        title: "Set 1: Life Science",
-        questions: [
-          { q: "Which gas is released during photosynthesis?", options: ["CO2", "Nitrogen", "Oxygen", "Hydrogen"], ans: 2 },
-          { q: "Chemical formula of salt?", options: ["HCl", "NaOH", "NaCl", "KCl"], ans: 2 }
-        ]
-      }
-    ]
-  };
-
+  let quizDatabase = { Math: [], Science: [] };
   let currentSubject = 'Math';
   let currentLevel = 1;
   let currentQIdx = 0;
@@ -481,18 +329,14 @@
   let qTimerInterval = null;
   let qTimeLeft = 30;
 
-  let currentUser = { 
-    name: '', phone: '', totalXP: 0, currentRank: '--',
-    unlockedLevels: { Math: 1, Science: 1 }
-  };
+  let currentUser = { username: '', pin: '', totalXP: 0, currentRank: '--', unlockedLevels: { Math: 1, Science: 1 } };
 
-  function loadUserProfile() {
-    const saved = localStorage.getItem('vimal_arena_player');
+  function initApp() {
+    const saved = localStorage.getItem('vimal_arena_auth');
     if (saved) {
       currentUser = JSON.parse(saved);
-      if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1 };
       document.getElementById('userModal').style.display = 'none';
-      updatePlayerStatsUI();
+      updatePlayerUI();
       navigateTo('screenHome');
       fetchCloudData();
     } else {
@@ -500,27 +344,64 @@
     }
   }
 
-  function saveUserProfile() {
-    const name = document.getElementById('regName').value.trim();
-    const phone = document.getElementById('regPhone').value.trim();
-    if (!name || !phone) return alert("Name aur Number daalein!");
-    currentUser = { name: name, phone: phone, totalXP: 0, currentRank: '--', unlockedLevels: { Math: 1, Science: 1 } };
-    localStorage.setItem('vimal_arena_player', JSON.stringify(currentUser));
-    document.getElementById('userModal').style.display = 'none';
-    updatePlayerStatsUI();
-    navigateTo('screenHome');
-    fetchCloudData();
+  async function handleAuthSubmit() {
+    const u = document.getElementById('authUsername').value.trim();
+    const p = document.getElementById('authPin').value.trim();
+    const errEl = document.getElementById('authErr');
+    const btn = document.getElementById('btnAuth');
+
+    if (!u || p.length !== 4) {
+      errEl.innerText = "Username aur 4-digit PIN daalein!";
+      errEl.style.display = 'block';
+      return;
+    }
+
+    btn.innerText = "Connecting...";
+    btn.disabled = true;
+
+    try {
+      const resp = await fetch(SCRIPT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: "login_or_register", username: u, pin: p })
+      });
+      const data = await resp.json();
+
+      if (data.status === "success") {
+        currentUser = data.user;
+        currentUser.currentRank = '--';
+        localStorage.setItem('vimal_arena_auth', JSON.stringify(currentUser));
+        document.getElementById('userModal').style.display = 'none';
+        updatePlayerUI();
+        navigateTo('screenHome');
+        fetchCloudData();
+      } else {
+        errEl.innerText = data.message || "Login failed!";
+        errEl.style.display = 'block';
+      }
+    } catch (e) {
+      // Local fallback
+      currentUser = { username: u, pin: p, totalXP: 0, currentRank: '--', unlockedLevels: { Math: 1, Science: 1 } };
+      localStorage.setItem('vimal_arena_auth', JSON.stringify(currentUser));
+      document.getElementById('userModal').style.display = 'none';
+      updatePlayerUI();
+      navigateTo('screenHome');
+      fetchCloudData();
+    } finally {
+      btn.innerText = "Login / Register Account ➔";
+      btn.disabled = false;
+    }
   }
 
   function logoutUser() {
     if (!confirm("Logout karna chahte hain?")) return;
-    localStorage.removeItem('vimal_arena_player');
+    localStorage.removeItem('vimal_arena_auth');
     location.reload();
   }
 
-  function updatePlayerStatsUI() {
-    document.getElementById('dispName').innerText = currentUser.name || "Student";
-    document.getElementById('userInitial').innerText = (currentUser.name || "V")[0].toUpperCase();
+  function updatePlayerUI() {
+    document.getElementById('dispName').innerText = currentUser.username;
+    document.getElementById('userInitial').innerText = (currentUser.username[0] || 'U').toUpperCase();
     document.getElementById('dispXP').innerText = `${currentUser.totalXP} XP`;
     document.getElementById('topUserRank').innerText = currentUser.currentRank ? `Rank #${currentUser.currentRank}` : 'Rank #--';
   }
@@ -539,16 +420,20 @@
       const data = await resp.json();
 
       if (data.quizzes) {
-        if (data.quizzes.Math && data.quizzes.Math.length > 0) quizDatabase.Math = data.quizzes.Math;
-        if (data.quizzes.Science && data.quizzes.Science.length > 0) quizDatabase.Science = data.quizzes.Science;
-        
-        document.getElementById('mathSetsSub').innerText = `${quizDatabase.Math.length} Sets Available`;
-        document.getElementById('sciSetsSub').innerText = `${quizDatabase.Science.length} Sets Available`;
+        if (data.quizzes.Math) quizDatabase.Math = data.quizzes.Math;
+        if (data.quizzes.Science) quizDatabase.Science = data.quizzes.Science;
+        document.getElementById('mathSetsSub').innerText = `${quizDatabase.Math.length} Sets Live`;
+        document.getElementById('sciSetsSub').innerText = `${quizDatabase.Science.length} Sets Live`;
+      }
+
+      // Live Running Ticker Update
+      if (data.activeUsers && data.activeUsers.length > 0) {
+        document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Competing in Exam Arena!";
       }
 
       renderLeaderboardUI(data);
     } catch (e) {
-      console.warn("Cloud Sync Error", e);
+      console.warn(e);
     }
   }
 
@@ -556,23 +441,22 @@
     const listEl = document.getElementById('leaderboardList');
     if (!listEl) return;
     const topList = currentSubject === 'Math' ? data.mathTop5 : data.scienceTop5;
+    listEl.innerHTML = '';
     if (!topList || topList.length === 0) {
       listEl.innerHTML = `<div style="color:#94a3b8; font-size:12px; text-align:center;">Abhi koi data nahi hai.</div>`;
       return;
     }
-    listEl.innerHTML = '';
     topList.forEach(item => {
-      const isMe = item.name.toLowerCase() === currentUser.name.toLowerCase();
+      const isMe = item.name.toLowerCase() === currentUser.username.toLowerCase();
       if (isMe) {
         currentUser.currentRank = item.rank;
         document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
-        localStorage.setItem('vimal_arena_player', JSON.stringify(currentUser));
       }
       const div = document.createElement('div');
       div.className = 'lb-item';
       div.innerHTML = `
         <div><span style="font-weight:900; margin-right:6px;">#${item.rank}</span> ${item.name} ${isMe ? '(You)' : ''}</div>
-        <div style="font-size:12px; font-weight:800; color:#38bdf8;">${item.totalXP} XP</div>
+        <div style="color:#38bdf8;">${item.totalXP} XP</div>
       `;
       listEl.appendChild(div);
     });
@@ -580,7 +464,7 @@
 
   function openSubjectSets(subj) {
     currentSubject = subj;
-    document.getElementById('selectedSubjHeading').innerText = `${subj === 'Math' ? '📐 Mathematics' : '🔬 General Science'} Sets`;
+    document.getElementById('selectedSubjHeading').innerText = `${subj === 'Math' ? '📐 Mathematics' : '🔬 Science'} Sets`;
     renderSetsList();
     navigateTo('screenSets');
   }
@@ -589,24 +473,24 @@
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
     const sets = quizDatabase[currentSubject] || [];
-    const unlockedMax = currentUser.unlockedLevels[currentSubject] || 1;
+    const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
 
     sets.forEach(set => {
       const isLocked = set.level > unlockedMax;
       const row = document.createElement('div');
       row.className = 'set-row-card ' + (isLocked ? 'locked' : 'unlocked');
       row.innerHTML = `
-        <div class="set-title-wrap">
+        <div style="display:flex; align-items:center; gap:10px;">
           <span style="font-size:18px;">${isLocked ? '🔒' : '🔓'}</span>
-          <div class="set-info">
-            <h4>${set.title}</h4>
-            <span>${set.questions.length} Questions • 30s Timer</span>
+          <div>
+            <h4 style="font-size:14px; font-weight:800;">${set.title}</h4>
+            <span style="font-size:11px; color:#94a3b8;">${set.questions.length} Questions • 30s Timer</span>
           </div>
         </div>
         <div class="set-action-pill">${isLocked ? 'Locked' : 'Start ▶'}</div>
       `;
       row.onclick = () => {
-        if (isLocked) return alert(`🔒 Set ${set.level} locked hai! Pichle set me 50% score karein.`);
+        if (isLocked) return alert(`🔒 Set ${set.level} locked hai! Pichle set me 50% laayein.`);
         startQuizSet(set.level);
       };
       container.appendChild(row);
@@ -633,7 +517,7 @@
     const questions = getCurrentQuestions();
     const qData = questions[idx];
 
-    document.getElementById('qCounter').innerText = `Question ${idx + 1} / ${questions.length}`;
+    document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
     document.getElementById('qText').innerText = `${idx + 1}. ${qData.q}`;
 
     const container = document.getElementById('optionsContainer');
@@ -642,10 +526,7 @@
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
       btn.innerHTML = `<span style="opacity:0.6;">${String.fromCharCode(65 + oIdx)}.</span> ${opt}`;
-      btn.onclick = () => {
-        userAnswers[idx] = oIdx;
-        loadQuestion(idx);
-      };
+      btn.onclick = () => { userAnswers[idx] = oIdx; loadQuestion(idx); };
       container.appendChild(btn);
     });
 
@@ -696,7 +577,7 @@
     const earnedXP = score * 20;
     currentUser.totalXP = (currentUser.totalXP || 0) + earnedXP;
 
-    const unlockedMax = currentUser.unlockedLevels[currentSubject] || 1;
+    const unlockedMax = (currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject]) || 1;
     let newLevelUnlocked = false;
 
     if (passed && currentLevel === unlockedMax && currentLevel < quizDatabase[currentSubject].length) {
@@ -704,14 +585,13 @@
       newLevelUnlocked = true;
     }
 
-    localStorage.setItem('vimal_arena_player', JSON.stringify(currentUser));
-    updatePlayerStatsUI();
+    localStorage.setItem('vimal_arena_auth', JSON.stringify(currentUser));
+    updatePlayerUI();
 
     navigateTo('resultScreen');
     document.getElementById('resSubjTag').innerText = `${currentSubject} - Set ${currentLevel}`;
     document.getElementById('resScore').innerText = score;
     document.getElementById('resTotalQ').innerText = `out of ${questions.length}`;
-    document.getElementById('lbSubjTitle').innerText = currentSubject;
 
     const banner = document.getElementById('unlockResultBanner');
     const nextBtn = document.getElementById('btnNextLevelAction');
@@ -730,17 +610,18 @@
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
+    // Sync score & updated unlocked levels to Google Sheet
     fetch(SCRIPT_WEBHOOK_URL, {
       method: 'POST',
-      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        studentName: currentUser.name,
-        mobileNumber: currentUser.phone,
+        action: "submit_score",
+        username: currentUser.username,
         subject: `${currentSubject}_Set${currentLevel}`,
         score: score,
         totalQuestions: questions.length,
-        xpEarned: earnedXP
+        xpEarned: earnedXP,
+        unlockedLevels: currentUser.unlockedLevels
       })
     });
 
@@ -757,7 +638,7 @@
     startQuizSet(currentLevel);
   }
 
-  window.onload = loadUserProfile;
+  window.onload = initApp;
 </script>
 
 </body>
