@@ -17,7 +17,6 @@
       --text-muted: #94a3b8;
       --border-color: #1e293b;
       
-      /* Vibrant Glow Gradients */
       --grad-math: linear-gradient(135deg, #1e3a8a, #2563eb, #06b6d4);
       --grad-sci: linear-gradient(135deg, #064e3b, #059669, #10b981);
       --grad-gk: linear-gradient(135deg, #7c2d12, #c2410c, #f59e0b);
@@ -45,7 +44,6 @@
       gap: 12px;
     }
 
-    /* HEADER */
     .arena-header {
       text-align: center;
       padding: 14px 12px;
@@ -76,7 +74,6 @@
       margin-top: 4px;
     }
 
-    /* NEW QUIZ FLASH ALERT CARD (GLOWING ANIMATED) */
     .flash-alert-card {
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.22), rgba(245, 158, 11, 0.22));
       border: 1.5px solid #f59e0b;
@@ -129,7 +126,6 @@
       flex-shrink: 0;
     }
 
-    /* LIVE RUNNING TICKER */
     .live-ticker-wrap {
       width: 100%;
       background: linear-gradient(90deg, #111e38, #0b1325);
@@ -163,7 +159,6 @@
     }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* PROFILE BAR */
     .player-profile-card {
       background: linear-gradient(135deg, #132244, #0e172e);
       border: 1.5px solid #283e6b;
@@ -212,7 +207,6 @@
       margin-left: 8px;
     }
 
-    /* ADS CONTAINER */
     .ad-banner-box {
       width: 100%;
       min-height: 250px;
@@ -225,11 +219,9 @@
       background: rgba(255,255,255,0.02);
     }
 
-    /* SCREENS */
     .app-screen { display: flex; flex-direction: column; gap: 12px; width: 100%; }
     .section-title { font-size: 14px; font-weight: 800; color: #fbbf24; display: flex; align-items: center; gap: 6px; }
 
-    /* 3 VIBRANT SUBJECT CARDS */
     .subject-cards-grid { display: flex; flex-direction: column; gap: 12px; }
     .subject-card {
       border-radius: 18px;
@@ -273,7 +265,6 @@
       color: #fff;
     }
 
-    /* SCREEN 2: SETS */
     .screen-header-bar {
       display: flex;
       align-items: center;
@@ -309,7 +300,6 @@
     .set-row-card:not(.locked) .set-action-pill { background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; }
     .set-row-card.locked .set-action-pill { background: #1e293b; color: #64748b; }
 
-    /* QUIZ ARENA */
     .quiz-card {
       background: var(--card-bg);
       border: 1.5px solid #223254;
@@ -336,6 +326,11 @@
       cursor: pointer;
     }
     .option-btn.selected { border-color: #38bdf8; background: rgba(56, 189, 248, 0.18); color: #38bdf8; }
+    
+    /* Scientific formula typography styles */
+    sup { font-size: 0.75em; vertical-align: super; line-height: 0; }
+    sub { font-size: 0.75em; vertical-align: sub; line-height: 0; }
+
     .nav-actions { display: flex; gap: 10px; margin-top: 18px; }
     .btn-action {
       flex: 1; padding: 14px; border-radius: 12px; font-size: 14.5px; font-weight: 800;
@@ -344,7 +339,6 @@
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #0284c7); color: #fff; }
 
-    /* RESULT */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
     .score-circle {
       width: 120px; height: 120px; border-radius: 50%;
@@ -360,14 +354,12 @@
     .unlock-success { background: rgba(16, 185, 129, 0.15); border: 1.5px solid #10b981; color: #34d399; }
     .unlock-failed { background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; color: #f87171; }
 
-    /* LEADERBOARD */
     .leaderboard-box {
       width: 100%; background: #080f1e; border: 1.5px solid #1e293b; border-radius: 16px; padding: 14px; text-align: left;
     }
     .lb-header { display: flex; justify-content: space-between; font-size: 13.5px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
     .lb-item { display: flex; justify-content: space-between; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; margin-bottom: 5px; background: #131e36; }
 
-    /* AUTH MODAL & TABS */
     #userModal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.92);
       display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
@@ -397,7 +389,6 @@
     .err-msg { color: #f87171; font-size: 12px; font-weight: 700; margin-top: 8px; display: none; }
     .succ-msg { color: #34d399; font-size: 12px; font-weight: 800; margin-top: 8px; display: none; }
 
-    /* RECOVERY MODAL */
     #recoveryModal {
       position: fixed; inset: 0; background: rgba(0,0,0,0.92);
       display: none; align-items: center; justify-content: center; padding: 16px; z-index: 10000;
@@ -481,7 +472,7 @@
     <div class="vimal-badge">BY VIMAL SIR • MASTER LIVE EDITION</div>
   </div>
 
-  <!-- FLASH ALERT NOTIFICATION CARD (CHAMAKTA HUA BANNER) -->
+  <!-- FLASH ALERT NOTIFICATION CARD -->
   <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
     <div class="flash-icon-box">🔥</div>
     <div class="flash-text-wrap">
@@ -656,7 +647,7 @@
         level: 1,
         title: "Set 1: Basic Arithmetic",
         questions: [
-          { q: "(25 × 4) + (15 × 2) का मान क्या होगा?", options: ["120", "130", "140", "150"], ans: 1 },
+          { q: "(25 * 4) + (15 * 2) का मान क्या होगा?", options: ["120", "130", "140", "150"], ans: 1 },
           { q: "12 cm भुजा वाले वर्ग का परिमाप क्या होगा?", options: ["24 cm", "48 cm", "144 cm", "96 cm"], ans: 1 },
           { q: "√625 का वर्गमूल क्या है?", options: ["15", "25", "35", "20"], ans: 1 }
         ]
@@ -696,6 +687,16 @@
     username: '', studentName: '', totalXP: 0, currentRank: '--',
     unlockedLevels: { Math: 1, Science: 1, GK: 1 }
   };
+
+  // SMART FORMULA & SCIENTIFIC NOTATION FORMATTER
+  function formatMathFormula(text) {
+    if (!text) return '';
+    return text
+      .toString()
+      .replace(/\s*\*\s*/g, ' × ')                  // '*' ko neat multiplication '×' banata hai
+      .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>') // '^2' ya '^n' ko power (superscript) banata hai
+      .replace(/_([0-9a-zA-Z+-]+)/g, '<sub>$1</sub>'); // '_2' ko chemical formula subscript banata hai
+  }
 
   // Prevent spaces automatically
   document.querySelectorAll('.no-space-input').forEach(input => {
@@ -1026,14 +1027,19 @@
     const qData = questions[idx];
 
     document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
-    document.getElementById('qText').innerText = `${idx + 1}. ${qData.q}`;
+    
+    // Formula formatter applied to question text
+    document.getElementById('qText').innerHTML = `${idx + 1}. ${formatMathFormula(qData.q)}`;
 
     const container = document.getElementById('optionsContainer');
     container.innerHTML = '';
     qData.options.forEach((opt, oIdx) => {
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
-      btn.innerHTML = `<span style="opacity:0.6; margin-right:6px;">${String.fromCharCode(65 + oIdx)}.</span> ${opt}`;
+      
+      // Formula formatter applied to options text (renders superscript & multiply symbols)
+      btn.innerHTML = `<span style="opacity:0.6; margin-right:6px;">${String.fromCharCode(65 + oIdx)}.</span> ${formatMathFormula(opt)}`;
+      
       btn.onclick = () => { userAnswers[idx] = oIdx; loadQuestion(idx); };
       container.appendChild(btn);
     });
