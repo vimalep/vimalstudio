@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exam Arena by Vimal Sir</title>
   
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#181438">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
@@ -119,10 +125,10 @@
       gap: 12px;
     }
 
-    /* HEADER: PADDING ADDED TO PREVENT OVERLAP ON MOBILE */
+    /* HEADER: PADDING ON RIGHT PREVENTS BUTTON OVERLAP ON MOBILE */
     .arena-header {
       text-align: center;
-      padding: 14px 80px 14px 20px;
+      padding: 14px 80px 14px 18px;
       background: var(--header-bg);
       backdrop-filter: blur(14px);
       border: 2px solid var(--header-border);
@@ -275,7 +281,7 @@
     body:not(.light-theme) .ticker-content { color: #38bdf8; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* PROFILE BAR */
+    /* PLAYER PROFILE CARD */
     .player-profile-card {
       background: var(--profile-bg);
       border: 2px solid var(--card-border);
@@ -373,7 +379,7 @@
     .section-title { font-size: 14px; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 6px; }
     body:not(.light-theme) .section-title { color: #fde047; }
 
-    /* 2-COLUMN GRID TILES */
+    /* 2-COLUMN COMPACT TILES */
     .subject-cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -671,9 +677,7 @@
     .review-card.rev-wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.08); }
     .review-card.rev-skipped { border-color: #94a3b8; background: rgba(148, 163, 184, 0.08); }
 
-    /* ============================================================
-       TOP-3 PODIUM LEADERBOARD STYLING
-    ============================================================ */
+    /* TOP-3 PODIUM LEADERBOARD STYLING */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg);
       border: 2px solid var(--card-border); border-radius: 20px; padding: 16px 12px; text-align: left;
@@ -708,7 +712,7 @@
       border-color: #38bdf8;
     }
 
-    /* PODIUM CONTAINER */
+    /* PODIUM STAGE */
     .podium-stage {
       display: flex;
       justify-content: center;
@@ -904,7 +908,7 @@
 <!-- MAIN CONTAINER -->
 <div class="arena-container">
 
-  <!-- HEADER WITH PADDING TO PROTECT BUTTONS -->
+  <!-- HEADER (SAFE PADDING FOR CONTROLS) -->
   <div class="arena-header">
     <div class="arena-title">🎯 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
@@ -913,6 +917,13 @@
       <button class="ctrl-btn" id="soundToggleBtn" onclick="toggleSound()" title="Sound On/Off">🔊</button>
       <button class="ctrl-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Theme Switch">☀️</button>
     </div>
+  </div>
+
+  <!-- INSTALL APP BUTTON (PWA AUTO-DETECT) -->
+  <div id="pwaInstallBox" style="display:none; width:100%; margin:4px 0 8px 0;">
+    <button id="btnPwaInstall" onclick="installAppDirectly()" style="width:100%; background:linear-gradient(135deg, #10b981, #059669); border:2px solid #a7f3d0; color:#ffffff; padding:11px 16px; border-radius:14px; font-size:13.5px; font-weight:900; cursor:pointer; box-shadow:0 6px 18px rgba(16, 185, 129, 0.35); display:flex; align-items:center; justify-content:center; gap:8px;">
+      <span>📥</span> Exam Arena App फ़ोन में इंस्टॉल करें
+    </button>
   </div>
 
   <!-- FLASH ALERT CARD -->
@@ -1408,7 +1419,6 @@
       return;
     }
 
-    // Check my rank
     rankList.forEach(item => {
       if (item.name.toLowerCase() === (currentUser.name || '').toLowerCase()) {
         currentUser.currentRank = item.rank;
@@ -1465,7 +1475,6 @@
       </div>
     `;
 
-    // Rank 4+ List
     if (rest.length > 0) {
       html += `<div class="lb-list-rest">`;
       rest.forEach(item => {
@@ -1747,6 +1756,34 @@
       if (nextLvl <= sets.length) currentLevel = nextLvl;
     }
     startQuizSet(currentLevel);
+  }
+
+  /* PWA INSTALLATION LOGIC */
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const installBox = document.getElementById('pwaInstallBox');
+    if (installBox) installBox.style.display = 'block';
+  });
+
+  function installAppDirectly() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          document.getElementById('pwaInstallBox').style.display = 'none';
+        }
+        deferredPrompt = null;
+      });
+    }
+  }
+
+  // Register Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch((err) => {
+      console.log('SW registration note:', err);
+    });
   }
 
   window.onload = initApp;
