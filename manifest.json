@@ -1,7 +1,7 @@
 {
   "name": "Exam Arena by Vimal Sir",
   "short_name": "Exam Arena",
-  "start_url": "./",
+  "start_url": "Exam_Arena.html",
   "display": "standalone",
   "background_color": "#181438",
   "theme_color": "#181438",
