@@ -237,11 +237,7 @@
       font-family: serif;
       pointer-events: none;
     }
-    .thought-top-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+    .thought-top-meta { display: flex; align-items: center; justify-content: space-between; }
     .thought-pill {
       background: rgba(245, 158, 11, 0.2);
       border: 1.2px solid #f59e0b;
@@ -336,9 +332,10 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     .flash-btn.attempted {
-      background: #10b981;
-      color: #ffffff;
-      border: 1px solid #a7f3d0;
+      background: #10b981 !important;
+      color: #ffffff !important;
+      border: 1px solid #a7f3d0 !important;
+      cursor: pointer;
     }
 
     /* LIVE TICKER */
@@ -514,10 +511,7 @@
       text-align: left !important;
       gap: 14px;
     }
-    .subject-card.full-width .sc-icon {
-      margin-bottom: 0 !important;
-      flex-shrink: 0;
-    }
+    .subject-card.full-width .sc-icon { margin-bottom: 0 !important; flex-shrink: 0; }
 
     .sc-math { background: var(--grad-math); }
     .sc-sci { background: var(--grad-sci); }
@@ -598,6 +592,11 @@
       border: 2px solid #f59e0b !important;
       box-shadow: 0 8px 22px rgba(245, 158, 11, 0.3) !important;
     }
+    .set-row-card.live-challenge-card.attempted {
+      background: rgba(16, 185, 129, 0.15) !important;
+      border: 2px solid #10b981 !important;
+      box-shadow: none !important;
+    }
 
     .set-action-pill { font-size: 12.5px; font-weight: 900; padding: 7px 16px; border-radius: 20px; }
     .set-row-card:not(.locked) .set-action-pill {
@@ -609,6 +608,11 @@
       background: linear-gradient(135deg, #f59e0b, #ef4444) !important;
       color: #fff !important;
       box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important;
+    }
+    .set-row-card.live-challenge-card.attempted .set-action-pill {
+      background: #10b981 !important;
+      color: #ffffff !important;
+      box-shadow: none !important;
     }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
@@ -646,10 +650,7 @@
       box-shadow: 0 0 20px rgba(239, 68, 68, 0.85) !important;
       animation: pulseUrgent 0.6s infinite alternate;
     }
-    @keyframes pulseUrgent {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.08); }
-    }
+    @keyframes pulseUrgent { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
 
     .q-text {
       font-size: 16.5px;
@@ -872,10 +873,7 @@
       transform: translateX(-50%);
       animation: crownBounce 1.8s infinite ease-in-out;
     }
-    @keyframes crownBounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(-4px); }
-    }
+    @keyframes crownBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
 
     .podium-col.rank-1 .podium-avatar {
       width: 60px; height: 60px; font-size: 26px;
@@ -1144,7 +1142,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: SETS (SPECIAL PINNED DAILY LIVE TEST + REGULAR SEQUENTIAL SETS) -->
+  <!-- SCREEN 3: SETS (SPECIAL PINNED DAILY LIVE TEST + REGULAR CHAPTER SETS) -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
@@ -1190,7 +1188,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: RESULT (CONFETTI, AUDIO, SHAKE & REVIEW) -->
+  <!-- SCREEN 5: RESULT -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
@@ -1443,7 +1441,7 @@
           }
 
           if (attemptedRecord) {
-            flashBtn.innerText = `✅ Attempted (${attemptedRecord.score}/${attemptedRecord.total})`;
+            flashBtn.innerText = `Completed 🔒 (${attemptedRecord.score}/${attemptedRecord.total})`;
             flashBtn.className = "flash-btn attempted";
           } else {
             flashBtn.innerText = `Start Test ➔`;
@@ -1467,7 +1465,7 @@
     }
   }
 
-  /* DIRECT LIVE TEST TRIGGER (BYPASS LEVEL LOCK) */
+  /* DIRECT LIVE TEST TRIGGER (STRICT SINGLE-ATTEMPT ENFORCED) */
   function handleFlashClick() {
     if (!latestLiveTarget) {
       openSubjectSets('Science');
@@ -1476,10 +1474,10 @@
     const liveKey = `${latestLiveTarget.subject}_Set${latestLiveTarget.level}`;
     const attemptedRecord = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
 
+    // STRICT: RE-ATTEMPT BLOCKED
     if (attemptedRecord) {
-      if (!confirm(`आप यह डेली लाइव टेस्ट पहले ही दे चुके हैं (स्कोर: ${attemptedRecord.score}/${attemptedRecord.total})। क्या आप फिर से अभ्यास करना चाहते हैं?`)) {
-        return;
-      }
+      alert(`⚠️ आप आज का डेली लाइव टेस्ट पहले ही दे चुके हैं!\n\nआपका स्कोर: ${attemptedRecord.score}/${attemptedRecord.total} (${attemptedRecord.percent}%)\n\nनियम: लाइव टेस्ट केवल 1 बार ही दिया जा सकता है। अगला लाइव टेस्ट कल आएगा!`);
+      return;
     }
 
     currentSubject = latestLiveTarget.subject;
@@ -1594,7 +1592,7 @@
     navigateTo('screenSets');
   }
 
-  /* RENDER SETS LIST: PINNED DAILY LIVE TEST + REGULAR CHAPTER SETS */
+  /* RENDER SETS LIST */
   function renderSetsList() {
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
@@ -1606,7 +1604,7 @@
       return;
     }
 
-    // 1. Agar is subject me koi Daily Live Test chal raha hai toh use sabse upar pin karein (Always UNLOCKED)
+    // 1. Pinned Daily Live Test Card (Single-Attempt Locked if Attempted)
     if (latestLiveTarget && latestLiveTarget.subject === currentSubject) {
       const liveSetObj = sets.find(s => Number(s.level) === latestLiveTarget.level);
       if (liveSetObj) {
@@ -1614,27 +1612,32 @@
         const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
 
         const liveRow = document.createElement('div');
-        liveRow.className = 'set-row-card live-challenge-card';
+        liveRow.className = 'set-row-card live-challenge-card' + (attempted ? ' attempted' : '');
         liveRow.innerHTML = `
           <div style="display:flex; align-items:center; gap:14px;">
-            <span style="font-size:24px;">🔥</span>
+            <span style="font-size:24px;">${attempted ? '✅' : '🔥'}</span>
             <div>
               <div style="font-size:10px; font-weight:900; color:#ef4444; text-transform:uppercase; background:#ffffff; padding:1px 6px; border-radius:4px; display:inline-block; margin-bottom:2px;">TODAY'S LIVE CHALLENGE</div>
               <h4 style="font-size:15px; font-weight:800; color:#ffffff;">${liveSetObj.title}</h4>
-              <span style="font-size:11.5px; color:#fef08a; font-weight:700;">⭐ Open to All Students • 60s Timer</span>
+              <span style="font-size:11.5px; color:#fef08a; font-weight:700;">${attempted ? `पूर्ण (Score: ${attempted.score}/${attempted.total}) • कल नया सेट आएगा` : '⭐ Open to All Students • 60s Timer'}</span>
             </div>
           </div>
-          <div class="set-action-pill">${attempted ? `Done (${attempted.score}/${attempted.total})` : 'Live ▶'}</div>
+          <div class="set-action-pill">${attempted ? 'Submitted 🔒' : 'Live ▶'}</div>
         `;
-        liveRow.onclick = () => startQuizSet(liveSetObj.level, true);
+        liveRow.onclick = () => {
+          if (attempted) {
+            alert(`⚠️ आप आज का लाइव टेस्ट पहले ही दे चुके हैं (स्कोर: ${attempted.score}/${attempted.total})!\n\nलाइव टेस्ट में दोबारा मौका नहीं मिलता है।`);
+            return;
+          }
+          startQuizSet(liveSetObj.level, true);
+        };
         container.appendChild(liveRow);
       }
     }
 
-    // 2. Regular Sequential Sets (Set 1, Set 2, Set 3...)
+    // 2. Regular Chapter Sets
     sets.forEach(set => {
       const setLvl = Number(set.level);
-      // Agar ye set already top par live banner me hai, toh ise niche regular list me dubara repeat mat karein
       if (latestLiveTarget && latestLiveTarget.subject === currentSubject && setLvl === latestLiveTarget.level) {
         return;
       }
@@ -1661,6 +1664,14 @@
   }
 
   function startQuizSet(lvl, isLive = false) {
+    if (isLive) {
+      const liveKey = `${currentSubject}_Set${lvl}`;
+      if (currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey]) {
+        alert("⚠️ आप यह लाइव टेस्ट पहले ही दे चुके हैं! दोबारा टेस्ट देने की अनुमति नहीं है।");
+        return;
+      }
+    }
+
     currentLevel = Number(lvl);
     isCurrentQuizDailyLive = isLive;
     userAnswers = {};
@@ -1754,7 +1765,7 @@
     }
   }
 
-  /* SUBMIT QUIZ: HANDLES BOTH LIVE QUIZ & REGULAR LEVEL PROGRESSION */
+  /* SUBMIT QUIZ */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const questions = getCurrentQuestions();
@@ -1769,7 +1780,7 @@
     let unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
     let newLevelUnlocked = false;
 
-    // LOGIC: Daily Live Quiz XP deti hai, par syllabus sequence ko jump nahi karti
+    // Daily Live Quiz: Save as completed so re-attempt is locked
     if (isCurrentQuizDailyLive) {
       if (!currentUser.attemptedLiveTests) currentUser.attemptedLiveTests = {};
       const liveKey = `${currentSubject}_Set${currentLevel}`;
@@ -1779,13 +1790,11 @@
         percent: percent.toFixed(0)
       };
 
-      // Agar bacha coincidentally usi level par tha, tabhi agla level unlock ho
       if (passed && currentLevel === unlockedMax) {
         currentUser.unlockedLevels[currentSubject] = currentLevel + 1;
         newLevelUnlocked = true;
       }
     } else {
-      // Regular Set logic (Sequential Progression)
       if (passed) {
         const nextLvl = currentLevel + 1;
         if (nextLvl > unlockedMax) {
@@ -1800,7 +1809,7 @@
     updatePlayerUI();
 
     navigateTo('resultScreen');
-    document.getElementById('resSubjTag').innerText = `${isCurrentQuizDailyLive ? '🔥 LIVE CHALLENGE: ' : ''}${currentSubject} - Set ${currentLevel}`;
+    document.getElementById('resSubjTag').innerText = `${isCurrentQuizDailyLive ? '🔥 DAILY LIVE: ' : ''}${currentSubject} - Set ${currentLevel}`;
     document.getElementById('resScore').innerText = score;
     document.getElementById('resTotalQ').innerText = `out of ${questions.length}`;
 
@@ -1814,7 +1823,7 @@
       banner.className = "unlock-banner unlock-success";
       
       if (isCurrentQuizDailyLive) {
-        banner.innerHTML = `🌟 बधाई! Daily Live Quiz Complete! XP Points Added: +${earnedXP} XP!`;
+        banner.innerHTML = `🌟 बधाई! Daily Live Quiz सबमिट हो गया!<br>Score: ${score}/${questions.length} (${percent.toFixed(0)}%) • Earned +${earnedXP} XP!`;
         nextBtn.innerText = `View Leaderboard 🏆`;
       } else {
         banner.innerHTML = newLevelUnlocked 
@@ -1830,8 +1839,14 @@
     } else {
       document.getElementById('resHeadingText').innerText = "🎯 टेस्ट परिणाम घोषित!";
       banner.className = "unlock-banner unlock-failed";
-      banner.innerHTML = `🌟 कोई बात नहीं! आप मंज़िल के बहुत करीब थे 🎯<br><span style="font-size:12px; opacity:0.9;">अगला स्तर खोलने के लिए 50% चाहिए (आपका स्कोर: ${percent.toFixed(0)}%)।</span>`;
-      nextBtn.innerText = `🔄 पुनः टेस्ट दें (Re-attempt Test)`;
+
+      if (isCurrentQuizDailyLive) {
+        banner.innerHTML = `स्कोर: ${score}/${questions.length} (${percent.toFixed(0)}%)<br><span style="font-size:12px; opacity:0.9;">लाइव टेस्ट केवल 1 बार दे सकते हैं। कल नए टेस्ट में बेहतर प्रयास करें!</span>`;
+        nextBtn.innerText = `View Leaderboard 🏆`;
+      } else {
+        banner.innerHTML = `🌟 कोई बात नहीं! आप मंज़िल के बहुत करीब थे 🎯<br><span style="font-size:12px; opacity:0.9;">अगला स्तर खोलने के लिए 50% चाहिए (आपका स्कोर: ${percent.toFixed(0)}%)।</span>`;
+        nextBtn.innerText = `🔄 पुनः टेस्ट दें (Re-attempt Test)`;
+      }
 
       resultCard.classList.add('failure-glow-shake');
       playFailureSound();
