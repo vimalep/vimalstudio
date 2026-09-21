@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exam Arena by Vimal Sir</title>
   
-  <!-- PWA Meta Tags -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#181438">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -15,7 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@600;700;800;900&family=Hind:wght@600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -117,15 +115,8 @@
       transition: background 0.3s ease, color 0.3s ease;
     }
 
-    .arena-container {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .arena-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
 
-    /* HEADER */
     .arena-header {
       text-align: center;
       padding: 14px 80px 14px 18px;
@@ -136,383 +127,146 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.2);
       position: relative;
     }
-    
     .header-ctrls {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 12px;
-      display: flex;
-      gap: 6px;
+      position: absolute; top: 50%; transform: translateY(-50%); right: 12px; display: flex; gap: 6px;
     }
     .ctrl-btn {
       background: rgba(255, 255, 255, 0.25);
       border: 1.5px solid rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(4px);
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-    .ctrl-btn:active { transform: scale(0.9); }
 
     .arena-title {
-      font-family: 'Fredoka', cursive, sans-serif;
-      font-size: clamp(19px, 5vw, 25px);
-      font-weight: 800;
-      letter-spacing: 1px;
-      color: #ffffff;
-      text-shadow: 0 0 16px rgba(254, 240, 138, 0.75), 0 3px 8px rgba(0, 0, 0, 0.6);
+      font-family: 'Fredoka', cursive, sans-serif; font-size: clamp(19px, 5vw, 25px); font-weight: 800;
+      letter-spacing: 1px; color: #ffffff; text-shadow: 0 0 16px rgba(254, 240, 138, 0.75), 0 3px 8px rgba(0, 0, 0, 0.6);
       text-transform: uppercase;
-      white-space: nowrap;
     }
-    body.light-theme .arena-title {
-      color: #1e1b4b;
-      text-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
-    }
+    body.light-theme .arena-title { color: #1e1b4b; text-shadow: 0 2px 10px rgba(99, 102, 241, 0.3); }
 
     .vimal-badge {
-      display: inline-block;
-      background: linear-gradient(135deg, #f59e0b, #ef4444);
-      border: 1.5px solid #fef08a;
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 900;
-      padding: 3px 14px;
-      border-radius: 20px;
-      margin-top: 4px;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
-      letter-spacing: 0.8px;
+      display: inline-block; background: linear-gradient(135deg, #f59e0b, #ef4444); border: 1.5px solid #fef08a;
+      color: #ffffff; font-size: 11px; font-weight: 900; padding: 3px 14px; border-radius: 20px; margin-top: 4px;
     }
 
-    /* PWA INSTALL BANNER */
     #pwaInstallBox { width: 100%; margin: 2px 0 4px 0; }
     .btn-pwa-install {
-      width: 100%;
-      background: linear-gradient(135deg, #10b981, #059669);
-      border: 2px solid #a7f3d0;
-      color: #ffffff;
-      padding: 11px 16px;
-      border-radius: 14px;
-      font-size: 13.5px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      width: 100%; background: linear-gradient(135deg, #10b981, #059669); border: 2px solid #a7f3d0;
+      color: #ffffff; padding: 11px 16px; border-radius: 14px; font-size: 13.5px; font-weight: 900; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
-    /* TODAY'S MOTIVATIONAL THOUGHT CARD */
     .thought-card {
       background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(49, 46, 129, 0.9));
-      border: 2px solid rgba(245, 158, 11, 0.45);
-      border-radius: 18px;
-      padding: 13px 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
-      position: relative;
-      overflow: hidden;
+      border: 2px solid rgba(245, 158, 11, 0.45); border-radius: 18px; padding: 13px 15px;
+      display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden;
     }
-    body.light-theme .thought-card {
-      background: linear-gradient(135deg, #ffffff, #fef3c7);
-      border-color: #f59e0b;
-    }
-    .thought-card::before {
-      content: '❝';
-      position: absolute;
-      right: 12px;
-      bottom: -15px;
-      font-size: 78px;
-      color: rgba(245, 158, 11, 0.08);
-      font-family: serif;
-      pointer-events: none;
-    }
+    body.light-theme .thought-card { background: linear-gradient(135deg, #ffffff, #fef3c7); border-color: #f59e0b; }
     .thought-top-meta { display: flex; align-items: center; justify-content: space-between; }
     .thought-pill {
-      background: rgba(245, 158, 11, 0.2);
-      border: 1.2px solid #f59e0b;
-      color: #fbbf24;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 2px 8px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      background: rgba(245, 158, 11, 0.2); border: 1.2px solid #f59e0b; color: #fbbf24; font-size: 11px;
+      font-weight: 800; padding: 2px 8px; border-radius: 8px;
     }
     body.light-theme .thought-pill { color: #b45309; }
-    .thought-body-text {
-      font-size: 13.5px;
-      font-weight: 700;
-      line-height: 1.5;
-      color: var(--text-main);
-      font-style: italic;
-    }
-    .thought-author {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-align: right;
-    }
+    .thought-body-text { font-size: 13.5px; font-weight: 700; line-height: 1.5; color: var(--text-main); font-style: italic; }
+    .thought-author { font-size: 11.5px; font-weight: 700; color: var(--text-muted); text-align: right; }
     .btn-share-thought-poster {
-      background: linear-gradient(135deg, #25d366, #128c7e);
-      border: none;
-      color: #ffffff;
-      padding: 8px 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 900;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-      width: fit-content;
-      margin-top: 2px;
-      align-self: flex-end;
+      background: linear-gradient(135deg, #25d366, #128c7e); border: none; color: #ffffff; padding: 8px 12px;
+      border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; align-self: flex-end;
     }
 
-    /* FLASH ALERT CARD (DAILY LIVE TEST) */
+    /* FLASH ALERT CARD (COUNTDOWN & LIVE TRIGGER) */
     .flash-alert-card {
       background: linear-gradient(135deg, #ef4444, #f97316, #f59e0b);
-      border: 2px solid #fef08a;
-      border-radius: 16px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      border: 2px solid #fef08a; border-radius: 16px; padding: 11px 14px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
       box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
-      animation: bounceCard 2.4s infinite ease-in-out;
     }
-    @keyframes bounceCard {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
+    .flash-alert-card.upcoming {
+      background: linear-gradient(135deg, #4338ca, #6366f1, #0284c7); border-color: #93c5fd;
+    }
+    .flash-alert-card.closed {
+      background: linear-gradient(135deg, #334155, #475569); border-color: #94a3b8;
     }
     .flash-icon-box { font-size: 24px; }
     .flash-text-wrap { flex: 1; text-align: left; }
     .flash-badge {
-      display: inline-block;
-      background: #ffffff;
-      color: #ef4444;
-      font-size: 9.5px;
-      font-weight: 900;
-      padding: 2px 7px;
-      border-radius: 6px;
-      text-transform: uppercase;
-      margin-bottom: 2px;
+      display: inline-block; background: #ffffff; color: #ef4444; font-size: 9.5px;
+      font-weight: 900; padding: 2px 7px; border-radius: 6px; text-transform: uppercase; margin-bottom: 2px;
     }
-    .flash-msg {
-      font-size: 12px;
-      font-weight: 800;
-      color: #ffffff;
-      line-height: 1.3;
-    }
+    .flash-alert-card.upcoming .flash-badge { color: #4338ca; }
+    .flash-alert-card.closed .flash-badge { color: #334155; }
+    .flash-msg { font-size: 12px; font-weight: 800; color: #ffffff; line-height: 1.3; }
+    .flash-timer-highlight { font-family: monospace; font-size: 13.5px; font-weight: 900; color: #fef08a; }
+    
     .flash-btn {
-      background: #ffffff;
-      color: #b91c1c;
-      border: none;
-      padding: 7px 12px;
-      border-radius: 10px;
-      font-size: 11.5px;
-      font-weight: 900;
-      cursor: pointer;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background: #ffffff; color: #b91c1c; border: none; padding: 8px 12px;
+      border-radius: 10px; font-size: 11.5px; font-weight: 900; cursor: pointer; flex-shrink: 0;
     }
-    .flash-btn.attempted {
-      background: #10b981 !important;
-      color: #ffffff !important;
-      border: 1px solid #a7f3d0 !important;
-      cursor: pointer;
-    }
+    .flash-btn.locked { background: #cbd5e1; color: #64748b; cursor: not-allowed; }
+    .flash-btn.completed { background: #10b981; color: #ffffff; }
 
-    /* LIVE TICKER */
     .live-ticker-wrap {
-      width: 100%;
-      background: var(--ticker-bg);
-      border: 1.5px solid rgba(99, 102, 241, 0.5);
-      border-radius: 14px;
-      padding: 7px 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      width: 100%; background: var(--ticker-bg); border: 1.5px solid rgba(99, 102, 241, 0.5);
+      border-radius: 14px; padding: 7px 12px; display: flex; align-items: center; gap: 10px; overflow: hidden;
     }
-    .ticker-pill {
-      background: #10b981;
-      color: #fff;
-      font-size: 10px;
-      font-weight: 900;
-      padding: 3px 9px;
-      border-radius: 8px;
-      flex-shrink: 0;
-      animation: pulse 1.4s infinite;
-      z-index: 2;
-    }
-    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.96); } }
+    .ticker-pill { background: #10b981; color: #fff; font-size: 10px; font-weight: 900; padding: 3px 9px; border-radius: 8px; flex-shrink: 0; }
     .ticker-track { flex: 1; overflow: hidden; white-space: nowrap; }
-    .ticker-content {
-      white-space: nowrap;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #0284c7;
-      display: inline-block;
-      animation: scrollText 20s linear infinite;
-    }
-    body:not(.light-theme) .ticker-content { color: #38bdf8; }
+    .ticker-content { white-space: nowrap; font-size: 11.5px; font-weight: 700; color: #38bdf8; display: inline-block; animation: scrollText 20s linear infinite; }
+    body.light-theme .ticker-content { color: #0284c7; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* PLAYER PROFILE CARD */
     .player-profile-card {
-      background: var(--profile-bg);
-      border: 2px solid var(--card-border);
-      border-radius: 16px;
-      padding: 10px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      background: var(--profile-bg); border: 2px solid var(--card-border); border-radius: 16px;
+      padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
     }
     .profile-info { display: flex; align-items: center; gap: 10px; }
     .avatar-circle {
-      width: 42px;
-      height: 42px;
-      background: var(--grad-gold);
-      border: 2px solid #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 900;
-      color: #1e1b4b;
+      width: 42px; height: 42px; background: var(--grad-gold); border: 2px solid #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: #1e1b4b;
     }
     .user-tag { display: flex; flex-direction: column; }
     .u-name { font-size: 14.5px; font-weight: 900; color: var(--text-main); }
     .user-rank-badge {
-      color: #b45309;
-      font-size: 11px;
-      font-weight: 800;
-      background: rgba(245, 158, 11, 0.2);
-      border: 1px solid #f59e0b;
-      padding: 1px 6px;
-      border-radius: 6px;
-      display: inline-block;
-      width: fit-content;
-      margin-top: 1px;
+      color: #fef08a; font-size: 11px; font-weight: 800; background: rgba(245, 158, 11, 0.2);
+      border: 1px solid #f59e0b; padding: 1px 6px; border-radius: 6px; display: inline-block; width: fit-content;
     }
-    body:not(.light-theme) .user-rank-badge { color: #fef08a; }
+    body.light-theme .user-rank-badge { color: #b45309; }
 
-    .stat-badge {
-      background: rgba(56, 189, 248, 0.15);
-      border: 1.5px solid #0284c7;
-      padding: 5px 12px;
-      border-radius: 12px;
-      text-align: right;
-    }
-    .stat-badge .xp-num { font-size: 16px; font-weight: 900; color: #0284c7; line-height: 1; }
-    body:not(.light-theme) .stat-badge .xp-num { color: #38bdf8; }
+    .stat-badge { background: rgba(56, 189, 248, 0.15); border: 1.5px solid #0284c7; padding: 5px 12px; border-radius: 12px; text-align: right; }
+    .stat-badge .xp-num { font-size: 16px; font-weight: 900; color: #38bdf8; line-height: 1; }
+    body.light-theme .stat-badge .xp-num { color: #0284c7; }
     .stat-badge .xp-lbl { font-size: 9.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
     
     .btn-logout {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1.5px solid #ef4444;
-      color: #ef4444;
-      padding: 8px 10px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 900;
-      cursor: pointer;
-      margin-left: 6px;
+      background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; color: #ef4444; padding: 8px 10px;
+      border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; margin-left: 6px;
     }
 
     .btn-view-ranks {
-      width: 100%;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      border: 1.5px solid #a855f7;
-      color: #ffffff;
-      padding: 10px 14px;
-      border-radius: 14px;
-      font-size: 13.5px;
-      font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.35);
+      width: 100%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border: 1.5px solid #a855f7;
+      color: #ffffff; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
     .ad-banner-box {
-      width: 100%;
-      min-height: 250px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin: 4px 0;
-      border-radius: 16px;
-      background: rgba(0,0,0,0.03);
-      border: 1px dashed var(--card-border);
+      width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; margin: 4px 0; border-radius: 16px; background: rgba(0,0,0,0.03); border: 1px dashed var(--card-border);
     }
 
     .app-screen { display: flex; flex-direction: column; gap: 11px; width: 100%; }
-    .section-title { font-size: 14px; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 6px; }
-    body:not(.light-theme) .section-title { color: #fde047; }
+    .section-title { font-size: 14px; font-weight: 800; color: #fde047; display: flex; align-items: center; gap: 6px; }
+    body.light-theme .section-title { color: #d97706; }
 
-    /* 2-COLUMN TILES */
-    .subject-cards-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      width: 100%;
-    }
+    .subject-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
     .subject-card {
-      border-radius: 18px;
-      padding: 14px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-      border: 2px solid rgba(255,255,255,0.4);
-      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
-      min-height: 108px;
+      border-radius: 18px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; cursor: pointer; border: 2px solid rgba(255,255,255,0.4); min-height: 108px;
     }
-    .subject-card:active { transform: scale(0.96); }
-    
     .subject-card.full-width {
-      grid-column: 1 / -1;
-      flex-direction: row !important;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 18px;
-      min-height: auto;
+      grid-column: 1 / -1; flex-direction: row !important; justify-content: space-between; align-items: center; padding: 12px 18px; min-height: auto;
     }
-    .subject-card.full-width .sc-info {
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      text-align: left !important;
-      gap: 14px;
-    }
-    .subject-card.full-width .sc-icon { margin-bottom: 0 !important; flex-shrink: 0; }
-
+    .subject-card.full-width .sc-info { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 14px; }
     .sc-math { background: var(--grad-math); }
     .sc-sci { background: var(--grad-sci); }
     .sc-sst { background: var(--grad-sst); }
@@ -520,421 +274,170 @@
     .sc-gk { background: var(--grad-gk); }
 
     .sc-icon {
-      width: 44px;
-      height: 44px;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(6px);
-      border: 1.5px solid rgba(255, 255, 255, 0.4);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 6px;
+      width: 44px; height: 44px; background: rgba(255, 255, 255, 0.25); border: 1.5px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 6px;
     }
-
-    .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 15.5px; font-weight: 700; color: #ffffff; line-height: 1.2; }
-    .sc-text p { font-size: 11px; color: rgba(255,255,255,0.95); font-weight: 600; margin-top: 2px; }
-    .sc-arrow {
-      width: 32px;
-      height: 32px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 900;
-      color: #fff;
-    }
+    .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 15.5px; font-weight: 700; color: #ffffff; }
+    .sc-text p { font-size: 11px; color: rgba(255,255,255,0.95); font-weight: 600; }
+    .sc-arrow { width: 32px; height: 32px; background: rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }
 
     .screen-header-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--screen-bar-bg);
-      border: 1.5px solid var(--card-border);
-      border-radius: 16px;
-      padding: 10px 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      display: flex; align-items: center; justify-content: space-between; background: var(--screen-bar-bg);
+      border: 1.5px solid var(--card-border); border-radius: 16px; padding: 10px 14px;
     }
-    .btn-back {
-      background: #4338ca;
-      border: 1.5px solid #818cf8;
-      color: #ffffff;
-      padding: 8px 16px;
-      border-radius: 12px;
-      font-size: 12.5px;
-      font-weight: 800;
-      cursor: pointer;
-    }
+    .btn-back { background: #4338ca; border: 1.5px solid #818cf8; color: #ffffff; padding: 8px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
 
-    /* SETS CARDS */
     .sets-list-container { display: flex; flex-direction: column; gap: 11px; }
     .set-row-card {
-      background: var(--set-card-bg);
-      border: 2px solid var(--set-card-border);
-      border-radius: 18px;
-      padding: 15px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-      transition: transform 0.15s ease;
+      background: var(--set-card-bg); border: 2px solid var(--set-card-border); border-radius: 18px;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
     }
-    .set-row-card:active { transform: scale(0.98); }
     .set-row-card.locked { opacity: 0.55; cursor: not-allowed; }
-
-    /* SPECIAL PINNED LIVE CHALLENGE CARD */
-    .set-row-card.live-challenge-card {
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(245, 158, 11, 0.25)) !important;
+    .set-row-card.live-pinned {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(245, 158, 11, 0.25)) !important;
       border: 2px solid #f59e0b !important;
-      box-shadow: 0 8px 22px rgba(245, 158, 11, 0.3) !important;
-    }
-    .set-row-card.live-challenge-card.attempted {
-      background: rgba(16, 185, 129, 0.15) !important;
-      border: 2px solid #10b981 !important;
-      box-shadow: none !important;
     }
 
-    .set-action-pill { font-size: 12.5px; font-weight: 900; padding: 7px 16px; border-radius: 20px; }
-    .set-row-card:not(.locked) .set-action-pill {
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+    .set-best-badge {
+      font-size: 11px; font-weight: 800; color: #10b981; background: rgba(16, 185, 129, 0.15);
+      padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 3px;
     }
-    .set-row-card.live-challenge-card .set-action-pill {
-      background: linear-gradient(135deg, #f59e0b, #ef4444) !important;
-      color: #fff !important;
-      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4) !important;
-    }
-    .set-row-card.live-challenge-card.attempted .set-action-pill {
-      background: #10b981 !important;
-      color: #ffffff !important;
-      box-shadow: none !important;
-    }
+    .set-action-pill { font-size: 12px; font-weight: 900; padding: 6px 14px; border-radius: 20px; }
+    .set-row-card:not(.locked) .set-action-pill { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
-    /* QUIZ CARD */
     .quiz-card {
-      background: var(--quiz-card-bg);
-      border: 2px solid var(--quiz-card-border);
-      border-radius: 24px;
-      padding: 18px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
-      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      background: var(--quiz-card-bg); border: 2px solid var(--quiz-card-border); border-radius: 24px;
+      padding: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25);
     }
     .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .q-counter {
-      font-size: 12.5px; font-weight: 900; color: #0284c7;
-      background: rgba(56, 189, 248, 0.18); border: 1px solid #0284c7;
-      padding: 5px 12px; border-radius: 14px;
+      font-size: 12.5px; font-weight: 900; color: #38bdf8; background: rgba(56, 189, 248, 0.18);
+      border: 1px solid #38bdf8; padding: 5px 12px; border-radius: 14px;
     }
-    body:not(.light-theme) .q-counter { color: #38bdf8; border-color: #38bdf8; }
+    body.light-theme .q-counter { color: #0284c7; border-color: #0284c7; }
 
     .timer-pill {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      border: 2px solid #fef08a;
-      color: #ffffff;
-      font-size: 13.5px;
-      font-weight: 900;
-      padding: 5px 14px;
-      border-radius: 25px;
-      box-shadow: 0 0 14px rgba(245, 158, 11, 0.4);
-      transition: all 0.3s ease;
+      background: linear-gradient(135deg, #f59e0b, #d97706); border: 2px solid #fef08a; color: #ffffff;
+      font-size: 13.5px; font-weight: 900; padding: 5px 14px; border-radius: 25px;
     }
     .timer-pill.urgent {
-      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-      border-color: #fca5a5 !important;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.85) !important;
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important; border-color: #fca5a5 !important;
       animation: pulseUrgent 0.6s infinite alternate;
     }
     @keyframes pulseUrgent { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
 
-    .q-text {
-      font-size: 16.5px;
-      font-weight: 800;
-      line-height: 1.5;
-      margin-bottom: 18px;
-      color: var(--text-main);
-    }
-
+    .q-text { font-size: 16.5px; font-weight: 800; line-height: 1.5; margin-bottom: 18px; color: var(--text-main); }
     .options-grid { display: flex; flex-direction: column; gap: 11px; }
     .option-btn {
-      width: 100%;
-      background: var(--opt-btn-bg);
-      border: 2px solid var(--opt-btn-border);
-      color: var(--opt-btn-text);
-      padding: 13px 15px;
-      border-radius: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      transition: all 0.15s ease;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      width: 100%; background: var(--opt-btn-bg); border: 2px solid var(--opt-btn-border); color: var(--opt-btn-text);
+      padding: 13px 15px; border-radius: 16px; font-size: 14px; font-weight: 700; text-align: left;
+      cursor: pointer; display: flex; align-items: center;
     }
     .opt-letter-badge {
-      width: 30px;
-      height: 30px;
-      border-radius: 10px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 13.5px;
-      color: #fff;
-      margin-right: 12px;
-      flex-shrink: 0;
+      width: 30px; height: 30px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 13.5px; color: #fff; margin-right: 12px; flex-shrink: 0;
     }
     .option-btn:nth-child(1) .opt-letter-badge { background: var(--opt-a); }
     .option-btn:nth-child(2) .opt-letter-badge { background: var(--opt-b); }
     .option-btn:nth-child(3) .opt-letter-badge { background: var(--opt-c); }
     .option-btn:nth-child(4) .opt-letter-badge { background: var(--opt-d); }
 
-    .option-btn:hover { border-color: rgba(99, 102, 241, 0.4); transform: translateY(-1px); }
-    
-    .option-btn.selected {
-      border-color: #f59e0b !important;
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.5) !important;
-    }
+    .option-btn.selected { border-color: #f59e0b !important; }
     .option-btn:nth-child(1).selected { background: linear-gradient(135deg, #0369a1, #0284c7); color: #fff; }
     .option-btn:nth-child(2).selected { background: linear-gradient(135deg, #047857, #059669); color: #fff; }
     .option-btn:nth-child(3).selected { background: linear-gradient(135deg, #b45309, #d97706); color: #fff; }
     .option-btn:nth-child(4).selected { background: linear-gradient(135deg, #be185d, #db2777); color: #fff; }
 
-    sup { font-size: 0.78em; vertical-align: super; line-height: 0; }
-    sub { font-size: 0.78em; vertical-align: sub; line-height: 0; }
-
     .nav-actions { display: flex; gap: 10px; margin-top: 18px; }
     .btn-action {
       flex: 1; padding: 13px 15px; border-radius: 14px; font-size: 14.5px; font-weight: 900;
       cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
     }
-    .btn-prev {
-      background: rgba(99, 102, 241, 0.2);
-      border: 1.5px solid #6366f1;
-      color: #818cf8;
-      max-width: 130px;
-    }
-    body.light-theme .btn-prev { background: #e0e7ff; color: #4338ca; border-color: #818cf8; }
+    .btn-prev { background: rgba(99, 102, 241, 0.2); border: 1.5px solid #6366f1; color: #818cf8; max-width: 130px; }
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
-    /* RESULT SCREEN */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
     .score-circle {
       width: 125px; height: 125px; border-radius: 50%;
-      background: conic-gradient(#10b981 var(--score-angle, 0deg), #e2e8f0 0deg);
+      background: conic-gradient(#10b981 var(--score-angle, 0deg), #312e81 0deg);
       display: flex; align-items: center; justify-content: center; margin: 10px auto;
-      box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
     }
-    body:not(.light-theme) .score-circle { background: conic-gradient(#10b981 var(--score-angle, 0deg), #312e81 0deg); }
+    body.light-theme .score-circle { background: conic-gradient(#10b981 var(--score-angle, 0deg), #e2e8f0 0deg); }
     .score-inner {
       width: 100px; height: 100px; border-radius: 50%; background: var(--score-inner-bg);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .score-num { font-family: 'Fredoka', sans-serif; font-size: 32px; font-weight: 800; color: var(--text-main); }
+    .score-num { font-family: 'Fredoka', sans-serif; font-size: 32px; font-weight: 800; }
     .unlock-banner { width: 100%; padding: 13px 16px; border-radius: 14px; font-size: 13.5px; font-weight: 900; }
-    .unlock-success { background: rgba(16, 185, 129, 0.2); border: 2px solid #10b981; color: #059669; }
-    body:not(.light-theme) .unlock-success { color: #34d399; }
-    .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #dc2626; }
-    body:not(.light-theme) .unlock-failed { color: #fca5a5; }
-
-    .quiz-card.failure-glow-shake {
-      border-color: #ef4444 !important;
-      box-shadow: 0 0 35px rgba(239, 68, 68, 0.6) !important;
-      animation: shakeAnim 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-    }
-    @keyframes shakeAnim {
-      10%, 90% { transform: translate3d(-2px, 0, 0); }
-      20%, 80% { transform: translate3d(3px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-      40%, 60% { transform: translate3d(4px, 0, 0); }
-    }
+    .unlock-success { background: rgba(16, 185, 129, 0.2); border: 2px solid #10b981; color: #34d399; }
+    body.light-theme .unlock-success { color: #059669; }
+    .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #fca5a5; }
+    body.light-theme .unlock-failed { color: #dc2626; }
 
     .btn-whatsapp-share {
-      width: 100%;
-      background: #25d366;
-      border: none;
-      color: #ffffff;
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-size: 13.5px;
-      font-weight: 900;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
-      text-decoration: none;
-      margin-top: 8px;
+      width: 100%; background: #25d366; border: none; color: #ffffff; padding: 12px 16px;
+      border-radius: 14px; font-size: 13.5px; font-weight: 900; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 8px;
     }
 
     .review-card {
-      background: var(--opt-btn-bg);
-      border: 1.5px solid var(--card-border);
-      border-radius: 14px;
-      padding: 12px 14px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      text-align: left;
+      background: var(--opt-btn-bg); border: 1.5px solid var(--card-border); border-radius: 14px;
+      padding: 12px 14px; text-align: left;
     }
-    .review-card.rev-correct { border-color: #10b981; background: rgba(16, 185, 129, 0.08); }
-    .review-card.rev-wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.08); }
-    .review-card.rev-skipped { border-color: #94a3b8; background: rgba(148, 163, 184, 0.08); }
+    .review-card.rev-correct { border-color: #10b981; }
+    .review-card.rev-wrong { border-color: #ef4444; }
 
-    /* PODIUM LEADERBOARD */
+    /* LEADERBOARD & PODIUM */
     .leaderboard-box {
-      width: 100%; background: var(--lb-box-bg);
-      border: 2px solid var(--card-border); border-radius: 20px; padding: 16px 12px; text-align: left;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      width: 100%; background: var(--lb-box-bg); border: 2px solid var(--card-border);
+      border-radius: 20px; padding: 16px 12px; text-align: left;
     }
-    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 900; color: #d97706; margin-bottom: 12px; }
-    body:not(.light-theme) .lb-header { color: #fde047; }
+    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 900; color: #fde047; margin-bottom: 12px; }
+    body.light-theme .lb-header { color: #d97706; }
     
-    .lb-tabs-bar {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      margin-bottom: 12px;
-      scrollbar-width: none;
-    }
+    .lb-tabs-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
     .lb-tabs-bar::-webkit-scrollbar { display: none; }
     .lb-tab-btn {
-      padding: 6px 12px;
-      border-radius: 10px;
-      font-size: 11.5px;
-      font-weight: 800;
-      white-space: nowrap;
-      cursor: pointer;
-      border: 1.5px solid var(--card-border);
-      background: transparent;
-      color: var(--text-muted);
+      padding: 6px 12px; border-radius: 10px; font-size: 11.5px; font-weight: 800; white-space: nowrap;
+      cursor: pointer; border: 1.5px solid var(--card-border); background: transparent; color: var(--text-muted);
     }
-    .lb-tab-btn.active {
-      background: linear-gradient(135deg, #0284c7, #3b82f6);
-      color: #fff;
-      border-color: #38bdf8;
-    }
+    .lb-tab-btn.active { background: linear-gradient(135deg, #0284c7, #3b82f6); color: #fff; border-color: #38bdf8; }
+    .lb-tab-btn.live-tab { border-color: #f59e0b; color: #fbbf24; }
+    .lb-tab-btn.live-tab.active { background: linear-gradient(135deg, #ef4444, #f59e0b); color: #fff; }
 
-    .podium-stage {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 8px;
-      margin: 15px 0 20px 0;
-      padding: 0 4px;
-    }
-    .podium-col {
-      flex: 1;
-      max-width: 120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      position: relative;
-    }
+    .podium-stage { display: flex; justify-content: center; align-items: flex-end; gap: 8px; margin: 15px 0 20px 0; padding: 0 4px; }
+    .podium-col { flex: 1; max-width: 120px; display: flex; flex-direction: column; align-items: center; text-align: center; }
     .podium-avatar-wrap { position: relative; margin-bottom: 6px; }
-    .podium-avatar {
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      color: #1e1b4b;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-    }
-    .podium-badge-icon {
-      position: absolute;
-      bottom: -4px;
-      right: -4px;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      font-weight: 900;
-      color: #fff;
-      border: 2px solid #fff;
-    }
-    .podium-crown {
-      font-size: 22px;
-      position: absolute;
-      top: -24px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: crownBounce 1.8s infinite ease-in-out;
-    }
-    @keyframes crownBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
+    .podium-avatar { border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #1e1b4b; }
+    .podium-badge-icon { position: absolute; bottom: -4px; right: -4px; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #fff; border: 2px solid #fff; }
+    .podium-crown { font-size: 22px; position: absolute; top: -24px; left: 50%; transform: translateX(-50%); }
 
-    .podium-col.rank-1 .podium-avatar {
-      width: 60px; height: 60px; font-size: 26px;
-      background: linear-gradient(135deg, #f59e0b, #fbbf24);
-      border: 3px solid #fef08a;
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
-    }
+    .podium-col.rank-1 .podium-avatar { width: 60px; height: 60px; font-size: 26px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border: 3px solid #fef08a; }
     .podium-col.rank-1 .podium-badge-icon { background: #f59e0b; }
-    .podium-col.rank-1 .podium-pedestal {
-      height: 70px;
-      background: linear-gradient(180deg, rgba(245, 158, 11, 0.4), rgba(245, 158, 11, 0.1));
-      border-top: 3px solid #f59e0b;
-    }
+    .podium-col.rank-1 .podium-pedestal { height: 70px; background: linear-gradient(180deg, rgba(245, 158, 11, 0.4), rgba(245, 158, 11, 0.1)); border-top: 3px solid #f59e0b; }
 
-    .podium-col.rank-2 .podium-avatar {
-      width: 48px; height: 48px; font-size: 20px;
-      background: linear-gradient(135deg, #94a3b8, #e2e8f0);
-      border: 2.5px solid #ffffff;
-    }
+    .podium-col.rank-2 .podium-avatar { width: 48px; height: 48px; font-size: 20px; background: linear-gradient(135deg, #94a3b8, #e2e8f0); border: 2.5px solid #ffffff; }
     .podium-col.rank-2 .podium-badge-icon { background: #64748b; }
-    .podium-col.rank-2 .podium-pedestal {
-      height: 50px;
-      background: linear-gradient(180deg, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.08));
-      border-top: 3px solid #94a3b8;
-    }
+    .podium-col.rank-2 .podium-pedestal { height: 50px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.08)); border-top: 3px solid #94a3b8; }
 
-    .podium-col.rank-3 .podium-avatar {
-      width: 48px; height: 48px; font-size: 20px;
-      background: linear-gradient(135deg, #d97706, #f97316);
-      border: 2.5px solid #fed7aa;
-    }
+    .podium-col.rank-3 .podium-avatar { width: 48px; height: 48px; font-size: 20px; background: linear-gradient(135deg, #d97706, #f97316); border: 2.5px solid #fed7aa; }
     .podium-col.rank-3 .podium-badge-icon { background: #b45309; }
-    .podium-col.rank-3 .podium-pedestal {
-      height: 38px;
-      background: linear-gradient(180deg, rgba(217, 119, 6, 0.35), rgba(217, 119, 6, 0.08));
-      border-top: 3px solid #d97706;
-    }
+    .podium-col.rank-3 .podium-pedestal { height: 38px; background: linear-gradient(180deg, rgba(217, 119, 6, 0.35), rgba(217, 119, 6, 0.08)); border-top: 3px solid #d97706; }
 
-    .podium-name {
-      font-size: 12px; font-weight: 800; color: var(--text-main);
-      max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px;
-    }
+    .podium-name { font-size: 12px; font-weight: 800; color: var(--text-main); max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .podium-score { font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 6px; }
     body.light-theme .podium-score { color: #0284c7; }
-
-    .podium-pedestal {
-      width: 100%; border-radius: 8px 8px 0 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; font-weight: 900; color: var(--text-main);
-    }
+    .podium-pedestal { width: 100%; border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; }
 
     .lb-list-rest { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
     .lb-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 800;
-      background: var(--lb-item-bg); color: var(--lb-item-text); border: 1.5px solid var(--card-border);
+      display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
+      border-radius: 12px; font-size: 13px; font-weight: 800; background: var(--lb-item-bg);
+      color: var(--lb-item-text); border: 1.5px solid var(--card-border);
     }
-    .lb-item.is-me {
-      border-color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15) !important;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
-    }
+    .lb-item.is-me { border-color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15) !important; }
 
     #userModal {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
@@ -943,7 +446,6 @@
     .modal-box {
       background: var(--modal-bg); border: 2px solid var(--modal-border); padding: 24px 20px;
       border-radius: 22px; width: 100%; max-width: 390px; text-align: center;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.4);
     }
     .form-input {
       width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 13px 15px;
@@ -952,45 +454,41 @@
     .form-btn-main {
       width: 100%; background: var(--grad-btn); border: none; padding: 13px;
       border-radius: 13px; color: #fff; font-weight: 900; font-size: 15px; cursor: pointer;
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
     }
   </style>
 </head>
 <body>
 
-<!-- 1-CLICK INSTANT NAME MODAL -->
+<!-- INSTANT LOGIN -->
 <div id="userModal">
   <div class="modal-box">
     <div style="font-family:'Fredoka',sans-serif; font-size:24px; font-weight:800; color:#f59e0b; margin-bottom:4px;">🎯 EXAM ARENA</div>
     <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">Live Mock Test Series by Vimal Sir ⭐</div>
-
     <input type="text" class="form-input" id="studentQuickName" placeholder="अपना नाम लिखें (उदा. Aman Sharma)" autofocus>
     <button class="form-btn-main" onclick="saveQuickPlayerName()">टेस्ट प्रारंभ करें ➔</button>
   </div>
 </div>
 
-<!-- MAIN CONTAINER -->
 <div class="arena-container">
 
   <!-- HEADER -->
   <div class="arena-header">
     <div class="arena-title">🎯 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
-    
     <div class="header-ctrls">
-      <button class="ctrl-btn" id="soundToggleBtn" onclick="toggleSound()" title="Sound On/Off">🔊</button>
-      <button class="ctrl-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Theme Switch">☀️</button>
+      <button class="ctrl-btn" id="soundToggleBtn" onclick="toggleSound()">🔊</button>
+      <button class="ctrl-btn" id="themeToggleBtn" onclick="toggleTheme()">☀️</button>
     </div>
   </div>
 
-  <!-- PWA INSTALL BANNER -->
+  <!-- PWA INSTALL -->
   <div id="pwaInstallBox" style="display:none;">
     <button class="btn-pwa-install" onclick="installAppDirectly()">
       <span>📥</span> Exam Arena App फ़ोन में इंस्टॉल करें
     </button>
   </div>
 
-  <!-- TODAY'S MOTIVATIONAL THOUGHT -->
+  <!-- DAILY MOTIVATION THOUGHT -->
   <div class="thought-card">
     <div class="thought-top-meta">
       <span class="thought-pill">💡 आज का प्रेरक विचार</span>
@@ -999,22 +497,18 @@
     <div class="thought-body-text" id="dailyThoughtText">
       "कठिन परिश्रम का कोई विकल्प नहीं होता, सफलता केवल निरंतर अभ्यास और अनुशासन से मिलती है।"
     </div>
-    <div class="thought-author" id="dailyThoughtAuthor">
-      – डॉ. ए.पी.जे. अब्दुल कलाम
-    </div>
-    <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()">
-      <span>📲</span> WhatsApp पोस्टर शेयर करें
-    </button>
+    <div class="thought-author" id="dailyThoughtAuthor">– डॉ. ए.पी.जे. अब्दुल कलाम</div>
+    <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()"><span>📲</span> WhatsApp पोस्टर शेयर करें</button>
   </div>
 
-  <!-- FLASH ALERT CARD (DIRECT LIVE TEST TRIGGER) -->
+  <!-- FLASH ALERT CARD (DYNAMIC COUNTDOWN / LIVE / PRACTICE) -->
   <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
-    <div class="flash-icon-box">📢</div>
+    <div class="flash-icon-box" id="flashIconBox">🔥</div>
     <div class="flash-text-wrap">
       <div class="flash-badge" id="flashBadgeTitle">DAILY LIVE TEST</div>
-      <div class="flash-msg" id="flashNoticeText">नया टेस्ट सेट लाइव हो चुका है!</div>
+      <div class="flash-msg" id="flashNoticeText">लाइव टेस्ट की जानकारी लोड हो रही है...</div>
     </div>
-    <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Start Test ➔</button>
+    <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Check ➔</button>
   </div>
 
   <!-- LIVE TICKER -->
@@ -1025,7 +519,7 @@
     </div>
   </div>
 
-  <!-- PLAYER PROFILE CARD -->
+  <!-- PROFILE CARD -->
   <div class="player-profile-card">
     <div class="profile-info">
       <div class="avatar-circle" id="userInitial">V</div>
@@ -1043,134 +537,97 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: HOME (2-COLUMN COMPACT TILES) -->
+  <!-- SCREEN 1: HOME TILES -->
   <div class="app-screen" id="screenHome">
     <button class="btn-view-ranks" onclick="navigateTo('screenLeaderboard')">
-      <span>🏆</span> Live All Rankers Leaderboard देखें ➔
+      <span>🏆</span> Live & All Rankers Leaderboard देखें ➔
     </button>
 
     <div class="section-title">🎯 अपना विषय चुनें (Choose Subject):</div>
     
     <div class="subject-cards-grid">
-      <!-- 1. Maths -->
       <div class="subject-card sc-math" onclick="openSubjectSets('Math')">
         <div class="sc-icon">📐</div>
-        <div class="sc-text">
-          <h3>Maths</h3>
-          <p id="mathSetsSub">Live sets loading...</p>
-        </div>
+        <div class="sc-text"><h3>Maths</h3><p id="mathSetsSub">Loading...</p></div>
       </div>
-
-      <!-- 2. Class X Science -->
       <div class="subject-card sc-sci" onclick="openSubjectSets('Science')">
         <div class="sc-icon">🔬</div>
-        <div class="sc-text">
-          <h3>Class X Science</h3>
-          <p id="sciSetsSub">Live sets loading...</p>
-        </div>
+        <div class="sc-text"><h3>Class X Science</h3><p id="sciSetsSub">Loading...</p></div>
       </div>
-
-      <!-- 3. Class X SST -->
       <div class="subject-card sc-sst" onclick="openSubjectSets('SocialScience')">
         <div class="sc-icon">📜</div>
-        <div class="sc-text">
-          <h3>Class X SST</h3>
-          <p id="sstSetsSub">Live sets loading...</p>
-        </div>
+        <div class="sc-text"><h3>Class X SST</h3><p id="sstSetsSub">Loading...</p></div>
       </div>
-
-      <!-- 4. English Grammar -->
       <div class="subject-card sc-eng" onclick="openSubjectSets('English')">
         <div class="sc-icon">✍️</div>
-        <div class="sc-text">
-          <h3>English Grammar</h3>
-          <p id="engSetsSub">Live sets loading...</p>
-        </div>
+        <div class="sc-text"><h3>English Grammar</h3><p id="engSetsSub">Loading...</p></div>
       </div>
-
-      <!-- 5. सामान्य ज्ञान (GK) -->
       <div class="subject-card sc-gk full-width" onclick="openSubjectSets('GK')">
         <div class="sc-info">
           <div class="sc-icon">🌍</div>
-          <div class="sc-text">
-            <h3>सामान्य ज्ञान (GK)</h3>
-            <p id="gkSetsSub">Live sets loading...</p>
-          </div>
+          <div class="sc-text"><h3>सामान्य ज्ञान (GK)</h3><p id="gkSetsSub">Loading...</p></div>
         </div>
         <div class="sc-arrow">➔</div>
       </div>
     </div>
 
-    <!-- ADSTERRA AD SLOT 1 -->
     <div class="ad-banner-box">
       <script>
-        atOptions = {
-          'key' : 'd79925c62cdb9ae65373e56a45850972',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
       </script>
       <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
     </div>
   </div>
 
-  <!-- SCREEN 2: FULL LEADERBOARD -->
+  <!-- SCREEN 2: DEDICATED LEADERBOARDS (LIVE TAB + XP TABS) -->
   <div class="app-screen" id="screenLeaderboard" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#d97706;">🏆 Rankers Board</span>
+      <span style="font-weight:900; font-size:14px; color:#f59e0b;">🏆 Leaderboard Arena</span>
     </div>
     
     <div class="leaderboard-box">
       <div class="lb-header">
-        <span>🌟 विषय अनुसार रैंकर्स</span>
-        <span style="font-size:12px; color:#0284c7; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
+        <span id="lbCurrentHeaderTitle">🔥 Today's Live Quiz Rankers</span>
+        <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
       </div>
 
       <div class="lb-tabs-bar">
-        <button class="lb-tab-btn active" onclick="switchLeaderboardTab('overall', this)">🏆 Overall</button>
+        <button class="lb-tab-btn live-tab active" onclick="switchLeaderboardTab('dailyLive', this)">🔥 Today's Live</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('overall', this)">🏆 All-Time XP</button>
         <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Maths</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Class X Science</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 Class X SST</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English Grammar</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 सामान्य ज्ञान (GK)</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Science</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 SST</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 GK</button>
       </div>
 
       <div id="fullLeaderboardList"></div>
     </div>
   </div>
 
-  <!-- SCREEN 3: SETS (SPECIAL PINNED DAILY LIVE TEST + REGULAR CHAPTER SETS) -->
+  <!-- SCREEN 3: SETS LIST (BEST SCORE SHOWN & LIVE PINNED) -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#d97706;" id="selectedSubjHeading">Sets</span>
+      <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="selectedSubjHeading">Sets</span>
     </div>
-    <div class="section-title">🏆 सेट चुनें (≥50% स्कोर पर अगला सेट खुलेगा):</div>
+    <div class="section-title">🏆 अभ्यास सेट चुनें:</div>
     <div class="sets-list-container" id="setsListRenderBox"></div>
 
-    <!-- ADSTERRA AD SLOT 2 -->
     <div class="ad-banner-box">
       <script>
-        atOptions = {
-          'key' : 'd79925c62cdb9ae65373e56a45850972',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
       </script>
       <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
     </div>
   </div>
 
-  <!-- SCREEN 4: QUIZ ARENA (60s TIMER + BEEP + AUTO-NEXT) -->
+  <!-- SCREEN 4: QUIZ ARENA (60s TIMER & SPEED TRACKER) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
-      <span style="font-size:13px; font-weight:900; color:#d97706;" id="activeQuizSetTitle">Set 1</span>
+      <span style="font-size:13px; font-weight:900; color:#f59e0b;" id="activeQuizSetTitle">Set 1</span>
     </div>
     <div class="quiz-card" id="activeQuizCard">
       <div class="q-meta">
@@ -1188,7 +645,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 5: RESULT -->
+  <!-- SCREEN 5: RESULT SCREEN -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
@@ -1203,12 +660,10 @@
       
       <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
 
-      <!-- WhatsApp Share Challenge -->
       <a href="#" class="btn-whatsapp-share" id="btnWhatsappShare" target="_blank">
         <span>📲</span> दोस्तों को चुनौती दें (WhatsApp Share)
       </a>
 
-      <!-- Answer Review -->
       <div style="width:100%; text-align:left; margin-top:16px;">
         <div style="font-size:14px; font-weight:900; color:var(--text-main); margin-bottom:8px;">
           <span>📝 उत्तर समीक्षा (Answer Sheet):</span>
@@ -1228,30 +683,31 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  let quizDatabase = {
-    Math: [], Science: [], SocialScience: [], English: [], GK: []
-  };
-
+  let quizDatabase = { Math: [], Science: [], SocialScience: [], English: [], GK: [] };
   let currentSubject = 'Science';
   let currentLevel = 1;
   let currentQIdx = 0;
   let userAnswers = {};
   let qTimerInterval = null;
   let qTimeLeft = 60;
-  let latestLiveTarget = null; 
+  let quizStartTime = null; 
   let isCurrentQuizDailyLive = false;
+  let currentQuizSubmissionType = 'LIVE'; 
   let cloudLeaderboards = {};
   let isSoundEnabled = true;
+
+  let liveScheduleData = null; 
+  let countdownTimerInterval = null;
 
   let currentUser = {
     name: '', totalXP: 0, currentRank: '--',
     unlockedLevels: { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 },
+    setBestScores: {},     
     attemptedLiveTests: {} 
   };
 
-  /* WEB AUDIO SYNTH */
+  /* AUDIO SYNTH */
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
   function playTone(freq, duration, type = 'sine') {
     if (!isSoundEnabled) return;
     try {
@@ -1268,75 +724,46 @@
       osc.stop(audioCtx.currentTime + duration);
     } catch(e){}
   }
-
   function playTickSound() { playTone(900, 0.06, 'triangle'); }
-
   function playVictorySound() {
     if (!isSoundEnabled) return;
-    const notes = [261.63, 329.63, 392.00, 523.25];
-    notes.forEach((freq, idx) => {
-      setTimeout(() => playTone(freq, 0.25, 'triangle'), idx * 120);
-    });
+    [261.63, 329.63, 392.00, 523.25].forEach((f, idx) => setTimeout(() => playTone(f, 0.25, 'triangle'), idx * 120));
   }
-
   function playFailureSound() {
     if (!isSoundEnabled) return;
-    const notes = [392.00, 349.23, 311.13, 261.63];
-    notes.forEach((freq, idx) => {
-      setTimeout(() => playTone(freq, 0.35, 'sine'), idx * 160);
-    });
+    [392.00, 349.23, 311.13, 261.63].forEach((f, idx) => setTimeout(() => playTone(f, 0.35, 'sine'), idx * 160));
   }
-
   function toggleSound() {
     isSoundEnabled = !isSoundEnabled;
     document.getElementById('soundToggleBtn').innerText = isSoundEnabled ? '🔊' : '🔇';
   }
 
-  /* THEME SYSTEM */
+  /* THEME */
   function initTheme() {
     const savedTheme = localStorage.getItem('vimal_arena_theme') || 'dark';
     if (savedTheme === 'light') {
       document.body.classList.add('light-theme');
       document.getElementById('themeToggleBtn').innerText = '🌙';
-    } else {
-      document.body.classList.remove('light-theme');
-      document.getElementById('themeToggleBtn').innerText = '☀️';
     }
   }
-
   function toggleTheme() {
     const isLight = document.body.classList.toggle('light-theme');
     localStorage.setItem('vimal_arena_theme', isLight ? 'light' : 'dark');
     document.getElementById('themeToggleBtn').innerText = isLight ? '🌙' : '☀️';
   }
 
-  /* FORMULA FORMATTER */
   function formatMathFormula(text) {
     if (!text) return '';
-    return text
-      .toString()
-      .replace(/\balpha\b/gi, 'α')
-      .replace(/\bbeta\b/gi, 'β')
-      .replace(/\bgamma\b/gi, 'γ')
-      .replace(/\btheta\b/gi, 'θ')
-      .replace(/\bdelta\b/gi, 'Δ')
-      .replace(/\blambda\b/gi, 'λ')
-      .replace(/\bomega\b/gi, 'Ω')
-      .replace(/\bpi\b/gi, 'π')
-      .replace(/sqrt\s*/gi, '√')
-      .replace(/cbrt\s*/gi, '∛')
-      .replace(/\s*\*\s*/g, ' × ')
+    return text.toString()
+      .replace(/\balpha\b/gi, 'α').replace(/\bbeta\b/gi, 'β').replace(/\bgamma\b/gi, 'γ')
+      .replace(/\btheta\b/gi, 'θ').replace(/\bpi\b/gi, 'π').replace(/sqrt\s*/gi, '√')
       .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')
       .replace(/([A-Z][a-z]?|\))(\d+)/g, '$1<sub>$2</sub>');
   }
 
-  /* INSTANT NAME LOGIN */
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
-    if (!entered) {
-      alert("कृपया अपना नाम लिखें!");
-      return;
-    }
+    if (!entered) return alert("कृपया अपना नाम लिखें!");
     currentUser.name = entered;
     localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
     document.getElementById('userModal').style.display = 'none';
@@ -1350,12 +777,9 @@
     const saved = localStorage.getItem('vimal_arena_quick_player');
     if (saved) {
       currentUser = JSON.parse(saved);
-      if (!currentUser.unlockedLevels) {
-        currentUser.unlockedLevels = { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 };
-      }
-      if (!currentUser.attemptedLiveTests) {
-        currentUser.attemptedLiveTests = {};
-      }
+      if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 };
+      if (!currentUser.setBestScores) currentUser.setBestScores = {};
+      if (!currentUser.attemptedLiveTests) currentUser.attemptedLiveTests = {};
       document.getElementById('userModal').style.display = 'none';
       updatePlayerUI();
       navigateTo('screenHome');
@@ -1388,6 +812,7 @@
     if (target) target.style.display = 'flex';
   }
 
+  /* FETCH DATA & PARSE LIVE SCHEDULE */
   async function fetchCloudData() {
     try {
       const resp = await fetch(SCRIPT_WEBHOOK_URL);
@@ -1395,17 +820,11 @@
 
       if (data.dailyThought) {
         document.getElementById('dailyThoughtText').innerText = `"${data.dailyThought}"`;
-        if (data.dailyThoughtAuthor) {
-          document.getElementById('dailyThoughtAuthor').innerText = `– ${data.dailyThoughtAuthor}`;
-        }
+        if (data.dailyThoughtAuthor) document.getElementById('dailyThoughtAuthor').innerText = `– ${data.dailyThoughtAuthor}`;
       }
 
       if (data.quizzes) {
-        for (let subj in data.quizzes) {
-          if (data.quizzes[subj] && data.quizzes[subj].length > 0) {
-            quizDatabase[subj] = data.quizzes[subj];
-          }
-        }
+        for (let s in data.quizzes) quizDatabase[s] = data.quizzes[s];
         document.getElementById('mathSetsSub').innerText = `${quizDatabase.Math.length} Sets Live`;
         document.getElementById('sciSetsSub').innerText = `${quizDatabase.Science.length} Sets Live`;
         document.getElementById('sstSetsSub').innerText = `${quizDatabase.SocialScience.length} Sets Live`;
@@ -1413,110 +832,177 @@
         document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
       }
 
-      if (data.latestQuiz && data.latestQuiz.subject) {
-        const targetSubj = data.latestQuiz.subject;
-        const subjSets = quizDatabase[targetSubj] || [];
-        let matchedSet = null;
+      if (data.leaderboards) {
+        cloudLeaderboards = data.leaderboards;
+        renderLeaderboardList(cloudLeaderboards.dailyLive || [], true);
+      }
 
-        if (subjSets.length > 0) {
-          matchedSet = subjSets.find(s => s.title === data.latestQuiz.title) || subjSets[subjSets.length - 1];
-        }
-
-        if (matchedSet) {
-          latestLiveTarget = {
-            subject: targetSubj,
-            level: Number(matchedSet.level),
-            title: matchedSet.title,
-            name: data.latestQuiz.name || targetSubj
-          };
-
-          const liveKey = `${latestLiveTarget.subject}_Set${latestLiveTarget.level}`;
-          const attemptedRecord = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
-          const flashBtn = document.getElementById('btnFlashAction');
-
-          if (data.flashNotice) {
-            document.getElementById('flashNoticeText').innerText = data.flashNotice;
-          } else {
-            document.getElementById('flashNoticeText').innerText = `🔥 आज का लाइव टेस्ट: ${latestLiveTarget.name} (${latestLiveTarget.title}) शुरू करें!`;
-          }
-
-          if (attemptedRecord) {
-            flashBtn.innerText = `Completed 🔒 (${attemptedRecord.score}/${attemptedRecord.total})`;
-            flashBtn.className = "flash-btn attempted";
-          } else {
-            flashBtn.innerText = `Start Test ➔`;
-            flashBtn.className = "flash-btn";
-          }
-
-          document.getElementById('newQuizFlashCard').style.display = 'flex';
-        }
+      if (data.liveSchedule) {
+        liveScheduleData = data.liveSchedule;
+        initScheduleWatcher();
       }
 
       if (data.activeUsers && data.activeUsers.length > 0) {
         document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Appearing in Mock Tests";
       }
-
-      if (data.leaderboards) {
-        cloudLeaderboards = data.leaderboards;
-        renderLeaderboardList(cloudLeaderboards.overall || []);
-      }
     } catch (e) {
-      console.warn("Cloud Sync Note: ", e);
+      console.warn(e);
     }
   }
 
-  /* DIRECT LIVE TEST TRIGGER (STRICT SINGLE-ATTEMPT ENFORCED) */
+  /* REAL-TIME COUNTDOWN WATCHER */
+  function initScheduleWatcher() {
+    clearInterval(countdownTimerInterval);
+    if (!liveScheduleData) return;
+
+    function parseTimeObj(dateStr, timeStr) {
+      const [yy, mm, dd] = dateStr.split('-').map(Number);
+      const [hh, min] = timeStr.split(':').map(Number);
+      return new Date(yy, mm - 1, dd, hh, min, 0);
+    }
+
+    const startDate = parseTimeObj(liveScheduleData.date, liveScheduleData.startTime);
+    const endDate = parseTimeObj(liveScheduleData.date, liveScheduleData.endTime);
+
+    const card = document.getElementById('newQuizFlashCard');
+    const badge = document.getElementById('flashBadgeTitle');
+    const msg = document.getElementById('flashNoticeText');
+    const btn = document.getElementById('btnFlashAction');
+    const icon = document.getElementById('flashIconBox');
+
+    card.style.display = 'flex';
+
+    function tick() {
+      const now = new Date();
+      const liveKey = `${liveScheduleData.subject}_Set${liveScheduleData.level}`;
+      const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
+
+      if (now < startDate) {
+        // UPCOMING STATE
+        const diffMs = startDate - now;
+        const diffHrs = Math.floor(diffMs / 3600000);
+        const diffMins = Math.floor((diffMs % 3600000) / 60000);
+        const diffSecs = Math.floor((diffMs % 60000) / 1000);
+        const cdStr = `${String(diffHrs).padStart(2,'0')}h ${String(diffMins).padStart(2,'0')}m ${String(diffSecs).padStart(2,'0')}s`;
+
+        card.className = "flash-alert-card upcoming";
+        icon.innerText = "⏳";
+        badge.innerText = "UPCOMING LIVE TEST";
+        msg.innerHTML = `${liveScheduleData.title}<br>Starts in: <span class="flash-timer-highlight">${cdStr}</span> (${liveScheduleData.startTime})`;
+        btn.innerText = "Upcoming 🔒";
+        btn.className = "flash-btn locked";
+      } 
+      else if (now >= startDate && now <= endDate) {
+        // LIVE STATE
+        card.className = "flash-alert-card";
+        icon.innerText = "🔥";
+        badge.innerText = "LIVE NOW (1 HOUR WINDOW)";
+
+        const diffMs = endDate - now;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffSecs = Math.floor((diffMs % 60000) / 1000);
+        const remStr = `${String(diffMins).padStart(2,'0')}m ${String(diffSecs).padStart(2,'0')}s`;
+
+        if (attempted) {
+          msg.innerHTML = `${liveScheduleData.title}<br>✅ आपने टेस्ट दे दिया है (स्कोर: ${attempted.score}/${attempted.total})`;
+          btn.innerText = "Completed 🔒";
+          btn.className = "flash-btn completed";
+        } else {
+          msg.innerHTML = `${liveScheduleData.title}<br>Time Left: <span class="flash-timer-highlight">${remStr}</span>`;
+          btn.innerText = "Start Live ➔";
+          btn.className = "flash-btn";
+        }
+      } 
+      else {
+        // CLOSED (PRACTICE ARCHIVE)
+        card.className = "flash-alert-card closed";
+        icon.innerText = "📚";
+        badge.innerText = "PRACTICE ARCHIVE";
+        msg.innerHTML = `${liveScheduleData.title} (Live Ended)<br>अब इसे कभी भी अभ्यास के रूप में दें।`;
+        btn.innerText = "Practice ▶";
+        btn.className = "flash-btn";
+      }
+    }
+
+    tick();
+    countdownTimerInterval = setInterval(tick, 1000);
+  }
+
   function handleFlashClick() {
-    if (!latestLiveTarget) {
-      openSubjectSets('Science');
+    if (!liveScheduleData) return;
+    const now = new Date();
+    const [yy, mm, dd] = liveScheduleData.date.split('-').map(Number);
+    const [sh, sm] = liveScheduleData.startTime.split(':').map(Number);
+    const [eh, em] = liveScheduleData.endTime.split(':').map(Number);
+    const sDate = new Date(yy, mm - 1, dd, sh, sm, 0);
+    const eDate = new Date(yy, mm - 1, dd, eh, em, 0);
+
+    const liveKey = `${liveScheduleData.subject}_Set${liveScheduleData.level}`;
+    const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
+
+    if (now < sDate) {
+      alert(`⏳ यह टेस्ट रात ${liveScheduleData.startTime} बजे लाइव होगा। तब तक उल्टी गिनती (Countdown) देखें!`);
       return;
     }
-    const liveKey = `${latestLiveTarget.subject}_Set${latestLiveTarget.level}`;
-    const attemptedRecord = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
 
-    // STRICT: RE-ATTEMPT BLOCKED
-    if (attemptedRecord) {
-      alert(`⚠️ आप आज का डेली लाइव टेस्ट पहले ही दे चुके हैं!\n\nआपका स्कोर: ${attemptedRecord.score}/${attemptedRecord.total} (${attemptedRecord.percent}%)\n\nनियम: लाइव टेस्ट केवल 1 बार ही दिया जा सकता है। अगला लाइव टेस्ट कल आएगा!`);
-      return;
+    if (now >= sDate && now <= eDate) {
+      if (attempted) {
+        alert(`⚠️ आप आज का लाइव टेस्ट पहले ही दे चुके हैं!\n\nस्कोर: ${attempted.score}/${attempted.total}\nसमय: ${attempted.timeTaken}s\n\nलाइव टेस्ट में केवल 1 मौका मिलता है। लीडरबोर्ड चेक करें!`);
+        return;
+      }
+      currentSubject = liveScheduleData.subject;
+      startQuizSet(liveScheduleData.level, true, 'LIVE');
+    } else {
+      currentSubject = liveScheduleData.subject;
+      startQuizSet(liveScheduleData.level, false, 'PRACTICE');
     }
-
-    currentSubject = latestLiveTarget.subject;
-    startQuizSet(latestLiveTarget.level, true);
   }
 
-  /* LEADERBOARD TABS */
+  /* LEADERBOARD RENDERING */
   function switchLeaderboardTab(tabKey, btnEl) {
     document.querySelectorAll('.lb-tab-btn').forEach(b => b.classList.remove('active'));
     if (btnEl) btnEl.classList.add('active');
+
+    const header = document.getElementById('lbCurrentHeaderTitle');
+    const isLive = (tabKey === 'dailyLive');
+
+    if (isLive) header.innerText = "🔥 Today's Live Quiz Rankers (Speed & Marks)";
+    else header.innerText = "🏆 All-Time XP Rankers";
+
     const targetList = cloudLeaderboards[tabKey] || [];
-    renderLeaderboardList(targetList);
+    renderLeaderboardList(targetList, isLive);
   }
 
-  /* TOP 3 PODIUM + LIST */
-  function renderLeaderboardList(rankList) {
+  function renderLeaderboardList(rankList, isLive = false) {
     const listEl = document.getElementById('fullLeaderboardList');
     if (!listEl) return;
 
     if (!rankList || rankList.length === 0) {
-      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center; padding:18px;">इस विषय में अभी कोई रिकॉर्ड नहीं है। पहला टेस्ट देकर Rank #1 बनें!</div>`;
+      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center; padding:20px;">अभी इस बोर्ड पर कोई स्कोर दर्ज नहीं है।</div>`;
       return;
     }
 
-    rankList.forEach(item => {
-      if (item.name.toLowerCase() === (currentUser.name || '').toLowerCase()) {
-        currentUser.currentRank = item.rank;
-        document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
-      }
-    });
+    if (!isLive) {
+      rankList.forEach(item => {
+        if (item.name.toLowerCase() === (currentUser.name || '').toLowerCase()) {
+          currentUser.currentRank = item.rank;
+          document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
+        }
+      });
+    }
 
     const p1 = rankList[0] || null;
     const p2 = rankList[1] || null;
     const p3 = rankList[2] || null;
     const rest = rankList.slice(3);
 
+    function formatStat(item) {
+      if (!item) return '';
+      return isLive ? `${item.score}/${item.total} (${item.timeTaken}s)` : `${item.totalXP} XP`;
+    }
+
     let html = `
       <div class="podium-stage">
-        <!-- Rank 2 -->
         <div class="podium-col rank-2">
           ${p2 ? `
             <div class="podium-avatar-wrap">
@@ -1524,12 +1010,11 @@
               <div class="podium-badge-icon">#2</div>
             </div>
             <div class="podium-name">${p2.name}</div>
-            <div class="podium-score">${p2.totalXP} XP</div>
+            <div class="podium-score">${formatStat(p2)}</div>
             <div class="podium-pedestal">2</div>
           ` : `<div style="height:120px;"></div>`}
         </div>
 
-        <!-- Rank 1 -->
         <div class="podium-col rank-1">
           ${p1 ? `
             <div class="podium-avatar-wrap">
@@ -1538,12 +1023,11 @@
               <div class="podium-badge-icon">#1</div>
             </div>
             <div class="podium-name">${p1.name}</div>
-            <div class="podium-score">${p1.totalXP} XP</div>
+            <div class="podium-score">${formatStat(p1)}</div>
             <div class="podium-pedestal">1</div>
           ` : `<div style="height:140px;"></div>`}
         </div>
 
-        <!-- Rank 3 -->
         <div class="podium-col rank-3">
           ${p3 ? `
             <div class="podium-avatar-wrap">
@@ -1551,7 +1035,7 @@
               <div class="podium-badge-icon">#3</div>
             </div>
             <div class="podium-name">${p3.name}</div>
-            <div class="podium-score">${p3.totalXP} XP</div>
+            <div class="podium-score">${formatStat(p3)}</div>
             <div class="podium-pedestal">3</div>
           ` : `<div style="height:110px;"></div>`}
         </div>
@@ -1568,7 +1052,7 @@
               <span style="font-weight:900; color:#f59e0b; width:28px;">#${item.rank}</span>
               <span>${item.name} ${isMe ? '<b>(You)</b>' : ''}</span>
             </div>
-            <div style="color:#0284c7; font-weight:900;">${item.totalXP} XP</div>
+            <div style="color:#0284c7; font-weight:900;">${formatStat(item)}</div>
           </div>
         `;
       });
@@ -1580,105 +1064,91 @@
 
   function openSubjectSets(subj) {
     currentSubject = subj;
-    const titles = {
-      Math: '📐 Maths Sets',
-      Science: '🔬 Class X Science Sets',
-      SocialScience: '📜 Class X SST Sets',
-      English: '✍️ English Grammar Sets',
-      GK: '🌍 सामान्य ज्ञान (GK) Sets'
-    };
+    const titles = { Math: '📐 Maths Sets', Science: '🔬 Class X Science Sets', SocialScience: '📜 Class X SST Sets', English: '✍️ English Grammar Sets', GK: '🌍 GK Sets' };
     document.getElementById('selectedSubjHeading').innerText = titles[subj] || 'Sets';
     renderSetsList();
     navigateTo('screenSets');
   }
 
-  /* RENDER SETS LIST */
   function renderSetsList() {
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
     const sets = quizDatabase[currentSubject] || [];
-    const unlockedMax = Number((currentUser.unlockedLevels && currentUser.unlockedLevels[currentSubject])) || 1;
+    const unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
 
     if (sets.length === 0) {
       container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Sheet से सवाल लोड हो रहे हैं...</div>`;
       return;
     }
 
-    // 1. Pinned Daily Live Test Card (Single-Attempt Locked if Attempted)
-    if (latestLiveTarget && latestLiveTarget.subject === currentSubject) {
-      const liveSetObj = sets.find(s => Number(s.level) === latestLiveTarget.level);
+    // PINNED LIVE CHALLENGE CARD
+    if (liveScheduleData && liveScheduleData.subject === currentSubject) {
+      const liveSetObj = sets.find(s => Number(s.level) === liveScheduleData.level);
       if (liveSetObj) {
         const liveKey = `${currentSubject}_Set${liveSetObj.level}`;
         const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
 
-        const liveRow = document.createElement('div');
-        liveRow.className = 'set-row-card live-challenge-card' + (attempted ? ' attempted' : '');
-        liveRow.innerHTML = `
-          <div style="display:flex; align-items:center; gap:14px;">
+        const card = document.createElement('div');
+        card.className = 'set-row-card live-pinned';
+        card.innerHTML = `
+          <div style="display:flex; align-items:center; gap:12px;">
             <span style="font-size:24px;">${attempted ? '✅' : '🔥'}</span>
             <div>
-              <div style="font-size:10px; font-weight:900; color:#ef4444; text-transform:uppercase; background:#ffffff; padding:1px 6px; border-radius:4px; display:inline-block; margin-bottom:2px;">TODAY'S LIVE CHALLENGE</div>
-              <h4 style="font-size:15px; font-weight:800; color:#ffffff;">${liveSetObj.title}</h4>
-              <span style="font-size:11.5px; color:#fef08a; font-weight:700;">${attempted ? `पूर्ण (Score: ${attempted.score}/${attempted.total}) • कल नया सेट आएगा` : '⭐ Open to All Students • 60s Timer'}</span>
+              <div style="font-size:9.5px; font-weight:900; color:#ef4444; background:#fff; padding:1px 6px; border-radius:4px; display:inline-block;">TODAY'S EVENT</div>
+              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">${liveSetObj.title}</h4>
+              <span style="font-size:11px; color:#fef08a;">${attempted ? `Submitted: ${attempted.score}/${attempted.total} (${attempted.timeTaken}s)` : `Window: ${liveScheduleData.startTime} -${liveScheduleData.endTime}`}</span>
             </div>
           </div>
-          <div class="set-action-pill">${attempted ? 'Submitted 🔒' : 'Live ▶'}</div>
+          <div class="set-action-pill" style="background:${attempted ? '#10b981':'linear-gradient(135deg,#ef4444,#f59e0b)'}; color:#fff;">
+            ${attempted ? 'Done 🔒' : 'Open ▶'}
+          </div>
         `;
-        liveRow.onclick = () => {
-          if (attempted) {
-            alert(`⚠️ आप आज का लाइव टेस्ट पहले ही दे चुके हैं (स्कोर: ${attempted.score}/${attempted.total})!\n\nलाइव टेस्ट में दोबारा मौका नहीं मिलता है।`);
-            return;
-          }
-          startQuizSet(liveSetObj.level, true);
-        };
-        container.appendChild(liveRow);
+        card.onclick = handleFlashClick;
+        container.appendChild(card);
       }
     }
 
-    // 2. Regular Chapter Sets
+    // REGULAR SEQUENTIAL SETS (WITH BEST SCORE DISPLAY)
     sets.forEach(set => {
       const setLvl = Number(set.level);
-      if (latestLiveTarget && latestLiveTarget.subject === currentSubject && setLvl === latestLiveTarget.level) {
-        return;
-      }
+      if (liveScheduleData && liveScheduleData.subject === currentSubject && setLvl === liveScheduleData.level) return;
 
       const isLocked = setLvl > unlockedMax;
+      const setKey = `${currentSubject}_Set${setLvl}`;
+      const best = currentUser.setBestScores && currentUser.setBestScores[setKey];
+
       const row = document.createElement('div');
       row.className = 'set-row-card ' + (isLocked ? 'locked' : 'unlocked');
       row.innerHTML = `
-        <div style="display:flex; align-items:center; gap:14px;">
+        <div style="display:flex; align-items:center; gap:12px;">
           <span style="font-size:22px;">${isLocked ? '🔒' : '🔓'}</span>
           <div>
-            <h4 style="font-size:14.5px; font-weight:800;">${set.title}</h4>
-            <span style="font-size:11.5px; color:var(--text-muted);">${set.questions.length} Questions • 60s Timer</span>
+            <h4 style="font-size:14px; font-weight:800;">${set.title}</h4>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:11px; color:var(--text-muted);">${set.questions.length} Questions</span>
+              ${best ? `<span class="set-best-badge">Best: ${best.score}/${best.total} (${Math.round((best.score/best.total)*100)}%) ✅</span>` : ''}
+            </div>
           </div>
         </div>
-        <div class="set-action-pill">${isLocked ? 'Locked' : 'Start ▶'}</div>
+        <div class="set-action-pill">${isLocked ? 'Locked' : (best ? 'Re-test 🔁' : 'Start ▶')}</div>
       `;
       row.onclick = () => {
-        if (isLocked) return alert(`🔒 Set ${set.level} locked है! पिछला सेट पास (≥50%) करें।`);
-        startQuizSet(set.level, false);
+        if (isLocked) return alert(`🔒 Set ${set.level} locked है! पिछला सेट पास करें।`);
+        startQuizSet(set.level, false, 'PRACTICE');
       };
       container.appendChild(row);
     });
   }
 
-  function startQuizSet(lvl, isLive = false) {
-    if (isLive) {
-      const liveKey = `${currentSubject}_Set${lvl}`;
-      if (currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey]) {
-        alert("⚠️ आप यह लाइव टेस्ट पहले ही दे चुके हैं! दोबारा टेस्ट देने की अनुमति नहीं है।");
-        return;
-      }
-    }
-
+  function startQuizSet(lvl, isLive = false, subType = 'LIVE') {
     currentLevel = Number(lvl);
     isCurrentQuizDailyLive = isLive;
+    currentQuizSubmissionType = subType;
     userAnswers = {};
+    quizStartTime = Date.now();
 
     const setObj = quizDatabase[currentSubject].find(s => Number(s.level) === currentLevel);
-    const prefix = isCurrentQuizDailyLive ? '🔥 LIVE: ' : '';
-    document.getElementById('activeQuizSetTitle').innerText = `${prefix}${currentSubject} - ${setObj ? setObj.title : 'Set ' + currentLevel}`;
+    document.getElementById('activeQuizSetTitle').innerText = `${isLive ? '🔥 LIVE: ' : ''}${currentSubject} - ${setObj ? setObj.title : 'Set ' + currentLevel}`;
 
     navigateTo('screenQuiz');
     loadQuestion(0);
@@ -1722,10 +1192,7 @@
     startTimer();
   }
 
-  function prevQuestion() {
-    if (currentQIdx > 0) loadQuestion(currentQIdx - 1);
-  }
-
+  function prevQuestion() { if (currentQIdx > 0) loadQuestion(currentQIdx - 1); }
   function nextQuestion() {
     const questions = getCurrentQuestions();
     if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
@@ -1741,67 +1208,61 @@
     qTimerInterval = setInterval(() => {
       qTimeLeft--;
       timerSecsEl.innerText = qTimeLeft;
-      
       if (qTimeLeft <= 10 && qTimeLeft > 0) {
         timerPillEl.classList.add('urgent');
         playTickSound();
       }
-
       if (qTimeLeft <= 0) {
         clearInterval(qTimerInterval);
         const questions = getCurrentQuestions();
-        if (currentQIdx < questions.length - 1) {
-          loadQuestion(currentQIdx + 1);
-        } else {
-          submitQuiz();
-        }
+        if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
+        else submitQuiz();
       }
     }, 1000);
   }
 
   function confirmExitQuiz() {
-    if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
-      openSubjectSets(currentSubject);
-    }
+    if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) openSubjectSets(currentSubject);
   }
 
-  /* SUBMIT QUIZ */
+  /* SUBMIT QUIZ: TIME TRACKER + DELTA XP ENFORCED */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
+    const totalTimeSecs = Math.round((Date.now() - quizStartTime) / 1000);
     const questions = getCurrentQuestions();
     let score = 0;
     questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
 
     const percent = (score / questions.length) * 100;
     const passed = percent >= 50;
-    const earnedXP = score * 20;
-    currentUser.totalXP = (Number(currentUser.totalXP) || 0) + earnedXP;
+    const setKey = `${currentSubject}_Set${currentLevel}`;
+
+    // DELTA XP RULE (Exploit prevention)
+    const prevBest = currentUser.setBestScores[setKey] || { score: 0, xp: 0 };
+    const rawXP = score * 20;
+    const deltaXP = Math.max(0, rawXP - prevBest.xp);
+
+    currentUser.totalXP = (Number(currentUser.totalXP) || 0) + deltaXP;
+
+    if (score > prevBest.score) {
+      currentUser.setBestScores[setKey] = { score: score, total: questions.length, xp: rawXP };
+    }
 
     let unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
     let newLevelUnlocked = false;
 
-    // Daily Live Quiz: Save as completed so re-attempt is locked
     if (isCurrentQuizDailyLive) {
-      if (!currentUser.attemptedLiveTests) currentUser.attemptedLiveTests = {};
-      const liveKey = `${currentSubject}_Set${currentLevel}`;
-      currentUser.attemptedLiveTests[liveKey] = {
-        score: score,
-        total: questions.length,
-        percent: percent.toFixed(0)
+      currentUser.attemptedLiveTests[setKey] = {
+        score: score, total: questions.length, timeTaken: totalTimeSecs, date: new Date().toISOString()
       };
-
       if (passed && currentLevel === unlockedMax) {
         currentUser.unlockedLevels[currentSubject] = currentLevel + 1;
         newLevelUnlocked = true;
       }
     } else {
-      if (passed) {
-        const nextLvl = currentLevel + 1;
-        if (nextLvl > unlockedMax) {
-          currentUser.unlockedLevels[currentSubject] = nextLvl;
-          unlockedMax = nextLvl;
-          newLevelUnlocked = true;
-        }
+      if (passed && (currentLevel + 1) > unlockedMax) {
+        currentUser.unlockedLevels[currentSubject] = currentLevel + 1;
+        newLevelUnlocked = true;
       }
     }
 
@@ -1809,7 +1270,7 @@
     updatePlayerUI();
 
     navigateTo('resultScreen');
-    document.getElementById('resSubjTag').innerText = `${isCurrentQuizDailyLive ? '🔥 DAILY LIVE: ' : ''}${currentSubject} - Set ${currentLevel}`;
+    document.getElementById('resSubjTag').innerText = `${isCurrentQuizDailyLive ? '🔥 LIVE CHALLENGE: ' : ''}${currentSubject} - Set ${currentLevel} • Time: ${totalTimeSecs}s`;
     document.getElementById('resScore').innerText = score;
     document.getElementById('resTotalQ').innerText = `out of ${questions.length}`;
 
@@ -1818,99 +1279,79 @@
     const resultCard = document.getElementById('resultMainCard');
 
     if (passed) {
-      resultCard.classList.remove('failure-glow-shake');
       document.getElementById('resHeadingText').innerText = "🎉 टेस्ट परिणाम घोषित!";
       banner.className = "unlock-banner unlock-success";
       
+      let xpMsg = deltaXP > 0 ? `+${deltaXP} XP Earned!` : `(पहले से उत्तीर्ण: 0 XP Farming Blocked)`;
       if (isCurrentQuizDailyLive) {
-        banner.innerHTML = `🌟 बधाई! Daily Live Quiz सबमिट हो गया!<br>Score: ${score}/${questions.length} (${percent.toFixed(0)}%) • Earned +${earnedXP} XP!`;
-        nextBtn.innerText = `View Leaderboard 🏆`;
+        banner.innerHTML = `🌟 बधाई! Live Quiz सबमिट हो गया!<br>Time: ${totalTimeSecs}s • ${xpMsg}`;
+        nextBtn.innerText = `View Live Ranks 🏆`;
       } else {
         banner.innerHTML = newLevelUnlocked 
-          ? `🎉 शानदार प्रदर्शन! Score: ${percent.toFixed(0)}%. अगला सेट ${currentLevel + 1} UNLOCK हो गया! 🔓`
-          : `✅ उत्तीर्ण! Score: ${percent.toFixed(0)}%. Set Mastered!`;
+          ? `🎉 शानदार! अगला सेट ${currentLevel + 1} UNLOCK हो गया! 🔓 • ${xpMsg}`
+          : `✅ सेट पूर्ण! • ${xpMsg}`;
         nextBtn.innerText = `Next Set ➔`;
       }
-
       playVictorySound();
-      if (typeof confetti === 'function') {
-        confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
-      }
+      if (typeof confetti === 'function') confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
     } else {
       document.getElementById('resHeadingText').innerText = "🎯 टेस्ट परिणाम घोषित!";
       banner.className = "unlock-banner unlock-failed";
-
       if (isCurrentQuizDailyLive) {
-        banner.innerHTML = `स्कोर: ${score}/${questions.length} (${percent.toFixed(0)}%)<br><span style="font-size:12px; opacity:0.9;">लाइव टेस्ट केवल 1 बार दे सकते हैं। कल नए टेस्ट में बेहतर प्रयास करें!</span>`;
-        nextBtn.innerText = `View Leaderboard 🏆`;
+        banner.innerHTML = `स्कोर: ${score}/${questions.length} (${totalTimeSecs}s)<br>लाइव टेस्ट में केवल 1 मौका मिलता है। कल प्रयास करें!`;
+        nextBtn.innerText = `View Live Ranks 🏆`;
       } else {
-        banner.innerHTML = `🌟 कोई बात नहीं! आप मंज़िल के बहुत करीब थे 🎯<br><span style="font-size:12px; opacity:0.9;">अगला स्तर खोलने के लिए 50% चाहिए (आपका स्कोर: ${percent.toFixed(0)}%)।</span>`;
-        nextBtn.innerText = `🔄 पुनः टेस्ट दें (Re-attempt Test)`;
+        banner.innerHTML = `स्कोर: ${percent.toFixed(0)}% (पास के लिए 50% ज़रूरी)<br>कोई बात नहीं, पुनः अभ्यास करें!`;
+        nextBtn.innerText = `🔄 पुनः टेस्ट दें (Re-attempt)`;
       }
-
-      resultCard.classList.add('failure-glow-shake');
       playFailureSound();
     }
 
     document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
 
-    const shareText = `मैंने Exam Arena में ${currentSubject} (Set ${currentLevel}) में ${percent.toFixed(0)}% स्कोर किया! क्या आप मुझसे बेहतर स्कोर कर सकते हैं? अभी टेस्ट दें 👉 ${window.location.href}`;
+    const shareText = `मैंने Exam Arena में ${currentSubject} में ${score}/${questions.length} मार्क्स लाए (${totalTimeSecs} सेकंड में)! क्या आप मुझसे बेहतर कर सकते हैं? 👉 ${window.location.href}`;
     document.getElementById('btnWhatsappShare').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
 
-    // Review Sheet
+    // REVIEW SHEET
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
       questions.forEach((q, qIdx) => {
         const userAnsIdx = userAnswers[qIdx];
         const isCorrect = (userAnsIdx === q.ans);
-        const isAttempted = (userAnsIdx !== undefined);
-
         const card = document.createElement('div');
-        card.className = 'review-card ' + (isCorrect ? 'rev-correct' : (isAttempted ? 'rev-wrong' : 'rev-skipped'));
-
-        const userAnsText = isAttempted 
-          ? `<b>${String.fromCharCode(65 + userAnsIdx)}.</b> ${formatMathFormula(q.options[userAnsIdx])}`
-          : `<span style="opacity:0.7;">छोड़ा गया (Not Attempted)</span>`;
-        
-        const correctAnsText = `<b>${String.fromCharCode(65 + q.ans)}.</b> ${formatMathFormula(q.options[q.ans])}`;
-
+        card.className = 'review-card ' + (isCorrect ? 'rev-correct' : 'rev-wrong');
         card.innerHTML = `
-          <div style="font-weight:800; font-size:13.5px; color:var(--text-main); margin-bottom:6px;">
-            ${qIdx + 1}. ${formatMathFormula(q.q)}
+          <div style="font-weight:800; font-size:13.5px; margin-bottom:4px;">${qIdx + 1}. ${formatMathFormula(q.q)}</div>
+          <div style="font-size:12px; color:${isCorrect ? '#10b981' : '#ef4444'}; font-weight:700;">
+            ${isCorrect ? '✅ आपका सही उत्तर:' : '❌ आपका उत्तर:'} ${userAnsIdx !== undefined ? formatMathFormula(q.options[userAnsIdx]) : 'छोड़ा गया'}
           </div>
-          <div style="font-size:12px; margin-bottom:3px; color:${isCorrect ? '#10b981' : '#ef4444'}; font-weight:700;">
-            ${isCorrect ? '✅ आपका उत्तर सही है:' : '❌ आपका उत्तर:'} ${userAnsText}
-          </div>
-          ${!isCorrect ? `
-            <div style="font-size:12px; color:#10b981; font-weight:800; margin-top:2px;">
-              👉 सही उत्तर: ${correctAnsText}
-            </div>
-          ` : ''}
+          ${!isCorrect ? `<div style="font-size:12px; color:#10b981; font-weight:800; margin-top:2px;">👉 सही उत्तर: ${formatMathFormula(q.options[q.ans])}</div>` : ''}
         `;
         reviewListEl.appendChild(card);
       });
     }
 
-    // Submit to Sheet
+    // SUBMIT TO SHEET
     fetch(SCRIPT_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({
         action: "submit_score",
         username: currentUser.name,
-        subject: `${currentSubject}_Set${currentLevel}`,
+        subject: setKey,
         score: score,
         totalQuestions: questions.length,
-        xpEarned: earnedXP
+        xpEarned: deltaXP,
+        timeTakenSecs: totalTimeSecs,
+        submissionType: currentQuizSubmissionType
       })
-    }).then(() => {
-      setTimeout(fetchCloudData, 1200);
-    }).catch(e => console.warn(e));
+    }).then(() => setTimeout(fetchCloudData, 1200)).catch(e => console.warn(e));
   }
 
   function goToNextLevelOrRetry() {
     if (isCurrentQuizDailyLive) {
+      switchLeaderboardTab('dailyLive', document.querySelector('.lb-tab-btn.live-tab'));
       navigateTo('screenLeaderboard');
       return;
     }
@@ -1919,162 +1360,83 @@
     questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
     if ((score / questions.length) * 100 >= 50) {
       const nextLvl = currentLevel + 1;
-      const sets = quizDatabase[currentSubject] || [];
-      if (nextLvl <= sets.length) currentLevel = nextLvl;
+      if (nextLvl <= (quizDatabase[currentSubject] || []).length) currentLevel = nextLvl;
     }
-    startQuizSet(currentLevel, false);
+    startQuizSet(currentLevel, false, 'PRACTICE');
   }
 
-  /* HD JPEG POSTER ENGINE */
+  /* HD POSTER */
   async function shareThoughtAsJPEG() {
     const thoughtText = document.getElementById('dailyThoughtText').innerText.replace(/^"|"$/g, '');
     const authorText = document.getElementById('dailyThoughtAuthor').innerText;
 
     const canvas = document.createElement('canvas');
-    canvas.width = 1080;
-    canvas.height = 1080;
+    canvas.width = 1080; canvas.height = 1080;
     const ctx = canvas.getContext('2d');
 
     const bgGrad = ctx.createRadialGradient(540, 540, 100, 540, 540, 750);
-    bgGrad.addColorStop(0, '#1e1b4b');
-    bgGrad.addColorStop(1, '#0b0924');
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, 1080, 1080);
+    bgGrad.addColorStop(0, '#1e1b4b'); bgGrad.addColorStop(1, '#0b0924');
+    ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, 1080, 1080);
 
-    ctx.strokeStyle = '#f59e0b';
-    ctx.lineWidth = 14;
-    ctx.strokeRect(36, 36, 1008, 1008);
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 14; ctx.strokeRect(36, 36, 1008, 1008);
 
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(54, 54, 972, 972);
-
-    ctx.fillStyle = '#fbbf24';
-    ctx.beginPath(); ctx.arc(60, 60, 14, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(1020, 60, 14, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(60, 1020, 14, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(1020, 1020, 14, 0, Math.PI * 2); ctx.fill();
-
-    ctx.fillStyle = '#f59e0b';
-    ctx.beginPath();
-    ctx.roundRect(310, 100, 460, 64, [32]);
-    ctx.fill();
-
-    ctx.font = "bold 30px 'Poppins', sans-serif";
-    ctx.fillStyle = "#1e1b4b";
-    ctx.textAlign = "center";
+    ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.roundRect(310, 100, 460, 64, [32]); ctx.fill();
+    ctx.font = "bold 30px 'Poppins', sans-serif"; ctx.fillStyle = "#1e1b4b"; ctx.textAlign = "center";
     ctx.fillText("⭐ आज का प्रेरक विचार ⭐", 540, 144);
 
-    ctx.font = "bold 150px serif";
-    ctx.fillStyle = "rgba(245, 158, 11, 0.22)";
-    ctx.fillText("❝", 540, 310);
+    ctx.font = "bold 150px serif"; ctx.fillStyle = "rgba(245, 158, 11, 0.22)"; ctx.fillText("❝", 540, 310);
 
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
       const words = text.split(' ');
-      let line = '';
-      const lines = [];
-
+      let line = ''; const lines = [];
       for (let n = 0; n < words.length; n++) {
         const testLine = line + words[n] + ' ';
-        const metrics = context.measureText(testLine);
-        if (metrics.width > maxWidth && n > 0) {
-          lines.push(line);
-          line = words[n] + ' ';
-        } else {
-          line = testLine;
-        }
+        if (context.measureText(testLine).width > maxWidth && n > 0) { lines.push(line); line = words[n] + ' '; }
+        else line = testLine;
       }
       lines.push(line);
-
       const startY = y - ((lines.length - 1) * lineHeight) / 2;
-      for (let k = 0; k < lines.length; k++) {
-        context.fillText(lines[k].trim(), x, startY + (k * lineHeight));
-      }
+      lines.forEach((l, k) => context.fillText(l.trim(), x, startY + (k * lineHeight)));
     }
 
-    ctx.font = "bold 44px 'Hind', 'Poppins', sans-serif";
-    ctx.fillStyle = "#ffffff";
-    ctx.shadowColor = "rgba(0,0,0,0.8)";
-    ctx.shadowBlur = 15;
+    ctx.font = "bold 44px 'Hind', 'Poppins', sans-serif"; ctx.fillStyle = "#ffffff";
     wrapText(ctx, thoughtText, 540, 470, 840, 68);
-    ctx.shadowBlur = 0;
 
-    ctx.font = "italic 700 34px 'Hind', 'Poppins', sans-serif";
-    ctx.fillStyle = "#fbbf24";
+    ctx.font = "italic 700 34px 'Hind', 'Poppins', sans-serif"; ctx.fillStyle = "#fbbf24";
     ctx.fillText(authorText, 540, 720);
 
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(240, 780);
-    ctx.lineTo(840, 780);
-    ctx.stroke();
-
-    ctx.font = "900 38px 'Fredoka', 'Poppins', sans-serif";
-    ctx.fillStyle = "#38bdf8";
+    ctx.font = "900 38px 'Fredoka', 'Poppins', sans-serif"; ctx.fillStyle = "#38bdf8";
     ctx.fillText("🎯 EXAM ARENA BY VIMAL SIR", 540, 850);
-
-    ctx.font = "700 26px 'Poppins', sans-serif";
-    ctx.fillStyle = "#cbd5e1";
-    ctx.fillText("निःशुल्क लाइव टेस्ट सीरीज़ व क्विज़ प्रतियोगिता", 540, 900);
-
-    ctx.font = "700 23px 'Poppins', sans-serif";
-    ctx.fillStyle = "#a7f3d0";
-    ctx.fillText("आज ही अभ्यास करें 👉 examarena.in", 540, 950);
+    ctx.font = "700 23px 'Poppins', sans-serif"; ctx.fillStyle = "#a7f3d0";
+    ctx.fillText("फ्री मॉक टेस्ट दें 👉 examarena.in", 540, 920);
 
     canvas.toBlob(async (blob) => {
       if (!blob) return alert("पोस्टर बनाने में समस्या आई!");
-      const file = new File([blob], 'ExamArena_AajKaVichar.jpg', { type: 'image/jpeg' });
-
+      const file = new File([blob], 'ExamArena_Thought.jpg', { type: 'image/jpeg' });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({
-            files: [file],
-            title: 'आज का प्रेरक विचार • Exam Arena',
-            text: `आज का विचार • Exam Arena by Vimal Sir 🎯\nफ्री मॉक टेस्ट दें: ${window.location.href}`
-          });
-        } catch (e) {
-          console.log("Share note: ", e);
-        }
+        await navigator.share({ files: [file], title: 'आज का प्रेरक विचार', text: `Exam Arena by Vimal Sir 🎯\nटेस्ट दें: ${window.location.href}` });
       } else {
-        const downloadUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = 'ExamArena_AajKaVichar.jpg';
-        a.click();
-        URL.revokeObjectURL(downloadUrl);
-        alert("पोस्टर आपकी गैलरी में सेव हो गया है! अब इसे अपने WhatsApp स्टेटस पर लगाएँ।");
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = 'ExamArena_Thought.jpg'; a.click();
+        alert("पोस्टर गैलरी में सेव हो गया है!");
       }
     }, 'image/jpeg', 0.95);
   }
 
-  /* PWA INSTALLATION */
+  /* PWA */
   let deferredPrompt;
   window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const installBox = document.getElementById('pwaInstallBox');
-    if (installBox) installBox.style.display = 'block';
+    e.preventDefault(); deferredPrompt = e;
+    document.getElementById('pwaInstallBox').style.display = 'block';
   });
-
   function installAppDirectly() {
     if (deferredPrompt) {
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          document.getElementById('pwaInstallBox').style.display = 'none';
-        }
-        deferredPrompt = null;
-      });
+      deferredPrompt.userChoice.then(() => { document.getElementById('pwaInstallBox').style.display = 'none'; deferredPrompt = null; });
     }
   }
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch((err) => {
-      console.log('SW registration note:', err);
-    });
-  }
-
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(e => console.log(e));
   window.onload = initApp;
 </script>
 
