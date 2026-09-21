@@ -13,7 +13,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@600;700;800;900&family=Hind:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -98,7 +98,7 @@
       --score-inner-bg: #ffffff;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', 'Hind', sans-serif; }
 
     body {
       background: var(--bg-body);
@@ -191,6 +191,102 @@
       letter-spacing: 0.8px;
     }
 
+    /* PWA INSTALL BANNER */
+    #pwaInstallBox { width: 100%; margin: 2px 0 4px 0; }
+    .btn-pwa-install {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: 2px solid #a7f3d0;
+      color: #ffffff;
+      padding: 11px 16px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* TODAY'S THOUGHT CARD */
+    .thought-card {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(49, 46, 129, 0.9));
+      border: 2px solid rgba(245, 158, 11, 0.45);
+      border-radius: 18px;
+      padding: 13px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+      position: relative;
+      overflow: hidden;
+    }
+    body.light-theme .thought-card {
+      background: linear-gradient(135deg, #ffffff, #fef3c7);
+      border-color: #f59e0b;
+    }
+    .thought-card::before {
+      content: '❝';
+      position: absolute;
+      right: 12px;
+      bottom: -15px;
+      font-size: 78px;
+      color: rgba(245, 158, 11, 0.08);
+      font-family: serif;
+      pointer-events: none;
+    }
+    .thought-top-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .thought-pill {
+      background: rgba(245, 158, 11, 0.2);
+      border: 1.2px solid #f59e0b;
+      color: #fbbf24;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    body.light-theme .thought-pill { color: #b45309; }
+    .thought-body-text {
+      font-size: 13.5px;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--text-main);
+      font-style: italic;
+    }
+    .thought-author {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: right;
+    }
+    .btn-share-thought-poster {
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      border: none;
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+      width: fit-content;
+      margin-top: 2px;
+      align-self: flex-end;
+    }
+
     /* FLASH ALERT CARD */
     .flash-alert-card {
       background: linear-gradient(135deg, #ef4444, #f97316, #f59e0b);
@@ -281,7 +377,7 @@
     body:not(.light-theme) .ticker-content { color: #38bdf8; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* PLAYER PROFILE CARD */
+    /* PROFILE BAR */
     .player-profile-card {
       background: var(--profile-bg);
       border: 2px solid var(--card-border);
@@ -379,7 +475,7 @@
     .section-title { font-size: 14px; font-weight: 800; color: #d97706; display: flex; align-items: center; gap: 6px; }
     body:not(.light-theme) .section-title { color: #fde047; }
 
-    /* 2-COLUMN COMPACT TILES */
+    /* 2-COLUMN TILES */
     .subject-cards-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -677,7 +773,7 @@
     .review-card.rev-wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.08); }
     .review-card.rev-skipped { border-color: #94a3b8; background: rgba(148, 163, 184, 0.08); }
 
-    /* TOP-3 PODIUM LEADERBOARD STYLING */
+    /* PODIUM LEADERBOARD STYLING */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg);
       border: 2px solid var(--card-border); border-radius: 20px; padding: 16px 12px; text-align: left;
@@ -908,7 +1004,7 @@
 <!-- MAIN CONTAINER -->
 <div class="arena-container">
 
-  <!-- HEADER (SAFE PADDING FOR CONTROLS) -->
+  <!-- HEADER -->
   <div class="arena-header">
     <div class="arena-title">🎯 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
@@ -919,10 +1015,27 @@
     </div>
   </div>
 
-  <!-- INSTALL APP BUTTON (PWA AUTO-DETECT) -->
-  <div id="pwaInstallBox" style="display:none; width:100%; margin:4px 0 8px 0;">
-    <button id="btnPwaInstall" onclick="installAppDirectly()" style="width:100%; background:linear-gradient(135deg, #10b981, #059669); border:2px solid #a7f3d0; color:#ffffff; padding:11px 16px; border-radius:14px; font-size:13.5px; font-weight:900; cursor:pointer; box-shadow:0 6px 18px rgba(16, 185, 129, 0.35); display:flex; align-items:center; justify-content:center; gap:8px;">
+  <!-- INSTALL APP BUTTON (PWA) -->
+  <div id="pwaInstallBox" style="display:none;">
+    <button class="btn-pwa-install" onclick="installAppDirectly()">
       <span>📥</span> Exam Arena App फ़ोन में इंस्टॉल करें
+    </button>
+  </div>
+
+  <!-- TODAY'S MOTIVATIONAL THOUGHT CARD -->
+  <div class="thought-card">
+    <div class="thought-top-meta">
+      <span class="thought-pill">💡 आज का प्रेरक विचार</span>
+      <span style="font-size:11px; color:var(--text-muted); font-weight:700;">Daily Motivation</span>
+    </div>
+    <div class="thought-body-text" id="dailyThoughtText">
+      "कठिन परिश्रम का कोई विकल्प नहीं होता, सफलता केवल निरंतर अभ्यास और अनुशासन से मिलती है।"
+    </div>
+    <div class="thought-author" id="dailyThoughtAuthor">
+      – डॉ. ए.पी.जे. अब्दुल कलाम
+    </div>
+    <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()">
+      <span>📲</span> WhatsApp पोस्टर शेयर करें
     </button>
   </div>
 
@@ -1363,6 +1476,13 @@
       const resp = await fetch(SCRIPT_WEBHOOK_URL);
       const data = await resp.json();
 
+      if (data.dailyThought) {
+        document.getElementById('dailyThoughtText').innerText = `"${data.dailyThought}"`;
+        if (data.dailyThoughtAuthor) {
+          document.getElementById('dailyThoughtAuthor').innerText = `– ${data.dailyThoughtAuthor}`;
+        }
+      }
+
       if (data.quizzes) {
         for (let subj in data.quizzes) {
           if (data.quizzes[subj] && data.quizzes[subj].length > 0) {
@@ -1395,6 +1515,145 @@
     } catch (e) {
       console.warn("Cloud Sync Note: ", e);
     }
+  }
+
+  /* ============================================================
+     HD JPEG POSTER GENERATOR ENGINE FOR TODAY'S THOUGHT
+  ============================================================ */
+  async function shareThoughtAsJPEG() {
+    const thoughtText = document.getElementById('dailyThoughtText').innerText.replace(/^"|"$/g, '');
+    const authorText = document.getElementById('dailyThoughtAuthor').innerText;
+
+    // Create 1080x1080 Square Canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+
+    // Background Gradient (Royal Navy to Purple)
+    const bgGrad = ctx.createRadialGradient(540, 540, 100, 540, 540, 750);
+    bgGrad.addColorStop(0, '#1e1b4b');
+    bgGrad.addColorStop(1, '#0b0924');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, 1080, 1080);
+
+    // Decorative Borders
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 14;
+    ctx.strokeRect(36, 36, 1008, 1008);
+
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(54, 54, 972, 972);
+
+    // Corner Ornaments
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath(); ctx.arc(60, 60, 14, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(1020, 60, 14, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(60, 1020, 14, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(1020, 1020, 14, 0, Math.PI * 2); ctx.fill();
+
+    // Top Header Pill
+    ctx.fillStyle = '#f59e0b';
+    ctx.beginPath();
+    ctx.roundRect(310, 100, 460, 64, [32]);
+    ctx.fill();
+
+    ctx.font = "bold 30px 'Poppins', sans-serif";
+    ctx.fillStyle = "#1e1b4b";
+    ctx.textAlign = "center";
+    ctx.fillText("⭐ आज का प्रेरक विचार ⭐", 540, 144);
+
+    // Giant Quotation Mark Icon
+    ctx.font = "bold 150px serif";
+    ctx.fillStyle = "rgba(245, 158, 11, 0.22)";
+    ctx.fillText("❝", 540, 310);
+
+    // Word Wrap Helper for Canvas
+    function wrapText(context, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      const lines = [];
+
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = context.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+          lines.push(line);
+          line = words[n] + ' ';
+        } else {
+          line = testLine;
+        }
+      }
+      lines.push(line);
+
+      const startY = y - ((lines.length - 1) * lineHeight) / 2;
+      for (let k = 0; k < lines.length; k++) {
+        context.fillText(lines[k].trim(), x, startY + (k * lineHeight));
+      }
+    }
+
+    // Main Thought Text
+    ctx.font = "bold 44px 'Hind', 'Poppins', sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.shadowColor = "rgba(0,0,0,0.8)";
+    ctx.shadowBlur = 15;
+    wrapText(ctx, thoughtText, 540, 470, 840, 68);
+    ctx.shadowBlur = 0;
+
+    // Author
+    ctx.font = "italic 700 34px 'Hind', 'Poppins', sans-serif";
+    ctx.fillStyle = "#fbbf24";
+    ctx.fillText(authorText, 540, 720);
+
+    // Divider Line
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(240, 780);
+    ctx.lineTo(840, 780);
+    ctx.stroke();
+
+    // Footer Branding
+    ctx.font = "900 38px 'Fredoka', 'Poppins', sans-serif";
+    ctx.fillStyle = "#38bdf8";
+    ctx.fillText("🎯 EXAM ARENA BY VIMAL SIR", 540, 850);
+
+    ctx.font = "700 26px 'Poppins', sans-serif";
+    ctx.fillStyle = "#cbd5e1";
+    ctx.fillText("निःशुल्क लाइव टेस्ट सीरीज़ व क्विज़ प्रतियोगिता", 540, 900);
+
+    ctx.font = "700 23px 'Poppins', sans-serif";
+    ctx.fillStyle = "#a7f3d0";
+    ctx.fillText("आज ही अभ्यास करें 👉 examarena.in", 540, 950);
+
+    // Convert Canvas to Blob and Trigger Share
+    canvas.toBlob(async (blob) => {
+      if (!blob) return alert("पोस्टर बनाने में समस्या आई!");
+      const file = new File([blob], 'ExamArena_AajKaVichar.jpg', { type: 'image/jpeg' });
+
+      // If Web Share API supports file sharing directly to WhatsApp
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'आज का प्रेरक विचार • Exam Arena',
+            text: `आज का विचार • Exam Arena by Vimal Sir 🎯\nफ्री मॉक टेस्ट दें: ${window.location.href}`
+          });
+        } catch (e) {
+          console.log("Share cancelled or failed: ", e);
+        }
+      } else {
+        // Fallback: Direct Download
+        const downloadUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = 'ExamArena_AajKaVichar.jpg';
+        a.click();
+        URL.revokeObjectURL(downloadUrl);
+        alert("पोस्टर आपकी गैलरी में सेव हो गया है! अब इसे अपने WhatsApp स्टेटस पर लगाएँ।");
+      }
+    }, 'image/jpeg', 0.95);
   }
 
   function handleFlashClick() {
@@ -1779,7 +2038,6 @@
     }
   }
 
-  // Register Service Worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch((err) => {
       console.log('SW registration note:', err);
