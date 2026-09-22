@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exam Arena by Vimal Sir</title>
   
-  <!-- Favicon & Search Engine Metadata -->
+  <!-- Favicon & Search Metadata -->
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
@@ -19,7 +19,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@600;700;800;900&family=Hind:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800&family=Poppins:wght@500;600;700;800;900&family=Hind:wght@500;600;700;800&display=swap" rel="stylesheet">
   
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
@@ -55,6 +55,7 @@
       --set-card-border: rgba(165, 180, 252, 0.35);
       --screen-bar-bg: linear-gradient(135deg, #312e81, #1e1b4b);
       --score-inner-bg: #1e1b4b;
+      --bottom-nav-bg: rgba(24, 20, 56, 0.92);
 
       --grad-math: linear-gradient(135deg, #2563eb, #0284c7, #06b6d4);
       --grad-sci: linear-gradient(135deg, #059669, #10b981, #84cc16);
@@ -101,6 +102,7 @@
       --set-card-border: #cbd5e1;
       --screen-bar-bg: #ffffff;
       --score-inner-bg: #ffffff;
+      --bottom-nav-bg: rgba(255, 255, 255, 0.94);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', 'Hind', sans-serif; }
@@ -114,7 +116,7 @@
         radial-gradient(circle at 80% 20%, var(--bg-radial-4) 0%, transparent 35%);
       background-attachment: fixed;
       color: var(--text-main);
-      padding: 12px 10px 45px 10px;
+      padding: 12px 10px 85px 10px; /* Space for Bottom Nav Bar */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -124,6 +126,7 @@
 
     .arena-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
 
+    /* HEADER */
     .arena-header {
       text-align: center;
       padding: 14px 80px 14px 18px;
@@ -134,28 +137,25 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.2);
       position: relative;
     }
-    .header-ctrls {
-      position: absolute; top: 50%; transform: translateY(-50%); right: 12px; display: flex; gap: 6px;
-    }
+    .header-ctrls { position: absolute; top: 50%; transform: translateY(-50%); right: 12px; display: flex; gap: 6px; }
     .ctrl-btn {
       background: rgba(255, 255, 255, 0.25);
       border: 1.5px solid rgba(255, 255, 255, 0.45);
       width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
       cursor: pointer; font-size: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-
     .arena-title {
       font-family: 'Fredoka', cursive, sans-serif; font-size: clamp(19px, 5vw, 25px); font-weight: 800;
       letter-spacing: 1px; color: #ffffff; text-shadow: 0 0 16px rgba(254, 240, 138, 0.75), 0 3px 8px rgba(0, 0, 0, 0.6);
       text-transform: uppercase;
     }
     body.light-theme .arena-title { color: #1e1b4b; text-shadow: 0 2px 10px rgba(99, 102, 241, 0.3); }
-
     .vimal-badge {
       display: inline-block; background: linear-gradient(135deg, #f59e0b, #ef4444); border: 1.5px solid #fef08a;
       color: #ffffff; font-size: 11px; font-weight: 900; padding: 3px 14px; border-radius: 20px; margin-top: 4px;
     }
 
+    /* PWA BANNER */
     #pwaInstallBox { width: 100%; margin: 2px 0 4px 0; }
     .btn-pwa-install {
       width: 100%; background: linear-gradient(135deg, #10b981, #059669); border: 2px solid #a7f3d0;
@@ -163,6 +163,7 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
+    /* MOTIVATION CARD */
     .thought-card {
       background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(49, 46, 129, 0.9));
       border: 2px solid rgba(245, 158, 11, 0.45); border-radius: 18px; padding: 13px 15px;
@@ -182,18 +183,15 @@
       border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; align-self: flex-end;
     }
 
+    /* FLASH ALERT */
     .flash-alert-card {
       background: linear-gradient(135deg, #ef4444, #f97316, #f59e0b);
       border: 2px solid #fef08a; border-radius: 16px; padding: 11px 14px;
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
     }
-    .flash-alert-card.upcoming {
-      background: linear-gradient(135deg, #4338ca, #6366f1, #0284c7); border-color: #93c5fd;
-    }
-    .flash-alert-card.closed {
-      background: linear-gradient(135deg, #334155, #475569); border-color: #94a3b8;
-    }
+    .flash-alert-card.upcoming { background: linear-gradient(135deg, #4338ca, #6366f1, #0284c7); border-color: #93c5fd; }
+    .flash-alert-card.closed { background: linear-gradient(135deg, #334155, #475569); border-color: #94a3b8; }
     .flash-icon-box { font-size: 24px; }
     .flash-text-wrap { flex: 1; text-align: left; }
     .flash-badge {
@@ -204,7 +202,6 @@
     .flash-alert-card.closed .flash-badge { color: #334155; }
     .flash-msg { font-size: 12px; font-weight: 800; color: #ffffff; line-height: 1.3; }
     .flash-timer-highlight { font-family: monospace; font-size: 13.5px; font-weight: 900; color: #fef08a; }
-    
     .flash-btn {
       background: #ffffff; color: #b91c1c; border: none; padding: 8px 12px;
       border-radius: 10px; font-size: 11.5px; font-weight: 900; cursor: pointer; flex-shrink: 0;
@@ -212,6 +209,7 @@
     .flash-btn.locked { background: #cbd5e1; color: #64748b; cursor: not-allowed; }
     .flash-btn.completed { background: #10b981; color: #ffffff; }
 
+    /* TICKER */
     .live-ticker-wrap {
       width: 100%; background: var(--ticker-bg); border: 1.5px solid rgba(99, 102, 241, 0.5);
       border-radius: 14px; padding: 7px 12px; display: flex; align-items: center; gap: 10px; overflow: hidden;
@@ -222,10 +220,12 @@
     body.light-theme .ticker-content { color: #0284c7; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
+    /* PLAYER PROFILE WITH STREAKS & BADGES */
     .player-profile-card {
-      background: var(--profile-bg); border: 2px solid var(--card-border); border-radius: 16px;
-      padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;
+      background: var(--profile-bg); border: 2px solid var(--card-border); border-radius: 18px;
+      padding: 12px 14px; display: flex; flex-direction: column; gap: 10px;
     }
+    .profile-top-row { display: flex; align-items: center; justify-content: space-between; }
     .profile-info { display: flex; align-items: center; gap: 10px; }
     .avatar-circle {
       width: 42px; height: 42px; background: var(--grad-gold); border: 2px solid #fff; border-radius: 50%;
@@ -244,30 +244,32 @@
     body.light-theme .stat-badge .xp-num { color: #0284c7; }
     .stat-badge .xp-lbl { font-size: 9.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
     
-    .btn-logout {
-      background: rgba(239, 68, 68, 0.15); border: 1.5px solid #ef4444; color: #ef4444; padding: 8px 10px;
-      border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; margin-left: 6px;
+    .streak-badge {
+      display: inline-flex; align-items: center; gap: 4px; background: rgba(239, 68, 68, 0.15);
+      border: 1.5px solid #ef4444; color: #f87171; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 800;
     }
+    body.light-theme .streak-badge { color: #dc2626; }
 
-    .btn-view-ranks {
-      width: 100%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border: 1.5px solid #a855f7;
-      color: #ffffff; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; font-weight: 800; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+    .badges-tray { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+    .badges-tray::-webkit-scrollbar { display: none; }
+    .badge-pill {
+      font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 8px; white-space: nowrap;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted);
     }
+    .badge-pill.unlocked { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; }
 
-    .btn-view-downloads {
-      width: 100%; background: linear-gradient(135deg, #10b981, #059669); border: 1.5px solid #34d399;
-      color: #ffffff; padding: 11px 14px; border-radius: 14px; font-size: 13.5px; font-weight: 800; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+    /* SHIMMER EFFECT / SKELETON */
+    .skeleton-box {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmerLoading 1.5s infinite;
+      border-radius: 12px; min-height: 48px; width: 100%;
     }
+    @keyframes shimmerLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-    .ad-banner-box {
-      width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center;
-      overflow: hidden; margin: 4px 0; border-radius: 16px; background: rgba(0,0,0,0.03); border: 1px dashed var(--card-border);
-    }
-
+    /* SCREENS & CARDS */
     .app-screen { display: flex; flex-direction: column; gap: 11px; width: 100%; }
-    .section-title { font-size: 14px; font-weight: 800; color: #fde047; display: flex; align-items: center; gap: 6px; }
+    .section-title { font-size: 14px; font-weight: 800; color: #fde047; display: flex; align-items: center; justify-content: space-between; }
     body.light-theme .section-title { color: #d97706; }
 
     .subject-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
@@ -299,7 +301,7 @@
     }
     .btn-back { background: #4338ca; border: 1.5px solid #818cf8; color: #ffffff; padding: 8px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
 
-    /* DOWNLOAD ITEMS STYLING */
+    /* DOWNLOADS */
     .download-card-item {
       background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px;
       padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -310,6 +312,7 @@
       display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
     }
 
+    /* SETS */
     .sets-list-container { display: flex; flex-direction: column; gap: 11px; }
     .set-row-card {
       background: var(--set-card-bg); border: 2px solid var(--set-card-border); border-radius: 18px;
@@ -320,7 +323,6 @@
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(245, 158, 11, 0.25)) !important;
       border: 2px solid #f59e0b !important;
     }
-
     .set-best-badge {
       font-size: 11px; font-weight: 800; color: #10b981; background: rgba(16, 185, 129, 0.15);
       padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 3px;
@@ -329,16 +331,24 @@
     .set-row-card:not(.locked) .set-action-pill { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
+    /* QUIZ CARD & BOOKMARK BUTTON */
     .quiz-card {
       background: var(--quiz-card-bg); border: 2px solid var(--quiz-card-border); border-radius: 24px;
-      padding: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      padding: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); position: relative;
     }
     .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .q-meta-left { display: flex; align-items: center; gap: 8px; }
     .q-counter {
       font-size: 12.5px; font-weight: 900; color: #38bdf8; background: rgba(56, 189, 248, 0.18);
       border: 1px solid #38bdf8; padding: 5px 12px; border-radius: 14px;
     }
     body.light-theme .q-counter { color: #0284c7; border-color: #0284c7; }
+    .btn-bookmark {
+      background: rgba(255, 255, 255, 0.12); border: 1.5px solid rgba(255, 255, 255, 0.25);
+      color: #fff; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center;
+      justify-content: center; cursor: pointer; font-size: 16px;
+    }
+    .btn-bookmark.active { background: rgba(245, 158, 11, 0.25); border-color: #f59e0b; color: #fbbf24; }
 
     .timer-pill {
       background: linear-gradient(135deg, #f59e0b, #d97706); border: 2px solid #fef08a; color: #ffffff;
@@ -381,6 +391,7 @@
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
+    /* RESULTS SCREEN & WEAK AREA ANALYSIS */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
     .score-circle {
       width: 125px; height: 125px; border-radius: 50%;
@@ -399,11 +410,11 @@
     .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #fca5a5; }
     body.light-theme .unlock-failed { color: #dc2626; }
 
-    .btn-whatsapp-share {
-      width: 100%; background: #25d366; border: none; color: #ffffff; padding: 12px 16px;
-      border-radius: 14px; font-size: 13.5px; font-weight: 900; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 8px;
+    .analysis-card {
+      background: rgba(49, 46, 129, 0.6); border: 1.5px solid var(--card-border); border-radius: 14px;
+      padding: 12px 14px; width: 100%; text-align: left; display: flex; flex-direction: column; gap: 6px;
     }
+    .analysis-pill { font-size: 11.5px; font-weight: 800; color: #38bdf8; }
 
     .review-card {
       background: var(--opt-btn-bg); border: 1.5px solid var(--card-border); border-radius: 14px;
@@ -411,14 +422,18 @@
     }
     .review-card.rev-correct { border-color: #10b981; }
     .review-card.rev-wrong { border-color: #ef4444; }
+    .explanation-box {
+      margin-top: 6px; padding: 8px 10px; background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid #38bdf8; border-radius: 4px; font-size: 12px; color: var(--text-muted);
+    }
 
+    /* LEADERBOARDS & PODIUM */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg); border: 2px solid var(--card-border);
       border-radius: 20px; padding: 16px 12px; text-align: left;
     }
     .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 900; color: #fde047; margin-bottom: 12px; }
     body.light-theme .lb-header { color: #d97706; }
-    
     .lb-tabs-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
     .lb-tabs-bar::-webkit-scrollbar { display: none; }
     .lb-tab-btn {
@@ -435,19 +450,15 @@
     .podium-avatar { border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #1e1b4b; }
     .podium-badge-icon { position: absolute; bottom: -4px; right: -4px; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #fff; border: 2px solid #fff; }
     .podium-crown { font-size: 22px; position: absolute; top: -24px; left: 50%; transform: translateX(-50%); }
-
     .podium-col.rank-1 .podium-avatar { width: 60px; height: 60px; font-size: 26px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border: 3px solid #fef08a; }
     .podium-col.rank-1 .podium-badge-icon { background: #f59e0b; }
     .podium-col.rank-1 .podium-pedestal { height: 70px; background: linear-gradient(180deg, rgba(245, 158, 11, 0.4), rgba(245, 158, 11, 0.1)); border-top: 3px solid #f59e0b; }
-
     .podium-col.rank-2 .podium-avatar { width: 48px; height: 48px; font-size: 20px; background: linear-gradient(135deg, #94a3b8, #e2e8f0); border: 2.5px solid #ffffff; }
     .podium-col.rank-2 .podium-badge-icon { background: #64748b; }
     .podium-col.rank-2 .podium-pedestal { height: 50px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.08)); border-top: 3px solid #94a3b8; }
-
     .podium-col.rank-3 .podium-avatar { width: 48px; height: 48px; font-size: 20px; background: linear-gradient(135deg, #d97706, #f97316); border: 2.5px solid #fed7aa; }
     .podium-col.rank-3 .podium-badge-icon { background: #b45309; }
     .podium-col.rank-3 .podium-pedestal { height: 38px; background: linear-gradient(180deg, rgba(217, 119, 6, 0.35), rgba(217, 119, 6, 0.08)); border-top: 3px solid #d97706; }
-
     .podium-name { font-size: 12px; font-weight: 800; color: var(--text-main); max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .podium-score { font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 6px; }
     body.light-theme .podium-score { color: #0284c7; }
@@ -461,13 +472,30 @@
     }
     .lb-item.is-me { border-color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15) !important; }
 
-    #userModal {
+    /* BOTTOM NAVIGATION BAR */
+    .bottom-nav-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
+      background: var(--bottom-nav-bg); backdrop-filter: blur(16px);
+      border-top: 1.5px solid var(--card-border); display: flex; align-items: center;
+      justify-content: space-around; z-index: 1000; box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2px; color: var(--text-muted); cursor: pointer; flex: 1; height: 100%;
+    }
+    .nav-item.active { color: #38bdf8; }
+    body.light-theme .nav-item.active { color: #0284c7; }
+    .nav-icon { font-size: 20px; }
+    .nav-label { font-size: 10.5px; font-weight: 800; }
+
+    /* MODAL POPUPS */
+    .app-modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
       display: none; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
     }
     .modal-box {
       background: var(--modal-bg); border: 2px solid var(--modal-border); padding: 24px 20px;
-      border-radius: 22px; width: 100%; max-width: 390px; text-align: center;
+      border-radius: 22px; width: 100%; max-width: 400px; text-align: center; max-height: 85vh; overflow-y: auto;
     }
     .form-input {
       width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 13px 15px;
@@ -477,22 +505,45 @@
       width: 100%; background: var(--grad-btn); border: none; padding: 13px;
       border-radius: 13px; color: #fff; font-weight: 900; font-size: 15px; cursor: pointer;
     }
+
+    /* FOOTER COMPLIANCE LINKS */
+    .app-footer {
+      text-align: center; margin-top: 14px; font-size: 11px; color: var(--text-muted);
+      display: flex; justify-content: center; gap: 14px;
+    }
+    .footer-link { color: #38bdf8; text-decoration: none; cursor: pointer; font-weight: 700; }
   </style>
 </head>
 <body>
 
-<!-- SMART POPUP MODAL (Sirf pehli baar test shuru karte waqt open hoga) -->
-<div id="userModal">
+<!-- NAME ENTRY MODAL (Triggered only when guest attempts their first quiz) -->
+<div id="userModal" class="app-modal-overlay">
   <div class="modal-box">
     <div style="font-family:'Fredoka',sans-serif; font-size:24px; font-weight:800; color:#f59e0b; margin-bottom:4px;">🎯 EXAM ARENA</div>
     <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">टेस्ट शुरू करने के लिए अपना नाम दर्ज करें ⭐</div>
     <input type="text" class="form-input" id="studentQuickName" placeholder="अपना नाम लिखें (उदा. Aman Sharma)" autofocus>
-    <button class="form-btn-main" onclick="saveQuickPlayerName()">टेस्ट शुरू करें ➔</button>
+    <button class="form-btn-main" onclick="saveQuickPlayerName()">टेस्ट प्रारंभ करें ➔</button>
+  </div>
+</div>
+
+<!-- ABOUT & PRIVACY POLICY MODAL -->
+<div id="aboutModal" class="app-modal-overlay">
+  <div class="modal-box" style="text-align:left;">
+    <h3 style="color:#f59e0b; font-size:18px; font-weight:800; margin-bottom:8px;">🎯 About Exam Arena</h3>
+    <p style="font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:14px;">
+      Exam Arena by Vimal Sir कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं की तैयारी कर रहे विद्यार्थियों के लिए एक निःशुल्क शैक्षणिक प्लेटफॉर्म है। यहाँ आप लाइव टेस्ट, चैप्टर-वाइज़ मॉक टेस्ट व अध्ययन सामग्री (PDF) प्राप्त कर सकते हैं।
+    </p>
+    <h4 style="color:#38bdf8; font-size:14px; font-weight:800; margin-bottom:6px;">🔒 Privacy & Data Usage</h4>
+    <p style="font-size:11.5px; color:var(--text-muted); line-height:1.4; margin-bottom:16px;">
+      हम विद्यार्थियों की निजता का सम्मान करते हैं। ऐप में दर्ज किया गया नाम व स्कोर केवल लीडरबोर्ड व टेस्ट विश्लेषण के लिए उपयोग किया जाता है। कोई भी संवेदनशील जानकारी एकत्रित नहीं की जाती।
+    </p>
+    <button class="form-btn-main" onclick="closeAboutModal()">बंद करें (Close)</button>
   </div>
 </div>
 
 <div class="arena-container">
 
+  <!-- TOP HEADER -->
   <div class="arena-header">
     <div class="arena-title">🎯 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
@@ -502,12 +553,14 @@
     </div>
   </div>
 
+  <!-- PWA INSTALL BANNER -->
   <div id="pwaInstallBox" style="display:none;">
     <button class="btn-pwa-install" onclick="installAppDirectly()">
       <span>📥</span> Exam Arena App फ़ोन में इंस्टॉल करें
     </button>
   </div>
 
+  <!-- DAILY MOTIVATION -->
   <div class="thought-card">
     <div class="thought-top-meta">
       <span class="thought-pill">💡 आज का प्रेरक विचार</span>
@@ -520,6 +573,7 @@
     <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()"><span>📲</span> WhatsApp पोस्टर शेयर करें</button>
   </div>
 
+  <!-- FLASH ALERT / DAILY LIVE QUIZ -->
   <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
     <div class="flash-icon-box" id="flashIconBox">🔥</div>
     <div class="flash-text-wrap">
@@ -529,6 +583,7 @@
     <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Check ➔</button>
   </div>
 
+  <!-- LIVE TICKER -->
   <div class="live-ticker-wrap">
     <div class="ticker-pill">LIVE 🟢</div>
     <div class="ticker-track">
@@ -536,34 +591,43 @@
     </div>
   </div>
 
+  <!-- GAMIFIED PROFILE WITH STREAKS & BADGES -->
   <div class="player-profile-card">
-    <div class="profile-info">
-      <div class="avatar-circle" id="userInitial">S</div>
-      <div class="user-tag">
-        <span class="u-name" id="dispName">Student</span>
-        <span class="user-rank-badge" id="topUserRank">Rank #--</span>
+    <div class="profile-top-row">
+      <div class="profile-info">
+        <div class="avatar-circle" id="userInitial">S</div>
+        <div class="user-tag">
+          <span class="u-name" id="dispName">विद्यार्थी (Guest)</span>
+          <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+            <span class="user-rank-badge" id="topUserRank">Rank #--</span>
+            <span class="streak-badge" id="dispStreak">🔥 1 Day</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;">
+        <div class="stat-badge">
+          <div class="xp-num" id="dispXP">0 XP</div>
+          <div class="xp-lbl">Total Score</div>
+        </div>
+        <button class="ctrl-btn" style="border-radius:10px; font-size:12px; width:30px; height:30px;" onclick="logoutUser()" title="Reset User">🚪</button>
       </div>
     </div>
-    <div style="display:flex; align-items:center;">
-      <div class="stat-badge">
-        <div class="xp-num" id="dispXP">0 XP</div>
-        <div class="xp-lbl">Total Score</div>
-      </div>
-      <button class="btn-logout" onclick="logoutUser()">🚪 Exit</button>
+
+    <!-- BADGES ROW -->
+    <div class="badges-tray" id="userBadgesTray">
+      <div class="badge-pill unlocked">🌟 Starter</div>
+      <div class="badge-pill" id="badgeStreak">🔥 3-Day Streak</div>
+      <div class="badge-pill" id="badgeScholar">🎓 500+ XP</div>
+      <div class="badge-pill" id="badgeMaster">👑 Top 3 Ranker</div>
     </div>
   </div>
 
-  <!-- SCREEN: HOME -->
+  <!-- SCREEN: HOME (SUBJECTS & QUIZZES) -->
   <div class="app-screen" id="screenHome">
-    <button class="btn-view-ranks" onclick="navigateTo('screenLeaderboard')">
-      <span>🏆</span> Live & All Rankers Leaderboard देखें ➔
-    </button>
-
-    <button class="btn-view-downloads" onclick="navigateTo('screenDownloads')">
-      <span>📥</span> Free PDF Notes & Downloads (Google Drive) ➔
-    </button>
-
-    <div class="section-title">🎯 अपना विषय चुनें (Choose Subject):</div>
+    <div class="section-title">
+      <span>🎯 अभ्यास विषय (Select Subject):</span>
+      <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="navigateTo('screenBookmarks')">⭐ Bookmarks</span>
+    </div>
     
     <div class="subject-cards-grid">
       <div class="subject-card sc-math" onclick="openSubjectSets('Math')">
@@ -591,21 +655,40 @@
       </div>
     </div>
 
-    <div class="ad-banner-box">
+    <!-- CLEAN AD CONTAINER -->
+    <div class="ad-banner-box" style="width:100%; min-height:250px; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:8px 0; border-radius:16px; background:rgba(0,0,0,0.03); border:1px dashed var(--card-border);">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
       </script>
       <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
     </div>
+
+    <!-- APP FOOTER -->
+    <div class="app-footer">
+      <span class="footer-link" onclick="openAboutModal()">About Us</span>
+      <span>•</span>
+      <span class="footer-link" onclick="openAboutModal()">Privacy Policy</span>
+      <span>•</span>
+      <span>Exam Arena © 2026</span>
+    </div>
+  </div>
+
+  <!-- SCREEN: SAVED BOOKMARKS -->
+  <div class="app-screen" id="screenBookmarks" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back</button>
+      <span style="font-weight:900; font-size:14px; color:#fbbf24;">⭐ Saved Questions</span>
+    </div>
+    <div class="section-title">पुनः अभ्यास के लिए सेव किए गए प्रश्न:</div>
+    <div id="bookmarksRenderList" style="display:flex; flex-direction:column; gap:10px;"></div>
   </div>
 
   <!-- SCREEN: DOWNLOADS ZONE -->
   <div class="app-screen" id="screenDownloads" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Free Study Materials</span>
+      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Study Materials</span>
     </div>
-
     <div class="section-title">📁 1-Click Google Drive Downloads:</div>
 
     <div class="download-card-item">
@@ -638,13 +721,6 @@
         <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">सभी टेस्ट पेपर्स व नोट्स एक ही Google Drive फोल्डर में</p>
       </div>
       <a href="https://drive.google.com/" target="_blank" class="download-link-btn" style="background: linear-gradient(135deg, #38bdf8, #2563eb);">फोल्डर खोलें ➔</a>
-    </div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
     </div>
   </div>
 
@@ -682,17 +758,14 @@
       <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="selectedSubjHeading">Sets</span>
     </div>
     <div class="section-title">🏆 अभ्यास सेट चुनें:</div>
-    <div class="sets-list-container" id="setsListRenderBox"></div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    <div class="sets-list-container" id="setsListRenderBox">
+      <div class="skeleton-box"></div>
+      <div class="skeleton-box"></div>
+      <div class="skeleton-box"></div>
     </div>
   </div>
 
-  <!-- SCREEN: QUIZ -->
+  <!-- SCREEN: LIVE QUIZ (DISTRACTION-FREE) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
@@ -700,7 +773,10 @@
     </div>
     <div class="quiz-card" id="activeQuizCard">
       <div class="q-meta">
-        <span class="q-counter" id="qCounter">Q 1/5</span>
+        <div class="q-meta-left">
+          <span class="q-counter" id="qCounter">Q 1/5</span>
+          <button class="btn-bookmark" id="btnToggleBookmark" onclick="toggleCurrentBookmark()" title="Save Question">⭐</button>
+        </div>
         <div class="timer-pill" id="qTimerPill">⏱️ <span id="qTimerSecs">60</span>s</div>
       </div>
       <div class="q-text" id="qText">Loading question...</div>
@@ -714,7 +790,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: RESULT -->
+  <!-- SCREEN: RESULT (WITH WEAK TOPIC ANALYSIS & EXPLANATIONS) -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
@@ -729,13 +805,22 @@
       
       <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
 
-      <a href="#" class="btn-whatsapp-share" id="btnWhatsappShare" target="_blank">
+      <!-- WEAK TOPIC ANALYSIS -->
+      <div class="analysis-card" id="weakTopicAnalysisCard">
+        <span class="analysis-pill">📊 Performance Insight:</span>
+        <div style="font-size:12.5px; font-weight:700; color:#fff;" id="analysisInsightText">
+          Analyzing answers...
+        </div>
+      </div>
+
+      <a href="#" class="btn-pwa-install" id="btnWhatsappShare" target="_blank" style="background:#25d366; border:none; text-decoration:none; margin-top:4px;">
         <span>📲</span> दोस्तों को चुनौती दें (WhatsApp Share)
       </a>
 
-      <div style="width:100%; text-align:left; margin-top:16px;">
+      <!-- ANSWER SHEET WITH DETAILED EXPLANATION -->
+      <div style="width:100%; text-align:left; margin-top:14px;">
         <div style="font-size:14px; font-weight:900; color:var(--text-main); margin-bottom:8px;">
-          <span>📝 उत्तर समीक्षा (Answer Sheet):</span>
+          <span>📝 उत्तर समीक्षा एवं व्याख्या (Solutions):</span>
         </div>
         <div id="reviewQuestionsList" style="display:flex; flex-direction:column; gap:9px;"></div>
       </div>
@@ -748,6 +833,26 @@
   </div>
 
 </div>
+
+<!-- BOTTOM FIXED NAVIGATION BAR -->
+<nav class="bottom-nav-bar" id="bottomNavBar">
+  <div class="nav-item active" id="navHome" onclick="switchNavTab('screenHome', this)">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+  </div>
+  <div class="nav-item" id="navRanks" onclick="switchNavTab('screenLeaderboard', this)">
+    <span class="nav-icon">🏆</span>
+    <span class="nav-label">Ranks</span>
+  </div>
+  <div class="nav-item" id="navSaved" onclick="switchNavTab('screenBookmarks', this)">
+    <span class="nav-icon">⭐</span>
+    <span class="nav-label">Saved</span>
+  </div>
+  <div class="nav-item" id="navDocs" onclick="switchNavTab('screenDownloads', this)">
+    <span class="nav-icon">📥</span>
+    <span class="nav-label">Notes</span>
+  </div>
+</nav>
 
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
@@ -767,13 +872,15 @@
 
   let liveScheduleData = null; 
   let countdownTimerInterval = null;
-  let pendingQuizAction = null; // Pop-up ke baad test shuru karne ke liye
+  let pendingQuizAction = null;
 
   let currentUser = {
     name: '', totalXP: 0, currentRank: '--',
+    streak: 1, lastActiveDate: '',
     unlockedLevels: { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 },
     setBestScores: {},     
-    attemptedLiveTests: {} 
+    attemptedLiveTests: {},
+    bookmarks: [] // Array of { q, options, ans, subject }
   };
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -829,7 +936,67 @@
       .replace(/([A-Z][a-z]?|\))(\d+)/g, '$1<sub>$2</sub>');
   }
 
-  // JAB STUDENT PEHLI BAAR NAAM SUBMIT KAREGA
+  /* DAILY STREAK LOGIC */
+  function updateDailyStreak() {
+    const today = new Date().toISOString().split('T')[0];
+    if (!currentUser.lastActiveDate) {
+      currentUser.streak = 1;
+      currentUser.lastActiveDate = today;
+    } else if (currentUser.lastActiveDate !== today) {
+      const lastDate = new Date(currentUser.lastActiveDate);
+      const currentDate = new Date(today);
+      const diffTime = Math.abs(currentDate - lastDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays === 1) {
+        currentUser.streak = (currentUser.streak || 1) + 1;
+      } else if (diffDays > 1) {
+        currentUser.streak = 1;
+      }
+      currentUser.lastActiveDate = today;
+    }
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+  }
+
+  /* BADGE LOGIC */
+  function evaluateBadges() {
+    if (currentUser.streak >= 3) {
+      const b = document.getElementById('badgeStreak');
+      if (b) b.classList.add('unlocked');
+    }
+    if ((currentUser.totalXP || 0) >= 500) {
+      const b = document.getElementById('badgeScholar');
+      if (b) b.classList.add('unlocked');
+    }
+    if (currentUser.currentRank && !isNaN(currentUser.currentRank) && Number(currentUser.currentRank) <= 3) {
+      const b = document.getElementById('badgeMaster');
+      if (b) b.classList.add('unlocked');
+    }
+  }
+
+  /* BOTTOM NAVIGATION BAR SWITCHER */
+  function switchNavTab(screenId, navEl) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (navEl) navEl.classList.add('active');
+    navigateTo(screenId);
+    if (screenId === 'screenBookmarks') renderBookmarksList();
+  }
+
+  function navigateTo(screenId) {
+    clearInterval(qTimerInterval);
+    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads', 'screenBookmarks'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    const target = document.getElementById(screenId);
+    if (target) target.style.display = 'flex';
+
+    // Hide bottom bar during active quiz to give fullscreen focus
+    const navBar = document.getElementById('bottomNavBar');
+    if (navBar) navBar.style.display = (screenId === 'screenQuiz') ? 'none' : 'flex';
+    window.scrollTo(0, 0);
+  }
+
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
     if (!entered) return alert("कृपया अपना नाम लिखें!");
@@ -837,8 +1004,6 @@
     localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
     document.getElementById('userModal').style.display = 'none';
     updatePlayerUI();
-    
-    // Agar test start karne par naam manga gaya tha, toh test turant shuru hoga
     if (pendingQuizAction) {
       const act = pendingQuizAction;
       pendingQuizAction = null;
@@ -846,22 +1011,21 @@
     }
   }
 
-  // APP INITIALIZATION (Direct open hoga, koi popup nahi aayega)
   function initApp() {
     initTheme();
     const saved = localStorage.getItem('vimal_arena_quick_player');
     if (saved) {
-      try {
-        currentUser = JSON.parse(saved);
-      } catch(e){}
+      try { currentUser = JSON.parse(saved); } catch(e){}
     }
     if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 };
     if (!currentUser.setBestScores) currentUser.setBestScores = {};
     if (!currentUser.attemptedLiveTests) currentUser.attemptedLiveTests = {};
+    if (!currentUser.bookmarks) currentUser.bookmarks = [];
 
-    // Modal popup shuru me band rahega
+    updateDailyStreak();
     document.getElementById('userModal').style.display = 'none';
     updatePlayerUI();
+    evaluateBadges();
     navigateTo('screenHome');
     fetchCloudData();
   }
@@ -877,17 +1041,8 @@
     document.getElementById('userInitial').innerText = (currentUser.name ? currentUser.name[0] : 'S').toUpperCase();
     document.getElementById('dispXP').innerText = `${currentUser.totalXP || 0} XP`;
     document.getElementById('topUserRank').innerText = currentUser.currentRank ? `Rank #${currentUser.currentRank}` : 'Rank #--';
-  }
-
-  function navigateTo(screenId) {
-    clearInterval(qTimerInterval);
-    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-    const target = document.getElementById(screenId);
-    if (target) target.style.display = 'flex';
-    window.scrollTo(0, 0);
+    document.getElementById('dispStreak').innerText = `🔥 ${currentUser.streak || 1} Day Streak`;
+    evaluateBadges();
   }
 
   async function fetchCloudData() {
@@ -1061,6 +1216,7 @@
           document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
         }
       });
+      evaluateBadges();
     }
 
     const p1 = rankList[0] || null;
@@ -1149,7 +1305,11 @@
     const unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
 
     if (sets.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">Sheet से सवाल लोड हो रहे हैं...</div>`;
+      container.innerHTML = `
+        <div class="skeleton-box"></div>
+        <div class="skeleton-box"></div>
+        <div class="skeleton-box"></div>
+      `;
       return;
     }
 
@@ -1210,7 +1370,6 @@
     });
   }
 
-  // QUIZ START FUNCTION (Agar naam nahi hai tabhi popup maangega)
   function startQuizSet(lvl, isLive = false, subType = 'LIVE') {
     if (!currentUser.name || currentUser.name.trim() === '') {
       pendingQuizAction = () => startQuizSet(lvl, isLive, subType);
@@ -1237,6 +1396,67 @@
     return setObj ? setObj.questions : [];
   }
 
+  /* BOOKMARK LOGIC */
+  function isQuestionBookmarked(qText) {
+    return (currentUser.bookmarks || []).some(b => b.q === qText);
+  }
+
+  function toggleCurrentBookmark() {
+    const questions = getCurrentQuestions();
+    const qData = questions[currentQIdx];
+    if (!qData) return;
+
+    if (!currentUser.bookmarks) currentUser.bookmarks = [];
+    const existingIdx = currentUser.bookmarks.findIndex(b => b.q === qData.q);
+
+    if (existingIdx >= 0) {
+      currentUser.bookmarks.splice(existingIdx, 1);
+      document.getElementById('btnToggleBookmark').classList.remove('active');
+    } else {
+      currentUser.bookmarks.push({
+        q: qData.q,
+        options: qData.options,
+        ans: qData.ans,
+        explanation: qData.explanation || '',
+        subject: currentSubject
+      });
+      document.getElementById('btnToggleBookmark').classList.add('active');
+    }
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+  }
+
+  function renderBookmarksList() {
+    const container = document.getElementById('bookmarksRenderList');
+    container.innerHTML = '';
+    const bMarks = currentUser.bookmarks || [];
+
+    if (bMarks.length === 0) {
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:13px; padding:30px;">अभी आपने कोई प्रश्न सेव नहीं किया है।<br>क्विज़ के दौरान ⭐ दबाकर प्रश्न सेव करें।</div>`;
+      return;
+    }
+
+    bMarks.forEach((bm, bIdx) => {
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <span style="font-size:11px; color:#38bdf8; font-weight:800;">${bm.subject || 'Practice'}</span>
+          <span style="cursor:pointer; color:#ef4444; font-size:12px; font-weight:800;" onclick="deleteBookmark(${bIdx})">हटाएँ ✕</span>
+        </div>
+        <div style="font-weight:800; font-size:13.5px; margin:6px 0;">${formatMathFormula(bm.q)}</div>
+        <div style="font-size:12px; color:#10b981; font-weight:800;">👉 सही उत्तर: ${formatMathFormula(bm.options[bm.ans])}</div>
+        ${bm.explanation ? `<div class="explanation-box">💡 ${formatMathFormula(bm.explanation)}</div>` : ''}
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function deleteBookmark(idx) {
+    currentUser.bookmarks.splice(idx, 1);
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+    renderBookmarksList();
+  }
+
   function loadQuestion(idx) {
     clearInterval(qTimerInterval);
     currentQIdx = idx;
@@ -1245,6 +1465,11 @@
 
     document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
     document.getElementById('qText').innerHTML = `${idx + 1}. ${formatMathFormula(qData.q)}`;
+
+    // Bookmark State Check
+    const bmBtn = document.getElementById('btnToggleBookmark');
+    if (isQuestionBookmarked(qData.q)) bmBtn.classList.add('active');
+    else bmBtn.classList.remove('active');
 
     const container = document.getElementById('optionsContainer');
     container.innerHTML = '';
@@ -1303,6 +1528,7 @@
     if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) openSubjectSets(currentSubject);
   }
 
+  /* SUBMIT & PERFORMANCE ANALYSIS */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const totalTimeSecs = Math.round((Date.now() - quizStartTime) / 1000);
@@ -1353,10 +1579,21 @@
     const banner = document.getElementById('unlockResultBanner');
     const nextBtn = document.getElementById('btnNextLevelAction');
 
+    // WEAK AREA ANALYSIS & SPEED INSIGHT
+    const avgSecsPerQ = (totalTimeSecs / questions.length).toFixed(1);
+    let insightStr = `सटीकता: ${percent.toFixed(0)}% • औसत गति: ${avgSecsPerQ}s प्रति प्रश्न। `;
+    if (percent === 100) {
+      insightStr += "उत्कृष्ट! इस विषय पर आपकी पकड़ बहुत मजबूत है।";
+    } else if (percent >= 70) {
+      insightStr += "अच्छा प्रयास! गलत हुए 1-2 प्रश्नों की व्याख्या नीचे ध्यानपूर्वक पढ़ें।";
+    } else {
+      insightStr += "सुझाव: बेसिक्स पर ध्यान दें और फ़ॉर्मूला शीट डाउनलोड करके पुनः टेस्ट दें।";
+    }
+    document.getElementById('analysisInsightText').innerText = insightStr;
+
     if (passed) {
       document.getElementById('resHeadingText').innerText = "🎉 टेस्ट परिणाम घोषित!";
       banner.className = "unlock-banner unlock-success";
-      
       let xpMsg = deltaXP > 0 ? `+${deltaXP} XP Earned!` : `(पहले से उत्तीर्ण: 0 XP Farming Blocked)`;
       if (isCurrentQuizDailyLive) {
         banner.innerHTML = `🌟 बधाई! Live Quiz सबमिट हो गया!<br>Time: ${totalTimeSecs}s • ${xpMsg}`;
@@ -1387,6 +1624,7 @@
     const shareText = `मैंने Exam Arena में ${currentSubject} में ${score}/${questions.length} मार्क्स लाए (${totalTimeSecs} सेकंड में)! क्या आप मुझसे बेहतर कर सकते हैं? 👉 ${window.location.href}`;
     document.getElementById('btnWhatsappShare').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
 
+    // ANSWER SHEET WITH DETAILED EXPLANATION
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
@@ -1395,12 +1633,21 @@
         const isCorrect = (userAnsIdx === q.ans);
         const card = document.createElement('div');
         card.className = 'review-card ' + (isCorrect ? 'rev-correct' : 'rev-wrong');
+        
+        let explanationHtml = '';
+        if (q.explanation && q.explanation.trim() !== '') {
+          explanationHtml = `<div class="explanation-box">💡 <b>हल/व्याख्या:</b> ${formatMathFormula(q.explanation)}</div>`;
+        } else {
+          explanationHtml = `<div class="explanation-box">💡 <b>Concept Tip:</b> इस प्रश्न को समझने के लिए संबंधित अध्याय के मुख्य नियमों का पुनः अध्ययन करें।</div>`;
+        }
+
         card.innerHTML = `
           <div style="font-weight:800; font-size:13.5px; margin-bottom:4px;">${qIdx + 1}. ${formatMathFormula(q.q)}</div>
           <div style="font-size:12px; color:${isCorrect ? '#10b981' : '#ef4444'}; font-weight:700;">
             ${isCorrect ? '✅ आपका सही उत्तर:' : '❌ आपका उत्तर:'} ${userAnsIdx !== undefined ? formatMathFormula(q.options[userAnsIdx]) : 'छोड़ा गया'}
           </div>
           ${!isCorrect ? `<div style="font-size:12px; color:#10b981; font-weight:800; margin-top:2px;">👉 सही उत्तर: ${formatMathFormula(q.options[q.ans])}</div>` : ''}
+          ${explanationHtml}
         `;
         reviewListEl.appendChild(card);
       });
@@ -1438,6 +1685,11 @@
     startQuizSet(currentLevel, false, 'PRACTICE');
   }
 
+  /* ABOUT & PRIVACY MODAL CONTROLS */
+  function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
+  function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
+
+  /* POSTER GENERATOR */
   async function shareThoughtAsJPEG() {
     const thoughtText = document.getElementById('dailyThoughtText').innerText.replace(/^"|"$/g, '');
     const authorText = document.getElementById('dailyThoughtAuthor').innerText;
@@ -1451,10 +1703,7 @@
     ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, 1080, 1080);
 
     ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 14; ctx.strokeRect(36, 36, 1008, 1008);
-
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(54, 54, 972, 972);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.lineWidth = 3; ctx.strokeRect(54, 54, 972, 972);
 
     ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.roundRect(310, 100, 460, 64, [32]); ctx.fill();
     ctx.font = "bold 30px 'Poppins', sans-serif"; ctx.fillStyle = "#1e1b4b"; ctx.textAlign = "center";
@@ -1511,7 +1760,6 @@
     }
   }
 
-  // AUTO-UPDATE SERVICE WORKER LISTENER
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').then((reg) => {
       reg.update();
