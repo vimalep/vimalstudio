@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exam Arena by Vimal Sir</title>
   
+  <!-- Favicon & Search Description -->
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <meta name="description" content="Exam Arena by Vimal Sir - कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं के लिए फ्री लाइव टेस्ट सीरीज़, डेली मॉक टेस्ट और फ्री PDF नोट्स।">
+  <meta name="keywords" content="Exam Arena, Vimal Sir, Class 10 Mock Test, Online Quiz, Board Exam Preparation, Free PDF Notes">
+
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#181438">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -242,10 +249,17 @@
       border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; margin-left: 6px;
     }
 
+    /* ACTION BUTTONS */
     .btn-view-ranks {
       width: 100%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border: 1.5px solid #a855f7;
       color: #ffffff; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; font-weight: 800; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    .btn-view-downloads {
+      width: 100%; background: linear-gradient(135deg, #10b981, #059669); border: 1.5px solid #34d399;
+      color: #ffffff; padding: 11px 14px; border-radius: 14px; font-size: 13.5px; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
     }
 
     .ad-banner-box {
@@ -285,6 +299,17 @@
       border: 1.5px solid var(--card-border); border-radius: 16px; padding: 10px 14px;
     }
     .btn-back { background: #4338ca; border: 1.5px solid #818cf8; color: #ffffff; padding: 8px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+
+    /* DOWNLOAD ITEMS STYLING */
+    .download-card-item {
+      background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .download-link-btn {
+      background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; padding: 8px 16px;
+      border-radius: 10px; font-size: 12.5px; font-weight: 800; text-decoration: none; border: none;
+      display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+    }
 
     .sets-list-container { display: flex; flex-direction: column; gap: 11px; }
     .set-row-card {
@@ -528,9 +553,15 @@
     </div>
   </div>
 
+  <!-- SCREEN: HOME -->
   <div class="app-screen" id="screenHome">
     <button class="btn-view-ranks" onclick="navigateTo('screenLeaderboard')">
       <span>🏆</span> Live & All Rankers Leaderboard देखें ➔
+    </button>
+
+    <!-- NEW: DOWNLOADS BUTTON -->
+    <button class="btn-view-downloads" onclick="navigateTo('screenDownloads')">
+      <span>📥</span> Free PDF Notes & Downloads (Google Drive) ➔
     </button>
 
     <div class="section-title">🎯 अपना विषय चुनें (Choose Subject):</div>
@@ -569,6 +600,57 @@
     </div>
   </div>
 
+  <!-- SCREEN: DOWNLOADS ZONE -->
+  <div class="app-screen" id="screenDownloads" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Free Study Materials</span>
+    </div>
+
+    <div class="section-title">📁 1-Click Google Drive Downloads:</div>
+
+    <div class="download-card-item">
+      <div>
+        <h4 style="font-size:14.5px; font-weight:800; color:#fff;">📐 Math Formula Sheet</h4>
+        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">कक्षा 10वीं के सभी महत्वपूर्ण सूत्र एवं ट्रिक्स (PDF)</p>
+      </div>
+      <!-- Apne Google Drive File ka link href me dalein -->
+      <a href="https://drive.google.com/" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
+    </div>
+
+    <div class="download-card-item">
+      <div>
+        <h4 style="font-size:14.5px; font-weight:800; color:#fff;">🔬 Science Revision Notes</h4>
+        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">विज्ञान के हस्तलिखित शॉर्ट नोट्स व आरेख (PDF)</p>
+      </div>
+      <a href="https://drive.google.com/" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
+    </div>
+
+    <div class="download-card-item">
+      <div>
+        <h4 style="font-size:14.5px; font-weight:800; color:#fff;">🗺️ SST Map Work Booster</h4>
+        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">इतिहास व भूगोल के 100% पक्के मानचित्र (PDF)</p>
+      </div>
+      <a href="https://drive.google.com/" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
+    </div>
+
+    <div class="download-card-item" style="border-color:#38bdf8;">
+      <div>
+        <h4 style="font-size:14.5px; font-weight:800; color:#38bdf8;">📁 Master Drive Folder</h4>
+        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">सभी टेस्ट पेपर्स व नोट्स एक ही Google Drive फोल्डर में</p>
+      </div>
+      <a href="https://drive.google.com/" target="_blank" class="download-link-btn" style="background: linear-gradient(135deg, #38bdf8, #2563eb);">फोल्डर खोलें ➔</a>
+    </div>
+
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
+  </div>
+
+  <!-- SCREEN: LEADERBOARD -->
   <div class="app-screen" id="screenLeaderboard" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
@@ -595,6 +677,7 @@
     </div>
   </div>
 
+  <!-- SCREEN: SETS -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
@@ -611,6 +694,7 @@
     </div>
   </div>
 
+  <!-- SCREEN: QUIZ -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
@@ -632,6 +716,7 @@
     </div>
   </div>
 
+  <!-- SCREEN: RESULT -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
@@ -788,12 +873,13 @@
 
   function navigateTo(screenId) {
     clearInterval(qTimerInterval);
-    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen'].forEach(id => {
+    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
     });
     const target = document.getElementById(screenId);
     if (target) target.style.display = 'flex';
+    window.scrollTo(0, 0);
   }
 
   async function fetchCloudData() {
@@ -1410,20 +1496,18 @@
   }
 
   if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').then((reg) => {
-    reg.update(); // Har baar app khulte hi naye version ki jaanch karega
-  });
+    navigator.serviceWorker.register('sw.js').then((reg) => {
+      reg.update();
+    }).catch(e => console.log(e));
 
-  // Jaise hi naya version milega, app apne-aap ek baar refresh hokar update ho jayegi
-  let refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!refreshing) {
-      refreshing = true;
-      window.location.reload();
-    }
-  });
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    });
   }
-  
   window.onload = initApp;
 </script>
 
