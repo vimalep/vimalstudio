@@ -1,22 +1,24 @@
-const CACHE_NAME = 'exam-arena-v4'; // Jab bhi naya code dalein, bas v2 ko v3 kar dein
+const CACHE_NAME = 'exam-arena-v5'; // Har naye update par version badal dein (v5, v6...)
 
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './manifest.json'
+  './Exam_Arena.html',
+  './manifest.json',
+  './favicon.png'
 ];
 
-// Install Event: Naya worker turant activate hoga
+// 1. Install Event: Naya worker aate hi turant activate hoga
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+      return cache.addAll(ASSETS_TO_CACHE).catch((err) => console.log('Cache add warning:', err));
     })
   );
 });
 
-// Activate Event: Purana cache turant delete karein
+// 2. Activate Event: Purana saara kachra/cache ek second mein delete
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -31,12 +33,22 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event: "Network First" (Pehle fresh live code lao, offline hone par hi cache dikhao)
+// 3. Fetch Event: "Strict Network First" (Disk cache bypass karke direct live server se lao)
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
+  const url = new URL(event.request.url);
+
+  // Google Apps Script ya external APIs ko cache na karein (Hamesha 100% LIVE chalenge)
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  const isHtmlPage = event.request.mode === 'navigate' || event.request.headers.get('accept')?.includes('text/html');
+
   event.respondWith(
-    fetch(event.request)
+    // { cache: 'no-cache' } se browser ka purana memory cache bypass ho jata hai
+    fetch(event.request, isHtmlPage ? { cache: 'no-cache' } : {})
       .then((networkResponse) => {
         if (networkResponse && networkResponse.status === 200) {
           const responseToCache = networkResponse.clone();
@@ -47,7 +59,11 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       })
       .catch(() => {
-        return caches.match(event.request);
+        // Offline hone par hi cache se dikhayein
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
+          if (isHtmlPage) return caches.match('./index.html') || caches.match('./Exam_Arena.html');
+        });
       })
   );
 });
