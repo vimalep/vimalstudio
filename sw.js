@@ -1,4 +1,4 @@
-const CACHE_NAME = 'exam-arena-v3'; // Jab bhi naya code dalein, bas v2 ko v3 kar dein
+const CACHE_NAME = 'exam-arena-v4'; // Jab bhi naya code dalein, bas v2 ko v3 kar dein
 
 const ASSETS_TO_CACHE = [
   './',
