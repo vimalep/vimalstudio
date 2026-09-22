@@ -1,4 +1,4 @@
-const CACHE_NAME = 'exam-arena-v1';
+const CACHE_NAME = 'exam-arena-v2';
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
