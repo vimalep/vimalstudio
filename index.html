@@ -116,7 +116,7 @@
         radial-gradient(circle at 80% 20%, var(--bg-radial-4) 0%, transparent 35%);
       background-attachment: fixed;
       color: var(--text-main);
-      padding: 12px 10px 85px 10px; /* Space for Bottom Nav Bar */
+      padding: 12px 10px 85px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -126,7 +126,6 @@
 
     .arena-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
 
-    /* FIXED TOP HEADER ACROSS ALL SCREENS */
     .arena-header {
       text-align: center;
       padding: 14px 80px 14px 18px;
@@ -155,7 +154,6 @@
       color: #ffffff; font-size: 11px; font-weight: 900; padding: 3px 14px; border-radius: 20px; margin-top: 4px;
     }
 
-    /* PWA BANNER */
     #pwaInstallBox { width: 100%; margin: 2px 0 4px 0; }
     .btn-pwa-install {
       width: 100%; background: linear-gradient(135deg, #10b981, #059669); border: 2px solid #a7f3d0;
@@ -163,7 +161,6 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
-    /* MOTIVATION CARD */
     .thought-card {
       background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(49, 46, 129, 0.9));
       border: 2px solid rgba(245, 158, 11, 0.45); border-radius: 18px; padding: 13px 15px;
@@ -183,7 +180,6 @@
       border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; align-self: flex-end;
     }
 
-    /* FLASH ALERT */
     .flash-alert-card {
       background: linear-gradient(135deg, #ef4444, #f97316, #f59e0b);
       border: 2px solid #fef08a; border-radius: 16px; padding: 11px 14px;
@@ -209,7 +205,6 @@
     .flash-btn.locked { background: #cbd5e1; color: #64748b; cursor: not-allowed; }
     .flash-btn.completed { background: #10b981; color: #ffffff; }
 
-    /* TICKER */
     .live-ticker-wrap {
       width: 100%; background: var(--ticker-bg); border: 1.5px solid rgba(99, 102, 241, 0.5);
       border-radius: 14px; padding: 7px 12px; display: flex; align-items: center; gap: 10px; overflow: hidden;
@@ -220,7 +215,6 @@
     body.light-theme .ticker-content { color: #0284c7; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* PLAYER PROFILE WITH STREAKS & BADGES */
     .player-profile-card {
       background: var(--profile-bg); border: 2px solid var(--card-border); border-radius: 18px;
       padding: 12px 14px; display: flex; flex-direction: column; gap: 10px;
@@ -258,7 +252,6 @@
     }
     .badge-pill.unlocked { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; }
 
-    /* SHIMMER EFFECT / SKELETON */
     .skeleton-box {
       background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.04) 75%);
       background-size: 200% 100%;
@@ -267,7 +260,6 @@
     }
     @keyframes shimmerLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-    /* SCREENS & CARDS */
     .app-screen { display: flex; flex-direction: column; gap: 11px; width: 100%; }
     .section-title { font-size: 14px; font-weight: 800; color: #fde047; display: flex; align-items: center; justify-content: space-between; }
     body.light-theme .section-title { color: #d97706; }
@@ -301,7 +293,6 @@
     }
     .btn-back { background: #4338ca; border: 1.5px solid #818cf8; color: #ffffff; padding: 8px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
 
-    /* DOWNLOADS */
     .download-card-item {
       background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px;
       padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -312,7 +303,6 @@
       display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
     }
 
-    /* SETS */
     .sets-list-container { display: flex; flex-direction: column; gap: 11px; }
     .set-row-card {
       background: var(--set-card-bg); border: 2px solid var(--set-card-border); border-radius: 18px;
@@ -331,7 +321,6 @@
     .set-row-card:not(.locked) .set-action-pill { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
-    /* QUIZ CARD & BOOKMARK BUTTON */
     .quiz-card {
       background: var(--quiz-card-bg); border: 2px solid var(--quiz-card-border); border-radius: 24px;
       padding: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); position: relative;
@@ -391,7 +380,6 @@
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
-    /* RESULTS SCREEN & WEAK AREA ANALYSIS */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
     .score-circle {
       width: 125px; height: 125px; border-radius: 50%;
@@ -427,7 +415,6 @@
       border-left: 3px solid #38bdf8; border-radius: 4px; font-size: 12px; color: var(--text-muted);
     }
 
-    /* LEADERBOARDS & PODIUM */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg); border: 2px solid var(--card-border);
       border-radius: 20px; padding: 16px 12px; text-align: left;
@@ -464,21 +451,11 @@
     body.light-theme .podium-score { color: #0284c7; }
     .podium-pedestal { width: 100%; border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; }
 
-    .lb-list-rest { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
-    .lb-item {
-      display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
-      border-radius: 12px; font-size: 13px; font-weight: 800; background: var(--lb-item-bg);
-      color: var(--lb-item-text); border: 1.5px solid var(--card-border);
-    }
-    .lb-item.is-me { border-color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15) !important; }
-
-    /* REVENUE AD BANNER BOX */
     .ad-banner-box {
       width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center;
       overflow: hidden; margin: 10px 0 4px 0; border-radius: 16px; background: rgba(0,0,0,0.03); border: 1px dashed var(--card-border);
     }
 
-    /* BOTTOM NAVIGATION BAR */
     .bottom-nav-bar {
       position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
       background: var(--bottom-nav-bg); backdrop-filter: blur(16px);
@@ -494,7 +471,6 @@
     .nav-icon { font-size: 20px; }
     .nav-label { font-size: 10.5px; font-weight: 800; }
 
-    /* MODAL POPUPS */
     .app-modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
       display: none; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
@@ -512,7 +488,6 @@
       border-radius: 13px; color: #fff; font-weight: 900; font-size: 15px; cursor: pointer;
     }
 
-    /* FOOTER COMPLIANCE LINKS */
     .app-footer {
       text-align: center; margin-top: 14px; font-size: 11px; color: var(--text-muted);
       display: flex; justify-content: center; gap: 14px;
@@ -522,7 +497,6 @@
 </head>
 <body>
 
-<!-- NAME ENTRY MODAL (Sirf pehli baar test shuru karte waqt maangega) -->
 <div id="userModal" class="app-modal-overlay">
   <div class="modal-box">
     <div style="font-family:'Fredoka',sans-serif; font-size:24px; font-weight:800; color:#f59e0b; margin-bottom:4px;">🎯 EXAM ARENA</div>
@@ -532,7 +506,6 @@
   </div>
 </div>
 
-<!-- ABOUT & PRIVACY POLICY MODAL -->
 <div id="aboutModal" class="app-modal-overlay">
   <div class="modal-box" style="text-align:left;">
     <h3 style="color:#f59e0b; font-size:18px; font-weight:800; margin-bottom:8px;">🎯 About Exam Arena</h3>
@@ -549,7 +522,7 @@
 
 <div class="arena-container">
 
-  <!-- TOP HEADER (Hamesha Sabhi Screens Par Dikhega) -->
+  <!-- TOP FIXED HEADER -->
   <div class="arena-header">
     <div class="arena-title">🎯 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
@@ -559,7 +532,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 1: HOME (Thought, Profile aur Subjects yahan rahenge) -->
+  <!-- SCREEN 1: HOME -->
   <div class="app-screen" id="screenHome">
     <div id="pwaInstallBox" style="display:none;">
       <button class="btn-pwa-install" onclick="installAppDirectly()">
@@ -567,7 +540,6 @@
       </button>
     </div>
 
-    <!-- Daily Motivation Card -->
     <div class="thought-card">
       <div class="thought-top-meta">
         <span class="thought-pill">💡 आज का प्रेरक विचार</span>
@@ -580,7 +552,6 @@
       <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()"><span>📲</span> WhatsApp पोस्टर शेयर करें</button>
     </div>
 
-    <!-- Live Event Flash Alert -->
     <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
       <div class="flash-icon-box" id="flashIconBox">🔥</div>
       <div class="flash-text-wrap">
@@ -590,7 +561,6 @@
       <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Check ➔</button>
     </div>
 
-    <!-- Live Ticker -->
     <div class="live-ticker-wrap">
       <div class="ticker-pill">LIVE 🟢</div>
       <div class="ticker-track">
@@ -598,7 +568,6 @@
       </div>
     </div>
 
-    <!-- Profile & Streak Card -->
     <div class="player-profile-card">
       <div class="profile-top-row">
         <div class="profile-info">
@@ -659,7 +628,7 @@
       </div>
     </div>
 
-    <!-- HOME REVENUE AD -->
+    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -676,7 +645,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 2: LEADERBOARD (Direct Top par Leaderboard dikhega) -->
+  <!-- SCREEN 2: LEADERBOARD -->
   <div class="app-screen" id="screenLeaderboard" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
@@ -702,7 +671,7 @@
       <div id="fullLeaderboardList"></div>
     </div>
 
-    <!-- RANKS REVENUE AD -->
+    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -711,7 +680,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: SAVED QUESTIONS (Direct Top par Saved Questions) -->
+  <!-- SCREEN 3: SAVED BOOKMARKS -->
   <div class="app-screen" id="screenBookmarks" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
@@ -720,7 +689,7 @@
     <div class="section-title"><span>पुनः अभ्यास के लिए सेव किए गए प्रश्न:</span></div>
     <div id="bookmarksRenderList" style="display:flex; flex-direction:column; gap:10px;"></div>
 
-    <!-- SAVED REVENUE AD -->
+    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -729,7 +698,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: DOWNLOADS ZONE (Direct Top par Google Drive Links) -->
+  <!-- SCREEN 4: DOWNLOADS CENTER -->
   <div class="app-screen" id="screenDownloads" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
@@ -769,7 +738,7 @@
       <a href="https://drive.google.com/" target="_blank" class="download-link-btn" style="background: linear-gradient(135deg, #38bdf8, #2563eb);">फोल्डर खोलें ➔</a>
     </div>
 
-    <!-- DOWNLOADS REVENUE AD -->
+    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -791,7 +760,7 @@
       <div class="skeleton-box"></div>
     </div>
 
-    <!-- SETS REVENUE AD -->
+    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -800,7 +769,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 6: LIVE QUIZ (DISTRACTION-FREE, NO ADS) -->
+  <!-- SCREEN 6: QUIZ (DISTRACTION-FREE, NO ADS) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
@@ -825,7 +794,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: RESULT (WITH REVENUE AD) -->
+  <!-- SCREEN 7: RESULT -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
@@ -840,7 +809,6 @@
       
       <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
 
-      <!-- WEAK TOPIC ANALYSIS -->
       <div class="analysis-card" id="weakTopicAnalysisCard">
         <span class="analysis-pill">📊 Performance Insight:</span>
         <div style="font-size:12.5px; font-weight:700; color:#fff;" id="analysisInsightText">
@@ -852,7 +820,6 @@
         <span>📲</span> दोस्तों को चुनौती दें (WhatsApp Share)
       </a>
 
-      <!-- ANSWER SHEET WITH DETAILED EXPLANATION -->
       <div style="width:100%; text-align:left; margin-top:14px;">
         <div style="font-size:14px; font-weight:900; color:var(--text-main); margin-bottom:8px;">
           <span>📝 उत्तर समीक्षा एवं व्याख्या (Solutions):</span>
@@ -866,7 +833,7 @@
       </div>
     </div>
 
-    <!-- RESULT REVENUE AD -->
+    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -1015,14 +982,23 @@
     }
   }
 
+  function updateNavIconsState(screenId) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (screenId === 'screenHome') document.getElementById('navHome')?.classList.add('active');
+    else if (screenId === 'screenLeaderboard') document.getElementById('navRanks')?.classList.add('active');
+    else if (screenId === 'screenBookmarks') document.getElementById('navSaved')?.classList.add('active');
+    else if (screenId === 'screenDownloads') document.getElementById('navDownloads')?.classList.add('active');
+  }
+
   function switchNavTab(screenId, navEl) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     if (navEl) navEl.classList.add('active');
-    navigateTo(screenId);
+    navigateTo(screenId, true);
     if (screenId === 'screenBookmarks') renderBookmarksList();
   }
 
-  function navigateTo(screenId) {
+  // NAVIGATION FUNCTION WITH MOBILE HISTORY BACK-BUTTON SUPPORT
+  function navigateTo(screenId, addToHistory = true) {
     clearInterval(qTimerInterval);
     ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads', 'screenBookmarks'].forEach(id => {
       const el = document.getElementById(id);
@@ -1034,7 +1010,43 @@
     const navBar = document.getElementById('bottomNavBar');
     if (navBar) navBar.style.display = (screenId === 'screenQuiz') ? 'none' : 'flex';
     window.scrollTo(0, 0);
+
+    updateNavIconsState(screenId);
+
+    // Browser History API integration for Mobile Back Button
+    if (addToHistory && screenId !== 'screenHome') {
+      history.pushState({ screen: screenId }, '');
+    }
   }
+
+  // MOBILE HARDWARE & GESTURE BACK-BUTTON LISTENER
+  window.addEventListener('popstate', (event) => {
+    const activeQuiz = document.getElementById('screenQuiz');
+    
+    // 1. Agar test chal raha ho aur student back dabaye
+    if (activeQuiz && activeQuiz.style.display === 'flex') {
+      if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
+        openSubjectSets(currentSubject);
+      } else {
+        history.pushState({ screen: 'screenQuiz' }, '');
+      }
+      return;
+    }
+
+    // 2. Agar Sets ya Result screen par hai, toh Home screen par le aao
+    const setsScreen = document.getElementById('screenSets');
+    const resScreen = document.getElementById('resultScreen');
+    if ((setsScreen && setsScreen.style.display === 'flex') || (resScreen && resScreen.style.display === 'flex')) {
+      navigateTo('screenHome', false);
+      return;
+    }
+
+    // 3. Ranks, Saved ya Downloads par hai, toh Home screen par le aao
+    const homeScreen = document.getElementById('screenHome');
+    if (homeScreen && homeScreen.style.display !== 'flex') {
+      navigateTo('screenHome', false);
+    }
+  });
 
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
@@ -1065,7 +1077,7 @@
     document.getElementById('userModal').style.display = 'none';
     updatePlayerUI();
     evaluateBadges();
-    navigateTo('screenHome');
+    navigateTo('screenHome', false);
     fetchCloudData();
   }
 
@@ -1334,7 +1346,7 @@
     const titles = { Math: '📐 Maths Sets', Science: '🔬 Class X Science Sets', SocialScience: '📜 Class X SST Sets', English: '✍️ English Grammar Sets', GK: '🌍 GK Sets' };
     document.getElementById('selectedSubjHeading').innerText = titles[subj] || 'Sets';
     renderSetsList();
-    navigateTo('screenSets');
+    navigateTo('screenSets', true);
   }
 
   function renderSetsList() {
@@ -1426,7 +1438,7 @@
     const setObj = quizDatabase[currentSubject].find(s => Number(s.level) === currentLevel);
     document.getElementById('activeQuizSetTitle').innerText = `${isLive ? '🔥 LIVE: ' : ''}${currentSubject} - ${setObj ? setObj.title : 'Set ' + currentLevel}`;
 
-    navigateTo('screenQuiz');
+    navigateTo('screenQuiz', true);
     loadQuestion(0);
   }
 
@@ -1607,7 +1619,7 @@
     localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
     updatePlayerUI();
 
-    navigateTo('resultScreen');
+    navigateTo('resultScreen', true);
     document.getElementById('resSubjTag').innerText = `${isCurrentQuizDailyLive ? '🔥 LIVE CHALLENGE: ' : ''}${currentSubject} - Set ${currentLevel} • Time: ${totalTimeSecs}s`;
     document.getElementById('resScore').innerText = score;
     document.getElementById('resTotalQ').innerText = `out of ${questions.length}`;
@@ -1706,7 +1718,7 @@
   function goToNextLevelOrRetry() {
     if (isCurrentQuizDailyLive) {
       switchLeaderboardTab('dailyLive', document.querySelector('.lb-tab-btn.live-tab'));
-      navigateTo('screenLeaderboard');
+      navigateTo('screenLeaderboard', true);
       return;
     }
     const questions = getCurrentQuestions();
@@ -1792,7 +1804,6 @@
     }
   }
 
-  // SERVICE WORKER REGISTRATION (Bypasses HTTP Browser Cache)
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((reg) => {
       reg.update();
