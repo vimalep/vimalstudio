@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exam Arena by Vimal Sir</title>
   
-  <!-- Favicon & Search Description -->
+  <!-- Favicon & Search Engine Metadata -->
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
-  <meta name="description" content="Exam Arena by Vimal Sir - कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं के लिए फ्री लाइव टेस्ट सीरीज़, डेली मॉक टेस्ट और फ्री PDF नोट्स।">
+  <meta name="description" content="Exam Arena by Vimal Sir - कक्षा 10वीं बोर्ड (गणित, विज्ञान, SST) एवं प्रतियोगी परीक्षाओं के लिए फ्री लाइव टेस्ट सीरीज़, डेली मॉक टेस्ट और फ्री PDF नोट्स।">
   <meta name="keywords" content="Exam Arena, Vimal Sir, Class 10 Mock Test, Online Quiz, Board Exam Preparation, Free PDF Notes">
 
   <link rel="manifest" href="manifest.json">
@@ -249,7 +249,6 @@
       border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; margin-left: 6px;
     }
 
-    /* ACTION BUTTONS */
     .btn-view-ranks {
       width: 100%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border: 1.5px solid #a855f7;
       color: #ffffff; padding: 10px 14px; border-radius: 14px; font-size: 13.5px; font-weight: 800; cursor: pointer;
@@ -464,7 +463,7 @@
 
     #userModal {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
-      display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
+      display: none; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
     }
     .modal-box {
       background: var(--modal-bg); border: 2px solid var(--modal-border); padding: 24px 20px;
@@ -482,12 +481,13 @@
 </head>
 <body>
 
+<!-- SMART POPUP MODAL (Sirf pehli baar test shuru karte waqt open hoga) -->
 <div id="userModal">
   <div class="modal-box">
     <div style="font-family:'Fredoka',sans-serif; font-size:24px; font-weight:800; color:#f59e0b; margin-bottom:4px;">🎯 EXAM ARENA</div>
-    <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">Live Mock Test Series by Vimal Sir ⭐</div>
+    <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">टेस्ट शुरू करने के लिए अपना नाम दर्ज करें ⭐</div>
     <input type="text" class="form-input" id="studentQuickName" placeholder="अपना नाम लिखें (उदा. Aman Sharma)" autofocus>
-    <button class="form-btn-main" onclick="saveQuickPlayerName()">टेस्ट प्रारंभ करें ➔</button>
+    <button class="form-btn-main" onclick="saveQuickPlayerName()">टेस्ट शुरू करें ➔</button>
   </div>
 </div>
 
@@ -538,7 +538,7 @@
 
   <div class="player-profile-card">
     <div class="profile-info">
-      <div class="avatar-circle" id="userInitial">V</div>
+      <div class="avatar-circle" id="userInitial">S</div>
       <div class="user-tag">
         <span class="u-name" id="dispName">Student</span>
         <span class="user-rank-badge" id="topUserRank">Rank #--</span>
@@ -559,7 +559,6 @@
       <span>🏆</span> Live & All Rankers Leaderboard देखें ➔
     </button>
 
-    <!-- NEW: DOWNLOADS BUTTON -->
     <button class="btn-view-downloads" onclick="navigateTo('screenDownloads')">
       <span>📥</span> Free PDF Notes & Downloads (Google Drive) ➔
     </button>
@@ -614,7 +613,6 @@
         <h4 style="font-size:14.5px; font-weight:800; color:#fff;">📐 Math Formula Sheet</h4>
         <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">कक्षा 10वीं के सभी महत्वपूर्ण सूत्र एवं ट्रिक्स (PDF)</p>
       </div>
-      <!-- Apne Google Drive File ka link href me dalein -->
       <a href="https://drive.google.com/" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
     </div>
 
@@ -769,6 +767,7 @@
 
   let liveScheduleData = null; 
   let countdownTimerInterval = null;
+  let pendingQuizAction = null; // Pop-up ke baad test shuru karne ke liye
 
   let currentUser = {
     name: '', totalXP: 0, currentRank: '--',
@@ -830,6 +829,7 @@
       .replace(/([A-Z][a-z]?|\))(\d+)/g, '$1<sub>$2</sub>');
   }
 
+  // JAB STUDENT PEHLI BAAR NAAM SUBMIT KAREGA
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
     if (!entered) return alert("कृपया अपना नाम लिखें!");
@@ -837,25 +837,33 @@
     localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
     document.getElementById('userModal').style.display = 'none';
     updatePlayerUI();
-    navigateTo('screenHome');
-    fetchCloudData();
+    
+    // Agar test start karne par naam manga gaya tha, toh test turant shuru hoga
+    if (pendingQuizAction) {
+      const act = pendingQuizAction;
+      pendingQuizAction = null;
+      act();
+    }
   }
 
+  // APP INITIALIZATION (Direct open hoga, koi popup nahi aayega)
   function initApp() {
     initTheme();
     const saved = localStorage.getItem('vimal_arena_quick_player');
     if (saved) {
-      currentUser = JSON.parse(saved);
-      if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 };
-      if (!currentUser.setBestScores) currentUser.setBestScores = {};
-      if (!currentUser.attemptedLiveTests) currentUser.attemptedLiveTests = {};
-      document.getElementById('userModal').style.display = 'none';
-      updatePlayerUI();
-      navigateTo('screenHome');
-      fetchCloudData();
-    } else {
-      document.getElementById('userModal').style.display = 'flex';
+      try {
+        currentUser = JSON.parse(saved);
+      } catch(e){}
     }
+    if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 };
+    if (!currentUser.setBestScores) currentUser.setBestScores = {};
+    if (!currentUser.attemptedLiveTests) currentUser.attemptedLiveTests = {};
+
+    // Modal popup shuru me band rahega
+    document.getElementById('userModal').style.display = 'none';
+    updatePlayerUI();
+    navigateTo('screenHome');
+    fetchCloudData();
   }
 
   function logoutUser() {
@@ -865,8 +873,8 @@
   }
 
   function updatePlayerUI() {
-    document.getElementById('dispName').innerText = currentUser.name || "Student";
-    document.getElementById('userInitial').innerText = (currentUser.name || 'V')[0].toUpperCase();
+    document.getElementById('dispName').innerText = currentUser.name || "विद्यार्थी (Guest)";
+    document.getElementById('userInitial').innerText = (currentUser.name ? currentUser.name[0] : 'S').toUpperCase();
     document.getElementById('dispXP').innerText = `${currentUser.totalXP || 0} XP`;
     document.getElementById('topUserRank').innerText = currentUser.currentRank ? `Rank #${currentUser.currentRank}` : 'Rank #--';
   }
@@ -1202,7 +1210,15 @@
     });
   }
 
+  // QUIZ START FUNCTION (Agar naam nahi hai tabhi popup maangega)
   function startQuizSet(lvl, isLive = false, subType = 'LIVE') {
+    if (!currentUser.name || currentUser.name.trim() === '') {
+      pendingQuizAction = () => startQuizSet(lvl, isLive, subType);
+      document.getElementById('userModal').style.display = 'flex';
+      document.getElementById('studentQuickName').focus();
+      return;
+    }
+
     currentLevel = Number(lvl);
     isCurrentQuizDailyLive = isLive;
     currentQuizSubmissionType = subType;
@@ -1495,6 +1511,7 @@
     }
   }
 
+  // AUTO-UPDATE SERVICE WORKER LISTENER
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').then((reg) => {
       reg.update();
