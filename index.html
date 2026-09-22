@@ -55,7 +55,7 @@
       --set-card-border: rgba(165, 180, 252, 0.35);
       --screen-bar-bg: linear-gradient(135deg, #312e81, #1e1b4b);
       --score-inner-bg: #1e1b4b;
-      --bottom-nav-bg: rgba(24, 20, 56, 0.92);
+      --bottom-nav-bg: rgba(24, 20, 56, 0.94);
 
       --grad-math: linear-gradient(135deg, #2563eb, #0284c7, #06b6d4);
       --grad-sci: linear-gradient(135deg, #059669, #10b981, #84cc16);
@@ -102,7 +102,7 @@
       --set-card-border: #cbd5e1;
       --screen-bar-bg: #ffffff;
       --score-inner-bg: #ffffff;
-      --bottom-nav-bg: rgba(255, 255, 255, 0.94);
+      --bottom-nav-bg: rgba(255, 255, 255, 0.95);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', 'Hind', sans-serif; }
@@ -126,7 +126,7 @@
 
     .arena-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
 
-    /* HEADER */
+    /* FIXED TOP HEADER ACROSS ALL SCREENS */
     .arena-header {
       text-align: center;
       padding: 14px 80px 14px 18px;
@@ -472,6 +472,12 @@
     }
     .lb-item.is-me { border-color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15) !important; }
 
+    /* REVENUE AD BANNER BOX */
+    .ad-banner-box {
+      width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; margin: 10px 0 4px 0; border-radius: 16px; background: rgba(0,0,0,0.03); border: 1px dashed var(--card-border);
+    }
+
     /* BOTTOM NAVIGATION BAR */
     .bottom-nav-bar {
       position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
@@ -516,7 +522,7 @@
 </head>
 <body>
 
-<!-- NAME ENTRY MODAL (Triggered only when guest attempts their first quiz) -->
+<!-- NAME ENTRY MODAL (Sirf pehli baar test shuru karte waqt maangega) -->
 <div id="userModal" class="app-modal-overlay">
   <div class="modal-box">
     <div style="font-family:'Fredoka',sans-serif; font-size:24px; font-weight:800; color:#f59e0b; margin-bottom:4px;">🎯 EXAM ARENA</div>
@@ -543,7 +549,7 @@
 
 <div class="arena-container">
 
-  <!-- TOP HEADER -->
+  <!-- TOP HEADER (Hamesha Sabhi Screens Par Dikhega) -->
   <div class="arena-header">
     <div class="arena-title">🎯 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
@@ -553,80 +559,78 @@
     </div>
   </div>
 
-  <!-- PWA INSTALL BANNER -->
-  <div id="pwaInstallBox" style="display:none;">
-    <button class="btn-pwa-install" onclick="installAppDirectly()">
-      <span>📥</span> Exam Arena App फ़ोन में इंस्टॉल करें
-    </button>
-  </div>
-
-  <!-- DAILY MOTIVATION -->
-  <div class="thought-card">
-    <div class="thought-top-meta">
-      <span class="thought-pill">💡 आज का प्रेरक विचार</span>
-      <span style="font-size:11px; color:var(--text-muted); font-weight:700;">Daily Motivation</span>
+  <!-- SCREEN 1: HOME (Thought, Profile aur Subjects yahan rahenge) -->
+  <div class="app-screen" id="screenHome">
+    <div id="pwaInstallBox" style="display:none;">
+      <button class="btn-pwa-install" onclick="installAppDirectly()">
+        <span>📥</span> Exam Arena App फ़ोन में इंस्टॉल करें
+      </button>
     </div>
-    <div class="thought-body-text" id="dailyThoughtText">
-      "कठिन परिश्रम का कोई विकल्प नहीं होता, सफलता केवल निरंतर अभ्यास और अनुशासन से मिलती है।"
-    </div>
-    <div class="thought-author" id="dailyThoughtAuthor">– डॉ. ए.पी.जे. अब्दुल कलाम</div>
-    <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()"><span>📲</span> WhatsApp पोस्टर शेयर करें</button>
-  </div>
 
-  <!-- FLASH ALERT / DAILY LIVE QUIZ -->
-  <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
-    <div class="flash-icon-box" id="flashIconBox">🔥</div>
-    <div class="flash-text-wrap">
-      <div class="flash-badge" id="flashBadgeTitle">DAILY LIVE TEST</div>
-      <div class="flash-msg" id="flashNoticeText">लाइव टेस्ट की जानकारी लोड हो रही है...</div>
+    <!-- Daily Motivation Card -->
+    <div class="thought-card">
+      <div class="thought-top-meta">
+        <span class="thought-pill">💡 आज का प्रेरक विचार</span>
+        <span style="font-size:11px; color:var(--text-muted); font-weight:700;">Daily Motivation</span>
+      </div>
+      <div class="thought-body-text" id="dailyThoughtText">
+        "कठिन परिश्रम का कोई विकल्प नहीं होता, सफलता केवल निरंतर अभ्यास और अनुशासन से मिलती है।"
+      </div>
+      <div class="thought-author" id="dailyThoughtAuthor">– डॉ. ए.पी.जे. अब्दुल कलाम</div>
+      <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()"><span>📲</span> WhatsApp पोस्टर शेयर करें</button>
     </div>
-    <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Check ➔</button>
-  </div>
 
-  <!-- LIVE TICKER -->
-  <div class="live-ticker-wrap">
-    <div class="ticker-pill">LIVE 🟢</div>
-    <div class="ticker-track">
-      <div class="ticker-content" id="liveTickerText">Online: Active students appearing in mock tests...</div>
+    <!-- Live Event Flash Alert -->
+    <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
+      <div class="flash-icon-box" id="flashIconBox">🔥</div>
+      <div class="flash-text-wrap">
+        <div class="flash-badge" id="flashBadgeTitle">DAILY LIVE TEST</div>
+        <div class="flash-msg" id="flashNoticeText">लाइव टेस्ट की जानकारी लोड हो रही है...</div>
+      </div>
+      <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Check ➔</button>
     </div>
-  </div>
 
-  <!-- GAMIFIED PROFILE WITH STREAKS & BADGES -->
-  <div class="player-profile-card">
-    <div class="profile-top-row">
-      <div class="profile-info">
-        <div class="avatar-circle" id="userInitial">S</div>
-        <div class="user-tag">
-          <span class="u-name" id="dispName">विद्यार्थी (Guest)</span>
-          <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
-            <span class="user-rank-badge" id="topUserRank">Rank #--</span>
-            <span class="streak-badge" id="dispStreak">🔥 1 Day</span>
+    <!-- Live Ticker -->
+    <div class="live-ticker-wrap">
+      <div class="ticker-pill">LIVE 🟢</div>
+      <div class="ticker-track">
+        <div class="ticker-content" id="liveTickerText">Online: Active students appearing in mock tests...</div>
+      </div>
+    </div>
+
+    <!-- Profile & Streak Card -->
+    <div class="player-profile-card">
+      <div class="profile-top-row">
+        <div class="profile-info">
+          <div class="avatar-circle" id="userInitial">S</div>
+          <div class="user-tag">
+            <span class="u-name" id="dispName">विद्यार्थी (Guest)</span>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:2px;">
+              <span class="user-rank-badge" id="topUserRank">Rank #--</span>
+              <span class="streak-badge" id="dispStreak">🔥 1 Day</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div style="display:flex; align-items:center; gap:6px;">
-        <div class="stat-badge">
-          <div class="xp-num" id="dispXP">0 XP</div>
-          <div class="xp-lbl">Total Score</div>
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div class="stat-badge">
+            <div class="xp-num" id="dispXP">0 XP</div>
+            <div class="xp-lbl">Total Score</div>
+          </div>
+          <button class="ctrl-btn" style="border-radius:10px; font-size:12px; width:30px; height:30px;" onclick="logoutUser()" title="Reset User">🚪</button>
         </div>
-        <button class="ctrl-btn" style="border-radius:10px; font-size:12px; width:30px; height:30px;" onclick="logoutUser()" title="Reset User">🚪</button>
+      </div>
+
+      <div class="badges-tray" id="userBadgesTray">
+        <div class="badge-pill unlocked">🌟 Starter</div>
+        <div class="badge-pill" id="badgeStreak">🔥 3-Day Streak</div>
+        <div class="badge-pill" id="badgeScholar">🎓 500+ XP</div>
+        <div class="badge-pill" id="badgeMaster">👑 Top 3 Ranker</div>
       </div>
     </div>
 
-    <!-- BADGES ROW -->
-    <div class="badges-tray" id="userBadgesTray">
-      <div class="badge-pill unlocked">🌟 Starter</div>
-      <div class="badge-pill" id="badgeStreak">🔥 3-Day Streak</div>
-      <div class="badge-pill" id="badgeScholar">🎓 500+ XP</div>
-      <div class="badge-pill" id="badgeMaster">👑 Top 3 Ranker</div>
-    </div>
-  </div>
-
-  <!-- SCREEN: HOME (SUBJECTS & QUIZZES) -->
-  <div class="app-screen" id="screenHome">
     <div class="section-title">
       <span>🎯 अभ्यास विषय (Select Subject):</span>
-      <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="navigateTo('screenBookmarks')">⭐ Bookmarks</span>
+      <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="switchNavTab('screenBookmarks', document.getElementById('navSaved'))">⭐ Saved Questions</span>
     </div>
     
     <div class="subject-cards-grid">
@@ -655,15 +659,14 @@
       </div>
     </div>
 
-    <!-- CLEAN AD CONTAINER -->
-    <div class="ad-banner-box" style="width:100%; min-height:250px; display:flex; align-items:center; justify-content:center; overflow:hidden; margin:8px 0; border-radius:16px; background:rgba(0,0,0,0.03); border:1px dashed var(--card-border);">
+    <!-- HOME REVENUE AD -->
+    <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
       </script>
       <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
     </div>
 
-    <!-- APP FOOTER -->
     <div class="app-footer">
       <span class="footer-link" onclick="openAboutModal()">About Us</span>
       <span>•</span>
@@ -673,23 +676,66 @@
     </div>
   </div>
 
-  <!-- SCREEN: SAVED BOOKMARKS -->
-  <div class="app-screen" id="screenBookmarks" style="display:none;">
+  <!-- SCREEN 2: LEADERBOARD (Direct Top par Leaderboard dikhega) -->
+  <div class="app-screen" id="screenLeaderboard" style="display:none;">
     <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back</button>
-      <span style="font-weight:900; font-size:14px; color:#fbbf24;">⭐ Saved Questions</span>
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#f59e0b;">🏆 Leaderboard Arena</span>
     </div>
-    <div class="section-title">पुनः अभ्यास के लिए सेव किए गए प्रश्न:</div>
-    <div id="bookmarksRenderList" style="display:flex; flex-direction:column; gap:10px;"></div>
+    
+    <div class="leaderboard-box">
+      <div class="lb-header">
+        <span id="lbCurrentHeaderTitle">🔥 Today's Live Quiz Rankers</span>
+        <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
+      </div>
+
+      <div class="lb-tabs-bar">
+        <button class="lb-tab-btn live-tab active" onclick="switchLeaderboardTab('dailyLive', this)">🔥 Today's Live</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('overall', this)">🏆 All-Time XP</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Maths</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Science</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 SST</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 GK</button>
+      </div>
+
+      <div id="fullLeaderboardList"></div>
+    </div>
+
+    <!-- RANKS REVENUE AD -->
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
   </div>
 
-  <!-- SCREEN: DOWNLOADS ZONE -->
+  <!-- SCREEN 3: SAVED QUESTIONS (Direct Top par Saved Questions) -->
+  <div class="app-screen" id="screenBookmarks" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#fbbf24;">⭐ Saved Questions</span>
+    </div>
+    <div class="section-title"><span>पुनः अभ्यास के लिए सेव किए गए प्रश्न:</span></div>
+    <div id="bookmarksRenderList" style="display:flex; flex-direction:column; gap:10px;"></div>
+
+    <!-- SAVED REVENUE AD -->
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: DOWNLOADS ZONE (Direct Top par Google Drive Links) -->
   <div class="app-screen" id="screenDownloads" style="display:none;">
     <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Study Materials</span>
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Downloads Center</span>
     </div>
-    <div class="section-title">📁 1-Click Google Drive Downloads:</div>
+    <div class="section-title"><span>📁 1-Click Google Drive Downloads:</span></div>
 
     <div class="download-card-item">
       <div>
@@ -722,50 +768,39 @@
       </div>
       <a href="https://drive.google.com/" target="_blank" class="download-link-btn" style="background: linear-gradient(135deg, #38bdf8, #2563eb);">फोल्डर खोलें ➔</a>
     </div>
-  </div>
 
-  <!-- SCREEN: LEADERBOARD -->
-  <div class="app-screen" id="screenLeaderboard" style="display:none;">
-    <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#f59e0b;">🏆 Leaderboard Arena</span>
-    </div>
-    
-    <div class="leaderboard-box">
-      <div class="lb-header">
-        <span id="lbCurrentHeaderTitle">🔥 Today's Live Quiz Rankers</span>
-        <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
-      </div>
-
-      <div class="lb-tabs-bar">
-        <button class="lb-tab-btn live-tab active" onclick="switchLeaderboardTab('dailyLive', this)">🔥 Today's Live</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('overall', this)">🏆 All-Time XP</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Maths</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Science</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 SST</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English</button>
-        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 GK</button>
-      </div>
-
-      <div id="fullLeaderboardList"></div>
+    <!-- DOWNLOADS REVENUE AD -->
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
     </div>
   </div>
 
-  <!-- SCREEN: SETS -->
+  <!-- SCREEN 5: SETS LIST -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
       <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="selectedSubjHeading">Sets</span>
     </div>
-    <div class="section-title">🏆 अभ्यास सेट चुनें:</div>
+    <div class="section-title"><span>🏆 अभ्यास सेट चुनें:</span></div>
     <div class="sets-list-container" id="setsListRenderBox">
       <div class="skeleton-box"></div>
       <div class="skeleton-box"></div>
       <div class="skeleton-box"></div>
     </div>
+
+    <!-- SETS REVENUE AD -->
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
   </div>
 
-  <!-- SCREEN: LIVE QUIZ (DISTRACTION-FREE) -->
+  <!-- SCREEN 6: LIVE QUIZ (DISTRACTION-FREE, NO ADS) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
@@ -790,7 +825,7 @@
     </div>
   </div>
 
-  <!-- SCREEN: RESULT (WITH WEAK TOPIC ANALYSIS & EXPLANATIONS) -->
+  <!-- SCREEN 7: RESULT (WITH REVENUE AD) -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
@@ -830,6 +865,14 @@
         <button class="btn-action btn-next" id="btnNextLevelAction" onclick="goToNextLevelOrRetry()">Next Set ➔</button>
       </div>
     </div>
+
+    <!-- RESULT REVENUE AD -->
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
   </div>
 
 </div>
@@ -848,9 +891,9 @@
     <span class="nav-icon">⭐</span>
     <span class="nav-label">Saved</span>
   </div>
-  <div class="nav-item" id="navDocs" onclick="switchNavTab('screenDownloads', this)">
+  <div class="nav-item" id="navDownloads" onclick="switchNavTab('screenDownloads', this)">
     <span class="nav-icon">📥</span>
-    <span class="nav-label">Notes</span>
+    <span class="nav-label">Downloads</span>
   </div>
 </nav>
 
@@ -880,7 +923,7 @@
     unlockedLevels: { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 },
     setBestScores: {},     
     attemptedLiveTests: {},
-    bookmarks: [] // Array of { q, options, ans, subject }
+    bookmarks: []
   };
 
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -936,7 +979,6 @@
       .replace(/([A-Z][a-z]?|\))(\d+)/g, '$1<sub>$2</sub>');
   }
 
-  /* DAILY STREAK LOGIC */
   function updateDailyStreak() {
     const today = new Date().toISOString().split('T')[0];
     if (!currentUser.lastActiveDate) {
@@ -958,7 +1000,6 @@
     localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
   }
 
-  /* BADGE LOGIC */
   function evaluateBadges() {
     if (currentUser.streak >= 3) {
       const b = document.getElementById('badgeStreak');
@@ -974,7 +1015,6 @@
     }
   }
 
-  /* BOTTOM NAVIGATION BAR SWITCHER */
   function switchNavTab(screenId, navEl) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     if (navEl) navEl.classList.add('active');
@@ -991,7 +1031,6 @@
     const target = document.getElementById(screenId);
     if (target) target.style.display = 'flex';
 
-    // Hide bottom bar during active quiz to give fullscreen focus
     const navBar = document.getElementById('bottomNavBar');
     if (navBar) navBar.style.display = (screenId === 'screenQuiz') ? 'none' : 'flex';
     window.scrollTo(0, 0);
@@ -1396,7 +1435,6 @@
     return setObj ? setObj.questions : [];
   }
 
-  /* BOOKMARK LOGIC */
   function isQuestionBookmarked(qText) {
     return (currentUser.bookmarks || []).some(b => b.q === qText);
   }
@@ -1466,7 +1504,6 @@
     document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
     document.getElementById('qText').innerHTML = `${idx + 1}. ${formatMathFormula(qData.q)}`;
 
-    // Bookmark State Check
     const bmBtn = document.getElementById('btnToggleBookmark');
     if (isQuestionBookmarked(qData.q)) bmBtn.classList.add('active');
     else bmBtn.classList.remove('active');
@@ -1528,7 +1565,6 @@
     if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) openSubjectSets(currentSubject);
   }
 
-  /* SUBMIT & PERFORMANCE ANALYSIS */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const totalTimeSecs = Math.round((Date.now() - quizStartTime) / 1000);
@@ -1579,7 +1615,6 @@
     const banner = document.getElementById('unlockResultBanner');
     const nextBtn = document.getElementById('btnNextLevelAction');
 
-    // WEAK AREA ANALYSIS & SPEED INSIGHT
     const avgSecsPerQ = (totalTimeSecs / questions.length).toFixed(1);
     let insightStr = `सटीकता: ${percent.toFixed(0)}% • औसत गति: ${avgSecsPerQ}s प्रति प्रश्न। `;
     if (percent === 100) {
@@ -1624,7 +1659,6 @@
     const shareText = `मैंने Exam Arena में ${currentSubject} में ${score}/${questions.length} मार्क्स लाए (${totalTimeSecs} सेकंड में)! क्या आप मुझसे बेहतर कर सकते हैं? 👉 ${window.location.href}`;
     document.getElementById('btnWhatsappShare').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
 
-    // ANSWER SHEET WITH DETAILED EXPLANATION
     const reviewListEl = document.getElementById('reviewQuestionsList');
     if (reviewListEl) {
       reviewListEl.innerHTML = '';
@@ -1685,11 +1719,9 @@
     startQuizSet(currentLevel, false, 'PRACTICE');
   }
 
-  /* ABOUT & PRIVACY MODAL CONTROLS */
   function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
   function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
 
-  /* POSTER GENERATOR */
   async function shareThoughtAsJPEG() {
     const thoughtText = document.getElementById('dailyThoughtText').innerText.replace(/^"|"$/g, '');
     const authorText = document.getElementById('dailyThoughtAuthor').innerText;
@@ -1760,7 +1792,8 @@
     }
   }
 
- if ('serviceWorker' in navigator) {
+  // SERVICE WORKER REGISTRATION (Bypasses HTTP Browser Cache)
+  if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((reg) => {
       reg.update();
     }).catch(e => console.log(e));
