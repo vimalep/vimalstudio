@@ -1409,7 +1409,21 @@
     }
   }
 
-  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(e => console.log(e));
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then((reg) => {
+    reg.update(); // Har baar app khulte hi naye version ki jaanch karega
+  });
+
+  // Jaise hi naya version milega, app apne-aap ek baar refresh hokar update ho jayegi
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) {
+      refreshing = true;
+      window.location.reload();
+    }
+  });
+  }
+  
   window.onload = initApp;
 </script>
 
