@@ -55,7 +55,7 @@
       --set-card-border: rgba(165, 180, 252, 0.35);
       --screen-bar-bg: linear-gradient(135deg, #312e81, #1e1b4b);
       --score-inner-bg: #1e1b4b;
-      --bottom-nav-bg: rgba(24, 20, 56, 0.94);
+      --bottom-nav-bg: rgba(24, 20, 56, 0.96);
 
       --grad-math: linear-gradient(135deg, #2563eb, #0284c7, #06b6d4);
       --grad-sci: linear-gradient(135deg, #059669, #10b981, #84cc16);
@@ -102,7 +102,7 @@
       --set-card-border: #cbd5e1;
       --screen-bar-bg: #ffffff;
       --score-inner-bg: #ffffff;
-      --bottom-nav-bg: rgba(255, 255, 255, 0.95);
+      --bottom-nav-bg: rgba(255, 255, 255, 0.96);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', 'Hind', sans-serif; }
@@ -126,6 +126,7 @@
 
     .arena-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
 
+    /* HEADER */
     .arena-header {
       text-align: center;
       padding: 14px 80px 14px 18px;
@@ -161,6 +162,7 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
 
+    /* MOTIVATION & FLASH ALERT */
     .thought-card {
       background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(49, 46, 129, 0.9));
       border: 2px solid rgba(245, 158, 11, 0.45); border-radius: 18px; padding: 13px 15px;
@@ -205,6 +207,7 @@
     .flash-btn.locked { background: #cbd5e1; color: #64748b; cursor: not-allowed; }
     .flash-btn.completed { background: #10b981; color: #ffffff; }
 
+    /* TICKER */
     .live-ticker-wrap {
       width: 100%; background: var(--ticker-bg); border: 1.5px solid rgba(99, 102, 241, 0.5);
       border-radius: 14px; padding: 7px 12px; display: flex; align-items: center; gap: 10px; overflow: hidden;
@@ -215,6 +218,7 @@
     body.light-theme .ticker-content { color: #0284c7; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
+    /* PROFILE */
     .player-profile-card {
       background: var(--profile-bg); border: 2px solid var(--card-border); border-radius: 18px;
       padding: 12px 14px; display: flex; flex-direction: column; gap: 10px;
@@ -260,6 +264,7 @@
     }
     @keyframes shimmerLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
+    /* SCREENS & GRIDS */
     .app-screen { display: flex; flex-direction: column; gap: 11px; width: 100%; }
     .section-title { font-size: 14px; font-weight: 800; color: #fde047; display: flex; align-items: center; justify-content: space-between; }
     body.light-theme .section-title { color: #d97706; }
@@ -293,6 +298,15 @@
     }
     .btn-back { background: #4338ca; border: 1.5px solid #818cf8; color: #ffffff; padding: 8px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
 
+    /* DOWNLOADS & FILTERS */
+    .filter-pills-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+    .filter-pills-bar::-webkit-scrollbar { display: none; }
+    .filter-pill-btn {
+      padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer;
+      background: var(--opt-btn-bg); border: 1.5px solid var(--card-border); color: var(--text-muted); white-space: nowrap;
+    }
+    .filter-pill-btn.active { background: linear-gradient(135deg, #10b981, #059669); color: #fff; border-color: #34d399; }
+
     .download-card-item {
       background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px;
       padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -303,6 +317,16 @@
       display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
     }
 
+    /* NOTES READING STYLING (READ-ONLY) */
+    .notes-chapter-item {
+      background: var(--set-card-bg); border: 1.5px solid var(--set-card-border); border-radius: 16px;
+      padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    }
+    .notes-reader-frame {
+      width: 100%; height: 75vh; border: none; border-radius: 16px; background: #ffffff;
+    }
+
+    /* SETS */
     .sets-list-container { display: flex; flex-direction: column; gap: 11px; }
     .set-row-card {
       background: var(--set-card-bg); border: 2px solid var(--set-card-border); border-radius: 18px;
@@ -321,6 +345,7 @@
     .set-row-card:not(.locked) .set-action-pill { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; }
     .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
 
+    /* QUIZ */
     .quiz-card {
       background: var(--quiz-card-bg); border: 2px solid var(--quiz-card-border); border-radius: 24px;
       padding: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); position: relative;
@@ -380,6 +405,7 @@
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
     .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
+    /* RESULTS */
     #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
     .score-circle {
       width: 125px; height: 125px; border-radius: 50%;
@@ -415,6 +441,7 @@
       border-left: 3px solid #38bdf8; border-radius: 4px; font-size: 12px; color: var(--text-muted);
     }
 
+    /* LEADERBOARDS */
     .leaderboard-box {
       width: 100%; background: var(--lb-box-bg); border: 2px solid var(--card-border);
       border-radius: 20px; padding: 16px 12px; text-align: left;
@@ -451,11 +478,21 @@
     body.light-theme .podium-score { color: #0284c7; }
     .podium-pedestal { width: 100%; border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; }
 
+    .lb-list-rest { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .lb-item {
+      display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
+      border-radius: 12px; font-size: 13px; font-weight: 800; background: var(--lb-item-bg);
+      color: var(--lb-item-text); border: 1.5px solid var(--card-border);
+    }
+    .lb-item.is-me { border-color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15) !important; }
+
+    /* REVENUE AD */
     .ad-banner-box {
       width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center;
       overflow: hidden; margin: 10px 0 4px 0; border-radius: 16px; background: rgba(0,0,0,0.03); border: 1px dashed var(--card-border);
     }
 
+    /* BOTTOM 5-BUTTON NAVIGATION BAR */
     .bottom-nav-bar {
       position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
       background: var(--bottom-nav-bg); backdrop-filter: blur(16px);
@@ -468,9 +505,10 @@
     }
     .nav-item.active { color: #38bdf8; }
     body.light-theme .nav-item.active { color: #0284c7; }
-    .nav-icon { font-size: 20px; }
-    .nav-label { font-size: 10.5px; font-weight: 800; }
+    .nav-icon { font-size: 18px; }
+    .nav-label { font-size: 10px; font-weight: 800; }
 
+    /* MODAL */
     .app-modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
       display: none; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
@@ -510,11 +548,7 @@
   <div class="modal-box" style="text-align:left;">
     <h3 style="color:#f59e0b; font-size:18px; font-weight:800; margin-bottom:8px;">🎯 About Exam Arena</h3>
     <p style="font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:14px;">
-      Exam Arena by Vimal Sir कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं की तैयारी कर रहे विद्यार्थियों के लिए एक निःशुल्क शैक्षणिक प्लेटफॉर्म है। यहाँ आप लाइव टेस्ट, चैप्टर-वाइज़ मॉक टेस्ट व अध्ययन सामग्री (PDF) प्राप्त कर सकते हैं।
-    </p>
-    <h4 style="color:#38bdf8; font-size:14px; font-weight:800; margin-bottom:6px;">🔒 Privacy & Data Usage</h4>
-    <p style="font-size:11.5px; color:var(--text-muted); line-height:1.4; margin-bottom:16px;">
-      हम विद्यार्थियों की निजता का सम्मान करते हैं। ऐप में दर्ज किया गया नाम व स्कोर केवल लीडरबोर्ड व टेस्ट विश्लेषण के लिए उपयोग किया जाता है। कोई भी संवेदनशील जानकारी एकत्रित नहीं की जाती।
+      Exam Arena by Vimal Sir कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं की तैयारी कर रहे विद्यार्थियों के लिए एक निःशुल्क शैक्षणिक प्लेटफॉर्म है। यहाँ आप लाइव टेस्ट, चैप्टर-वाइज़ मॉक टेस्ट, ऑनलाइन नोट्स व अध्ययन सामग्री (PDF) प्राप्त कर सकते हैं।
     </p>
     <button class="form-btn-main" onclick="closeAboutModal()">बंद करें (Close)</button>
   </div>
@@ -628,7 +662,6 @@
       </div>
     </div>
 
-    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -637,9 +670,7 @@
     </div>
 
     <div class="app-footer">
-      <span class="footer-link" onclick="openAboutModal()">About Us</span>
-      <span>•</span>
-      <span class="footer-link" onclick="openAboutModal()">Privacy Policy</span>
+      <span class="footer-link" onclick="openAboutModal()">About Us & Privacy</span>
       <span>•</span>
       <span>Exam Arena © 2026</span>
     </div>
@@ -671,7 +702,6 @@
       <div id="fullLeaderboardList"></div>
     </div>
 
-    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -680,7 +710,139 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: SAVED BOOKMARKS -->
+  <!-- SCREEN 3: NOTES ZONE (CLASS 10 ➔ SUBJECTS ➔ CHAPTERS ➔ READ-ONLY) -->
+  <div class="app-screen" id="screenNotes" style="display:none;">
+    
+    <!-- SUB-VIEW 1: CLASS SELECTION -->
+    <div id="notesViewClasses">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+        <span style="font-weight:900; font-size:14px; color:#a855f7;">📖 Digital Notes</span>
+      </div>
+      <div class="section-title" style="margin:10px 0;"><span>अपनी कक्षा चुनें:</span></div>
+      
+      <div class="set-row-card" onclick="openNotesSubjects('Class 10')">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:26px;">🎓</span>
+          <div>
+            <h4 style="font-size:15px; font-weight:800; color:#fff;">कक्षा 10वीं (Class 10th)</h4>
+            <span style="font-size:11.5px; color:var(--text-muted);">Physics, Chemistry, Biology, Maths Notes</span>
+          </div>
+        </div>
+        <div class="set-action-pill" style="background:linear-gradient(135deg,#a855f7,#ec4899); color:#fff;">Open ➔</div>
+      </div>
+    </div>
+
+    <!-- SUB-VIEW 2: SUBJECTS SELECTION -->
+    <div id="notesViewSubjects" style="display:none;">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="backToNotesClasses()">⬅ Back to Classes</button>
+        <span style="font-weight:900; font-size:14px; color:#a855f7;" id="notesSelectedClassTitle">Class 10th</span>
+      </div>
+      <div class="section-title" style="margin:10px 0;"><span>विषय चुनें (Choose Subject):</span></div>
+      
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div class="set-row-card" onclick="openNotesChapters('Physics')">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">⚡</span>
+            <div>
+              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Physics (भौतिक विज्ञान)</h4>
+              <span style="font-size:11px; color:var(--text-muted);">अध्याय-वार विस्तृत नोट्स</span>
+            </div>
+          </div>
+          <div class="set-action-pill" style="background:linear-gradient(135deg,#0284c7,#3b82f6); color:#fff;">Chapters ➔</div>
+        </div>
+
+        <div class="set-row-card" onclick="openNotesChapters('Chemistry')">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">🧪</span>
+            <div>
+              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Chemistry (रसायन विज्ञान)</h4>
+              <span style="font-size:11px; color:var(--text-muted);">रासायनिक अभिक्रियाएँ एवं समीकरण</span>
+            </div>
+          </div>
+          <div class="set-action-pill" style="background:linear-gradient(135deg,#059669,#10b981); color:#fff;">Chapters ➔</div>
+        </div>
+
+        <div class="set-row-card" onclick="openNotesChapters('Biology')">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">🧬</span>
+            <div>
+              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Biology (जीव विज्ञान)</h4>
+              <span style="font-size:11px; color:var(--text-muted);">जैव प्रक्रम एवं नियंत्रण</span>
+            </div>
+          </div>
+          <div class="set-action-pill" style="background:linear-gradient(135deg,#d97706,#f59e0b); color:#fff;">Chapters ➔</div>
+        </div>
+
+        <div class="set-row-card" onclick="openNotesChapters('Maths')">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">📐</span>
+            <div>
+              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Maths (गणित)</h4>
+              <span style="font-size:11px; color:var(--text-muted);">सभी अध्याय व महत्वपूर्ण अवधारणाएँ</span>
+            </div>
+          </div>
+          <div class="set-action-pill" style="background:linear-gradient(135deg,#be185d,#db2777); color:#fff;">Chapters ➔</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUB-VIEW 3: CHAPTERS LIST -->
+    <div id="notesViewChapters" style="display:none;">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="backToNotesSubjects()">⬅ Back to Subjects</button>
+        <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="notesSelectedSubjTitle">Chapters</span>
+      </div>
+      <div class="section-title" style="margin:10px 0;"><span>अध्याय चुनें और सीधे पढ़ें:</span></div>
+      <div id="notesChaptersListContainer" style="display:flex; flex-direction:column; gap:9px;"></div>
+    </div>
+
+    <!-- SUB-VIEW 4: READ-ONLY CHAPTER READER (NO DOWNLOAD OPTION) -->
+    <div id="notesViewReader" style="display:none;">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="backToNotesChapters()">⬅ Back to Chapters</button>
+        <span style="font-weight:900; font-size:13px; color:#10b981;" id="notesReadingChapterTitle">Reading Mode</span>
+      </div>
+      <div style="font-size:11px; color:var(--text-muted); text-align:center; margin:4px 0;">📖 ऑनलाइन अध्ययन मोड (Read-Only)</div>
+      <iframe id="notesDocIframe" class="notes-reader-frame" src="about:blank"></iframe>
+    </div>
+
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: DOWNLOADS CENTER (WITH SUBJECT FILTER) -->
+  <div class="app-screen" id="screenDownloads" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Downloads Center</span>
+    </div>
+    
+    <div class="section-title"><span>📁 विषय अनुसार फ़िल्टर करें (Filter):</span></div>
+    
+    <div class="filter-pills-bar">
+      <button class="filter-pill-btn active" onclick="filterDownloadsList('All', this)">All Materials</button>
+      <button class="filter-pill-btn" onclick="filterDownloadsList('Maths', this)">📐 Maths</button>
+      <button class="filter-pill-btn" onclick="filterDownloadsList('Science', this)">🔬 Science</button>
+      <button class="filter-pill-btn" onclick="filterDownloadsList('SST', this)">📜 SST</button>
+    </div>
+
+    <div id="downloadsRenderContainer" style="display:flex; flex-direction:column; gap:10px; margin-top:6px;"></div>
+
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
+  </div>
+
+  <!-- SCREEN 5: SAVED BOOKMARKS -->
   <div class="app-screen" id="screenBookmarks" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
@@ -689,7 +851,6 @@
     <div class="section-title"><span>पुनः अभ्यास के लिए सेव किए गए प्रश्न:</span></div>
     <div id="bookmarksRenderList" style="display:flex; flex-direction:column; gap:10px;"></div>
 
-    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -698,56 +859,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 4: DOWNLOADS CENTER -->
-  <div class="app-screen" id="screenDownloads" style="display:none;">
-    <div class="screen-header-bar">
-      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
-      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Downloads Center</span>
-    </div>
-    <div class="section-title"><span>📁 1-Click Google Drive Downloads:</span></div>
-
-    <div class="download-card-item">
-      <div>
-        <h4 style="font-size:14.5px; font-weight:800; color:#fff;">📐 Math Formula Sheet</h4>
-        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">कक्षा 10वीं के सभी महत्वपूर्ण सूत्र एवं ट्रिक्स (PDF)</p>
-      </div>
-      <a href="https://drive.google.com/" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
-    </div>
-
-    <div class="download-card-item">
-      <div>
-        <h4 style="font-size:14.5px; font-weight:800; color:#fff;">🔬 Science Revision Notes</h4>
-        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">विज्ञान के हस्तलिखित शॉर्ट नोट्स व आरेख (PDF)</p>
-      </div>
-      <a href="https://drive.google.com/" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
-    </div>
-
-    <div class="download-card-item">
-      <div>
-        <h4 style="font-size:14.5px; font-weight:800; color:#fff;">🗺️ SST Map Work Booster</h4>
-        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">इतिहास व भूगोल के 100% पक्के मानचित्र (PDF)</p>
-      </div>
-      <a href="https://drive.google.com/" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
-    </div>
-
-    <div class="download-card-item" style="border-color:#38bdf8;">
-      <div>
-        <h4 style="font-size:14.5px; font-weight:800; color:#38bdf8;">📁 Master Drive Folder</h4>
-        <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">सभी टेस्ट पेपर्स व नोट्स एक ही Google Drive फोल्डर में</p>
-      </div>
-      <a href="https://drive.google.com/" target="_blank" class="download-link-btn" style="background: linear-gradient(135deg, #38bdf8, #2563eb);">फोल्डर खोलें ➔</a>
-    </div>
-
-    <!-- REVENUE AD -->
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
-  </div>
-
-  <!-- SCREEN 5: SETS LIST -->
+  <!-- SCREEN 6: SETS LIST -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
@@ -760,7 +872,6 @@
       <div class="skeleton-box"></div>
     </div>
 
-    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -769,7 +880,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 6: QUIZ (DISTRACTION-FREE, NO ADS) -->
+  <!-- SCREEN 7: LIVE QUIZ (NO ADS) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
@@ -794,7 +905,7 @@
     </div>
   </div>
 
-  <!-- SCREEN 7: RESULT -->
+  <!-- SCREEN 8: RESULT -->
   <div class="app-screen" id="resultScreen">
     <div class="quiz-card" id="resultMainCard" style="text-align:center;">
       <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
@@ -811,9 +922,7 @@
 
       <div class="analysis-card" id="weakTopicAnalysisCard">
         <span class="analysis-pill">📊 Performance Insight:</span>
-        <div style="font-size:12.5px; font-weight:700; color:#fff;" id="analysisInsightText">
-          Analyzing answers...
-        </div>
+        <div style="font-size:12.5px; font-weight:700; color:#fff;" id="analysisInsightText">Analyzing answers...</div>
       </div>
 
       <a href="#" class="btn-pwa-install" id="btnWhatsappShare" target="_blank" style="background:#25d366; border:none; text-decoration:none; margin-top:4px;">
@@ -833,7 +942,6 @@
       </div>
     </div>
 
-    <!-- REVENUE AD -->
     <div class="ad-banner-box">
       <script>
         atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
@@ -844,7 +952,7 @@
 
 </div>
 
-<!-- BOTTOM FIXED NAVIGATION BAR -->
+<!-- BOTTOM 5-BUTTON NAVIGATION BAR -->
 <nav class="bottom-nav-bar" id="bottomNavBar">
   <div class="nav-item active" id="navHome" onclick="switchNavTab('screenHome', this)">
     <span class="nav-icon">🏠</span>
@@ -854,18 +962,111 @@
     <span class="nav-icon">🏆</span>
     <span class="nav-label">Ranks</span>
   </div>
-  <div class="nav-item" id="navSaved" onclick="switchNavTab('screenBookmarks', this)">
-    <span class="nav-icon">⭐</span>
-    <span class="nav-label">Saved</span>
+  <div class="nav-item" id="navNotes" onclick="switchNavTab('screenNotes', this)">
+    <span class="nav-icon">📖</span>
+    <span class="nav-label">Notes</span>
   </div>
   <div class="nav-item" id="navDownloads" onclick="switchNavTab('screenDownloads', this)">
     <span class="nav-icon">📥</span>
     <span class="nav-label">Downloads</span>
   </div>
+  <div class="nav-item" id="navSaved" onclick="switchNavTab('screenBookmarks', this)">
+    <span class="nav-icon">⭐</span>
+    <span class="nav-label">Saved</span>
+  </div>
 </nav>
 
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
+
+  /* ==========================================================================
+     1. YAHAN SE DOWNLOADS AUR PDF LINKS MANAGE KAREIN (EASY MANAGEMENT)
+     ========================================================================== */
+  const DOWNLOADS_DATA = [
+    {
+      title: "📐 Math Complete Formula Sheet",
+      subject: "Maths",
+      desc: "कक्षा 10वीं के सभी अध्यायों के मुख्य सूत्र एवं ट्रिक्स (PDF)",
+      link: "https://drive.google.com/" // <-- Yahan apna GDrive PDF link dalein
+    },
+    {
+      title: "🔬 Science Quick Revision Handwritten Notes",
+      subject: "Science",
+      desc: "भौतिकी, रसायन व जीव विज्ञान के महत्वपूर्ण आरेख व शॉर्ट नोट्स",
+      link: "https://drive.google.com/"
+    },
+    {
+      title: "🗺️ SST Map Work 100% Guaranteed Marks",
+      subject: "SST",
+      desc: "इतिहास व भूगोल के बोर्ड परीक्षा में आने वाले मुख्य मानचित्र",
+      link: "https://drive.google.com/"
+    },
+    {
+      title: "📁 All Subjects Master Folder (Drive)",
+      subject: "All",
+      desc: "सभी टेस्ट पेपर्स व नोट्स एक ही गूगल ड्राइव फोल्डर में",
+      link: "https://drive.google.com/"
+    }
+  ];
+
+  /* ==========================================================================
+     2. YAHAN SE DIGITAL NOTES MANAGE KAREIN (READ-ONLY GOOGLE DOCS)
+     ========================================================================== */
+  const NOTES_DATABASE = {
+    "Class 10": {
+      "Physics": [
+        {
+          name: "Chapter 1: प्रकाश - परावर्तन तथा अपवर्तन",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        },
+        {
+          name: "Chapter 2: मानव नेत्र तथा रंगबिरंगा संसार",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        },
+        {
+          name: "Chapter 3: विद्युत (Electricity)",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        }
+      ],
+      "Chemistry": [
+        {
+          name: "Chapter 1: रासायनिक अभिक्रियाएँ एवं समीकरण",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        },
+        {
+          name: "Chapter 2: अम्ल, क्षारक एवं लवण",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        }
+      ],
+      "Biology": [
+        {
+          name: "Chapter 1: जैव प्रक्रम (Life Processes)",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        },
+        {
+          name: "Chapter 2: नियंत्रण एवं समन्वय",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        }
+      ],
+      "Maths": [
+        {
+          name: "Chapter 1: वास्तविक संख्याएँ (Real Numbers)",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        },
+        {
+          name: "Chapter 2: बहुपद (Polynomials)",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        },
+        {
+          name: "Chapter 3: दो चर वाले रैखिक समीकरण युग्म",
+          docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO-LINK/pub?embedded=true"
+        }
+      ]
+    }
+  };
+
+  let activeNotesClass = 'Class 10';
+  let activeNotesSubject = 'Physics';
 
   let quizDatabase = { Math: [], Science: [], SocialScience: [], English: [], GK: [] };
   let currentSubject = 'Science';
@@ -956,29 +1157,18 @@
       const currentDate = new Date(today);
       const diffTime = Math.abs(currentDate - lastDate);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      
-      if (diffDays === 1) {
-        currentUser.streak = (currentUser.streak || 1) + 1;
-      } else if (diffDays > 1) {
-        currentUser.streak = 1;
-      }
+      if (diffDays === 1) currentUser.streak = (currentUser.streak || 1) + 1;
+      else if (diffDays > 1) currentUser.streak = 1;
       currentUser.lastActiveDate = today;
     }
     localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
   }
 
   function evaluateBadges() {
-    if (currentUser.streak >= 3) {
-      const b = document.getElementById('badgeStreak');
-      if (b) b.classList.add('unlocked');
-    }
-    if ((currentUser.totalXP || 0) >= 500) {
-      const b = document.getElementById('badgeScholar');
-      if (b) b.classList.add('unlocked');
-    }
+    if (currentUser.streak >= 3) document.getElementById('badgeStreak')?.classList.add('unlocked');
+    if ((currentUser.totalXP || 0) >= 500) document.getElementById('badgeScholar')?.classList.add('unlocked');
     if (currentUser.currentRank && !isNaN(currentUser.currentRank) && Number(currentUser.currentRank) <= 3) {
-      const b = document.getElementById('badgeMaster');
-      if (b) b.classList.add('unlocked');
+      document.getElementById('badgeMaster')?.classList.add('unlocked');
     }
   }
 
@@ -986,21 +1176,28 @@
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     if (screenId === 'screenHome') document.getElementById('navHome')?.classList.add('active');
     else if (screenId === 'screenLeaderboard') document.getElementById('navRanks')?.classList.add('active');
-    else if (screenId === 'screenBookmarks') document.getElementById('navSaved')?.classList.add('active');
+    else if (screenId === 'screenNotes') document.getElementById('navNotes')?.classList.add('active');
     else if (screenId === 'screenDownloads') document.getElementById('navDownloads')?.classList.add('active');
+    else if (screenId === 'screenBookmarks') document.getElementById('navSaved')?.classList.add('active');
   }
 
   function switchNavTab(screenId, navEl) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     if (navEl) navEl.classList.add('active');
-    navigateTo(screenId, true);
+    
+    if (screenId === 'screenNotes') backToNotesClasses();
+    if (screenId === 'screenDownloads') renderDownloadsList('All');
     if (screenId === 'screenBookmarks') renderBookmarksList();
+
+    navigateTo(screenId, true);
   }
 
-  // NAVIGATION FUNCTION WITH MOBILE HISTORY BACK-BUTTON SUPPORT
+  /* ==========================================================================
+     3. SMART NAVIGATION & BACK-BUTTON PROTECTION (FIXES CLOSING ISSUE)
+     ========================================================================== */
   function navigateTo(screenId, addToHistory = true) {
     clearInterval(qTimerInterval);
-    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads', 'screenBookmarks'].forEach(id => {
+    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads', 'screenBookmarks', 'screenNotes'].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.style.display = 'none';
     });
@@ -1013,17 +1210,14 @@
 
     updateNavIconsState(screenId);
 
-    // Browser History API integration for Mobile Back Button
     if (addToHistory && screenId !== 'screenHome') {
       history.pushState({ screen: screenId }, '');
     }
   }
 
-  // MOBILE HARDWARE & GESTURE BACK-BUTTON LISTENER
+  // 100% BACK-BUTTON CONTROLLER (APP BAND HONE SE BACHATA HAI)
   window.addEventListener('popstate', (event) => {
     const activeQuiz = document.getElementById('screenQuiz');
-    
-    // 1. Agar test chal raha ho aur student back dabaye
     if (activeQuiz && activeQuiz.style.display === 'flex') {
       if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
         openSubjectSets(currentSubject);
@@ -1033,7 +1227,28 @@
       return;
     }
 
-    // 2. Agar Sets ya Result screen par hai, toh Home screen par le aao
+    // Notes Reader View me ho toh Chapters par le aao
+    const readerView = document.getElementById('notesViewReader');
+    if (readerView && readerView.style.display === 'block') {
+      backToNotesChapters();
+      return;
+    }
+
+    // Notes Chapters View me ho toh Subjects par le aao
+    const chapView = document.getElementById('notesViewChapters');
+    if (chapView && chapView.style.display === 'block') {
+      backToNotesSubjects();
+      return;
+    }
+
+    // Notes Subjects View me ho toh Classes par le aao
+    const subjView = document.getElementById('notesViewSubjects');
+    if (subjView && subjView.style.display === 'block') {
+      backToNotesClasses();
+      return;
+    }
+
+    // Sets ya Result screen par ho toh Home par le aao
     const setsScreen = document.getElementById('screenSets');
     const resScreen = document.getElementById('resultScreen');
     if ((setsScreen && setsScreen.style.display === 'flex') || (resScreen && resScreen.style.display === 'flex')) {
@@ -1041,13 +1256,126 @@
       return;
     }
 
-    // 3. Ranks, Saved ya Downloads par hai, toh Home screen par le aao
+    // Ranks, Notes, Downloads ya Saved par ho toh Home par le aao
     const homeScreen = document.getElementById('screenHome');
     if (homeScreen && homeScreen.style.display !== 'flex') {
       navigateTo('screenHome', false);
     }
   });
 
+  /* ==========================================================================
+     4. NOTES SECTION CONTROLLERS (READ-ONLY LOGIC)
+     ========================================================================== */
+  function openNotesSubjects(className) {
+    activeNotesClass = className;
+    document.getElementById('notesSelectedClassTitle').innerText = `${className} Subjects`;
+    document.getElementById('notesViewClasses').style.display = 'none';
+    document.getElementById('notesViewSubjects').style.display = 'block';
+    history.pushState({ screen: 'screenNotes', view: 'subjects' }, '');
+  }
+
+  function backToNotesClasses() {
+    document.getElementById('notesViewClasses').style.display = 'block';
+    document.getElementById('notesViewSubjects').style.display = 'none';
+    document.getElementById('notesViewChapters').style.display = 'none';
+    document.getElementById('notesViewReader').style.display = 'none';
+    document.getElementById('notesDocIframe').src = 'about:blank';
+  }
+
+  function openNotesChapters(subjectName) {
+    activeNotesSubject = subjectName;
+    document.getElementById('notesSelectedSubjTitle').innerText = `${subjectName} Chapters`;
+    document.getElementById('notesViewSubjects').style.display = 'none';
+    document.getElementById('notesViewChapters').style.display = 'block';
+
+    const container = document.getElementById('notesChaptersListContainer');
+    container.innerHTML = '';
+    const chapters = (NOTES_DATABASE[activeNotesClass] && NOTES_DATABASE[activeNotesClass][subjectName]) || [];
+
+    if (chapters.length === 0) {
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय के नोट्स जल्द जोड़े जा रहे हैं।</div>`;
+      return;
+    }
+
+    chapters.forEach(chap => {
+      const card = document.createElement('div');
+      card.className = 'notes-chapter-item';
+      card.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:20px;">📄</span>
+          <span style="font-size:13.5px; font-weight:700; color:#fff;">${chap.name}</span>
+        </div>
+        <div class="set-action-pill" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff;">पढ़ें 📖</div>
+      `;
+      card.onclick = () => readChapterDoc(chap.name, chap.docUrl);
+      container.appendChild(card);
+    });
+
+    history.pushState({ screen: 'screenNotes', view: 'chapters' }, '');
+  }
+
+  function backToNotesSubjects() {
+    document.getElementById('notesViewSubjects').style.display = 'block';
+    document.getElementById('notesViewChapters').style.display = 'none';
+    document.getElementById('notesViewReader').style.display = 'none';
+    document.getElementById('notesDocIframe').src = 'about:blank';
+  }
+
+  function readChapterDoc(chapName, docUrl) {
+    document.getElementById('notesReadingChapterTitle').innerText = chapName;
+    document.getElementById('notesViewChapters').style.display = 'none';
+    document.getElementById('notesViewReader').style.display = 'block';
+    
+    // Clean Embedded View
+    document.getElementById('notesDocIframe').src = docUrl;
+    history.pushState({ screen: 'screenNotes', view: 'reader' }, '');
+  }
+
+  function backToNotesChapters() {
+    document.getElementById('notesViewChapters').style.display = 'block';
+    document.getElementById('notesViewReader').style.display = 'none';
+    document.getElementById('notesDocIframe').src = 'about:blank';
+  }
+
+  /* ==========================================================================
+     5. DOWNLOADS CONTROLLER (WITH SUBJECT FILTER)
+     ========================================================================== */
+  function filterDownloadsList(subject, btnEl) {
+    document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    renderDownloadsList(subject);
+  }
+
+  function renderDownloadsList(selectedSubj = 'All') {
+    const container = document.getElementById('downloadsRenderContainer');
+    container.innerHTML = '';
+
+    const list = (selectedSubj === 'All') 
+      ? DOWNLOADS_DATA 
+      : DOWNLOADS_DATA.filter(item => item.subject === selectedSubj || item.subject === 'All');
+
+    if (list.length === 0) {
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय की PDF अभी अपलोड नहीं हुई है।</div>`;
+      return;
+    }
+
+    list.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'download-card-item';
+      card.innerHTML = `
+        <div>
+          <h4 style="font-size:14.5px; font-weight:800; color:#fff;">${item.title}</h4>
+          <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">${item.desc}</p>
+        </div>
+        <a href="${item.link}" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  /* ==========================================================================
+     6. CORE QUIZ & SCORE ENGINE
+     ========================================================================== */
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
     if (!entered) return alert("कृपया अपना नाम लिखें!");
@@ -1629,13 +1957,9 @@
 
     const avgSecsPerQ = (totalTimeSecs / questions.length).toFixed(1);
     let insightStr = `सटीकता: ${percent.toFixed(0)}% • औसत गति: ${avgSecsPerQ}s प्रति प्रश्न। `;
-    if (percent === 100) {
-      insightStr += "उत्कृष्ट! इस विषय पर आपकी पकड़ बहुत मजबूत है।";
-    } else if (percent >= 70) {
-      insightStr += "अच्छा प्रयास! गलत हुए 1-2 प्रश्नों की व्याख्या नीचे ध्यानपूर्वक पढ़ें।";
-    } else {
-      insightStr += "सुझाव: बेसिक्स पर ध्यान दें और फ़ॉर्मूला शीट डाउनलोड करके पुनः टेस्ट दें।";
-    }
+    if (percent === 100) insightStr += "उत्कृष्ट! इस विषय पर आपकी पकड़ बहुत मजबूत है।";
+    else if (percent >= 70) insightStr += "अच्छा प्रयास! गलत हुए 1-2 प्रश्नों की व्याख्या नीचे ध्यानपूर्वक पढ़ें।";
+    else insightStr += "सुझाव: बेसिक्स पर ध्यान दें और नोट्स पढ़कर पुनः टेस्ट दें।";
     document.getElementById('analysisInsightText').innerText = insightStr;
 
     if (passed) {
