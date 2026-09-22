@@ -1760,8 +1760,8 @@
     }
   }
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').then((reg) => {
+ if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((reg) => {
       reg.update();
     }).catch(e => console.log(e));
 
