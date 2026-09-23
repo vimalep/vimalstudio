@@ -134,7 +134,7 @@
       backdrop-filter: blur(14px);
       border: 2px solid var(--header-border);
       border-radius: 22px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       position: relative;
     }
     .header-ctrls { position: absolute; top: 50%; transform: translateY(-50%); right: 12px; display: flex; gap: 6px; }
@@ -220,7 +220,7 @@
     body.light-theme .ticker-content { color: #0284c7; }
     @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* PROFILE CARD */
+    /* REDESIGNED PROFILE CARD */
     .player-profile-card {
       background: var(--profile-bg); border: 2px solid var(--card-border); border-radius: 18px;
       padding: 14px 14px; display: flex; flex-direction: column; gap: 10px;
@@ -495,7 +495,7 @@
       overflow: hidden; margin: 10px 0 4px 0; border-radius: 16px; background: rgba(0,0,0,0.03); border: 1px dashed var(--card-border);
     }
 
-    /* BOTTOM 5-BUTTON BAR */
+    /* 5-BUTTON BOTTOM NAVIGATION BAR */
     .bottom-nav-bar {
       position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
       background: var(--bottom-nav-bg); backdrop-filter: blur(16px);
@@ -550,7 +550,7 @@
   <div class="modal-box" style="text-align:left;">
     <h3 style="color:#f59e0b; font-size:18px; font-weight:800; margin-bottom:8px;">🎯 About Exam Arena</h3>
     <p style="font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:14px;">
-      Exam Arena by Vimal Sir कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं की तैयारी कर रहे विद्यार्थियों के लिए एक निःशुल्क शैक्षणिक प्लेटफॉर्म है। यहाँ आप लाइव टेस्ट, चैप्टर-वाइज़ मॉक टेस्ट, ऑनलाइन नोट्स व अध्ययन सामग्री (PDF) प्राप्त कर सकते हैं।
+      Exam Arena by Vimal Sir कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं की तैयारी कर रहे विद्यार्थियों के लिए एक निःशुल्क शैक्षणिक प्लेटफॉर्म है।
     </p>
     <button class="form-btn-main" onclick="closeAboutModal()">बंद करें (Close)</button>
   </div>
@@ -576,7 +576,7 @@
       </button>
     </div>
 
-    <!-- CLEAN DAILY MOTIVATION CARD -->
+    <!-- DAILY MOTIVATION CARD -->
     <div class="thought-card">
       <div class="thought-top-meta">
         <span class="thought-pill">💡 Daily Motivation</span>
@@ -590,6 +590,7 @@
       </div>
     </div>
 
+    <!-- LIVE TEST CARD -->
     <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
       <div class="flash-icon-box" id="flashIconBox">🔥</div>
       <div class="flash-text-wrap">
@@ -599,6 +600,7 @@
       <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Check ➔</button>
     </div>
 
+    <!-- LIVE TICKER -->
     <div class="live-ticker-wrap">
       <div class="ticker-pill">LIVE 🟢</div>
       <div class="ticker-track">
@@ -606,7 +608,7 @@
       </div>
     </div>
 
-    <!-- REDESIGNED PROFILE CARD -->
+    <!-- PROFILE CARD (FULL METRICS + BADGES) -->
     <div class="player-profile-card">
       <div class="profile-top-row">
         <div class="profile-info">
@@ -714,16 +716,9 @@
 
       <div id="fullLeaderboardList"></div>
     </div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
   </div>
 
-  <!-- SCREEN 3: NOTES ZONE (CLASS 10 ➔ SUBJECTS ➔ CHAPTERS ➔ READ-ONLY) -->
+  <!-- SCREEN 3: NOTES ZONE (POWERED BY EXTERNAL SHEET) -->
   <div class="app-screen" id="screenNotes" style="display:none;">
     <div id="notesViewClasses">
       <div class="screen-header-bar">
@@ -749,51 +744,24 @@
         <button class="btn-back" onclick="backToNotesClasses()">⬅ Back to Classes</button>
         <span style="font-weight:900; font-size:14px; color:#a855f7;" id="notesSelectedClassTitle">Class 10th</span>
       </div>
-      <div class="section-title" style="margin:10px 0;"><span>विषय चुनें (Choose Subject):</span></div>
+      <div class="section-title" style="margin:10px 0;"><span>विषय चुनें:</span></div>
       
       <div style="display:flex; flex-direction:column; gap:10px;">
         <div class="set-row-card" onclick="openNotesChapters('Physics')">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <span style="font-size:24px;">⚡</span>
-            <div>
-              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Physics (भौतिक विज्ञान)</h4>
-              <span style="font-size:11px; color:var(--text-muted);">अध्याय-वार विस्तृत नोट्स</span>
-            </div>
-          </div>
-          <div class="set-action-pill" style="background:linear-gradient(135deg,#0284c7,#3b82f6); color:#fff;">Chapters ➔</div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">⚡</span><h4>Physics (भौतिक विज्ञान)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
         </div>
-
         <div class="set-row-card" onclick="openNotesChapters('Chemistry')">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <span style="font-size:24px;">🧪</span>
-            <div>
-              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Chemistry (रसायन विज्ञान)</h4>
-              <span style="font-size:11px; color:var(--text-muted);">रासायनिक अभिक्रियाएँ एवं समीकरण</span>
-            </div>
-          </div>
-          <div class="set-action-pill" style="background:linear-gradient(135deg,#059669,#10b981); color:#fff;">Chapters ➔</div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">🧪</span><h4>Chemistry (रसायन विज्ञान)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
         </div>
-
         <div class="set-row-card" onclick="openNotesChapters('Biology')">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <span style="font-size:24px;">🧬</span>
-            <div>
-              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Biology (जीव विज्ञान)</h4>
-              <span style="font-size:11px; color:var(--text-muted);">जैव प्रक्रम एवं नियंत्रण</span>
-            </div>
-          </div>
-          <div class="set-action-pill" style="background:linear-gradient(135deg,#d97706,#f59e0b); color:#fff;">Chapters ➔</div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">🧬</span><h4>Biology (जीव विज्ञान)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
         </div>
-
         <div class="set-row-card" onclick="openNotesChapters('Maths')">
-          <div style="display:flex; align-items:center; gap:12px;">
-            <span style="font-size:24px;">📐</span>
-            <div>
-              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">Maths (गणित)</h4>
-              <span style="font-size:11px; color:var(--text-muted);">सभी अध्याय व महत्वपूर्ण सूत्र</span>
-            </div>
-          </div>
-          <div class="set-action-pill" style="background:linear-gradient(135deg,#be185d,#db2777); color:#fff;">Chapters ➔</div>
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">📐</span><h4>Maths (गणित)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
         </div>
       </div>
     </div>
@@ -812,26 +780,18 @@
         <button class="btn-back" onclick="backToNotesChapters()">⬅ Back to Chapters</button>
         <span style="font-weight:900; font-size:13px; color:#10b981;" id="notesReadingChapterTitle">Reading Mode</span>
       </div>
-      <div style="font-size:11px; color:var(--text-muted); text-align:center; margin:4px 0;">📖 ऑनलाइन अध्ययन मोड (Read-Only)</div>
       <iframe id="notesDocIframe" class="notes-reader-frame" src="about:blank"></iframe>
-    </div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
     </div>
   </div>
 
-  <!-- SCREEN 4: DOWNLOADS CENTER -->
+  <!-- SCREEN 4: DOWNLOADS CENTER (POWERED BY EXTERNAL SHEET) -->
   <div class="app-screen" id="screenDownloads" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
       <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Downloads Center</span>
     </div>
     
-    <div class="section-title"><span>📁 विषय अनुसार फ़िल्टर करें (Filter):</span></div>
+    <div class="section-title"><span>📁 विषय अनुसार फ़िल्टर करें:</span></div>
     
     <div class="filter-pills-bar">
       <button class="filter-pill-btn active" onclick="filterDownloadsList('All', this)">All Materials</button>
@@ -841,13 +801,6 @@
     </div>
 
     <div id="downloadsRenderContainer" style="display:flex; flex-direction:column; gap:10px; margin-top:6px;"></div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
   </div>
 
   <!-- SCREEN 5: SAVED BOOKMARKS -->
@@ -858,13 +811,6 @@
     </div>
     <div class="section-title"><span>पुनः अभ्यास के लिए सेव किए गए प्रश्न:</span></div>
     <div id="bookmarksRenderList" style="display:flex; flex-direction:column; gap:10px;"></div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
   </div>
 
   <!-- SCREEN 6: SETS LIST -->
@@ -874,21 +820,10 @@
       <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="selectedSubjHeading">Sets</span>
     </div>
     <div class="section-title"><span>🏆 अभ्यास सेट चुनें:</span></div>
-    <div class="sets-list-container" id="setsListRenderBox">
-      <div class="skeleton-box"></div>
-      <div class="skeleton-box"></div>
-      <div class="skeleton-box"></div>
-    </div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
+    <div class="sets-list-container" id="setsListRenderBox"></div>
   </div>
 
-  <!-- SCREEN 7: LIVE QUIZ (DISTRACTION-FREE, NO ADS) -->
+  <!-- SCREEN 7: LIVE QUIZ (NO SHUFFLE + DEFAULT ENGLISH + PERSISTENT HINDI) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
       <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
@@ -950,18 +885,11 @@
         <button class="btn-action btn-next" id="btnNextLevelAction" onclick="goToNextLevelOrRetry()">Next Set ➔</button>
       </div>
     </div>
-
-    <div class="ad-banner-box">
-      <script>
-        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-      </script>
-      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
-    </div>
   </div>
 
 </div>
 
-<!-- BOTTOM 5-BUTTON BAR -->
+<!-- 5-BUTTON BOTTOM NAVIGATION BAR -->
 <nav class="bottom-nav-bar" id="bottomNavBar">
   <div class="nav-item active" id="navHome" onclick="switchNavTab('screenHome', this)">
     <span class="nav-icon">🏠</span>
@@ -988,61 +916,6 @@
 <script>
   const SCRIPT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzZBKSgvS3mEOXhtqLWZUf5ZSgXDFoFiJBc8Q7ePKQ9ih-FZJPNv1LCv2dnCJl8zhCn/exec";
 
-  /* 1. DOWNLOADS DATA */
-  const DOWNLOADS_DATA = [
-    {
-      title: "📐 Math Complete Formula Sheet",
-      subject: "Maths",
-      desc: "कक्षा 10वीं के सभी अध्यायों के मुख्य सूत्र एवं ट्रिक्स (PDF)",
-      link: "https://drive.google.com/"
-    },
-    {
-      title: "🔬 Science Quick Revision Handwritten Notes",
-      subject: "Science",
-      desc: "भौतिकी, रसायन व जीव विज्ञान के महत्वपूर्ण आरेख व शॉर्ट नोट्स",
-      link: "https://drive.google.com/"
-    },
-    {
-      title: "🗺️ SST Map Work 100% Guaranteed Marks",
-      subject: "SST",
-      desc: "इतिहास व भूगोल के बोर्ड परीक्षा में आने वाले मुख्य मानचित्र",
-      link: "https://drive.google.com/"
-    },
-    {
-      title: "📁 All Subjects Master Folder (Drive)",
-      subject: "All",
-      desc: "सभी टेस्ट पेपर्स व नोट्स एक ही गूगल ड्राइव फोल्डर में",
-      link: "https://drive.google.com/"
-    }
-  ];
-
-  /* 2. DIGITAL READ-ONLY NOTES */
-  const NOTES_DATABASE = {
-    "Class 10": {
-      "Physics": [
-        { name: "Chapter 1: प्रकाश - परावर्तन तथा अपवर्तन", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" },
-        { name: "Chapter 2: मानव नेत्र तथा रंगबिरंगा संसार", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" },
-        { name: "Chapter 3: विद्युत (Electricity)", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" }
-      ],
-      "Chemistry": [
-        { name: "Chapter 1: रासायनिक अभिक्रियाएँ एवं समीकरण", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" },
-        { name: "Chapter 2: अम्ल, क्षारक एवं लवण", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" }
-      ],
-      "Biology": [
-        { name: "Chapter 1: जैव प्रक्रम (Life Processes)", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" },
-        { name: "Chapter 2: नियंत्रण एवं समन्वय", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" }
-      ],
-      "Maths": [
-        { name: "Chapter 1: वास्तविक संख्याएँ (Real Numbers)", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" },
-        { name: "Chapter 2: बहुपद (Polynomials)", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" },
-        { name: "Chapter 3: दो चर वाले रैखिक समीकरण युग्म", docUrl: "https://docs.google.com/document/d/e/2PACX-1vT-DEMO/pub?embedded=true" }
-      ]
-    }
-  };
-
-  let activeNotesClass = 'Class 10';
-  let activeNotesSubject = 'Physics';
-
   let quizDatabase = { Math: [], Science: [], SocialScience: [], English: [], GK: [] };
   let currentActiveQuestions = [];
   let currentSubject = 'Science';
@@ -1056,11 +929,16 @@
   let currentQuizSubmissionType = 'LIVE'; 
   let cloudLeaderboards = {};
   let isSoundEnabled = true;
-  let currentQuizLang = 'en'; // DEFAULT IS STRICTLY ENGLISH
+
+  // RULE 1: STRICT DEFAULT ENGLISH
+  let currentQuizLang = 'en';
 
   let liveScheduleData = null; 
   let countdownTimerInterval = null;
   let pendingQuizAction = null;
+
+  let dynamicNotesData = {};
+  let dynamicDownloadsData = [];
 
   let currentUser = {
     name: '', totalScore: 0, currentRank: '--',
@@ -1162,15 +1040,12 @@
   function switchNavTab(screenId, navEl) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     if (navEl) navEl.classList.add('active');
-    
     if (screenId === 'screenNotes') backToNotesClasses();
     if (screenId === 'screenDownloads') renderDownloadsList('All');
     if (screenId === 'screenBookmarks') renderBookmarksList();
-
     navigateTo(screenId, true);
   }
 
-  /* 3. NAVIGATION & BACK BUTTON PROTECTION */
   function navigateTo(screenId, addToHistory = true) {
     clearInterval(qTimerInterval);
     ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads', 'screenBookmarks', 'screenNotes'].forEach(id => {
@@ -1191,7 +1066,7 @@
     }
   }
 
-  window.addEventListener('popstate', (event) => {
+  window.addEventListener('popstate', () => {
     const activeQuiz = document.getElementById('screenQuiz');
     if (activeQuiz && activeQuiz.style.display === 'flex') {
       if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
@@ -1201,22 +1076,12 @@
       }
       return;
     }
-
     const readerView = document.getElementById('notesViewReader');
-    if (readerView && readerView.style.display === 'block') {
-      backToNotesChapters();
-      return;
-    }
+    if (readerView && readerView.style.display === 'block') { backToNotesChapters(); return; }
     const chapView = document.getElementById('notesViewChapters');
-    if (chapView && chapView.style.display === 'block') {
-      backToNotesSubjects();
-      return;
-    }
+    if (chapView && chapView.style.display === 'block') { backToNotesSubjects(); return; }
     const subjView = document.getElementById('notesViewSubjects');
-    if (subjView && subjView.style.display === 'block') {
-      backToNotesClasses();
-      return;
-    }
+    if (subjView && subjView.style.display === 'block') { backToNotesClasses(); return; }
 
     const setsScreen = document.getElementById('screenSets');
     const resScreen = document.getElementById('resultScreen');
@@ -1224,26 +1089,12 @@
       navigateTo('screenHome', false);
       return;
     }
-
-    const homeScreen = document.getElementById('screenHome');
-    if (homeScreen && homeScreen.style.display !== 'flex') {
-      navigateTo('screenHome', false);
-    }
+    navigateTo('screenHome', false);
   });
 
-  /* 4. QUESTIONS-ONLY SHUFFLE (OPTIONS SHUFFLE STOPPED) + HEADER FILTER */
-  function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-
-  function prepareShuffledQuizQuestions(rawQuestions) {
+  // NO SHUFFLING: Questions and Options are preserved in exact sheet order. Headers are strictly excluded.
+  function prepareQuizQuestionsNoShuffle(rawQuestions) {
     if (!rawQuestions || rawQuestions.length === 0) return [];
-    
-    // Strict Header Filtering - Headers are NEVER treated as questions!
     let validList = rawQuestions.filter(q => {
       let qStr = (q.q || '').toString().trim().toLowerCase();
       let qHiStr = (q.q_hi || '').toString().trim().toLowerCase();
@@ -1252,33 +1103,24 @@
     });
 
     let qList = JSON.parse(JSON.stringify(validList));
-    // SHUFFLE QUESTIONS ONLY
-    qList = shuffleArray(qList);
-
-    // Keep Options in exact sheet order (NO OPTIONS SHUFFLING)
     qList.forEach(q => {
       let enOpts = (q.options && q.options.length === 4) ? q.options : ["", "", "", ""];
       let hiOpts = (q.options_hi && q.options_hi.length === 4) ? q.options_hi : enOpts;
-
       q.options = enOpts.map(o => (o !== undefined && o !== null) ? o.toString().trim() : '');
       q.options_hi = hiOpts.map((o, idx) => {
         let val = (o !== undefined && o !== null) ? o.toString().trim() : '';
         return (val !== '') ? val : q.options[idx];
       });
     });
-
     return qList;
   }
 
-  /* 5. NOTES ENGINE */
+  /* NOTES ENGINE (POWERED BY EXTERNAL SHEET) */
   function openNotesSubjects(className) {
-    activeNotesClass = className;
     document.getElementById('notesSelectedClassTitle').innerText = `${className} Subjects`;
     document.getElementById('notesViewClasses').style.display = 'none';
     document.getElementById('notesViewSubjects').style.display = 'block';
-    history.pushState({ screen: 'screenNotes', view: 'subjects' }, '');
   }
-
   function backToNotesClasses() {
     document.getElementById('notesViewClasses').style.display = 'block';
     document.getElementById('notesViewSubjects').style.display = 'none';
@@ -1286,19 +1128,17 @@
     document.getElementById('notesViewReader').style.display = 'none';
     document.getElementById('notesDocIframe').src = 'about:blank';
   }
-
   function openNotesChapters(subjectName) {
-    activeNotesSubject = subjectName;
     document.getElementById('notesSelectedSubjTitle').innerText = `${subjectName} Chapters`;
     document.getElementById('notesViewSubjects').style.display = 'none';
     document.getElementById('notesViewChapters').style.display = 'block';
 
     const container = document.getElementById('notesChaptersListContainer');
     container.innerHTML = '';
-    const chapters = (NOTES_DATABASE[activeNotesClass] && NOTES_DATABASE[activeNotesClass][subjectName]) || [];
+    const chapters = (dynamicNotesData['Class 10'] && dynamicNotesData['Class 10'][subjectName]) || [];
 
     if (chapters.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय के नोट्स जल्द जोड़े जा रहे हैं।</div>`;
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय के नोट्स Google Sheet में जोड़ें!</div>`;
       return;
     }
 
@@ -1312,35 +1152,28 @@
         </div>
         <div class="set-action-pill" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff;">पढ़ें 📖</div>
       `;
-      card.onclick = () => readChapterDoc(chap.name, chap.docUrl);
+      card.onclick = () => {
+        document.getElementById('notesReadingChapterTitle').innerText = chap.name;
+        document.getElementById('notesViewChapters').style.display = 'none';
+        document.getElementById('notesViewReader').style.display = 'block';
+        document.getElementById('notesDocIframe').src = chap.docUrl;
+      };
       container.appendChild(card);
     });
-
-    history.pushState({ screen: 'screenNotes', view: 'chapters' }, '');
   }
-
   function backToNotesSubjects() {
     document.getElementById('notesViewSubjects').style.display = 'block';
     document.getElementById('notesViewChapters').style.display = 'none';
     document.getElementById('notesViewReader').style.display = 'none';
     document.getElementById('notesDocIframe').src = 'about:blank';
   }
-
-  function readChapterDoc(chapName, docUrl) {
-    document.getElementById('notesReadingChapterTitle').innerText = chapName;
-    document.getElementById('notesViewChapters').style.display = 'none';
-    document.getElementById('notesViewReader').style.display = 'block';
-    document.getElementById('notesDocIframe').src = docUrl;
-    history.pushState({ screen: 'screenNotes', view: 'reader' }, '');
-  }
-
   function backToNotesChapters() {
     document.getElementById('notesViewChapters').style.display = 'block';
     document.getElementById('notesViewReader').style.display = 'none';
     document.getElementById('notesDocIframe').src = 'about:blank';
   }
 
-  /* 6. DOWNLOADS ENGINE */
+  /* DOWNLOADS ENGINE (POWERED BY EXTERNAL SHEET) */
   function filterDownloadsList(subject, btnEl) {
     document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
     if (btnEl) btnEl.classList.add('active');
@@ -1350,13 +1183,10 @@
   function renderDownloadsList(selectedSubj = 'All') {
     const container = document.getElementById('downloadsRenderContainer');
     container.innerHTML = '';
-
-    const list = (selectedSubj === 'All') 
-      ? DOWNLOADS_DATA 
-      : DOWNLOADS_DATA.filter(item => item.subject === selectedSubj || item.subject === 'All');
+    const list = (selectedSubj === 'All') ? dynamicDownloadsData : dynamicDownloadsData.filter(d => d.subject === selectedSubj || d.subject === 'All');
 
     if (list.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय की PDF अभी अपलोड नहीं हुई है।</div>`;
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय की PDF Google Sheet में जोड़ें!</div>`;
       return;
     }
 
@@ -1374,7 +1204,7 @@
     });
   }
 
-  /* 7. AUTH & CLOUD SYNC */
+  /* AUTH & CLOUD SYNC */
   function saveQuickPlayerName() {
     const entered = document.getElementById('studentQuickName').value.trim();
     if (!entered) return alert("कृपया अपना नाम लिखें!");
@@ -1446,6 +1276,9 @@
         document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
       }
 
+      if (data.notesData) dynamicNotesData = data.notesData;
+      if (data.downloadsData) dynamicDownloadsData = data.downloadsData;
+
       if (data.leaderboards) {
         cloudLeaderboards = data.leaderboards;
         renderLeaderboardList(cloudLeaderboards.dailyLive || [], true);
@@ -1459,9 +1292,7 @@
       if (data.activeUsers && data.activeUsers.length > 0) {
         document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Appearing in Mock Tests";
       }
-    } catch (e) {
-      console.warn(e);
-    }
+    } catch (e) { console.warn(e); }
   }
 
   function initScheduleWatcher() {
@@ -1550,16 +1381,9 @@
     const liveKey = `${liveScheduleData.subject}_Set${liveScheduleData.level}`;
     const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
 
-    if (now < sDate) {
-      alert(`⏳ यह टेस्ट रात ${liveScheduleData.startTime} बजे लाइव होगा। तब तक उल्टी गिनती देखें!`);
-      return;
-    }
-
+    if (now < sDate) return alert(`⏳ यह टेस्ट रात ${liveScheduleData.startTime} बजे लाइव होगा। तब तक उल्टी गिनती देखें!`);
     if (now >= sDate && now <= eDate) {
-      if (attempted) {
-        alert(`⚠️ आप आज का लाइव टेस्ट पहले ही दे चुके हैं!\n\nस्कोर: ${attempted.score}/${attempted.total}\nसमय: ${attempted.timeTaken}s\n\nलीडरबोर्ड चेक करें!`);
-        return;
-      }
+      if (attempted) return alert(`⚠️ आप आज का लाइव टेस्ट पहले ही दे चुके हैं!\n\nस्कोर: ${attempted.score}/${attempted.total}\nसमय: ${attempted.timeTaken}s`);
       currentSubject = liveScheduleData.subject;
       startQuizSet(liveScheduleData.level, true, 'LIVE');
     } else {
@@ -1608,7 +1432,7 @@
 
     function formatStat(item) {
       if (!item) return '';
-      return isLive ? `${item.score}/${item.total} (${item.timeTaken}s)` : `${item.totalScore || item.totalXP || 0} Score`;
+      return isLive ? `${item.score}/${item.total} (${item.timeTaken}s)` : `${item.totalScore || 0} Score`;
     }
 
     let html = `
@@ -1749,7 +1573,7 @@
     });
   }
 
-  /* 8. QUIZ ENGINE (DEFAULT ENGLISH + PERSISTENT HINDI + QUESTIONS ONLY SHUFFLED) */
+  /* QUIZ ENGINE: NO SHUFFLE + DEFAULT ENGLISH + PERSISTENT HINDI */
   function startQuizSet(lvl, isLive = false, subType = 'LIVE') {
     if (!currentUser.name || currentUser.name.trim() === '') {
       pendingQuizAction = () => startQuizSet(lvl, isLive, subType);
@@ -1767,10 +1591,10 @@
     const setObj = quizDatabase[currentSubject].find(s => Number(s.level) === currentLevel);
     document.getElementById('activeQuizSetTitle').innerText = `${isLive ? '🔥 LIVE: ' : ''}${currentSubject} - ${setObj ? setObj.title : 'Set ' + currentLevel}`;
 
-    // PREPARE QUESTIONS (SHUFFLES QUESTIONS ONLY, FILTERS OUT HEADERS)
-    currentActiveQuestions = prepareShuffledQuizQuestions(setObj ? setObj.questions : []);
+    // STRICT NO SHUFFLING: Exact questions as per Google Sheet
+    currentActiveQuestions = prepareQuizQuestionsNoShuffle(setObj ? setObj.questions : []);
 
-    // RULE 1: DEFAULT IS STRICTLY ENGLISH
+    // RULE 1: STRICT DEFAULT ENGLISH ON START
     currentQuizLang = 'en';
 
     const langBtn = document.getElementById('btnLangToggle');
@@ -1778,7 +1602,7 @@
       langBtn.style.display = 'none';
     } else {
       langBtn.style.display = 'inline-flex';
-      document.getElementById('langToggleText').innerText = 'हिंदी'; // Indicates click to switch to Hindi
+      document.getElementById('langToggleText').innerText = 'हिंदी'; // Shows next switch target
     }
 
     navigateTo('screenQuiz', true);
@@ -1789,7 +1613,7 @@
     return currentActiveQuestions;
   }
 
-  // RULE 2: PERSISTENT LANGUAGE TOGGLE (EK BAAR HINDI TOUCH KIYA TO SARE HINDI HO JAYENGE)
+  // RULE 2: PERSISTENT LANGUAGE TOGGLE (EK BAAR HINDI TOUCH KIYA TO SARE QUESTIONS HINDI HO JAYENGE)
   function toggleQuizLanguage() {
     currentQuizLang = (currentQuizLang === 'en') ? 'hi' : 'en';
     document.getElementById('langToggleText').innerText = (currentQuizLang === 'en') ? 'हिंदी' : 'ENG';
@@ -1891,7 +1715,7 @@
     if (isQuestionBookmarked(qData.q)) bmBtn.classList.add('active');
     else bmBtn.classList.remove('active');
 
-    // Bulletproof Option Text Handling: Never leaves options blank!
+    // Bulletproof Options Handling: Never leaves options blank!
     let optsArr = qData.options || [];
     if (currentQuizLang === 'hi' && qData.options_hi && qData.options_hi.length === 4) {
       optsArr = qData.options_hi.map((opt, oIdx) => {
@@ -1963,7 +1787,7 @@
     if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) openSubjectSets(currentSubject);
   }
 
-  /* 9. SUBMIT & FAIR-SCORING ENGINE */
+  /* SUBMIT & FAIR-SCORING ENGINE (1st Attempt: 1 Mark/Q, 2nd Attempt: 0.5 Mark/Q, 3rd+: Locked) */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const totalTimeSecs = Math.round((Date.now() - quizStartTime) / 1000);
