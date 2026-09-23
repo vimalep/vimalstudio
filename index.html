@@ -388,6 +388,7 @@
       width: 30px; height: 30px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center;
       font-weight: 900; font-size: 13.5px; color: #fff; margin-right: 12px; flex-shrink: 0;
     }
+    .opt-text-label { flex: 1; line-height: 1.4; word-break: break-word; }
     .option-btn:nth-child(1) .opt-letter-badge { background: var(--opt-a); }
     .option-btn:nth-child(2) .opt-letter-badge { background: var(--opt-b); }
     .option-btn:nth-child(3) .opt-letter-badge { background: var(--opt-c); }
@@ -1043,7 +1044,7 @@
   let activeNotesSubject = 'Physics';
 
   let quizDatabase = { Math: [], Science: [], SocialScience: [], English: [], GK: [] };
-  let currentActiveQuestions = []; // Active shuffled questions for current attempt
+  let currentActiveQuestions = [];
   let currentSubject = 'Science';
   let currentLevel = 1;
   let currentQIdx = 0;
@@ -1055,7 +1056,7 @@
   let currentQuizSubmissionType = 'LIVE'; 
   let cloudLeaderboards = {};
   let isSoundEnabled = true;
-  let currentQuizLang = 'hi'; // Default Hindi
+  let currentQuizLang = 'hi';
 
   let liveScheduleData = null; 
   let countdownTimerInterval = null;
@@ -1065,8 +1066,8 @@
     name: '', totalScore: 0, currentRank: '--',
     streak: 1, lastActiveDate: '',
     unlockedLevels: { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 },
-    setScores: {},     // { Math_Set1: 8 }
-    setAttempts: {},   // { Math_Set1: 2 }
+    setScores: {},
+    setAttempts: {},
     attemptedLiveTests: {},
     bookmarks: []
   };
@@ -1116,7 +1117,7 @@
   }
 
   function formatMathFormula(text) {
-    if (!text) return '';
+    if (text === undefined || text === null) return '';
     return text.toString()
       .replace(/\balpha\b/gi, 'α').replace(/\bbeta\b/gi, 'β').replace(/\bgamma\b/gi, 'γ')
       .replace(/\btheta\b/gi, 'θ').replace(/\bpi\b/gi, 'π').replace(/sqrt\s*/gi, '√')
@@ -1230,7 +1231,7 @@
     }
   });
 
-  /* 4. FISHER-YATES SHUFFLE FOR QUESTIONS & OPTIONS */
+  /* 4. SAFE FISHER-YATES SHUFFLE FOR QUESTIONS & OPTIONS */
   function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -1240,19 +1241,31 @@
   }
 
   function prepareShuffledQuizQuestions(rawQuestions) {
+    if (!rawQuestions || rawQuestions.length === 0) return [];
     let qList = JSON.parse(JSON.stringify(rawQuestions));
-    qList = shuffleArray(qList); // Sawalon ka kram shuffle
+    qList = shuffleArray(qList);
 
     qList.forEach(q => {
-      let pairs = [0, 1, 2, 3].map(i => ({
-        origIdx: i,
-        en: (q.options && q.options[i]) ? q.options[i] : '',
-        hi: (q.options_hi && q.options_hi[i]) ? q.options_hi[i] : ((q.options && q.options[i]) ? q.options[i] : '')
-      }));
+      let enOpts = (q.options && q.options.length === 4) ? q.options : ["", "", "", ""];
+      let hiOpts = (q.options_hi && q.options_hi.length === 4) ? q.options_hi : enOpts;
 
-      pairs = shuffleArray(pairs); // Chaaron options ki position shuffle
+      let pairs = [0, 1, 2, 3].map(i => {
+        let enVal = (enOpts[i] !== undefined && enOpts[i] !== null) ? enOpts[i].toString().trim() : '';
+        let hiVal = (hiOpts[i] !== undefined && hiOpts[i] !== null && hiOpts[i].toString().trim() !== "") 
+                    ? hiOpts[i].toString().trim() 
+                    : enVal;
+        return {
+          origIdx: i,
+          en: enVal,
+          hi: hiVal
+        };
+      });
+
+      pairs = shuffleArray(pairs);
 
       q.ans = pairs.findIndex(p => p.origIdx === q.ans);
+      if (q.ans === -1) q.ans = 0;
+
       q.options = pairs.map(p => p.en);
       q.options_hi = pairs.map(p => p.hi);
     });
@@ -1385,7 +1398,6 @@
     if (saved) {
       try { 
         currentUser = JSON.parse(saved); 
-        // Migrate old XP to Score if exists
         if (currentUser.totalXP && !currentUser.totalScore) currentUser.totalScore = Math.round(currentUser.totalXP / 10);
       } catch(e){}
     }
@@ -1740,7 +1752,7 @@
     });
   }
 
-  /* 8. QUIZ ENGINE WITH RANDOMIZATION & BILINGUAL TOGGLE */
+  /* 8. QUIZ ENGINE WITH SAFE BILINGUAL & SHUFFLING LOGIC */
   function startQuizSet(lvl, isLive = false, subType = 'LIVE') {
     if (!currentUser.name || currentUser.name.trim() === '') {
       pendingQuizAction = () => startQuizSet(lvl, isLive, subType);
@@ -1758,17 +1770,15 @@
     const setObj = quizDatabase[currentSubject].find(s => Number(s.level) === currentLevel);
     document.getElementById('activeQuizSetTitle').innerText = `${isLive ? '🔥 LIVE: ' : ''}${currentSubject} - ${setObj ? setObj.title : 'Set ' + currentLevel}`;
 
-    // SHUFFLE QUESTIONS & OPTIONS FOR EACH ATTEMPT
     currentActiveQuestions = prepareShuffledQuizQuestions(setObj ? setObj.questions : []);
 
-    // Language Toggle Visibility
     const langBtn = document.getElementById('btnLangToggle');
     if (currentSubject === 'English') {
       langBtn.style.display = 'none';
       currentQuizLang = 'en';
     } else {
       langBtn.style.display = 'inline-flex';
-      currentQuizLang = 'hi'; // Default Hindi for Maths/Science/SST
+      currentQuizLang = 'hi';
       document.getElementById('langToggleText').innerText = 'ENG';
     }
 
@@ -1828,9 +1838,17 @@
     }
 
     bMarks.forEach((bm, bIdx) => {
-      const qText = (currentQuizLang === 'hi' && bm.q_hi) ? bm.q_hi : bm.q;
-      const opts = (currentQuizLang === 'hi' && bm.options_hi && bm.options_hi.length > 0) ? bm.options_hi : bm.options;
-      const expl = (currentQuizLang === 'hi' && bm.explanation_hi) ? bm.explanation_hi : (bm.explanation || '');
+      let qText = bm.q || "";
+      if (currentQuizLang === 'hi' && bm.q_hi && bm.q_hi !== "Question_HI" && bm.q_hi.trim() !== "") {
+        qText = bm.q_hi;
+      }
+
+      let opts = bm.options || [];
+      if (currentQuizLang === 'hi' && bm.options_hi && bm.options_hi.length === 4) {
+        opts = bm.options_hi.map((opt, oIdx) => (opt && opt.trim() !== "") ? opt : (bm.options[oIdx] || ""));
+      }
+
+      let expl = (currentQuizLang === 'hi' && bm.explanation_hi && bm.explanation_hi.trim() !== "") ? bm.explanation_hi : (bm.explanation || '');
 
       const card = document.createElement('div');
       card.className = 'review-card';
@@ -1858,9 +1876,12 @@
     const qData = questions[idx];
     if (!qData) return;
 
-    // Bilingual text selection with smart fallback
-    const qText = (currentQuizLang === 'hi' && qData.q_hi) ? qData.q_hi : qData.q;
-    const optsArr = (currentQuizLang === 'hi' && qData.options_hi && qData.options_hi.length === 4) ? qData.options_hi : qData.options;
+    let qText = qData.q || "";
+    if (currentQuizLang === 'hi') {
+      if (qData.q_hi && qData.q_hi !== "Question_HI" && qData.q_hi.trim() !== "") {
+        qText = qData.q_hi;
+      }
+    }
 
     document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
     document.getElementById('qText').innerHTML = `${idx + 1}. ${formatMathFormula(qText)}`;
@@ -1869,6 +1890,15 @@
     if (isQuestionBookmarked(qData.q)) bmBtn.classList.add('active');
     else bmBtn.classList.remove('active');
 
+    let optsArr = qData.options || [];
+    if (currentQuizLang === 'hi' && qData.options_hi && qData.options_hi.length === 4) {
+      optsArr = qData.options_hi.map((opt, oIdx) => {
+        return (opt !== undefined && opt !== null && opt.toString().trim() !== "") 
+               ? opt.toString().trim() 
+               : (qData.options[oIdx] || "");
+      });
+    }
+
     const container = document.getElementById('optionsContainer');
     container.innerHTML = '';
     optsArr.forEach((opt, oIdx) => {
@@ -1876,7 +1906,7 @@
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
       btn.innerHTML = `
         <span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span>
-        <span>${formatMathFormula(opt)}</span>
+        <span class="opt-text-label">${formatMathFormula(opt)}</span>
       `;
       btn.onclick = () => {
         userAnswers[idx] = oIdx;
@@ -1932,7 +1962,7 @@
     if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) openSubjectSets(currentSubject);
   }
 
-  /* 9. SUBMIT & FAIR-SCORING ENGINE (XP TO SCORE MIGRATION) */
+  /* 9. SUBMIT & FAIR-SCORING ENGINE */
   async function submitQuiz() {
     clearInterval(qTimerInterval);
     const totalTimeSecs = Math.round((Date.now() - quizStartTime) / 1000);
@@ -1944,7 +1974,6 @@
     const passed = percent >= 50;
     const setKey = `${currentSubject}_Set${currentLevel}`;
 
-    // Attempt tracking
     currentUser.setScores = currentUser.setScores || {};
     currentUser.setAttempts = currentUser.setAttempts || {};
 
@@ -1956,12 +1985,10 @@
     let scoreNotice = '';
 
     if (currentAttempt === 1) {
-      // 1st Attempt: 1 mark per correct question
       addedScore = score;
       currentUser.setScores[setKey] = score;
       scoreNotice = `+${addedScore} Score Added! (1st Attempt)`;
     } else if (currentAttempt === 2) {
-      // 2nd Attempt: Half mark for newly improved correct answers
       if (score > prevScore) {
         const diff = score - prevScore;
         addedScore = diff * 0.5;
@@ -1971,7 +1998,6 @@
         scoreNotice = `Score नहीं बढ़ा (Previous best: ${prevScore})`;
       }
     } else {
-      // 3rd Attempt+: Locked score, practice only
       addedScore = 0;
       scoreNotice = `अभ्यास मोड: 0 Score Added (Score Locked at 2 Attempts)`;
     }
@@ -2056,9 +2082,17 @@
         const card = document.createElement('div');
         card.className = 'review-card ' + (isCorrect ? 'rev-correct' : 'rev-wrong');
         
-        const qText = (currentQuizLang === 'hi' && q.q_hi) ? q.q_hi : q.q;
-        const optsArr = (currentQuizLang === 'hi' && q.options_hi && q.options_hi.length === 4) ? q.options_hi : q.options;
-        const expl = (currentQuizLang === 'hi' && q.explanation_hi) ? q.explanation_hi : (q.explanation || '');
+        let qText = q.q || "";
+        if (currentQuizLang === 'hi' && q.q_hi && q.q_hi !== "Question_HI" && q.q_hi.trim() !== "") {
+          qText = q.q_hi;
+        }
+
+        let optsArr = q.options || [];
+        if (currentQuizLang === 'hi' && q.options_hi && q.options_hi.length === 4) {
+          optsArr = q.options_hi.map((opt, oIdx) => (opt && opt.trim() !== "") ? opt : (q.options[oIdx] || ""));
+        }
+
+        let expl = (currentQuizLang === 'hi' && q.explanation_hi && q.explanation_hi.trim() !== "") ? q.explanation_hi : (q.explanation || '');
 
         let explanationHtml = '';
         if (expl && expl.trim() !== '') {
