@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Exam Arena by Vimal Sir</title>
   
+  <!-- Favicon & Search Metadata -->
   <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
   <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
@@ -70,6 +71,40 @@
       --opt-d: #db2777;
     }
 
+    body.light-theme {
+      --bg-body: #f8fafc;
+      --bg-radial-1: rgba(99, 102, 241, 0.12);
+      --bg-radial-2: rgba(236, 72, 153, 0.1);
+      --bg-radial-3: rgba(16, 185, 129, 0.1);
+      --bg-radial-4: rgba(245, 158, 11, 0.12);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+      --card-border: #cbd5e1;
+      --header-bg: linear-gradient(135deg, #e0e7ff, #f3e8ff);
+      --header-border: #c7d2fe;
+      --ticker-bg: linear-gradient(90deg, #e0e7ff, #ede9fe, #e0e7ff);
+      --profile-bg: #ffffff;
+      --quiz-card-bg: #ffffff;
+      --quiz-card-border: #c7d2fe;
+      --opt-btn-bg: #f8fafc;
+      --opt-btn-border: #cbd5e1;
+      --opt-btn-text: #0f172a;
+      --modal-bg: #ffffff;
+      --modal-border: #c084fc;
+      --input-bg: #f1f5f9;
+      --input-border: #94a3b8;
+      --input-text: #0f172a;
+      --lb-box-bg: #ffffff;
+      --lb-item-bg: #f1f5f9;
+      --lb-item-text: #0f172a;
+      --set-card-bg: #ffffff;
+      --set-card-border: #cbd5e1;
+      --screen-bar-bg: #ffffff;
+      --score-inner-bg: #ffffff;
+      --bottom-nav-bg: rgba(255, 255, 255, 0.96);
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: 'Poppins', 'Hind', sans-serif; }
 
     body {
@@ -86,6 +121,7 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .arena-container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 12px; }
@@ -106,13 +142,14 @@
       background: rgba(255, 255, 255, 0.25);
       border: 1.5px solid rgba(255, 255, 255, 0.45);
       width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 15px;
+      cursor: pointer; font-size: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
     .arena-title {
       font-family: 'Fredoka', cursive, sans-serif; font-size: clamp(19px, 5vw, 25px); font-weight: 800;
-      letter-spacing: 1px; color: #ffffff; text-shadow: 0 0 16px rgba(254, 240, 138, 0.75);
+      letter-spacing: 1px; color: #ffffff; text-shadow: 0 0 16px rgba(254, 240, 138, 0.75), 0 3px 8px rgba(0, 0, 0, 0.6);
       text-transform: uppercase;
     }
+    body.light-theme .arena-title { color: #1e1b4b; text-shadow: 0 2px 10px rgba(99, 102, 241, 0.3); }
     .vimal-badge {
       display: inline-block; background: linear-gradient(135deg, #f59e0b, #ef4444); border: 1.5px solid #fef08a;
       color: #ffffff; font-size: 11px; font-weight: 900; padding: 3px 14px; border-radius: 20px; margin-top: 4px;
@@ -129,14 +166,16 @@
     .thought-card {
       background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(49, 46, 129, 0.9));
       border: 2px solid rgba(245, 158, 11, 0.45); border-radius: 18px; padding: 12px 14px;
-      display: flex; flex-direction: column; gap: 6px;
+      display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden;
     }
+    body.light-theme .thought-card { background: linear-gradient(135deg, #ffffff, #fef3c7); border-color: #f59e0b; }
     .thought-top-meta { display: flex; align-items: center; justify-content: space-between; }
     .thought-pill {
       background: rgba(245, 158, 11, 0.2); border: 1.2px solid #f59e0b; color: #fbbf24; font-size: 11px;
       font-weight: 800; padding: 2px 8px; border-radius: 8px;
     }
-    .thought-body-text { font-size: 13.5px; font-weight: 700; line-height: 1.45; color: var(--text-main); font-style: italic; }
+    body.light-theme .thought-pill { color: #b45309; }
+    .thought-body-text { font-size: 13.5px; font-weight: 700; line-height: 1.45; color: var(--text-main); font-style: italic; margin-top: 2px; }
     .thought-bottom-row { display: flex; align-items: center; justify-content: space-between; margin-top: 2px; }
     .thought-author { font-size: 11.5px; font-weight: 700; color: var(--text-muted); }
     .btn-share-thought-poster {
@@ -144,7 +183,44 @@
       border-radius: 10px; font-size: 12px; font-weight: 900; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;
     }
 
-    /* PROFILE */
+    /* FLASH ALERT */
+    .flash-alert-card {
+      background: linear-gradient(135deg, #ef4444, #f97316, #f59e0b);
+      border: 2px solid #fef08a; border-radius: 16px; padding: 11px 14px;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
+    }
+    .flash-alert-card.upcoming { background: linear-gradient(135deg, #4338ca, #6366f1, #0284c7); border-color: #93c5fd; }
+    .flash-alert-card.closed { background: linear-gradient(135deg, #334155, #475569); border-color: #94a3b8; }
+    .flash-icon-box { font-size: 24px; }
+    .flash-text-wrap { flex: 1; text-align: left; }
+    .flash-badge {
+      display: inline-block; background: #ffffff; color: #ef4444; font-size: 9.5px;
+      font-weight: 900; padding: 2px 7px; border-radius: 6px; text-transform: uppercase; margin-bottom: 2px;
+    }
+    .flash-alert-card.upcoming .flash-badge { color: #4338ca; }
+    .flash-alert-card.closed .flash-badge { color: #334155; }
+    .flash-msg { font-size: 12px; font-weight: 800; color: #ffffff; line-height: 1.3; }
+    .flash-timer-highlight { font-family: monospace; font-size: 13.5px; font-weight: 900; color: #fef08a; }
+    .flash-btn {
+      background: #ffffff; color: #b91c1c; border: none; padding: 8px 12px;
+      border-radius: 10px; font-size: 11.5px; font-weight: 900; cursor: pointer; flex-shrink: 0;
+    }
+    .flash-btn.locked { background: #cbd5e1; color: #64748b; cursor: not-allowed; }
+    .flash-btn.completed { background: #10b981; color: #ffffff; }
+
+    /* TICKER */
+    .live-ticker-wrap {
+      width: 100%; background: var(--ticker-bg); border: 1.5px solid rgba(99, 102, 241, 0.5);
+      border-radius: 14px; padding: 7px 12px; display: flex; align-items: center; gap: 10px; overflow: hidden;
+    }
+    .ticker-pill { background: #10b981; color: #fff; font-size: 10px; font-weight: 900; padding: 3px 9px; border-radius: 8px; flex-shrink: 0; }
+    .ticker-track { flex: 1; overflow: hidden; white-space: nowrap; }
+    .ticker-content { white-space: nowrap; font-size: 11.5px; font-weight: 700; color: #38bdf8; display: inline-block; animation: scrollText 20s linear infinite; }
+    body.light-theme .ticker-content { color: #0284c7; }
+    @keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+    /* REDESIGNED PROFILE CARD */
     .player-profile-card {
       background: var(--profile-bg); border: 2px solid var(--card-border); border-radius: 18px;
       padding: 14px 14px; display: flex; flex-direction: column; gap: 10px;
@@ -157,28 +233,63 @@
     }
     .user-tag { display: flex; flex-direction: column; }
     .u-name { font-size: 15px; font-weight: 900; color: var(--text-main); }
-    .profile-metrics-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    
+    .profile-metrics-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 2px;
+    }
     .metric-card-box {
       background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--card-border);
       border-radius: 12px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between;
     }
+    .metric-card-box .m-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); }
+    .metric-card-box .m-val { font-size: 13px; font-weight: 900; }
+
     .stat-badge { background: rgba(56, 189, 248, 0.15); border: 1.5px solid #0284c7; padding: 5px 12px; border-radius: 12px; text-align: right; }
     .stat-badge .xp-num { font-size: 16px; font-weight: 900; color: #38bdf8; line-height: 1; }
+    body.light-theme .stat-badge .xp-num { color: #0284c7; }
+    .stat-badge .xp-lbl { font-size: 9.5px; color: var(--text-muted); font-weight: 700; margin-top: 2px; }
+
+    .badges-tray { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+    .badges-tray::-webkit-scrollbar { display: none; }
+    .badge-pill {
+      font-size: 10.5px; font-weight: 800; padding: 3px 8px; border-radius: 8px; white-space: nowrap;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: var(--text-muted);
+    }
+    .badge-pill.unlocked { background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24; }
+
+    .skeleton-box {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%; animation: shimmerLoading 1.5s infinite; border-radius: 12px; min-height: 48px; width: 100%;
+    }
+    @keyframes shimmerLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
     /* SCREENS */
     .app-screen { display: flex; flex-direction: column; gap: 11px; width: 100%; }
     .section-title { font-size: 14px; font-weight: 800; color: #fde047; display: flex; align-items: center; justify-content: space-between; }
+    body.light-theme .section-title { color: #d97706; }
+
     .subject-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
     .subject-card {
       border-radius: 18px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center;
       justify-content: center; text-align: center; cursor: pointer; border: 2px solid rgba(255,255,255,0.4); min-height: 108px;
     }
-    .subject-card.full-width { grid-column: 1 / -1; flex-direction: row !important; justify-content: space-between; padding: 12px 18px; min-height: auto; }
+    .subject-card.full-width {
+      grid-column: 1 / -1; flex-direction: row !important; justify-content: space-between; align-items: center; padding: 12px 18px; min-height: auto;
+    }
+    .subject-card.full-width .sc-info { display: flex !important; flex-direction: row !important; align-items: center !important; gap: 14px; }
     .sc-math { background: var(--grad-math); }
     .sc-sci { background: var(--grad-sci); }
     .sc-sst { background: var(--grad-sst); }
     .sc-eng { background: var(--grad-eng); }
     .sc-gk { background: var(--grad-gk); }
+
+    .sc-icon {
+      width: 44px; height: 44px; background: rgba(255, 255, 255, 0.25); border: 1.5px solid rgba(255, 255, 255, 0.4);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 6px;
+    }
+    .sc-text h3 { font-family: 'Fredoka', sans-serif; font-size: 15.5px; font-weight: 700; color: #ffffff; }
+    .sc-text p { font-size: 11px; color: rgba(255,255,255,0.95); font-weight: 600; }
+    .sc-arrow { width: 32px; height: 32px; background: rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }
 
     .screen-header-bar {
       display: flex; align-items: center; justify-content: space-between; background: var(--screen-bar-bg);
@@ -186,22 +297,87 @@
     }
     .btn-back { background: #4338ca; border: 1.5px solid #818cf8; color: #ffffff; padding: 8px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
 
-    /* QUIZ & OPTIONS */
+    /* DOWNLOADS */
+    .filter-pills-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+    .filter-pills-bar::-webkit-scrollbar { display: none; }
+    .filter-pill-btn {
+      padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer;
+      background: var(--opt-btn-bg); border: 1.5px solid var(--card-border); color: var(--text-muted); white-space: nowrap;
+    }
+    .filter-pill-btn.active { background: linear-gradient(135deg, #10b981, #059669); color: #fff; border-color: #34d399; }
+
+    .download-card-item {
+      background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .download-link-btn {
+      background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; padding: 8px 16px;
+      border-radius: 10px; font-size: 12.5px; font-weight: 800; text-decoration: none; border: none;
+      display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+    }
+
+    /* NOTES READ-ONLY */
+    .notes-chapter-item {
+      background: var(--set-card-bg); border: 1.5px solid var(--set-card-border); border-radius: 16px;
+      padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    }
+    .notes-reader-frame { width: 100%; height: 75vh; border: none; border-radius: 16px; background: #ffffff; }
+
+    /* SETS */
+    .sets-list-container { display: flex; flex-direction: column; gap: 11px; }
+    .set-row-card {
+      background: var(--set-card-bg); border: 2px solid var(--set-card-border); border-radius: 18px;
+      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    }
+    .set-row-card.locked { opacity: 0.55; cursor: not-allowed; }
+    .set-row-card.live-pinned {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.25), rgba(245, 158, 11, 0.25)) !important;
+      border: 2px solid #f59e0b !important;
+    }
+    .set-best-badge {
+      font-size: 11px; font-weight: 800; color: #10b981; background: rgba(16, 185, 129, 0.15);
+      padding: 2px 6px; border-radius: 6px; display: inline-block; margin-top: 3px;
+    }
+    .set-action-pill { font-size: 12px; font-weight: 900; padding: 6px 14px; border-radius: 20px; }
+    .set-row-card:not(.locked) .set-action-pill { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: #fff; }
+    .set-row-card.locked .set-action-pill { background: #64748b; color: #f8fafc; }
+
+    /* QUIZ CARD */
     .quiz-card {
       background: var(--quiz-card-bg); border: 2px solid var(--quiz-card-border); border-radius: 24px;
-      padding: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+      padding: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.25); position: relative;
     }
     .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
     .q-meta-left { display: flex; align-items: center; gap: 8px; }
+    .q-counter {
+      font-size: 12.5px; font-weight: 900; color: #38bdf8; background: rgba(56, 189, 248, 0.18);
+      border: 1px solid #38bdf8; padding: 5px 12px; border-radius: 14px;
+    }
+    body.light-theme .q-counter { color: #0284c7; border-color: #0284c7; }
+    .btn-bookmark {
+      background: rgba(255, 255, 255, 0.12); border: 1.5px solid rgba(255, 255, 255, 0.25);
+      color: #fff; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center;
+      justify-content: center; cursor: pointer; font-size: 16px;
+    }
+    .btn-bookmark.active { background: rgba(245, 158, 11, 0.25); border-color: #f59e0b; color: #fbbf24; }
+
     .btn-lang-toggle {
       background: rgba(99, 102, 241, 0.25); border: 1.5px solid #818cf8; color: #38bdf8;
       padding: 5px 12px; border-radius: 12px; font-size: 11.5px; font-weight: 900; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 4px;
     }
+
     .timer-pill {
       background: linear-gradient(135deg, #f59e0b, #d97706); border: 2px solid #fef08a; color: #ffffff;
       font-size: 13.5px; font-weight: 900; padding: 5px 14px; border-radius: 25px;
     }
-    .q-text { font-size: 16px; font-weight: 800; line-height: 1.5; margin-bottom: 18px; color: var(--text-main); }
+    .timer-pill.urgent {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important; border-color: #fca5a5 !important;
+      animation: pulseUrgent 0.6s infinite alternate;
+    }
+    @keyframes pulseUrgent { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+
+    .q-text { font-size: 16.5px; font-weight: 800; line-height: 1.5; margin-bottom: 18px; color: var(--text-main); }
     .options-grid { display: flex; flex-direction: column; gap: 11px; }
     .option-btn {
       width: 100%; background: var(--opt-btn-bg); border: 2px solid var(--opt-btn-border); color: var(--opt-btn-text);
@@ -217,118 +393,448 @@
     .option-btn:nth-child(2) .opt-letter-badge { background: var(--opt-b); }
     .option-btn:nth-child(3) .opt-letter-badge { background: var(--opt-c); }
     .option-btn:nth-child(4) .opt-letter-badge { background: var(--opt-d); }
-    .option-btn.selected { border-color: #f59e0b !important; background: rgba(99, 102, 241, 0.4) !important; }
+
+    .option-btn.selected { border-color: #f59e0b !important; }
+    .option-btn:nth-child(1).selected { background: linear-gradient(135deg, #0369a1, #0284c7); color: #fff; }
+    .option-btn:nth-child(2).selected { background: linear-gradient(135deg, #047857, #059669); color: #fff; }
+    .option-btn:nth-child(3).selected { background: linear-gradient(135deg, #b45309, #d97706); color: #fff; }
+    .option-btn:nth-child(4).selected { background: linear-gradient(135deg, #be185d, #db2777); color: #fff; }
 
     .nav-actions { display: flex; gap: 10px; margin-top: 18px; }
     .btn-action {
       flex: 1; padding: 13px 15px; border-radius: 14px; font-size: 14.5px; font-weight: 900;
       cursor: pointer; border: none; display: flex; align-items: center; justify-content: center;
     }
-    .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
+    .btn-prev { background: rgba(99, 102, 241, 0.2); border: 1.5px solid #6366f1; color: #818cf8; max-width: 130px; }
     .btn-submit { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+    .btn-next { background: linear-gradient(135deg, #38bdf8, #2563eb); color: #fff; }
 
-    /* DOWNLOADS & NOTES */
-    .filter-pills-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
-    .filter-pill-btn {
-      padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer;
-      background: var(--opt-btn-bg); border: 1.5px solid var(--card-border); color: var(--text-muted);
+    /* RESULTS */
+    #resultScreen { display: none; text-align: center; flex-direction: column; align-items: center; gap: 14px; }
+    .score-circle {
+      width: 125px; height: 125px; border-radius: 50%;
+      background: conic-gradient(#10b981 var(--score-angle, 0deg), #312e81 0deg);
+      display: flex; align-items: center; justify-content: center; margin: 10px auto;
     }
-    .filter-pill-btn.active { background: linear-gradient(135deg, #10b981, #059669); color: #fff; border-color: #34d399; }
-    .download-card-item {
-      background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px;
-      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    body.light-theme .score-circle { background: conic-gradient(#10b981 var(--score-angle, 0deg), #e2e8f0 0deg); }
+    .score-inner {
+      width: 100px; height: 100px; border-radius: 50%; background: var(--score-inner-bg);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
-    .download-link-btn {
-      background: linear-gradient(135deg, #10b981, #059669); color: #ffffff; padding: 8px 16px;
-      border-radius: 10px; font-size: 12.5px; font-weight: 800; text-decoration: none;
-    }
-    .notes-reader-frame { width: 100%; height: 75vh; border: none; border-radius: 16px; background: #ffffff; }
+    .score-num { font-family: 'Fredoka', sans-serif; font-size: 32px; font-weight: 800; }
+    .unlock-banner { width: 100%; padding: 13px 16px; border-radius: 14px; font-size: 13.5px; font-weight: 900; }
+    .unlock-success { background: rgba(16, 185, 129, 0.2); border: 2px solid #10b981; color: #34d399; }
+    body.light-theme .unlock-success { color: #059669; }
+    .unlock-failed { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #fca5a5; }
+    body.light-theme .unlock-failed { color: #dc2626; }
 
-    /* BOTTOM NAV */
+    .analysis-card {
+      background: rgba(49, 46, 129, 0.6); border: 1.5px solid var(--card-border); border-radius: 14px;
+      padding: 12px 14px; width: 100%; text-align: left; display: flex; flex-direction: column; gap: 6px;
+    }
+    .analysis-pill { font-size: 11.5px; font-weight: 800; color: #38bdf8; }
+
+    .review-card {
+      background: var(--opt-btn-bg); border: 1.5px solid var(--card-border); border-radius: 14px;
+      padding: 12px 14px; text-align: left;
+    }
+    .review-card.rev-correct { border-color: #10b981; }
+    .review-card.rev-wrong { border-color: #ef4444; }
+    .explanation-box {
+      margin-top: 6px; padding: 8px 10px; background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid #38bdf8; border-radius: 4px; font-size: 12px; color: var(--text-muted);
+    }
+
+    /* LEADERBOARDS */
+    .leaderboard-box {
+      width: 100%; background: var(--lb-box-bg); border: 2px solid var(--card-border);
+      border-radius: 20px; padding: 16px 12px; text-align: left;
+    }
+    .lb-header { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 900; color: #fde047; margin-bottom: 12px; }
+    body.light-theme .lb-header { color: #d97706; }
+    .lb-tabs-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 12px; scrollbar-width: none; }
+    .lb-tabs-bar::-webkit-scrollbar { display: none; }
+    .lb-tab-btn {
+      padding: 6px 12px; border-radius: 10px; font-size: 11.5px; font-weight: 800; white-space: nowrap;
+      cursor: pointer; border: 1.5px solid var(--card-border); background: transparent; color: var(--text-muted);
+    }
+    .lb-tab-btn.active { background: linear-gradient(135deg, #0284c7, #3b82f6); color: #fff; border-color: #38bdf8; }
+    .lb-tab-btn.live-tab { border-color: #f59e0b; color: #fbbf24; }
+    .lb-tab-btn.live-tab.active { background: linear-gradient(135deg, #ef4444, #f59e0b); color: #fff; }
+
+    .podium-stage { display: flex; justify-content: center; align-items: flex-end; gap: 8px; margin: 15px 0 20px 0; padding: 0 4px; }
+    .podium-col { flex: 1; max-width: 120px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .podium-avatar-wrap { position: relative; margin-bottom: 6px; }
+    .podium-avatar { border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #1e1b4b; }
+    .podium-badge-icon { position: absolute; bottom: -4px; right: -4px; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: #fff; border: 2px solid #fff; }
+    .podium-crown { font-size: 22px; position: absolute; top: -24px; left: 50%; transform: translateX(-50%); }
+    .podium-col.rank-1 .podium-avatar { width: 60px; height: 60px; font-size: 26px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border: 3px solid #fef08a; }
+    .podium-col.rank-1 .podium-badge-icon { background: #f59e0b; }
+    .podium-col.rank-1 .podium-pedestal { height: 70px; background: linear-gradient(180deg, rgba(245, 158, 11, 0.4), rgba(245, 158, 11, 0.1)); border-top: 3px solid #f59e0b; }
+    .podium-col.rank-2 .podium-avatar { width: 48px; height: 48px; font-size: 20px; background: linear-gradient(135deg, #94a3b8, #e2e8f0); border: 2.5px solid #ffffff; }
+    .podium-col.rank-2 .podium-badge-icon { background: #64748b; }
+    .podium-col.rank-2 .podium-pedestal { height: 50px; background: linear-gradient(180deg, rgba(148, 163, 184, 0.35), rgba(148, 163, 184, 0.08)); border-top: 3px solid #94a3b8; }
+    .podium-col.rank-3 .podium-avatar { width: 48px; height: 48px; font-size: 20px; background: linear-gradient(135deg, #d97706, #f97316); border: 2.5px solid #fed7aa; }
+    .podium-col.rank-3 .podium-badge-icon { background: #b45309; }
+    .podium-col.rank-3 .podium-pedestal { height: 38px; background: linear-gradient(180deg, rgba(217, 119, 6, 0.35), rgba(217, 119, 6, 0.08)); border-top: 3px solid #d97706; }
+    .podium-name { font-size: 12px; font-weight: 800; color: var(--text-main); max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .podium-score { font-size: 11px; font-weight: 900; color: #38bdf8; margin-bottom: 6px; }
+    body.light-theme .podium-score { color: #0284c7; }
+    .podium-pedestal { width: 100%; border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; }
+
+    .lb-list-rest { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .lb-item {
+      display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
+      border-radius: 12px; font-size: 13px; font-weight: 800; background: var(--lb-item-bg);
+      color: var(--lb-item-text); border: 1.5px solid var(--card-border);
+    }
+    .lb-item.is-me { border-color: #38bdf8 !important; background: rgba(56, 189, 248, 0.15) !important; }
+
+    .ad-banner-box {
+      width: 100%; min-height: 250px; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; margin: 10px 0 4px 0; border-radius: 16px; background: rgba(0,0,0,0.03); border: 1px dashed var(--card-border);
+    }
+
+    /* 5-BUTTON BOTTOM NAVIGATION BAR */
     .bottom-nav-bar {
       position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
       background: var(--bottom-nav-bg); backdrop-filter: blur(16px);
       border-top: 1.5px solid var(--card-border); display: flex; align-items: center;
-      justify-content: space-around; z-index: 1000;
+      justify-content: space-around; z-index: 1000; box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
     }
     .nav-item {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 2px; color: var(--text-muted); cursor: pointer; flex: 1; height: 100%;
     }
     .nav-item.active { color: #38bdf8; }
+    body.light-theme .nav-item.active { color: #0284c7; }
+    .nav-icon { font-size: 18px; }
+    .nav-label { font-size: 10px; font-weight: 800; }
 
-    .set-row-card {
-      background: var(--set-card-bg); border: 2px solid var(--set-card-border); border-radius: 18px;
-      padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+    .app-modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 12, 41, 0.92); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; padding: 16px; z-index: 9999;
     }
-    .set-action-pill { font-size: 12px; font-weight: 900; padding: 6px 14px; border-radius: 20px; background: linear-gradient(135deg,#06b6d4,#3b82f6); color:#fff; }
+    .modal-box {
+      background: var(--modal-bg); border: 2px solid var(--modal-border); padding: 24px 20px;
+      border-radius: 22px; width: 100%; max-width: 400px; text-align: center; max-height: 85vh; overflow-y: auto;
+    }
+    .form-input {
+      width: 100%; background: var(--input-bg); border: 2px solid var(--input-border); padding: 13px 15px;
+      border-radius: 13px; color: var(--input-text); font-size: 14.5px; font-weight: 700; margin-bottom: 12px; outline: none;
+    }
+    .form-btn-main {
+      width: 100%; background: var(--grad-btn); border: none; padding: 13px;
+      border-radius: 13px; color: #fff; font-weight: 900; font-size: 15px; cursor: pointer;
+    }
+
+    .app-footer {
+      text-align: center; margin-top: 14px; font-size: 11px; color: var(--text-muted);
+      display: flex; justify-content: center; gap: 14px;
+    }
+    .footer-link { color: #38bdf8; text-decoration: none; cursor: pointer; font-weight: 700; }
   </style>
 </head>
 <body>
 
+<div id="userModal" class="app-modal-overlay">
+  <div class="modal-box">
+    <div style="font-family:'Fredoka',sans-serif; font-size:24px; font-weight:800; color:#f59e0b; margin-bottom:4px;">🎯 EXAM ARENA</div>
+    <div style="font-size:12px; color:#a855f7; font-weight:700; margin-bottom:16px;">टेस्ट शुरू करने के लिए अपना नाम दर्ज करें ⭐</div>
+    <input type="text" class="form-input" id="studentQuickName" placeholder="अपना नाम लिखें (उदा. Aman Sharma)" autofocus>
+    <button class="form-btn-main" onclick="saveQuickPlayerName()">टेस्ट प्रारंभ करें ➔</button>
+  </div>
+</div>
+
+<div id="aboutModal" class="app-modal-overlay">
+  <div class="modal-box" style="text-align:left;">
+    <h3 style="color:#f59e0b; font-size:18px; font-weight:800; margin-bottom:8px;">🎯 About Exam Arena</h3>
+    <p style="font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:14px;">
+      Exam Arena by Vimal Sir कक्षा 10वीं बोर्ड एवं प्रतियोगी परीक्षाओं की तैयारी कर रहे विद्यार्थियों के लिए एक निःशुल्क शैक्षणिक प्लेटफॉर्म है।
+    </p>
+    <button class="form-btn-main" onclick="closeAboutModal()">बंद करें (Close)</button>
+  </div>
+</div>
+
 <div class="arena-container">
 
-  <!-- TOP HEADER -->
+  <!-- TOP FIXED HEADER -->
   <div class="arena-header">
     <div class="arena-title">🎯 EXAM ARENA</div>
     <div class="vimal-badge">⭐ BY VIMAL SIR ⭐</div>
+    <div class="header-ctrls">
+      <button class="ctrl-btn" id="soundToggleBtn" onclick="toggleSound()">🔊</button>
+      <button class="ctrl-btn" id="themeToggleBtn" onclick="toggleTheme()">☀️</button>
+    </div>
   </div>
 
   <!-- SCREEN 1: HOME -->
   <div class="app-screen" id="screenHome">
+    <div id="pwaInstallBox" style="display:none;">
+      <button class="btn-pwa-install" onclick="installAppDirectly()">
+        <span>📥</span> Exam Arena App फ़ोन में इंस्टॉल करें
+      </button>
+    </div>
+
+    <!-- DAILY MOTIVATION CARD -->
     <div class="thought-card">
-      <div class="thought-top-meta"><span class="thought-pill">💡 Daily Motivation</span></div>
-      <div class="thought-body-text" id="dailyThoughtText">"मनुष्य का सबसे बड़ा यदि कोई शत्रु है तो वह है उसका अज्ञान।"</div>
+      <div class="thought-top-meta">
+        <span class="thought-pill">💡 Daily Motivation</span>
+      </div>
+      <div class="thought-body-text" id="dailyThoughtText">
+        "मनुष्य का सबसे बड़ा यदि कोई शत्रु है तो वह है उसका अज्ञान।"
+      </div>
       <div class="thought-bottom-row">
         <div class="thought-author" id="dailyThoughtAuthor">– चाणक्य</div>
+        <button class="btn-share-thought-poster" onclick="shareThoughtAsJPEG()"><span>📲</span> Share</button>
       </div>
     </div>
 
+    <!-- LIVE TEST CARD -->
+    <div id="newQuizFlashCard" style="display:none;" class="flash-alert-card">
+      <div class="flash-icon-box" id="flashIconBox">🔥</div>
+      <div class="flash-text-wrap">
+        <div class="flash-badge" id="flashBadgeTitle">DAILY LIVE TEST</div>
+        <div class="flash-msg" id="flashNoticeText">लाइव टेस्ट की जानकारी लोड हो रही है...</div>
+      </div>
+      <button class="flash-btn" id="btnFlashAction" onclick="handleFlashClick()">Check ➔</button>
+    </div>
+
+    <!-- LIVE TICKER -->
+    <div class="live-ticker-wrap">
+      <div class="ticker-pill">LIVE 🟢</div>
+      <div class="ticker-track">
+        <div class="ticker-content" id="liveTickerText">Online: Active students appearing in mock tests...</div>
+      </div>
+    </div>
+
+    <!-- PROFILE CARD (FULL METRICS + BADGES) -->
     <div class="player-profile-card">
       <div class="profile-top-row">
         <div class="profile-info">
-          <div class="avatar-circle">V</div>
+          <div class="avatar-circle" id="userInitial">V</div>
           <div class="user-tag">
             <span class="u-name" id="dispName">Vimal Kumar</span>
             <span style="font-size:11px; color:#38bdf8; font-weight:700;">Student Portal</span>
           </div>
         </div>
-        <div class="stat-badge"><div class="xp-num" id="dispXP">0 Score</div></div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="stat-badge">
+            <div class="xp-num" id="dispXP">0 Score</div>
+            <div class="xp-lbl">Total Marks</div>
+          </div>
+          <button class="ctrl-btn" style="border-radius:10px; font-size:13px; width:34px; height:34px;" onclick="logoutUser()" title="Reset Profile">🚪</button>
+        </div>
+      </div>
+
+      <div class="profile-metrics-row">
+        <div class="metric-card-box">
+          <span class="m-lbl">Daily Streak:</span>
+          <span class="m-val" style="color:#ef4444;" id="dispStreak">🔥 1 Day</span>
+        </div>
+        <div class="metric-card-box">
+          <span class="m-lbl">Current Rank:</span>
+          <span class="m-val" style="color:#f59e0b;" id="topUserRank">Rank #--</span>
+        </div>
+      </div>
+
+      <div class="badges-tray" id="userBadgesTray">
+        <div class="badge-pill unlocked">🌟 Starter</div>
+        <div class="badge-pill" id="badgeStreak">🔥 3-Day Streak</div>
+        <div class="badge-pill" id="badgeScholar">🎓 50+ Score</div>
+        <div class="badge-pill" id="badgeMaster">👑 Top 3 Ranker</div>
       </div>
     </div>
 
-    <div class="section-title"><span>🎯 अभ्यास विषय (Select Subject):</span></div>
+    <div class="section-title">
+      <span>🎯 अभ्यास विषय (Select Subject):</span>
+      <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="switchNavTab('screenBookmarks', document.getElementById('navSaved'))">⭐ Saved Questions</span>
+    </div>
     
     <div class="subject-cards-grid">
-      <div class="subject-card sc-math" onclick="openSubjectSets('Math')"><h3>Maths</h3><p id="mathSetsSub">Loading...</p></div>
-      <div class="subject-card sc-sci" onclick="openSubjectSets('Science')"><h3>Class X Science</h3><p id="sciSetsSub">Loading...</p></div>
-      <div class="subject-card sc-sst" onclick="openSubjectSets('SocialScience')"><h3>Class X SST</h3><p id="sstSetsSub">Loading...</p></div>
-      <div class="subject-card sc-eng" onclick="openSubjectSets('English')"><h3>English Grammar</h3><p id="engSetsSub">Loading...</p></div>
-      <div class="subject-card sc-gk full-width" onclick="openSubjectSets('GK')"><h3>सामान्य ज्ञान (GK)</h3><p id="gkSetsSub">Loading...</p></div>
+      <div class="subject-card sc-math" onclick="openSubjectSets('Math')">
+        <div class="sc-icon">📐</div>
+        <div class="sc-text"><h3>Maths</h3><p id="mathSetsSub">Loading...</p></div>
+      </div>
+      <div class="subject-card sc-sci" onclick="openSubjectSets('Science')">
+        <div class="sc-icon">🔬</div>
+        <div class="sc-text"><h3>Class X Science</h3><p id="sciSetsSub">Loading...</p></div>
+      </div>
+      <div class="subject-card sc-sst" onclick="openSubjectSets('SocialScience')">
+        <div class="sc-icon">📜</div>
+        <div class="sc-text"><h3>Class X SST</h3><p id="sstSetsSub">Loading...</p></div>
+      </div>
+      <div class="subject-card sc-eng" onclick="openSubjectSets('English')">
+        <div class="sc-icon">✍️</div>
+        <div class="sc-text"><h3>English Grammar</h3><p id="engSetsSub">Loading...</p></div>
+      </div>
+      <div class="subject-card sc-gk full-width" onclick="openSubjectSets('GK')">
+        <div class="sc-info">
+          <div class="sc-icon">🌍</div>
+          <div class="sc-text"><h3>सामान्य ज्ञान (GK)</h3><p id="gkSetsSub">Loading...</p></div>
+        </div>
+        <div class="sc-arrow">➔</div>
+      </div>
+    </div>
+
+    <div class="ad-banner-box">
+      <script>
+        atOptions = { 'key' : 'd79925c62cdb9ae65373e56a45850972', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+      </script>
+      <script src="https://www.highrevenueformat.com/d79925c62cdb9ae65373e56a45850972/invoke.js"></script>
+    </div>
+
+    <div class="app-footer">
+      <span class="footer-link" onclick="openAboutModal()">About Us & Privacy</span>
+      <span>•</span>
+      <span>Exam Arena © 2026</span>
     </div>
   </div>
 
-  <!-- SCREEN 2: SETS -->
+  <!-- SCREEN 2: LEADERBOARD -->
+  <div class="app-screen" id="screenLeaderboard" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#f59e0b;">🏆 Leaderboard Arena</span>
+    </div>
+    
+    <div class="leaderboard-box">
+      <div class="lb-header">
+        <span id="lbCurrentHeaderTitle">🔥 Today's Live Quiz Rankers</span>
+        <span style="font-size:12px; color:#38bdf8; cursor:pointer;" onclick="fetchCloudData()">🔄 Refresh</span>
+      </div>
+
+      <div class="lb-tabs-bar">
+        <button class="lb-tab-btn live-tab active" onclick="switchLeaderboardTab('dailyLive', this)">🔥 Today's Live</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('overall', this)">🏆 All-Time Score</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Math', this)">📐 Maths</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('Science', this)">🔬 Science</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('SocialScience', this)">📜 SST</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('English', this)">✍️ English</button>
+        <button class="lb-tab-btn" onclick="switchLeaderboardTab('GK', this)">🌍 GK</button>
+      </div>
+
+      <div id="fullLeaderboardList"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: NOTES ZONE (POWERED BY EXTERNAL SHEET) -->
+  <div class="app-screen" id="screenNotes" style="display:none;">
+    <div id="notesViewClasses">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+        <span style="font-weight:900; font-size:14px; color:#a855f7;">📖 Digital Notes</span>
+      </div>
+      <div class="section-title" style="margin:10px 0;"><span>अपनी कक्षा चुनें:</span></div>
+      
+      <div class="set-row-card" onclick="openNotesSubjects('Class 10')">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:26px;">🎓</span>
+          <div>
+            <h4 style="font-size:15px; font-weight:800; color:#fff;">कक्षा 10वीं (Class 10th)</h4>
+            <span style="font-size:11.5px; color:var(--text-muted);">Physics, Chemistry, Biology, Maths Notes</span>
+          </div>
+        </div>
+        <div class="set-action-pill" style="background:linear-gradient(135deg,#a855f7,#ec4899); color:#fff;">Open ➔</div>
+      </div>
+    </div>
+
+    <div id="notesViewSubjects" style="display:none;">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="backToNotesClasses()">⬅ Back to Classes</button>
+        <span style="font-weight:900; font-size:14px; color:#a855f7;" id="notesSelectedClassTitle">Class 10th</span>
+      </div>
+      <div class="section-title" style="margin:10px 0;"><span>विषय चुनें:</span></div>
+      
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div class="set-row-card" onclick="openNotesChapters('Physics')">
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">⚡</span><h4>Physics (भौतिक विज्ञान)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
+        </div>
+        <div class="set-row-card" onclick="openNotesChapters('Chemistry')">
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">🧪</span><h4>Chemistry (रसायन विज्ञान)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
+        </div>
+        <div class="set-row-card" onclick="openNotesChapters('Biology')">
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">🧬</span><h4>Biology (जीव विज्ञान)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
+        </div>
+        <div class="set-row-card" onclick="openNotesChapters('Maths')">
+          <div style="display:flex; align-items:center; gap:12px;"><span style="font-size:24px;">📐</span><h4>Maths (गणित)</h4></div>
+          <div class="set-action-pill">Chapters ➔</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="notesViewChapters" style="display:none;">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="backToNotesSubjects()">⬅ Back to Subjects</button>
+        <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="notesSelectedSubjTitle">Chapters</span>
+      </div>
+      <div class="section-title" style="margin:10px 0;"><span>अध्याय चुनें और सीधे पढ़ें:</span></div>
+      <div id="notesChaptersListContainer" style="display:flex; flex-direction:column; gap:9px;"></div>
+    </div>
+
+    <div id="notesViewReader" style="display:none;">
+      <div class="screen-header-bar">
+        <button class="btn-back" onclick="backToNotesChapters()">⬅ Back to Chapters</button>
+        <span style="font-weight:900; font-size:13px; color:#10b981;" id="notesReadingChapterTitle">Reading Mode</span>
+      </div>
+      <iframe id="notesDocIframe" class="notes-reader-frame" src="about:blank"></iframe>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: DOWNLOADS CENTER (POWERED BY EXTERNAL SHEET) -->
+  <div class="app-screen" id="screenDownloads" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Downloads Center</span>
+    </div>
+    
+    <div class="section-title"><span>📁 विषय अनुसार फ़िल्टर करें:</span></div>
+    
+    <div class="filter-pills-bar">
+      <button class="filter-pill-btn active" onclick="filterDownloadsList('All', this)">All Materials</button>
+      <button class="filter-pill-btn" onclick="filterDownloadsList('Maths', this)">📐 Maths</button>
+      <button class="filter-pill-btn" onclick="filterDownloadsList('Science', this)">🔬 Science</button>
+      <button class="filter-pill-btn" onclick="filterDownloadsList('SST', this)">📜 SST</button>
+    </div>
+
+    <div id="downloadsRenderContainer" style="display:flex; flex-direction:column; gap:10px; margin-top:6px;"></div>
+  </div>
+
+  <!-- SCREEN 5: SAVED BOOKMARKS -->
+  <div class="app-screen" id="screenBookmarks" style="display:none;">
+    <div class="screen-header-bar">
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
+      <span style="font-weight:900; font-size:14px; color:#fbbf24;">⭐ Saved Questions</span>
+    </div>
+    <div class="section-title"><span>पुनः अभ्यास के लिए सेव किए गए प्रश्न:</span></div>
+    <div id="bookmarksRenderList" style="display:flex; flex-direction:column; gap:10px;"></div>
+  </div>
+
+  <!-- SCREEN 6: SETS LIST -->
   <div class="app-screen" id="screenSets" style="display:none;">
     <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back to Home</button>
+      <button class="btn-back" onclick="switchNavTab('screenHome', document.getElementById('navHome'))">⬅ Back to Home</button>
       <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="selectedSubjHeading">Sets</span>
     </div>
-    <div id="setsListRenderBox" style="display:flex; flex-direction:column; gap:10px;"></div>
+    <div class="section-title"><span>🏆 अभ्यास सेट चुनें:</span></div>
+    <div class="sets-list-container" id="setsListRenderBox"></div>
   </div>
 
-  <!-- SCREEN 3: QUIZ (NO SHUFFLE + PERSISTENT HINDI) -->
+  <!-- SCREEN 7: LIVE QUIZ (NO SHUFFLE + DEFAULT ENGLISH + PERSISTENT HINDI) -->
   <div class="app-screen" id="screenQuiz" style="display:none;">
     <div class="screen-header-bar">
-      <button class="btn-back" onclick="confirmExitQuiz()">⬅ Exit Quiz</button>
-      <span style="font-size:13px; font-weight:900; color:#f59e0b;" id="activeQuizSetTitle">Quiz</span>
+      <button class="btn-back" onclick="confirmExitQuiz()">⬅ Test से बाहर जाएँ</button>
+      <span style="font-size:13px; font-weight:900; color:#f59e0b;" id="activeQuizSetTitle">Set 1</span>
     </div>
-    <div class="quiz-card">
+    <div class="quiz-card" id="activeQuizCard">
       <div class="q-meta">
         <div class="q-meta-left">
-          <span style="font-size:12px; font-weight:900; color:#38bdf8;" id="qCounter">Q 1/10</span>
-          <!-- PERSISTENT LANGUAGE TOGGLE -->
-          <button class="btn-lang-toggle" id="btnLangToggle" onclick="toggleQuizLanguage()">🌐 <span id="langToggleText">हिंदी</span></button>
+          <span class="q-counter" id="qCounter">Q 1/10</span>
+          <button class="btn-bookmark" id="btnToggleBookmark" onclick="toggleCurrentBookmark()" title="Save Question">⭐</button>
+          <button class="btn-lang-toggle" id="btnLangToggle" onclick="toggleQuizLanguage()" title="Change Language">🌐 <span id="langToggleText">हिंदी</span></button>
         </div>
         <div class="timer-pill" id="qTimerPill">⏱️ <span id="qTimerSecs">60</span>s</div>
       </div>
@@ -336,67 +842,75 @@
       <div class="options-grid" id="optionsContainer"></div>
       
       <div class="nav-actions">
+        <button class="btn-action btn-prev" id="btnPrev" onclick="prevQuestion()" style="display:none;">⬅ Previous</button>
         <button class="btn-action btn-next" id="btnNext" onclick="nextQuestion()">Next ➔</button>
         <button class="btn-action btn-submit" id="btnSubmit" onclick="submitQuiz()" style="display:none;">Submit Test 🏆</button>
       </div>
     </div>
   </div>
 
-  <!-- SCREEN 4: NOTES ZONE (POWERED BY EXTERNAL SHEET) -->
-  <div class="app-screen" id="screenNotes" style="display:none;">
-    <div id="notesViewSubjects">
-      <div class="screen-header-bar">
-        <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back</button>
-        <span style="font-weight:900; font-size:14px; color:#a855f7;">📖 Notes Zone</span>
+  <!-- SCREEN 8: RESULT -->
+  <div class="app-screen" id="resultScreen">
+    <div class="quiz-card" id="resultMainCard" style="text-align:center;">
+      <h3 style="font-family:'Fredoka',sans-serif; color:#10b981; font-size:23px;" id="resHeadingText">🎉 टेस्ट परिणाम घोषित!</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin-top:2px;" id="resSubjTag">Set 1</p>
+      
+      <div class="score-circle" id="scoreCircleWheel">
+        <div class="score-inner">
+          <span class="score-num" id="resScore">0</span>
+          <span style="font-size:11.5px; color:var(--text-muted); font-weight:700;" id="resTotalQ">out of 10</span>
+        </div>
       </div>
-      <div class="section-title" style="margin:10px 0;"><span>विषय चुनें:</span></div>
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <div class="set-row-card" onclick="openNotesChapters('Physics')"><h4>Physics (भौतिक विज्ञान)</h4><div class="set-action-pill">Open ➔</div></div>
-        <div class="set-row-card" onclick="openNotesChapters('Chemistry')"><h4>Chemistry (रसायन विज्ञान)</h4><div class="set-action-pill">Open ➔</div></div>
-        <div class="set-row-card" onclick="openNotesChapters('Biology')"><h4>Biology (जीव विज्ञान)</h4><div class="set-action-pill">Open ➔</div></div>
-        <div class="set-row-card" onclick="openNotesChapters('Maths')"><h4>Maths (गणित)</h4><div class="set-action-pill">Open ➔</div></div>
-      </div>
-    </div>
+      
+      <div id="unlockResultBanner" class="unlock-banner unlock-success"></div>
 
-    <div id="notesViewChapters" style="display:none;">
-      <div class="screen-header-bar">
-        <button class="btn-back" onclick="backToNotesSubj()">⬅ Back to Subjects</button>
-        <span style="font-weight:900; font-size:14px; color:#f59e0b;" id="notesSelectedSubjTitle">Chapters</span>
+      <div class="analysis-card" id="weakTopicAnalysisCard">
+        <span class="analysis-pill">📊 Performance Insight:</span>
+        <div style="font-size:12.5px; font-weight:700; color:#fff;" id="analysisInsightText">Analyzing answers...</div>
       </div>
-      <div id="notesChaptersListContainer" style="display:flex; flex-direction:column; gap:9px; margin-top:10px;"></div>
-    </div>
 
-    <div id="notesViewReader" style="display:none;">
-      <div class="screen-header-bar">
-        <button class="btn-back" onclick="backToNotesChap()">⬅ Back to Chapters</button>
-        <span style="font-weight:900; font-size:13px; color:#10b981;" id="notesReadingChapterTitle">Reading Mode</span>
+      <a href="#" class="btn-pwa-install" id="btnWhatsappShare" target="_blank" style="background:#25d366; border:none; text-decoration:none; margin-top:4px;">
+        <span>📲</span> दोस्तों को चुनौती दें (WhatsApp Share)
+      </a>
+
+      <div style="width:100%; text-align:left; margin-top:14px;">
+        <div style="font-size:14px; font-weight:900; color:var(--text-main); margin-bottom:8px;">
+          <span>📝 उत्तर समीक्षा एवं व्याख्या (Solutions):</span>
+        </div>
+        <div id="reviewQuestionsList" style="display:flex; flex-direction:column; gap:9px;"></div>
       </div>
-      <iframe id="notesDocIframe" class="notes-reader-frame" src="about:blank"></iframe>
-    </div>
-  </div>
 
-  <!-- SCREEN 5: DOWNLOADS (POWERED BY EXTERNAL SHEET) -->
-  <div class="app-screen" id="screenDownloads" style="display:none;">
-    <div class="screen-header-bar">
-      <button class="btn-back" onclick="navigateTo('screenHome')">⬅ Back</button>
-      <span style="font-weight:900; font-size:14px; color:#10b981;">📥 Downloads Center</span>
+      <div style="display:flex; gap:12px; margin-top:16px;">
+        <button class="btn-action btn-next" style="background:#4338ca; color:#fff;" onclick="openSubjectSets(currentSubject)">Sets List</button>
+        <button class="btn-action btn-next" id="btnNextLevelAction" onclick="goToNextLevelOrRetry()">Next Set ➔</button>
+      </div>
     </div>
-    <div class="filter-pills-bar" style="margin-top:6px;">
-      <button class="filter-pill-btn active" onclick="filterDownloadsList('All', this)">All</button>
-      <button class="filter-pill-btn" onclick="filterDownloadsList('Maths', this)">📐 Maths</button>
-      <button class="filter-pill-btn" onclick="filterDownloadsList('Science', this)">🔬 Science</button>
-      <button class="filter-pill-btn" onclick="filterDownloadsList('SST', this)">📜 SST</button>
-    </div>
-    <div id="downloadsRenderContainer" style="display:flex; flex-direction:column; gap:10px; margin-top:10px;"></div>
   </div>
 
 </div>
 
-<!-- BOTTOM 5-BUTTON BAR -->
-<nav class="bottom-nav-bar">
-  <div class="nav-item active" onclick="switchNavTab('screenHome', this)"><span>🏠</span><span style="font-size:10px;">Home</span></div>
-  <div class="nav-item" onclick="switchNavTab('screenNotes', this)"><span>📖</span><span style="font-size:10px;">Notes</span></div>
-  <div class="nav-item" onclick="switchNavTab('screenDownloads', this)"><span>📥</span><span style="font-size:10px;">Downloads</span></div>
+<!-- 5-BUTTON BOTTOM NAVIGATION BAR -->
+<nav class="bottom-nav-bar" id="bottomNavBar">
+  <div class="nav-item active" id="navHome" onclick="switchNavTab('screenHome', this)">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+  </div>
+  <div class="nav-item" id="navRanks" onclick="switchNavTab('screenLeaderboard', this)">
+    <span class="nav-icon">🏆</span>
+    <span class="nav-label">Ranks</span>
+  </div>
+  <div class="nav-item" id="navNotes" onclick="switchNavTab('screenNotes', this)">
+    <span class="nav-icon">📖</span>
+    <span class="nav-label">Notes</span>
+  </div>
+  <div class="nav-item" id="navDownloads" onclick="switchNavTab('screenDownloads', this)">
+    <span class="nav-icon">📥</span>
+    <span class="nav-label">Downloads</span>
+  </div>
+  <div class="nav-item" id="navSaved" onclick="switchNavTab('screenBookmarks', this)">
+    <span class="nav-icon">⭐</span>
+    <span class="nav-label">Saved</span>
+  </div>
 </nav>
 
 <script>
@@ -410,36 +924,349 @@
   let userAnswers = {};
   let qTimerInterval = null;
   let qTimeLeft = 60;
-  
-  // RULE: STRICT DEFAULT ENGLISH & PERSISTENT HINDI
-  let currentQuizLang = 'en'; 
+  let quizStartTime = null; 
+  let isCurrentQuizDailyLive = false;
+  let currentQuizSubmissionType = 'LIVE'; 
+  let cloudLeaderboards = {};
+  let isSoundEnabled = true;
+
+  // RULE 1: STRICT DEFAULT ENGLISH
+  let currentQuizLang = 'en';
+
+  let liveScheduleData = null; 
+  let countdownTimerInterval = null;
+  let pendingQuizAction = null;
 
   let dynamicNotesData = {};
   let dynamicDownloadsData = [];
 
-  function navigateTo(screenId) {
-    clearInterval(qTimerInterval);
-    ['screenHome', 'screenSets', 'screenQuiz', 'screenNotes', 'screenDownloads'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-    const target = document.getElementById(screenId);
-    if (target) target.style.display = 'flex';
-    window.scrollTo(0, 0);
+  let currentUser = {
+    name: '', totalScore: 0, currentRank: '--',
+    streak: 1, lastActiveDate: '',
+    unlockedLevels: { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 },
+    setScores: {},
+    setAttempts: {},
+    attemptedLiveTests: {},
+    bookmarks: []
+  };
+
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function playTone(freq, duration, type = 'sine') {
+    if (!isSoundEnabled) return;
+    try {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e){}
+  }
+  function playTickSound() { playTone(900, 0.06, 'triangle'); }
+  function playVictorySound() {
+    if (!isSoundEnabled) return;
+    [261.63, 329.63, 392.00, 523.25].forEach((f, idx) => setTimeout(() => playTone(f, 0.25, 'triangle'), idx * 120));
+  }
+  function playFailureSound() {
+    if (!isSoundEnabled) return;
+    [392.00, 349.23, 311.13, 261.63].forEach((f, idx) => setTimeout(() => playTone(f, 0.35, 'sine'), idx * 160));
+  }
+  function toggleSound() {
+    isSoundEnabled = !isSoundEnabled;
+    document.getElementById('soundToggleBtn').innerText = isSoundEnabled ? '🔊' : '🔇';
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem('vimal_arena_theme') || 'dark';
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-theme');
+      document.getElementById('themeToggleBtn').innerText = '🌙';
+    }
+  }
+  function toggleTheme() {
+    const isLight = document.body.classList.toggle('light-theme');
+    localStorage.setItem('vimal_arena_theme', isLight ? 'light' : 'dark');
+    document.getElementById('themeToggleBtn').innerText = isLight ? '🌙' : '☀️';
+  }
+
+  function formatMathFormula(text) {
+    if (text === undefined || text === null) return '';
+    return text.toString()
+      .replace(/\balpha\b/gi, 'α').replace(/\bbeta\b/gi, 'β').replace(/\bgamma\b/gi, 'γ')
+      .replace(/\btheta\b/gi, 'θ').replace(/\bpi\b/gi, 'π').replace(/sqrt\s*/gi, '√')
+      .replace(/\^([0-9a-zA-Z+-]+)/g, '<sup>$1</sup>')
+      .replace(/([A-Z][a-z]?|\))(\d+)/g, '$1<sub>$2</sub>');
+  }
+
+  function updateDailyStreak() {
+    const today = new Date().toISOString().split('T')[0];
+    if (!currentUser.lastActiveDate) {
+      currentUser.streak = 1;
+      currentUser.lastActiveDate = today;
+    } else if (currentUser.lastActiveDate !== today) {
+      const lastDate = new Date(currentUser.lastActiveDate);
+      const currentDate = new Date(today);
+      const diffTime = Math.abs(currentDate - lastDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      if (diffDays === 1) currentUser.streak = (currentUser.streak || 1) + 1;
+      else if (diffDays > 1) currentUser.streak = 1;
+      currentUser.lastActiveDate = today;
+    }
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+  }
+
+  function evaluateBadges() {
+    if (currentUser.streak >= 3) document.getElementById('badgeStreak')?.classList.add('unlocked');
+    if ((currentUser.totalScore || 0) >= 50) document.getElementById('badgeScholar')?.classList.add('unlocked');
+    if (currentUser.currentRank && !isNaN(currentUser.currentRank) && Number(currentUser.currentRank) <= 3) {
+      document.getElementById('badgeMaster')?.classList.add('unlocked');
+    }
+  }
+
+  function updateNavIconsState(screenId) {
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if (screenId === 'screenHome') document.getElementById('navHome')?.classList.add('active');
+    else if (screenId === 'screenLeaderboard') document.getElementById('navRanks')?.classList.add('active');
+    else if (screenId === 'screenNotes') document.getElementById('navNotes')?.classList.add('active');
+    else if (screenId === 'screenDownloads') document.getElementById('navDownloads')?.classList.add('active');
+    else if (screenId === 'screenBookmarks') document.getElementById('navSaved')?.classList.add('active');
   }
 
   function switchNavTab(screenId, navEl) {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     if (navEl) navEl.classList.add('active');
+    if (screenId === 'screenNotes') backToNotesClasses();
     if (screenId === 'screenDownloads') renderDownloadsList('All');
-    if (screenId === 'screenNotes') backToNotesSubj();
-    navigateTo(screenId);
+    if (screenId === 'screenBookmarks') renderBookmarksList();
+    navigateTo(screenId, true);
+  }
+
+  function navigateTo(screenId, addToHistory = true) {
+    clearInterval(qTimerInterval);
+    ['screenHome', 'screenLeaderboard', 'screenSets', 'screenQuiz', 'resultScreen', 'screenDownloads', 'screenBookmarks', 'screenNotes'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    const target = document.getElementById(screenId);
+    if (target) target.style.display = 'flex';
+
+    const navBar = document.getElementById('bottomNavBar');
+    if (navBar) navBar.style.display = (screenId === 'screenQuiz') ? 'none' : 'flex';
+    window.scrollTo(0, 0);
+
+    updateNavIconsState(screenId);
+
+    if (addToHistory && screenId !== 'screenHome') {
+      history.pushState({ screen: screenId }, '');
+    }
+  }
+
+  window.addEventListener('popstate', () => {
+    const activeQuiz = document.getElementById('screenQuiz');
+    if (activeQuiz && activeQuiz.style.display === 'flex') {
+      if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) {
+        openSubjectSets(currentSubject);
+      } else {
+        history.pushState({ screen: 'screenQuiz' }, '');
+      }
+      return;
+    }
+    const readerView = document.getElementById('notesViewReader');
+    if (readerView && readerView.style.display === 'block') { backToNotesChapters(); return; }
+    const chapView = document.getElementById('notesViewChapters');
+    if (chapView && chapView.style.display === 'block') { backToNotesSubjects(); return; }
+    const subjView = document.getElementById('notesViewSubjects');
+    if (subjView && subjView.style.display === 'block') { backToNotesClasses(); return; }
+
+    const setsScreen = document.getElementById('screenSets');
+    const resScreen = document.getElementById('resultScreen');
+    if ((setsScreen && setsScreen.style.display === 'flex') || (resScreen && resScreen.style.display === 'flex')) {
+      navigateTo('screenHome', false);
+      return;
+    }
+    navigateTo('screenHome', false);
+  });
+
+  // NO SHUFFLING: Questions and Options are preserved in exact sheet order. Headers are strictly excluded.
+  function prepareQuizQuestionsNoShuffle(rawQuestions) {
+    if (!rawQuestions || rawQuestions.length === 0) return [];
+    let validList = rawQuestions.filter(q => {
+      let qStr = (q.q || '').toString().trim().toLowerCase();
+      let qHiStr = (q.q_hi || '').toString().trim().toLowerCase();
+      if (qStr === 'question' || qStr === 'level' || qStr === 'settitle' || qHiStr === 'question_hi') return false;
+      return (qStr !== '' || qHiStr !== '');
+    });
+
+    let qList = JSON.parse(JSON.stringify(validList));
+    qList.forEach(q => {
+      let enOpts = (q.options && q.options.length === 4) ? q.options : ["", "", "", ""];
+      let hiOpts = (q.options_hi && q.options_hi.length === 4) ? q.options_hi : enOpts;
+      q.options = enOpts.map(o => (o !== undefined && o !== null) ? o.toString().trim() : '');
+      q.options_hi = hiOpts.map((o, idx) => {
+        let val = (o !== undefined && o !== null) ? o.toString().trim() : '';
+        return (val !== '') ? val : q.options[idx];
+      });
+    });
+    return qList;
+  }
+
+  /* NOTES ENGINE (POWERED BY EXTERNAL SHEET) */
+  function openNotesSubjects(className) {
+    document.getElementById('notesSelectedClassTitle').innerText = `${className} Subjects`;
+    document.getElementById('notesViewClasses').style.display = 'none';
+    document.getElementById('notesViewSubjects').style.display = 'block';
+  }
+  function backToNotesClasses() {
+    document.getElementById('notesViewClasses').style.display = 'block';
+    document.getElementById('notesViewSubjects').style.display = 'none';
+    document.getElementById('notesViewChapters').style.display = 'none';
+    document.getElementById('notesViewReader').style.display = 'none';
+    document.getElementById('notesDocIframe').src = 'about:blank';
+  }
+  function openNotesChapters(subjectName) {
+    document.getElementById('notesSelectedSubjTitle').innerText = `${subjectName} Chapters`;
+    document.getElementById('notesViewSubjects').style.display = 'none';
+    document.getElementById('notesViewChapters').style.display = 'block';
+
+    const container = document.getElementById('notesChaptersListContainer');
+    container.innerHTML = '';
+    const chapters = (dynamicNotesData['Class 10'] && dynamicNotesData['Class 10'][subjectName]) || [];
+
+    if (chapters.length === 0) {
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय के नोट्स Google Sheet में जोड़ें!</div>`;
+      return;
+    }
+
+    chapters.forEach(chap => {
+      const card = document.createElement('div');
+      card.className = 'notes-chapter-item';
+      card.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:20px;">📄</span>
+          <span style="font-size:13.5px; font-weight:700; color:#fff;">${chap.name}</span>
+        </div>
+        <div class="set-action-pill" style="background:linear-gradient(135deg,#10b981,#059669); color:#fff;">पढ़ें 📖</div>
+      `;
+      card.onclick = () => {
+        document.getElementById('notesReadingChapterTitle').innerText = chap.name;
+        document.getElementById('notesViewChapters').style.display = 'none';
+        document.getElementById('notesViewReader').style.display = 'block';
+        document.getElementById('notesDocIframe').src = chap.docUrl;
+      };
+      container.appendChild(card);
+    });
+  }
+  function backToNotesSubjects() {
+    document.getElementById('notesViewSubjects').style.display = 'block';
+    document.getElementById('notesViewChapters').style.display = 'none';
+    document.getElementById('notesViewReader').style.display = 'none';
+    document.getElementById('notesDocIframe').src = 'about:blank';
+  }
+  function backToNotesChapters() {
+    document.getElementById('notesViewChapters').style.display = 'block';
+    document.getElementById('notesViewReader').style.display = 'none';
+    document.getElementById('notesDocIframe').src = 'about:blank';
+  }
+
+  /* DOWNLOADS ENGINE (POWERED BY EXTERNAL SHEET) */
+  function filterDownloadsList(subject, btnEl) {
+    document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    renderDownloadsList(subject);
+  }
+
+  function renderDownloadsList(selectedSubj = 'All') {
+    const container = document.getElementById('downloadsRenderContainer');
+    container.innerHTML = '';
+    const list = (selectedSubj === 'All') ? dynamicDownloadsData : dynamicDownloadsData.filter(d => d.subject === selectedSubj || d.subject === 'All');
+
+    if (list.length === 0) {
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">इस विषय की PDF Google Sheet में जोड़ें!</div>`;
+      return;
+    }
+
+    list.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'download-card-item';
+      card.innerHTML = `
+        <div>
+          <h4 style="font-size:14.5px; font-weight:800; color:#fff;">${item.title}</h4>
+          <p style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">${item.desc}</p>
+        </div>
+        <a href="${item.link}" target="_blank" class="download-link-btn">डाउनलोड ⬇</a>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  /* AUTH & CLOUD SYNC */
+  function saveQuickPlayerName() {
+    const entered = document.getElementById('studentQuickName').value.trim();
+    if (!entered) return alert("कृपया अपना नाम लिखें!");
+    currentUser.name = entered;
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+    document.getElementById('userModal').style.display = 'none';
+    updatePlayerUI();
+    if (pendingQuizAction) {
+      const act = pendingQuizAction;
+      pendingQuizAction = null;
+      act();
+    }
+  }
+
+  function initApp() {
+    initTheme();
+    const saved = localStorage.getItem('vimal_arena_quick_player');
+    if (saved) {
+      try { 
+        currentUser = JSON.parse(saved); 
+        if (currentUser.totalXP && !currentUser.totalScore) currentUser.totalScore = Math.round(currentUser.totalXP / 10);
+      } catch(e){}
+    }
+    if (!currentUser.unlockedLevels) currentUser.unlockedLevels = { Math: 1, Science: 1, SocialScience: 1, English: 1, GK: 1 };
+    if (!currentUser.setScores) currentUser.setScores = {};
+    if (!currentUser.setAttempts) currentUser.setAttempts = {};
+    if (!currentUser.attemptedLiveTests) currentUser.attemptedLiveTests = {};
+    if (!currentUser.bookmarks) currentUser.bookmarks = [];
+
+    updateDailyStreak();
+    document.getElementById('userModal').style.display = 'none';
+    updatePlayerUI();
+    evaluateBadges();
+    navigateTo('screenHome', false);
+    fetchCloudData();
+  }
+
+  function logoutUser() {
+    if (!confirm("क्या आप नाम बदलकर दोबारा शुरू करना चाहते हैं?")) return;
+    localStorage.removeItem('vimal_arena_quick_player');
+    location.reload();
+  }
+
+  function updatePlayerUI() {
+    document.getElementById('dispName').innerText = currentUser.name || "विद्यार्थी (Guest)";
+    document.getElementById('userInitial').innerText = (currentUser.name ? currentUser.name[0] : 'S').toUpperCase();
+    document.getElementById('dispXP').innerText = `${currentUser.totalScore || 0} Score`;
+    document.getElementById('topUserRank').innerText = currentUser.currentRank ? `Rank #${currentUser.currentRank}` : 'Rank #--';
+    document.getElementById('dispStreak').innerText = `🔥 ${currentUser.streak || 1} Day`;
+    evaluateBadges();
   }
 
   async function fetchCloudData() {
     try {
       const resp = await fetch(SCRIPT_WEBHOOK_URL);
       const data = await resp.json();
+
+      if (data.dailyThought) {
+        document.getElementById('dailyThoughtText').innerText = `"${data.dailyThought}"`;
+        if (data.dailyThoughtAuthor) document.getElementById('dailyThoughtAuthor').innerText = `– ${data.dailyThoughtAuthor}`;
+      }
+
       if (data.quizzes) {
         for (let s in data.quizzes) quizDatabase[s] = data.quizzes[s];
         document.getElementById('mathSetsSub').innerText = `${quizDatabase.Math.length} Sets Live`;
@@ -448,75 +1275,464 @@
         document.getElementById('engSetsSub').innerText = `${quizDatabase.English.length} Sets Live`;
         document.getElementById('gkSetsSub').innerText = `${quizDatabase.GK.length} Sets Live`;
       }
+
       if (data.notesData) dynamicNotesData = data.notesData;
       if (data.downloadsData) dynamicDownloadsData = data.downloadsData;
-    } catch(e) { console.warn(e); }
+
+      if (data.leaderboards) {
+        cloudLeaderboards = data.leaderboards;
+        renderLeaderboardList(cloudLeaderboards.dailyLive || [], true);
+      }
+
+      if (data.liveSchedule) {
+        liveScheduleData = data.liveSchedule;
+        initScheduleWatcher();
+      }
+
+      if (data.activeUsers && data.activeUsers.length > 0) {
+        document.getElementById('liveTickerText').innerText = "🟢 Online Now: " + data.activeUsers.join(" • ") + " • Appearing in Mock Tests";
+      }
+    } catch (e) { console.warn(e); }
+  }
+
+  function initScheduleWatcher() {
+    clearInterval(countdownTimerInterval);
+    if (!liveScheduleData) return;
+
+    function parseTimeObj(dateStr, timeStr) {
+      const [yy, mm, dd] = dateStr.split('-').map(Number);
+      const [hh, min] = timeStr.split(':').map(Number);
+      return new Date(yy, mm - 1, dd, hh, min, 0);
+    }
+
+    const startDate = parseTimeObj(liveScheduleData.date, liveScheduleData.startTime);
+    const endDate = parseTimeObj(liveScheduleData.date, liveScheduleData.endTime);
+
+    const card = document.getElementById('newQuizFlashCard');
+    const badge = document.getElementById('flashBadgeTitle');
+    const msg = document.getElementById('flashNoticeText');
+    const btn = document.getElementById('btnFlashAction');
+    const icon = document.getElementById('flashIconBox');
+
+    card.style.display = 'flex';
+
+    function tick() {
+      const now = new Date();
+      const liveKey = `${liveScheduleData.subject}_Set${liveScheduleData.level}`;
+      const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
+
+      if (now < startDate) {
+        const diffMs = startDate - now;
+        const diffHrs = Math.floor(diffMs / 3600000);
+        const diffMins = Math.floor((diffMs % 3600000) / 60000);
+        const diffSecs = Math.floor((diffMs % 60000) / 1000);
+        const cdStr = `${String(diffHrs).padStart(2,'0')}h ${String(diffMins).padStart(2,'0')}m ${String(diffSecs).padStart(2,'0')}s`;
+
+        card.className = "flash-alert-card upcoming";
+        icon.innerText = "⏳";
+        badge.innerText = "UPCOMING LIVE TEST";
+        msg.innerHTML = `${liveScheduleData.title}<br>Starts in: <span class="flash-timer-highlight">${cdStr}</span> (${liveScheduleData.startTime})`;
+        btn.innerText = "Upcoming 🔒";
+        btn.className = "flash-btn locked";
+      } 
+      else if (now >= startDate && now <= endDate) {
+        card.className = "flash-alert-card";
+        icon.innerText = "🔥";
+        badge.innerText = "LIVE NOW (1 HOUR WINDOW)";
+
+        const diffMs = endDate - now;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffSecs = Math.floor((diffMs % 60000) / 1000);
+        const remStr = `${String(diffMins).padStart(2,'0')}m ${String(diffSecs).padStart(2,'0')}s`;
+
+        if (attempted) {
+          msg.innerHTML = `${liveScheduleData.title}<br>✅ आपने टेस्ट दे दिया है (स्कोर: ${attempted.score}/${attempted.total})`;
+          btn.innerText = "Completed 🔒";
+          btn.className = "flash-btn completed";
+        } else {
+          msg.innerHTML = `${liveScheduleData.title}<br>Time Left: <span class="flash-timer-highlight">${remStr}</span>`;
+          btn.innerText = "Start Live ➔";
+          btn.className = "flash-btn";
+        }
+      } 
+      else {
+        card.className = "flash-alert-card closed";
+        icon.innerText = "📚";
+        badge.innerText = "PRACTICE ARCHIVE";
+        msg.innerHTML = `${liveScheduleData.title} (Live Ended)<br>अब इसे कभी भी अभ्यास के रूप में दें।`;
+        btn.innerText = "Practice ▶";
+        btn.className = "flash-btn";
+      }
+    }
+
+    tick();
+    countdownTimerInterval = setInterval(tick, 1000);
+  }
+
+  function handleFlashClick() {
+    if (!liveScheduleData) return;
+    const now = new Date();
+    const [yy, mm, dd] = liveScheduleData.date.split('-').map(Number);
+    const [sh, sm] = liveScheduleData.startTime.split(':').map(Number);
+    const [eh, em] = liveScheduleData.endTime.split(':').map(Number);
+    const sDate = new Date(yy, mm - 1, dd, sh, sm, 0);
+    const eDate = new Date(yy, mm - 1, dd, eh, em, 0);
+
+    const liveKey = `${liveScheduleData.subject}_Set${liveScheduleData.level}`;
+    const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
+
+    if (now < sDate) return alert(`⏳ यह टेस्ट रात ${liveScheduleData.startTime} बजे लाइव होगा। तब तक उल्टी गिनती देखें!`);
+    if (now >= sDate && now <= eDate) {
+      if (attempted) return alert(`⚠️ आप आज का लाइव टेस्ट पहले ही दे चुके हैं!\n\nस्कोर: ${attempted.score}/${attempted.total}\nसमय: ${attempted.timeTaken}s`);
+      currentSubject = liveScheduleData.subject;
+      startQuizSet(liveScheduleData.level, true, 'LIVE');
+    } else {
+      currentSubject = liveScheduleData.subject;
+      startQuizSet(liveScheduleData.level, false, 'PRACTICE');
+    }
+  }
+
+  function switchLeaderboardTab(tabKey, btnEl) {
+    document.querySelectorAll('.lb-tab-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+
+    const header = document.getElementById('lbCurrentHeaderTitle');
+    const isLive = (tabKey === 'dailyLive');
+
+    if (isLive) header.innerText = "🔥 Today's Live Quiz Rankers (Speed & Marks)";
+    else header.innerText = "🏆 All-Time Score Rankers";
+
+    const targetList = cloudLeaderboards[tabKey] || [];
+    renderLeaderboardList(targetList, isLive);
+  }
+
+  function renderLeaderboardList(rankList, isLive = false) {
+    const listEl = document.getElementById('fullLeaderboardList');
+    if (!listEl) return;
+
+    if (!rankList || rankList.length === 0) {
+      listEl.innerHTML = `<div style="color:var(--text-muted); font-size:12.5px; text-align:center; padding:20px;">अभी इस बोर्ड पर कोई स्कोर दर्ज नहीं है।</div>`;
+      return;
+    }
+
+    if (!isLive) {
+      rankList.forEach(item => {
+        if (item.name.toLowerCase() === (currentUser.name || '').toLowerCase()) {
+          currentUser.currentRank = item.rank;
+          document.getElementById('topUserRank').innerText = `Rank #${item.rank}`;
+        }
+      });
+      evaluateBadges();
+    }
+
+    const p1 = rankList[0] || null;
+    const p2 = rankList[1] || null;
+    const p3 = rankList[2] || null;
+    const rest = rankList.slice(3);
+
+    function formatStat(item) {
+      if (!item) return '';
+      return isLive ? `${item.score}/${item.total} (${item.timeTaken}s)` : `${item.totalScore || 0} Score`;
+    }
+
+    let html = `
+      <div class="podium-stage">
+        <div class="podium-col rank-2">
+          ${p2 ? `
+            <div class="podium-avatar-wrap">
+              <div class="podium-avatar">${p2.name.charAt(0).toUpperCase()}</div>
+              <div class="podium-badge-icon">#2</div>
+            </div>
+            <div class="podium-name">${p2.name}</div>
+            <div class="podium-score">${formatStat(p2)}</div>
+            <div class="podium-pedestal">2</div>
+          ` : `<div style="height:120px;"></div>`}
+        </div>
+
+        <div class="podium-col rank-1">
+          ${p1 ? `
+            <div class="podium-avatar-wrap">
+              <div class="podium-crown">👑</div>
+              <div class="podium-avatar">${p1.name.charAt(0).toUpperCase()}</div>
+              <div class="podium-badge-icon">#1</div>
+            </div>
+            <div class="podium-name">${p1.name}</div>
+            <div class="podium-score">${formatStat(p1)}</div>
+            <div class="podium-pedestal">1</div>
+          ` : `<div style="height:140px;"></div>`}
+        </div>
+
+        <div class="podium-col rank-3">
+          ${p3 ? `
+            <div class="podium-avatar-wrap">
+              <div class="podium-avatar">${p3.name.charAt(0).toUpperCase()}</div>
+              <div class="podium-badge-icon">#3</div>
+            </div>
+            <div class="podium-name">${p3.name}</div>
+            <div class="podium-score">${formatStat(p3)}</div>
+            <div class="podium-pedestal">3</div>
+          ` : `<div style="height:110px;"></div>`}
+        </div>
+      </div>
+    `;
+
+    if (rest.length > 0) {
+      html += `<div class="lb-list-rest">`;
+      rest.forEach(item => {
+        const isMe = item.name.toLowerCase() === (currentUser.name || '').toLowerCase();
+        html += `
+          <div class="lb-item ${isMe ? 'is-me' : ''}">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-weight:900; color:#f59e0b; width:28px;">#${item.rank}</span>
+              <span>${item.name} ${isMe ? '<b>(You)</b>' : ''}</span>
+            </div>
+            <div style="color:#0284c7; font-weight:900;">${formatStat(item)}</div>
+          </div>
+        `;
+      });
+      html += `</div>`;
+    }
+
+    listEl.innerHTML = html;
   }
 
   function openSubjectSets(subj) {
     currentSubject = subj;
-    document.getElementById('selectedSubjHeading').innerText = subj + " Sets";
+    const titles = { Math: '📐 Maths Sets', Science: '🔬 Class X Science Sets', SocialScience: '📜 Class X SST Sets', English: '✍️ English Grammar Sets', GK: '🌍 GK Sets' };
+    document.getElementById('selectedSubjHeading').innerText = titles[subj] || 'Sets';
+    renderSetsList();
+    navigateTo('screenSets', true);
+  }
+
+  function renderSetsList() {
     const container = document.getElementById('setsListRenderBox');
     container.innerHTML = '';
     const sets = quizDatabase[currentSubject] || [];
+    const unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
+
+    if (sets.length === 0) {
+      container.innerHTML = `<div class="skeleton-box"></div><div class="skeleton-box"></div><div class="skeleton-box"></div>`;
+      return;
+    }
+
+    if (liveScheduleData && liveScheduleData.subject === currentSubject) {
+      const liveSetObj = sets.find(s => Number(s.level) === liveScheduleData.level);
+      if (liveSetObj) {
+        const liveKey = `${currentSubject}_Set${liveSetObj.level}`;
+        const attempted = currentUser.attemptedLiveTests && currentUser.attemptedLiveTests[liveKey];
+
+        const card = document.createElement('div');
+        card.className = 'set-row-card live-pinned';
+        card.innerHTML = `
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">${attempted ? '✅' : '🔥'}</span>
+            <div>
+              <div style="font-size:9.5px; font-weight:900; color:#ef4444; background:#fff; padding:1px 6px; border-radius:4px; display:inline-block;">TODAY'S EVENT</div>
+              <h4 style="font-size:14.5px; font-weight:800; color:#fff;">${liveSetObj.title}</h4>
+              <span style="font-size:11px; color:#fef08a;">${attempted ? `Submitted: ${attempted.score}/${attempted.total} (${attempted.timeTaken}s)` : `Window: ${liveScheduleData.startTime} -${liveScheduleData.endTime}`}</span>
+            </div>
+          </div>
+          <div class="set-action-pill" style="background:${attempted ? '#10b981':'linear-gradient(135deg,#ef4444,#f59e0b)'}; color:#fff;">
+            ${attempted ? 'Done 🔒' : 'Open ▶'}
+          </div>
+        `;
+        card.onclick = handleFlashClick;
+        container.appendChild(card);
+      }
+    }
+
     sets.forEach(set => {
+      const setLvl = Number(set.level);
+      if (liveScheduleData && liveScheduleData.subject === currentSubject && setLvl === liveScheduleData.level) return;
+
+      const isLocked = setLvl > unlockedMax;
+      const setKey = `${currentSubject}_Set${setLvl}`;
+      const bestScore = currentUser.setScores && currentUser.setScores[setKey];
+      const attemptsDone = currentUser.setAttempts && currentUser.setAttempts[setKey];
+
       const row = document.createElement('div');
-      row.className = 'set-row-card';
-      row.innerHTML = `<h4>${set.title}</h4><div class="set-action-pill">Start ▶</div>`;
-      row.onclick = () => startQuizSet(set.level);
+      row.className = 'set-row-card ' + (isLocked ? 'locked' : 'unlocked');
+      row.innerHTML = `
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:22px;">${isLocked ? '🔒' : '🔓'}</span>
+          <div>
+            <h4 style="font-size:14px; font-weight:800;">${set.title}</h4>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="font-size:11px; color:var(--text-muted);">${set.questions.length} Questions</span>
+              ${bestScore !== undefined ? `<span class="set-best-badge">Score: ${bestScore}/${set.questions.length} (Att:${attemptsDone || 1}) ✅</span>` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="set-action-pill">${isLocked ? 'Locked' : (bestScore !== undefined ? 'Re-test 🔁' : 'Start ▶')}</div>
+      `;
+      row.onclick = () => {
+        if (isLocked) return alert(`🔒 Set ${set.level} locked है! पिछला सेट पास करें।`);
+        startQuizSet(set.level, false, 'PRACTICE');
+      };
       container.appendChild(row);
     });
-    navigateTo('screenSets');
   }
 
-  function startQuizSet(lvl) {
+  /* QUIZ ENGINE: NO SHUFFLE + DEFAULT ENGLISH + PERSISTENT HINDI */
+  function startQuizSet(lvl, isLive = false, subType = 'LIVE') {
+    if (!currentUser.name || currentUser.name.trim() === '') {
+      pendingQuizAction = () => startQuizSet(lvl, isLive, subType);
+      document.getElementById('userModal').style.display = 'flex';
+      document.getElementById('studentQuickName').focus();
+      return;
+    }
+
     currentLevel = Number(lvl);
+    isCurrentQuizDailyLive = isLive;
+    currentQuizSubmissionType = subType;
     userAnswers = {};
+    quizStartTime = Date.now();
+
     const setObj = quizDatabase[currentSubject].find(s => Number(s.level) === currentLevel);
+    document.getElementById('activeQuizSetTitle').innerText = `${isLive ? '🔥 LIVE: ' : ''}${currentSubject} - ${setObj ? setObj.title : 'Set ' + currentLevel}`;
 
-    // NO SHUFFLING: Exact questions as per Google Sheet
-    currentActiveQuestions = setObj ? setObj.questions : [];
+    // STRICT NO SHUFFLING: Exact questions as per Google Sheet
+    currentActiveQuestions = prepareQuizQuestionsNoShuffle(setObj ? setObj.questions : []);
 
-    // RULE: ALWAYS START IN ENGLISH BY DEFAULT
+    // RULE 1: STRICT DEFAULT ENGLISH ON START
     currentQuizLang = 'en';
+
     const langBtn = document.getElementById('btnLangToggle');
     if (currentSubject === 'English') {
       langBtn.style.display = 'none';
     } else {
       langBtn.style.display = 'inline-flex';
-      document.getElementById('langToggleText').innerText = 'हिंदी';
+      document.getElementById('langToggleText').innerText = 'हिंदी'; // Shows next switch target
     }
 
-    navigateTo('screenQuiz');
+    navigateTo('screenQuiz', true);
     loadQuestion(0);
   }
 
-  // RULE: ONCE HINDI IS TOUCHED, EVERYTHING STAYS HINDI UNTIL TOGGLED BACK
+  function getCurrentQuestions() {
+    return currentActiveQuestions;
+  }
+
+  // RULE 2: PERSISTENT LANGUAGE TOGGLE (EK BAAR HINDI TOUCH KIYA TO SARE QUESTIONS HINDI HO JAYENGE)
   function toggleQuizLanguage() {
     currentQuizLang = (currentQuizLang === 'en') ? 'hi' : 'en';
     document.getElementById('langToggleText').innerText = (currentQuizLang === 'en') ? 'हिंदी' : 'ENG';
     renderCurrentQuestionText(currentQIdx);
   }
 
-  function renderCurrentQuestionText(idx) {
-    const qData = currentActiveQuestions[idx];
+  function isQuestionBookmarked(qText) {
+    return (currentUser.bookmarks || []).some(b => b.q === qText);
+  }
+
+  function toggleCurrentBookmark() {
+    const questions = getCurrentQuestions();
+    const qData = questions[currentQIdx];
     if (!qData) return;
 
-    let qText = (currentQuizLang === 'hi' && qData.q_hi && qData.q_hi.toLowerCase() !== "question_hi") ? qData.q_hi : qData.q;
-    let optsArr = (currentQuizLang === 'hi' && qData.options_hi && qData.options_hi.length === 4) ? qData.options_hi : qData.options;
+    if (!currentUser.bookmarks) currentUser.bookmarks = [];
+    const existingIdx = currentUser.bookmarks.findIndex(b => b.q === qData.q);
 
-    document.getElementById('qCounter').innerText = `Q ${idx + 1}/${currentActiveQuestions.length}`;
-    document.getElementById('qText').innerHTML = `${idx + 1}. ${qText}`;
+    if (existingIdx >= 0) {
+      currentUser.bookmarks.splice(existingIdx, 1);
+      document.getElementById('btnToggleBookmark').classList.remove('active');
+    } else {
+      currentUser.bookmarks.push({
+        q: qData.q,
+        q_hi: qData.q_hi || '',
+        options: qData.options,
+        options_hi: qData.options_hi || [],
+        ans: qData.ans,
+        explanation: qData.explanation || '',
+        explanation_hi: qData.explanation_hi || '',
+        subject: currentSubject
+      });
+      document.getElementById('btnToggleBookmark').classList.add('active');
+    }
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+  }
+
+  function renderBookmarksList() {
+    const container = document.getElementById('bookmarksRenderList');
+    container.innerHTML = '';
+    const bMarks = currentUser.bookmarks || [];
+
+    if (bMarks.length === 0) {
+      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); font-size:13px; padding:30px;">अभी आपने कोई प्रश्न सेव नहीं किया है।<br>क्विज़ के दौरान ⭐ दबाकर प्रश्न सेव करें।</div>`;
+      return;
+    }
+
+    bMarks.forEach((bm, bIdx) => {
+      let qText = bm.q || "";
+      if (currentQuizLang === 'hi' && bm.q_hi && bm.q_hi.toLowerCase() !== "question_hi" && bm.q_hi.trim() !== "") {
+        qText = bm.q_hi;
+      }
+
+      let opts = bm.options || [];
+      if (currentQuizLang === 'hi' && bm.options_hi && bm.options_hi.length === 4) {
+        opts = bm.options_hi.map((opt, oIdx) => (opt && opt.trim() !== "") ? opt : (bm.options[oIdx] || ""));
+      }
+
+      let expl = (currentQuizLang === 'hi' && bm.explanation_hi && bm.explanation_hi.trim() !== "") ? bm.explanation_hi : (bm.explanation || '');
+
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <span style="font-size:11px; color:#38bdf8; font-weight:800;">${bm.subject || 'Practice'}</span>
+          <span style="cursor:pointer; color:#ef4444; font-size:12px; font-weight:800;" onclick="deleteBookmark(${bIdx})">हटाएँ ✕</span>
+        </div>
+        <div style="font-weight:800; font-size:13.5px; margin:6px 0;">${formatMathFormula(qText)}</div>
+        <div style="font-size:12px; color:#10b981; font-weight:800;">👉 सही उत्तर: ${formatMathFormula(opts[bm.ans])}</div>
+        ${expl ? `<div class="explanation-box">💡 ${formatMathFormula(expl)}</div>` : ''}
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function deleteBookmark(idx) {
+    currentUser.bookmarks.splice(idx, 1);
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+    renderBookmarksList();
+  }
+
+  function renderCurrentQuestionText(idx) {
+    const questions = getCurrentQuestions();
+    const qData = questions[idx];
+    if (!qData) return;
+
+    // Strict Header Filtering - Headers like "Question_HI" will NEVER be rendered!
+    let qText = qData.q || "";
+    if (currentQuizLang === 'hi') {
+      if (qData.q_hi && qData.q_hi.toLowerCase() !== "question_hi" && qData.q_hi.trim() !== "") {
+        qText = qData.q_hi;
+      }
+    }
+
+    document.getElementById('qCounter').innerText = `Q ${idx + 1}/${questions.length}`;
+    document.getElementById('qText').innerHTML = `${idx + 1}. ${formatMathFormula(qText)}`;
+
+    const bmBtn = document.getElementById('btnToggleBookmark');
+    if (isQuestionBookmarked(qData.q)) bmBtn.classList.add('active');
+    else bmBtn.classList.remove('active');
+
+    // Bulletproof Options Handling: Never leaves options blank!
+    let optsArr = qData.options || [];
+    if (currentQuizLang === 'hi' && qData.options_hi && qData.options_hi.length === 4) {
+      optsArr = qData.options_hi.map((opt, oIdx) => {
+        let val = (opt !== undefined && opt !== null) ? opt.toString().trim() : '';
+        return (val !== "") ? val : (qData.options[oIdx] || "");
+      });
+    }
 
     const container = document.getElementById('optionsContainer');
     container.innerHTML = '';
     optsArr.forEach((opt, oIdx) => {
-      let optVal = (opt !== undefined && opt !== null) ? opt.toString().trim() : '';
-      if (!optVal) optVal = qData.options[oIdx] || ''; // Fallback
-
       const btn = document.createElement('button');
       btn.className = 'option-btn' + (userAnswers[idx] === oIdx ? ' selected' : '');
-      btn.innerHTML = `<span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span><span class="opt-text-label">${optVal}</span>`;
+      btn.innerHTML = `
+        <span class="opt-letter-badge">${String.fromCharCode(65 + oIdx)}</span>
+        <span class="opt-text-label">${formatMathFormula(opt)}</span>
+      `;
       btn.onclick = () => {
         userAnswers[idx] = oIdx;
         renderCurrentQuestionText(idx);
@@ -529,105 +1745,319 @@
     clearInterval(qTimerInterval);
     currentQIdx = idx;
     renderCurrentQuestionText(idx);
-    const isLast = (idx === currentActiveQuestions.length - 1);
+
+    document.getElementById('btnPrev').style.display = (idx > 0) ? 'flex' : 'none';
+    const isLast = (idx === getCurrentQuestions().length - 1);
     document.getElementById('btnNext').style.display = isLast ? 'none' : 'flex';
     document.getElementById('btnSubmit').style.display = isLast ? 'flex' : 'none';
+
     startTimer();
   }
 
+  function prevQuestion() { if (currentQIdx > 0) loadQuestion(currentQIdx - 1); }
   function nextQuestion() {
-    if (currentQIdx < currentActiveQuestions.length - 1) loadQuestion(currentQIdx + 1);
+    const questions = getCurrentQuestions();
+    if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
   }
 
   function startTimer() {
     qTimeLeft = 60;
-    document.getElementById('qTimerSecs').innerText = qTimeLeft;
+    const timerSecsEl = document.getElementById('qTimerSecs');
+    const timerPillEl = document.getElementById('qTimerPill');
+    timerSecsEl.innerText = qTimeLeft;
+    timerPillEl.classList.remove('urgent');
+
     qTimerInterval = setInterval(() => {
       qTimeLeft--;
-      document.getElementById('qTimerSecs').innerText = qTimeLeft;
+      timerSecsEl.innerText = qTimeLeft;
+      if (qTimeLeft <= 10 && qTimeLeft > 0) {
+        timerPillEl.classList.add('urgent');
+        playTickSound();
+      }
       if (qTimeLeft <= 0) {
         clearInterval(qTimerInterval);
-        if (currentQIdx < currentActiveQuestions.length - 1) loadQuestion(currentQIdx + 1);
+        const questions = getCurrentQuestions();
+        if (currentQIdx < questions.length - 1) loadQuestion(currentQIdx + 1);
+        else submitQuiz();
       }
     }, 1000);
   }
 
   function confirmExitQuiz() {
-    if (confirm("Exit Quiz?")) openSubjectSets(currentSubject);
+    if (confirm("क्या आप टेस्ट छोड़कर बाहर जाना चाहते हैं?")) openSubjectSets(currentSubject);
   }
 
-  function submitQuiz() {
+  /* SUBMIT & FAIR-SCORING ENGINE (1st Attempt: 1 Mark/Q, 2nd Attempt: 0.5 Mark/Q, 3rd+: Locked) */
+  async function submitQuiz() {
     clearInterval(qTimerInterval);
-    alert("Test Completed!");
-    navigateTo('screenHome');
-  }
+    const totalTimeSecs = Math.round((Date.now() - quizStartTime) / 1000);
+    const questions = getCurrentQuestions();
+    let score = 0;
+    questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
 
-  /* DYNAMIC DOWNLOADS (SHEET-POWERED) */
-  function filterDownloadsList(subject, btnEl) {
-    document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
-    if (btnEl) btnEl.classList.add('active');
-    renderDownloadsList(subject);
-  }
+    const percent = (score / questions.length) * 100;
+    const passed = percent >= 50;
+    const setKey = `${currentSubject}_Set${currentLevel}`;
 
-  function renderDownloadsList(selectedSubj = 'All') {
-    const container = document.getElementById('downloadsRenderContainer');
-    container.innerHTML = '';
-    const list = (selectedSubj === 'All') ? dynamicDownloadsData : dynamicDownloadsData.filter(d => d.subject === selectedSubj || d.subject === 'All');
-    if (list.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No PDFs uploaded yet. Add in your Google Sheet!</div>`;
-      return;
+    currentUser.setScores = currentUser.setScores || {};
+    currentUser.setAttempts = currentUser.setAttempts || {};
+
+    const prevScore = currentUser.setScores[setKey] || 0;
+    const currentAttempt = (currentUser.setAttempts[setKey] || 0) + 1;
+    currentUser.setAttempts[setKey] = currentAttempt;
+
+    let addedScore = 0;
+    let scoreNotice = '';
+
+    if (currentAttempt === 1) {
+      addedScore = score;
+      currentUser.setScores[setKey] = score;
+      scoreNotice = `+${addedScore} Score Added! (1st Attempt)`;
+    } else if (currentAttempt === 2) {
+      if (score > prevScore) {
+        const diff = score - prevScore;
+        addedScore = diff * 0.5;
+        currentUser.setScores[setKey] = Math.min(questions.length, prevScore + addedScore);
+        scoreNotice = `+${addedScore} Score Added! (Improvement: 0.5/Q)`;
+      } else {
+        scoreNotice = `Score नहीं बढ़ा (Previous best: ${prevScore})`;
+      }
+    } else {
+      addedScore = 0;
+      scoreNotice = `अभ्यास मोड: 0 Score Added (Score Locked at 2 Attempts)`;
     }
-    list.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'download-card-item';
-      card.innerHTML = `<div><h4>${item.title}</h4><p style="font-size:11px; color:var(--text-muted);">${item.desc}</p></div><a href="${item.link}" target="_blank" class="download-link-btn">Download ⬇</a>`;
-      container.appendChild(card);
-    });
-  }
 
-  /* DYNAMIC NOTES (SHEET-POWERED) */
-  function openNotesChapters(subjectName) {
-    document.getElementById('notesSelectedSubjTitle').innerText = subjectName + " Chapters";
-    document.getElementById('notesViewSubjects').style.display = 'none';
-    document.getElementById('notesViewChapters').style.display = 'block';
-    const container = document.getElementById('notesChaptersListContainer');
-    container.innerHTML = '';
-    const chapters = (dynamicNotesData['Class 10'] && dynamicNotesData['Class 10'][subjectName]) || [];
-    if (chapters.length === 0) {
-      container.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:20px;">No chapters found. Add in your Notes Google Sheet!</div>`;
-      return;
-    }
-    chapters.forEach(chap => {
-      const card = document.createElement('div');
-      card.className = 'set-row-card';
-      card.innerHTML = `<h4>${chap.name}</h4><div class="set-action-pill">Read 📖</div>`;
-      card.onclick = () => {
-        document.getElementById('notesReadingChapterTitle').innerText = chap.name;
-        document.getElementById('notesViewChapters').style.display = 'none';
-        document.getElementById('notesViewReader').style.display = 'block';
-        document.getElementById('notesDocIframe').src = chap.docUrl;
+    currentUser.totalScore = (Number(currentUser.totalScore) || 0) + addedScore;
+
+    let unlockedMax = Number(currentUser.unlockedLevels[currentSubject]) || 1;
+    let newLevelUnlocked = false;
+
+    if (isCurrentQuizDailyLive) {
+      currentUser.attemptedLiveTests[setKey] = {
+        score: score, total: questions.length, timeTaken: totalTimeSecs, date: new Date().toISOString()
       };
-      container.appendChild(card);
+      if (passed && currentLevel === unlockedMax) {
+        currentUser.unlockedLevels[currentSubject] = currentLevel + 1;
+        newLevelUnlocked = true;
+      }
+    } else {
+      if (passed && (currentLevel + 1) > unlockedMax) {
+        currentUser.unlockedLevels[currentSubject] = currentLevel + 1;
+        newLevelUnlocked = true;
+      }
+    }
+
+    localStorage.setItem('vimal_arena_quick_player', JSON.stringify(currentUser));
+    updatePlayerUI();
+
+    navigateTo('resultScreen', true);
+    document.getElementById('resSubjTag').innerText = `${isCurrentQuizDailyLive ? '🔥 LIVE CHALLENGE: ' : ''}${currentSubject} - Set ${currentLevel} • Time: ${totalTimeSecs}s • Attempt: #${currentAttempt}`;
+    document.getElementById('resScore').innerText = score;
+    document.getElementById('resTotalQ').innerText = `out of ${questions.length}`;
+
+    const banner = document.getElementById('unlockResultBanner');
+    const nextBtn = document.getElementById('btnNextLevelAction');
+
+    const avgSecsPerQ = (totalTimeSecs / questions.length).toFixed(1);
+    let insightStr = `सटीकता: ${percent.toFixed(0)}% • औसत गति: ${avgSecsPerQ}s प्रति प्रश्न। `;
+    if (percent === 100) insightStr += "उत्कृष्ट! इस विषय पर आपकी पकड़ बहुत मजबूत है।";
+    else if (percent >= 70) insightStr += "अच्छा प्रयास! गलत हुए प्रश्नों की व्याख्या नीचे ध्यानपूर्वक पढ़ें।";
+    else insightStr += "सुझाव: बेसिक्स पर ध्यान दें और नोट्स पढ़कर पुनः टेस्ट दें।";
+    document.getElementById('analysisInsightText').innerText = insightStr;
+
+    if (passed) {
+      document.getElementById('resHeadingText').innerText = "🎉 टेस्ट परिणाम घोषित!";
+      banner.className = "unlock-banner unlock-success";
+      if (isCurrentQuizDailyLive) {
+        banner.innerHTML = `🌟 Live Quiz सबमिट हो गया!<br>Time: ${totalTimeSecs}s • ${scoreNotice}`;
+        nextBtn.innerText = `View Live Ranks 🏆`;
+      } else {
+        banner.innerHTML = newLevelUnlocked 
+          ? `🎉 शानदार! अगला सेट ${currentLevel + 1} UNLOCK हो गया! 🔓 • ${scoreNotice}`
+          : `✅ सेट पूर्ण! • ${scoreNotice}`;
+        nextBtn.innerText = `Next Set ➔`;
+      }
+      playVictorySound();
+      if (typeof confetti === 'function') confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
+    } else {
+      document.getElementById('resHeadingText').innerText = "🎯 टेस्ट परिणाम घोषित!";
+      banner.className = "unlock-banner unlock-failed";
+      if (isCurrentQuizDailyLive) {
+        banner.innerHTML = `स्कोर: ${score}/${questions.length} (${totalTimeSecs}s)<br>लाइव टेस्ट में केवल 1 मौका मिलता है। कल प्रयास करें!`;
+        nextBtn.innerText = `View Live Ranks 🏆`;
+      } else {
+        banner.innerHTML = `स्कोर: ${percent.toFixed(0)}% (पास के लिए 50% ज़रूरी)<br>${scoreNotice}`;
+        nextBtn.innerText = `🔄 पुनः टेस्ट दें (Re-attempt)`;
+      }
+      playFailureSound();
+    }
+
+    document.getElementById('scoreCircleWheel').style.setProperty('--score-angle', `${(score / questions.length) * 360}deg`);
+
+    const shareText = `मैंने Exam Arena में ${currentSubject} में ${score}/${questions.length} मार्क्स लाए (${totalTimeSecs} सेकंड में)! क्या आप मुझसे बेहतर कर सकते हैं? 👉 ${window.location.href}`;
+    document.getElementById('btnWhatsappShare').href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+
+    // BILINGUAL SOLUTIONS REVIEW LIST
+    const reviewListEl = document.getElementById('reviewQuestionsList');
+    if (reviewListEl) {
+      reviewListEl.innerHTML = '';
+      questions.forEach((q, qIdx) => {
+        const userAnsIdx = userAnswers[qIdx];
+        const isCorrect = (userAnsIdx === q.ans);
+        const card = document.createElement('div');
+        card.className = 'review-card ' + (isCorrect ? 'rev-correct' : 'rev-wrong');
+        
+        let qText = q.q || "";
+        if (currentQuizLang === 'hi' && q.q_hi && q.q_hi.toLowerCase() !== "question_hi" && q.q_hi.trim() !== "") {
+          qText = q.q_hi;
+        }
+
+        let optsArr = q.options || [];
+        if (currentQuizLang === 'hi' && q.options_hi && q.options_hi.length === 4) {
+          optsArr = q.options_hi.map((opt, oIdx) => (opt && opt.trim() !== "") ? opt : (q.options[oIdx] || ""));
+        }
+
+        let expl = (currentQuizLang === 'hi' && q.explanation_hi && q.explanation_hi.trim() !== "") ? q.explanation_hi : (q.explanation || '');
+
+        let explanationHtml = '';
+        if (expl && expl.trim() !== '') {
+          explanationHtml = `<div class="explanation-box">💡 <b>हल/व्याख्या:</b> ${formatMathFormula(expl)}</div>`;
+        } else {
+          explanationHtml = `<div class="explanation-box">💡 <b>Concept Tip:</b> इस प्रश्न को समझने के लिए संबंधित अध्याय के मुख्य नियमों का पुनः अध्ययन करें।</div>`;
+        }
+
+        card.innerHTML = `
+          <div style="font-weight:800; font-size:13.5px; margin-bottom:4px;">${qIdx + 1}. ${formatMathFormula(qText)}</div>
+          <div style="font-size:12px; color:${isCorrect ? '#10b981' : '#ef4444'}; font-weight:700;">
+            ${isCorrect ? '✅ आपका सही उत्तर:' : '❌ आपका उत्तर:'} ${userAnsIdx !== undefined ? formatMathFormula(optsArr[userAnsIdx]) : 'छोड़ा गया'}
+          </div>
+          ${!isCorrect ? `<div style="font-size:12px; color:#10b981; font-weight:800; margin-top:2px;">👉 सही उत्तर: ${formatMathFormula(optsArr[q.ans])}</div>` : ''}
+          ${explanationHtml}
+        `;
+        reviewListEl.appendChild(card);
+      });
+    }
+
+    fetch(SCRIPT_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: "submit_score",
+        username: currentUser.name,
+        subject: setKey,
+        score: score,
+        totalQuestions: questions.length,
+        scoreEarned: addedScore,
+        timeTakenSecs: totalTimeSecs,
+        submissionType: currentQuizSubmissionType
+      })
+    }).then(() => setTimeout(fetchCloudData, 1200)).catch(e => console.warn(e));
+  }
+
+  function goToNextLevelOrRetry() {
+    if (isCurrentQuizDailyLive) {
+      switchLeaderboardTab('dailyLive', document.querySelector('.lb-tab-btn.live-tab'));
+      navigateTo('screenLeaderboard', true);
+      return;
+    }
+    const questions = getCurrentQuestions();
+    let score = 0;
+    questions.forEach((q, idx) => { if (userAnswers[idx] === q.ans) score++; });
+    if ((score / questions.length) * 100 >= 50) {
+      const nextLvl = currentLevel + 1;
+      if (nextLvl <= (quizDatabase[currentSubject] || []).length) currentLevel = nextLvl;
+    }
+    startQuizSet(currentLevel, false, 'PRACTICE');
+  }
+
+  function openAboutModal() { document.getElementById('aboutModal').style.display = 'flex'; }
+  function closeAboutModal() { document.getElementById('aboutModal').style.display = 'none'; }
+
+  async function shareThoughtAsJPEG() {
+    const thoughtText = document.getElementById('dailyThoughtText').innerText.replace(/^"|"$/g, '');
+    const authorText = document.getElementById('dailyThoughtAuthor').innerText;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080; canvas.height = 1080;
+    const ctx = canvas.getContext('2d');
+
+    const bgGrad = ctx.createRadialGradient(540, 540, 100, 540, 540, 750);
+    bgGrad.addColorStop(0, '#1e1b4b'); bgGrad.addColorStop(1, '#0b0924');
+    ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, 1080, 1080);
+
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 14; ctx.strokeRect(36, 36, 1008, 1008);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.lineWidth = 3; ctx.strokeRect(54, 54, 972, 972);
+
+    ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.roundRect(310, 100, 460, 64, [32]); ctx.fill();
+    ctx.font = "bold 30px 'Poppins', sans-serif"; ctx.fillStyle = "#1e1b4b"; ctx.textAlign = "center";
+    ctx.fillText("⭐ Daily Motivation ⭐", 540, 144);
+
+    ctx.font = "bold 150px serif"; ctx.fillStyle = "rgba(245, 158, 11, 0.22)"; ctx.fillText("❝", 540, 310);
+
+    function wrapText(context, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = ''; const lines = [];
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        if (context.measureText(testLine).width > maxWidth && n > 0) { lines.push(line); line = words[n] + ' '; }
+        else line = testLine;
+      }
+      lines.push(line);
+      const startY = y - ((lines.length - 1) * lineHeight) / 2;
+      lines.forEach((l, k) => context.fillText(l.trim(), x, startY + (k * lineHeight)));
+    }
+
+    ctx.font = "bold 44px 'Hind', 'Poppins', sans-serif"; ctx.fillStyle = "#ffffff";
+    wrapText(ctx, thoughtText, 540, 470, 840, 68);
+
+    ctx.font = "italic 700 34px 'Hind', 'Poppins', sans-serif"; ctx.fillStyle = "#fbbf24";
+    ctx.fillText(authorText, 540, 720);
+
+    ctx.font = "900 38px 'Fredoka', 'Poppins', sans-serif"; ctx.fillStyle = "#38bdf8";
+    ctx.fillText("🎯 EXAM ARENA BY VIMAL SIR", 540, 850);
+    ctx.font = "700 26px 'Poppins', sans-serif"; ctx.fillStyle = "#a7f3d0";
+    ctx.fillText("फ्री मॉक टेस्ट दें 👉 examarena.in", 540, 920);
+
+    canvas.toBlob(async (blob) => {
+      if (!blob) return alert("पोस्टर बनाने में समस्या आई!");
+      const file = new File([blob], 'ExamArena_Thought.jpg', { type: 'image/jpeg' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'Daily Motivation', text: `Exam Arena by Vimal Sir 🎯\nटेस्ट दें: ${window.location.href}` });
+      } else {
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+        a.download = 'ExamArena_Thought.jpg'; a.click();
+        alert("पोस्टर गैलरी में सेव हो गया है!");
+      }
+    }, 'image/jpeg', 0.95);
+  }
+
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault(); deferredPrompt = e;
+    document.getElementById('pwaInstallBox').style.display = 'block';
+  });
+  function installAppDirectly() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => { document.getElementById('pwaInstallBox').style.display = 'none'; deferredPrompt = null; });
+    }
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((reg) => {
+      reg.update();
+    }).catch(e => console.log(e));
+
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
     });
   }
-
-  function backToNotesSubj() {
-    document.getElementById('notesViewSubjects').style.display = 'block';
-    document.getElementById('notesViewChapters').style.display = 'none';
-    document.getElementById('notesViewReader').style.display = 'none';
-    document.getElementById('notesDocIframe').src = 'about:blank';
-  }
-
-  function backToNotesChap() {
-    document.getElementById('notesViewChapters').style.display = 'block';
-    document.getElementById('notesViewReader').style.display = 'none';
-    document.getElementById('notesDocIframe').src = 'about:blank';
-  }
-
-  window.onload = () => {
-    navigateTo('screenHome');
-    fetchCloudData();
-  };
+  window.onload = initApp;
 </script>
+
 </body>
 </html>
