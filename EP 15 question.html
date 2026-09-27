@@ -465,25 +465,37 @@
       font-weight: 800;
     }
     
-    /* 1. Circle Number Badge */
+    /* प्रश्न और नंबर का फ्लेक्स लेआउट (ताकि नेक्स्ट लाइन नंबर के नीचे न जाए) */
+    .q-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+    }
+    
     .q-num {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
       border-radius: 50%;
       background: #1d4ed8;
       color: #ffffff;
-      font-size: 18px;
+      font-size: 17px !important;
       font-weight: 900;
-      margin-right: 8px;
       line-height: 1;
-      vertical-align: middle;
       font-family: 'Poppins', sans-serif;
       box-shadow: 0 2px 5px rgba(29, 78, 216, 0.3);
       flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .q-text {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
     }
 
     .word-red { color: #dc2626; font-weight: 900; }
@@ -792,7 +804,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
   ]);
 
   /* ==========================================================
-     1. INDEXEDDB ENGINE (असीमित स्टोरेज, नो 5MB लिमिट)
+     1. INDEXEDDB ENGINE (असीमित स्टोरेज)
      ========================================================== */
   const DB_NAME = 'ExamPrepStudioDB';
   const DB_VERSION = 1;
@@ -856,7 +868,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
           for (const item of parsed) {
             await dbPut(item);
           }
-          localStorage.removeItem('exam_prep_db_v7'); // माइग्रेशन पूरा
+          localStorage.removeItem('exam_prep_db_v7');
         }
       }
     } catch (e) {
@@ -1171,11 +1183,16 @@ Ans: दूसरे व सातवें स्तंभ लेख
       const tdQ = document.createElement('td');
       tdQ.className = 'td-q';
       
-      // प्रश्न संख्या को सादे डॉट के बिना सर्कल में डिस्प्ले करना
       const rawNum = item.num ? item.num : (index + 1);
       const cleanNum = String(rawNum).replace(/\.$/, '');
       
-      tdQ.innerHTML = `<span class="q-num">${cleanNum}</span> ${formatQuestion(item.q, index)}`;
+      // यहाँ q-wrap और q-text से अलाइनमेंट एकदम सीधा (क्लियर) रहेगा
+      tdQ.innerHTML = `
+        <div class="q-wrap">
+          <span class="q-num">${cleanNum}</span>
+          <div class="q-text">${formatQuestion(item.q, index)}</div>
+        </div>
+      `;
 
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
@@ -1435,10 +1452,10 @@ Ans: दूसरे व सातवें स्तंभ लेख
      INITIALIZATION ON LOAD
      ========================================================== */
   window.onload = async () => {
-    loadTypographySettings();       // 1. पिछली फ़ॉन्ट सेटिंग्स लोड करें
-    await migrateOldLocalStorage();  // 2. पुराना डेटा IndexedDB में माइग्रेट करें
-    parseSmartInput();              // 3. डिफ़ॉल्ट सवाल पार्स करें
-    await renderLibrary();          // 4. लाइब्रेरी रेंडर करें
+    loadTypographySettings();       // 1. पिछली सेटिंग्स लोड करें
+    await migrateOldLocalStorage();  // 2. LocalStorage से IndexedDB में डेटा लाएँ
+    parseSmartInput();              // 3. कार्ड रेंडर करें
+    await renderLibrary();          // 4. आर्काइव सूची लोड करें
     setTimeout(updatePreviewScale, 300);
   };
 </script>
