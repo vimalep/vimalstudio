@@ -167,7 +167,7 @@
       font-size: 13.5px;
       font-family: inherit;
       outline: none;
-      height: 145px;
+      height: 155px;
       line-height: 1.45;
       resize: vertical;
     }
@@ -338,7 +338,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* ONE-LINER HEADER & ELEMENTS */
+    /* ONE-LINER LAYOUT STYLES */
     .top-header-wrap {
       position: relative;
       display: flex;
@@ -380,7 +380,6 @@
       font-family: 'Poppins', sans-serif;
       margin-left: 6px;
     }
-    
     .top-hook-badge {
       position: relative;
       z-index: 2;
@@ -392,9 +391,7 @@
       border: 2px dashed #dc2626;
       border-radius: 30px;
       box-shadow: 0 2px 8px rgba(220, 38, 38, 0.12);
-      letter-spacing: 0.3px;
     }
-
     .top-follow-pill {
       position: relative;
       z-index: 2;
@@ -406,7 +403,6 @@
       border-radius: 40px;
       font-family: 'Poppins', sans-serif;
     }
-
     .title-banner {
       display: flex;
       justify-content: center;
@@ -449,7 +445,6 @@
       align-items: center;
       font-family: 'Poppins', sans-serif;
     }
-
     .watermark {
       position: absolute;
       top: 50%;
@@ -465,8 +460,6 @@
       text-transform: uppercase;
       font-family: 'Poppins', sans-serif;
     }
-
-    /* ONE-LINER TABLE STYLES */
     .table-container {
       flex: 1;
       position: relative;
@@ -504,15 +497,11 @@
     }
     thead th.th-q { color: #dc2626; }
     thead th.th-a { color: #15803d; }
-
     tbody tr {
       border-bottom: 1.5px solid #bbf7d0;
       height: calc((100% - 42px) / 10);
     }
-    tbody tr:last-child {
-      border-bottom: none;
-    }
-
+    tbody tr:last-child { border-bottom: none; }
     td {
       padding: 4px 12px;
       line-height: 1.3;
@@ -520,19 +509,8 @@
       overflow: hidden;
       word-break: break-word;
     }
-    .td-q {
-      color: #0f172a;
-      font-size: 22px;
-      font-weight: 700;
-    }
-
-    .q-wrap {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      width: 100%;
-    }
-    
+    .td-q { color: #0f172a; font-size: 22px; font-weight: 700; }
+    .q-wrap { display: flex; align-items: flex-start; gap: 10px; width: 100%; }
     .q-num {
       display: inline-flex;
       align-items: center;
@@ -551,20 +529,9 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
-
-    .q-text {
-      flex: 1;
-      min-width: 0;
-      word-break: break-word;
-    }
-
-    .td-a {
-      font-size: 22px;
-      font-weight: 700;
-    }
+    .q-text { flex: 1; min-width: 0; word-break: break-word; }
+    .td-a { font-size: 22px; font-weight: 700; }
     .ans-green { color: #15803d; font-weight: 700; }
-    .ans-maroon { color: #800000; font-weight: 800; }
-    
     .ans-challenge {
       background: #fef3c7;
       border: 1.5px dashed #d97706;
@@ -575,7 +542,6 @@
       border-radius: 6px;
       display: inline-block;
     }
-
     .footer-wrap {
       position: relative;
       display: flex;
@@ -611,7 +577,6 @@
     }
     .footer-title .f-red { color: #dc2626; }
     .footer-title .f-black { color: #0f172a; }
-
     .footer-follow-btn {
       position: relative;
       z-index: 2;
@@ -625,7 +590,7 @@
     }
 
     /* ==========================================================
-       EXACT SCREENSHOT MCQ LAYOUT (PREMIUM CREAM THEME)
+       MCQ LAYOUT STYLES (SCREENSHOT SPECIFIC)
        ========================================================== */
     .mcq-view-active {
       background-color: #fffdf0 !important;
@@ -633,8 +598,6 @@
       position: relative;
       overflow: hidden;
     }
-
-    /* Watermark pattern from image */
     .mcq-bg-watermark {
       position: absolute;
       top: 0;
@@ -655,7 +618,6 @@
       z-index: 1;
       white-space: nowrap;
     }
-
     .mcq-content-layer {
       position: relative;
       z-index: 2;
@@ -664,17 +626,15 @@
       flex-direction: column;
       justify-content: space-between;
     }
-
-    /* Top Centered Header */
     .mcq-header-box {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 12px;
-      margin-top: 10px;
+      margin-top: 5px;
     }
     .mcq-category-title {
-      font-size: 40px;
+      font-size: 42px;
       font-weight: 900;
       color: #0f172a;
       letter-spacing: 0.5px;
@@ -683,6 +643,7 @@
       gap: 12px;
       text-transform: uppercase;
       font-family: 'Poppins', 'Mukta', sans-serif;
+      text-align: center;
     }
     .mcq-brand-capsule {
       background: #ffffff;
@@ -697,10 +658,8 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.04);
       font-family: 'Poppins', sans-serif;
     }
-
-    /* Question Box */
     .mcq-question-area {
-      margin: 30px 0 25px 0;
+      margin: 25px 0 20px 0;
       font-size: 38px;
       font-weight: 800;
       line-height: 1.45;
@@ -710,7 +669,7 @@
     }
     .mcq-q-blue {
       color: #0284c7;
-      font-size: 44px;
+      font-size: 46px;
       font-weight: 900;
       margin-right: 8px;
       font-family: 'Poppins', sans-serif;
@@ -719,31 +678,29 @@
       color: #dc2626 !important;
       font-weight: 800;
     }
-
-    /* 4 Options Grid */
     .mcq-options-container {
       display: flex;
       flex-direction: column;
       gap: 20px;
       margin-bottom: 25px;
+      width: 100%;
     }
-
     .mcq-option-card {
       display: flex;
       align-items: center;
       border-radius: 18px;
-      padding: 16px 22px;
-      border: 2px solid;
+      padding: 18px 24px;
+      border: 2.5px solid;
       background: #ffffff;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     }
     .mcq-opt-badge {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
+      width: 50px;
+      height: 50px;
+      min-width: 50px;
       border-radius: 10px;
       color: #ffffff;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -753,46 +710,27 @@
       flex-shrink: 0;
     }
     .mcq-opt-label {
-      font-size: 33px;
+      font-size: 32px;
       font-weight: 700;
       color: #0f172a;
       margin-left: 20px;
       flex: 1;
       font-family: 'Mukta', 'Poppins', sans-serif;
+      word-break: break-word;
     }
 
     /* Option Variants from Screenshot */
-    .opt-card-A {
-      background: #f0f7ff;
-      border-color: #93c5fd;
-    }
-    .opt-card-A .mcq-opt-badge {
-      background: #2563eb;
-    }
+    .opt-card-A { background: #f0f7ff; border-color: #93c5fd; }
+    .opt-card-A .mcq-opt-badge { background: #2563eb; }
 
-    .opt-card-B {
-      background: #f0fdf4;
-      border-color: #86efac;
-    }
-    .opt-card-B .mcq-opt-badge {
-      background: #059669;
-    }
+    .opt-card-B { background: #f0fdf4; border-color: #86efac; }
+    .opt-card-B .mcq-opt-badge { background: #059669; }
 
-    .opt-card-C {
-      background: #fffbeb;
-      border-color: #fde68a;
-    }
-    .opt-card-C .mcq-opt-badge {
-      background: #d97706;
-    }
+    .opt-card-C { background: #fffbeb; border-color: #fde68a; }
+    .opt-card-C .mcq-opt-badge { background: #d97706; }
 
-    .opt-card-D {
-      background: #faf5ff;
-      border-color: #e9d5ff;
-    }
-    .opt-card-D .mcq-opt-badge {
-      background: #7c3aed;
-    }
+    .opt-card-D { background: #faf5ff; border-color: #e9d5ff; }
+    .opt-card-D .mcq-opt-badge { background: #7c3aed; }
 
     /* When Answer is Highlighted */
     .mcq-option-card.correct-revealed {
@@ -808,7 +746,6 @@
       margin-left: 10px;
     }
 
-    /* Bottom Engagement Strip */
     .mcq-footer-box {
       display: flex;
       flex-direction: column;
@@ -867,7 +804,7 @@
   <div class="dark-card">
     <div class="card-title">
       <span id="inputBoxTitle">📝 Raw Text (Smart Paste):</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">CURRENT AFFAIRS DETECTED</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">READY</span>
     </div>
 
     <!-- VIRAL HOOK SELECTOR -->
@@ -875,33 +812,33 @@
       <div style="flex: 1.2;">
         <label>🔥 Viral Hook / Tag:</label>
         <select id="selViralHook" onchange="updateCustomHook(this.value)">
-          <option value="🏛️ CURRENT AFFAIRS 🧠" selected>🏛️ CURRENT AFFAIRS 🧠</option>
-          <option value="🌍 WORLD GEOGRAPHY QUIZ 🧠">🌍 WORLD GEOGRAPHY QUIZ 🧠</option>
+          <option value="🌍 WORLD GEOGRAPHY QUIZ 🧠" selected>🌍 WORLD GEOGRAPHY QUIZ 🧠</option>
+          <option value="🏛️ CURRENT AFFAIRS 🧠">🏛️ CURRENT AFFAIRS 🧠</option>
           <option value="🔥 90% Aspirants Fail In Q7">🔥 90% Aspirants Fail In Q7</option>
           <option value="⚡ Only 1% Can Answer This!">⚡ Only 1% Can Answer This!</option>
           <option value="custom">✏️ Custom Hook (Type below)...</option>
         </select>
       </div>
       <div style="flex: 1;">
-        <label>Brand / Top Text:</label>
-        <input type="text" id="txtCustomHook" value="🏛️ CURRENT AFFAIRS 🧠" oninput="applyHookDirectly()">
+        <label>Top Title Text:</label>
+        <input type="text" id="txtCustomHook" value="🌍 WORLD GEOGRAPHY QUIZ 🧠" oninput="applyHookDirectly()">
       </div>
     </div>
     
-    <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()">🏛️ CURRENT AFFAIRS 🧠
-EXAM PREPARATION
-Q. संगीत क्षेत्र का प्रतिष्ठित 'राष्ट्रीय लता मंगेशकर पुरस्कार 2026' किसे प्रदान किया जाएगा? 🎵
-A) श्रेया घोषाल 🎤
-B) अभिजीत बनर्जी 🎼
-C) शांतनु मोइत्रा 🏆
-D) ए. आर. रहमान 🎹
-👇 सही Option Comment में लिखें! 💬
-❤️ Like | ➕ Follow 🎯
-Caption: संगीत क्षेत्र का प्रतिष्ठित राष्ट्रीय लता मंगेशकर पुरस्कार 2026! अपना सही उत्तर कमेंट करें। 👇✨
-#CurrentAffairs #ExamPrep</textarea>
+    <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()">🌍 WORLD GEOGRAPHY QUIZ 🧠
+Q.1 Which is the deepest trench in the world? 🌊
+        A) Java Trench 🇮🇩
+        B) Mariana Trench 🇵🇭
+        C) Puerto Rico Trench 🇵🇷
+        D) South Sandwich Trench 🇦🇶
+👇 Comment your answer below! 🔥
+              ❤️ Like | ➕ Follow 🎯
+Caption: Test your knowledge on the Deepest Oceanic Trench / Mariana Trench! Drop the correct option below. 👇🚀
+#GeneralKnowledge
+Answer: B) Mariana Trench 🇵🇭</textarea>
 
     <div class="status-counter">
-      <span id="statusCounter">📊 Loaded MCQ: Q. (4 Options)</span>
+      <span id="statusCounter">📊 Loaded MCQ: Q.1 (4 Options)</span>
       <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
     </div>
 
@@ -926,11 +863,10 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
         <div>
           <div class="typo-label">Font Style:</div>
           <select id="selFontFamily" onchange="applyTypography(true)">
-            <option value="'Mukta', sans-serif" selected>Mukta (हिंदी और इंग्लिश परफेक्ट)</option>
-            <option value="'Poppins', sans-serif">Poppins (मॉडर्न & बोल्ड)</option>
-            <option value="'Hind', sans-serif">Hind (स्पष्ट और किताबी)</option>
-            <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
-            <option value="'Roboto', sans-serif">Roboto (क्लासिक)</option>
+            <option value="'Poppins', sans-serif" selected>Poppins (Clean & Modern)</option>
+            <option value="'Mukta', sans-serif">Mukta (Hindi & English)</option>
+            <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
+            <option value="'Hind', sans-serif">Hind (Bold Book)</option>
           </select>
         </div>
         <div>
@@ -945,8 +881,8 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
 
       <div class="typo-row">
         <div>
-          <div class="typo-label">Header/Title: <span id="lblTitleSize">38px</span></div>
-          <input type="range" id="rngTitleSize" min="26" max="48" value="38" oninput="applyTypography(true)">
+          <div class="typo-label">Header/Title: <span id="lblTitleSize">40px</span></div>
+          <input type="range" id="rngTitleSize" min="26" max="48" value="40" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Ques Size: <span id="lblQSize">38px</span></div>
@@ -984,7 +920,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
         <!-- CAPTURE CARD -->
         <div id="capture-card" class="mcq-view-active">
           
-          <!-- ================= MCQ LAYOUT (MATCHING IMAGE) ================= -->
+          <!-- ================= MCQ LAYOUT ================= -->
           <div id="mcqLayoutWrap" class="mcq-content-layer">
             <div class="mcq-bg-watermark">
               <div>EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION</div>
@@ -995,14 +931,14 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
 
             <!-- Top Header -->
             <div class="mcq-header-box">
-              <div class="mcq-category-title" id="mcqCategoryTitle">🏛️ CURRENT AFFAIRS 🧠</div>
+              <div class="mcq-category-title" id="mcqCategoryTitle">🌍 WORLD GEOGRAPHY QUIZ 🧠</div>
               <div class="mcq-brand-capsule" id="mcqBrandCapsule">EXAM PREPARATION</div>
             </div>
 
             <!-- Question -->
             <div class="mcq-question-area" id="mcqQuestionArea">
-              <span class="mcq-q-blue" id="mcqQPrefix">Q.</span>
-              <span id="mcqQuestionText">संगीत क्षेत्र का प्रतिष्ठित <span class="mcq-highlight-red">'राष्ट्रीय लता मंगेशकर पुरस्कार 2026'</span> <span class="mcq-highlight-red">किसे प्रदान किया जाएगा?</span> 🎵</span>
+              <span class="mcq-q-blue" id="mcqQPrefix">Q.1</span>
+              <span id="mcqQuestionText">Which is the deepest trench in the world? 🌊</span>
             </div>
 
             <!-- 4 Options -->
@@ -1012,12 +948,12 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
 
             <!-- Bottom CTA -->
             <div class="mcq-footer-box">
-              <div class="mcq-comment-pill" id="mcqCtaPill">👇 सही Option Comment में लिखें! 💬</div>
+              <div class="mcq-comment-pill" id="mcqCtaPill">👇 Comment your answer below! 🔥</div>
               <div class="mcq-like-follow" id="mcqLikeFollow">❤️ Like | ➕ Follow 🎯</div>
             </div>
           </div>
 
-          <!-- ================= ONE-LINER LAYOUT (PRESERVED) ================= -->
+          <!-- ================= ONE-LINER LAYOUT ================= -->
           <div id="oneLinerLayoutWrap" style="display: none; height: 100%; flex-direction: column; justify-content: space-between;">
             <div>
               <div class="top-header-wrap">
@@ -1075,9 +1011,9 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
 
     <div class="subject-pill-row">
       <button class="subj-pill active" onclick="filterBySubject('All', this)">All</button>
+      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
       <button class="subj-pill" onclick="filterBySubject('Current Affairs', this)">Current Affairs</button>
       <button class="subj-pill" onclick="filterBySubject('History', this)">History</button>
-      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
       <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
     </div>
 
@@ -1096,7 +1032,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
 </div>
 
 <script>
-  let currentAppMode = 'mcq'; // 'mcq' or 'oneliner'
+  let currentAppMode = 'mcq';
   let parsedQAData = [];
   let isChallengeMode = true;
   let isRevealAnswer = false;
@@ -1104,25 +1040,25 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
   let currentSubjectFilter = 'All';
 
   let currentMCQData = {
-    category: '🏛️ CURRENT AFFAIRS 🧠',
+    category: '🌍 WORLD GEOGRAPHY QUIZ 🧠',
     brand: 'EXAM PREPARATION',
-    qPrefix: 'Q.',
-    questionHTML: `संगीत क्षेत्र का प्रतिष्ठित <span class="mcq-highlight-red">'राष्ट्रीय लता मंगेशकर पुरस्कार 2026'</span> <span class="mcq-highlight-red">किसे प्रदान किया जाएगा?</span> 🎵`,
+    qPrefix: 'Q.1',
+    questionHTML: 'Which is the deepest trench in the world? 🌊',
     options: [
-      { letter: 'A', text: 'श्रेया घोषाल 🎤' },
-      { letter: 'B', text: 'अभिजीत बनर्जी 🎼' },
-      { letter: 'C', text: 'शांतनु मोइत्रा 🏆' },
-      { letter: 'D', text: 'ए. आर. रहमान 🎹' }
+      { letter: 'A', text: 'Java Trench 🇮🇩' },
+      { letter: 'B', text: 'Mariana Trench 🇵🇭' },
+      { letter: 'C', text: 'Puerto Rico Trench 🇵🇷' },
+      { letter: 'D', text: 'South Sandwich Trench 🇦🇶' }
     ],
     correctLetter: 'B',
-    ctaMain: '👇 सही Option Comment में लिखें! 💬',
+    ctaMain: '👇 Comment your answer below! 🔥',
     ctaSub: '❤️ Like | ➕ Follow 🎯'
   };
 
   let currentMeta = {
-    subject: 'Current Affairs',
-    subTopic: 'Awards 2026',
-    part: 'Set 1',
+    subject: 'Geography',
+    subTopic: 'World Geography',
+    part: 'Quiz 1',
     caption: ''
   };
 
@@ -1134,7 +1070,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
   /* ==========================================================
      1. INDEXEDDB DATABASE
      ========================================================== */
-  const DB_NAME = 'AoneNotesMultiStudioDB';
+  const DB_NAME = 'AoneNotesMultiStudioDB_v2';
   const DB_VERSION = 1;
   const STORE_NAME = 'allSets';
 
@@ -1190,7 +1126,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
   /* ==========================================================
      2. SETTINGS MEMORY (PERSISTENCE)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_multi_typography_settings_v3';
+  const SETTINGS_KEY = 'aone_multi_typography_settings_v4';
 
   function saveTypographySettings() {
     const settings = {
@@ -1313,10 +1249,12 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
   }
 
   /* ==========================================================
-     4. PARSER LOGIC
+     4. BULLETPROOF PARSER LOGIC
      ========================================================== */
   function cleanLine(str) {
-    return str.replace(/\u00A0/g, ' ').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
+    return str.replace(/\u00A0/g, ' ')
+              .replace(/[\u2000-\u200B\u200C\u200D\uFEFF]/g, ' ')
+              .trim();
   }
 
   function parseSmartInput() {
@@ -1330,18 +1268,18 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
     }
   }
 
-  // --- SMART MCQ PARSER MATCHING SCREENSHOT ---
+  // --- ROBUST MCQ PARSER ---
   function parseMCQInput(raw) {
     const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
     
     currentMCQData = {
-      category: '🏛️ CURRENT AFFAIRS 🧠',
+      category: '🌍 WORLD GEOGRAPHY QUIZ 🧠',
       brand: 'EXAM PREPARATION',
-      qPrefix: 'Q.',
+      qPrefix: 'Q.1',
       questionHTML: '',
       options: [],
       correctLetter: '',
-      ctaMain: '👇 सही Option Comment में लिखें! 💬',
+      ctaMain: '👇 Comment your answer below! 🔥',
       ctaSub: '❤️ Like | ➕ Follow 🎯'
     };
 
@@ -1351,28 +1289,30 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // 1. First Header Line
-      if (i === 0 && (line.includes('QUIZ') || line.includes('AFFAIRS') || line.includes('🏛️') || line.includes('🌍') || line.includes('🎯') || line.includes('🧠'))) {
+      // A. Category / Header Line (e.g. 🌍 WORLD GEOGRAPHY QUIZ 🧠)
+      if (i === 0 && (line.includes('QUIZ') || line.includes('AFFAIRS') || line.includes('🌍') || line.includes('🏛️') || line.includes('🎯') || line.includes('🧠'))) {
         currentMCQData.category = line;
         continue;
       }
 
-      // 2. Brand Capsule (Line 2 or specific)
-      if (i === 1 && !line.match(/^[QA-D0-9\(\.]/i) && line.length < 35 && !line.includes('?')) {         currentMCQData.brand = line;         continue;       }        // 3. Question Line       const qMatch = line.match(/^(?:Q\.?\s*(\d+\vert{}[०-९]+)?\vert{}(\d+)\.\vert{}\d+\))\s*[\:\.\-\s]*(.*)/i);
-      if ((qMatch || line.includes('?')) && !detectedQ) {
-        if (qMatch) {
-          const num = qMatch[1] || qMatch[2];
-          currentMCQData.qPrefix = num ? `Q.${num}` : 'Q.';
-          detectedQ = qMatch[3] ? qMatch[3].trim() : line;
-        } else {
-          currentMCQData.qPrefix = 'Q.';
-          detectedQ = line;
-        }
+      // B. Brand Capsule (e.g. EXAM PREPARATION)
+      if (i === 1 && !line.match(/^[QA-D0-9\(\.]/i) && line.length < 35 && !line.includes('?')) {
+        currentMCQData.brand = line;
         continue;
       }
 
-      // 4. Options A, B, C, D
-      const optMatch = line.match(/^[\(\[]?([A-Da-d])[\)\.\:\-\]]\s*(.*)/);       if (optMatch) {         currentMCQData.options.push({           letter: optMatch[1].toUpperCase(),           text: optMatch[2].trim()         });         continue;       }        // 5. Answer Line       const ansMatch = line.match(/^(?:Answer\vert{}Ans\vert{}उत्तर)[\:\-\s]*([A-Da-d])?[\)\.\:\-\s]*(.*)/i);
+      // C. Options Detection: A) B) C) D) or (A) (B) or A. B.
+      const optMatch = line.match(/^[\(\[]?\s*([A-D])\s*[\)\.\:\-]?\s+(.*)/i);
+      if (optMatch) {
+        currentMCQData.options.push({
+          letter: optMatch[1].toUpperCase(),
+          text: optMatch[2].trim()
+        });
+        continue;
+      }
+
+      // D. Answer Line: Answer: B) Mariana Trench 🇵🇭
+      const ansMatch = line.match(/^(?:Answer|Ans|उत्तर)[\:\-\s]*\(?([A-D])\)?[\)\.\:\-\s]*(.*)/i);
       if (ansMatch) {
         if (ansMatch[1]) {
           currentMCQData.correctLetter = ansMatch[1].toUpperCase();
@@ -1383,34 +1323,53 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
         continue;
       }
 
-      // 6. CTA & Follow Lines
+      // E. CTA & Follow lines
       if (line.includes('Comment') || line.includes('Option') || line.includes('लिखें') || line.includes('👇')) {
         currentMCQData.ctaMain = line;
         continue;
       }
-      if (line.includes('Like') || line.includes('Follow') || line.includes('❤️')) {
+      if (line.includes('Like') || line.includes('Follow') || line.includes('❤️') || line.includes('➕')) {
         currentMCQData.ctaSub = line;
         continue;
       }
 
-      // 7. Caption Lines
+      // F. Captions & Hashtags
       if (line.toLowerCase().startsWith('caption:') || line.includes('#')) {
         captionLines.push(line.replace(/^caption:\s*/i, ''));
+        continue;
+      }
+
+      // G. Question Line
+      if (!detectedQ && (line.match(/^(?:Q\.?\s*\d*|\d+[\.\)]|\bQ\b)/i) || line.includes('?'))) {
+        let prefix = 'Q.';
+        let cleanQ = line;
+        const pMatch = line.match(/^(Q\.?\s*\d*|\d+[\.\)])\s*/i);
+        if (pMatch) {
+          prefix = pMatch[1].trim();
+          if (!prefix.endsWith('.') && !prefix.includes('.')) prefix += '.';
+          cleanQ = line.substring(pMatch[0].length).trim();
+        } else if (cleanQ.toLowerCase().startsWith('q.')) {
+          cleanQ = cleanQ.substring(2).trim();
+        }
+        currentMCQData.qPrefix = prefix;
+        detectedQ = cleanQ;
+        continue;
       }
     }
 
-    // Question formatting: Auto-highlight text inside quotes and questions
     if (detectedQ) {
       let formattedQ = detectedQ;
-      // Highlight single/double quotes in red
+      // Quotes highlight in Red
       formattedQ = formattedQ.replace(/(['"][^'"]+['"])/g, '<span class="mcq-highlight-red">$1</span>');
-      // Highlight typical Hindi question words in red
+      // Hindi keyword highlight
       const qWords = ['किसे प्रदान किया जाएगा\\?', 'किसको दिया जाएगा\\?', 'कहाँ स्थित है\\?', 'कब हुआ था\\?', 'किसने की थी\\?', 'कौन थे\\?', 'क्या है\\?'];
       qWords.forEach(kw => {
         const re = new RegExp(`(${kw})`, 'g');
         formattedQ = formattedQ.replace(re, '<span class="mcq-highlight-red">$1</span>');
       });
       currentMCQData.questionHTML = formattedQ;
+    } else {
+      currentMCQData.questionHTML = 'Which is the deepest trench in the world? 🌊';
     }
 
     if (captionLines.length > 0) {
@@ -1418,7 +1377,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
       document.getElementById('fbCaption').value = currentMeta.caption;
     }
 
-    document.getElementById('headerDetectedBadge').innerText = currentMCQData.category.replace(/[^\w\s\u0900-\u097F]/gi, '').trim().substring(0, 22);
+    document.getElementById('headerDetectedBadge').innerText = currentMCQData.category.replace(/[^\w\s\u0900-\u097F]/gi, '').trim().substring(0, 20);
     document.getElementById('statusCounter').innerText = `📊 Loaded MCQ: ${currentMCQData.qPrefix} (${currentMCQData.options.length} Options)`;
 
     renderMCQCard();
@@ -1516,13 +1475,13 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
      5. RENDER FUNCTIONS
      ========================================================== */
   function renderMCQCard() {
-    document.getElementById('mcqCategoryTitle').innerText = currentMCQData.category || '🏛️ CURRENT AFFAIRS 🧠';
+    document.getElementById('mcqCategoryTitle').innerText = currentMCQData.category || '🌍 WORLD GEOGRAPHY QUIZ 🧠';
     document.getElementById('mcqBrandCapsule').innerText = currentMCQData.brand || 'EXAM PREPARATION';
     
-    document.getElementById('mcqQPrefix').innerText = currentMCQData.qPrefix || 'Q.';
-    document.getElementById('mcqQuestionText').innerHTML = currentMCQData.questionHTML || 'संगीत क्षेत्र का प्रतिष्ठित लता मंगेशकर पुरस्कार?';
+    document.getElementById('mcqQPrefix').innerText = currentMCQData.qPrefix || 'Q.1';
+    document.getElementById('mcqQuestionText').innerHTML = currentMCQData.questionHTML || 'Which is the deepest trench in the world? 🌊';
 
-    document.getElementById('mcqCtaPill').innerText = currentMCQData.ctaMain || '👇 सही Option Comment में लिखें! 💬';
+    document.getElementById('mcqCtaPill').innerText = currentMCQData.ctaMain || '👇 Comment your answer below! 🔥';
     document.getElementById('mcqLikeFollow').innerText = currentMCQData.ctaSub || '❤️ Like | ➕ Follow 🎯';
 
     const container = document.getElementById('mcqOptionsContainer');
@@ -1614,7 +1573,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
   }
 
   function applyHookDirectly() {
-    const val = document.getElementById('txtCustomHook').value.trim() || '🏛️ CURRENT AFFAIRS 🧠';
+    const val = document.getElementById('txtCustomHook').value.trim() || '🌍 WORLD GEOGRAPHY QUIZ 🧠';
     currentMCQData.category = val;
     document.getElementById('mcqCategoryTitle').innerText = val;
     document.getElementById('outHookBadge').innerText = val;
@@ -1666,7 +1625,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
       parseSmartInput();
       saveToDatabase(false);
       if (ind) ind.innerText = "● Auto-Saved";
-    }, 1000);
+    }, 900);
   }
 
   async function getCardCanvas() {
@@ -1752,7 +1711,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
       part: currentMeta.part,
       caption: currentMeta.caption,
       smartRaw: rawVal,
-      date: new Date().toLocaleDateString('hi-IN')
+      date: new Date().toLocaleDateString('en-US')
     };
 
     await dbPut(entry);
@@ -1896,7 +1855,7 @@ Caption: संगीत क्षेत्र का प्रतिष्ठ�
      ========================================================== */
   window.onload = async () => {
     loadTypographySettings();
-    setAppMode(currentAppMode); // Sets to 'mcq' by default or stored mode
+    setAppMode(currentAppMode);
     await renderLibrary();
     setTimeout(updatePreviewScale, 300);
   };
