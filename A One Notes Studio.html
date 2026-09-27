@@ -137,7 +137,7 @@
       font-size: 13.5px;
       font-family: inherit;
       outline: none;
-      height: 160px;
+      height: 165px;
       line-height: 1.45;
       resize: vertical;
     }
@@ -284,20 +284,23 @@
       white-space: nowrap;
     }
 
-    /* PREVIEW CONTAINER WITH CSS ASPECT RATIO (COLLAPSE PROOF) */
+    /* PREVIEW CONTAINER (FIXED FIT & NEVER COLLAPSES) */
     .preview-viewport-wrapper {
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
-      background: #0f172a;
+      background: #0b1222;
       border: 1.5px solid #1f293d;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
       position: relative;
     }
     #previewViewport {
       width: 100%;
-      aspect-ratio: 1080 / 1350;
       position: relative;
       overflow: hidden;
+      display: block;
     }
 
     /* 1080x1350 4:5 MAIN CANVAS */
@@ -575,7 +578,7 @@
     }
 
     /* ==========================================================
-       MCQ EXACT DESIGN (A ONE NOTES BRANDING + SAFE BORDER)
+       MCQ LAYOUT STYLES (A ONE NOTES BRANDING + POSTER BORDER)
        ========================================================== */
     .mcq-view-active {
       background-color: #fffdf0 !important;
@@ -706,7 +709,7 @@
       word-break: break-word;
     }
 
-    /* Option Color Themes from Screenshot */
+    /* Option Color Schemes */
     .opt-card-A { background: #f0f7ff; border-color: #93c5fd; }
     .opt-card-A .mcq-opt-badge { background: #2563eb; }
 
@@ -766,7 +769,7 @@
       font-family: 'Poppins', 'Mukta', sans-serif;
     }
 
-    /* ARCHIVE SECTION (FIXED HORIZONTAL SCROLL) */
+    /* ARCHIVE SECTION */
     .subject-pill-row {
       display: flex !important;
       flex-direction: row !important;
@@ -862,6 +865,7 @@
       <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">AUTO-DETECT ACTIVE</span>
     </div>
     
+    <!-- Clean Textarea (Unwanted Category/Hook input row completely removed) -->
     <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()"></textarea>
 
     <div class="status-counter">
@@ -1055,7 +1059,7 @@
 </div>
 
 <script>
-  let currentAppMode = 'mcq'; // 'mcq' or 'oneliner'
+  let currentAppMode = 'mcq';
   let isChallengeMode = true;
   let isRevealAnswer = false;
   let autoSaveTimer = null;
@@ -1096,7 +1100,6 @@ Ans: Lothal
 Ans: Banabhatta
 10. Who was the 24th Tirthankara of Jainism?
 Ans: Mahavira
-How many did you get right out of 10? Drop your score in the comments and share this with your fellow aspirants!
 #HistoryGK`
   };
 
@@ -1138,7 +1141,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
   /* ==========================================================
      1. INDEXEDDB DATABASE
      ========================================================== */
-  const DB_NAME = 'AoneNotesMultiStudioDB_v6';
+  const DB_NAME = 'AoneNotesMultiStudioDB_v9';
   const DB_VERSION = 1;
   const STORE_NAME = 'allSets';
 
@@ -1194,7 +1197,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
   /* ==========================================================
      2. SETTINGS MEMORY (PERSISTENCE)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_multi_typography_settings_v8';
+  const SETTINGS_KEY = 'aone_multi_typography_settings_v9';
 
   function saveTypographySettings() {
     const settings = {
@@ -1320,7 +1323,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
 
     parseSmartInput();
     saveTypographySettings();
-    updatePreviewScale();
+    setTimeout(updatePreviewScale, 50);
   }
 
   function toggleRevealAnswer() {
@@ -1457,7 +1460,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
     renderMCQCard();
   }
 
-  // --- ONE-LINER PARSER (BULLETPROOF FOR CLASSIC 10 QUESTIONS) ---
+  // --- ONE-LINER PARSER ---
   function parseOneLinerInput(raw) {
     const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
     parsedQAData = [];
@@ -1482,14 +1485,13 @@ How many did you get right out of 10? Drop your score in the comments and share 
         }
       }
 
-      // B. Question Line (Supports 1. , 1) , Q.1 , Q1.)
+      // B. Question Line
       const qStartMatch = line.match(/^(?:Q\.?\s*(\d+|[०-९]+)|(\d+|[०-९]+)[\.\)])\s*(.*)/i);
       if (qStartMatch) {
         if (currentQ) parsedQAData.push(currentQ);
         const num = qStartMatch[1] || qStartMatch[2];
         let restOfLine = qStartMatch[3].trim();
 
-        // Check if Answer is on the same line
         const qMarkIdx = restOfLine.indexOf('?');
         if (qMarkIdx !== -1) {
           const actualQ = restOfLine.substring(0, qMarkIdx).trim();
@@ -1628,17 +1630,19 @@ How many did you get right out of 10? Drop your score in the comments and share 
     const card = document.getElementById('capture-card');
     if (!viewport || !card) return;
 
-    const containerWidth = viewport.clientWidth || viewport.parentElement.clientWidth || 360;
+    const wrapper = viewport.parentElement;
+    const containerWidth = wrapper.clientWidth || 360;
     const scale = containerWidth / 1080;
     
     card.style.transform = `scale(${scale})`;
+    viewport.style.width = `${containerWidth}px`;
     viewport.style.height = `${1350 * scale}px`;
   }
 
   window.addEventListener('resize', updatePreviewScale);
 
   /* ==========================================================
-     6. ACTIONS & SHARING
+     6. ACTIONS & ULTRA-ROBUST CLIPBOARD PASTE
      ========================================================== */
   async function copyViralCaption() {
     const caption = document.getElementById('fbCaption').value || currentMeta.caption;
@@ -1650,27 +1654,47 @@ How many did you get right out of 10? Drop your score in the comments and share 
     }
   }
 
+  // ROBUST CLICK PASTE (Handles Android Chrome & Permissions)
   async function onlyPasteClipboard() {
+    const input = document.getElementById('smartInput');
+    let pastedText = '';
+
     try {
       if (navigator.clipboard && navigator.clipboard.readText) {
-        const text = await navigator.clipboard.readText();
-        if (text && text.trim().length > 0) {
-          document.getElementById('smartInput').value = text;
-          generateCards();
-          return;
-        }
+        pastedText = await navigator.clipboard.readText();
       }
     } catch (err) {
-      console.warn(err);
+      console.warn("Clipboard access blocked by browser:", err);
     }
-    notify("💡 Paste text manually, then tap 'Generate / Run'");
-    document.getElementById('smartInput').focus();
+
+    if (pastedText && pastedText.trim().length > 0) {
+      input.value = pastedText;
+      generateCards();
+      notify("📋 क्लिपबोर्ड से पेस्ट होकर कार्ड तैयार हो गया!");
+      return;
+    }
+
+    // Fallback if browser permission is blocked
+    input.focus();
+    notify("💡 ब्राउज़र ने ऑटो-पेस्ट ब्लॉक किया है। बॉक्स में थोड़ा देर दबाकर (Long Press) 'Paste' करें।");
   }
+
+  // INSTANT PASTE LISTENER (When pasting via Keyboard/Gboard directly)
+  window.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('smartInput');
+    input.addEventListener('paste', () => {
+      setTimeout(() => {
+        generateCards();
+        notify("⚡ पेस्ट होते ही कार्ड तैयार हो गया!");
+      }, 50);
+    });
+  });
 
   function generateCards() {
     try {
       parseSmartInput();
       saveToDatabase(false);
+      updatePreviewScale();
       notify("⚡ Card Generated & Auto-Saved!");
     } catch (e) {
       alert("Parsing Error: " + e.message);
@@ -1685,7 +1709,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
       parseSmartInput();
       saveToDatabase(false);
       if (ind) ind.innerText = "● Auto-Saved";
-    }, 900);
+    }, 600);
   }
 
   async function getCardCanvas() {
@@ -1917,7 +1941,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
     loadTypographySettings();
     setAppMode(currentAppMode);
     await renderLibrary();
-    setTimeout(updatePreviewScale, 300);
+    setTimeout(updatePreviewScale, 150);
   };
 </script>
 </body>
