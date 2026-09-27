@@ -317,7 +317,7 @@
       position: relative;
     }
 
-    /* 1080x1350 4:5 MAIN CANVAS */
+    /* 1080x1350 4:5 MAIN CANVAS WITH SAFE ZONE BORDER */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -590,13 +590,15 @@
     }
 
     /* ==========================================================
-       MCQ SCREENSHOT EXACT DESIGN (A ONE NOTES BRANDING)
+       MCQ SCREENSHOT EXACT DESIGN (A ONE NOTES BRANDING + BORDER)
        ========================================================== */
     .mcq-view-active {
       background-color: #fffdf0 !important;
-      padding: 40px 48px 36px 48px !important;
+      padding: 38px 46px 34px 46px !important;
       position: relative;
       overflow: hidden;
+      border: 12px solid #fef08a !important; /* Premium Poster Border Frame */
+      box-shadow: inset 0 0 0 3px #facc15 !important;
     }
     .mcq-bg-watermark {
       position: absolute;
@@ -605,18 +607,19 @@
       right: 0;
       bottom: 0;
       pointer-events: none;
-      opacity: 0.045;
-      font-size: 32px;
+      opacity: 0.048;
+      font-size: 34px;
       font-weight: 900;
       color: #b45309;
       transform: rotate(-30deg) scale(1.3);
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      line-height: 2.6;
+      line-height: 2.7;
       user-select: none;
       z-index: 1;
       white-space: nowrap;
+      font-family: 'Poppins', sans-serif;
     }
     .mcq-content-layer {
       position: relative;
@@ -645,22 +648,26 @@
       font-family: 'Poppins', 'Mukta', sans-serif;
       text-align: center;
     }
+    
+    /* 1. BADA A ONE NOTES CAPSULE */
     .mcq-brand-capsule {
       background: #ffffff;
-      border: 1.8px solid #cbd5e1;
-      border-radius: 30px;
-      padding: 4px 26px;
-      font-size: 18px;
-      font-weight: 800;
-      color: #1e293b;
+      border: 2.2px solid #cbd5e1;
+      border-radius: 35px;
+      padding: 6px 34px;
+      font-size: 24px;
+      font-weight: 900;
+      color: #0f172a;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      letter-spacing: 1.2px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
       font-family: 'Poppins', sans-serif;
     }
+
+    /* 2. QUESTION AREA WITH DYNAMIC MULTI-COLOR WORDS */
     .mcq-question-area {
       margin: 20px 0 15px 0;
-      font-size: 40px;
+      font-size: 42px;
       font-weight: 800;
       line-height: 1.45;
       color: #0f172a;
@@ -669,15 +676,12 @@
     }
     .mcq-q-blue {
       color: #0284c7;
-      font-size: 46px;
+      font-size: 48px;
       font-weight: 900;
       margin-right: 8px;
       font-family: 'Poppins', sans-serif;
     }
-    .mcq-highlight-red {
-      color: #dc2626 !important;
-      font-weight: 800;
-    }
+
     .mcq-options-container {
       display: flex;
       flex-direction: column;
@@ -695,12 +699,12 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     }
     .mcq-opt-badge {
-      width: 50px;
-      height: 50px;
-      min-width: 50px;
-      border-radius: 10px;
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      border-radius: 12px;
       color: #ffffff;
-      font-size: 26px;
+      font-size: 27px;
       font-weight: 900;
       display: flex;
       align-items: center;
@@ -745,6 +749,7 @@
       margin-left: 10px;
     }
 
+    /* BOTTOM YELLOW HOOK PILL */
     .mcq-footer-box {
       display: flex;
       flex-direction: column;
@@ -779,7 +784,7 @@
     }
 
     /* ==========================================================
-       ARCHIVE SECTION FIXED CSS (RESOLVES SCREENSHOT VERTICAL BUG)
+       ARCHIVE SECTION FIXED CSS (CLEAN HORIZONTAL SCROLL)
        ========================================================== */
     .subject-pill-row {
       display: flex;
@@ -950,11 +955,13 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
           <input type="range" id="rngTitleSize" min="26" max="54" value="42" oninput="applyTypography(true)">
         </div>
         <div>
-          <div class="typo-label">Ques Size: <span id="lblQSize">40px</span></div>
-          <input type="range" id="rngQSize" min="20" max="65" value="40" oninput="applyTypography(true)">
+          <div class="typo-label">Ques Size: <span id="lblQSize">42px</span></div>
+          <!-- Question Size Max increased to 85px -->
+          <input type="range" id="rngQSize" min="22" max="85" value="42" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Options Size: <span id="lblASize">34px</span></div>
+          <!-- Options Size Max increased to 52px -->
           <input type="range" id="rngASize" min="18" max="52" value="34" oninput="applyTypography(true)">
         </div>
       </div>
@@ -1000,7 +1007,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
               <div class="mcq-brand-capsule" id="mcqBrandCapsule">A ONE NOTES</div>
             </div>
 
-            <!-- Question -->
+            <!-- Question with Auto Multi-colored words -->
             <div class="mcq-question-area" id="mcqQuestionArea">
               <span class="mcq-q-blue" id="mcqQPrefix">Q.1</span>
               <span id="mcqQuestionText">Which is the deepest trench in the world? 🌊</span>
@@ -1108,7 +1115,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     category: '🌍 WORLD GEOGRAPHY QUIZ 🧠',
     brand: 'A ONE NOTES',
     qPrefix: 'Q.1',
-    questionHTML: 'Which is the deepest trench in the world? 🌊',
+    questionHTML: '',
     options: [
       { letter: 'A', text: 'Java Trench 🇮🇩' },
       { letter: 'B', text: 'Mariana Trench 🇵🇭' },
@@ -1132,10 +1139,22 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     '#faf5ff', '#fff7ed', '#f0fdfa', '#fdf2f8', '#fffbeb'
   ];
 
+  // High engagement palette for multi-colored words
+  const engagementColors = ['#dc2626', '#1d4ed8', '#047857', '#d97706', '#7c3aed', '#0f172a', '#b91c1c'];
+
+  function colorizeQuestionWords(plainText) {
+    if (!plainText) return '';
+    const words = plainText.trim().split(/\s+/);
+    return words.map((w, idx) => {
+      const color = engagementColors[idx % engagementColors.length];
+      return `<span style="color: ${color};">${w}</span>`;
+    }).join(' ');
+  }
+
   /* ==========================================================
      1. INDEXEDDB DATABASE
      ========================================================== */
-  const DB_NAME = 'AoneNotesMultiStudioDB_v3';
+  const DB_NAME = 'AoneNotesMultiStudioDB_v4';
   const DB_VERSION = 1;
   const STORE_NAME = 'allSets';
 
@@ -1191,7 +1210,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   /* ==========================================================
      2. SETTINGS MEMORY (PERSISTENCE)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_multi_typography_settings_v5';
+  const SETTINGS_KEY = 'aone_multi_typography_settings_v6';
 
   function saveTypographySettings() {
     const settings = {
@@ -1353,7 +1372,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // 1. CAPTIONS & HASHTAGS (Priority check - so they never go to yellow box)
+      // 1. CAPTION / HASHTAG LINES (Stored purely for FB sharing)
       if (line.toLowerCase().startsWith('caption:') || line.includes('#')) {
         captionLines.push(line.replace(/^caption:\s*/i, ''));
         continue;
@@ -1381,7 +1400,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
         continue;
       }
 
-      // 4. CTA & FOLLOW LINES (Yellow Pill hook)
+      // 4. CTA / HOOK LINE (Appears inside the Yellow pill)
       if (line.includes('Comment') || line.includes('Option') || line.includes('लिखें') || line.includes('👇')) {
         currentMCQData.ctaMain = line;
         continue;
@@ -1391,21 +1410,15 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
         continue;
       }
 
-      // 5. CATEGORY / TOP TITLE
+      // 5. TOP CATEGORY TITLE
       if (i === 0 && (line.includes('QUIZ') || line.includes('AFFAIRS') || line.includes('🌍') || line.includes('🏛️') || line.includes('🎯') || line.includes('🧠'))) {
         currentMCQData.category = line;
         continue;
       }
 
       // 6. BRAND CAPSULE
-      if (i === 1 && !line.match(/^[QA-D0-9\(\.]/i) && line.length < 35 && !line.includes('?')) {
-        currentMCQData.brand = line;
-        continue;
-      }
-
-      // 7. QUESTION LINE
-      if (!detectedQ && (line.match(/^(?:Q\.?\s*\d*|\d+[\.\)]|\bQ\b)/i) || line.includes('?'))) {
-        let prefix = 'Q.';
+      if (i === 1 && !line.match(/^[QA-D0-9\(\.]/i) && line.length < 35 && !line.includes('?')) {         currentMCQData.brand = line;         continue;       }        // 7. QUESTION DETECTION       if (!detectedQ && (line.match(/^(?:Q\.?\s*\d*\vert{}\d+[\.\)]|\bQ\b)/i) || line.includes('?'))) {
+        let prefix = 'Q.1';
         let cleanQ = line;
         const pMatch = line.match(/^(Q\.?\s*\d*|\d+[\.\)])\s*/i);
         if (pMatch) {
@@ -1421,25 +1434,18 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       }
     }
 
+    // Auto-Colorize Question Words for High Engagement
     if (detectedQ) {
-      let formattedQ = detectedQ;
-      // Single/double quotes highlight in Red
-      formattedQ = formattedQ.replace(/(['"][^'"]+['"])/g, '<span class="mcq-highlight-red">$1</span>');
-      const qWords = ['किसे प्रदान किया जाएगा\\?', 'किसको दिया जाएगा\\?', 'कहाँ स्थित है\\?', 'कब हुआ था\\?', 'किसने की थी\\?', 'कौन थे\\?', 'क्या है\\?'];
-      qWords.forEach(kw => {
-        const re = new RegExp(`(${kw})`, 'g');
-        formattedQ = formattedQ.replace(re, '<span class="mcq-highlight-red">$1</span>');
-      });
-      currentMCQData.questionHTML = formattedQ;
+      currentMCQData.questionHTML = colorizeQuestionWords(detectedQ);
     } else {
-      currentMCQData.questionHTML = 'Which is the deepest trench in the world? 🌊';
+      currentMCQData.questionHTML = colorizeQuestionWords('Which is the deepest trench in the world? 🌊');
     }
 
-    // Prepare full Facebook Caption
+    // Facebook Caption setup
     if (captionLines.length > 0) {
       currentMeta.caption = captionLines.join('\n');
     } else {
-      currentMeta.caption = `${currentMCQData.questionHTML.replace(/<[^>]*>/g, '')}\n\nDrop your answer below! 👇🚀\n#Quiz #GeneralKnowledge`;
+      currentMeta.caption = `${detectedQ || 'GK Quiz'}\n\nDrop your answer below! 👇🚀\n#Quiz #GeneralKnowledge`;
     }
     document.getElementById('fbCaption').value = currentMeta.caption;
 
