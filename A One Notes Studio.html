@@ -284,20 +284,19 @@
       white-space: nowrap;
     }
 
-    /* PREVIEW CONTAINER (FIXED FIT & NEVER COLLAPSES) */
+    /* PREVIEW CONTAINER - ASPECT RATIO PREVENTS COLLAPSE */
     .preview-viewport-wrapper {
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
       background: #0b1222;
       border: 1.5px solid #1f293d;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
       position: relative;
+      margin: 4px 0;
     }
     #previewViewport {
       width: 100%;
+      aspect-ratio: 1080 / 1350;
       position: relative;
       overflow: hidden;
       display: block;
@@ -324,9 +323,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* ==========================================================
-       ONE-LINER LAYOUT STYLES (10 QUESTIONS)
-       ========================================================== */
+    /* ONE-LINER LAYOUT STYLES (10 QUESTIONS) */
     .top-header-wrap {
       position: relative;
       display: flex;
@@ -709,7 +706,7 @@
       word-break: break-word;
     }
 
-    /* Option Color Schemes */
+    /* Option Color Themes */
     .opt-card-A { background: #f0f7ff; border-color: #93c5fd; }
     .opt-card-A .mcq-opt-badge { background: #2563eb; }
 
@@ -802,7 +799,7 @@
       background: #38bdf8 !important;
       color: #04101e !important;
       border-color: #38bdf8 !important;
-      font-weight: 800 !important;
+      font-weight: 800;
     }
 
     .library-list {
@@ -862,10 +859,9 @@
   <div class="dark-card">
     <div class="card-title">
       <span id="inputBoxTitle">📝 MCQ Raw Input:</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">AUTO-DETECT ACTIVE</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">READY</span>
     </div>
     
-    <!-- Clean Textarea (Unwanted Category/Hook input row completely removed) -->
     <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()"></textarea>
 
     <div class="status-counter">
@@ -1065,7 +1061,7 @@
   let autoSaveTimer = null;
   let currentSubjectFilter = 'All';
 
-  // SEPARATE STORAGE TO PREVENT OVERWRITING BETWEEN MODES
+  // DEFAULT DATA STORES
   let modeDataStore = {
     mcq: `🌍 WORLD GEOGRAPHY QUIZ 🧠
 Q.1 Which is the deepest trench in the world? 🌊
@@ -1141,7 +1137,7 @@ Ans: Mahavira
   /* ==========================================================
      1. INDEXEDDB DATABASE
      ========================================================== */
-  const DB_NAME = 'AoneNotesMultiStudioDB_v9';
+  const DB_NAME = 'AoneNotesMultiStudioDB_v10';
   const DB_VERSION = 1;
   const STORE_NAME = 'allSets';
 
@@ -1197,7 +1193,7 @@ Ans: Mahavira
   /* ==========================================================
      2. SETTINGS MEMORY (PERSISTENCE)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_multi_typography_settings_v9';
+  const SETTINGS_KEY = 'aone_multi_typography_settings_v10';
 
   function saveTypographySettings() {
     const settings = {
@@ -1266,10 +1262,9 @@ Ans: Mahavira
   }
 
   /* ==========================================================
-     3. MODE SWITCHING WITH ISOLATED TEXT PRESERVATION
+     3. MODE SWITCHING WITH PRESERVATION
      ========================================================== */
   function setAppMode(mode) {
-    // Save current textarea content to appropriate mode store
     const currentInputVal = document.getElementById('smartInput').value;
     if (currentInputVal && currentInputVal.trim().length > 0) {
       modeDataStore[currentAppMode] = currentInputVal;
@@ -1318,7 +1313,6 @@ Ans: Mahavira
       lblAns.innerText = 'Answer Size:';
     }
 
-    // Populate mode-specific text
     document.getElementById('smartInput').value = modeDataStore[mode] || '';
 
     parseSmartInput();
@@ -1339,7 +1333,7 @@ Ans: Mahavira
   }
 
   /* ==========================================================
-     4. BULLETPROOF PARSERS
+     4. BULLETPROOF PARSERS (ROBUST FOR MOBILE COPY-PASTE)
      ========================================================== */
   function cleanLine(str) {
     return str.replace(/\u00A0/g, ' ')
@@ -1460,7 +1454,7 @@ Ans: Mahavira
     renderMCQCard();
   }
 
-  // --- ONE-LINER PARSER ---
+  // --- ONE-LINER PARSER (10 QUESTIONS) ---
   function parseOneLinerInput(raw) {
     const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
     parsedQAData = [];
@@ -1635,7 +1629,6 @@ Ans: Mahavira
     const scale = containerWidth / 1080;
     
     card.style.transform = `scale(${scale})`;
-    viewport.style.width = `${containerWidth}px`;
     viewport.style.height = `${1350 * scale}px`;
   }
 
@@ -1676,7 +1669,7 @@ Ans: Mahavira
 
     // Fallback if browser permission is blocked
     input.focus();
-    notify("💡 ब्राउज़र ने ऑटो-पेस्ट ब्लॉक किया है। बॉक्स में थोड़ा देर दबाकर (Long Press) 'Paste' करें।");
+    notify("💡 बॉक्स में थोड़ा देर दबाकर (Long Press) 'Paste' करें।");
   }
 
   // INSTANT PASTE LISTENER (When pasting via Keyboard/Gboard directly)
@@ -1686,7 +1679,7 @@ Ans: Mahavira
       setTimeout(() => {
         generateCards();
         notify("⚡ पेस्ट होते ही कार्ड तैयार हो गया!");
-      }, 50);
+      }, 60);
     });
   });
 
