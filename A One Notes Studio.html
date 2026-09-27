@@ -8,7 +8,7 @@
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&family=Mukta:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&family=Mukta:wght@500;600;700;800&family=Hind:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -338,7 +338,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* TOP HEADER */
+    /* ONE-LINER HEADER & ELEMENTS */
     .top-header-wrap {
       position: relative;
       display: flex;
@@ -407,7 +407,6 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* TITLE BANNER */
     .title-banner {
       display: flex;
       justify-content: center;
@@ -467,7 +466,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* MODE 1: ONE-LINER TABLE CONTAINER */
+    /* ONE-LINER TABLE STYLES */
     .table-container {
       flex: 1;
       position: relative;
@@ -559,8 +558,6 @@
       word-break: break-word;
     }
 
-    .word-red { color: #dc2626; font-weight: 800; }
-    .q-mark { color: #dc2626; font-weight: 900; }
     .td-a {
       font-size: 22px;
       font-weight: 700;
@@ -579,137 +576,6 @@
       display: inline-block;
     }
 
-    /* MODE 2: MCQ QUIZ CONTAINER */
-    .mcq-container {
-      flex: 1;
-      position: relative;
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 10px 0;
-      z-index: 2;
-    }
-
-    .mcq-q-box {
-      background: #f8fafc;
-      border: 3px solid #cbd5e1;
-      border-radius: 18px;
-      padding: 24px 28px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-    }
-    .mcq-q-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 54px;
-      height: 54px;
-      min-width: 54px;
-      border-radius: 50%;
-      background: #dc2626;
-      color: #ffffff;
-      font-size: 24px;
-      font-weight: 900;
-      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .mcq-q-title {
-      font-size: 34px;
-      font-weight: 800;
-      color: #0f172a;
-      line-height: 1.35;
-      flex: 1;
-      word-break: break-word;
-    }
-
-    .mcq-options-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      flex: 1;
-      justify-content: center;
-    }
-
-    .mcq-opt-row {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      background: #ffffff;
-      border: 3px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 16px 22px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
-      transition: all 0.2s ease;
-    }
-    .mcq-opt-letter {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
-      border-radius: 50%;
-      background: #1e293b;
-      color: #ffffff;
-      font-size: 22px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-      flex-shrink: 0;
-    }
-    .mcq-opt-text {
-      font-size: 28px;
-      font-weight: 700;
-      color: #1e293b;
-      flex: 1;
-    }
-
-    /* Option Highlighted When Correct */
-    .mcq-opt-row.is-correct {
-      background: #f0fdf4 !important;
-      border-color: #22c55e !important;
-      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.2) !important;
-    }
-    .mcq-opt-row.is-correct .mcq-opt-letter {
-      background: #16a34a !important;
-    }
-    .mcq-opt-row.is-correct .mcq-opt-text {
-      color: #15803d !important;
-      font-weight: 800;
-    }
-    .mcq-opt-row.is-correct::after {
-      content: '✔';
-      color: #16a34a;
-      font-size: 28px;
-      font-weight: 900;
-    }
-
-    /* MCQ Call-to-action engagement box */
-    .mcq-callout-strip {
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      border: 2px dashed #d97706;
-      border-radius: 14px;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .mcq-callout-text {
-      font-size: 22px;
-      font-weight: 800;
-      color: #b45309;
-    }
-    .mcq-callout-sub {
-      font-size: 20px;
-      font-weight: 800;
-      color: #dc2626;
-    }
-
-    /* FOOTER */
     .footer-wrap {
       position: relative;
       display: flex;
@@ -758,51 +624,221 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* ARCHIVE STYLES */
-    .subject-pill-row {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
+    /* ==========================================================
+       EXACT SCREENSHOT MCQ LAYOUT (PREMIUM CREAM THEME)
+       ========================================================== */
+    .mcq-view-active {
+      background-color: #fffdf0 !important;
+      padding: 40px 48px 36px 48px !important;
+      position: relative;
+      overflow: hidden;
     }
-    .subj-pill {
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      background: #1e293b;
-      color: #94a3b8;
-      border: 1px solid #334155;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .subj-pill.active {
-      background: #dc2626;
-      color: #fff;
-      border-color: #dc2626;
-    }
-    .library-list {
-      max-height: 140px;
-      overflow-y: auto;
+
+    /* Watermark pattern from image */
+    .mcq-bg-watermark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      opacity: 0.045;
+      font-size: 32px;
+      font-weight: 900;
+      color: #b45309;
+      transform: rotate(-30deg) scale(1.3);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      justify-content: space-around;
+      line-height: 2.6;
+      user-select: none;
+      z-index: 1;
+      white-space: nowrap;
     }
-    .saved-row {
-      background: #0f172a;
-      border: 1px solid #1e293b;
-      padding: 7px 10px;
-      border-radius: 8px;
+
+    .mcq-content-layer {
+      position: relative;
+      z-index: 2;
+      height: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-      font-size: 12.5px;
     }
-    .btn-xs {
-      padding: 3px 7px;
-      font-size: 11px;
-      border-radius: 5px;
+
+    /* Top Centered Header */
+    .mcq-header-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .mcq-category-title {
+      font-size: 40px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-transform: uppercase;
+      font-family: 'Poppins', 'Mukta', sans-serif;
+    }
+    .mcq-brand-capsule {
+      background: #ffffff;
+      border: 1.8px solid #cbd5e1;
+      border-radius: 30px;
+      padding: 4px 26px;
+      font-size: 18px;
+      font-weight: 800;
+      color: #1e293b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Question Box */
+    .mcq-question-area {
+      margin: 30px 0 25px 0;
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.45;
+      color: #0f172a;
+      word-break: break-word;
+      font-family: 'Mukta', 'Poppins', sans-serif;
+    }
+    .mcq-q-blue {
+      color: #0284c7;
+      font-size: 44px;
+      font-weight: 900;
+      margin-right: 8px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .mcq-highlight-red {
+      color: #dc2626 !important;
+      font-weight: 800;
+    }
+
+    /* 4 Options Grid */
+    .mcq-options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .mcq-option-card {
+      display: flex;
+      align-items: center;
+      border-radius: 18px;
+      padding: 16px 22px;
+      border: 2px solid;
+      background: #ffffff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+    }
+    .mcq-opt-badge {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+    }
+    .mcq-opt-label {
+      font-size: 33px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-left: 20px;
+      flex: 1;
+      font-family: 'Mukta', 'Poppins', sans-serif;
+    }
+
+    /* Option Variants from Screenshot */
+    .opt-card-A {
+      background: #f0f7ff;
+      border-color: #93c5fd;
+    }
+    .opt-card-A .mcq-opt-badge {
+      background: #2563eb;
+    }
+
+    .opt-card-B {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+    .opt-card-B .mcq-opt-badge {
+      background: #059669;
+    }
+
+    .opt-card-C {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+    .opt-card-C .mcq-opt-badge {
+      background: #d97706;
+    }
+
+    .opt-card-D {
+      background: #faf5ff;
+      border-color: #e9d5ff;
+    }
+    .opt-card-D .mcq-opt-badge {
+      background: #7c3aed;
+    }
+
+    /* When Answer is Highlighted */
+    .mcq-option-card.correct-revealed {
+      border: 3.5px solid #16a34a !important;
+      background: #ecfdf5 !important;
+      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.25) !important;
+    }
+    .mcq-option-card.correct-revealed::after {
+      content: '✔';
+      font-size: 32px;
+      color: #16a34a;
+      font-weight: 900;
+      margin-left: 10px;
+    }
+
+    /* Bottom Engagement Strip */
+    .mcq-footer-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    .mcq-comment-pill {
+      width: 100%;
+      background: #fef08a;
+      border: 2px solid #facc15;
+      border-radius: 40px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 29px;
+      font-weight: 800;
+      color: #713f12;
+      box-shadow: 0 4px 12px rgba(250, 204, 21, 0.25);
+      font-family: 'Mukta', 'Poppins', sans-serif;
+    }
+    .mcq-like-follow {
+      font-size: 24px;
+      font-weight: 800;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Poppins', 'Mukta', sans-serif;
     }
   </style>
 </head>
@@ -814,7 +850,7 @@
 
   <div class="app-header">
     <h1>⚡ A one Notes Studio</h1>
-    <span class="app-badge">PRO MULTI-STUDIO</span>
+    <span class="app-badge">MULTI-MODE PRO</span>
   </div>
 
   <!-- MODE SWITCHER -->
@@ -830,49 +866,49 @@
   <!-- MANUAL SMART PASTE CARD -->
   <div class="dark-card">
     <div class="card-title">
-      <span id="inputBoxTitle">📝 MCQ Raw Input:</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">WORLD GEOGRAPHY DETECTED</span>
+      <span id="inputBoxTitle">📝 Raw Text (Smart Paste):</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">CURRENT AFFAIRS DETECTED</span>
     </div>
 
     <!-- VIRAL HOOK SELECTOR -->
     <div class="row-flex" style="margin-bottom: 10px;">
       <div style="flex: 1.2;">
-        <label>🔥 Viral Header Hook:</label>
+        <label>🔥 Viral Hook / Tag:</label>
         <select id="selViralHook" onchange="updateCustomHook(this.value)">
+          <option value="🏛️ CURRENT AFFAIRS 🧠" selected>🏛️ CURRENT AFFAIRS 🧠</option>
+          <option value="🌍 WORLD GEOGRAPHY QUIZ 🧠">🌍 WORLD GEOGRAPHY QUIZ 🧠</option>
           <option value="🔥 90% Aspirants Fail In Q7">🔥 90% Aspirants Fail In Q7</option>
-          <option value="🎯 World Geography Quiz" selected>🎯 World Geography Quiz</option>
           <option value="⚡ Only 1% Can Answer This!">⚡ Only 1% Can Answer This!</option>
-          <option value="🧠 Daily GK Challenge: Test Yourself">🧠 Daily GK Challenge: Test Yourself</option>
           <option value="custom">✏️ Custom Hook (Type below)...</option>
         </select>
       </div>
       <div style="flex: 1;">
-        <label>Hook Text:</label>
-        <input type="text" id="txtCustomHook" value="🎯 World Geography Quiz" oninput="applyHookDirectly()">
+        <label>Brand / Top Text:</label>
+        <input type="text" id="txtCustomHook" value="🏛️ CURRENT AFFAIRS 🧠" oninput="applyHookDirectly()">
       </div>
     </div>
     
-    <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()">🌍 WORLD GEOGRAPHY QUIZ 🧠
-Q.1 Which is the deepest trench in the world? 🌊
-        A) Java Trench 🇮🇩
-        B) Mariana Trench 🇵🇭
-        C) Puerto Rico Trench 🇵🇷
-        D) South Sandwich Trench 🇦🇶
-👇 Comment your answer below! 🔥
-              ❤️ Like | ➕ Follow 🎯
-Caption: Test your knowledge on the Deepest Oceanic Trench / Mariana Trench! Drop the correct option below. 👇🚀
-#GeneralKnowledge
-Answer: B) Mariana Trench 🇵🇭</textarea>
+    <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()">🏛️ CURRENT AFFAIRS 🧠
+EXAM PREPARATION
+Q. संगीत क्षेत्र का प्रतिष्ठित 'राष्ट्रीय लता मंगेशकर पुरस्कार 2026' किसे प्रदान किया जाएगा? 🎵
+A) श्रेया घोषाल 🎤
+B) अभिजीत बनर्जी 🎼
+C) शांतनु मोइत्रा 🏆
+D) ए. आर. रहमान 🎹
+👇 सही Option Comment में लिखें! 💬
+❤️ Like | ➕ Follow 🎯
+Caption: संगीत क्षेत्र का प्रतिष्ठित राष्ट्रीय लता मंगेशकर पुरस्कार 2026! अपना सही उत्तर कमेंट करें। 👇✨
+#CurrentAffairs #ExamPrep</textarea>
 
     <div class="status-counter">
-      <span id="statusCounter">📊 Loaded MCQ: Q.1 (4 Options)</span>
+      <span id="statusCounter">📊 Loaded MCQ: Q. (4 Options)</span>
       <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
     </div>
 
-    <!-- VIRAL CHALLENGE / ANSWER HIGHLIGHT TOGGLE -->
+    <!-- TOGGLES -->
     <div id="oneLinerToggleWrap" style="display: none;">
       <label class="challenge-toggle-box" for="chkChallengeMode">
-        <span>🎯 Q10 Comment Challenge Mode (Boosts Viral Reach)</span>
+        <span>🎯 Q10 Comment Challenge Mode (One-Liner)</span>
         <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
       </label>
     </div>
@@ -888,14 +924,13 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     <div class="typo-panel">
       <div class="typo-row">
         <div>
-          <div class="typo-label">Font Family:</div>
+          <div class="typo-label">Font Style:</div>
           <select id="selFontFamily" onchange="applyTypography(true)">
-            <option value="'Poppins', sans-serif" selected>Poppins (Clean & Bold)</option>
-            <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
+            <option value="'Mukta', sans-serif" selected>Mukta (हिंदी और इंग्लिश परफेक्ट)</option>
+            <option value="'Poppins', sans-serif">Poppins (मॉडर्न & बोल्ड)</option>
+            <option value="'Hind', sans-serif">Hind (स्पष्ट और किताबी)</option>
             <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
-            <option value="'Roboto', sans-serif">Roboto (Classic)</option>
-            <option value="'Merriweather', serif">Merriweather (Editorial)</option>
-            <option value="'Mukta', sans-serif">Mukta (Hindi & English)</option>
+            <option value="'Roboto', sans-serif">Roboto (क्लासिक)</option>
           </select>
         </div>
         <div>
@@ -904,33 +939,31 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
             <option value="700">Bold (700)</option>
             <option value="800" selected>Extra Bold (800)</option>
             <option value="900">Black (900)</option>
-            <option value="600">Semi Bold (600)</option>
           </select>
         </div>
       </div>
 
       <div class="typo-row">
         <div>
-          <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
-          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography(true)">
+          <div class="typo-label">Header/Title: <span id="lblTitleSize">38px</span></div>
+          <input type="range" id="rngTitleSize" min="26" max="48" value="38" oninput="applyTypography(true)">
         </div>
         <div>
-          <div class="typo-label">Ques Size: <span id="lblQSize">26px</span></div>
-          <input type="range" id="rngQSize" min="18" max="42" value="26" oninput="applyTypography(true)">
+          <div class="typo-label">Ques Size: <span id="lblQSize">38px</span></div>
+          <input type="range" id="rngQSize" min="22" max="46" value="38" oninput="applyTypography(true)">
         </div>
         <div>
-          <div class="typo-label">Options/Ans Size: <span id="lblASize">24px</span></div>
-          <input type="range" id="rngASize" min="16" max="36" value="24" oninput="applyTypography(true)">
+          <div class="typo-label">Options Size: <span id="lblASize">32px</span></div>
+          <input type="range" id="rngASize" min="20" max="40" value="32" oninput="applyTypography(true)">
         </div>
       </div>
     </div>
 
-    <!-- Hidden Caption for FB -->
     <input type="hidden" id="fbCaption" value="">
 
     <!-- Actions -->
     <div class="btn-grid">
-      <button class="btn-caption" onclick="copyViralCaption()">📋 Copy FB Viral Caption</button>
+      <button class="btn-caption" onclick="copyViralCaption()">📋 Copy FB Caption</button>
       <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
       <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
       <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
@@ -947,68 +980,88 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
 
     <div class="preview-viewport-wrapper">
       <div id="previewViewport">
-        <div id="capture-card">
+        
+        <!-- CAPTURE CARD -->
+        <div id="capture-card" class="mcq-view-active">
           
-          <div class="top-header-wrap">
-            <div class="top-line-behind"></div>
-            <div class="top-logo">
-              <span class="logo-red">A one</span><span class="logo-black">Notes</span>
-            </div>
-            
-            <div class="top-hook-badge" id="outHookBadge">🎯 World Geography Quiz</div>
-
-            <div class="top-follow-pill">A one Notes : Follow</div>
-          </div>
-
-          <div class="title-banner">
-            <div class="title-pill">
-              <div class="title-main" id="outSubject">GEOGRAPHY</div>
-              <div class="title-sub" id="outSubTopic">( Oceanic Trenches )</div>
-              <div class="title-part" id="outPart">Quiz 1</div>
-            </div>
-          </div>
-
-          <div class="watermark">A one Notes</div>
-
-          <!-- 1. ONE-LINER 10 Qs VIEW -->
-          <div class="table-container" id="oneLinerTableContainer">
-            <table>
-              <thead>
-                <tr>
-                  <th class="th-q">Questions</th>
-                  <th class="th-a">Answers</th>
-                </tr>
-              </thead>
-              <tbody id="qaBody"></tbody>
-            </table>
-          </div>
-
-          <!-- 2. MCQ QUIZ VIEW -->
-          <div class="mcq-container" id="mcqQuizContainer">
-            <div class="mcq-q-box">
-              <span class="mcq-q-badge" id="mcqCardQNum">Q.1</span>
-              <div class="mcq-q-title" id="mcqCardQText">Which is the deepest trench in the world? 🌊</div>
+          <!-- ================= MCQ LAYOUT (MATCHING IMAGE) ================= -->
+          <div id="mcqLayoutWrap" class="mcq-content-layer">
+            <div class="mcq-bg-watermark">
+              <div>EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION</div>
+              <div>EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION</div>
+              <div>EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION</div>
+              <div>EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION &nbsp;•&nbsp; EXAM PREPARATION</div>
             </div>
 
-            <div class="mcq-options-grid" id="mcqOptionsGrid">
-              <!-- Options rendered dynamically -->
+            <!-- Top Header -->
+            <div class="mcq-header-box">
+              <div class="mcq-category-title" id="mcqCategoryTitle">🏛️ CURRENT AFFAIRS 🧠</div>
+              <div class="mcq-brand-capsule" id="mcqBrandCapsule">EXAM PREPARATION</div>
             </div>
 
-            <div class="mcq-callout-strip">
-              <div class="mcq-callout-text" id="mcqCtaMain">👇 Comment your answer below! 🔥</div>
-              <div class="mcq-callout-sub" id="mcqCtaSub">❤️ Like | ➕ Follow 🎯</div>
+            <!-- Question -->
+            <div class="mcq-question-area" id="mcqQuestionArea">
+              <span class="mcq-q-blue" id="mcqQPrefix">Q.</span>
+              <span id="mcqQuestionText">संगीत क्षेत्र का प्रतिष्ठित <span class="mcq-highlight-red">'राष्ट्रीय लता मंगेशकर पुरस्कार 2026'</span> <span class="mcq-highlight-red">किसे प्रदान किया जाएगा?</span> 🎵</span>
+            </div>
+
+            <!-- 4 Options -->
+            <div class="mcq-options-container" id="mcqOptionsContainer">
+              <!-- Dynamically populated -->
+            </div>
+
+            <!-- Bottom CTA -->
+            <div class="mcq-footer-box">
+              <div class="mcq-comment-pill" id="mcqCtaPill">👇 सही Option Comment में लिखें! 💬</div>
+              <div class="mcq-like-follow" id="mcqLikeFollow">❤️ Like | ➕ Follow 🎯</div>
             </div>
           </div>
 
-          <div class="footer-wrap">
-            <div class="footer-line-behind"></div>
-            <div class="footer-brand">
-              <span class="footer-book-icon">📖</span>
-              <div class="footer-title">
-                <span class="f-red">A one</span><span class="f-black">Notes</span>
+          <!-- ================= ONE-LINER LAYOUT (PRESERVED) ================= -->
+          <div id="oneLinerLayoutWrap" style="display: none; height: 100%; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div class="top-header-wrap">
+                <div class="top-line-behind"></div>
+                <div class="top-logo">
+                  <span class="logo-red">A one</span><span class="logo-black">Notes</span>
+                </div>
+                <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
+                <div class="top-follow-pill">A one Notes : Follow</div>
+              </div>
+
+              <div class="title-banner">
+                <div class="title-pill">
+                  <div class="title-main" id="outSubject">HISTORY</div>
+                  <div class="title-sub" id="outSubTopic">( Ancient India )</div>
+                  <div class="title-part" id="outPart">Part 1</div>
+                </div>
               </div>
             </div>
-            <div class="footer-follow-btn">Important For All Exams</div>
+
+            <div class="watermark">A one Notes</div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="th-q">Questions</th>
+                    <th class="th-a">Answers</th>
+                  </tr>
+                </thead>
+                <tbody id="qaBody"></tbody>
+              </table>
+            </div>
+
+            <div class="footer-wrap">
+              <div class="footer-line-behind"></div>
+              <div class="footer-brand">
+                <span class="footer-book-icon">📖</span>
+                <div class="footer-title">
+                  <span class="f-red">A one</span><span class="f-black">Notes</span>
+                </div>
+              </div>
+              <div class="footer-follow-btn">Important For All Exams</div>
+            </div>
           </div>
 
         </div>
@@ -1022,9 +1075,9 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
 
     <div class="subject-pill-row">
       <button class="subj-pill active" onclick="filterBySubject('All', this)">All</button>
-      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
+      <button class="subj-pill" onclick="filterBySubject('Current Affairs', this)">Current Affairs</button>
       <button class="subj-pill" onclick="filterBySubject('History', this)">History</button>
-      <button class="subj-pill" onclick="filterBySubject('Polity', this)">Polity</button>
+      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
       <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
     </div>
 
@@ -1043,35 +1096,35 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
 </div>
 
 <script>
-  let currentAppMode = 'mcq'; // 'oneliner' or 'mcq'
-  let parsedQAData = [];       // For One-Liner Mode
-  let currentMCQData = {       // For MCQ Mode
-    qNum: 'Q.1',
-    question: 'Which is the deepest trench in the world? 🌊',
+  let currentAppMode = 'mcq'; // 'mcq' or 'oneliner'
+  let parsedQAData = [];
+  let isChallengeMode = true;
+  let isRevealAnswer = false;
+  let autoSaveTimer = null;
+  let currentSubjectFilter = 'All';
+
+  let currentMCQData = {
+    category: '🏛️ CURRENT AFFAIRS 🧠',
+    brand: 'EXAM PREPARATION',
+    qPrefix: 'Q.',
+    questionHTML: `संगीत क्षेत्र का प्रतिष्ठित <span class="mcq-highlight-red">'राष्ट्रीय लता मंगेशकर पुरस्कार 2026'</span> <span class="mcq-highlight-red">किसे प्रदान किया जाएगा?</span> 🎵`,
     options: [
-      { letter: 'A', text: 'Java Trench 🇮🇩' },
-      { letter: 'B', text: 'Mariana Trench 🇵🇭' },
-      { letter: 'C', Puerto: false, text: 'Puerto Rico Trench 🇵🇷' },
-      { letter: 'D', text: 'South Sandwich Trench 🇦🇶' }
+      { letter: 'A', text: 'श्रेया घोषाल 🎤' },
+      { letter: 'B', text: 'अभिजीत बनर्जी 🎼' },
+      { letter: 'C', text: 'शांतनु मोइत्रा 🏆' },
+      { letter: 'D', text: 'ए. आर. रहमान 🎹' }
     ],
     correctLetter: 'B',
-    correctAnswerText: 'Mariana Trench 🇵🇭',
-    ctaMain: '👇 Comment your answer below! 🔥',
+    ctaMain: '👇 सही Option Comment में लिखें! 💬',
     ctaSub: '❤️ Like | ➕ Follow 🎯'
   };
 
-  let currentMeta = { 
-    subject: 'GEOGRAPHY', 
-    subTopic: 'Oceanic Trenches', 
-    part: 'Quiz 1', 
-    caption: '',
-    hook: '🎯 World Geography Quiz'
+  let currentMeta = {
+    subject: 'Current Affairs',
+    subTopic: 'Awards 2026',
+    part: 'Set 1',
+    caption: ''
   };
-
-  let currentSubjectFilter = 'All';
-  let autoSaveTimer = null;
-  let isChallengeMode = true;  // For One-Liner
-  let isRevealAnswer = false;  // For MCQ
 
   const pastelRowColors = [
     '#ffffff', '#f8fafc', '#f0fdf4', '#fefce8', '#eff6ff',
@@ -1079,7 +1132,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   ];
 
   /* ==========================================================
-     1. INDEXEDDB ENGINE
+     1. INDEXEDDB DATABASE
      ========================================================== */
   const DB_NAME = 'AoneNotesMultiStudioDB';
   const DB_VERSION = 1;
@@ -1134,28 +1187,10 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     });
   }
 
-  async function migrateOldLocalStorage() {
-    try {
-      const oldData = localStorage.getItem('aone_notes_db_v1');
-      if (oldData) {
-        const parsed = JSON.parse(oldData);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          for (const item of parsed) {
-            item.mode = 'oneliner';
-            await dbPut(item);
-          }
-          localStorage.removeItem('aone_notes_db_v1');
-        }
-      }
-    } catch (e) {
-      console.warn("Storage Migration Note:", e);
-    }
-  }
-
   /* ==========================================================
-     2. SETTINGS MEMORY (PERSISTENT TYPOGRAPHY)
+     2. SETTINGS MEMORY (PERSISTENCE)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_multi_typography_settings';
+  const SETTINGS_KEY = 'aone_multi_typography_settings_v3';
 
   function saveTypographySettings() {
     const settings = {
@@ -1181,7 +1216,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
       if (s.aSize) document.getElementById('rngASize').value = s.aSize;
     } catch (e) {
-      console.warn("Settings load error:", e);
+      console.warn(e);
     }
   }
 
@@ -1199,28 +1234,23 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     const card = document.getElementById('capture-card');
     card.style.fontFamily = selectedFont;
 
-    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
-    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
-    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
-
-    // One-Liner Table sizing
-    document.querySelectorAll('.td-q').forEach(el => {
-      el.style.fontSize = qSize + 'px';
-      el.style.fontWeight = qWeight;
-    });
-    document.querySelectorAll('.td-a').forEach(el => {
-      el.style.fontSize = aSize + 'px';
-    });
-
-    // MCQ Card sizing
-    const mcqTitle = document.getElementById('mcqCardQText');
-    if (mcqTitle) {
-      mcqTitle.style.fontSize = (parseInt(qSize) + 8) + 'px';
-      mcqTitle.style.fontWeight = qWeight;
+    if (currentAppMode === 'mcq') {
+      document.getElementById('mcqCategoryTitle').style.fontSize = titleSize + 'px';
+      document.getElementById('mcqQuestionArea').style.fontSize = qSize + 'px';
+      document.getElementById('mcqQuestionArea').style.fontWeight = qWeight;
+      document.querySelectorAll('.mcq-opt-label').forEach(el => {
+        el.style.fontSize = aSize + 'px';
+      });
+    } else {
+      document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+      document.querySelectorAll('.td-q').forEach(el => {
+        el.style.fontSize = qSize + 'px';
+        el.style.fontWeight = qWeight;
+      });
+      document.querySelectorAll('.td-a').forEach(el => {
+        el.style.fontSize = aSize + 'px';
+      });
     }
-    document.querySelectorAll('.mcq-opt-text').forEach(el => {
-      el.style.fontSize = (parseInt(aSize) + 4) + 'px';
-    });
 
     if (shouldSave) {
       saveTypographySettings();
@@ -1229,38 +1259,40 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   }
 
   /* ==========================================================
-     3. MODE SWITCHING LOGIC (ONE-LINER VS MCQ)
+     3. MODE SWITCHING
      ========================================================== */
   function setAppMode(mode) {
     currentAppMode = mode;
-    
+    const card = document.getElementById('capture-card');
+    const mcqLayout = document.getElementById('mcqLayoutWrap');
+    const oneLinerLayout = document.getElementById('oneLinerLayoutWrap');
     const btnOne = document.getElementById('btnTabOneLiner');
     const btnMCQ = document.getElementById('btnTabMCQ');
-    const tableContainer = document.getElementById('oneLinerTableContainer');
-    const mcqContainer = document.getElementById('mcqQuizContainer');
     const oneLinerToggle = document.getElementById('oneLinerToggleWrap');
     const mcqToggle = document.getElementById('mcqToggleWrap');
     const ratioBadge = document.getElementById('ratioBadge');
-    const boxTitle = document.getElementById('inputBoxTitle');
 
     if (mode === 'mcq') {
       btnMCQ.classList.add('active');
       btnOne.classList.remove('active');
-      tableContainer.style.display = 'none';
-      mcqContainer.style.display = 'flex';
+      card.classList.add('mcq-view-active');
+      mcqLayout.style.display = 'flex';
+      oneLinerLayout.style.display = 'none';
       oneLinerToggle.style.display = 'none';
       mcqToggle.style.display = 'block';
       ratioBadge.innerText = '● 4:5 FB Ratio (MCQ Mode)';
-      boxTitle.innerText = '📝 MCQ Raw Input:';
+      document.getElementById('inputBoxTitle').innerText = '📝 MCQ Raw Input:';
     } else {
       btnOne.classList.add('active');
       btnMCQ.classList.remove('active');
-      tableContainer.style.display = 'flex';
-      mcqContainer.style.display = 'none';
+      card.classList.remove('mcq-view-active');
+      card.style.background = '#ffffff';
+      mcqLayout.style.display = 'none';
+      oneLinerLayout.style.display = 'flex';
       oneLinerToggle.style.display = 'block';
       mcqToggle.style.display = 'none';
       ratioBadge.innerText = '● 4:5 FB Ratio (10 Qs One-Liner)';
-      boxTitle.innerText = '📝 10 Qs Raw Content:';
+      document.getElementById('inputBoxTitle').innerText = '📝 10 Qs Raw Content:';
     }
 
     parseSmartInput();
@@ -1271,26 +1303,24 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   function toggleRevealAnswer() {
     isRevealAnswer = document.getElementById('chkRevealAnswer').checked;
     renderMCQCard();
-    notify(isRevealAnswer ? "✅ Answer Highlighted" : "Neutral Quiz Mode");
+    notify(isRevealAnswer ? "✅ Answer Highlighted" : "Quiz Mode Neutral");
   }
 
   function toggleChallengeMode() {
     isChallengeMode = document.getElementById('chkChallengeMode').checked;
     renderOneLinerCard();
-    notify(isChallengeMode ? "🎯 Q10 Challenge Mode Activated!" : "Standard Q10 Mode Activated!");
+    notify(isChallengeMode ? "🎯 Q10 Challenge Active" : "Standard Q10 Mode");
   }
 
   /* ==========================================================
-     4. PARSER LOGIC FOR BOTH MODES
+     4. PARSER LOGIC
      ========================================================== */
   function cleanLine(str) {
-    return str.replace(/\u00A0/g, ' ')
-              .replace(/[\u200B-\u200D\uFEFF]/g, '')
-              .trim();
+    return str.replace(/\u00A0/g, ' ').replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
   }
 
   function parseSmartInput() {
-    let raw = document.getElementById('smartInput').value || '';
+    const raw = document.getElementById('smartInput').value || '';
     if (!raw.trim()) return;
 
     if (currentAppMode === 'mcq') {
@@ -1300,90 +1330,61 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     }
   }
 
-  // --- MCQ PARSER (Handles user's exact format) ---
+  // --- SMART MCQ PARSER MATCHING SCREENSHOT ---
   function parseMCQInput(raw) {
     const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
     
     currentMCQData = {
-      qNum: 'Q.1',
-      question: '',
+      category: '🏛️ CURRENT AFFAIRS 🧠',
+      brand: 'EXAM PREPARATION',
+      qPrefix: 'Q.',
+      questionHTML: '',
       options: [],
       correctLetter: '',
-      correctAnswerText: '',
-      ctaMain: '👇 Comment your answer below! 🔥',
+      ctaMain: '👇 सही Option Comment में लिखें! 💬',
       ctaSub: '❤️ Like | ➕ Follow 🎯'
     };
 
     let captionLines = [];
-    let detectedHeader = '';
+    let detectedQ = '';
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // 1. Topic / Quiz Title Line (e.g., 🌍 WORLD GEOGRAPHY QUIZ 🧠)
-      if (i === 0 && (line.includes('QUIZ') || line.includes('🎯') || line.includes('🌍') || line.includes('TEST'))) {
-        detectedHeader = line.replace(/^[🌍🎯🧠🔥📚✨\s]+|[🌍🎯🧠🔥📚✨\s]+$/g, '').trim();
-        if (detectedHeader.toLowerCase().includes('geography')) {
-          currentMeta.subject = 'GEOGRAPHY';
-          currentMeta.subTopic = 'World Geography';
-        } else if (detectedHeader.toLowerCase().includes('history')) {
-          currentMeta.subject = 'HISTORY';
-          currentMeta.subTopic = 'Ancient India';
-        } else if (detectedHeader.toLowerCase().includes('polity')) {
-          currentMeta.subject = 'POLITY';
-          currentMeta.subTopic = 'Constitution';
-        } else if (detectedHeader.toLowerCase().includes('science')) {
-          currentMeta.subject = 'SCIENCE';
-          currentMeta.subTopic = 'General Science';
+      // 1. First Header Line
+      if (i === 0 && (line.includes('QUIZ') || line.includes('AFFAIRS') || line.includes('🏛️') || line.includes('🌍') || line.includes('🎯') || line.includes('🧠'))) {
+        currentMCQData.category = line;
+        continue;
+      }
+
+      // 2. Brand Capsule (Line 2 or specific)
+      if (i === 1 && !line.match(/^[QA-D0-9\(\.]/i) && line.length < 35 && !line.includes('?')) {         currentMCQData.brand = line;         continue;       }        // 3. Question Line       const qMatch = line.match(/^(?:Q\.?\s*(\d+\vert{}[०-९]+)?\vert{}(\d+)\.\vert{}\d+\))\s*[\:\.\-\s]*(.*)/i);
+      if ((qMatch || line.includes('?')) && !detectedQ) {
+        if (qMatch) {
+          const num = qMatch[1] || qMatch[2];
+          currentMCQData.qPrefix = num ? `Q.${num}` : 'Q.';
+          detectedQ = qMatch[3] ? qMatch[3].trim() : line;
         } else {
-          currentMeta.subject = detectedHeader;
-          currentMeta.subTopic = 'General Knowledge';
+          currentMCQData.qPrefix = 'Q.';
+          detectedQ = line;
         }
-        currentMeta.part = 'Quiz 1';
         continue;
       }
 
-      // 2. Question Line (e.g., Q.1 Which is the deepest trench in the world? 🌊)
-      const qMatch = line.match(/^(?:Q\.?\s*(\d+|[०-९]+)|(\d+)\.|\d+\))\s*[\:\.\-\s]*(.*)/i);
-      if (qMatch && !currentMCQData.question) {
-        currentMCQData.qNum = 'Q.' + (qMatch[1] || qMatch[2] || '1');
-        currentMCQData.question = qMatch[3].trim();
-        continue;
-      } else if (!currentMCQData.question && line.includes('?')) {
-        currentMCQData.qNum = 'Q.1';
-        currentMCQData.question = line;
-        continue;
-      }
-
-      // 3. Option Lines: A) Java Trench 🇮🇩  or (A) ...
-      const optMatch = line.match(/^[\(\[]?([A-Da-d])[\)\.\:\-\]]\s*(.*)/);
-      if (optMatch) {
-        currentMCQData.options.push({
-          letter: optMatch[1].toUpperCase(),
-          text: optMatch[2].trim()
-        });
-        continue;
-      }
-
-      // 4. Answer Line: Answer: B) Mariana Trench 🇵🇭
-      const ansMatch = line.match(/^(?:Answer|Ans|उत्तर)[\:\-\s]*([A-Da-d])?[\)\.\:\-\s]*(.*)/i);
+      // 4. Options A, B, C, D
+      const optMatch = line.match(/^[\(\[]?([A-Da-d])[\)\.\:\-\]]\s*(.*)/);       if (optMatch) {         currentMCQData.options.push({           letter: optMatch[1].toUpperCase(),           text: optMatch[2].trim()         });         continue;       }        // 5. Answer Line       const ansMatch = line.match(/^(?:Answer\vert{}Ans\vert{}उत्तर)[\:\-\s]*([A-Da-d])?[\)\.\:\-\s]*(.*)/i);
       if (ansMatch) {
         if (ansMatch[1]) {
           currentMCQData.correctLetter = ansMatch[1].toUpperCase();
-          currentMCQData.correctAnswerText = ansMatch[2] ? ansMatch[2].trim() : '';
         } else if (ansMatch[2]) {
-          currentMCQData.correctAnswerText = ansMatch[2].trim();
-          // Check if starts with letter
-          const firstChar = currentMCQData.correctAnswerText.charAt(0).toUpperCase();
-          if (['A','B','C','D'].includes(firstChar)) {
-            currentMCQData.correctLetter = firstChar;
-          }
+          const firstChar = ansMatch[2].trim().charAt(0).toUpperCase();
+          if (['A','B','C','D'].includes(firstChar)) currentMCQData.correctLetter = firstChar;
         }
         continue;
       }
 
-      // 5. CTA lines
-      if (line.includes('Comment your answer') || line.includes('👇')) {
+      // 6. CTA & Follow Lines
+      if (line.includes('Comment') || line.includes('Option') || line.includes('लिखें') || line.includes('👇')) {
         currentMCQData.ctaMain = line;
         continue;
       }
@@ -1392,10 +1393,24 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
         continue;
       }
 
-      // 6. Caption lines
+      // 7. Caption Lines
       if (line.toLowerCase().startsWith('caption:') || line.includes('#')) {
         captionLines.push(line.replace(/^caption:\s*/i, ''));
       }
+    }
+
+    // Question formatting: Auto-highlight text inside quotes and questions
+    if (detectedQ) {
+      let formattedQ = detectedQ;
+      // Highlight single/double quotes in red
+      formattedQ = formattedQ.replace(/(['"][^'"]+['"])/g, '<span class="mcq-highlight-red">$1</span>');
+      // Highlight typical Hindi question words in red
+      const qWords = ['किसे प्रदान किया जाएगा\\?', 'किसको दिया जाएगा\\?', 'कहाँ स्थित है\\?', 'कब हुआ था\\?', 'किसने की थी\\?', 'कौन थे\\?', 'क्या है\\?'];
+      qWords.forEach(kw => {
+        const re = new RegExp(`(${kw})`, 'g');
+        formattedQ = formattedQ.replace(re, '<span class="mcq-highlight-red">$1</span>');
+      });
+      currentMCQData.questionHTML = formattedQ;
     }
 
     if (captionLines.length > 0) {
@@ -1403,8 +1418,8 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       document.getElementById('fbCaption').value = currentMeta.caption;
     }
 
-    document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMCQData.qNum})`;
-    document.getElementById('statusCounter').innerText = `📊 Loaded MCQ: ${currentMCQData.qNum} (${currentMCQData.options.length} Options)`;
+    document.getElementById('headerDetectedBadge').innerText = currentMCQData.category.replace(/[^\w\s\u0900-\u097F]/gi, '').trim().substring(0, 22);
+    document.getElementById('statusCounter').innerText = `📊 Loaded MCQ: ${currentMCQData.qPrefix} (${currentMCQData.options.length} Options)`;
 
     renderMCQCard();
   }
@@ -1499,36 +1514,33 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
 
   /* ==========================================================
      5. RENDER FUNCTIONS
-     ========================================================= */
+     ========================================================== */
   function renderMCQCard() {
-    document.getElementById('outSubject').innerText = currentMeta.subject || 'GEOGRAPHY';
-    document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
-    document.getElementById('outPart').innerText = currentMeta.part || 'Quiz 1';
-    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🎯 World Geography Quiz';
+    document.getElementById('mcqCategoryTitle').innerText = currentMCQData.category || '🏛️ CURRENT AFFAIRS 🧠';
+    document.getElementById('mcqBrandCapsule').innerText = currentMCQData.brand || 'EXAM PREPARATION';
+    
+    document.getElementById('mcqQPrefix').innerText = currentMCQData.qPrefix || 'Q.';
+    document.getElementById('mcqQuestionText').innerHTML = currentMCQData.questionHTML || 'संगीत क्षेत्र का प्रतिष्ठित लता मंगेशकर पुरस्कार?';
 
-    document.getElementById('mcqCardQNum').innerText = currentMCQData.qNum || 'Q.1';
-    document.getElementById('mcqCardQText').innerText = currentMCQData.question || 'Which is the deepest trench in the world? 🌊';
+    document.getElementById('mcqCtaPill').innerText = currentMCQData.ctaMain || '👇 सही Option Comment में लिखें! 💬';
+    document.getElementById('mcqLikeFollow').innerText = currentMCQData.ctaSub || '❤️ Like | ➕ Follow 🎯';
 
-    document.getElementById('mcqCtaMain').innerText = currentMCQData.ctaMain || '👇 Comment your answer below! 🔥';
-    document.getElementById('mcqCtaSub').innerText = currentMCQData.ctaSub || '❤️ Like | ➕ Follow 🎯';
+    const container = document.getElementById('mcqOptionsContainer');
+    container.innerHTML = '';
 
-    const grid = document.getElementById('mcqOptionsGrid');
-    grid.innerHTML = '';
+    currentMCQData.options.forEach((opt) => {
+      const card = document.createElement('div');
+      card.className = `mcq-option-card opt-card-${opt.letter}`;
 
-    currentMCQData.options.forEach(opt => {
-      const row = document.createElement('div');
-      row.className = 'mcq-opt-row';
-      
-      const isThisCorrect = (opt.letter === currentMCQData.correctLetter);
-      if (isThisCorrect && isRevealAnswer) {
-        row.classList.add('is-correct');
+      if (isRevealAnswer && opt.letter === currentMCQData.correctLetter) {
+        card.classList.add('correct-revealed');
       }
 
-      row.innerHTML = `
-        <div class="mcq-opt-letter">${opt.letter}</div>
-        <div class="mcq-opt-text">${opt.text}</div>
+      card.innerHTML = `
+        <div class="mcq-opt-badge">${opt.letter}</div>
+        <div class="mcq-opt-label">${opt.text}</div>
       `;
-      grid.appendChild(row);
+      container.appendChild(card);
     });
 
     applyTypography(false);
@@ -1539,7 +1551,6 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     document.getElementById('outSubject').innerText = currentMeta.subject || 'HISTORY';
     document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
     document.getElementById('outPart').innerText = currentMeta.part || 'Part 1';
-    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🔥 90% Aspirants Fail In Q7';
 
     const tbody = document.getElementById('qaBody');
     tbody.innerHTML = '';
@@ -1593,7 +1604,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   window.addEventListener('resize', updatePreviewScale);
 
   /* ==========================================================
-     6. ACTIONS (GENERATE, DOWNLOAD, SHARE, HOOKS)
+     6. ACTIONS & SHARING
      ========================================================== */
   function updateCustomHook(val) {
     if (val !== 'custom') {
@@ -1603,8 +1614,9 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   }
 
   function applyHookDirectly() {
-    const val = document.getElementById('txtCustomHook').value.trim() || '🎯 World Geography Quiz';
-    currentMeta.hook = val;
+    const val = document.getElementById('txtCustomHook').value.trim() || '🏛️ CURRENT AFFAIRS 🧠';
+    currentMCQData.category = val;
+    document.getElementById('mcqCategoryTitle').innerText = val;
     document.getElementById('outHookBadge').innerText = val;
     saveToDatabase(false);
   }
@@ -1630,7 +1642,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
         }
       }
     } catch (err) {
-      console.warn("Clipboard access denied", err);
+      console.warn(err);
     }
     notify("💡 Paste text manually, then tap 'Generate / Run'");
     document.getElementById('smartInput').focus();
@@ -1667,7 +1679,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       height: 1350,
       scale: 2,
       useCORS: true,
-      backgroundColor: '#ffffff',
+      backgroundColor: (currentAppMode === 'mcq') ? '#fffdf0' : '#ffffff',
       logging: false
     });
 
@@ -1679,7 +1691,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     notify("⏳ Generating HD Image...");
     const canvas = await getCardCanvas();
     const link = document.createElement('a');
-    link.download = `A_one_Notes_${currentAppMode}_${currentMeta.subject}.png`;
+    link.download = `Exam_Prep_${currentAppMode}_${Date.now()}.png`;
     link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
     notify("📥 HD Image Downloaded (4:5)!");
@@ -1695,7 +1707,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     const canvas = await getCardCanvas();
 
     canvas.toBlob(async (blob) => {
-      const file = new File([blob], 'aone_notes_post.png', { type: 'image/png' });
+      const file = new File([blob], 'exam_prep_post.png', { type: 'image/png' });
 
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
@@ -1710,7 +1722,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       }
 
       const link = document.createElement('a');
-      link.download = 'aone_notes_post.png';
+      link.download = 'exam_prep_post.png';
       link.href = URL.createObjectURL(blob);
       link.click();
 
@@ -1728,9 +1740,8 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
 
     const existing = db.find(item => 
       item.subject === currentMeta.subject && 
-      item.subTopic === currentMeta.subTopic && 
-      item.part === currentMeta.part &&
-      item.mode === currentAppMode
+      item.mode === currentAppMode &&
+      item.smartRaw === rawVal
     );
 
     const entry = {
@@ -1740,9 +1751,8 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       subTopic: currentMeta.subTopic,
       part: currentMeta.part,
       caption: currentMeta.caption,
-      hook: currentMeta.hook,
       smartRaw: rawVal,
-      date: new Date().toLocaleDateString('en-US')
+      date: new Date().toLocaleDateString('hi-IN')
     };
 
     await dbPut(entry);
@@ -1769,7 +1779,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       div.className = 'saved-row';
       const badge = item.mode === 'mcq' ? '🔘 MCQ' : '📝 10Qs';
       div.innerHTML = `
-        <div><span style="color:#38bdf8; font-weight:800;">[${badge}]</span> <strong>${item.subTopic}</strong> (${item.part})</div>
+        <div><span style="color:#38bdf8; font-weight:800;">[${badge}]</span> <strong>${item.subTopic || item.subject}</strong></div>
         <div style="display: flex; gap: 5px;">
           <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
           <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
@@ -1800,19 +1810,17 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       subject: item.subject,
       subTopic: item.subTopic,
       part: item.part,
-      caption: item.caption,
-      hook: item.hook || '🎯 Quiz'
+      caption: item.caption
     };
-    document.getElementById('txtCustomHook').value = currentMeta.hook;
 
     parseSmartInput();
-    notify(`📖 Loaded: ${item.subject} (${item.part})`);
+    notify(`📖 Loaded: ${item.subject}`);
   }
 
   async function deleteItem(id) {
     await dbDelete(id);
     await renderLibrary();
-    notify("🗑️ Post deleted from archive");
+    notify("🗑️ Deleted from archive");
   }
 
   async function downloadSubjectPDF() {
@@ -1827,24 +1835,22 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     }
 
     doc.setFontSize(18);
-    doc.text(`A one Notes - Archive Export`, 14, 20);
-    doc.setFontSize(11);
-    doc.text(`Total Sets: ${db.length}`, 14, 28);
-    doc.line(14, 32, 196, 32);
+    doc.text(`Exam Preparation - Archive Export`, 14, 20);
+    doc.line(14, 25, 196, 25);
 
-    let yPos = 40;
+    let yPos = 35;
     db.forEach((set) => {
       if (yPos > 260) { doc.addPage(); yPos = 20; }
-      doc.setFontSize(13);
-      doc.text(`[${set.mode.toUpperCase()}] ${set.subject} - ${set.subTopic} (${set.part})`, 14, yPos);
-      yPos += 8;
+      doc.setFontSize(12);
+      doc.text(`[${set.mode.toUpperCase()}] ${set.subject} - ${set.date}`, 14, yPos);
+      yPos += 7;
       doc.setFontSize(9);
       const splitText = doc.splitTextToSize(set.smartRaw, 175);
       doc.text(splitText, 14, yPos);
       yPos += (splitText.length * 5) + 8;
     });
 
-    doc.save(`A_one_Notes_Archive.pdf`);
+    doc.save(`Exam_Preparation_Archive.pdf`);
     notify("📄 PDF Downloaded!");
   }
 
@@ -1853,7 +1859,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
     const a = document.createElement('a');
     a.href = dataStr;
-    a.download = `A_one_Notes_Multi_Backup_${Date.now()}.json`;
+    a.download = `Exam_Prep_Backup_${Date.now()}.json`;
     a.click();
   }
 
@@ -1890,8 +1896,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
      ========================================================== */
   window.onload = async () => {
     loadTypographySettings();
-    await migrateOldLocalStorage();
-    setAppMode(currentAppMode); // default to stored mode or 'mcq'
+    setAppMode(currentAppMode); // Sets to 'mcq' by default or stored mode
     await renderLibrary();
     setTimeout(updatePreviewScale, 300);
   };
