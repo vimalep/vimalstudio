@@ -491,13 +491,40 @@
       font-size: 22px;
       font-weight: 700;
     }
+
+    /* प्रश्न और नंबर का फ्लेक्स लेआउट */
+    .q-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+    }
     
+    /* 1. Circle Badge for Question Number */
     .q-num {
-      color: #1d4ed8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 50%;
+      background: #1d4ed8;
+      color: #ffffff;
+      font-size: 18px !important;
       font-weight: 900;
-      margin-right: 6px;
-      display: inline-block;
-      min-width: 34px;
+      line-height: 1;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 2px 5px rgba(29, 78, 216, 0.3);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* 2. Text Wrapper (नेक्स्ट लाइन नंबर के नीचे नहीं जाएगी) */
+    .q-text {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
     }
 
     .word-red { color: #dc2626; font-weight: 800; }
@@ -691,7 +718,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
       <div class="typo-row">
         <div>
           <div class="typo-label">Font Family:</div>
-          <select id="selFontFamily" onchange="applyTypography()">
+          <select id="selFontFamily" onchange="applyTypography(true)">
             <option value="'Poppins', sans-serif" selected>Poppins (Clean & Bold)</option>
             <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
             <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
@@ -701,7 +728,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
         </div>
         <div>
           <div class="typo-label">Question Boldness:</div>
-          <select id="selQWeight" onchange="applyTypography()">
+          <select id="selQWeight" onchange="applyTypography(true)">
             <option value="700" selected>Bold (700)</option>
             <option value="800">Extra Bold (800)</option>
             <option value="900">Black (900)</option>
@@ -713,15 +740,15 @@ How many did you get right out of 10? Drop your score in the comments and share 
       <div class="typo-row">
         <div>
           <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
-          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography()">
+          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Ques Size: <span id="lblQSize">22px</span></div>
-          <input type="range" id="rngQSize" min="16" max="32" value="22" oninput="applyTypography()">
+          <input type="range" id="rngQSize" min="16" max="36" value="22" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Ans Size: <span id="lblASize">22px</span></div>
-          <input type="range" id="rngASize" min="16" max="32" value="22" oninput="applyTypography()">
+          <input type="range" id="rngASize" min="16" max="36" value="22" oninput="applyTypography(true)">
         </div>
       </div>
     </div>
@@ -798,7 +825,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
     </div>
   </div>
 
-  <!-- ARCHIVE -->
+  <!-- ARCHIVE (IndexedDB) -->
   <div class="dark-card">
     <div class="card-title">📚 Question Bank (Archive)</div>
 
@@ -854,6 +881,146 @@ How many did you get right out of 10? Drop your score in the comments and share 
     'by', 'with', 'was', 'were', 'has', 'had', 'been', 'be', 'are', 'this', 'that', 'these', 'those'
   ]);
 
+  /* ==========================================================
+     1. INDEXEDDB ENGINE (असीमित स्टोरेज, नो 5MB लिमिट)
+     ========================================================== */
+  const DB_NAME = 'AoneNotesDB';
+  const DB_VERSION = 1;
+  const STORE_NAME = 'aoneQuestionSets';
+
+  function initDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      request.onupgradeneeded = function (e) {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          store.createIndex('subject', 'subject', { unique: false });
+        }
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function dbGetAll() {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function dbPut(item) {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.put(item);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function dbDelete(id) {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.delete(id);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  // पुराने LocalStorage डेटा को IndexedDB में ऑटोमैटिक ट्रांसफर करना
+  async function migrateOldLocalStorage() {
+    try {
+      const oldData = localStorage.getItem('aone_notes_db_v1');
+      if (oldData) {
+        const parsed = JSON.parse(oldData);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          for (const item of parsed) {
+            await dbPut(item);
+          }
+          localStorage.removeItem('aone_notes_db_v1');
+        }
+      }
+    } catch (e) {
+      console.warn("Storage Migration Note:", e);
+    }
+  }
+
+  /* ==========================================================
+     2. SETTINGS MEMORY (फ़ॉन्ट साइज़ और स्टाइल्स को याद रखना)
+     ========================================================== */
+  const SETTINGS_KEY = 'aone_notes_typography_settings';
+
+  function saveTypographySettings() {
+    const settings = {
+      fontFamily: document.getElementById('selFontFamily').value,
+      qWeight: document.getElementById('selQWeight').value,
+      titleSize: document.getElementById('rngTitleSize').value,
+      qSize: document.getElementById('rngQSize').value,
+      aSize: document.getElementById('rngASize').value
+    };
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
+
+  function loadTypographySettings() {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (!raw) return;
+    try {
+      const s = JSON.parse(raw);
+      if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
+      if (s.qWeight) document.getElementById('selQWeight').value = s.qWeight;
+      if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
+      if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
+      if (s.aSize) document.getElementById('rngASize').value = s.aSize;
+    } catch (e) {
+      console.warn("Settings load error:", e);
+    }
+  }
+
+  function applyTypography(shouldSave = false) {
+    const selectedFont = document.getElementById('selFontFamily').value;
+    const qWeight = document.getElementById('selQWeight').value;
+    const titleSize = document.getElementById('rngTitleSize').value;
+    const qSize = document.getElementById('rngQSize').value;
+    const aSize = document.getElementById('rngASize').value;
+
+    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
+    document.getElementById('lblQSize').innerText = qSize + 'px';
+    document.getElementById('lblASize').innerText = aSize + 'px';
+
+    const card = document.getElementById('capture-card');
+    card.style.fontFamily = selectedFont;
+
+    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
+    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
+
+    document.querySelectorAll('.td-q').forEach(el => {
+      el.style.fontSize = qSize + 'px';
+      el.style.fontWeight = qWeight;
+    });
+
+    document.querySelectorAll('.td-a').forEach(el => {
+      el.style.fontSize = aSize + 'px';
+    });
+
+    if (shouldSave) {
+      saveTypographySettings();
+      saveToDatabase(false);
+    }
+  }
+
+  /* ==========================================================
+     3. HOOK & CHALLENGE CONTROLS
+     ========================================================== */
   function updateCustomHook(val) {
     if (val !== 'custom') {
       document.getElementById('txtCustomHook').value = val;
@@ -912,7 +1079,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
     }
   }
 
-  // AUTO-SAVE HANDLER (Saves silently when typing pauses for 1 second)
   function autoSaveHandler() {
     const ind = document.getElementById('autoSaveIndicator');
     if (ind) ind.innerText = "⏳ Saving...";
@@ -922,37 +1088,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
       saveToDatabase(false);
       if (ind) ind.innerText = "● Auto-Saved";
     }, 1000);
-  }
-
-  function applyTypography() {
-    const selectedFont = document.getElementById('selFontFamily').value;
-    const qWeight = document.getElementById('selQWeight').value;
-    const titleSize = document.getElementById('rngTitleSize').value;
-    const qSize = document.getElementById('rngQSize').value;
-    const aSize = document.getElementById('rngASize').value;
-
-    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
-    document.getElementById('lblQSize').innerText = qSize + 'px';
-    document.getElementById('lblASize').innerText = aSize + 'px';
-
-    const card = document.getElementById('capture-card');
-    card.style.fontFamily = selectedFont;
-
-    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
-    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
-    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
-
-    document.querySelectorAll('.td-q').forEach(el => {
-      el.style.fontSize = qSize + 'px';
-      el.style.fontWeight = qWeight;
-    });
-
-    document.querySelectorAll('.td-a').forEach(el => {
-      el.style.fontSize = aSize + 'px';
-    });
-
-    // Typography change ko bhi auto-save karein
-    saveToDatabase(false);
   }
 
   function cleanLine(str) {
@@ -1173,8 +1308,17 @@ How many did you get right out of 10? Drop your score in the comments and share 
 
       const tdQ = document.createElement('td');
       tdQ.className = 'td-q';
-      const qNumToDisplay = item.num ? item.num : (index + 1);
-      tdQ.innerHTML = `<span class="q-num">${qNumToDisplay}.</span> ${formatQuestion(item.q, index)}`;
+      
+      const rawNum = item.num ? item.num : (index + 1);
+      const cleanNum = String(rawNum).replace(/\.$/, '');
+
+      // Flex wrapper से नंबर सर्कल में रहेगा और नेक्स्ट लाइन सीधी रहेगी
+      tdQ.innerHTML = `
+        <div class="q-wrap">
+          <span class="q-num">${cleanNum}</span>
+          <div class="q-text">${formatQuestion(item.q, index)}</div>
+        </div>
+      `;
 
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
@@ -1185,6 +1329,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
       tbody.appendChild(tr);
     });
 
+    applyTypography(false);
     updatePreviewScale();
   }
 
@@ -1265,27 +1410,22 @@ How many did you get right out of 10? Drop your score in the comments and share 
     }, 'image/png');
   }
 
-  function getDB() {
-    return JSON.parse(localStorage.getItem('aone_notes_db_v1') || '[]');
-  }
-  function saveDB(db) {
-    localStorage.setItem('aone_notes_db_v1', JSON.stringify(db));
-  }
-
-  // AUTO-SAVE ENGINE
-  function saveToDatabase(isManual = false) {
+  /* ==========================================================
+     4. ASYNC INDEXEDDB ARCHIVE OPERATIONS
+     ========================================================== */
+  async function saveToDatabase(isManual = false) {
     if (parsedQAData.length === 0) return;
-    const db = getDB();
+    const db = await dbGetAll();
     const rawVal = document.getElementById('smartInput').value;
 
-    const existingIndex = db.findIndex(item => 
+    const existing = db.find(item => 
       item.subject === currentMeta.subject && 
       item.subTopic === currentMeta.subTopic && 
       item.part === currentMeta.part
     );
 
     const entry = {
-      id: existingIndex >= 0 ? db[existingIndex].id : Date.now(),
+      id: existing ? existing.id : Date.now(),
       subject: currentMeta.subject,
       subTopic: currentMeta.subTopic,
       part: currentMeta.part,
@@ -1297,19 +1437,13 @@ How many did you get right out of 10? Drop your score in the comments and share 
       date: new Date().toLocaleDateString('en-US')
     };
 
-    if (existingIndex >= 0) {
-      db[existingIndex] = entry;
-    } else {
-      db.unshift(entry);
-    }
-
-    saveDB(db);
-    renderLibrary();
-    if (isManual) notify("💾 Saved to Archive!");
+    await dbPut(entry);
+    await renderLibrary();
+    if (isManual) notify("💾 Saved to Archive (IndexedDB)!");
   }
 
-  function renderLibrary() {
-    const db = getDB();
+  async function renderLibrary() {
+    const db = await dbGetAll();
     const container = document.getElementById('savedListContainer');
     container.innerHTML = '';
 
@@ -1341,8 +1475,8 @@ How many did you get right out of 10? Drop your score in the comments and share 
     renderLibrary();
   }
 
-  function loadItem(id) {
-    const db = getDB();
+  async function loadItem(id) {
+    const db = await dbGetAll();
     const item = db.find(x => x.id === id);
     if (!item) return;
 
@@ -1363,17 +1497,17 @@ How many did you get right out of 10? Drop your score in the comments and share 
     notify(`📖 Loaded: ${item.subject} (${item.part})`);
   }
 
-  function deleteItem(id) {
-    let db = getDB();
-    db = db.filter(x => x.id !== id);
-    saveDB(db);
-    renderLibrary();
+  async function deleteItem(id) {
+    await dbDelete(id);
+    await renderLibrary();
+    notify("🗑️ Post deleted from database");
   }
 
-  function downloadSubjectPDF() {
+  async function downloadSubjectPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const db = getDB().filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+    const all = await dbGetAll();
+    const db = all.filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
 
     if (db.length === 0) {
       alert(`No notes saved under "${currentSubjectFilter}"!`);
@@ -1409,8 +1543,8 @@ How many did you get right out of 10? Drop your score in the comments and share 
     notify("📄 PDF Downloaded!");
   }
 
-  function exportJSON() {
-    const db = getDB();
+  async function exportJSON() {
+    const db = await dbGetAll();
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
     const a = document.createElement('a');
     a.href = dataStr;
@@ -1418,17 +1552,19 @@ How many did you get right out of 10? Drop your score in the comments and share 
     a.click();
   }
 
-  function importJSON(event) {
+  async function importJSON(event) {
     const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
       try {
         const imported = JSON.parse(e.target.result);
         if (Array.isArray(imported)) {
-          saveDB(imported);
-          renderLibrary();
-          notify("📥 Backup imported successfully!");
+          for (const item of imported) {
+            await dbPut(item);
+          }
+          await renderLibrary();
+          notify("📥 Backup imported successfully to IndexedDB!");
         }
       } catch (err) {
         alert("Invalid JSON file!");
@@ -1444,10 +1580,14 @@ How many did you get right out of 10? Drop your score in the comments and share 
     setTimeout(() => { toast.style.display = 'none'; }, 2600);
   }
 
-  window.onload = () => {
-    parseSmartInput();
-    saveToDatabase(false);
-    renderLibrary();
+  /* ==========================================================
+     INITIALIZATION ON LOAD
+     ========================================================== */
+  window.onload = async () => {
+    loadTypographySettings();       // 1. पिछली फ़ॉन्ट सेटिंग्स लोड करें
+    await migrateOldLocalStorage();  // 2. LocalStorage डेटा को IndexedDB में लाएँ
+    parseSmartInput();              // 3. डिफ़ॉल्ट सवाल पार्स करें
+    await renderLibrary();          // 4. लाइब्रेरी सूची रेंडर करें
     setTimeout(updatePreviewScale, 300);
   };
 </script>
