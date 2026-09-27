@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>A one Notes - Studio Pro Mobile (10 Qs Auto-Save)</title>
+  <title>A one Notes - Studio Pro Mobile</title>
   
-  <!-- Premium English Fonts -->
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&family=Mukta:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -76,6 +76,37 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    /* MODE SWITCHER TABS */
+    .mode-switch-bar {
+      display: flex;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 6px;
+    }
+    .mode-tab-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border: none;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      background: transparent;
+      color: #94a3b8;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .mode-tab-btn.active {
+      background: #38bdf8;
+      color: #04101e;
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+
     .dark-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -136,7 +167,7 @@
       font-size: 13.5px;
       font-family: inherit;
       outline: none;
-      height: 140px;
+      height: 145px;
       line-height: 1.45;
       resize: vertical;
     }
@@ -286,6 +317,7 @@
       position: relative;
     }
 
+    /* 1080x1350 4:5 MAIN CANVAS */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -306,6 +338,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    /* TOP HEADER */
     .top-header-wrap {
       position: relative;
       display: flex;
@@ -374,6 +407,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    /* TITLE BANNER */
     .title-banner {
       display: flex;
       justify-content: center;
@@ -417,16 +451,6 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    .table-container {
-      flex: 1;
-      position: relative;
-      border: 2px solid #86efac;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-    }
     .watermark {
       position: absolute;
       top: 50%;
@@ -441,6 +465,18 @@
       z-index: 1;
       text-transform: uppercase;
       font-family: 'Poppins', sans-serif;
+    }
+
+    /* MODE 1: ONE-LINER TABLE CONTAINER */
+    .table-container {
+      flex: 1;
+      position: relative;
+      border: 2px solid #86efac;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
     }
     table {
       width: 100%;
@@ -458,7 +494,6 @@
       border-bottom: 2px solid #86efac;
       height: 42px;
     }
-    
     thead th.th-q, tbody td.td-q {
       width: 68% !important;
       border-right: 2px solid #86efac;
@@ -492,7 +527,6 @@
       font-weight: 700;
     }
 
-    /* प्रश्न और नंबर का फ्लेक्स लेआउट */
     .q-wrap {
       display: flex;
       align-items: flex-start;
@@ -500,7 +534,6 @@
       width: 100%;
     }
     
-    /* 1. Circle Badge for Question Number */
     .q-num {
       display: inline-flex;
       align-items: center;
@@ -520,7 +553,6 @@
       margin-top: 1px;
     }
 
-    /* 2. Text Wrapper (नेक्स्ट लाइन नंबर के नीचे नहीं जाएगी) */
     .q-text {
       flex: 1;
       min-width: 0;
@@ -547,6 +579,137 @@
       display: inline-block;
     }
 
+    /* MODE 2: MCQ QUIZ CONTAINER */
+    .mcq-container {
+      flex: 1;
+      position: relative;
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 0;
+      z-index: 2;
+    }
+
+    .mcq-q-box {
+      background: #f8fafc;
+      border: 3px solid #cbd5e1;
+      border-radius: 18px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    }
+    .mcq-q-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 54px;
+      height: 54px;
+      min-width: 54px;
+      border-radius: 50%;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 900;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .mcq-q-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.35;
+      flex: 1;
+      word-break: break-word;
+    }
+
+    .mcq-options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .mcq-opt-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #ffffff;
+      border: 3px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 16px 22px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+    }
+    .mcq-opt-letter {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      background: #1e293b;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+    .mcq-opt-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1e293b;
+      flex: 1;
+    }
+
+    /* Option Highlighted When Correct */
+    .mcq-opt-row.is-correct {
+      background: #f0fdf4 !important;
+      border-color: #22c55e !important;
+      box-shadow: 0 6px 18px rgba(34, 197, 94, 0.2) !important;
+    }
+    .mcq-opt-row.is-correct .mcq-opt-letter {
+      background: #16a34a !important;
+    }
+    .mcq-opt-row.is-correct .mcq-opt-text {
+      color: #15803d !important;
+      font-weight: 800;
+    }
+    .mcq-opt-row.is-correct::after {
+      content: '✔';
+      color: #16a34a;
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    /* MCQ Call-to-action engagement box */
+    .mcq-callout-strip {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 2px dashed #d97706;
+      border-radius: 14px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mcq-callout-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: #b45309;
+    }
+    .mcq-callout-sub {
+      font-size: 20px;
+      font-weight: 800;
+      color: #dc2626;
+    }
+
+    /* FOOTER */
     .footer-wrap {
       position: relative;
       display: flex;
@@ -595,6 +758,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    /* ARCHIVE STYLES */
     .subject-pill-row {
       display: flex;
       gap: 6px;
@@ -650,14 +814,24 @@
 
   <div class="app-header">
     <h1>⚡ A one Notes Studio</h1>
-    <span class="app-badge">10 Qs ULTRA VIRAL</span>
+    <span class="app-badge">PRO MULTI-STUDIO</span>
+  </div>
+
+  <!-- MODE SWITCHER -->
+  <div class="mode-switch-bar">
+    <button class="mode-tab-btn" id="btnTabOneLiner" onclick="setAppMode('oneliner')">
+      📝 10 Qs One-Liner
+    </button>
+    <button class="mode-tab-btn active" id="btnTabMCQ" onclick="setAppMode('mcq')">
+      🔘 MCQ Quiz Mode
+    </button>
   </div>
 
   <!-- MANUAL SMART PASTE CARD -->
   <div class="dark-card">
     <div class="card-title">
-      <span>📝 Raw Content (Smart Paste):</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">Part 1 Detected</span>
+      <span id="inputBoxTitle">📝 MCQ Raw Input:</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">WORLD GEOGRAPHY DETECTED</span>
     </div>
 
     <!-- VIRAL HOOK SELECTOR -->
@@ -665,53 +839,50 @@
       <div style="flex: 1.2;">
         <label>🔥 Viral Header Hook:</label>
         <select id="selViralHook" onchange="updateCustomHook(this.value)">
-          <option value="🔥 90% Aspirants Fail In Q7" selected>🔥 90% Aspirants Fail In Q7</option>
-          <option value="🎯 Top 10 Repeated Questions">🎯 Top 10 Repeated Questions</option>
-          <option value="⚡ Only Real Aspirants Score 10/10">⚡ Only Real Aspirants Score 10/10</option>
+          <option value="🔥 90% Aspirants Fail In Q7">🔥 90% Aspirants Fail In Q7</option>
+          <option value="🎯 World Geography Quiz" selected>🎯 World Geography Quiz</option>
+          <option value="⚡ Only 1% Can Answer This!">⚡ Only 1% Can Answer This!</option>
           <option value="🧠 Daily GK Challenge: Test Yourself">🧠 Daily GK Challenge: Test Yourself</option>
           <option value="custom">✏️ Custom Hook (Type below)...</option>
         </select>
       </div>
       <div style="flex: 1;">
         <label>Hook Text:</label>
-        <input type="text" id="txtCustomHook" value="🔥 90% Aspirants Fail In Q7" oninput="applyHookDirectly()">
+        <input type="text" id="txtCustomHook" value="🎯 World Geography Quiz" oninput="applyHookDirectly()">
       </div>
     </div>
     
-    <textarea id="smartInput" placeholder="Paste 10 questions here..." oninput="autoSaveHandler()">🎯 History, Ancient India, Part 1
-1. Which was the first site discovered in the Indus Valley Civilization?
-Ans: Harappa
-2. Who was the founder of the Maurya Empire?
-Ans: Chandragupta Maurya
-3. The famous Gayatri Mantra is found in which Veda?
-Ans: Rigveda
-4. At which place did Gautama Buddha attain enlightenment?
-Ans: Bodh Gaya
-5. Who is known as the 'Napoleon of India'?
-Ans: Samudragupta
-6. Which ruler convened the Fourth Buddhist Council in Kashmir?
-Ans: Kanishka
-7. Who was the author of the famous book 'Arthashastra'?
-Ans: Chanakya (Kautilya)
-8. Which Indus Valley site is famous for its dockyard?
-Ans: Lothal
-9. Who was the court poet of King Harsha and author of 'Harshacharita'?
-Ans: Banabhatta
-10. Who was the 24th Tirthankara of Jainism?
-Ans: Mahavira
-How many did you get right out of 10? Drop your score in the comments and share this with your fellow aspirants!
-#HistoryGK</textarea>
+    <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()">🌍 WORLD GEOGRAPHY QUIZ 🧠
+Q.1 Which is the deepest trench in the world? 🌊
+        A) Java Trench 🇮🇩
+        B) Mariana Trench 🇵🇭
+        C) Puerto Rico Trench 🇵🇷
+        D) South Sandwich Trench 🇦🇶
+👇 Comment your answer below! 🔥
+              ❤️ Like | ➕ Follow 🎯
+Caption: Test your knowledge on the Deepest Oceanic Trench / Mariana Trench! Drop the correct option below. 👇🚀
+#GeneralKnowledge
+Answer: B) Mariana Trench 🇵🇭</textarea>
 
     <div class="status-counter">
-      <span id="statusCounter">📊 Loaded Questions: 10 / 10</span>
+      <span id="statusCounter">📊 Loaded MCQ: Q.1 (4 Options)</span>
       <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
     </div>
 
-    <!-- VIRAL CHALLENGE TOGGLE -->
-    <label class="challenge-toggle-box" for="chkChallengeMode">
-      <span>🎯 Q10 Comment Challenge Mode (Boosts Viral Reach)</span>
-      <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
-    </label>
+    <!-- VIRAL CHALLENGE / ANSWER HIGHLIGHT TOGGLE -->
+    <div id="oneLinerToggleWrap" style="display: none;">
+      <label class="challenge-toggle-box" for="chkChallengeMode">
+        <span>🎯 Q10 Comment Challenge Mode (Boosts Viral Reach)</span>
+        <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
+      </label>
+    </div>
+
+    <div id="mcqToggleWrap">
+      <label class="challenge-toggle-box" for="chkRevealAnswer">
+        <span>✅ Highlight Correct Answer (हरे रंग में उत्तर दिखाएं)</span>
+        <input type="checkbox" id="chkRevealAnswer" onchange="toggleRevealAnswer()">
+      </label>
+    </div>
 
     <!-- Typography Controls -->
     <div class="typo-panel">
@@ -724,13 +895,14 @@ How many did you get right out of 10? Drop your score in the comments and share 
             <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
             <option value="'Roboto', sans-serif">Roboto (Classic)</option>
             <option value="'Merriweather', serif">Merriweather (Editorial)</option>
+            <option value="'Mukta', sans-serif">Mukta (Hindi & English)</option>
           </select>
         </div>
         <div>
           <div class="typo-label">Question Boldness:</div>
           <select id="selQWeight" onchange="applyTypography(true)">
-            <option value="700" selected>Bold (700)</option>
-            <option value="800">Extra Bold (800)</option>
+            <option value="700">Bold (700)</option>
+            <option value="800" selected>Extra Bold (800)</option>
             <option value="900">Black (900)</option>
             <option value="600">Semi Bold (600)</option>
           </select>
@@ -743,12 +915,12 @@ How many did you get right out of 10? Drop your score in the comments and share 
           <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography(true)">
         </div>
         <div>
-          <div class="typo-label">Ques Size: <span id="lblQSize">22px</span></div>
-          <input type="range" id="rngQSize" min="16" max="36" value="22" oninput="applyTypography(true)">
+          <div class="typo-label">Ques Size: <span id="lblQSize">26px</span></div>
+          <input type="range" id="rngQSize" min="18" max="42" value="26" oninput="applyTypography(true)">
         </div>
         <div>
-          <div class="typo-label">Ans Size: <span id="lblASize">22px</span></div>
-          <input type="range" id="rngASize" min="16" max="36" value="22" oninput="applyTypography(true)">
+          <div class="typo-label">Options/Ans Size: <span id="lblASize">24px</span></div>
+          <input type="range" id="rngASize" min="16" max="36" value="24" oninput="applyTypography(true)">
         </div>
       </div>
     </div>
@@ -770,7 +942,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
   <div class="dark-card" style="padding: 10px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <div class="card-title" style="margin:0;">📱 Live Mobile Preview</div>
-      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Ratio (10 Qs Ultra)</span>
+      <span style="font-size: 11px; color: #10b981; font-weight: 700;" id="ratioBadge">● 4:5 FB Ratio (MCQ Mode)</span>
     </div>
 
     <div class="preview-viewport-wrapper">
@@ -783,21 +955,23 @@ How many did you get right out of 10? Drop your score in the comments and share 
               <span class="logo-red">A one</span><span class="logo-black">Notes</span>
             </div>
             
-            <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
+            <div class="top-hook-badge" id="outHookBadge">🎯 World Geography Quiz</div>
 
             <div class="top-follow-pill">A one Notes : Follow</div>
           </div>
 
           <div class="title-banner">
             <div class="title-pill">
-              <div class="title-main" id="outSubject">HISTORY</div>
-              <div class="title-sub" id="outSubTopic">( Ancient India )</div>
-              <div class="title-part" id="outPart">Part 1</div>
+              <div class="title-main" id="outSubject">GEOGRAPHY</div>
+              <div class="title-sub" id="outSubTopic">( Oceanic Trenches )</div>
+              <div class="title-part" id="outPart">Quiz 1</div>
             </div>
           </div>
 
-          <div class="table-container">
-            <div class="watermark">A one Notes</div>
+          <div class="watermark">A one Notes</div>
+
+          <!-- 1. ONE-LINER 10 Qs VIEW -->
+          <div class="table-container" id="oneLinerTableContainer">
             <table>
               <thead>
                 <tr>
@@ -807,6 +981,23 @@ How many did you get right out of 10? Drop your score in the comments and share 
               </thead>
               <tbody id="qaBody"></tbody>
             </table>
+          </div>
+
+          <!-- 2. MCQ QUIZ VIEW -->
+          <div class="mcq-container" id="mcqQuizContainer">
+            <div class="mcq-q-box">
+              <span class="mcq-q-badge" id="mcqCardQNum">Q.1</span>
+              <div class="mcq-q-title" id="mcqCardQText">Which is the deepest trench in the world? 🌊</div>
+            </div>
+
+            <div class="mcq-options-grid" id="mcqOptionsGrid">
+              <!-- Options rendered dynamically -->
+            </div>
+
+            <div class="mcq-callout-strip">
+              <div class="mcq-callout-text" id="mcqCtaMain">👇 Comment your answer below! 🔥</div>
+              <div class="mcq-callout-sub" id="mcqCtaSub">❤️ Like | ➕ Follow 🎯</div>
+            </div>
           </div>
 
           <div class="footer-wrap">
@@ -830,11 +1021,11 @@ How many did you get right out of 10? Drop your score in the comments and share 
     <div class="card-title">📚 Question Bank (Archive)</div>
 
     <div class="subject-pill-row">
-      <button class="subj-pill active" onclick="filterBySubject('History', this)">History</button>
+      <button class="subj-pill active" onclick="filterBySubject('All', this)">All</button>
       <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
+      <button class="subj-pill" onclick="filterBySubject('History', this)">History</button>
       <button class="subj-pill" onclick="filterBySubject('Polity', this)">Polity</button>
       <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
-      <button class="subj-pill" onclick="filterBySubject('Economics', this)">Economics</button>
     </div>
 
     <div class="library-list" id="savedListContainer"></div>
@@ -852,41 +1043,47 @@ How many did you get right out of 10? Drop your score in the comments and share 
 </div>
 
 <script>
-  let parsedQAData = [];
-  let currentMeta = { 
-    subject: 'History', 
-    subTopic: 'Ancient India', 
-    part: 'Part 1', 
-    caption: '',
-    hook: '🔥 90% Aspirants Fail In Q7'
+  let currentAppMode = 'mcq'; // 'oneliner' or 'mcq'
+  let parsedQAData = [];       // For One-Liner Mode
+  let currentMCQData = {       // For MCQ Mode
+    qNum: 'Q.1',
+    question: 'Which is the deepest trench in the world? 🌊',
+    options: [
+      { letter: 'A', text: 'Java Trench 🇮🇩' },
+      { letter: 'B', text: 'Mariana Trench 🇵🇭' },
+      { letter: 'C', Puerto: false, text: 'Puerto Rico Trench 🇵🇷' },
+      { letter: 'D', text: 'South Sandwich Trench 🇦🇶' }
+    ],
+    correctLetter: 'B',
+    correctAnswerText: 'Mariana Trench 🇵🇭',
+    ctaMain: '👇 Comment your answer below! 🔥',
+    ctaSub: '❤️ Like | ➕ Follow 🎯'
   };
-  let currentSubjectFilter = 'History';
+
+  let currentMeta = { 
+    subject: 'GEOGRAPHY', 
+    subTopic: 'Oceanic Trenches', 
+    part: 'Quiz 1', 
+    caption: '',
+    hook: '🎯 World Geography Quiz'
+  };
+
+  let currentSubjectFilter = 'All';
   let autoSaveTimer = null;
-  let isChallengeMode = true;
+  let isChallengeMode = true;  // For One-Liner
+  let isRevealAnswer = false;  // For MCQ
 
   const pastelRowColors = [
     '#ffffff', '#f8fafc', '#f0fdf4', '#fefce8', '#eff6ff',
     '#faf5ff', '#fff7ed', '#f0fdfa', '#fdf2f8', '#fffbeb'
   ];
 
-  const questionWords = new Set([
-    'what', 'where', 'when', 'who', 'whom', 'whose', 'which', 'why', 'how', 'name',
-    'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
-    'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
-    'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
-  ]);
-
-  const stopWords = new Set([
-    'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'in', 'of', 'for', 'to', 'from',
-    'by', 'with', 'was', 'were', 'has', 'had', 'been', 'be', 'are', 'this', 'that', 'these', 'those'
-  ]);
-
   /* ==========================================================
-     1. INDEXEDDB ENGINE (असीमित स्टोरेज, नो 5MB लिमिट)
+     1. INDEXEDDB ENGINE
      ========================================================== */
-  const DB_NAME = 'AoneNotesDB';
+  const DB_NAME = 'AoneNotesMultiStudioDB';
   const DB_VERSION = 1;
-  const STORE_NAME = 'aoneQuestionSets';
+  const STORE_NAME = 'allSets';
 
   function initDB() {
     return new Promise((resolve, reject) => {
@@ -896,6 +1093,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
         if (!db.objectStoreNames.contains(STORE_NAME)) {
           const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
           store.createIndex('subject', 'subject', { unique: false });
+          store.createIndex('mode', 'mode', { unique: false });
         }
       };
       request.onsuccess = () => resolve(request.result);
@@ -936,7 +1134,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
     });
   }
 
-  // पुराने LocalStorage डेटा को IndexedDB में ऑटोमैटिक ट्रांसफर करना
   async function migrateOldLocalStorage() {
     try {
       const oldData = localStorage.getItem('aone_notes_db_v1');
@@ -944,6 +1141,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
         const parsed = JSON.parse(oldData);
         if (Array.isArray(parsed) && parsed.length > 0) {
           for (const item of parsed) {
+            item.mode = 'oneliner';
             await dbPut(item);
           }
           localStorage.removeItem('aone_notes_db_v1');
@@ -955,12 +1153,13 @@ How many did you get right out of 10? Drop your score in the comments and share 
   }
 
   /* ==========================================================
-     2. SETTINGS MEMORY (फ़ॉन्ट साइज़ और स्टाइल्स को याद रखना)
+     2. SETTINGS MEMORY (PERSISTENT TYPOGRAPHY)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_notes_typography_settings';
+  const SETTINGS_KEY = 'aone_multi_typography_settings';
 
   function saveTypographySettings() {
     const settings = {
+      appMode: currentAppMode,
       fontFamily: document.getElementById('selFontFamily').value,
       qWeight: document.getElementById('selQWeight').value,
       titleSize: document.getElementById('rngTitleSize').value,
@@ -975,6 +1174,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
     if (!raw) return;
     try {
       const s = JSON.parse(raw);
+      if (s.appMode) currentAppMode = s.appMode;
       if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
       if (s.qWeight) document.getElementById('selQWeight').value = s.qWeight;
       if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
@@ -1003,13 +1203,23 @@ How many did you get right out of 10? Drop your score in the comments and share 
     document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
     document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
 
+    // One-Liner Table sizing
     document.querySelectorAll('.td-q').forEach(el => {
       el.style.fontSize = qSize + 'px';
       el.style.fontWeight = qWeight;
     });
-
     document.querySelectorAll('.td-a').forEach(el => {
       el.style.fontSize = aSize + 'px';
+    });
+
+    // MCQ Card sizing
+    const mcqTitle = document.getElementById('mcqCardQText');
+    if (mcqTitle) {
+      mcqTitle.style.fontSize = (parseInt(qSize) + 8) + 'px';
+      mcqTitle.style.fontWeight = qWeight;
+    }
+    document.querySelectorAll('.mcq-opt-text').forEach(el => {
+      el.style.fontSize = (parseInt(aSize) + 4) + 'px';
     });
 
     if (shouldSave) {
@@ -1019,7 +1229,371 @@ How many did you get right out of 10? Drop your score in the comments and share 
   }
 
   /* ==========================================================
-     3. HOOK & CHALLENGE CONTROLS
+     3. MODE SWITCHING LOGIC (ONE-LINER VS MCQ)
+     ========================================================== */
+  function setAppMode(mode) {
+    currentAppMode = mode;
+    
+    const btnOne = document.getElementById('btnTabOneLiner');
+    const btnMCQ = document.getElementById('btnTabMCQ');
+    const tableContainer = document.getElementById('oneLinerTableContainer');
+    const mcqContainer = document.getElementById('mcqQuizContainer');
+    const oneLinerToggle = document.getElementById('oneLinerToggleWrap');
+    const mcqToggle = document.getElementById('mcqToggleWrap');
+    const ratioBadge = document.getElementById('ratioBadge');
+    const boxTitle = document.getElementById('inputBoxTitle');
+
+    if (mode === 'mcq') {
+      btnMCQ.classList.add('active');
+      btnOne.classList.remove('active');
+      tableContainer.style.display = 'none';
+      mcqContainer.style.display = 'flex';
+      oneLinerToggle.style.display = 'none';
+      mcqToggle.style.display = 'block';
+      ratioBadge.innerText = '● 4:5 FB Ratio (MCQ Mode)';
+      boxTitle.innerText = '📝 MCQ Raw Input:';
+    } else {
+      btnOne.classList.add('active');
+      btnMCQ.classList.remove('active');
+      tableContainer.style.display = 'flex';
+      mcqContainer.style.display = 'none';
+      oneLinerToggle.style.display = 'block';
+      mcqToggle.style.display = 'none';
+      ratioBadge.innerText = '● 4:5 FB Ratio (10 Qs One-Liner)';
+      boxTitle.innerText = '📝 10 Qs Raw Content:';
+    }
+
+    parseSmartInput();
+    saveTypographySettings();
+    updatePreviewScale();
+  }
+
+  function toggleRevealAnswer() {
+    isRevealAnswer = document.getElementById('chkRevealAnswer').checked;
+    renderMCQCard();
+    notify(isRevealAnswer ? "✅ Answer Highlighted" : "Neutral Quiz Mode");
+  }
+
+  function toggleChallengeMode() {
+    isChallengeMode = document.getElementById('chkChallengeMode').checked;
+    renderOneLinerCard();
+    notify(isChallengeMode ? "🎯 Q10 Challenge Mode Activated!" : "Standard Q10 Mode Activated!");
+  }
+
+  /* ==========================================================
+     4. PARSER LOGIC FOR BOTH MODES
+     ========================================================== */
+  function cleanLine(str) {
+    return str.replace(/\u00A0/g, ' ')
+              .replace(/[\u200B-\u200D\uFEFF]/g, '')
+              .trim();
+  }
+
+  function parseSmartInput() {
+    let raw = document.getElementById('smartInput').value || '';
+    if (!raw.trim()) return;
+
+    if (currentAppMode === 'mcq') {
+      parseMCQInput(raw);
+    } else {
+      parseOneLinerInput(raw);
+    }
+  }
+
+  // --- MCQ PARSER (Handles user's exact format) ---
+  function parseMCQInput(raw) {
+    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
+    
+    currentMCQData = {
+      qNum: 'Q.1',
+      question: '',
+      options: [],
+      correctLetter: '',
+      correctAnswerText: '',
+      ctaMain: '👇 Comment your answer below! 🔥',
+      ctaSub: '❤️ Like | ➕ Follow 🎯'
+    };
+
+    let captionLines = [];
+    let detectedHeader = '';
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // 1. Topic / Quiz Title Line (e.g., 🌍 WORLD GEOGRAPHY QUIZ 🧠)
+      if (i === 0 && (line.includes('QUIZ') || line.includes('🎯') || line.includes('🌍') || line.includes('TEST'))) {
+        detectedHeader = line.replace(/^[🌍🎯🧠🔥📚✨\s]+|[🌍🎯🧠🔥📚✨\s]+$/g, '').trim();
+        if (detectedHeader.toLowerCase().includes('geography')) {
+          currentMeta.subject = 'GEOGRAPHY';
+          currentMeta.subTopic = 'World Geography';
+        } else if (detectedHeader.toLowerCase().includes('history')) {
+          currentMeta.subject = 'HISTORY';
+          currentMeta.subTopic = 'Ancient India';
+        } else if (detectedHeader.toLowerCase().includes('polity')) {
+          currentMeta.subject = 'POLITY';
+          currentMeta.subTopic = 'Constitution';
+        } else if (detectedHeader.toLowerCase().includes('science')) {
+          currentMeta.subject = 'SCIENCE';
+          currentMeta.subTopic = 'General Science';
+        } else {
+          currentMeta.subject = detectedHeader;
+          currentMeta.subTopic = 'General Knowledge';
+        }
+        currentMeta.part = 'Quiz 1';
+        continue;
+      }
+
+      // 2. Question Line (e.g., Q.1 Which is the deepest trench in the world? 🌊)
+      const qMatch = line.match(/^(?:Q\.?\s*(\d+|[०-९]+)|(\d+)\.|\d+\))\s*[\:\.\-\s]*(.*)/i);
+      if (qMatch && !currentMCQData.question) {
+        currentMCQData.qNum = 'Q.' + (qMatch[1] || qMatch[2] || '1');
+        currentMCQData.question = qMatch[3].trim();
+        continue;
+      } else if (!currentMCQData.question && line.includes('?')) {
+        currentMCQData.qNum = 'Q.1';
+        currentMCQData.question = line;
+        continue;
+      }
+
+      // 3. Option Lines: A) Java Trench 🇮🇩  or (A) ...
+      const optMatch = line.match(/^[\(\[]?([A-Da-d])[\)\.\:\-\]]\s*(.*)/);
+      if (optMatch) {
+        currentMCQData.options.push({
+          letter: optMatch[1].toUpperCase(),
+          text: optMatch[2].trim()
+        });
+        continue;
+      }
+
+      // 4. Answer Line: Answer: B) Mariana Trench 🇵🇭
+      const ansMatch = line.match(/^(?:Answer|Ans|उत्तर)[\:\-\s]*([A-Da-d])?[\)\.\:\-\s]*(.*)/i);
+      if (ansMatch) {
+        if (ansMatch[1]) {
+          currentMCQData.correctLetter = ansMatch[1].toUpperCase();
+          currentMCQData.correctAnswerText = ansMatch[2] ? ansMatch[2].trim() : '';
+        } else if (ansMatch[2]) {
+          currentMCQData.correctAnswerText = ansMatch[2].trim();
+          // Check if starts with letter
+          const firstChar = currentMCQData.correctAnswerText.charAt(0).toUpperCase();
+          if (['A','B','C','D'].includes(firstChar)) {
+            currentMCQData.correctLetter = firstChar;
+          }
+        }
+        continue;
+      }
+
+      // 5. CTA lines
+      if (line.includes('Comment your answer') || line.includes('👇')) {
+        currentMCQData.ctaMain = line;
+        continue;
+      }
+      if (line.includes('Like') || line.includes('Follow') || line.includes('❤️')) {
+        currentMCQData.ctaSub = line;
+        continue;
+      }
+
+      // 6. Caption lines
+      if (line.toLowerCase().startsWith('caption:') || line.includes('#')) {
+        captionLines.push(line.replace(/^caption:\s*/i, ''));
+      }
+    }
+
+    if (captionLines.length > 0) {
+      currentMeta.caption = captionLines.join('\n');
+      document.getElementById('fbCaption').value = currentMeta.caption;
+    }
+
+    document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMCQData.qNum})`;
+    document.getElementById('statusCounter').innerText = `📊 Loaded MCQ: ${currentMCQData.qNum} (${currentMCQData.options.length} Options)`;
+
+    renderMCQCard();
+  }
+
+  // --- ONE-LINER PARSER ---
+  function parseOneLinerInput(raw) {
+    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
+    parsedQAData = [];
+    let captionLines = [];
+    let currentQ = null;
+    let headerParsed = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
+        if (line.includes('🎯') || line.toLowerCase().includes('part') || line.includes('भाग') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
+          headerParsed = true;
+          const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
+          const parts = clean.split(',').map(s => s.trim());
+          if (parts[0]) currentMeta.subject = parts[0].toUpperCase();
+          if (parts[1]) currentMeta.subTopic = parts[1];
+          if (parts[2]) currentMeta.part = parts[2];
+          document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part})`;
+          continue;
+        }
+      }
+
+      const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
+      if (qStartMatch) {
+        if (currentQ) parsedQAData.push(currentQ);
+        const num = qStartMatch[1];
+        let restOfLine = qStartMatch[2].trim();
+
+        const qMarkIdx = restOfLine.indexOf('?');
+        if (qMarkIdx !== -1) {
+          const actualQ = restOfLine.substring(0, qMarkIdx).trim();
+          const afterQ = restOfLine.substring(qMarkIdx + 1).trim();
+          const sameLineAnsMatch = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
+          if (sameLineAnsMatch) {
+            parsedQAData.push({ num: num, q: actualQ, a: sameLineAnsMatch[1].trim() });
+            currentQ = null;
+            continue;
+          } else if (afterQ.length > 0) {
+            parsedQAData.push({ num: num, q: actualQ, a: afterQ });
+            currentQ = null;
+            continue;
+          } else {
+            currentQ = { num: num, q: actualQ, a: '' };
+            continue;
+          }
+        } else {
+          currentQ = { num: num, q: restOfLine, a: '' };
+          continue;
+        }
+      }
+
+      const ansMatch = line.match(/^(?:Ans|Answer|उत्तर|उ\.?)[\:\-\s]*(.*)/i);
+      if (ansMatch) {
+        const ansText = ansMatch[1].trim();
+        if (currentQ) {
+          currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+          currentQ.a = ansText;
+          parsedQAData.push(currentQ);
+          currentQ = null;
+        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
+          parsedQAData[parsedQAData.length - 1].a = ansText;
+        }
+        continue;
+      }
+
+      if (currentQ && !currentQ.a) {
+        currentQ.q += ' ' + line;
+        continue;
+      }
+
+      if (line.includes('#') || parsedQAData.length >= 10) {
+        captionLines.push(line);
+      }
+    }
+
+    if (currentQ) parsedQAData.push(currentQ);
+
+    if (captionLines.length > 0) {
+      currentMeta.caption = captionLines.join('\n');
+      document.getElementById('fbCaption').value = currentMeta.caption;
+    }
+
+    document.getElementById('statusCounter').innerText = `📊 Loaded Questions: ${parsedQAData.length} / 10`;
+    renderOneLinerCard();
+  }
+
+  /* ==========================================================
+     5. RENDER FUNCTIONS
+     ========================================================= */
+  function renderMCQCard() {
+    document.getElementById('outSubject').innerText = currentMeta.subject || 'GEOGRAPHY';
+    document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
+    document.getElementById('outPart').innerText = currentMeta.part || 'Quiz 1';
+    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🎯 World Geography Quiz';
+
+    document.getElementById('mcqCardQNum').innerText = currentMCQData.qNum || 'Q.1';
+    document.getElementById('mcqCardQText').innerText = currentMCQData.question || 'Which is the deepest trench in the world? 🌊';
+
+    document.getElementById('mcqCtaMain').innerText = currentMCQData.ctaMain || '👇 Comment your answer below! 🔥';
+    document.getElementById('mcqCtaSub').innerText = currentMCQData.ctaSub || '❤️ Like | ➕ Follow 🎯';
+
+    const grid = document.getElementById('mcqOptionsGrid');
+    grid.innerHTML = '';
+
+    currentMCQData.options.forEach(opt => {
+      const row = document.createElement('div');
+      row.className = 'mcq-opt-row';
+      
+      const isThisCorrect = (opt.letter === currentMCQData.correctLetter);
+      if (isThisCorrect && isRevealAnswer) {
+        row.classList.add('is-correct');
+      }
+
+      row.innerHTML = `
+        <div class="mcq-opt-letter">${opt.letter}</div>
+        <div class="mcq-opt-text">${opt.text}</div>
+      `;
+      grid.appendChild(row);
+    });
+
+    applyTypography(false);
+    updatePreviewScale();
+  }
+
+  function renderOneLinerCard() {
+    document.getElementById('outSubject').innerText = currentMeta.subject || 'HISTORY';
+    document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
+    document.getElementById('outPart').innerText = currentMeta.part || 'Part 1';
+    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🔥 90% Aspirants Fail In Q7';
+
+    const tbody = document.getElementById('qaBody');
+    tbody.innerHTML = '';
+
+    const displayList = parsedQAData.slice(0, 10);
+
+    displayList.forEach((item, index) => {
+      const tr = document.createElement('tr');
+      tr.style.backgroundColor = pastelRowColors[index % pastelRowColors.length];
+
+      const tdQ = document.createElement('td');
+      tdQ.className = 'td-q';
+      const cleanNum = String(item.num ? item.num : (index + 1)).replace(/\.$/, '');
+
+      tdQ.innerHTML = `
+        <div class="q-wrap">
+          <span class="q-num">${cleanNum}</span>
+          <div class="q-text">${item.q}?</div>
+        </div>
+      `;
+
+      const tdA = document.createElement('td');
+      tdA.className = 'td-a';
+      if (index === 9 && isChallengeMode) {
+        tdA.innerHTML = `<span class="ans-challenge">💬 Comment answer 👇</span>`;
+      } else {
+        tdA.innerHTML = `<span class="ans-green">${item.a}</span>`;
+      }
+
+      tr.appendChild(tdQ);
+      tr.appendChild(tdA);
+      tbody.appendChild(tr);
+    });
+
+    applyTypography(false);
+    updatePreviewScale();
+  }
+
+  function updatePreviewScale() {
+    const viewport = document.getElementById('previewViewport');
+    const card = document.getElementById('capture-card');
+    if (!viewport || !card) return;
+
+    const containerWidth = viewport.parentElement.clientWidth;
+    const scale = containerWidth / 1080;
+    
+    card.style.transform = `scale(${scale})`;
+    viewport.style.height = `${1350 * scale}px`;
+  }
+
+  window.addEventListener('resize', updatePreviewScale);
+
+  /* ==========================================================
+     6. ACTIONS (GENERATE, DOWNLOAD, SHARE, HOOKS)
      ========================================================== */
   function updateCustomHook(val) {
     if (val !== 'custom') {
@@ -1029,17 +1603,10 @@ How many did you get right out of 10? Drop your score in the comments and share 
   }
 
   function applyHookDirectly() {
-    const val = document.getElementById('txtCustomHook').value.trim() || '🔥 90% Aspirants Fail In Q7';
+    const val = document.getElementById('txtCustomHook').value.trim() || '🎯 World Geography Quiz';
     currentMeta.hook = val;
     document.getElementById('outHookBadge').innerText = val;
     saveToDatabase(false);
-  }
-
-  function toggleChallengeMode() {
-    isChallengeMode = document.getElementById('chkChallengeMode').checked;
-    renderCard();
-    saveToDatabase(false);
-    notify(isChallengeMode ? "🎯 Q10 Challenge Mode Activated!" : "Standard Q10 Mode Activated!");
   }
 
   async function copyViralCaption() {
@@ -1073,7 +1640,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
     try {
       parseSmartInput();
       saveToDatabase(false);
-      notify("⚡ 10 Questions Generated & Auto-Saved!");
+      notify("⚡ Card Generated & Auto-Saved!");
     } catch (e) {
       alert("Parsing Error: " + e.message);
     }
@@ -1089,263 +1656,6 @@ How many did you get right out of 10? Drop your score in the comments and share 
       if (ind) ind.innerText = "● Auto-Saved";
     }, 1000);
   }
-
-  function cleanLine(str) {
-    return str.replace(/\u00A0/g, ' ')
-              .replace(/[\u200B-\u200D\uFEFF]/g, '')
-              .trim();
-  }
-
-  function parseSmartInput() {
-    let raw = document.getElementById('smartInput').value || '';
-    if (!raw.trim()) return;
-
-    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
-    parsedQAData = [];
-    let captionLines = [];
-    let currentQ = null;
-    let headerParsed = false;
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-
-      // A. Header
-      if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
-        if (line.includes('🎯') || line.toLowerCase().includes('part') || line.includes('भाग') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
-          headerParsed = true;
-          const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
-          const parts = clean.split(',').map(s => s.trim());
-          
-          if (parts[0]) {
-            const low = parts[0].toLowerCase();
-            if (low.includes('history') || low.includes('इतिहास')) currentMeta.subject = 'History';
-            else if (low.includes('geography') || low.includes('भूगोल')) currentMeta.subject = 'Geography';
-            else if (low.includes('polity') || low.includes('राज')) currentMeta.subject = 'Polity';
-            else if (low.includes('science') || low.includes('विज्ञान')) currentMeta.subject = 'Science';
-            else if (low.includes('eco') || low.includes('अर्थ')) currentMeta.subject = 'Economics';
-            else currentMeta.subject = parts[0];
-          }
-          if (parts[1]) currentMeta.subTopic = parts[1];
-          if (parts[2]) currentMeta.part = parts[2];
-
-          document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part})`;
-          continue;
-        }
-      }
-
-      // B. Question Line
-      const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
-      if (qStartMatch) {
-        if (currentQ) {
-          parsedQAData.push(currentQ);
-        }
-        const num = qStartMatch[1];
-        let restOfLine = qStartMatch[2].trim();
-
-        const qMarkIdx = restOfLine.indexOf('?');
-        if (qMarkIdx !== -1) {
-          const actualQ = restOfLine.substring(0, qMarkIdx).trim();
-          const afterQ = restOfLine.substring(qMarkIdx + 1).trim();
-          
-          const sameLineAnsMatch = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
-          if (sameLineAnsMatch) {
-            parsedQAData.push({ num: num, q: actualQ, a: sameLineAnsMatch[1].trim() });
-            currentQ = null;
-            continue;
-          } else if (afterQ.length > 0) {
-            parsedQAData.push({ num: num, q: actualQ, a: afterQ });
-            currentQ = null;
-            continue;
-          } else {
-            currentQ = { num: num, q: actualQ, a: '' };
-            continue;
-          }
-        } else {
-          currentQ = { num: num, q: restOfLine, a: '' };
-          continue;
-        }
-      }
-
-      // C. Answer Line
-      const ansMatch = line.match(/^(?:Ans|Answer|उत्तर|उ\.?)[\:\-\s]*(.*)/i);
-      if (ansMatch) {
-        const ansText = ansMatch[1].trim();
-        if (currentQ) {
-          currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
-          currentQ.a = ansText;
-          parsedQAData.push(currentQ);
-          currentQ = null;
-        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
-          parsedQAData[parsedQAData.length - 1].a = ansText;
-        }
-        continue;
-      }
-
-      // D. Multi-line continuation
-      if (currentQ && !currentQ.a) {
-        const qMarkIdx = line.indexOf('?');
-        if (qMarkIdx !== -1) {
-          currentQ.q += ' ' + line.substring(0, qMarkIdx).trim();
-          const afterQ = line.substring(qMarkIdx + 1).trim();
-          const inlineAns = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
-          if (inlineAns) {
-            currentQ.a = inlineAns[1].trim();
-            parsedQAData.push(currentQ);
-            currentQ = null;
-          } else if (afterQ.length > 0) {
-            currentQ.a = afterQ;
-            parsedQAData.push(currentQ);
-            currentQ = null;
-          }
-        } else {
-          currentQ.q += ' ' + line;
-        }
-        continue;
-      }
-
-      // E. Captions
-      if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || parsedQAData.length >= 10) {
-        captionLines.push(line);
-      }
-    }
-
-    if (currentQ) {
-      currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
-      parsedQAData.push(currentQ);
-    }
-
-    if (captionLines.length > 0) {
-      currentMeta.caption = captionLines.join('\n');
-      document.getElementById('fbCaption').value = currentMeta.caption;
-    }
-
-    document.getElementById('statusCounter').innerText = `📊 Loaded Questions: ${parsedQAData.length} / 10`;
-
-    renderCard();
-  }
-
-  function formatQuestion(qText, rowIndex) {
-    if (!qText) return '';
-    let words = qText.trim().split(/\s+/);
-    if (words.length === 0) return qText;
-
-    const candidateIndices = [];
-    words.forEach((w, idx) => {
-      const clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '').toLowerCase();
-      if (!questionWords.has(clean) && !stopWords.has(clean) && clean.length > 3) {
-        candidateIndices.push(idx);
-      }
-    });
-
-    const targetKeyIndex = candidateIndices.length > 0 ? candidateIndices[rowIndex % candidateIndices.length] : -1;
-
-    return words.map((w, wIdx) => {
-      let hasQMark = w.includes('?');
-      let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
-
-      let isQWord = questionWords.has(clean.toLowerCase());
-      let isKeyTarget = (wIdx === targetKeyIndex);
-
-      let styled = clean;
-      if (isQWord || isKeyTarget) {
-        styled = `<span class="word-red">${clean}</span>`;
-      }
-
-      if (hasQMark) styled += `<span class="q-mark">?</span>`;
-      return styled;
-    }).join(' ') + `<span class="q-mark">?</span>`;
-  }
-
-  function formatAnswer(aText, isTenthItem) {
-    if (isTenthItem && isChallengeMode) {
-      return `<span class="ans-challenge">💬 Comment your answer 👇</span>`;
-    }
-
-    if (!aText) return '';
-    let text = aText.trim();
-
-    if (text.includes('(') && text.includes(')')) {
-      return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
-        let res = '';
-        if (p1) res += `<span class="ans-green">${p1}</span>`;
-        if (p2) res += `<span class="ans-maroon">${p2}</span>`;
-        if (p3) res += `<span class="ans-green">${p3}</span>`;
-        return res;
-      });
-    }
-
-    if (text.includes(',')) {
-      let idx = text.indexOf(',');
-      let before = text.substring(0, idx);
-      let after = text.substring(idx);
-      return `<span class="ans-green">${before}</span><span class="ans-maroon">${after}</span>`;
-    }
-
-    return `<span class="ans-green">${text}</span>`;
-  }
-
-  function renderCard() {
-    document.getElementById('outSubject').innerText = currentMeta.subject;
-    document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
-    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🔥 90% Aspirants Fail In Q7';
-    
-    const partElem = document.getElementById('outPart');
-    if (currentMeta.part) {
-      partElem.innerText = currentMeta.part;
-      partElem.style.display = 'flex';
-    } else {
-      partElem.style.display = 'none';
-    }
-
-    const tbody = document.getElementById('qaBody');
-    tbody.innerHTML = '';
-
-    const displayList = parsedQAData.slice(0, 10);
-
-    displayList.forEach((item, index) => {
-      const tr = document.createElement('tr');
-      tr.style.backgroundColor = pastelRowColors[index % pastelRowColors.length];
-
-      const tdQ = document.createElement('td');
-      tdQ.className = 'td-q';
-      
-      const rawNum = item.num ? item.num : (index + 1);
-      const cleanNum = String(rawNum).replace(/\.$/, '');
-
-      // Flex wrapper से नंबर सर्कल में रहेगा और नेक्स्ट लाइन सीधी रहेगी
-      tdQ.innerHTML = `
-        <div class="q-wrap">
-          <span class="q-num">${cleanNum}</span>
-          <div class="q-text">${formatQuestion(item.q, index)}</div>
-        </div>
-      `;
-
-      const tdA = document.createElement('td');
-      tdA.className = 'td-a';
-      tdA.innerHTML = formatAnswer(item.a, index === 9);
-
-      tr.appendChild(tdQ);
-      tr.appendChild(tdA);
-      tbody.appendChild(tr);
-    });
-
-    applyTypography(false);
-    updatePreviewScale();
-  }
-
-  function updatePreviewScale() {
-    const viewport = document.getElementById('previewViewport');
-    const card = document.getElementById('capture-card');
-    if (!viewport || !card) return;
-
-    const containerWidth = viewport.parentElement.clientWidth;
-    const scale = containerWidth / 1080;
-    
-    card.style.transform = `scale(${scale})`;
-    viewport.style.height = `${1350 * scale}px`;
-  }
-
-  window.addEventListener('resize', updatePreviewScale);
 
   async function getCardCanvas() {
     const card = document.getElementById('capture-card');
@@ -1369,15 +1679,14 @@ How many did you get right out of 10? Drop your score in the comments and share 
     notify("⏳ Generating HD Image...");
     const canvas = await getCardCanvas();
     const link = document.createElement('a');
-    link.download = `A_one_Notes_${currentMeta.subject}_${currentMeta.part}.png`;
+    link.download = `A_one_Notes_${currentAppMode}_${currentMeta.subject}.png`;
     link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
-    notify("📥 HD Image Downloaded!");
+    notify("📥 HD Image Downloaded (4:5)!");
   }
 
   async function shareToFacebook() {
     const caption = document.getElementById('fbCaption').value || currentMeta.caption;
-    
     try {
       await navigator.clipboard.writeText(caption);
     } catch (e) {}
@@ -1411,29 +1720,28 @@ How many did you get right out of 10? Drop your score in the comments and share 
   }
 
   /* ==========================================================
-     4. ASYNC INDEXEDDB ARCHIVE OPERATIONS
+     7. ARCHIVE (INDEXEDDB) LOGIC
      ========================================================== */
   async function saveToDatabase(isManual = false) {
-    if (parsedQAData.length === 0) return;
     const db = await dbGetAll();
     const rawVal = document.getElementById('smartInput').value;
 
     const existing = db.find(item => 
       item.subject === currentMeta.subject && 
       item.subTopic === currentMeta.subTopic && 
-      item.part === currentMeta.part
+      item.part === currentMeta.part &&
+      item.mode === currentAppMode
     );
 
     const entry = {
       id: existing ? existing.id : Date.now(),
+      mode: currentAppMode,
       subject: currentMeta.subject,
       subTopic: currentMeta.subTopic,
       part: currentMeta.part,
       caption: currentMeta.caption,
       hook: currentMeta.hook,
       smartRaw: rawVal,
-      questions: parsedQAData.slice(0, 10),
-      isChallengeMode: isChallengeMode,
       date: new Date().toLocaleDateString('en-US')
     };
 
@@ -1447,18 +1755,21 @@ How many did you get right out of 10? Drop your score in the comments and share 
     const container = document.getElementById('savedListContainer');
     container.innerHTML = '';
 
-    const filtered = db.filter(item => item.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+    const filtered = (currentSubjectFilter === 'All') 
+      ? db 
+      : db.filter(item => item.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">No posts saved for ${currentSubjectFilter}.</div>`;
+      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">No posts saved in archive.</div>`;
       return;
     }
 
     filtered.forEach(item => {
       const div = document.createElement('div');
       div.className = 'saved-row';
+      const badge = item.mode === 'mcq' ? '🔘 MCQ' : '📝 10Qs';
       div.innerHTML = `
-        <div><strong>${item.subTopic}</strong> (${item.part})</div>
+        <div><span style="color:#38bdf8; font-weight:800;">[${badge}]</span> <strong>${item.subTopic}</strong> (${item.part})</div>
         <div style="display: flex; gap: 5px;">
           <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
           <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
@@ -1480,66 +1791,60 @@ How many did you get right out of 10? Drop your score in the comments and share 
     const item = db.find(x => x.id === id);
     if (!item) return;
 
+    if (item.mode && item.mode !== currentAppMode) {
+      setAppMode(item.mode);
+    }
+
     document.getElementById('smartInput').value = item.smartRaw || '';
     currentMeta = {
       subject: item.subject,
       subTopic: item.subTopic,
       part: item.part,
       caption: item.caption,
-      hook: item.hook || '🔥 90% Aspirants Fail In Q7'
+      hook: item.hook || '🎯 Quiz'
     };
-    parsedQAData = item.questions;
-    isChallengeMode = item.isChallengeMode !== undefined ? item.isChallengeMode : true;
-    document.getElementById('chkChallengeMode').checked = isChallengeMode;
     document.getElementById('txtCustomHook').value = currentMeta.hook;
 
-    renderCard();
+    parseSmartInput();
     notify(`📖 Loaded: ${item.subject} (${item.part})`);
   }
 
   async function deleteItem(id) {
     await dbDelete(id);
     await renderLibrary();
-    notify("🗑️ Post deleted from database");
+    notify("🗑️ Post deleted from archive");
   }
 
   async function downloadSubjectPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     const all = await dbGetAll();
-    const db = all.filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+    const db = (currentSubjectFilter === 'All') ? all : all.filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
 
     if (db.length === 0) {
-      alert(`No notes saved under "${currentSubjectFilter}"!`);
+      alert("No notes saved to generate PDF!");
       return;
     }
 
     doc.setFontSize(18);
-    doc.text(`A one Notes - ${currentSubjectFilter}`, 14, 20);
+    doc.text(`A one Notes - Archive Export`, 14, 20);
     doc.setFontSize(11);
-    doc.text(`10 Question Sets & Answer Key`, 14, 28);
+    doc.text(`Total Sets: ${db.length}`, 14, 28);
     doc.line(14, 32, 196, 32);
 
     let yPos = 40;
-
     db.forEach((set) => {
       if (yPos > 260) { doc.addPage(); yPos = 20; }
       doc.setFontSize(13);
-      doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
+      doc.text(`[${set.mode.toUpperCase()}] ${set.subject} - ${set.subTopic} (${set.part})`, 14, yPos);
       yPos += 8;
-
-      set.questions.forEach((qa) => {
-        if (yPos > 275) { doc.addPage(); yPos = 20; }
-        doc.setFontSize(10);
-        doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
-        yPos += 5;
-        doc.text(`Ans: ${qa.a}`, 16, yPos);
-        yPos += 7;
-      });
-      yPos += 6;
+      doc.setFontSize(9);
+      const splitText = doc.splitTextToSize(set.smartRaw, 175);
+      doc.text(splitText, 14, yPos);
+      yPos += (splitText.length * 5) + 8;
     });
 
-    doc.save(`A_one_Notes_${currentSubjectFilter}.pdf`);
+    doc.save(`A_one_Notes_Archive.pdf`);
     notify("📄 PDF Downloaded!");
   }
 
@@ -1548,7 +1853,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
     const a = document.createElement('a');
     a.href = dataStr;
-    a.download = `A_one_Notes_Backup_${Date.now()}.json`;
+    a.download = `A_one_Notes_Multi_Backup_${Date.now()}.json`;
     a.click();
   }
 
@@ -1564,7 +1869,7 @@ How many did you get right out of 10? Drop your score in the comments and share 
             await dbPut(item);
           }
           await renderLibrary();
-          notify("📥 Backup imported successfully to IndexedDB!");
+          notify("📥 Backup imported to IndexedDB!");
         }
       } catch (err) {
         alert("Invalid JSON file!");
@@ -1584,10 +1889,10 @@ How many did you get right out of 10? Drop your score in the comments and share 
      INITIALIZATION ON LOAD
      ========================================================== */
   window.onload = async () => {
-    loadTypographySettings();       // 1. पिछली फ़ॉन्ट सेटिंग्स लोड करें
-    await migrateOldLocalStorage();  // 2. LocalStorage डेटा को IndexedDB में लाएँ
-    parseSmartInput();              // 3. डिफ़ॉल्ट सवाल पार्स करें
-    await renderLibrary();          // 4. लाइब्रेरी सूची रेंडर करें
+    loadTypographySettings();
+    await migrateOldLocalStorage();
+    setAppMode(currentAppMode); // default to stored mode or 'mcq'
+    await renderLibrary();
     setTimeout(updatePreviewScale, 300);
   };
 </script>
