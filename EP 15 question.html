@@ -465,12 +465,25 @@
       font-weight: 800;
     }
     
+    /* 1. Circle Number Badge */
     .q-num {
-      color: #1d4ed8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      border-radius: 50%;
+      background: #1d4ed8;
+      color: #ffffff;
+      font-size: 18px;
       font-weight: 900;
-      margin-right: 5px;
-      display: inline-block;
-      min-width: 30px;
+      margin-right: 8px;
+      line-height: 1;
+      vertical-align: middle;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 2px 5px rgba(29, 78, 216, 0.3);
+      flex-shrink: 0;
     }
 
     .word-red { color: #dc2626; font-weight: 900; }
@@ -636,7 +649,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
       <div class="typo-row">
         <div>
           <div class="typo-label">फ़ॉन्ट स्टाइल (Hindi Font):</div>
-          <select id="selFontFamily" onchange="applyTypography()">
+          <select id="selFontFamily" onchange="applyTypography(true)">
             <option value="'Mukta', sans-serif">Mukta (मॉडर्न & क्लीन)</option>
             <option value="'Hind', sans-serif">Hind (बोल्ड & स्पष्ट)</option>
             <option value="'Noto Sans Devanagari', sans-serif">Noto Sans (क्लासिक)</option>
@@ -646,7 +659,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
         </div>
         <div>
           <div class="typo-label">Question Boldness:</div>
-          <select id="selQWeight" onchange="applyTypography()">
+          <select id="selQWeight" onchange="applyTypography(true)">
             <option value="700">Semi Bold (700)</option>
             <option value="800">Extra Bold (800)</option>
             <option value="900" selected>Ultra Bold (900)</option>
@@ -658,15 +671,15 @@ Ans: दूसरे व सातवें स्तंभ लेख
       <div class="typo-row">
         <div>
           <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
-          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography()">
+          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Ques Size: <span id="lblQSize">21px</span></div>
-          <input type="range" id="rngQSize" min="16" max="32" value="21" oninput="applyTypography()">
+          <input type="range" id="rngQSize" min="16" max="36" value="21" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Ans Size: <span id="lblASize">21px</span></div>
-          <input type="range" id="rngASize" min="16" max="32" value="21" oninput="applyTypography()">
+          <input type="range" id="rngASize" min="16" max="36" value="21" oninput="applyTypography(true)">
         </div>
       </div>
     </div>
@@ -740,7 +753,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
     </div>
   </div>
 
-  <!-- ARCHIVE -->
+  <!-- ARCHIVE (IndexedDB) -->
   <div class="dark-card">
     <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
@@ -778,6 +791,145 @@ Ans: दूसरे व सातवें स्तंभ लेख
     'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
   ]);
 
+  /* ==========================================================
+     1. INDEXEDDB ENGINE (असीमित स्टोरेज, नो 5MB लिमिट)
+     ========================================================== */
+  const DB_NAME = 'ExamPrepStudioDB';
+  const DB_VERSION = 1;
+  const STORE_NAME = 'questionSets';
+
+  function initDB() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(DB_NAME, DB_VERSION);
+      request.onupgradeneeded = function (e) {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          store.createIndex('subject', 'subject', { unique: false });
+        }
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function dbGetAll() {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function dbPut(item) {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.put(item);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function dbDelete(id) {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.delete(id);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  // पुराने LocalStorage डेटा को IndexedDB में ऑटोमैटिक ट्रांसफर करना
+  async function migrateOldLocalStorage() {
+    try {
+      const oldData = localStorage.getItem('exam_prep_db_v7');
+      if (oldData) {
+        const parsed = JSON.parse(oldData);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          for (const item of parsed) {
+            await dbPut(item);
+          }
+          localStorage.removeItem('exam_prep_db_v7'); // माइग्रेशन पूरा
+        }
+      }
+    } catch (e) {
+      console.warn("Storage Migration Note:", e);
+    }
+  }
+
+  /* ==========================================================
+     2. SETTINGS MEMORY (फ़ॉन्ट साइज़ और स्टाइल्स को याद रखना)
+     ========================================================== */
+  const SETTINGS_KEY = 'exam_prep_typography_settings';
+
+  function saveTypographySettings() {
+    const settings = {
+      fontFamily: document.getElementById('selFontFamily').value,
+      qWeight: document.getElementById('selQWeight').value,
+      titleSize: document.getElementById('rngTitleSize').value,
+      qSize: document.getElementById('rngQSize').value,
+      aSize: document.getElementById('rngASize').value
+    };
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
+
+  function loadTypographySettings() {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (!raw) return;
+    try {
+      const s = JSON.parse(raw);
+      if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
+      if (s.qWeight) document.getElementById('selQWeight').value = s.qWeight;
+      if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
+      if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
+      if (s.aSize) document.getElementById('rngASize').value = s.aSize;
+    } catch (e) {
+      console.warn("Settings load error:", e);
+    }
+  }
+
+  function applyTypography(shouldSave = false) {
+    const selectedFont = document.getElementById('selFontFamily').value;
+    const qWeight = document.getElementById('selQWeight').value;
+    const titleSize = document.getElementById('rngTitleSize').value;
+    const qSize = document.getElementById('rngQSize').value;
+    const aSize = document.getElementById('rngASize').value;
+
+    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
+    document.getElementById('lblQSize').innerText = qSize + 'px';
+    document.getElementById('lblASize').innerText = aSize + 'px';
+
+    const card = document.getElementById('capture-card');
+    card.style.fontFamily = selectedFont;
+
+    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
+    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
+
+    document.querySelectorAll('.td-q').forEach(el => {
+      el.style.fontSize = qSize + 'px';
+      el.style.fontWeight = qWeight;
+    });
+
+    document.querySelectorAll('.td-a').forEach(el => {
+      el.style.fontSize = aSize + 'px';
+    });
+
+    if (shouldSave) {
+      saveTypographySettings();
+    }
+  }
+
+  /* ==========================================================
+     3. PARSER & GENERATOR LOGIC
+     ========================================================== */
   async function onlyPasteClipboard() {
     try {
       if (navigator.clipboard && navigator.clipboard.readText) {
@@ -814,45 +966,12 @@ Ans: दूसरे व सातवें स्तंभ लेख
     }, 1200);
   }
 
-  function applyTypography() {
-    const selectedFont = document.getElementById('selFontFamily').value;
-    const qWeight = document.getElementById('selQWeight').value;
-    const titleSize = document.getElementById('rngTitleSize').value;
-    const qSize = document.getElementById('rngQSize').value;
-    const aSize = document.getElementById('rngASize').value;
-
-    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
-    document.getElementById('lblQSize').innerText = qSize + 'px';
-    document.getElementById('lblASize').innerText = aSize + 'px';
-
-    const card = document.getElementById('capture-card');
-    card.style.fontFamily = selectedFont;
-
-    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
-    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
-    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
-
-    document.querySelectorAll('.td-q').forEach(el => {
-      el.style.fontSize = qSize + 'px';
-      el.style.fontWeight = qWeight;
-    });
-
-    document.querySelectorAll('.td-a').forEach(el => {
-      el.style.fontSize = aSize + 'px';
-    });
-  }
-
   function cleanLine(str) {
     return str.replace(/\u00A0/g, ' ')
               .replace(/[\u200B-\u200D\uFEFF]/g, '')
               .trim();
   }
 
-  /* BULLETPROOF PARSER:
-     1. नया सवाल सिर्फ संख्या + '.' (जैसे 61.) से शुरू होगा।
-     2. सवाल केवल '?' पर ही खत्म होगा।
-     3. उत्तर केवल '?' के बाद या 'Ans:' / 'उत्तर:' वाली लाइन से आएगा।
-  */
   function parseSmartInput() {
     let raw = document.getElementById('smartInput').value || '';
     if (!raw.trim()) return;
@@ -890,7 +1009,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
         }
       }
 
-      // B. नया प्रश्न: केवल संख्या + '.' से शुरू होगा (उदा: 61.)
+      // B. नया प्रश्न: केवल संख्या + '.' से शुरू
       const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
       if (qStartMatch) {
         if (currentQ) {
@@ -899,7 +1018,6 @@ Ans: दूसरे व सातवें स्तंभ लेख
         const num = qStartMatch[1];
         let restOfLine = qStartMatch[2].trim();
 
-        // चेक करें: क्या उसी लाइन में '?' के बाद Ans/उत्तर चिपका हुआ है?
         const qMarkIdx = restOfLine.indexOf('?');
         if (qMarkIdx !== -1) {
           const actualQ = restOfLine.substring(0, qMarkIdx).trim();
@@ -919,18 +1037,16 @@ Ans: दूसरे व सातवें स्तंभ लेख
             continue;
           }
         } else {
-          // अगर '?' इस लाइन में नहीं है, तो आगे की लाइनों में जुड़ेगा
           currentQ = { num: num, q: restOfLine, a: '' };
           continue;
         }
       }
 
-      // C. उत्तर लाइन: Ans: या उत्तर: से शुरू
+      // C. उत्तर लाइन
       const ansMatch = line.match(/^(?:Ans|उत्तर|Answer|उ\.?)[\:\-\s]*(.*)/i);
       if (ansMatch) {
         const ansText = ansMatch[1].trim();
         if (currentQ) {
-          // अगर सवाल में अभी भी '?' चिपका हो तो हटाकर क्लीन करें
           currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
           currentQ.a = ansText;
           parsedQAData.push(currentQ);
@@ -941,7 +1057,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
         continue;
       }
 
-      // D. अगर सवाल चल रहा है और अभी तक '?' नहीं आया
+      // D. अगर सवाल जारी है
       if (currentQ && !currentQ.a) {
         const qMarkIdx = line.indexOf('?');
         if (qMarkIdx !== -1) {
@@ -1054,8 +1170,12 @@ Ans: दूसरे व सातवें स्तंभ लेख
 
       const tdQ = document.createElement('td');
       tdQ.className = 'td-q';
-      const qNumToDisplay = item.num ? item.num : (index + 1);
-      tdQ.innerHTML = `<span class="q-num">${qNumToDisplay}.</span> ${formatQuestion(item.q, index)}`;
+      
+      // प्रश्न संख्या को सादे डॉट के बिना सर्कल में डिस्प्ले करना
+      const rawNum = item.num ? item.num : (index + 1);
+      const cleanNum = String(rawNum).replace(/\.$/, '');
+      
+      tdQ.innerHTML = `<span class="q-num">${cleanNum}</span> ${formatQuestion(item.q, index)}`;
 
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
@@ -1066,7 +1186,7 @@ Ans: दूसरे व सातवें स्तंभ लेख
       tbody.appendChild(tr);
     });
 
-    applyTypography();
+    applyTypography(false);
     updatePreviewScale();
   }
 
@@ -1147,26 +1267,22 @@ Ans: दूसरे व सातवें स्तंभ लेख
     }, 'image/png');
   }
 
-  function getDB() {
-    return JSON.parse(localStorage.getItem('exam_prep_db_v7') || '[]');
-  }
-  function saveDB(db) {
-    localStorage.setItem('exam_prep_db_v7', JSON.stringify(db));
-  }
-
-  function saveToDatabase(isManual = false) {
+  /* ==========================================================
+     4. ASYNC INDEXEDDB ARCHIVE OPERATIONS
+     ========================================================== */
+  async function saveToDatabase(isManual = false) {
     if (parsedQAData.length === 0) return;
-    const db = getDB();
+    const db = await dbGetAll();
     const rawVal = document.getElementById('smartInput').value;
 
-    const existingIndex = db.findIndex(item => 
+    const existing = db.find(item => 
       item.subject === currentMeta.subject && 
       item.subTopic === currentMeta.subTopic && 
       item.part === currentMeta.part
     );
 
     const entry = {
-      id: existingIndex >= 0 ? db[existingIndex].id : Date.now(),
+      id: existing ? existing.id : Date.now(),
       subject: currentMeta.subject,
       subTopic: currentMeta.subTopic,
       part: currentMeta.part,
@@ -1176,19 +1292,13 @@ Ans: दूसरे व सातवें स्तंभ लेख
       date: new Date().toLocaleDateString('hi-IN')
     };
 
-    if (existingIndex >= 0) {
-      db[existingIndex] = entry;
-    } else {
-      db.unshift(entry);
-    }
-
-    saveDB(db);
-    renderLibrary();
-    if (isManual) notify("💾 पोस्ट सुरक्षित सेव हो गई!");
+    await dbPut(entry);
+    await renderLibrary();
+    if (isManual) notify("💾 पोस्ट IndexedDB में सुरक्षित सेव हो गई!");
   }
 
-  function renderLibrary() {
-    const db = getDB();
+  async function renderLibrary() {
+    const db = await dbGetAll();
     const container = document.getElementById('savedListContainer');
     container.innerHTML = '';
 
@@ -1220,8 +1330,8 @@ Ans: दूसरे व सातवें स्तंभ लेख
     renderLibrary();
   }
 
-  function loadItem(id) {
-    const db = getDB();
+  async function loadItem(id) {
+    const db = await dbGetAll();
     const item = db.find(x => x.id === id);
     if (!item) return;
 
@@ -1238,17 +1348,17 @@ Ans: दूसरे व सातवें स्तंभ लेख
     notify(`📖 लोड हुआ: ${item.subject} (${item.part})`);
   }
 
-  function deleteItem(id) {
-    let db = getDB();
-    db = db.filter(x => x.id !== id);
-    saveDB(db);
-    renderLibrary();
+  async function deleteItem(id) {
+    await dbDelete(id);
+    await renderLibrary();
+    notify("🗑️ पोस्ट डिलीट कर दी गई");
   }
 
-  function downloadSubjectPDF() {
+  async function downloadSubjectPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const db = getDB().filter(x => x.subject === currentSubjectFilter);
+    const all = await dbGetAll();
+    const db = all.filter(x => x.subject === currentSubjectFilter);
 
     if (db.length === 0) {
       alert(`विषय "${currentSubjectFilter}" में कोई प्रश्न सेव नहीं हैं!`);
@@ -1284,8 +1394,8 @@ Ans: दूसरे व सातवें स्तंभ लेख
     notify("📄 PDF डाउनलोड हो गया!");
   }
 
-  function exportJSON() {
-    const db = getDB();
+  async function exportJSON() {
+    const db = await dbGetAll();
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
     const a = document.createElement('a');
     a.href = dataStr;
@@ -1293,17 +1403,19 @@ Ans: दूसरे व सातवें स्तंभ लेख
     a.click();
   }
 
-  function importJSON(event) {
+  async function importJSON(event) {
     const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = async function(e) {
       try {
         const imported = JSON.parse(e.target.result);
         if (Array.isArray(imported)) {
-          saveDB(imported);
-          renderLibrary();
-          notify("📥 बैकअप लोड हुआ!");
+          for (const item of imported) {
+            await dbPut(item);
+          }
+          await renderLibrary();
+          notify("📥 बैकअप IndexedDB में लोड हुआ!");
         }
       } catch (err) {
         alert("अमान्य JSON फाइल!");
@@ -1319,10 +1431,14 @@ Ans: दूसरे व सातवें स्तंभ लेख
     setTimeout(() => { toast.style.display = 'none'; }, 2600);
   }
 
-  window.onload = () => {
-    parseSmartInput();
-    saveToDatabase(false);
-    renderLibrary();
+  /* ==========================================================
+     INITIALIZATION ON LOAD
+     ========================================================== */
+  window.onload = async () => {
+    loadTypographySettings();       // 1. पिछली फ़ॉन्ट सेटिंग्स लोड करें
+    await migrateOldLocalStorage();  // 2. पुराना डेटा IndexedDB में माइग्रेट करें
+    parseSmartInput();              // 3. डिफ़ॉल्ट सवाल पार्स करें
+    await renderLibrary();          // 4. लाइब्रेरी रेंडर करें
     setTimeout(updatePreviewScale, 300);
   };
 </script>
