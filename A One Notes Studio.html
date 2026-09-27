@@ -317,7 +317,7 @@
       position: relative;
     }
 
-    /* 1080x1350 4:5 MAIN CANVAS WITH SAFE ZONE BORDER */
+    /* 1080x1350 4:5 MAIN CANVAS */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -327,7 +327,7 @@
       max-height: 1350px;
       background: #ffffff;
       padding: 24px 32px 20px 32px;
-      position: absolute;
+      position: absolute !important;
       top: 0;
       left: 0;
       transform-origin: top left;
@@ -595,10 +595,11 @@
     .mcq-view-active {
       background-color: #fffdf0 !important;
       padding: 38px 46px 34px 46px !important;
-      position: relative;
+      position: absolute !important;
       overflow: hidden;
-      border: 12px solid #fef08a !important; /* Premium Poster Border Frame */
-      box-shadow: inset 0 0 0 3px #facc15 !important;
+      border: 14px solid #fef08a !important;
+      box-shadow: inset 0 0 0 3px #facc15, 0 10px 30px rgba(0,0,0,0.15) !important;
+      box-sizing: border-box !important;
     }
     .mcq-bg-watermark {
       position: absolute;
@@ -655,7 +656,7 @@
       border: 2.2px solid #cbd5e1;
       border-radius: 35px;
       padding: 6px 34px;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 900;
       color: #0f172a;
       text-transform: uppercase;
@@ -664,7 +665,7 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* 2. QUESTION AREA WITH DYNAMIC MULTI-COLOR WORDS */
+    /* 2. QUESTION AREA WITH PROPORTIONAL SCALING */
     .mcq-question-area {
       margin: 20px 0 15px 0;
       font-size: 42px;
@@ -676,10 +677,11 @@
     }
     .mcq-q-blue {
       color: #0284c7;
-      font-size: 48px;
+      font-size: 1.05em; /* Automatically scales proportionally with Question Slider */
       font-weight: 900;
-      margin-right: 8px;
+      margin-right: 10px;
       font-family: 'Poppins', sans-serif;
+      display: inline-block;
     }
 
     .mcq-options-container {
@@ -787,34 +789,38 @@
        ARCHIVE SECTION FIXED CSS (CLEAN HORIZONTAL SCROLL)
        ========================================================== */
     .subject-pill-row {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 6px;
-      margin-bottom: 10px;
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      gap: 8px !important;
+      overflow-x: auto !important;
+      padding-bottom: 6px !important;
+      margin-bottom: 10px !important;
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
+      width: 100% !important;
     }
     .subject-pill-row::-webkit-scrollbar { display: none; }
     
     .subj-pill {
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      background: #1e293b;
-      color: #94a3b8;
-      border: 1px solid #334155;
-      white-space: nowrap;
-      cursor: pointer;
-      flex-shrink: 0;
-      display: inline-block;
+      padding: 6px 14px !important;
+      border-radius: 20px !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      background: #1e293b !important;
+      color: #94a3b8 !important;
+      border: 1px solid #334155 !important;
+      white-space: nowrap !important;
+      cursor: pointer !important;
+      flex-shrink: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
     }
     .subj-pill.active {
       background: #38bdf8 !important;
       color: #04101e !important;
       border-color: #38bdf8 !important;
-      font-weight: 800;
+      font-weight: 800 !important;
     }
 
     .library-list {
@@ -956,12 +962,12 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
         </div>
         <div>
           <div class="typo-label">Ques Size: <span id="lblQSize">42px</span></div>
-          <!-- Question Size Max increased to 85px -->
+          <!-- Question size up to 85px -->
           <input type="range" id="rngQSize" min="22" max="85" value="42" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Options Size: <span id="lblASize">34px</span></div>
-          <!-- Options Size Max increased to 52px -->
+          <!-- Option size up to 52px -->
           <input type="range" id="rngASize" min="18" max="52" value="34" oninput="applyTypography(true)">
         </div>
       </div>
@@ -1154,7 +1160,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   /* ==========================================================
      1. INDEXEDDB DATABASE
      ========================================================== */
-  const DB_NAME = 'AoneNotesMultiStudioDB_v4';
+  const DB_NAME = 'AoneNotesMultiStudioDB_v5';
   const DB_VERSION = 1;
   const STORE_NAME = 'allSets';
 
@@ -1210,7 +1216,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
   /* ==========================================================
      2. SETTINGS MEMORY (PERSISTENCE)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_multi_typography_settings_v6';
+  const SETTINGS_KEY = 'aone_multi_typography_settings_v7';
 
   function saveTypographySettings() {
     const settings = {
@@ -1372,7 +1378,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // 1. CAPTION / HASHTAG LINES (Stored purely for FB sharing)
+      // 1. CAPTION / HASHTAG LINES (Always captured separately for FB Share)
       if (line.toLowerCase().startsWith('caption:') || line.includes('#')) {
         captionLines.push(line.replace(/^caption:\s*/i, ''));
         continue;
@@ -1400,7 +1406,7 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
         continue;
       }
 
-      // 4. CTA / HOOK LINE (Appears inside the Yellow pill)
+      // 4. CTA / HOOK LINE (Yellow Box Content)
       if (line.includes('Comment') || line.includes('Option') || line.includes('लिखें') || line.includes('👇')) {
         currentMCQData.ctaMain = line;
         continue;
@@ -1434,14 +1440,14 @@ Answer: B) Mariana Trench 🇵🇭</textarea>
       }
     }
 
-    // Auto-Colorize Question Words for High Engagement
+    // Auto-Colorize Question Words
     if (detectedQ) {
       currentMCQData.questionHTML = colorizeQuestionWords(detectedQ);
     } else {
       currentMCQData.questionHTML = colorizeQuestionWords('Which is the deepest trench in the world? 🌊');
     }
 
-    // Facebook Caption setup
+    // Setup FB Caption
     if (captionLines.length > 0) {
       currentMeta.caption = captionLines.join('\n');
     } else {
