@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>US Viral Trivia Quiz Studio HD</title>
+    <title>World & US Viral Trivia Quiz Studio HD</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -273,20 +273,21 @@
 <body>
 
 <div class="main-wrap">
-    <div class="studio-header">🇺🇸 US Viral Trivia Studio HD</div>
+    <div class="studio-header">🌍 World & US Viral Trivia Studio HD</div>
 
     <!-- CONTROLS -->
     <div class="control-box">
         <div class="box-title">📝 Paste Raw Quiz Text</div>
-        <textarea id="raw-paste-box">🇺🇸 US HISTORY QUIZ 🇺🇸
-Q.1 Which US President was the only one to serve two non-consecutive terms before 2024?
-A) Theodore Roosevelt 🐻
-B) Grover Cleveland 🏛️
-C) William McKinley 📜
-D) Woodrow Wilson 🇺🇸
-Answer: B) Grover Cleveland 🏛️
-Explanation: Grover Cleveland served as both the 22nd president (1885–1889) and the 24th president (1893–1897) of the United States.
-Caption: 90% of Americans forget this key piece of presidential history! Can you get it right without looking? Drop your answer below! 👇🧠 #USHistory</textarea>
+        <textarea id="raw-paste-box">🌍 WORLD GK QUIZ 🧠
+Q.31 Which European country is world-famous for its scenic canals, gondolas, and historic architecture? 🛶
+A) Greece 🇬🇷
+B) Spain 🇪🇸
+C) Italy 🇮🇹
+D) Portugal 🇵🇹
+Know your European travel? Drop your answer in the comments! 👇
+Caption: Test your world travel knowledge and challenge your friends below! 👇🏆
+#WorldTravel
+Answer: C) Italy 🇮🇹</textarea>
 
         <div class="btn-action-grid">
             <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
@@ -300,11 +301,11 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
         <div class="row-flex">
             <div>
                 <label>Question Counter (#):</label>
-                <input type="number" id="global-counter-val" value="1" min="1" onchange="saveAllSettings(); redrawCanvas();">
+                <input type="number" id="global-counter-val" value="31" min="1" onchange="saveAllSettings(); redrawCanvas();">
             </div>
             <div>
                 <label>Card Header Title:</label>
-                <input type="text" id="cfg-header-title" value="🇺🇸 US HISTORY QUIZ 🇺🇸" oninput="currentHeaderTitle=this.value; saveAllSettings(); redrawCanvas();">
+                <input type="text" id="cfg-header-title" value="🌍 WORLD GK QUIZ 🧠" oninput="currentHeaderTitle=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
@@ -322,7 +323,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
                     <option value="#f8fafc" selected>Clean Slate (Off-White)</option>
                     <option value="#fef9c3">Soft Warm Yellow</option>
-                    <option value="#eff6ff">Cool American Blue</option>
+                    <option value="#eff6ff">Cool Blue</option>
                     <option value="#ffffff">Pure Crisp White</option>
                 </select>
             </div>
@@ -376,7 +377,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
 <div id="history-modal" onclick="closeHistoryModal()">
     <div class="history-content" onclick="event.stopPropagation()">
         <div class="history-header">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 US Question Archive</span>
+            <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 Question Archive</span>
             <button onclick="document.getElementById('history-modal').style.display='none'" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
         </div>
         <div class="history-list" id="history-items-container"></div>
@@ -387,29 +388,31 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "US_QUIZ_STUDIO_PREFS_V3";
-    const STORAGE_HISTORY = "US_QUIZ_STUDIO_ARCHIVE_V3";
+    const STORAGE_PREFS = "WORLD_QUIZ_STUDIO_PREFS_V4";
+    const STORAGE_HISTORY = "WORLD_QUIZ_STUDIO_ARCHIVE_V4";
 
-    let currentHeaderTitle = "🇺🇸 US HISTORY QUIZ 🇺🇸";
+    let currentHeaderTitle = "🌍 WORLD GK QUIZ 🧠";
     let isAnswerRevealed = false;
 
     let quizData = {
-        questionNumber: 1,
-        questionText: "Which US President was the only one to serve two non-consecutive terms before 2024?",
+        questionNumber: 31,
+        questionText: "Which European country is world-famous for its scenic canals, gondolas, and historic architecture? 🛶",
         options: {
-            A: "Theodore Roosevelt 🐻",
-            B: "Grover Cleveland 🏛️",
-            C: "William McKinley 📜",
-            D: "Woodrow Wilson 🇺🇸"
+            A: "Greece 🇬🇷",
+            B: "Spain 🇪🇸",
+            C: "Italy 🇮🇹",
+            D: "Portugal 🇵🇹"
         },
-        correctOption: "B",
-        explanation: "Grover Cleveland served as both the 22nd president (1885–1889) and the 24th president (1893–1897) of the United States, making him the first in history to serve two non-consecutive terms.",
-        caption: "90% of Americans forget this key piece of presidential history! Can you get it right without looking? Drop your answer below! 👇🧠\n\n#USHistory"
+        hook: "Know your European travel? Drop your answer in the comments! 👇",
+        correctOption: "C",
+        explanation: "Italy is home to Venice, world-renowned for its intricate network of canals, gondola rides, and breathtaking Renaissance architecture.",
+        caption: "Test your world travel knowledge and challenge your friends below! 👇🏆\n#WorldTravel"
     };
 
     function cleanString(str) {
         if (!str) return "";
-        return str.replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g, '').trim();
+        // NFKC converts fancy bold mathematical unicode letters (like 𝐖, 𝐀) to normal standard characters (W, A)
+        return str.normalize('NFKC').replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g, '').trim();
     }
 
     function cleanAndMoveEmojiToEnd(text) {
@@ -432,7 +435,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 document.getElementById('raw-paste-box').value = text;
                 generateFromRawText();
             } else {
-                alert("Clipboard is empty! Please copy trivia text first.");
+                alert("Clipboard is empty! Please copy quiz text first.");
             }
         } catch (err) {
             alert("Clipboard access was not permitted. Please paste manually into the box.");
@@ -456,7 +459,8 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
         let parsedNum = parseInt(document.getElementById('global-counter-val').value) || 1;
         let parsedQText = "";
         let parsedOpts = { A: "", B: "", C: "", D: "" };
-        let parsedAns = "B";
+        let parsedHook = "";
+        let parsedAns = "A";
         let parsedExplanation = "";
         let parsedCaptionLines = [];
 
@@ -465,19 +469,22 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
         for (let i = 0; i < lines.length; i++) {
             let line = lines[i];
 
-            if (/^(?:Answer|Ans|Correct)\s*[:\-]/i.test(line)) {
+            // 1. Answer Detection
+            if (/^(?:Answer|Ans|Correct|उत्तर)\s*[:\-]/i.test(line)) {
                 state = "ANSWER";
-                let ansMatch = line.match(/^(?:Answer|Ans|Correct)\s*[:\-]\s*([A-Da-d])/i);
+                let ansMatch = line.match(/^(?:Answer|Ans|Correct|उत्तर)\s*[:\-]\s*([A-Da-d])/i);
                 if (ansMatch) parsedAns = ansMatch[1].toUpperCase();
                 continue;
             }
 
-            if (/^(?:Explanation|Fun Fact|Fact)\s*[:\-]/i.test(line)) {
+            // 2. Explanation Detection
+            if (/^(?:Explanation|Fun Fact|Fact|व्याख्या)\s*[:\-]/i.test(line)) {
                 state = "EXPLANATION";
-                parsedExplanation = line.replace(/^(?:Explanation|Fun Fact|Fact)\s*[:\-]\s*/i, '').trim();
+                parsedExplanation = line.replace(/^(?:Explanation|Fun Fact|Fact|व्याख्या)\s*[:\-]\s*/i, '').trim();
                 continue;
             }
 
+            // 3. Caption Detection
             if (/^Caption\s*[:\-]/i.test(line)) {
                 state = "CAPTION";
                 let cap = line.replace(/^Caption\s*[:\-]\s*/i, '').trim();
@@ -485,8 +492,9 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 continue;
             }
 
+            // 4. Header title detection
             if (state === "TITLE") {
-                if (line.includes("QUIZ") || line.includes("TRIVIA") || line.includes("🧠") || line.includes("🇺🇸") || line.includes("🎬") || line.includes("🏈")) {
+                if (line.includes("QUIZ") || line.includes("TRIVIA") || line.includes("🧠") || line.includes("🌍") || line.includes("🏛️") || line.includes("🇺🇸")) {
                     parsedTitle = line;
                     state = "QUESTION";
                     continue;
@@ -495,6 +503,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 }
             }
 
+            // 5. Question extraction
             if (state === "QUESTION") {
                 let qMatch = line.match(/^(Q\.?\s*(\d+)[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*(.*)/i);
                 if (qMatch) {
@@ -507,15 +516,28 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 continue;
             }
 
+            // 6. Options extraction (A, B, C, D)
             if (state === "OPTIONS") {
                 let optMatch = line.match(/^([A-Da-d])[\)\.\-]\s*(.*)/);
                 if (optMatch) {
                     let key = optMatch[1].toUpperCase();
                     parsedOpts[key] = cleanAndMoveEmojiToEnd(optMatch[2]);
                     if (parsedOpts.A && parsedOpts.B && parsedOpts.C && parsedOpts.D) {
-                        state = "AFTER_OPTIONS";
+                        state = "HOOK_CHECK";
                     }
                     continue;
+                }
+            }
+
+            // 7. Hook Line Detection right after 4th Option
+            if (state === "HOOK_CHECK") {
+                // If the line is not hashtag and not an answer, it is the custom hook!
+                if (!line.startsWith('#') && !/^(?:Answer|Ans|Caption|Explanation)/i.test(line)) {
+                    parsedHook = line;
+                    state = "AFTER_HOOK";
+                    continue;
+                } else {
+                    state = "AFTER_HOOK";
                 }
             }
 
@@ -524,7 +546,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 continue;
             }
 
-            if (state === "CAPTION" || state === "AFTER_OPTIONS") {
+            if (state === "CAPTION" || state === "AFTER_HOOK") {
                 parsedCaptionLines.push(line);
                 continue;
             }
@@ -544,18 +566,20 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 C: parsedOpts.C || quizData.options.C,
                 D: parsedOpts.D || quizData.options.D
             },
+            hook: parsedHook || "Know your travel? Drop your answer in the comments! 👇",
             correctOption: parsedAns,
-            explanation: parsedExplanation || "No explanation provided.",
-            caption: parsedCaptionLines.length > 0 ? parsedCaptionLines.join("\n") : `90% of Americans get this wrong! Drop your answer below! 👇🧠\n\n#USTrivia`
+            explanation: parsedExplanation || (quizData.options[parsedAns] ? `The correct answer is ${quizData.options[parsedAns]}` : "Correct solution verified."),
+            caption: parsedCaptionLines.length > 0 ? parsedCaptionLines.join("\n") : "Test your knowledge and challenge your friends below! 👇🏆"
         };
 
         document.getElementById('global-counter-val').value = parsedNum + 1;
-        document.getElementById('private-explanation').innerText = `[Correct Answer: Option ${quizData.correctOption}]\n\n${quizData.explanation}`;
+        document.getElementById('private-explanation').innerText = `[Correct Answer: Option ${quizData.correctOption}] ${quizData.options[quizData.correctOption] || ""}\n\n${quizData.explanation}`;
 
         saveToHistory({
             questionNumber: quizData.questionNumber,
             questionText: quizData.questionText,
             options: quizData.options,
+            hook: quizData.hook,
             correctOption: quizData.correctOption,
             explanation: quizData.explanation,
             caption: quizData.caption,
@@ -566,7 +590,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
         updateCaptionText();
         saveAllSettings();
         redrawCanvas();
-        alert(`🎉 Q.${quizData.questionNumber} Card Generated successfully!`);
+        alert(`🎉 Q.${quizData.questionNumber} Card & Hook Generated successfully!`);
     }
 
     function toggleAnswerMode() {
@@ -588,7 +612,9 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
             document.getElementById('fb-caption-box').innerText = 
 `✅ Correct Answer: [Option ${quizData.correctOption}] ${correctText}
 
-💡 Fun Fact: ${quizData.explanation}`;
+💡 Fun Fact: ${quizData.explanation}
+
+${quizData.caption}`;
         } else {
             document.getElementById('fb-caption-box').innerText = quizData.caption;
         }
@@ -731,7 +757,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
-        ctx.font = `900 56px ${fontFam}`;
+        ctx.font = `900 54px ${fontFam}`;
         ctx.fillText(currentHeaderTitle, 540, 125);
 
         // 4. SUB-TAG PILL
@@ -827,8 +853,9 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
             ctx.fillStyle = "#64748b";
             ctx.font = `800 22px ${fontFam}`;
             ctx.textAlign = "center";
-            ctx.fillText("❤️ Like | ➕ Follow for Daily Trivia 🇺🇸", 540, footerY + 205);
+            ctx.fillText("❤️ Like | ➕ Follow for Daily Trivia 🌍", 540, footerY + 205);
         } else {
+            // DYNAMIC HOOK BANNER (Takes directly from parsed text!)
             roundRect(ctx, 95, footerY, 890, 80, 40, "#fef08a", false);
             ctx.strokeStyle = "#facc15";
             ctx.lineWidth = 2.5;
@@ -837,12 +864,20 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillStyle = "#854d0e";
-            ctx.font = `900 28px ${fontFam}`;
-            ctx.fillText("🧠 90% of Americans Get This Wrong! Drop Your Guess 👇", 540, footerY + (80 / 2));
+            
+            // Dynamic text and responsive font size calculation
+            const hookText = quizData.hook || "Know your travel? Drop your answer in the comments! 👇";
+            let hookFontSize = 26;
+            ctx.font = `900 ${hookFontSize}px ${fontFam}`;
+            while (ctx.measureText(hookText).width > 850 && hookFontSize > 16) {
+                hookFontSize -= 1;
+                ctx.font = `900 ${hookFontSize}px ${fontFam}`;
+            }
+            ctx.fillText(hookText, 540, footerY + (80 / 2));
 
             ctx.fillStyle = "#0f172a";
             ctx.font = `800 26px ${fontFam}`;
-            ctx.fillText("❤️ Like | ➕ Follow for Daily Trivia 🇺🇸", 540, footerY + 132);
+            ctx.fillText("❤️ Like | ➕ Follow for Daily Trivia 🌍", 540, footerY + 132);
         }
     }
 
@@ -922,12 +957,12 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
                 alert("Failed to create image.");
                 return;
             }
-            const file = new File([blob], `USTrivia_Q${quizData.questionNumber}.png`, { type: 'image/png' });
+            const file = new File([blob], `Quiz_Q${quizData.questionNumber}.png`, { type: 'image/png' });
 
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 try {
                     await navigator.share({
-                        title: `US Trivia Q.${quizData.questionNumber}`,
+                        title: `Quiz Q.${quizData.questionNumber}`,
                         text: caption,
                         files: [file]
                     });
@@ -943,7 +978,7 @@ Caption: 90% of Americans forget this key piece of presidential history! Can you
     function downloadImage() {
         const link = document.createElement('a');
         const modePrefix = isAnswerRevealed ? "Solved_" : "";
-        link.download = `${modePrefix}USTrivia_Q${quizData.questionNumber}.png`;
+        link.download = `${modePrefix}Trivia_Q${quizData.questionNumber}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
     }
