@@ -795,14 +795,17 @@
         tbody tr:last-child { border-bottom: none; }
         td { padding: 4px 12px; line-height: 1.3; vertical-align: middle; overflow: hidden; word-break: break-word; }
         .td-q { color: #0f172a; font-size: 22px; font-weight: 700; }
-        .q-wrap { display: flex; align-items: flex-start; gap: 10px; width: 100%; }
+        .q-wrap { display: flex; align-items: flex-start; gap: 8px; width: 100%; }
+
+        /* NUMBER WITHOUT CIRCLE: CLEAN, BOLD AND ACCENT COLOR */
         .q-num {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 36px; height: 36px; min-width: 36px; border-radius: 50%;
-            background: #1d4ed8; color: #ffffff; font-size: 18px !important;
-            font-weight: 900; line-height: 1; box-shadow: 0 2px 5px rgba(29, 78, 216, 0.3);
-            flex-shrink: 0; margin-top: 1px;
+            color: #1d4ed8;
+            font-weight: 900;
+            line-height: 1.3;
+            flex-shrink: 0;
+            font-family: inherit;
         }
+
         .q-text { flex: 1; min-width: 0; word-break: break-word; }
         .word-red { color: #dc2626; font-weight: 800; }
         .q-mark { color: #dc2626; font-weight: 900; }
@@ -900,7 +903,7 @@
                 <div class="card-body">
                     10 महत्वपूर्ण प्रश्नों की 4:5 अल्ट्रा-वायरल टेबल और आर्काइव शीट तैयार करें।
                     <ul class="card-features">
-                        <li>✔ 10 Qs Smart Auto-Save & Number Badges</li>
+                        <li>✔ 10 Qs Smart Auto-Save & Clean Numbering</li>
                         <li>✔ Q10 Comment Challenge Mode</li>
                         <li>✔ Unlimited IndexedDB Archive & PDF Export</li>
                     </ul>
@@ -3030,9 +3033,10 @@ ${tagsString}`.trim();
             const rawNum = item.num ? item.num : (index + 1);
             const cleanNum = String(rawNum).replace(/\.$/, '');
 
+            // CLEAN NUMBERING WITHOUT CIRCLE BADGE
             tdQ.innerHTML = `
                 <div class="q-wrap">
-                    <span class="q-num">${cleanNum}</span>
+                    <span class="q-num">${cleanNum}.</span>
                     <div class="q-text">${formatQuestion(item.q, index)}</div>
                 </div>
             `;
