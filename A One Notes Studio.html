@@ -3,32 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Viral Quiz Studio Pro - Full Suite & Question Manager</title>
+    <title>A One Notes - Creator Studio Suite</title>
+
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Kalam:wght@700&family=Poppins:wght@500;600;700;800;900&family=Rozha+One&family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- EXTERNAL LIBRARIES FOR QNA STUDIO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
         body {
-            background: #0b1329;
+            background: #0a0f1d;
             color: #f8fafc;
-            font-family: 'Hind', sans-serif;
-            padding: 12px;
+            font-family: 'Poppins', 'Hind', sans-serif;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .main-wrap {
+        /* TOP NAVIGATION BAR FOR RETURNING TO HUB */
+        .hub-top-nav {
+            width: 100%;
+            max-width: 560px;
+            background: #111827;
+            border: 1px solid #1f293d;
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 6px;
+            z-index: 100;
+        }
+        .btn-back-hub {
+            background: #1e293b;
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-back-hub:hover {
+            background: #38bdf8;
+            color: #0b1329;
+        }
+        .hub-current-tag {
+            font-size: 12px;
+            font-weight: 800;
+            color: #94a3b8;
+        }
+
+        /* ========================================================
+           SECTION 1: HUB LANDING PAGE STYLES
+           ======================================================== */
+        #view-hub {
+            width: 100%;
+            max-width: 680px;
+            padding: 30px 16px 50px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+        }
+        .hub-header {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .hub-badge {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 30px;
+            letter-spacing: 0.5px;
+        }
+        .hub-title {
+            font-size: 26px;
+            font-weight: 900;
+            color: #ffffff;
+        }
+        .hub-title span { color: #38bdf8; }
+        .hub-subtitle {
+            font-size: 13.5px;
+            color: #94a3b8;
+            font-family: 'Hind', sans-serif;
+            font-weight: 600;
+        }
+        .cards-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .studio-card {
+            background: #111827;
+            border: 1.5px solid #1f293d;
+            border-radius: 16px;
+            padding: 22px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            min-height: 250px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .studio-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+        .card-quiz::before { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
+        .card-quiz:hover {
+            transform: translateY(-4px);
+            border-color: #8b5cf6;
+            box-shadow: 0 12px 28px rgba(139, 92, 246, 0.25);
+        }
+        .card-qna::before { background: linear-gradient(90deg, #dc2626, #f59e0b); }
+        .card-qna:hover {
+            transform: translateY(-4px);
+            border-color: #dc2626;
+            box-shadow: 0 12px 28px rgba(220, 38, 38, 0.25);
+        }
+        .card-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .icon-box {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .card-quiz .icon-box {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.35);
+        }
+        .card-qna .icon-box {
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid rgba(220, 38, 38, 0.35);
+        }
+        .card-heading {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+        .card-tag { font-size: 11px; font-weight: 700; margin-top: 2px; }
+        .card-quiz .card-tag { color: #a78bfa; }
+        .card-qna .card-tag { color: #f87171; }
+        .card-body {
+            font-size: 12.5px;
+            color: #94a3b8;
+            font-family: 'Hind', sans-serif;
+            line-height: 1.45;
+            margin-bottom: 16px;
+        }
+        .card-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .card-features li {
+            font-size: 11.5px;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .card-btn {
+            width: 100%;
+            padding: 10px 14px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .card-quiz .card-btn { background: linear-gradient(135deg, #8b5cf6, #3b82f6); }
+        .card-qna .card-btn { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+
+        /* ========================================================
+           SECTION 2: QUIZ STUDIO PRO STYLES
+           ======================================================== */
+        #view-quiz {
             width: 100%;
             max-width: 520px;
+            padding: 12px 10px 50px 10px;
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+        #view-quiz .main-wrap {
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 14px;
         }
-
-        .studio-header {
+        #view-quiz .studio-header {
             text-align: center;
             font-size: 19px;
             font-weight: 800;
@@ -37,8 +245,7 @@
             padding-bottom: 6px;
             font-family: 'Poppins', sans-serif;
         }
-
-        .section-divider {
+        #view-quiz .section-divider {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -48,14 +255,13 @@
             font-weight: 800;
             font-family: 'Poppins', sans-serif;
         }
-        .section-divider::before, .section-divider::after {
+        #view-quiz .section-divider::before, #view-quiz .section-divider::after {
             content: "";
             flex: 1;
             height: 1px;
             background: #334155;
         }
-
-        .control-box {
+        #view-quiz .control-box {
             background: #1e293b;
             border: 1px solid #334155;
             border-radius: 12px;
@@ -64,23 +270,20 @@
             flex-direction: column;
             gap: 10px;
         }
-
-        .row-flex {
+        #view-quiz .row-flex {
             display: flex;
             gap: 8px;
             align-items: center;
         }
-        .row-flex > div { flex: 1; }
-
-        label {
+        #view-quiz .row-flex > div { flex: 1; }
+        #view-quiz label {
             font-size: 11px;
             color: #94a3b8;
             font-weight: bold;
             display: block;
             margin-bottom: 3px;
         }
-
-        input, select, textarea {
+        #view-quiz input, #view-quiz select, #view-quiz textarea {
             width: 100%;
             padding: 8px 10px;
             background: #0f172a;
@@ -92,9 +295,8 @@
             outline: none;
             font-family: inherit;
         }
-        textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
-
-        .answer-toggle-card {
+        #view-quiz textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
+        #view-quiz .answer-toggle-card {
             background: #0f172a;
             border: 1.5px solid #10b981;
             border-radius: 8px;
@@ -104,7 +306,7 @@
             justify-content: space-between;
             cursor: pointer;
         }
-        .toggle-text {
+        #view-quiz .toggle-text {
             font-size: 13px;
             font-weight: 800;
             color: #34d399;
@@ -112,19 +314,18 @@
             align-items: center;
             gap: 6px;
         }
-        .checkbox-custom {
+        #view-quiz .checkbox-custom {
             width: 20px;
             height: 20px;
             cursor: pointer;
             accent-color: #10b981;
         }
-
-        .btn-action-grid {
+        #view-quiz .btn-action-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
         }
-        .btn-action {
+        #view-quiz .btn-action {
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
             color: white;
             border: none;
@@ -139,18 +340,17 @@
             justify-content: center;
             gap: 6px;
         }
-        .btn-clipboard {
+        #view-quiz .btn-clipboard {
             background: linear-gradient(135deg, #0284c7, #0369a1);
             box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
         }
-
-        .backup-grid {
+        #view-quiz .backup-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
             margin-top: 2px;
         }
-        .btn-backup {
+        #view-quiz .btn-backup {
             background: #334155;
             color: #f1f5f9;
             border: 1px solid #475569;
@@ -161,9 +361,7 @@
             cursor: pointer;
             text-align: center;
         }
-
-        /* CANVAS PREVIEW */
-        .canvas-card {
+        #view-quiz .canvas-card {
             width: 100%;
             background: #000;
             border-radius: 12px;
@@ -172,18 +370,17 @@
             display: flex;
             justify-content: center;
         }
-        canvas {
+        #view-quiz canvas {
             width: 100%;
             height: auto;
             display: block;
         }
-
-        .action-grid {
+        #view-quiz .action-grid {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 8px;
         }
-        .btn-act {
+        #view-quiz .btn-act {
             border: none;
             padding: 11px;
             border-radius: 8px;
@@ -197,19 +394,18 @@
             gap: 6px;
             color: white;
         }
-        .btn-share {
+        #view-quiz .btn-share {
             background: linear-gradient(135deg, #2563eb, #1d4ed8);
             box-shadow: 0 3px 10px rgba(37, 99, 235, 0.4);
         }
-        .btn-download { background: #10b981; }
-        .btn-history-trigger {
+        #view-quiz .btn-download { background: #10b981; }
+        #view-quiz .btn-history-trigger {
             background: #334155;
             color: #f1f5f9;
             grid-column: span 2;
             border: 1px solid #475569;
         }
-
-        .detail-card {
+        #view-quiz .detail-card {
             background: #1e293b;
             border: 1px solid #334155;
             border-radius: 10px;
@@ -218,7 +414,7 @@
             flex-direction: column;
             gap: 6px;
         }
-        .detail-text {
+        #view-quiz .detail-text {
             background: #0f172a;
             border: 1px solid #334155;
             border-radius: 6px;
@@ -229,9 +425,7 @@
             white-space: pre-wrap;
             user-select: text;
         }
-
-        /* COMPILER CARD */
-        .compiler-card {
+        #view-quiz .compiler-card {
             background: #1e1b4b;
             border: 1.5px solid #6366f1;
             border-radius: 12px;
@@ -240,7 +434,7 @@
             flex-direction: column;
             gap: 10px;
         }
-        .btn-compile {
+        #view-quiz .btn-compile {
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
             color: white;
             border: none;
@@ -250,7 +444,7 @@
             cursor: pointer;
             font-size: 13.5px;
         }
-        .page-nav-bar {
+        #view-quiz .page-nav-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -259,7 +453,7 @@
             border-radius: 8px;
             border: 1px solid #475569;
         }
-        .btn-nav {
+        #view-quiz .btn-nav {
             background: #334155;
             color: white;
             border: none;
@@ -269,18 +463,15 @@
             cursor: pointer;
             font-size: 12px;
         }
-        .btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
+        #view-quiz .btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
 
-        /* MODALS */
+        /* QUIZ MODALS */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85);
-            z-index: 999;
+            z-index: 9999;
             padding: 14px;
             justify-content: center;
             align-items: center;
@@ -289,82 +480,458 @@
             background: #1e293b;
             border: 1px solid #475569;
             border-radius: 12px;
-            width: 100%;
-            max-width: 490px;
-            max-height: 88vh;
-            display: flex;
-            flex-direction: column;
+            width: 100%; max-width: 490px; max-height: 88vh;
+            display: flex; flex-direction: column;
             overflow: hidden;
         }
         .modal-header {
-            padding: 12px;
-            background: #0f172a;
+            padding: 12px; background: #0f172a;
             border-bottom: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
         }
         .modal-body {
-            padding: 12px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            padding: 12px; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 10px;
         }
-
         .h-item {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            background: #0f172a; border: 1px solid #334155;
+            border-radius: 8px; padding: 10px;
+            display: flex; flex-direction: column; gap: 6px;
         }
         .h-item-title { font-size: 13px; font-weight: 800; color: #38bdf8; }
         .h-item-sub { font-size: 11.5px; color: #10b981; }
-        .h-item-exp { font-size: 11px; color: #94a3b8; line-height: 1.4; }
-        
-        .h-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 4px;
-        }
+        .h-actions { display: flex; gap: 6px; margin-top: 4px; }
         .btn-crud {
-            padding: 5px 9px;
-            font-size: 11px;
-            font-weight: 700;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: white;
+            padding: 5px 9px; font-size: 11px; font-weight: 700;
+            border: none; border-radius: 5px; cursor: pointer; color: white;
         }
         .btn-crud-load { background: #0284c7; }
         .btn-crud-edit { background: #d97706; }
         .btn-crud-del { background: #dc2626; }
         .btn-add-new {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 9px;
-            border-radius: 7px;
-            font-weight: 800;
-            font-size: 12.5px;
-            cursor: pointer;
-            margin-bottom: 6px;
+            background: #10b981; color: white; border: none;
+            padding: 9px; border-radius: 7px; font-weight: 800;
+            font-size: 12.5px; cursor: pointer; margin-bottom: 6px;
         }
+
+        /* ========================================================
+           SECTION 3: QNA STUDIO PRO STYLES
+           ======================================================== */
+        #view-qna {
+            width: 100%;
+            max-width: 560px;
+            padding: 12px 10px 50px 10px;
+            display: none;
+            flex-direction: column;
+            gap: 14px;
+        }
+        #view-qna .app-shell {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        #view-qna .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 6px;
+        }
+        #view-qna .app-header h1 {
+            font-size: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #view-qna .app-badge {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        #view-qna .dark-card {
+            background: #111827;
+            border: 1px solid #1f293d;
+            border-radius: 14px;
+            padding: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+        #view-qna .card-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        #view-qna .row-flex {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        #view-qna .row-flex > div { flex: 1; }
+        #view-qna label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 3px;
+        }
+        #view-qna input, #view-qna select {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #1f293d;
+            border-radius: 7px;
+            color: #f8fafc;
+            padding: 7px 10px;
+            font-size: 13px;
+            outline: none;
+        }
+        #view-qna textarea {
+            width: 100%;
+            background: #0f172a;
+            border: 1.5px solid #1f293d;
+            border-radius: 10px;
+            color: #f8fafc;
+            padding: 10px 12px;
+            font-size: 13.5px;
+            font-family: inherit;
+            outline: none;
+            height: 140px;
+            line-height: 1.45;
+            resize: vertical;
+        }
+        #view-qna .status-counter {
+            font-size: 12px;
+            font-weight: 700;
+            color: #38bdf8;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #view-qna .challenge-toggle-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px dashed rgba(245, 158, 11, 0.4);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 700;
+            color: #f59e0b;
+            cursor: pointer;
+        }
+        #view-qna .challenge-toggle-box input { width: auto; cursor: pointer; }
+        #view-qna .typo-panel {
+            background: #0b1222;
+            border: 1px solid #1f293d;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #view-qna .typo-row { display: flex; gap: 10px; align-items: center; }
+        #view-qna .typo-row > div { flex: 1; }
+        #view-qna .typo-label {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #94a3b8;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+        #view-qna .typo-label span { color: #38bdf8; font-weight: 800; }
+        #view-qna input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            border-radius: 5px;
+            background: #1f293d;
+            outline: none;
+        }
+        #view-qna input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #38bdf8;
+            cursor: pointer;
+        }
+        #view-qna .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        #view-qna button {
+            padding: 11px 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        #view-qna .btn-paste { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
+        #view-qna .btn-run { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; }
+        #view-qna .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+        #view-qna .btn-fb { background: linear-gradient(135deg, #1877f2, #0d5bbd); color: #fff; }
+        #view-qna .btn-caption { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; grid-column: span 2; }
+        #view-qna .btn-dark {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            font-size: 12px;
+            padding: 8px 10px;
+        }
+        #toastMsg {
+            display: none;
+            position: fixed;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 700;
+            z-index: 999999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        /* QNA PREVIEW CARD & TABLE */
+        .preview-viewport-wrapper {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            border: 1px solid #1f293d;
+        }
+        #previewViewport { width: 100%; position: relative; }
+        #capture-card {
+            width: 1080px; height: 1350px;
+            min-width: 1080px; min-height: 1350px;
+            max-width: 1080px; max-height: 1350px;
+            background: #ffffff;
+            padding: 24px 32px 20px 32px;
+            position: absolute; top: 0; left: 0;
+            transform-origin: top left;
+            display: flex; flex-direction: column; justify-content: space-between;
+            font-family: 'Poppins', sans-serif;
+        }
+        .top-header-wrap {
+            position: relative; display: flex; align-items: center; justify-content: space-between;
+            height: 52px; margin-bottom: 6px;
+        }
+        .top-line-behind {
+            position: absolute; left: 0; right: 0; top: 50%;
+            height: 2.5px; background: #dc2626; z-index: 1; transform: translateY(-50%);
+        }
+        .top-logo {
+            position: relative; z-index: 2; background: #ffffff;
+            padding: 2px 20px; border: 3px solid #dc2626; border-radius: 40px;
+            display: inline-flex; align-items: center;
+        }
+        .top-logo .logo-red { color: #dc2626; font-weight: 900; font-size: 26px; }
+        .top-logo .logo-black { color: #0f172a; font-weight: 900; font-size: 26px; margin-left: 6px; }
+        .top-hook-badge {
+            position: relative; z-index: 2; background: #ffffff;
+            padding: 4px 16px; font-size: 20px; font-weight: 900; color: #dc2626;
+            border: 2px dashed #dc2626; border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.12);
+        }
+        .top-follow-pill {
+            position: relative; z-index: 2; background: #dc2626; color: #ffffff;
+            font-size: 18px; font-weight: 800; padding: 6px 22px; border-radius: 40px;
+        }
+        .title-banner { display: flex; justify-content: center; align-items: center; margin-bottom: 6px; }
+        .title-pill { display: inline-flex; border-radius: 10px; overflow: hidden; box-shadow: 0 3px 8px rgba(0,0,0,0.08); }
+        .title-main { background: #dc2626; color: #ffffff; font-size: 32px; font-weight: 800; padding: 4px 28px; text-transform: uppercase; }
+        .title-sub { background: #15803d; color: #ffffff; font-size: 24px; font-weight: 700; padding: 4px 20px; }
+        .title-part { background: #1e3a8a; color: #ffffff; font-size: 22px; font-weight: 800; padding: 4px 20px; }
+        .table-container {
+            flex: 1; position: relative; border: 2px solid #86efac; border-radius: 12px;
+            overflow: hidden; background: #ffffff; display: flex; flex-direction: column;
+        }
+        .watermark {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-18deg);
+            font-size: 90px; font-weight: 900; color: rgba(220, 38, 38, 0.05);
+            white-space: nowrap; pointer-events: none; user-select: none; z-index: 1;
+            text-transform: uppercase;
+        }
+        table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; position: relative; z-index: 2; }
+        thead th {
+            background: #f0fdf4; padding: 4px 12px; font-size: 24px; font-weight: 800;
+            border-bottom: 2px solid #86efac; height: 42px;
+        }
+        thead th.th-q, tbody td.td-q { width: 68% !important; border-right: 2px solid #86efac; text-align: left; }
+        thead th.th-a, tbody td.td-a { width: 32% !important; text-align: left; }
+        thead th.th-q { color: #dc2626; }
+        thead th.th-a { color: #15803d; }
+        tbody tr { border-bottom: 1.5px solid #bbf7d0; height: calc((100% - 42px) / 10); }
+        tbody tr:last-child { border-bottom: none; }
+        td { padding: 4px 12px; line-height: 1.3; vertical-align: middle; overflow: hidden; word-break: break-word; }
+        .td-q { color: #0f172a; font-size: 22px; font-weight: 700; }
+        .q-wrap { display: flex; align-items: flex-start; gap: 10px; width: 100%; }
+        .q-num {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; min-width: 36px; border-radius: 50%;
+            background: #1d4ed8; color: #ffffff; font-size: 18px !important;
+            font-weight: 900; line-height: 1; box-shadow: 0 2px 5px rgba(29, 78, 216, 0.3);
+            flex-shrink: 0; margin-top: 1px;
+        }
+        .q-text { flex: 1; min-width: 0; word-break: break-word; }
+        .word-red { color: #dc2626; font-weight: 800; }
+        .q-mark { color: #dc2626; font-weight: 900; }
+        .td-a { font-size: 22px; font-weight: 700; }
+        .ans-green { color: #15803d; font-weight: 700; }
+        .ans-maroon { color: #800000; font-weight: 800; }
+        .ans-challenge {
+            background: #fef3c7; border: 1.5px dashed #d97706; color: #b45309;
+            font-size: 17px; font-weight: 800; padding: 4px 8px; border-radius: 6px; display: inline-block;
+        }
+        .footer-wrap {
+            position: relative; display: flex; align-items: center; justify-content: space-between;
+            height: 48px; margin-top: 6px;
+        }
+        .footer-line-behind {
+            position: absolute; left: 0; right: 0; top: 50%; height: 2.5px;
+            background: #dc2626; z-index: 1; transform: translateY(-50%);
+        }
+        .footer-brand {
+            position: relative; z-index: 2; background: #ffffff; padding: 0 14px 0 0;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .footer-book-icon { font-size: 26px; }
+        .footer-title { font-size: 24px; font-weight: 900; }
+        .footer-title .f-red { color: #dc2626; }
+        .footer-title .f-black { color: #0f172a; }
+        .footer-follow-btn {
+            position: relative; z-index: 2; background: #dc2626; color: #ffffff;
+            font-size: 18px; font-weight: 800; padding: 6px 20px; border-radius: 40px;
+        }
+        .subject-pill-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 8px; }
+        .subj-pill {
+            padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+            background: #1e293b; color: #94a3b8; border: 1px solid #334155; white-space: nowrap; cursor: pointer;
+        }
+        .subj-pill.active { background: #dc2626; color: #fff; border-color: #dc2626; }
+        .library-list { max-height: 140px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+        .saved-row {
+            background: #0f172a; border: 1px solid #1e293b; padding: 7px 10px;
+            border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 12.5px;
+        }
+        .btn-xs { padding: 3px 7px; font-size: 11px; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-<div class="main-wrap">
-    <div class="studio-header">⚡ Viral Quiz Card Studio Pro & Sheet Compiler</div>
+<div id="toastMsg"></div>
 
-    <!-- ==================== SECTION 1: SINGLE CARD STUDIO ==================== -->
-    <div class="control-box">
-        <div>
-            <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
-            <textarea id="raw-paste-box">🏛️ POLITY GK QUIZ 🧠
+<!-- ========================================================
+     1. HUB VIEW (MAIN CARDS SCREEN)
+     ======================================================== -->
+<div id="view-hub">
+    <div class="hub-header">
+        <span class="hub-badge">⚡ A ONE NOTES CREATOR SUITE</span>
+        <h1 class="hub-title">Viral Content <span>Hub</span></h1>
+        <p class="hub-subtitle">जिस टूल पर काम करना चाहते हैं, उस कार्ड पर क्लिक करें:</p>
+    </div>
+
+    <div class="cards-grid">
+        <!-- CARD 1: QUIZ -->
+        <div class="studio-card card-quiz" onclick="switchView('quiz')">
+            <div>
+                <div class="card-top">
+                    <div class="icon-box">🧠</div>
+                    <div>
+                        <div class="card-heading">1. Quiz Studio Pro</div>
+                        <div class="card-tag">4 Options & Polls</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    4 ऑप्शंस वाले क्विज़ कार्ड्स, FB पोल फॉर्मेट और 10-Q शीट तैयार करें।
+                    <ul class="card-features">
+                        <li>✔ 1-Click Paste & Card Generator</li>
+                        <li>✔ 10-Question Feed Sheet Compiler</li>
+                        <li>✔ Solved Mode & Multi-Image FB Share</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="card-btn">
+                <span>Quiz Studio खोलें</span>
+                <span>➔</span>
+            </button>
+        </div>
+
+        <!-- CARD 2: QNA -->
+        <div class="studio-card card-qna" onclick="switchView('qna')">
+            <div>
+                <div class="card-top">
+                    <div class="icon-box">📋</div>
+                    <div>
+                        <div class="card-heading">2. QNA Studio Pro</div>
+                        <div class="card-tag">10 Qs One-Liner Table</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    10 महत्वपूर्ण प्रश्नों की 4:5 अल्ट्रा-वायरल टेबल और आर्काइव शीट तैयार करें।
+                    <ul class="card-features">
+                        <li>✔ 10 Qs Smart Auto-Save & Number Badges</li>
+                        <li>✔ Q10 Comment Challenge Mode</li>
+                        <li>✔ Unlimited IndexedDB Archive & PDF Export</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="card-btn">
+                <span>QNA Studio खोलें</span>
+                <span>➔</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================
+     2. QUIZ STUDIO PRO VIEW
+     ======================================================== -->
+<div id="view-quiz">
+    <!-- Top Back Bar -->
+    <div class="hub-top-nav">
+        <button class="btn-back-hub" onclick="switchView('hub')">⬅ मुख्य मेन्यू (Back to Hub)</button>
+        <span class="hub-current-tag">🧠 Quiz Studio Pro</span>
+    </div>
+
+    <div class="main-wrap">
+        <div class="studio-header">⚡ Viral Quiz Card Studio Pro & Sheet Compiler</div>
+
+        <!-- SECTION 1: SINGLE CARD STUDIO -->
+        <div class="control-box">
+            <div>
+                <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
+                <textarea id="raw-paste-box">🏛️ POLITY GK QUIZ 🧠
 Q.169 संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️
 A) डॉ. राजेंद्र प्रसाद 📜
 B) डॉ. भीमराव अंबेडकर 🇮🇳
@@ -375,196 +942,410 @@ D) सरदार वल्लभभाई पटेल 🛡️
 Caption: संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀
 #PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity
 Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳</textarea>
-        </div>
-
-        <div class="btn-action-grid">
-            <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
-                <span>📋 1-Click Paste & Run</span>
-            </button>
-            <button class="btn-action" onclick="generateFromRawText()">
-                <span>✨ Generate Single Card</span>
-            </button>
-        </div>
-
-        <div class="row-flex" style="margin-top: 4px;">
-            <div>
-                <label>फ़ॉन्ट स्टाइल:</label>
-                <select id="cfg-font" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="'Hind', sans-serif">Hind (साफ बोल्ड)</option>
-                    <option value="'Kalam', cursive">Kalam (आकर्षक लिखावट)</option>
-                    <option value="'Rozha One', serif">Rozha One (क्लासिक)</option>
-                    <option value="'Poppins', sans-serif">Poppins (मॉडर्न)</option>
-                </select>
             </div>
-            <div>
-                <label>बैकग्राउंड थीम:</label>
-                <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="#ecfdf5" selected>Mint Light (Greenish)</option>
-                    <option value="#d1fae5">Soft Forest Green</option>
-                    <option value="#fef9c3">Soft Warm Yellow</option>
-                    <option value="#f8fafc">Creamy Light</option>
-                    <option value="#ffffff">Pure White</option>
-                </select>
+
+            <div class="btn-action-grid">
+                <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
+                    <span>📋 1-Click Paste & Run</span>
+                </button>
+                <button class="btn-action" onclick="generateFromRawText()">
+                    <span>✨ Generate Single Card</span>
+                </button>
             </div>
-        </div>
 
-        <div class="row-flex">
-            <div>
-                <label>प्रश्न साइज़: <span id="q-size-lbl">42</span>px</label>
-                <input type="range" id="cfg-q-size" min="30" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+            <div class="row-flex" style="margin-top: 4px;">
+                <div>
+                    <label>फ़ॉन्ट स्टाइल:</label>
+                    <select id="cfg-font" onchange="saveAllSettings(); redrawCanvas();">
+                        <option value="'Hind', sans-serif">Hind (साफ बोल्ड)</option>
+                        <option value="'Kalam', cursive">Kalam (आकर्षक लिखावट)</option>
+                        <option value="'Rozha One', serif">Rozha One (क्लासिक)</option>
+                        <option value="'Poppins', sans-serif">Poppins (मॉडर्न)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>बैकग्राउंड थीम:</label>
+                    <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
+                        <option value="#ecfdf5" selected>Mint Light (Greenish)</option>
+                        <option value="#d1fae5">Soft Forest Green</option>
+                        <option value="#fef9c3">Soft Warm Yellow</option>
+                        <option value="#f8fafc">Creamy Light</option>
+                        <option value="#ffffff">Pure White</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label>ऑप्शन साइज़: <span id="opt-size-lbl">30</span>px</label>
-                <input type="range" id="cfg-opt-size" min="24" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+
+            <div class="row-flex">
+                <div>
+                    <label>प्रश्न साइज़: <span id="q-size-lbl">42</span>px</label>
+                    <input type="range" id="cfg-q-size" min="30" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                </div>
+                <div>
+                    <label>ऑप्शन साइज़: <span id="opt-size-lbl">30</span>px</label>
+                    <input type="range" id="cfg-opt-size" min="24" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                </div>
             </div>
-        </div>
 
-        <!-- ANSWER MODE TOGGLE -->
-        <div class="answer-toggle-card" onclick="toggleAnswerMode()">
-            <span class="toggle-text">✅ सही उत्तर पर टिक मार्क दिखाएं (Answer Mode)</span>
-            <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
-        </div>
-
-        <!-- JSON BACKUP / RESTORE -->
-        <div class="backup-grid">
-            <button class="btn-backup" onclick="exportJSONBackup()">📤 Export Backup (JSON)</button>
-            <button class="btn-backup" onclick="document.getElementById('import-file').click()">📥 Import Backup (JSON)</button>
-            <input type="file" id="import-file" style="display:none" accept=".json" onchange="importJSONBackup(event)">
-        </div>
-    </div>
-
-    <!-- CANVAS PREVIEW (SINGLE CARD: 1080 x 1350) -->
-    <div class="canvas-card">
-        <canvas id="quizCanvas" width="1080" height="1350"></canvas>
-    </div>
-
-    <!-- ACTIONS FOR SINGLE CARD -->
-    <div class="action-grid">
-        <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share Single</button>
-        <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD Single</button>
-        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 प्रश्न बैंक प्रबंधन (Add, Edit, Delete) [<span id="history-total-count">0</span>]</button>
-    </div>
-
-    <!-- FACEBOOK POLL FORMAT COPY -->
-    <div class="detail-card" style="border-color: #8b5cf6;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📊 Facebook Poll Format (1-Click Ready):</span>
-            <button class="btn-action" style="background:#8b5cf6; padding:5px 12px; font-size:12px;" onclick="copyPollFormat()">📋 Copy Poll Text</button>
-        </div>
-        <div class="detail-text" id="fb-poll-box" style="color: #c4b5fd;">पोल फॉर्मेट यहाँ दिखाई देगा...</div>
-    </div>
-
-    <!-- PRIVATE EXPLANATION -->
-    <div class="detail-card">
-        <div class="box-title" style="color: #34d399; font-weight: bold; font-size: 12px;">💡 सही उत्तर:</div>
-        <div class="detail-text" id="private-explanation">यहाँ सही उत्तर दिखाई देगा।</div>
-    </div>
-
-    <!-- FB CAPTION BOX -->
-    <div class="detail-card">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Caption:</span>
-            <button class="btn-action" style="background:#0284c7; padding:5px 12px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
-        </div>
-        <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
-    </div>
-
-    <!-- ==================== SECTION 2: 10-Q MULTI-SHEET COMPILER ==================== -->
-    <div class="section-divider">
-        <span>📑 10-Question FB Feed Sheet Generator (Attractively Redesigned)</span>
-    </div>
-
-    <div class="compiler-card">
-        <div style="color:#c7d2fe; font-size:13px; font-weight:700;">
-            10 प्रश्नों की आकर्षक 2-कॉलम फ़ीड शीट (20 प्रश्न चुनने पर 2 अलग इमेज बनेंगी):
-        </div>
-        <div class="row-flex">
-            <div>
-                <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
-                <input type="number" id="batch-start" min="1" value="1" onchange="calcBatchEstimate()">
+            <!-- ANSWER MODE TOGGLE -->
+            <div class="answer-toggle-card" onclick="toggleAnswerMode()">
+                <span class="toggle-text">✅ सही उत्तर पर टिक मार्क दिखाएं (Answer Mode)</span>
+                <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
             </div>
-            <div>
-                <label>कुल प्रश्न चुनें (Count):</label>
-                <input type="number" id="batch-count" min="1" max="100" value="10" onchange="calcBatchEstimate()">
+
+            <!-- JSON BACKUP / RESTORE -->
+            <div class="backup-grid">
+                <button class="btn-backup" onclick="exportJSONBackup()">📤 Export Backup (JSON)</button>
+                <button class="btn-backup" onclick="document.getElementById('import-file').click()">📥 Import Backup (JSON)</button>
+                <input type="file" id="import-file" style="display:none" accept=".json" onchange="importJSONBackup(event)">
             </div>
         </div>
-        <div id="batch-estimate-lbl" style="font-size:11.5px; color:#a5b4fc; font-weight:600;">
-            ℹ️ कुल इमेज बनेंगी: 1 इमेज (10 प्रश्न)
+
+        <!-- CANVAS PREVIEW (SINGLE CARD: 1080 x 1350) -->
+        <div class="canvas-card">
+            <canvas id="quizCanvas" width="1080" height="1350"></canvas>
         </div>
-        <button class="btn-compile" onclick="compileBatchFeedSheets()">🚀 आकर्षक 10-Q शीट तैयार करें (Compile HD Sheets)</button>
-    </div>
 
-    <!-- BATCH NAVIGATION -->
-    <div class="page-nav-bar" id="batch-nav" style="display:none;">
-        <button class="btn-nav" id="btn-batch-prev" onclick="navigateBatch(-1)">◀ पिछला पेज</button>
-        <span id="batch-page-indicator" style="font-size:13px; font-weight:800; color:#38bdf8;">Page 1 of 1</span>
-        <button class="btn-nav" id="btn-batch-next" onclick="navigateBatch(1)">अगला पेज ▶</button>
-    </div>
-
-    <!-- CANVAS PREVIEW (FEED SHEET: 1080 x 1350) -->
-    <div class="canvas-card" id="sheet-preview-card" style="display:none;">
-        <canvas id="sheetCanvas" width="1080" height="1350"></canvas>
-    </div>
-
-    <!-- BATCH ACTIONS -->
-    <div class="action-grid" id="batch-actions" style="display:none;">
-        <button class="btn-act btn-share" onclick="shareCurrentBatchSheet()">📲 Share Current Feed Page</button>
-        <button class="btn-act btn-download" onclick="downloadCurrentBatchSheet()">📥 Download (JPG)</button>
-        <button class="btn-act btn-history-trigger" style="background:#0891b2;" onclick="downloadAllBatchSheets()">📦 सभी पेजों को एक साथ डाउनलोड करें</button>
-    </div>
-
-    <!-- BATCH CAPTION BOX -->
-    <div class="detail-card" id="batch-caption-card" style="display:none;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📝 Batch Post Facebook Caption:</span>
-            <button class="btn-action" style="background:#8b5cf6; padding:4px 10px; font-size:11.5px;" onclick="copyBatchCaption()">📋 Copy Caption</button>
+        <!-- ACTIONS FOR SINGLE CARD -->
+        <div class="action-grid">
+            <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share Single</button>
+            <button class="btn-act btn-download" onclick="downloadQuizSingleImage()">📥 Download HD Single</button>
+            <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 प्रश्न बैंक प्रबंधन (Add, Edit, Delete) [<span id="history-total-count">0</span>]</button>
         </div>
-        <div class="detail-text" id="batch-caption-box">शीट कंपाइल करने के बाद कैप्शन तैयार होगा...</div>
-    </div>
 
-    <!-- ==================== SECTION 3: MULTI-IMAGE RANGE SHARE (HD ANSWER MODE) ==================== -->
-    <div class="section-divider">
-        <span>🎯 Multiple Question Images Share (Solved Cards with Caption)</span>
-    </div>
-
-    <div class="compiler-card" style="background: #0f2744; border-color: #0284c7;">
-        <div style="color:#bae6fd; font-size:13px; font-weight:700;">
-            रेंज चुनें और सभी प्रश्नों की अलग-अलग HD इमेज सीधे Facebook पर भेजें:
-        </div>
-        <div class="row-flex">
-            <div>
-                <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
-                <input type="number" id="multi-start" min="1" value="1" onchange="calcMultiEstimate()">
+        <!-- FACEBOOK POLL FORMAT COPY -->
+        <div class="detail-card" style="border-color: #8b5cf6;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📊 Facebook Poll Format (1-Click Ready):</span>
+                <button class="btn-action" style="background:#8b5cf6; padding:5px 12px; font-size:12px;" onclick="copyPollFormat()">📋 Copy Poll Text</button>
             </div>
-            <div>
-                <label>अंतिम प्रश्न क्रम (End #):</label>
-                <input type="number" id="multi-end" min="1" value="5" onchange="calcMultiEstimate()">
+            <div class="detail-text" id="fb-poll-box" style="color: #c4b5fd;">पोल फॉर्मेट यहाँ दिखाई देगा...</div>
+        </div>
+
+        <!-- PRIVATE EXPLANATION -->
+        <div class="detail-card">
+            <div class="box-title" style="color: #34d399; font-weight: bold; font-size: 12px;">💡 सही उत्तर:</div>
+            <div class="detail-text" id="private-explanation">यहाँ सही उत्तर दिखाई देगा।</div>
+        </div>
+
+        <!-- FB CAPTION BOX -->
+        <div class="detail-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Caption:</span>
+                <button class="btn-action" style="background:#0284c7; padding:5px 12px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
+            </div>
+            <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
+        </div>
+
+        <!-- SECTION 2: 10-Q MULTI-SHEET COMPILER -->
+        <div class="section-divider">
+            <span>📑 10-Question FB Feed Sheet Generator (Attractively Redesigned)</span>
+        </div>
+
+        <div class="compiler-card">
+            <div style="color:#c7d2fe; font-size:13px; font-weight:700;">
+                10 प्रश्नों की आकर्षक 2-कॉलम फ़ीड शीट (20 प्रश्न चुनने पर 2 अलग इमेज बनेंगी):
+            </div>
+            <div class="row-flex">
+                <div>
+                    <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
+                    <input type="number" id="batch-start" min="1" value="1" onchange="calcBatchEstimate()">
+                </div>
+                <div>
+                    <label>कुल प्रश्न चुनें (Count):</label>
+                    <input type="number" id="batch-count" min="1" max="100" value="10" onchange="calcBatchEstimate()">
+                </div>
+            </div>
+            <div id="batch-estimate-lbl" style="font-size:11.5px; color:#a5b4fc; font-weight:600;">
+                ℹ️ कुल इमेज बनेंगी: 1 इमेज (10 प्रश्न)
+            </div>
+            <button class="btn-compile" onclick="compileBatchFeedSheets()">🚀 आकर्षक 10-Q शीट तैयार करें (Compile HD Sheets)</button>
+        </div>
+
+        <!-- BATCH NAVIGATION -->
+        <div class="page-nav-bar" id="batch-nav" style="display:none;">
+            <button class="btn-nav" id="btn-batch-prev" onclick="navigateBatch(-1)">◀ पिछला पेज</button>
+            <span id="batch-page-indicator" style="font-size:13px; font-weight:800; color:#38bdf8;">Page 1 of 1</span>
+            <button class="btn-nav" id="btn-batch-next" onclick="navigateBatch(1)">अगला पेज ▶</button>
+        </div>
+
+        <!-- CANVAS PREVIEW (FEED SHEET: 1080 x 1350) -->
+        <div class="canvas-card" id="sheet-preview-card" style="display:none;">
+            <canvas id="sheetCanvas" width="1080" height="1350"></canvas>
+        </div>
+
+        <!-- BATCH ACTIONS -->
+        <div class="action-grid" id="batch-actions" style="display:none;">
+            <button class="btn-act btn-share" onclick="shareCurrentBatchSheet()">📲 Share Current Feed Page</button>
+            <button class="btn-act btn-download" onclick="downloadCurrentBatchSheet()">📥 Download (JPG)</button>
+            <button class="btn-act btn-history-trigger" style="background:#0891b2;" onclick="downloadAllBatchSheets()">📦 सभी पेजों को एक साथ डाउनलोड करें</button>
+        </div>
+
+        <!-- BATCH CAPTION BOX -->
+        <div class="detail-card" id="batch-caption-card" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📝 Batch Post Facebook Caption:</span>
+                <button class="btn-action" style="background:#8b5cf6; padding:4px 10px; font-size:11.5px;" onclick="copyBatchCaption()">📋 Copy Caption</button>
+            </div>
+            <div class="detail-text" id="batch-caption-box">शीट कंपाइल करने के बाद कैप्शन तैयार होगा...</div>
+        </div>
+
+        <!-- SECTION 3: MULTI-IMAGE RANGE SHARE -->
+        <div class="section-divider">
+            <span>🎯 Multiple Question Images Share (Solved Cards with Caption)</span>
+        </div>
+
+        <div class="compiler-card" style="background: #0f2744; border-color: #0284c7;">
+            <div style="color:#bae6fd; font-size:13px; font-weight:700;">
+                रेंज चुनें और सभी प्रश्नों की अलग-अलग HD इमेज सीधे Facebook पर भेजें:
+            </div>
+            <div class="row-flex">
+                <div>
+                    <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
+                    <input type="number" id="multi-start" min="1" value="1" onchange="calcMultiEstimate()">
+                </div>
+                <div>
+                    <label>अंतिम प्रश्न क्रम (End #):</label>
+                    <input type="number" id="multi-end" min="1" value="5" onchange="calcMultiEstimate()">
+                </div>
+            </div>
+            <div id="multi-estimate-lbl" style="font-size:11.5px; color:#7dd3fc; font-weight:600;">
+                ℹ️ कुल HD कार्ड्स: 5 इमेज (Answer Mode Enabled)
+            </div>
+            <div class="action-grid" style="grid-template-columns: 1fr 1fr; margin-top: 4px;">
+                <button class="btn-act btn-share" style="background: linear-gradient(135deg, #0284c7, #2563eb);" onclick="shareMultiSolvedCards()">
+                    🚀 Direct Share All to FB
+                </button>
+                <button class="btn-act btn-download" style="background: #059669;" onclick="downloadAllMultiSolvedCards()">
+                    📥 Download All (HD)
+                </button>
             </div>
         </div>
-        <div id="multi-estimate-lbl" style="font-size:11.5px; color:#7dd3fc; font-weight:600;">
-            ℹ️ कुल HD कार्ड्स: 5 इमेज (Answer Mode Enabled)
-        </div>
-        <div class="action-grid" style="grid-template-columns: 1fr 1fr; margin-top: 4px;">
-            <button class="btn-act btn-share" style="background: linear-gradient(135deg, #0284c7, #2563eb);" onclick="shareMultiSolvedCards()">
-                🚀 Direct Share All to FB
-            </button>
-            <button class="btn-act btn-download" style="background: #059669;" onclick="downloadAllMultiSolvedCards()">
-                📥 Download All (HD)
-            </button>
-        </div>
-    </div>
 
-    <!-- MULTI CAPTION BOX -->
-    <div class="detail-card" id="multi-caption-card">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Multi-Post Facebook Caption (Auto Generated):</span>
-            <button class="btn-action" style="background:#0284c7; padding:4px 10px; font-size:11.5px;" onclick="copyMultiCaption()">📋 Copy Caption</button>
+        <!-- MULTI CAPTION BOX -->
+        <div class="detail-card" id="multi-caption-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Multi-Post Facebook Caption (Auto Generated):</span>
+                <button class="btn-action" style="background:#0284c7; padding:4px 10px; font-size:11.5px;" onclick="copyMultiCaption()">📋 Copy Caption</button>
+            </div>
+            <div class="detail-text" id="multi-caption-box">रेंज चुनने पर यहाँ सभी प्रश्नों का कंबाइंड कैप्शन तैयार होगा...</div>
         </div>
-        <div class="detail-text" id="multi-caption-box">रेंज चुनने पर यहाँ सभी प्रश्नों का कंबाइंड कैप्शन तैयार होगा...</div>
     </div>
 </div>
 
-<!-- ==================== MODAL 1: QUESTION BANK MANAGER ==================== -->
+<!-- ========================================================
+     3. QNA STUDIO PRO VIEW
+     ======================================================== -->
+<div id="view-qna">
+    <!-- Top Back Bar -->
+    <div class="hub-top-nav">
+        <button class="btn-back-hub" onclick="switchView('hub')">⬅ मुख्य मेन्यू (Back to Hub)</button>
+        <span class="hub-current-tag">📋 QNA Studio Pro</span>
+    </div>
+
+    <div class="app-shell">
+        <div class="app-header">
+            <h1>⚡ A one Notes Studio</h1>
+            <span class="app-badge">10 Qs ULTRA VIRAL</span>
+        </div>
+
+        <!-- MANUAL SMART PASTE CARD -->
+        <div class="dark-card">
+            <div class="card-title">
+                <span>📝 Raw Content (Smart Paste):</span>
+                <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">Part 1 Detected</span>
+            </div>
+
+            <!-- VIRAL HOOK SELECTOR -->
+            <div class="row-flex" style="margin-bottom: 10px;">
+                <div style="flex: 1.2;">
+                    <label>🔥 Viral Header Hook:</label>
+                    <select id="selViralHook" onchange="updateCustomHook(this.value)">
+                        <option value="🔥 90% Aspirants Fail In Q7" selected>🔥 90% Aspirants Fail In Q7</option>
+                        <option value="🎯 Top 10 Repeated Questions">🎯 Top 10 Repeated Questions</option>
+                        <option value="⚡ Only Real Aspirants Score 10/10">⚡ Only Real Aspirants Score 10/10</option>
+                        <option value="🧠 Daily GK Challenge: Test Yourself">🧠 Daily GK Challenge: Test Yourself</option>
+                        <option value="custom">✏️ Custom Hook (Type below)...</option>
+                    </select>
+                </div>
+                <div style="flex: 1;">
+                    <label>Hook Text:</label>
+                    <input type="text" id="txtCustomHook" value="🔥 90% Aspirants Fail In Q7" oninput="applyHookDirectly()">
+                </div>
+            </div>
+            
+            <textarea id="smartInput" placeholder="Paste 10 questions here..." oninput="autoSaveHandler()">🎯 History, Ancient India, Part 1
+1. Which was the first site discovered in the Indus Valley Civilization?
+Ans: Harappa
+2. Who was the founder of the Maurya Empire?
+Ans: Chandragupta Maurya
+3. The famous Gayatri Mantra is found in which Veda?
+Ans: Rigveda
+4. At which place did Gautama Buddha attain enlightenment?
+Ans: Bodh Gaya
+5. Who is known as the 'Napoleon of India'?
+Ans: Samudragupta
+6. Which ruler convened the Fourth Buddhist Council in Kashmir?
+Ans: Kanishka
+7. Who was the author of the famous book 'Arthashastra'?
+Ans: Chanakya (Kautilya)
+8. Which Indus Valley site is famous for its dockyard?
+Ans: Lothal
+9. Who was the court poet of King Harsha and author of 'Harshacharita'?
+Ans: Banabhatta
+10. Who was the 24th Tirthankara of Jainism?
+Ans: Mahavira
+How many did you get right out of 10? Drop your score in the comments and share this with your fellow aspirants!
+#HistoryGK</textarea>
+
+            <div class="status-counter">
+                <span id="statusCounter">📊 Loaded Questions: 10 / 10</span>
+                <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
+            </div>
+
+            <!-- VIRAL CHALLENGE TOGGLE -->
+            <label class="challenge-toggle-box" for="chkChallengeMode">
+                <span>🎯 Q10 Comment Challenge Mode (Boosts Viral Reach)</span>
+                <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
+            </label>
+
+            <!-- Typography Controls -->
+            <div class="typo-panel">
+                <div class="typo-row">
+                    <div>
+                        <div class="typo-label">Font Family:</div>
+                        <select id="selFontFamily" onchange="applyTypography(true)">
+                            <option value="'Poppins', sans-serif" selected>Poppins (Clean & Bold)</option>
+                            <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
+                            <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
+                            <option value="'Roboto', sans-serif">Roboto (Classic)</option>
+                            <option value="'Merriweather', serif">Merriweather (Editorial)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <div class="typo-label">Question Boldness:</div>
+                        <select id="selQWeight" onchange="applyTypography(true)">
+                            <option value="700" selected>Bold (700)</option>
+                            <option value="800">Extra Bold (800)</option>
+                            <option value="900">Black (900)</option>
+                            <option value="600">Semi Bold (600)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="typo-row">
+                    <div>
+                        <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
+                        <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography(true)">
+                    </div>
+                    <div>
+                        <div class="typo-label">Ques Size: <span id="lblQSize">22px</span></div>
+                        <input type="range" id="rngQSize" min="16" max="36" value="22" oninput="applyTypography(true)">
+                    </div>
+                    <div>
+                        <div class="typo-label">Ans Size: <span id="lblASize">22px</span></div>
+                        <input type="range" id="rngASize" min="16" max="36" value="22" oninput="applyTypography(true)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden Caption for FB -->
+            <input type="hidden" id="fbCaption" value="">
+
+            <!-- Actions -->
+            <div class="btn-grid">
+                <button class="btn-caption" onclick="copyViralCaption()">📋 Copy FB Viral Caption</button>
+                <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
+                <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
+                <button class="btn-emerald" onclick="downloadQnaHDImage()">📥 Download HD (4:5)</button>
+                <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to FB</button>
+            </div>
+        </div>
+
+        <!-- LIVE PREVIEW -->
+        <div class="dark-card" style="padding: 10px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <div class="card-title" style="margin:0;">📱 Live Mobile Preview</div>
+                <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Ratio (10 Qs Ultra)</span>
+            </div>
+
+            <div class="preview-viewport-wrapper">
+                <div id="previewViewport">
+                    <div id="capture-card">
+                        <div class="top-header-wrap">
+                            <div class="top-line-behind"></div>
+                            <div class="top-logo">
+                                <span class="logo-red">A one</span><span class="logo-black">Notes</span>
+                            </div>
+                            <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
+                            <div class="top-follow-pill">A one Notes : Follow</div>
+                        </div>
+
+                        <div class="title-banner">
+                            <div class="title-pill">
+                                <div class="title-main" id="outSubject">HISTORY</div>
+                                <div class="title-sub" id="outSubTopic">( Ancient India )</div>
+                                <div class="title-part" id="outPart">Part 1</div>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <div class="watermark">A one Notes</div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="th-q">Questions</th>
+                                        <th class="th-a">Answers</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="qaBody"></tbody>
+                            </table>
+                        </div>
+
+                        <div class="footer-wrap">
+                            <div class="footer-line-behind"></div>
+                            <div class="footer-brand">
+                                <span class="footer-book-icon">📖</span>
+                                <div class="footer-title">
+                                    <span class="f-red">A one</span><span class="f-black">Notes</span>
+                                </div>
+                            </div>
+                            <div class="footer-follow-btn">Important For All Exams</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ARCHIVE (IndexedDB) -->
+        <div class="dark-card">
+            <div class="card-title">📚 Question Bank (Archive)</div>
+
+            <div class="subject-pill-row">
+                <button class="subj-pill active" onclick="filterBySubject('History', this)">History</button>
+                <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
+                <button class="subj-pill" onclick="filterBySubject('Polity', this)">Polity</button>
+                <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
+                <button class="subj-pill" onclick="filterBySubject('Economics', this)">Economics</button>
+            </div>
+
+            <div class="library-list" id="savedListContainer"></div>
+
+            <div style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
+                <button class="btn-dark" style="flex:1;" onclick="saveToDatabase(true)">💾 Save</button>
+                <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 PDF</button>
+                <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
+                <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; margin: 0;">
+                    📥 Import <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================
+     MODALS FOR QUIZ STUDIO
+     ======================================================== -->
+<!-- MODAL 1: QUESTION BANK MANAGER -->
 <div id="history-modal" class="modal-overlay" onclick="closeHistoryModal()">
     <div class="modal-box" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -578,7 +1359,7 @@ Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳</textarea>
     </div>
 </div>
 
-<!-- ==================== MODAL 2: ADD / EDIT QUESTION MODAL ==================== -->
+<!-- MODAL 2: ADD / EDIT QUESTION MODAL -->
 <div id="edit-modal" class="modal-overlay" onclick="closeEditModal()">
     <div class="modal-box" onclick="event.stopPropagation()">
         <div class="modal-header">
@@ -629,7 +1410,35 @@ Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳</textarea>
     </div>
 </div>
 
+<!-- ========================================================
+     JAVASCRIPT LOGIC
+     ======================================================== -->
 <script>
+    /* ========================================================
+       A. MASTER VIEW CONTROLLER (HUB / QUIZ / QNA)
+       ======================================================== */
+    function switchView(viewName) {
+        document.getElementById('view-hub').style.display = 'none';
+        document.getElementById('view-quiz').style.display = 'none';
+        document.getElementById('view-qna').style.display = 'none';
+
+        if (viewName === 'quiz') {
+            document.getElementById('view-quiz').style.display = 'flex';
+            redrawCanvas();
+            calcBatchEstimate();
+            calcMultiEstimate();
+        } else if (viewName === 'qna') {
+            document.getElementById('view-qna').style.display = 'flex';
+            setTimeout(updatePreviewScale, 150);
+        } else {
+            document.getElementById('view-hub').style.display = 'flex';
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ========================================================
+       B. QUIZ STUDIO PRO LOGIC (CANVAS, POLLS, 10-Q SHEETS)
+       ======================================================== */
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -728,7 +1537,7 @@ Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳</textarea>
             }
 
             if (/^(?:Explanation|व्याख्या)\s*[:\-]/i.test(line)) {
-                continue; // Skip explanation
+                continue;
             }
 
             if (/^Caption\s*[:\-]/i.test(line)) {
@@ -937,7 +1746,6 @@ ${tagsString}`.trim();
         }
     }
 
-    /* ==================== QUESTION BANK CRUD ==================== */
     function getHistoryList() {
         try {
             let hist = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
@@ -1111,7 +1919,6 @@ ${tagsString}`.trim();
         alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
     }
 
-    /* ==================== SINGLE CARD DRAW ENGINE (HD) ==================== */
     function renderCardToCanvas(targetCtx, data, isRevealed) {
         const bgColor = document.getElementById('cfg-bg-color').value || "#ecfdf5";
         const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
@@ -1151,7 +1958,7 @@ ${tagsString}`.trim();
         targetCtx.font = `900 52px ${fontFam}`;
         targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 118);
 
-        // Capsule Badge: A one notes
+        // Capsule Badge
         const badgeText = "A ONE NOTES";
         targetCtx.font = "900 24px 'Poppins', sans-serif";
         const badgeWidth = targetCtx.measureText(badgeText).width;
@@ -1213,7 +2020,7 @@ ${tagsString}`.trim();
             targetCtx.fillText(optVal, optX + 96, curY + (optH / 2));
         });
 
-        // Footer: No Explanation box on reveal, keeps bottom clean and balanced
+        // Footer
         const footerY = optStartY + (4 * optGap) + 38;
         if (isRevealed) {
             roundRect(targetCtx, 110, footerY, 860, 84, 42, "#dcfce7", false);
@@ -1313,14 +2120,14 @@ ${tagsString}`.trim();
                     await navigator.share({ title: `Quiz ${quizData.qPrefix}`, text: caption, files: [file] });
                 } catch (err) {}
             } else {
-                downloadImage();
+                downloadQuizSingleImage();
                 copyCaption();
                 alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड और कैप्शन कॉपी हो गया है!");
             }
         });
     }
 
-    function downloadImage() {
+    function downloadQuizSingleImage() {
         const link = document.createElement('a');
         const modePrefix = isAnswerRevealed ? "Solved_" : "";
         link.download = `${modePrefix}Quiz_${quizData.qPrefix.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
@@ -1335,7 +2142,7 @@ ${tagsString}`.trim();
         });
     }
 
-    /* ==================== 10-Q MULTI-SHEET COMPILER ==================== */
+    /* 10-Q MULTI-SHEET COMPILER */
     function calcBatchEstimate() {
         const count = parseInt(document.getElementById('batch-count').value) || 10;
         const pages = Math.ceil(count / 10);
@@ -1390,11 +2197,9 @@ ${tagsString}`.trim();
     }
 
     function draw10QFeedSheet(questions, pageNum, totalPages) {
-        const W = 1080;
-        const H = 1350;
+        const W = 1080, H = 1350;
 
         sCtx.clearRect(0, 0, W, H);
-
         sCtx.fillStyle = "#ffffff";
         sCtx.fillRect(0, 0, W, H);
 
@@ -1638,7 +2443,6 @@ ${tagsString}`.trim();
         }, 'image/jpeg', 0.98);
     }
 
-    /* ==================== SECTION 3: MULTI-IMAGE RANGE SHARE (HD ANSWER MODE) ==================== */
     function calcMultiEstimate() {
         const list = getHistoryList();
         const start = Math.max(1, parseInt(document.getElementById('multi-start').value) || 1);
@@ -1682,9 +2486,7 @@ ${tagsString}`.trim();
         offscreen.width = 1080;
         offscreen.height = 1350;
         const offCtx = offscreen.getContext('2d');
-
         renderCardToCanvas(offCtx, questionObj, true);
-
         return new Promise(resolve => {
             offscreen.toBlob(resolve, 'image/jpeg', 0.98);
         });
@@ -1710,9 +2512,7 @@ ${tagsString}`.trim();
         const caption = generateMultiPostCaption(slice, start, end);
         document.getElementById('multi-caption-box').innerText = caption;
 
-        try {
-            await navigator.clipboard.writeText(caption);
-        } catch (e) {}
+        try { await navigator.clipboard.writeText(caption); } catch (e) {}
 
         alert(`⏳ कुल ${slice.length} HD इमेज तैयार हो रही हैं, कृपया कुछ सेकंड प्रतीक्षा करें...`);
 
@@ -1734,9 +2534,7 @@ ${tagsString}`.trim();
                     files: files
                 });
                 return;
-            } catch (err) {
-                console.log("Share dismissed or failed", err);
-            }
+            } catch (err) {}
         }
 
         files.forEach((f, idx) => {
@@ -1785,7 +2583,716 @@ ${tagsString}`.trim();
         }
     }
 
-    window.onload = function() {
+
+    /* ========================================================
+       C. QNA STUDIO PRO LOGIC (INDEXEDDB, 10-Q TABLE, HTML2CANVAS, PDF)
+       ======================================================== */
+    let parsedQAData = [];
+    let currentMeta = { 
+        subject: 'History', 
+        subTopic: 'Ancient India', 
+        part: 'Part 1', 
+        caption: '',
+        hook: '🔥 90% Aspirants Fail In Q7'
+    };
+    let currentSubjectFilter = 'History';
+    let autoSaveTimer = null;
+    let isChallengeMode = true;
+
+    const pastelRowColors = [
+        '#ffffff', '#f8fafc', '#f0fdf4', '#fefce8', '#eff6ff',
+        '#faf5ff', '#fff7ed', '#f0fdfa', '#fdf2f8', '#fffbeb'
+    ];
+
+    const questionWords = new Set([
+        'what', 'where', 'when', 'who', 'whom', 'whose', 'which', 'why', 'how', 'name',
+        'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
+        'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
+        'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
+    ]);
+
+    const stopWords = new Set([
+        'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'in', 'of', 'for', 'to', 'from',
+        'by', 'with', 'was', 'were', 'has', 'had', 'been', 'be', 'are', 'this', 'that', 'these', 'those'
+    ]);
+
+    const DB_NAME = 'AoneNotesDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'aoneQuestionSets';
+
+    function initDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            request.onupgradeneeded = function (e) {
+                const db = e.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                    store.createIndex('subject', 'subject', { unique: false });
+                }
+            };
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    async function dbGetAll() {
+        const db = await initDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readonly');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.getAll();
+            req.onsuccess = () => resolve(req.result || []);
+            req.onerror = () => reject(req.error);
+        });
+    }
+
+    async function dbPut(item) {
+        const db = await initDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.put(item);
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    }
+
+    async function dbDelete(id) {
+        const db = await initDB();
+        return new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE_NAME, 'readwrite');
+            const store = tx.objectStore(STORE_NAME);
+            const req = store.delete(id);
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    }
+
+    async function migrateOldLocalStorage() {
+        try {
+            const oldData = localStorage.getItem('aone_notes_db_v1');
+            if (oldData) {
+                const parsed = JSON.parse(oldData);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    for (const item of parsed) {
+                        await dbPut(item);
+                    }
+                    localStorage.removeItem('aone_notes_db_v1');
+                }
+            }
+        } catch (e) {
+            console.warn("Storage Migration Note:", e);
+        }
+    }
+
+    const SETTINGS_KEY = 'aone_notes_typography_settings';
+
+    function saveTypographySettings() {
+        const settings = {
+            fontFamily: document.getElementById('selFontFamily').value,
+            qWeight: document.getElementById('selQWeight').value,
+            titleSize: document.getElementById('rngTitleSize').value,
+            qSize: document.getElementById('rngQSize').value,
+            aSize: document.getElementById('rngASize').value
+        };
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    }
+
+    function loadTypographySettings() {
+        const raw = localStorage.getItem(SETTINGS_KEY);
+        if (!raw) return;
+        try {
+            const s = JSON.parse(raw);
+            if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
+            if (s.qWeight) document.getElementById('selQWeight').value = s.qWeight;
+            if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
+            if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
+            if (s.aSize) document.getElementById('rngASize').value = s.aSize;
+        } catch (e) {
+            console.warn("Settings load error:", e);
+        }
+    }
+
+    function applyTypography(shouldSave = false) {
+        const selectedFont = document.getElementById('selFontFamily').value;
+        const qWeight = document.getElementById('selQWeight').value;
+        const titleSize = document.getElementById('rngTitleSize').value;
+        const qSize = document.getElementById('rngQSize').value;
+        const aSize = document.getElementById('rngASize').value;
+
+        document.getElementById('lblTitleSize').innerText = titleSize + 'px';
+        document.getElementById('lblQSize').innerText = qSize + 'px';
+        document.getElementById('lblASize').innerText = aSize + 'px';
+
+        const card = document.getElementById('capture-card');
+        card.style.fontFamily = selectedFont;
+
+        document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+        document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
+        document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
+
+        document.querySelectorAll('.td-q').forEach(el => {
+            el.style.fontSize = qSize + 'px';
+            el.style.fontWeight = qWeight;
+        });
+
+        document.querySelectorAll('.td-a').forEach(el => {
+            el.style.fontSize = aSize + 'px';
+        });
+
+        if (shouldSave) {
+            saveTypographySettings();
+            saveToDatabase(false);
+        }
+    }
+
+    function updateCustomHook(val) {
+        if (val !== 'custom') {
+            document.getElementById('txtCustomHook').value = val;
+        }
+        applyHookDirectly();
+    }
+
+    function applyHookDirectly() {
+        const val = document.getElementById('txtCustomHook').value.trim() || '🔥 90% Aspirants Fail In Q7';
+        currentMeta.hook = val;
+        document.getElementById('outHookBadge').innerText = val;
+        saveToDatabase(false);
+    }
+
+    function toggleChallengeMode() {
+        isChallengeMode = document.getElementById('chkChallengeMode').checked;
+        renderCard();
+        saveToDatabase(false);
+        notify(isChallengeMode ? "🎯 Q10 Challenge Mode Activated!" : "Standard Q10 Mode Activated!");
+    }
+
+    async function copyViralCaption() {
+        const caption = document.getElementById('fbCaption').value || currentMeta.caption;
+        try {
+            await navigator.clipboard.writeText(caption);
+            notify("📋 Caption Copied to Clipboard!");
+        } catch (e) {
+            notify("❌ Failed to copy caption.");
+        }
+    }
+
+    async function onlyPasteClipboard() {
+        try {
+            if (navigator.clipboard && navigator.clipboard.readText) {
+                const text = await navigator.clipboard.readText();
+                if (text && text.trim().length > 0) {
+                    document.getElementById('smartInput').value = text;
+                    generateCards();
+                    return;
+                }
+            }
+        } catch (err) {
+            console.warn("Clipboard access denied", err);
+        }
+        notify("💡 Paste text manually, then tap 'Generate / Run'");
+        document.getElementById('smartInput').focus();
+    }
+
+    function generateCards() {
+        try {
+            parseSmartInput();
+            saveToDatabase(false);
+            notify("⚡ 10 Questions Generated & Auto-Saved!");
+        } catch (e) {
+            alert("Parsing Error: " + e.message);
+        }
+    }
+
+    function autoSaveHandler() {
+        const ind = document.getElementById('autoSaveIndicator');
+        if (ind) ind.innerText = "⏳ Saving...";
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(() => {
+            parseSmartInput();
+            saveToDatabase(false);
+            if (ind) ind.innerText = "● Auto-Saved";
+        }, 1000);
+    }
+
+    function cleanLine(str) {
+        return str.replace(/\u00A0/g, ' ')
+                  .replace(/[\u200B-\u200D\uFEFF]/g, '')
+                  .trim();
+    }
+
+    function parseSmartInput() {
+        let raw = document.getElementById('smartInput').value || '';
+        if (!raw.trim()) return;
+
+        const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
+        parsedQAData = [];
+        let captionLines = [];
+        let currentQ = null;
+        let headerParsed = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+
+            if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
+                if (line.includes('🎯') || line.toLowerCase().includes('part') || line.includes('भाग') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
+                    headerParsed = true;
+                    const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
+                    const parts = clean.split(',').map(s => s.trim());
+                    
+                    if (parts[0]) {
+                        const low = parts[0].toLowerCase();
+                        if (low.includes('history') || low.includes('इतिहास')) currentMeta.subject = 'History';
+                        else if (low.includes('geography') || low.includes('भूगोल')) currentMeta.subject = 'Geography';
+                        else if (low.includes('polity') || low.includes('राज')) currentMeta.subject = 'Polity';
+                        else if (low.includes('science') || low.includes('विज्ञान')) currentMeta.subject = 'Science';
+                        else if (low.includes('eco') || low.includes('अर्थ')) currentMeta.subject = 'Economics';
+                        else currentMeta.subject = parts[0];
+                    }
+                    if (parts[1]) currentMeta.subTopic = parts[1];
+                    if (parts[2]) currentMeta.part = parts[2];
+
+                    document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part})`;
+                    continue;
+                }
+            }
+
+            const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
+            if (qStartMatch) {
+                if (currentQ) {
+                    parsedQAData.push(currentQ);
+                }
+                const num = qStartMatch[1];
+                let restOfLine = qStartMatch[2].trim();
+
+                const qMarkIdx = restOfLine.indexOf('?');
+                if (qMarkIdx !== -1) {
+                    const actualQ = restOfLine.substring(0, qMarkIdx).trim();
+                    const afterQ = restOfLine.substring(qMarkIdx + 1).trim();
+                    
+                    const sameLineAnsMatch = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
+                    if (sameLineAnsMatch) {
+                        parsedQAData.push({ num: num, q: actualQ, a: sameLineAnsMatch[1].trim() });
+                        currentQ = null;
+                        continue;
+                    } else if (afterQ.length > 0) {
+                        parsedQAData.push({ num: num, q: actualQ, a: afterQ });
+                        currentQ = null;
+                        continue;
+                    } else {
+                        currentQ = { num: num, q: actualQ, a: '' };
+                        continue;
+                    }
+                } else {
+                    currentQ = { num: num, q: restOfLine, a: '' };
+                    continue;
+                }
+            }
+
+            const ansMatch = line.match(/^(?:Ans|Answer|उत्तर|उ\.?)[\:\-\s]*(.*)/i);
+            if (ansMatch) {
+                const ansText = ansMatch[1].trim();
+                if (currentQ) {
+                    currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+                    currentQ.a = ansText;
+                    parsedQAData.push(currentQ);
+                    currentQ = null;
+                } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
+                    parsedQAData[parsedQAData.length - 1].a = ansText;
+                }
+                continue;
+            }
+
+            if (currentQ && !currentQ.a) {
+                const qMarkIdx = line.indexOf('?');
+                if (qMarkIdx !== -1) {
+                    currentQ.q += ' ' + line.substring(0, qMarkIdx).trim();
+                    const afterQ = line.substring(qMarkIdx + 1).trim();
+                    const inlineAns = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
+                    if (inlineAns) {
+                        currentQ.a = inlineAns[1].trim();
+                        parsedQAData.push(currentQ);
+                        currentQ = null;
+                    } else if (afterQ.length > 0) {
+                        currentQ.a = afterQ;
+                        parsedQAData.push(currentQ);
+                        currentQ = null;
+                    }
+                } else {
+                    currentQ.q += ' ' + line;
+                }
+                continue;
+            }
+
+            if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || parsedQAData.length >= 10) {
+                captionLines.push(line);
+            }
+        }
+
+        if (currentQ) {
+            currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+            parsedQAData.push(currentQ);
+        }
+
+        if (captionLines.length > 0) {
+            currentMeta.caption = captionLines.join('\n');
+            document.getElementById('fbCaption').value = currentMeta.caption;
+        }
+
+        document.getElementById('statusCounter').innerText = `📊 Loaded Questions: ${parsedQAData.length} / 10`;
+        renderCard();
+    }
+
+    function formatQuestion(qText, rowIndex) {
+        if (!qText) return '';
+        let words = qText.trim().split(/\s+/);
+        if (words.length === 0) return qText;
+
+        const candidateIndices = [];
+        words.forEach((w, idx) => {
+            const clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '').toLowerCase();
+            if (!questionWords.has(clean) && !stopWords.has(clean) && clean.length > 3) {
+                candidateIndices.push(idx);
+            }
+        });
+
+        const targetKeyIndex = candidateIndices.length > 0 ? candidateIndices[rowIndex % candidateIndices.length] : -1;
+
+        return words.map((w, wIdx) => {
+            let hasQMark = w.includes('?');
+            let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
+            let isQWord = questionWords.has(clean.toLowerCase());
+            let isKeyTarget = (wIdx === targetKeyIndex);
+
+            let styled = clean;
+            if (isQWord || isKeyTarget) {
+                styled = `<span class="word-red">${clean}</span>`;
+            }
+
+            if (hasQMark) styled += `<span class="q-mark">?</span>`;
+            return styled;
+        }).join(' ') + `<span class="q-mark">?</span>`;
+    }
+
+    function formatAnswer(aText, isTenthItem) {
+        if (isTenthItem && isChallengeMode) {
+            return `<span class="ans-challenge">💬 Comment your answer 👇</span>`;
+        }
+
+        if (!aText) return '';
+        let text = aText.trim();
+
+        if (text.includes('(') && text.includes(')')) {
+            return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
+                let res = '';
+                if (p1) res += `<span class="ans-green">${p1}</span>`;
+                if (p2) res += `<span class="ans-maroon">${p2}</span>`;
+                if (p3) res += `<span class="ans-green">${p3}</span>`;
+                return res;
+            });
+        }
+
+        if (text.includes(',')) {
+            let idx = text.indexOf(',');
+            let before = text.substring(0, idx);
+            let after = text.substring(idx);
+            return `<span class="ans-green">${before}</span><span class="ans-maroon">${after}</span>`;
+        }
+
+        return `<span class="ans-green">${text}</span>`;
+    }
+
+    function renderCard() {
+        document.getElementById('outSubject').innerText = currentMeta.subject;
+        document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
+        document.getElementById('outHookBadge').innerText = currentMeta.hook || '🔥 90% Aspirants Fail In Q7';
+        
+        const partElem = document.getElementById('outPart');
+        if (currentMeta.part) {
+            partElem.innerText = currentMeta.part;
+            partElem.style.display = 'flex';
+        } else {
+            partElem.style.display = 'none';
+        }
+
+        const tbody = document.getElementById('qaBody');
+        tbody.innerHTML = '';
+
+        const displayList = parsedQAData.slice(0, 10);
+
+        displayList.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            tr.style.backgroundColor = pastelRowColors[index % pastelRowColors.length];
+
+            const tdQ = document.createElement('td');
+            tdQ.className = 'td-q';
+            
+            const rawNum = item.num ? item.num : (index + 1);
+            const cleanNum = String(rawNum).replace(/\.$/, '');
+
+            tdQ.innerHTML = `
+                <div class="q-wrap">
+                    <span class="q-num">${cleanNum}</span>
+                    <div class="q-text">${formatQuestion(item.q, index)}</div>
+                </div>
+            `;
+
+            const tdA = document.createElement('td');
+            tdA.className = 'td-a';
+            tdA.innerHTML = formatAnswer(item.a, index === 9);
+
+            tr.appendChild(tdQ);
+            tr.appendChild(tdA);
+            tbody.appendChild(tr);
+        });
+
+        applyTypography(false);
+        updatePreviewScale();
+    }
+
+    function updatePreviewScale() {
+        const viewport = document.getElementById('previewViewport');
+        const card = document.getElementById('capture-card');
+        if (!viewport || !card) return;
+
+        const containerWidth = viewport.parentElement.clientWidth;
+        const scale = containerWidth / 1080;
+        
+        card.style.transform = `scale(${scale})`;
+        viewport.style.height = `${1350 * scale}px`;
+    }
+
+    window.addEventListener('resize', updatePreviewScale);
+
+    async function getCardCanvas() {
+        const card = document.getElementById('capture-card');
+        const oldTransform = card.style.transform;
+        card.style.transform = 'none';
+
+        const canvas = await html2canvas(card, {
+            width: 1080,
+            height: 1350,
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false
+        });
+
+        card.style.transform = oldTransform;
+        return canvas;
+    }
+
+    async function downloadQnaHDImage() {
+        notify("⏳ Generating HD Image...");
+        const canvas = await getCardCanvas();
+        const link = document.createElement('a');
+        link.download = `A_one_Notes_${currentMeta.subject}_${currentMeta.part}.png`;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+        notify("📥 HD Image Downloaded!");
+    }
+
+    async function shareToFacebook() {
+        const caption = document.getElementById('fbCaption').value || currentMeta.caption;
+        try { await navigator.clipboard.writeText(caption); } catch (e) {}
+
+        notify("⏳ Sharing post...");
+        const canvas = await getCardCanvas();
+
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], 'aone_notes_post.png', { type: 'image/png' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: currentMeta.subject,
+                        text: caption
+                    });
+                    notify("🚀 Share dialog opened!");
+                    return;
+                } catch (err) {}
+            }
+
+            const link = document.createElement('a');
+            link.download = 'aone_notes_post.png';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            window.open('https://www.facebook.com/', '_blank');
+            notify("📋 Caption copied! Paste it on Facebook.");
+        }, 'image/png');
+    }
+
+    async function saveToDatabase(isManual = false) {
+        if (parsedQAData.length === 0) return;
+        const db = await dbGetAll();
+        const rawVal = document.getElementById('smartInput').value;
+
+        const existing = db.find(item => 
+            item.subject === currentMeta.subject && 
+            item.subTopic === currentMeta.subTopic && 
+            item.part === currentMeta.part
+        );
+
+        const entry = {
+            id: existing ? existing.id : Date.now(),
+            subject: currentMeta.subject,
+            subTopic: currentMeta.subTopic,
+            part: currentMeta.part,
+            caption: currentMeta.caption,
+            hook: currentMeta.hook,
+            smartRaw: rawVal,
+            questions: parsedQAData.slice(0, 10),
+            isChallengeMode: isChallengeMode,
+            date: new Date().toLocaleDateString('en-US')
+        };
+
+        await dbPut(entry);
+        await renderLibrary();
+        if (isManual) notify("💾 Saved to Archive (IndexedDB)!");
+    }
+
+    async function renderLibrary() {
+        const db = await dbGetAll();
+        const container = document.getElementById('savedListContainer');
+        container.innerHTML = '';
+
+        const filtered = db.filter(item => item.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">No posts saved for ${currentSubjectFilter}.</div>`;
+            return;
+        }
+
+        filtered.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'saved-row';
+            div.innerHTML = `
+                <div><strong>${item.subTopic}</strong> (${item.part})</div>
+                <div style="display: flex; gap: 5px;">
+                    <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
+                    <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function filterBySubject(subj, btn) {
+        currentSubjectFilter = subj;
+        document.querySelectorAll('.subj-pill').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderLibrary();
+    }
+
+    async function loadItem(id) {
+        const db = await dbGetAll();
+        const item = db.find(x => x.id === id);
+        if (!item) return;
+
+        document.getElementById('smartInput').value = item.smartRaw || '';
+        currentMeta = {
+            subject: item.subject,
+            subTopic: item.subTopic,
+            part: item.part,
+            caption: item.caption,
+            hook: item.hook || '🔥 90% Aspirants Fail In Q7'
+        };
+        parsedQAData = item.questions;
+        isChallengeMode = item.isChallengeMode !== undefined ? item.isChallengeMode : true;
+        document.getElementById('chkChallengeMode').checked = isChallengeMode;
+        document.getElementById('txtCustomHook').value = currentMeta.hook;
+
+        renderCard();
+        notify(`📖 Loaded: ${item.subject} (${item.part})`);
+    }
+
+    async function deleteItem(id) {
+        await dbDelete(id);
+        await renderLibrary();
+        notify("🗑️ Post deleted from database");
+    }
+
+    async function downloadSubjectPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const all = await dbGetAll();
+        const db = all.filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+
+        if (db.length === 0) {
+            alert(`No notes saved under "${currentSubjectFilter}"!`);
+            return;
+        }
+
+        doc.setFontSize(18);
+        doc.text(`A one Notes - ${currentSubjectFilter}`, 14, 20);
+        doc.setFontSize(11);
+        doc.text(`10 Question Sets & Answer Key`, 14, 28);
+        doc.line(14, 32, 196, 32);
+
+        let yPos = 40;
+        db.forEach((set) => {
+            if (yPos > 260) { doc.addPage(); yPos = 20; }
+            doc.setFontSize(13);
+            doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
+            yPos += 8;
+
+            set.questions.forEach((qa) => {
+                if (yPos > 275) { doc.addPage(); yPos = 20; }
+                doc.setFontSize(10);
+                doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
+                yPos += 5;
+                doc.text(`Ans: ${qa.a}`, 16, yPos);
+                yPos += 7;
+            });
+            yPos += 6;
+        });
+
+        doc.save(`A_one_Notes_${currentSubjectFilter}.pdf`);
+        notify("📄 PDF Downloaded!");
+    }
+
+    async function exportJSON() {
+        const db = await dbGetAll();
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+        const a = document.createElement('a');
+        a.href = dataStr;
+        a.download = `A_one_Notes_Backup_${Date.now()}.json`;
+        a.click();
+    }
+
+    async function importJSON(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (Array.isArray(imported)) {
+                    for (const item of imported) {
+                        await dbPut(item);
+                    }
+                    await renderLibrary();
+                    notify("📥 Backup imported successfully to IndexedDB!");
+                }
+            } catch (err) {
+                alert("Invalid JSON file!");
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function notify(msg) {
+        const toast = document.getElementById('toastMsg');
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2600);
+    }
+
+    /* ========================================================
+       D. INITIALIZATION ON WINDOW LOAD
+       ======================================================== */
+    window.onload = async () => {
+        // 1. Initialize Quiz Settings & History
         loadAllSettings();
         updateHistoryCount();
         updateCaptionText();
@@ -1793,6 +3300,13 @@ ${tagsString}`.trim();
         redrawCanvas();
         calcBatchEstimate();
         calcMultiEstimate();
+
+        // 2. Initialize QNA Settings & IndexedDB
+        loadTypographySettings();
+        await migrateOldLocalStorage();
+        parseSmartInput();
+        await renderLibrary();
+        setTimeout(updatePreviewScale, 300);
     };
 </script>
 
