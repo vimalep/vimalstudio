@@ -1,1595 +1,1800 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>A one Notes - Studio Pro Mobile (10 Qs Auto-Save)</title>
-  
-  <!-- Premium English Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
-  
-  <!-- Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Viral Quiz Studio Pro - Full Suite & Question Manager</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0b1329;
+            color: #f8fafc;
+            font-family: 'Hind', sans-serif;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-  <style>
-    :root {
-      --bg-main: #0a0f1d;
-      --bg-card: #111827;
-      --bg-input: #0f172a;
-      --border-color: #1f293d;
-      --border-focus: #38bdf8;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-    }
+        .main-wrap {
+            width: 100%;
+            max-width: 520px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+        .studio-header {
+            text-align: center;
+            font-size: 19px;
+            font-weight: 800;
+            color: #38bdf8;
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 6px;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      padding: 12px 10px 50px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            color: #818cf8;
+            font-size: 13.5px;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+        }
+        .section-divider::before, .section-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #334155;
+        }
 
-    .app-shell {
-      width: 100%;
-      max-width: 560px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+        .control-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    .app-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 4px 6px;
-    }
-    .app-header h1 {
-      font-size: 20px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 800;
-      color: #38bdf8;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .app-badge {
-      background: rgba(56, 189, 248, 0.15);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      color: #38bdf8;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-family: 'Poppins', sans-serif;
-    }
+        .row-flex {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .row-flex > div { flex: 1; }
 
-    .dark-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
+        label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 3px;
+        }
 
-    .card-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 10px;
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 7px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            font-family: inherit;
+        }
+        textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
 
-    .row-flex {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .row-flex > div { flex: 1; }
+        .answer-toggle-card {
+            background: #0f172a;
+            border: 1.5px solid #10b981;
+            border-radius: 8px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .toggle-text {
+            font-size: 13px;
+            font-weight: 800;
+            color: #34d399;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #10b981;
+        }
 
-    label {
-      font-size: 11px;
-      color: #94a3b8;
-      font-weight: bold;
-      display: block;
-      margin-bottom: 3px;
-    }
+        .btn-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .btn-action {
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-clipboard {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
 
-    input, select {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 7px;
-      color: #f8fafc;
-      padding: 7px 10px;
-      font-size: 13px;
-      outline: none;
-    }
-    input:focus, select:focus {
-      border-color: var(--border-focus);
-    }
+        .backup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 2px;
+        }
+        .btn-backup {
+            background: #334155;
+            color: #f1f5f9;
+            border: 1px solid #475569;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+        }
 
-    textarea {
-      width: 100%;
-      background: var(--bg-input);
-      border: 1.5px solid var(--border-color);
-      border-radius: 10px;
-      color: var(--text-main);
-      padding: 10px 12px;
-      font-size: 13.5px;
-      font-family: inherit;
-      outline: none;
-      height: 140px;
-      line-height: 1.45;
-      resize: vertical;
-    }
-    textarea:focus {
-      border-color: var(--border-focus);
-    }
+        /* CANVAS PREVIEW */
+        .canvas-card {
+            width: 100%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-    .status-counter {
-      font-size: 12px;
-      font-weight: 700;
-      color: #38bdf8;
-      margin-top: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+        .action-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 8px;
+        }
+        .btn-act {
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 13.5px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: white;
+        }
+        .btn-share {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 3px 10px rgba(37, 99, 235, 0.4);
+        }
+        .btn-download { background: #10b981; }
+        .btn-history-trigger {
+            background: #334155;
+            color: #f1f5f9;
+            grid-column: span 2;
+            border: 1px solid #475569;
+        }
 
-    .challenge-toggle-box {
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px dashed rgba(245, 158, 11, 0.4);
-      padding: 8px 12px;
-      border-radius: 8px;
-      margin-top: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 12px;
-      font-weight: 700;
-      color: #f59e0b;
-      cursor: pointer;
-    }
-    .challenge-toggle-box input {
-      width: auto;
-      cursor: pointer;
-    }
+        .detail-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .detail-text {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 9px;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #e2e8f0;
+            white-space: pre-wrap;
+            user-select: text;
+        }
 
-    .typo-panel {
-      background: #0b1222;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 12px;
-      margin: 10px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .typo-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .typo-row > div {
-      flex: 1;
-    }
-    .typo-label {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .typo-label span {
-      color: #38bdf8;
-      font-weight: 800;
-    }
+        /* COMPILER CARD */
+        .compiler-card {
+            background: #1e1b4b;
+            border: 1.5px solid #6366f1;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-compile {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 800;
+            cursor: pointer;
+            font-size: 13.5px;
+        }
+        .page-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0f172a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #475569;
+        }
+        .btn-nav {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-nav:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 100%;
-      height: 5px;
-      border-radius: 5px;
-      background: #1f293d;
-      outline: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #38bdf8;
-      cursor: pointer;
-    }
+        /* MODALS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 999;
+            padding: 14px;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-box {
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 490px;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .modal-header {
+            padding: 12px;
+            background: #0f172a;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-body {
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    .btn-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 6px;
-    }
-    button {
-      padding: 11px 10px;
-      border: none;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    button:active { transform: scale(0.97); }
-    
-    .btn-paste { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; }
-    .btn-run { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff; }
-    .btn-emerald { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
-    .btn-fb { background: linear-gradient(135deg, #1877f2, #0d5bbd); color: #fff; }
-    .btn-caption { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; grid-column: span 2; }
-    .btn-dark {
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      font-size: 12px;
-      padding: 8px 10px;
-    }
-
-    #toastMsg {
-      display: none;
-      position: fixed;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #10b981;
-      color: #fff;
-      padding: 8px 18px;
-      border-radius: 30px;
-      font-size: 12.5px;
-      font-weight: 700;
-      z-index: 99999;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      white-space: nowrap;
-    }
-
-    .preview-viewport-wrapper {
-      width: 100%;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      border: 1px solid #1f293d;
-    }
-    #previewViewport {
-      width: 100%;
-      position: relative;
-    }
-
-    #capture-card {
-      width: 1080px;
-      height: 1350px;
-      min-width: 1080px;
-      min-height: 1350px;
-      max-width: 1080px;
-      max-height: 1350px;
-      background: #ffffff;
-      padding: 24px 32px 20px 32px;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform-origin: top left;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .top-header-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 52px;
-      margin-bottom: 6px;
-    }
-    .top-line-behind {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
-      height: 2.5px;
-      background: #dc2626;
-      z-index: 1;
-      transform: translateY(-50%);
-    }
-    .top-logo {
-      position: relative;
-      z-index: 2;
-      background: #ffffff;
-      padding: 2px 20px;
-      border: 3px solid #dc2626;
-      border-radius: 40px;
-      display: inline-flex;
-      align-items: center;
-    }
-    .top-logo .logo-red {
-      color: #dc2626;
-      font-weight: 900;
-      font-size: 26px;
-      font-family: 'Poppins', sans-serif;
-    }
-    .top-logo .logo-black {
-      color: #0f172a;
-      font-weight: 900;
-      font-size: 26px;
-      font-family: 'Poppins', sans-serif;
-      margin-left: 6px;
-    }
-    
-    .top-hook-badge {
-      position: relative;
-      z-index: 2;
-      background: #ffffff;
-      padding: 4px 16px;
-      font-size: 20px;
-      font-weight: 900;
-      color: #dc2626;
-      border: 2px dashed #dc2626;
-      border-radius: 30px;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.12);
-      letter-spacing: 0.3px;
-    }
-
-    .top-follow-pill {
-      position: relative;
-      z-index: 2;
-      background: #dc2626;
-      color: #ffffff;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 6px 22px;
-      border-radius: 40px;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .title-banner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 6px;
-    }
-    .title-pill {
-      display: inline-flex;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-      align-items: stretch;
-    }
-    .title-main {
-      background: #dc2626;
-      color: #ffffff;
-      font-size: 32px;
-      font-weight: 800;
-      padding: 4px 28px;
-      display: flex;
-      align-items: center;
-      text-transform: uppercase;
-    }
-    .title-sub {
-      background: #15803d;
-      color: #ffffff;
-      font-size: 24px;
-      font-weight: 700;
-      padding: 4px 20px;
-      display: flex;
-      align-items: center;
-    }
-    .title-part {
-      background: #1e3a8a;
-      color: #ffffff;
-      font-size: 22px;
-      font-weight: 800;
-      padding: 4px 20px;
-      display: flex;
-      align-items: center;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .table-container {
-      flex: 1;
-      position: relative;
-      border: 2px solid #86efac;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-    }
-    .watermark {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-18deg);
-      font-size: 90px;
-      font-weight: 900;
-      color: rgba(220, 38, 38, 0.05);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      z-index: 1;
-      text-transform: uppercase;
-      font-family: 'Poppins', sans-serif;
-    }
-    table {
-      width: 100%;
-      height: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      position: relative;
-      z-index: 2;
-    }
-    thead th {
-      background: #f0fdf4;
-      padding: 4px 12px;
-      font-size: 24px;
-      font-weight: 800;
-      border-bottom: 2px solid #86efac;
-      height: 42px;
-    }
-    
-    thead th.th-q, tbody td.td-q {
-      width: 68% !important;
-      border-right: 2px solid #86efac;
-      text-align: left;
-    }
-    thead th.th-a, tbody td.td-a {
-      width: 32% !important;
-      text-align: left;
-    }
-    thead th.th-q { color: #dc2626; }
-    thead th.th-a { color: #15803d; }
-
-    tbody tr {
-      border-bottom: 1.5px solid #bbf7d0;
-      height: calc((100% - 42px) / 10);
-    }
-    tbody tr:last-child {
-      border-bottom: none;
-    }
-
-    td {
-      padding: 4px 12px;
-      line-height: 1.3;
-      vertical-align: middle;
-      overflow: hidden;
-      word-break: break-word;
-    }
-    .td-q {
-      color: #0f172a;
-      font-size: 22px;
-      font-weight: 700;
-    }
-
-    /* प्रश्न और नंबर का फ्लेक्स लेआउट */
-    .q-wrap {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      width: 100%;
-    }
-    
-    /* 1. Circle Badge for Question Number */
-    .q-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      min-width: 36px;
-      border-radius: 50%;
-      background: #1d4ed8;
-      color: #ffffff;
-      font-size: 18px !important;
-      font-weight: 900;
-      line-height: 1;
-      font-family: 'Poppins', sans-serif;
-      box-shadow: 0 2px 5px rgba(29, 78, 216, 0.3);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    /* 2. Text Wrapper (नेक्स्ट लाइन नंबर के नीचे नहीं जाएगी) */
-    .q-text {
-      flex: 1;
-      min-width: 0;
-      word-break: break-word;
-    }
-
-    .word-red { color: #dc2626; font-weight: 800; }
-    .q-mark { color: #dc2626; font-weight: 900; }
-    .td-a {
-      font-size: 22px;
-      font-weight: 700;
-    }
-    .ans-green { color: #15803d; font-weight: 700; }
-    .ans-maroon { color: #800000; font-weight: 800; }
-    
-    .ans-challenge {
-      background: #fef3c7;
-      border: 1.5px dashed #d97706;
-      color: #b45309;
-      font-size: 17px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 6px;
-      display: inline-block;
-    }
-
-    .footer-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 48px;
-      margin-top: 6px;
-    }
-    .footer-line-behind {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
-      height: 2.5px;
-      background: #dc2626;
-      z-index: 1;
-      transform: translateY(-50%);
-    }
-    .footer-brand {
-      position: relative;
-      z-index: 2;
-      background: #ffffff;
-      padding: 0 14px 0 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .footer-book-icon { font-size: 26px; }
-    .footer-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 24px;
-      font-weight: 900;
-    }
-    .footer-title .f-red { color: #dc2626; }
-    .footer-title .f-black { color: #0f172a; }
-
-    .footer-follow-btn {
-      position: relative;
-      z-index: 2;
-      background: #dc2626;
-      color: #ffffff;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 6px 20px;
-      border-radius: 40px;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .subject-pill-row {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      margin-bottom: 8px;
-    }
-    .subj-pill {
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      background: #1e293b;
-      color: #94a3b8;
-      border: 1px solid #334155;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-    .subj-pill.active {
-      background: #dc2626;
-      color: #fff;
-      border-color: #dc2626;
-    }
-    .library-list {
-      max-height: 140px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .saved-row {
-      background: #0f172a;
-      border: 1px solid #1e293b;
-      padding: 7px 10px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12.5px;
-    }
-    .btn-xs {
-      padding: 3px 7px;
-      font-size: 11px;
-      border-radius: 5px;
-    }
-  </style>
+        .h-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .h-item-title { font-size: 13px; font-weight: 800; color: #38bdf8; }
+        .h-item-sub { font-size: 11.5px; color: #10b981; }
+        .h-item-exp { font-size: 11px; color: #94a3b8; line-height: 1.4; }
+        
+        .h-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .btn-crud {
+            padding: 5px 9px;
+            font-size: 11px;
+            font-weight: 700;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .btn-crud-load { background: #0284c7; }
+        .btn-crud-edit { background: #d97706; }
+        .btn-crud-del { background: #dc2626; }
+        .btn-add-new {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 9px;
+            border-radius: 7px;
+            font-weight: 800;
+            font-size: 12.5px;
+            cursor: pointer;
+            margin-bottom: 6px;
+        }
+    </style>
 </head>
 <body>
 
-<div id="toastMsg"></div>
+<div class="main-wrap">
+    <div class="studio-header">⚡ Viral Quiz Card Studio Pro & Sheet Compiler</div>
 
-<div class="app-shell">
-
-  <div class="app-header">
-    <h1>⚡ A one Notes Studio</h1>
-    <span class="app-badge">10 Qs ULTRA VIRAL</span>
-  </div>
-
-  <!-- MANUAL SMART PASTE CARD -->
-  <div class="dark-card">
-    <div class="card-title">
-      <span>📝 Raw Content (Smart Paste):</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">Part 1 Detected</span>
-    </div>
-
-    <!-- VIRAL HOOK SELECTOR -->
-    <div class="row-flex" style="margin-bottom: 10px;">
-      <div style="flex: 1.2;">
-        <label>🔥 Viral Header Hook:</label>
-        <select id="selViralHook" onchange="updateCustomHook(this.value)">
-          <option value="🔥 90% Aspirants Fail In Q7" selected>🔥 90% Aspirants Fail In Q7</option>
-          <option value="🎯 Top 10 Repeated Questions">🎯 Top 10 Repeated Questions</option>
-          <option value="⚡ Only Real Aspirants Score 10/10">⚡ Only Real Aspirants Score 10/10</option>
-          <option value="🧠 Daily GK Challenge: Test Yourself">🧠 Daily GK Challenge: Test Yourself</option>
-          <option value="custom">✏️ Custom Hook (Type below)...</option>
-        </select>
-      </div>
-      <div style="flex: 1;">
-        <label>Hook Text:</label>
-        <input type="text" id="txtCustomHook" value="🔥 90% Aspirants Fail In Q7" oninput="applyHookDirectly()">
-      </div>
-    </div>
-    
-    <textarea id="smartInput" placeholder="Paste 10 questions here..." oninput="autoSaveHandler()">🎯 History, Ancient India, Part 1
-1. Which was the first site discovered in the Indus Valley Civilization?
-Ans: Harappa
-2. Who was the founder of the Maurya Empire?
-Ans: Chandragupta Maurya
-3. The famous Gayatri Mantra is found in which Veda?
-Ans: Rigveda
-4. At which place did Gautama Buddha attain enlightenment?
-Ans: Bodh Gaya
-5. Who is known as the 'Napoleon of India'?
-Ans: Samudragupta
-6. Which ruler convened the Fourth Buddhist Council in Kashmir?
-Ans: Kanishka
-7. Who was the author of the famous book 'Arthashastra'?
-Ans: Chanakya (Kautilya)
-8. Which Indus Valley site is famous for its dockyard?
-Ans: Lothal
-9. Who was the court poet of King Harsha and author of 'Harshacharita'?
-Ans: Banabhatta
-10. Who was the 24th Tirthankara of Jainism?
-Ans: Mahavira
-How many did you get right out of 10? Drop your score in the comments and share this with your fellow aspirants!
-#HistoryGK</textarea>
-
-    <div class="status-counter">
-      <span id="statusCounter">📊 Loaded Questions: 10 / 10</span>
-      <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
-    </div>
-
-    <!-- VIRAL CHALLENGE TOGGLE -->
-    <label class="challenge-toggle-box" for="chkChallengeMode">
-      <span>🎯 Q10 Comment Challenge Mode (Boosts Viral Reach)</span>
-      <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
-    </label>
-
-    <!-- Typography Controls -->
-    <div class="typo-panel">
-      <div class="typo-row">
+    <!-- ==================== SECTION 1: SINGLE CARD STUDIO ==================== -->
+    <div class="control-box">
         <div>
-          <div class="typo-label">Font Family:</div>
-          <select id="selFontFamily" onchange="applyTypography(true)">
-            <option value="'Poppins', sans-serif" selected>Poppins (Clean & Bold)</option>
-            <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
-            <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
-            <option value="'Roboto', sans-serif">Roboto (Classic)</option>
-            <option value="'Merriweather', serif">Merriweather (Editorial)</option>
-          </select>
+            <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
+            <textarea id="raw-paste-box">🏛️ POLITY GK QUIZ 🧠
+Q.169 संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️
+A) डॉ. राजेंद्र प्रसाद 📜
+B) डॉ. भीमराव अंबेडकर 🇮🇳
+C) जवाहरलाल नेहरू 🏛️
+D) सरदार वल्लभभाई पटेल 🛡️
+👇 1 Second में सही उत्तर Comment करें! ⚡
+❤️ Like | ➕ Follow 🎯
+Caption: संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀
+#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity
+Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳</textarea>
         </div>
-        <div>
-          <div class="typo-label">Question Boldness:</div>
-          <select id="selQWeight" onchange="applyTypography(true)">
-            <option value="700" selected>Bold (700)</option>
-            <option value="800">Extra Bold (800)</option>
-            <option value="900">Black (900)</option>
-            <option value="600">Semi Bold (600)</option>
-          </select>
+
+        <div class="btn-action-grid">
+            <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
+                <span>📋 1-Click Paste & Run</span>
+            </button>
+            <button class="btn-action" onclick="generateFromRawText()">
+                <span>✨ Generate Single Card</span>
+            </button>
         </div>
-      </div>
 
-      <div class="typo-row">
-        <div>
-          <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
-          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography(true)">
-        </div>
-        <div>
-          <div class="typo-label">Ques Size: <span id="lblQSize">22px</span></div>
-          <input type="range" id="rngQSize" min="16" max="36" value="22" oninput="applyTypography(true)">
-        </div>
-        <div>
-          <div class="typo-label">Ans Size: <span id="lblASize">22px</span></div>
-          <input type="range" id="rngASize" min="16" max="36" value="22" oninput="applyTypography(true)">
-        </div>
-      </div>
-    </div>
-
-    <!-- Hidden Caption for FB -->
-    <input type="hidden" id="fbCaption" value="">
-
-    <!-- Actions -->
-    <div class="btn-grid">
-      <button class="btn-caption" onclick="copyViralCaption()">📋 Copy FB Viral Caption</button>
-      <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
-      <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
-      <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
-      <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to FB</button>
-    </div>
-  </div>
-
-  <!-- LIVE PREVIEW -->
-  <div class="dark-card" style="padding: 10px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-      <div class="card-title" style="margin:0;">📱 Live Mobile Preview</div>
-      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Ratio (10 Qs Ultra)</span>
-    </div>
-
-    <div class="preview-viewport-wrapper">
-      <div id="previewViewport">
-        <div id="capture-card">
-          
-          <div class="top-header-wrap">
-            <div class="top-line-behind"></div>
-            <div class="top-logo">
-              <span class="logo-red">A one</span><span class="logo-black">Notes</span>
+        <div class="row-flex" style="margin-top: 4px;">
+            <div>
+                <label>फ़ॉन्ट स्टाइल:</label>
+                <select id="cfg-font" onchange="saveAllSettings(); redrawCanvas();">
+                    <option value="'Hind', sans-serif">Hind (साफ बोल्ड)</option>
+                    <option value="'Kalam', cursive">Kalam (आकर्षक लिखावट)</option>
+                    <option value="'Rozha One', serif">Rozha One (क्लासिक)</option>
+                    <option value="'Poppins', sans-serif">Poppins (मॉडर्न)</option>
+                </select>
             </div>
-            
-            <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
-
-            <div class="top-follow-pill">A one Notes : Follow</div>
-          </div>
-
-          <div class="title-banner">
-            <div class="title-pill">
-              <div class="title-main" id="outSubject">HISTORY</div>
-              <div class="title-sub" id="outSubTopic">( Ancient India )</div>
-              <div class="title-part" id="outPart">Part 1</div>
+            <div>
+                <label>बैकग्राउंड थीम:</label>
+                <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
+                    <option value="#ecfdf5" selected>Mint Light (Greenish)</option>
+                    <option value="#d1fae5">Soft Forest Green</option>
+                    <option value="#fef9c3">Soft Warm Yellow</option>
+                    <option value="#f8fafc">Creamy Light</option>
+                    <option value="#ffffff">Pure White</option>
+                </select>
             </div>
-          </div>
-
-          <div class="table-container">
-            <div class="watermark">A one Notes</div>
-            <table>
-              <thead>
-                <tr>
-                  <th class="th-q">Questions</th>
-                  <th class="th-a">Answers</th>
-                </tr>
-              </thead>
-              <tbody id="qaBody"></tbody>
-            </table>
-          </div>
-
-          <div class="footer-wrap">
-            <div class="footer-line-behind"></div>
-            <div class="footer-brand">
-              <span class="footer-book-icon">📖</span>
-              <div class="footer-title">
-                <span class="f-red">A one</span><span class="f-black">Notes</span>
-              </div>
-            </div>
-            <div class="footer-follow-btn">Important For All Exams</div>
-          </div>
-
         </div>
-      </div>
+
+        <div class="row-flex">
+            <div>
+                <label>प्रश्न साइज़: <span id="q-size-lbl">42</span>px</label>
+                <input type="range" id="cfg-q-size" min="30" max="64" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+            </div>
+            <div>
+                <label>ऑप्शन साइज़: <span id="opt-size-lbl">30</span>px</label>
+                <input type="range" id="cfg-opt-size" min="24" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+            </div>
+        </div>
+
+        <!-- ANSWER MODE TOGGLE -->
+        <div class="answer-toggle-card" onclick="toggleAnswerMode()">
+            <span class="toggle-text">✅ सही उत्तर पर टिक मार्क दिखाएं (Answer Mode)</span>
+            <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
+        </div>
+
+        <!-- JSON BACKUP / RESTORE -->
+        <div class="backup-grid">
+            <button class="btn-backup" onclick="exportJSONBackup()">📤 Export Backup (JSON)</button>
+            <button class="btn-backup" onclick="document.getElementById('import-file').click()">📥 Import Backup (JSON)</button>
+            <input type="file" id="import-file" style="display:none" accept=".json" onchange="importJSONBackup(event)">
+        </div>
     </div>
-  </div>
 
-  <!-- ARCHIVE (IndexedDB) -->
-  <div class="dark-card">
-    <div class="card-title">📚 Question Bank (Archive)</div>
-
-    <div class="subject-pill-row">
-      <button class="subj-pill active" onclick="filterBySubject('History', this)">History</button>
-      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
-      <button class="subj-pill" onclick="filterBySubject('Polity', this)">Polity</button>
-      <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
-      <button class="subj-pill" onclick="filterBySubject('Economics', this)">Economics</button>
+    <!-- CANVAS PREVIEW (SINGLE CARD: 1080 x 1350) -->
+    <div class="canvas-card">
+        <canvas id="quizCanvas" width="1080" height="1350"></canvas>
     </div>
 
-    <div class="library-list" id="savedListContainer"></div>
-
-    <div style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
-      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase(true)">💾 Save</button>
-      <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 PDF</button>
-      <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
-      <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; margin: 0;">
-        📥 Import <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
-      </label>
+    <!-- ACTIONS FOR SINGLE CARD -->
+    <div class="action-grid">
+        <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share Single</button>
+        <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD Single</button>
+        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 प्रश्न बैंक प्रबंधन (Add, Edit, Delete) [<span id="history-total-count">0</span>]</button>
     </div>
-  </div>
 
+    <!-- FACEBOOK POLL FORMAT COPY -->
+    <div class="detail-card" style="border-color: #8b5cf6;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📊 Facebook Poll Format (1-Click Ready):</span>
+            <button class="btn-action" style="background:#8b5cf6; padding:5px 12px; font-size:12px;" onclick="copyPollFormat()">📋 Copy Poll Text</button>
+        </div>
+        <div class="detail-text" id="fb-poll-box" style="color: #c4b5fd;">पोल फॉर्मेट यहाँ दिखाई देगा...</div>
+    </div>
+
+    <!-- PRIVATE EXPLANATION -->
+    <div class="detail-card">
+        <div class="box-title" style="color: #34d399; font-weight: bold; font-size: 12px;">💡 सही उत्तर:</div>
+        <div class="detail-text" id="private-explanation">यहाँ सही उत्तर दिखाई देगा।</div>
+    </div>
+
+    <!-- FB CAPTION BOX -->
+    <div class="detail-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Caption:</span>
+            <button class="btn-action" style="background:#0284c7; padding:5px 12px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
+        </div>
+        <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
+    </div>
+
+    <!-- ==================== SECTION 2: 10-Q MULTI-SHEET COMPILER ==================== -->
+    <div class="section-divider">
+        <span>📑 10-Question FB Feed Sheet Generator (Attractively Redesigned)</span>
+    </div>
+
+    <div class="compiler-card">
+        <div style="color:#c7d2fe; font-size:13px; font-weight:700;">
+            10 प्रश्नों की आकर्षक 2-कॉलम फ़ीड शीट (20 प्रश्न चुनने पर 2 अलग इमेज बनेंगी):
+        </div>
+        <div class="row-flex">
+            <div>
+                <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
+                <input type="number" id="batch-start" min="1" value="1" onchange="calcBatchEstimate()">
+            </div>
+            <div>
+                <label>कुल प्रश्न चुनें (Count):</label>
+                <input type="number" id="batch-count" min="1" max="100" value="10" onchange="calcBatchEstimate()">
+            </div>
+        </div>
+        <div id="batch-estimate-lbl" style="font-size:11.5px; color:#a5b4fc; font-weight:600;">
+            ℹ️ कुल इमेज बनेंगी: 1 इमेज (10 प्रश्न)
+        </div>
+        <button class="btn-compile" onclick="compileBatchFeedSheets()">🚀 आकर्षक 10-Q शीट तैयार करें (Compile HD Sheets)</button>
+    </div>
+
+    <!-- BATCH NAVIGATION -->
+    <div class="page-nav-bar" id="batch-nav" style="display:none;">
+        <button class="btn-nav" id="btn-batch-prev" onclick="navigateBatch(-1)">◀ पिछला पेज</button>
+        <span id="batch-page-indicator" style="font-size:13px; font-weight:800; color:#38bdf8;">Page 1 of 1</span>
+        <button class="btn-nav" id="btn-batch-next" onclick="navigateBatch(1)">अगला पेज ▶</button>
+    </div>
+
+    <!-- CANVAS PREVIEW (FEED SHEET: 1080 x 1350) -->
+    <div class="canvas-card" id="sheet-preview-card" style="display:none;">
+        <canvas id="sheetCanvas" width="1080" height="1350"></canvas>
+    </div>
+
+    <!-- BATCH ACTIONS -->
+    <div class="action-grid" id="batch-actions" style="display:none;">
+        <button class="btn-act btn-share" onclick="shareCurrentBatchSheet()">📲 Share Current Feed Page</button>
+        <button class="btn-act btn-download" onclick="downloadCurrentBatchSheet()">📥 Download (JPG)</button>
+        <button class="btn-act btn-history-trigger" style="background:#0891b2;" onclick="downloadAllBatchSheets()">📦 सभी पेजों को एक साथ डाउनलोड करें</button>
+    </div>
+
+    <!-- BATCH CAPTION BOX -->
+    <div class="detail-card" id="batch-caption-card" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #a78bfa; font-size: 13px;">📝 Batch Post Facebook Caption:</span>
+            <button class="btn-action" style="background:#8b5cf6; padding:4px 10px; font-size:11.5px;" onclick="copyBatchCaption()">📋 Copy Caption</button>
+        </div>
+        <div class="detail-text" id="batch-caption-box">शीट कंपाइल करने के बाद कैप्शन तैयार होगा...</div>
+    </div>
+
+    <!-- ==================== SECTION 3: MULTI-IMAGE RANGE SHARE (HD ANSWER MODE) ==================== -->
+    <div class="section-divider">
+        <span>🎯 Multiple Question Images Share (Solved Cards with Caption)</span>
+    </div>
+
+    <div class="compiler-card" style="background: #0f2744; border-color: #0284c7;">
+        <div style="color:#bae6fd; font-size:13px; font-weight:700;">
+            रेंज चुनें और सभी प्रश्नों की अलग-अलग HD इमेज सीधे Facebook पर भेजें:
+        </div>
+        <div class="row-flex">
+            <div>
+                <label>प्रारंभिक प्रश्न क्रम (Start #):</label>
+                <input type="number" id="multi-start" min="1" value="1" onchange="calcMultiEstimate()">
+            </div>
+            <div>
+                <label>अंतिम प्रश्न क्रम (End #):</label>
+                <input type="number" id="multi-end" min="1" value="5" onchange="calcMultiEstimate()">
+            </div>
+        </div>
+        <div id="multi-estimate-lbl" style="font-size:11.5px; color:#7dd3fc; font-weight:600;">
+            ℹ️ कुल HD कार्ड्स: 5 इमेज (Answer Mode Enabled)
+        </div>
+        <div class="action-grid" style="grid-template-columns: 1fr 1fr; margin-top: 4px;">
+            <button class="btn-act btn-share" style="background: linear-gradient(135deg, #0284c7, #2563eb);" onclick="shareMultiSolvedCards()">
+                🚀 Direct Share All to FB
+            </button>
+            <button class="btn-act btn-download" style="background: #059669;" onclick="downloadAllMultiSolvedCards()">
+                📥 Download All (HD)
+            </button>
+        </div>
+    </div>
+
+    <!-- MULTI CAPTION BOX -->
+    <div class="detail-card" id="multi-caption-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Multi-Post Facebook Caption (Auto Generated):</span>
+            <button class="btn-action" style="background:#0284c7; padding:4px 10px; font-size:11.5px;" onclick="copyMultiCaption()">📋 Copy Caption</button>
+        </div>
+        <div class="detail-text" id="multi-caption-box">रेंज चुनने पर यहाँ सभी प्रश्नों का कंबाइंड कैप्शन तैयार होगा...</div>
+    </div>
+</div>
+
+<!-- ==================== MODAL 1: QUESTION BANK MANAGER ==================== -->
+<div id="history-modal" class="modal-overlay" onclick="closeHistoryModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 प्रश्न बैंक प्रबंधन (Question Bank)</span>
+            <button onclick="closeHistoryModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div class="modal-body">
+            <button class="btn-add-new" onclick="openAddQuestionModal()">➕ नया प्रश्न स्वयं जोड़ें (Add New Question)</button>
+            <div id="history-items-container" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MODAL 2: ADD / EDIT QUESTION MODAL ==================== -->
+<div id="edit-modal" class="modal-overlay" onclick="closeEditModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <span id="edit-modal-title" style="font-weight: 800; color: #38bdf8; font-size: 14px;">✏️ प्रश्न संपादित करें (Edit Question)</span>
+            <button onclick="closeEditModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="edit-q-id">
+            <div>
+                <label>प्रश्न क्रमांक (Prefix - उदा. Q.170):</label>
+                <input type="text" id="edit-q-prefix">
+            </div>
+            <div>
+                <label>प्रश्न (Question Text):</label>
+                <textarea id="edit-q-text" style="min-height:60px;"></textarea>
+            </div>
+            <div class="row-flex">
+                <div>
+                    <label>विकल्प A:</label>
+                    <input type="text" id="edit-opt-a">
+                </div>
+                <div>
+                    <label>विकल्प B:</label>
+                    <input type="text" id="edit-opt-b">
+                </div>
+            </div>
+            <div class="row-flex">
+                <div>
+                    <label>विकल्प C:</label>
+                    <input type="text" id="edit-opt-c">
+                </div>
+                <div>
+                    <label>विकल्प D:</label>
+                    <input type="text" id="edit-opt-d">
+                </div>
+            </div>
+            <div>
+                <label>सही उत्तर (Correct Answer):</label>
+                <select id="edit-correct-ans">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+            <button class="btn-action" style="background:#10b981; margin-top:6px;" onclick="saveQuestionEditForm()">💾 सुरक्षित करें (Save Question)</button>
+        </div>
+    </div>
 </div>
 
 <script>
-  let parsedQAData = [];
-  let currentMeta = { 
-    subject: 'History', 
-    subTopic: 'Ancient India', 
-    part: 'Part 1', 
-    caption: '',
-    hook: '🔥 90% Aspirants Fail In Q7'
-  };
-  let currentSubjectFilter = 'History';
-  let autoSaveTimer = null;
-  let isChallengeMode = true;
+    const canvas = document.getElementById('quizCanvas');
+    const ctx = canvas.getContext('2d');
 
-  const pastelRowColors = [
-    '#ffffff', '#f8fafc', '#f0fdf4', '#fefce8', '#eff6ff',
-    '#faf5ff', '#fff7ed', '#f0fdfa', '#fdf2f8', '#fffbeb'
-  ];
+    const sheetCanvas = document.getElementById('sheetCanvas');
+    const sCtx = sheetCanvas.getContext('2d');
 
-  const questionWords = new Set([
-    'what', 'where', 'when', 'who', 'whom', 'whose', 'which', 'why', 'how', 'name',
-    'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
-    'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
-    'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
-  ]);
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V7";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V7";
 
-  const stopWords = new Set([
-    'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'in', 'of', 'for', 'to', 'from',
-    'by', 'with', 'was', 'were', 'has', 'had', 'been', 'be', 'are', 'this', 'that', 'these', 'those'
-  ]);
+    let isAnswerRevealed = false;
+    let compiledPages = [];
+    let currentBatchPageIndex = 0;
 
-  /* ==========================================================
-     1. INDEXEDDB ENGINE (असीमित स्टोरेज, नो 5MB लिमिट)
-     ========================================================== */
-  const DB_NAME = 'AoneNotesDB';
-  const DB_VERSION = 1;
-  const STORE_NAME = 'aoneQuestionSets';
-
-  function initDB() {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
-      request.onupgradeneeded = function (e) {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-          store.createIndex('subject', 'subject', { unique: false });
-        }
-      };
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-  }
-
-  async function dbGetAll() {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readonly');
-      const store = tx.objectStore(STORE_NAME);
-      const req = store.getAll();
-      req.onsuccess = () => resolve(req.result || []);
-      req.onerror = () => reject(req.error);
-    });
-  }
-
-  async function dbPut(item) {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      const req = store.put(item);
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
-    });
-  }
-
-  async function dbDelete(id) {
-    const db = await initDB();
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORE_NAME, 'readwrite');
-      const store = tx.objectStore(STORE_NAME);
-      const req = store.delete(id);
-      req.onsuccess = () => resolve(req.result);
-      req.onerror = () => reject(req.error);
-    });
-  }
-
-  // पुराने LocalStorage डेटा को IndexedDB में ऑटोमैटिक ट्रांसफर करना
-  async function migrateOldLocalStorage() {
-    try {
-      const oldData = localStorage.getItem('aone_notes_db_v1');
-      if (oldData) {
-        const parsed = JSON.parse(oldData);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          for (const item of parsed) {
-            await dbPut(item);
-          }
-          localStorage.removeItem('aone_notes_db_v1');
-        }
-      }
-    } catch (e) {
-      console.warn("Storage Migration Note:", e);
-    }
-  }
-
-  /* ==========================================================
-     2. SETTINGS MEMORY (फ़ॉन्ट साइज़ और स्टाइल्स को याद रखना)
-     ========================================================== */
-  const SETTINGS_KEY = 'aone_notes_typography_settings';
-
-  function saveTypographySettings() {
-    const settings = {
-      fontFamily: document.getElementById('selFontFamily').value,
-      qWeight: document.getElementById('selQWeight').value,
-      titleSize: document.getElementById('rngTitleSize').value,
-      qSize: document.getElementById('rngQSize').value,
-      aSize: document.getElementById('rngASize').value
+    let quizData = {
+        id: "default_169",
+        title: "🏛️ POLITY GK QUIZ 🧠",
+        qPrefix: "Q.169",
+        questionText: "संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️",
+        options: {
+            A: "डॉ. राजेंद्र प्रसाद 📜",
+            B: "डॉ. भीमराव अंबेडकर 🇮🇳",
+            C: "जवाहरलाल नेहरू 🏛️",
+            D: "सरदार वल्लभभाई पटेल 🛡️"
+        },
+        hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
+        social: "❤️ Like | ➕ Follow 🎯",
+        correctOption: "B",
+        explanation: "",
+        caption: "संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀\n#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity"
     };
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  }
 
-  function loadTypographySettings() {
-    const raw = localStorage.getItem(SETTINGS_KEY);
-    if (!raw) return;
-    try {
-      const s = JSON.parse(raw);
-      if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
-      if (s.qWeight) document.getElementById('selQWeight').value = s.qWeight;
-      if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
-      if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
-      if (s.aSize) document.getElementById('rngASize').value = s.aSize;
-    } catch (e) {
-      console.warn("Settings load error:", e);
+    function cleanString(str) {
+        if (!str) return "";
+        return str.replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g, '').trim();
     }
-  }
 
-  function applyTypography(shouldSave = false) {
-    const selectedFont = document.getElementById('selFontFamily').value;
-    const qWeight = document.getElementById('selQWeight').value;
-    const titleSize = document.getElementById('rngTitleSize').value;
-    const qSize = document.getElementById('rngQSize').value;
-    const aSize = document.getElementById('rngASize').value;
+    function cleanAndMoveEmojiToEnd(text) {
+        if (!text) return "";
+        let clean = cleanString(text).replace(/\s+/g, ' ');
+        const emojiRegex = /([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}])/gu;
+        const emojisFound = clean.match(emojiRegex);
+        const textWithoutEmojis = clean.replace(emojiRegex, '').replace(/\s+/g, ' ').trim();
 
-    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
-    document.getElementById('lblQSize').innerText = qSize + 'px';
-    document.getElementById('lblASize').innerText = aSize + 'px';
-
-    const card = document.getElementById('capture-card');
-    card.style.fontFamily = selectedFont;
-
-    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
-    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
-    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
-
-    document.querySelectorAll('.td-q').forEach(el => {
-      el.style.fontSize = qSize + 'px';
-      el.style.fontWeight = qWeight;
-    });
-
-    document.querySelectorAll('.td-a').forEach(el => {
-      el.style.fontSize = aSize + 'px';
-    });
-
-    if (shouldSave) {
-      saveTypographySettings();
-      saveToDatabase(false);
-    }
-  }
-
-  /* ==========================================================
-     3. HOOK & CHALLENGE CONTROLS
-     ========================================================== */
-  function updateCustomHook(val) {
-    if (val !== 'custom') {
-      document.getElementById('txtCustomHook').value = val;
-    }
-    applyHookDirectly();
-  }
-
-  function applyHookDirectly() {
-    const val = document.getElementById('txtCustomHook').value.trim() || '🔥 90% Aspirants Fail In Q7';
-    currentMeta.hook = val;
-    document.getElementById('outHookBadge').innerText = val;
-    saveToDatabase(false);
-  }
-
-  function toggleChallengeMode() {
-    isChallengeMode = document.getElementById('chkChallengeMode').checked;
-    renderCard();
-    saveToDatabase(false);
-    notify(isChallengeMode ? "🎯 Q10 Challenge Mode Activated!" : "Standard Q10 Mode Activated!");
-  }
-
-  async function copyViralCaption() {
-    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
-    try {
-      await navigator.clipboard.writeText(caption);
-      notify("📋 Caption Copied to Clipboard!");
-    } catch (e) {
-      notify("❌ Failed to copy caption.");
-    }
-  }
-
-  async function onlyPasteClipboard() {
-    try {
-      if (navigator.clipboard && navigator.clipboard.readText) {
-        const text = await navigator.clipboard.readText();
-        if (text && text.trim().length > 0) {
-          document.getElementById('smartInput').value = text;
-          generateCards();
-          return;
+        if (emojisFound && emojisFound.length > 0) {
+            return textWithoutEmojis + " " + emojisFound.join('');
         }
-      }
-    } catch (err) {
-      console.warn("Clipboard access denied", err);
-    }
-    notify("💡 Paste text manually, then tap 'Generate / Run'");
-    document.getElementById('smartInput').focus();
-  }
-
-  function generateCards() {
-    try {
-      parseSmartInput();
-      saveToDatabase(false);
-      notify("⚡ 10 Questions Generated & Auto-Saved!");
-    } catch (e) {
-      alert("Parsing Error: " + e.message);
-    }
-  }
-
-  function autoSaveHandler() {
-    const ind = document.getElementById('autoSaveIndicator');
-    if (ind) ind.innerText = "⏳ Saving...";
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(() => {
-      parseSmartInput();
-      saveToDatabase(false);
-      if (ind) ind.innerText = "● Auto-Saved";
-    }, 1000);
-  }
-
-  function cleanLine(str) {
-    return str.replace(/\u00A0/g, ' ')
-              .replace(/[\u200B-\u200D\uFEFF]/g, '')
-              .trim();
-  }
-
-  function parseSmartInput() {
-    let raw = document.getElementById('smartInput').value || '';
-    if (!raw.trim()) return;
-
-    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
-    parsedQAData = [];
-    let captionLines = [];
-    let currentQ = null;
-    let headerParsed = false;
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-
-      // A. Header
-      if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
-        if (line.includes('🎯') || line.toLowerCase().includes('part') || line.includes('भाग') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
-          headerParsed = true;
-          const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
-          const parts = clean.split(',').map(s => s.trim());
-          
-          if (parts[0]) {
-            const low = parts[0].toLowerCase();
-            if (low.includes('history') || low.includes('इतिहास')) currentMeta.subject = 'History';
-            else if (low.includes('geography') || low.includes('भूगोल')) currentMeta.subject = 'Geography';
-            else if (low.includes('polity') || low.includes('राज')) currentMeta.subject = 'Polity';
-            else if (low.includes('science') || low.includes('विज्ञान')) currentMeta.subject = 'Science';
-            else if (low.includes('eco') || low.includes('अर्थ')) currentMeta.subject = 'Economics';
-            else currentMeta.subject = parts[0];
-          }
-          if (parts[1]) currentMeta.subTopic = parts[1];
-          if (parts[2]) currentMeta.part = parts[2];
-
-          document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part})`;
-          continue;
-        }
-      }
-
-      // B. Question Line
-      const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
-      if (qStartMatch) {
-        if (currentQ) {
-          parsedQAData.push(currentQ);
-        }
-        const num = qStartMatch[1];
-        let restOfLine = qStartMatch[2].trim();
-
-        const qMarkIdx = restOfLine.indexOf('?');
-        if (qMarkIdx !== -1) {
-          const actualQ = restOfLine.substring(0, qMarkIdx).trim();
-          const afterQ = restOfLine.substring(qMarkIdx + 1).trim();
-          
-          const sameLineAnsMatch = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
-          if (sameLineAnsMatch) {
-            parsedQAData.push({ num: num, q: actualQ, a: sameLineAnsMatch[1].trim() });
-            currentQ = null;
-            continue;
-          } else if (afterQ.length > 0) {
-            parsedQAData.push({ num: num, q: actualQ, a: afterQ });
-            currentQ = null;
-            continue;
-          } else {
-            currentQ = { num: num, q: actualQ, a: '' };
-            continue;
-          }
-        } else {
-          currentQ = { num: num, q: restOfLine, a: '' };
-          continue;
-        }
-      }
-
-      // C. Answer Line
-      const ansMatch = line.match(/^(?:Ans|Answer|उत्तर|उ\.?)[\:\-\s]*(.*)/i);
-      if (ansMatch) {
-        const ansText = ansMatch[1].trim();
-        if (currentQ) {
-          currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
-          currentQ.a = ansText;
-          parsedQAData.push(currentQ);
-          currentQ = null;
-        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
-          parsedQAData[parsedQAData.length - 1].a = ansText;
-        }
-        continue;
-      }
-
-      // D. Multi-line continuation
-      if (currentQ && !currentQ.a) {
-        const qMarkIdx = line.indexOf('?');
-        if (qMarkIdx !== -1) {
-          currentQ.q += ' ' + line.substring(0, qMarkIdx).trim();
-          const afterQ = line.substring(qMarkIdx + 1).trim();
-          const inlineAns = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
-          if (inlineAns) {
-            currentQ.a = inlineAns[1].trim();
-            parsedQAData.push(currentQ);
-            currentQ = null;
-          } else if (afterQ.length > 0) {
-            currentQ.a = afterQ;
-            parsedQAData.push(currentQ);
-            currentQ = null;
-          }
-        } else {
-          currentQ.q += ' ' + line;
-        }
-        continue;
-      }
-
-      // E. Captions
-      if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || parsedQAData.length >= 10) {
-        captionLines.push(line);
-      }
+        return textWithoutEmojis;
     }
 
-    if (currentQ) {
-      currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
-      parsedQAData.push(currentQ);
-    }
-
-    if (captionLines.length > 0) {
-      currentMeta.caption = captionLines.join('\n');
-      document.getElementById('fbCaption').value = currentMeta.caption;
-    }
-
-    document.getElementById('statusCounter').innerText = `📊 Loaded Questions: ${parsedQAData.length} / 10`;
-
-    renderCard();
-  }
-
-  function formatQuestion(qText, rowIndex) {
-    if (!qText) return '';
-    let words = qText.trim().split(/\s+/);
-    if (words.length === 0) return qText;
-
-    const candidateIndices = [];
-    words.forEach((w, idx) => {
-      const clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '').toLowerCase();
-      if (!questionWords.has(clean) && !stopWords.has(clean) && clean.length > 3) {
-        candidateIndices.push(idx);
-      }
-    });
-
-    const targetKeyIndex = candidateIndices.length > 0 ? candidateIndices[rowIndex % candidateIndices.length] : -1;
-
-    return words.map((w, wIdx) => {
-      let hasQMark = w.includes('?');
-      let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
-
-      let isQWord = questionWords.has(clean.toLowerCase());
-      let isKeyTarget = (wIdx === targetKeyIndex);
-
-      let styled = clean;
-      if (isQWord || isKeyTarget) {
-        styled = `<span class="word-red">${clean}</span>`;
-      }
-
-      if (hasQMark) styled += `<span class="q-mark">?</span>`;
-      return styled;
-    }).join(' ') + `<span class="q-mark">?</span>`;
-  }
-
-  function formatAnswer(aText, isTenthItem) {
-    if (isTenthItem && isChallengeMode) {
-      return `<span class="ans-challenge">💬 Comment your answer 👇</span>`;
-    }
-
-    if (!aText) return '';
-    let text = aText.trim();
-
-    if (text.includes('(') && text.includes(')')) {
-      return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
-        let res = '';
-        if (p1) res += `<span class="ans-green">${p1}</span>`;
-        if (p2) res += `<span class="ans-maroon">${p2}</span>`;
-        if (p3) res += `<span class="ans-green">${p3}</span>`;
-        return res;
-      });
-    }
-
-    if (text.includes(',')) {
-      let idx = text.indexOf(',');
-      let before = text.substring(0, idx);
-      let after = text.substring(idx);
-      return `<span class="ans-green">${before}</span><span class="ans-maroon">${after}</span>`;
-    }
-
-    return `<span class="ans-green">${text}</span>`;
-  }
-
-  function renderCard() {
-    document.getElementById('outSubject').innerText = currentMeta.subject;
-    document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
-    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🔥 90% Aspirants Fail In Q7';
-    
-    const partElem = document.getElementById('outPart');
-    if (currentMeta.part) {
-      partElem.innerText = currentMeta.part;
-      partElem.style.display = 'flex';
-    } else {
-      partElem.style.display = 'none';
-    }
-
-    const tbody = document.getElementById('qaBody');
-    tbody.innerHTML = '';
-
-    const displayList = parsedQAData.slice(0, 10);
-
-    displayList.forEach((item, index) => {
-      const tr = document.createElement('tr');
-      tr.style.backgroundColor = pastelRowColors[index % pastelRowColors.length];
-
-      const tdQ = document.createElement('td');
-      tdQ.className = 'td-q';
-      
-      const rawNum = item.num ? item.num : (index + 1);
-      const cleanNum = String(rawNum).replace(/\.$/, '');
-
-      // Flex wrapper से नंबर सर्कल में रहेगा और नेक्स्ट लाइन सीधी रहेगी
-      tdQ.innerHTML = `
-        <div class="q-wrap">
-          <span class="q-num">${cleanNum}</span>
-          <div class="q-text">${formatQuestion(item.q, index)}</div>
-        </div>
-      `;
-
-      const tdA = document.createElement('td');
-      tdA.className = 'td-a';
-      tdA.innerHTML = formatAnswer(item.a, index === 9);
-
-      tr.appendChild(tdQ);
-      tr.appendChild(tdA);
-      tbody.appendChild(tr);
-    });
-
-    applyTypography(false);
-    updatePreviewScale();
-  }
-
-  function updatePreviewScale() {
-    const viewport = document.getElementById('previewViewport');
-    const card = document.getElementById('capture-card');
-    if (!viewport || !card) return;
-
-    const containerWidth = viewport.parentElement.clientWidth;
-    const scale = containerWidth / 1080;
-    
-    card.style.transform = `scale(${scale})`;
-    viewport.style.height = `${1350 * scale}px`;
-  }
-
-  window.addEventListener('resize', updatePreviewScale);
-
-  async function getCardCanvas() {
-    const card = document.getElementById('capture-card');
-    const oldTransform = card.style.transform;
-    card.style.transform = 'none';
-
-    const canvas = await html2canvas(card, {
-      width: 1080,
-      height: 1350,
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false
-    });
-
-    card.style.transform = oldTransform;
-    return canvas;
-  }
-
-  async function downloadImage() {
-    notify("⏳ Generating HD Image...");
-    const canvas = await getCardCanvas();
-    const link = document.createElement('a');
-    link.download = `A_one_Notes_${currentMeta.subject}_${currentMeta.part}.png`;
-    link.href = canvas.toDataURL('image/png', 1.0);
-    link.click();
-    notify("📥 HD Image Downloaded!");
-  }
-
-  async function shareToFacebook() {
-    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
-    
-    try {
-      await navigator.clipboard.writeText(caption);
-    } catch (e) {}
-
-    notify("⏳ Sharing post...");
-    const canvas = await getCardCanvas();
-
-    canvas.toBlob(async (blob) => {
-      const file = new File([blob], 'aone_notes_post.png', { type: 'image/png' });
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    async function pasteFromClipboardAndGenerate() {
         try {
-          await navigator.share({
-            files: [file],
-            title: currentMeta.subject,
-            text: caption
-          });
-          notify("🚀 Share dialog opened!");
-          return;
-        } catch (err) {}
-      }
-
-      const link = document.createElement('a');
-      link.download = 'aone_notes_post.png';
-      link.href = URL.createObjectURL(blob);
-      link.click();
-
-      window.open('https://www.facebook.com/', '_blank');
-      notify("📋 Caption copied! Paste it on Facebook.");
-    }, 'image/png');
-  }
-
-  /* ==========================================================
-     4. ASYNC INDEXEDDB ARCHIVE OPERATIONS
-     ========================================================== */
-  async function saveToDatabase(isManual = false) {
-    if (parsedQAData.length === 0) return;
-    const db = await dbGetAll();
-    const rawVal = document.getElementById('smartInput').value;
-
-    const existing = db.find(item => 
-      item.subject === currentMeta.subject && 
-      item.subTopic === currentMeta.subTopic && 
-      item.part === currentMeta.part
-    );
-
-    const entry = {
-      id: existing ? existing.id : Date.now(),
-      subject: currentMeta.subject,
-      subTopic: currentMeta.subTopic,
-      part: currentMeta.part,
-      caption: currentMeta.caption,
-      hook: currentMeta.hook,
-      smartRaw: rawVal,
-      questions: parsedQAData.slice(0, 10),
-      isChallengeMode: isChallengeMode,
-      date: new Date().toLocaleDateString('en-US')
-    };
-
-    await dbPut(entry);
-    await renderLibrary();
-    if (isManual) notify("💾 Saved to Archive (IndexedDB)!");
-  }
-
-  async function renderLibrary() {
-    const db = await dbGetAll();
-    const container = document.getElementById('savedListContainer');
-    container.innerHTML = '';
-
-    const filtered = db.filter(item => item.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
-
-    if (filtered.length === 0) {
-      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">No posts saved for ${currentSubjectFilter}.</div>`;
-      return;
-    }
-
-    filtered.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'saved-row';
-      div.innerHTML = `
-        <div><strong>${item.subTopic}</strong> (${item.part})</div>
-        <div style="display: flex; gap: 5px;">
-          <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
-          <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
-        </div>
-      `;
-      container.appendChild(div);
-    });
-  }
-
-  function filterBySubject(subj, btn) {
-    currentSubjectFilter = subj;
-    document.querySelectorAll('.subj-pill').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderLibrary();
-  }
-
-  async function loadItem(id) {
-    const db = await dbGetAll();
-    const item = db.find(x => x.id === id);
-    if (!item) return;
-
-    document.getElementById('smartInput').value = item.smartRaw || '';
-    currentMeta = {
-      subject: item.subject,
-      subTopic: item.subTopic,
-      part: item.part,
-      caption: item.caption,
-      hook: item.hook || '🔥 90% Aspirants Fail In Q7'
-    };
-    parsedQAData = item.questions;
-    isChallengeMode = item.isChallengeMode !== undefined ? item.isChallengeMode : true;
-    document.getElementById('chkChallengeMode').checked = isChallengeMode;
-    document.getElementById('txtCustomHook').value = currentMeta.hook;
-
-    renderCard();
-    notify(`📖 Loaded: ${item.subject} (${item.part})`);
-  }
-
-  async function deleteItem(id) {
-    await dbDelete(id);
-    await renderLibrary();
-    notify("🗑️ Post deleted from database");
-  }
-
-  async function downloadSubjectPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const all = await dbGetAll();
-    const db = all.filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
-
-    if (db.length === 0) {
-      alert(`No notes saved under "${currentSubjectFilter}"!`);
-      return;
-    }
-
-    doc.setFontSize(18);
-    doc.text(`A one Notes - ${currentSubjectFilter}`, 14, 20);
-    doc.setFontSize(11);
-    doc.text(`10 Question Sets & Answer Key`, 14, 28);
-    doc.line(14, 32, 196, 32);
-
-    let yPos = 40;
-
-    db.forEach((set) => {
-      if (yPos > 260) { doc.addPage(); yPos = 20; }
-      doc.setFontSize(13);
-      doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
-      yPos += 8;
-
-      set.questions.forEach((qa) => {
-        if (yPos > 275) { doc.addPage(); yPos = 20; }
-        doc.setFontSize(10);
-        doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
-        yPos += 5;
-        doc.text(`Ans: ${qa.a}`, 16, yPos);
-        yPos += 7;
-      });
-      yPos += 6;
-    });
-
-    doc.save(`A_one_Notes_${currentSubjectFilter}.pdf`);
-    notify("📄 PDF Downloaded!");
-  }
-
-  async function exportJSON() {
-    const db = await dbGetAll();
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
-    const a = document.createElement('a');
-    a.href = dataStr;
-    a.download = `A_one_Notes_Backup_${Date.now()}.json`;
-    a.click();
-  }
-
-  async function importJSON(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = async function(e) {
-      try {
-        const imported = JSON.parse(e.target.result);
-        if (Array.isArray(imported)) {
-          for (const item of imported) {
-            await dbPut(item);
-          }
-          await renderLibrary();
-          notify("📥 Backup imported successfully to IndexedDB!");
+            const text = await navigator.clipboard.readText();
+            if (text && text.trim().length > 0) {
+                document.getElementById('raw-paste-box').value = text;
+                generateFromRawText();
+            } else {
+                alert("क्लिपबोर्ड खाली है! कृपया पहले टेक्स्ट कॉपी करें।");
+            }
+        } catch (err) {
+            alert("क्लिपबोर्ड एक्सेस की अनुमति नहीं मिली। कृपया बॉक्स में पेस्ट करके 'Generate Single Card' दबाएं।");
         }
-      } catch (err) {
-        alert("Invalid JSON file!");
-      }
+    }
+
+    function generateFromRawText() {
+        const raw = document.getElementById('raw-paste-box').value;
+        if (!raw || !raw.trim()) {
+            alert("कृपया टेक्स्ट बॉक्स में पूरा क्विज़ टेक्स्ट पेस्ट करें!");
+            return;
+        }
+
+        const lines = raw.split(/\r?\n/).map(l => cleanString(l)).filter(l => l.length > 0);
+        if (lines.length < 4) {
+            alert("टेक्स्ट बहुत छोटा है! कृपया पूरा फ़ॉर्मेट पेस्ट करें।");
+            return;
+        }
+
+        let parsedTitle = "";
+        let parsedPrefix = "Q.";
+        let parsedQText = "";
+        let parsedOpts = { A: "", B: "", C: "", D: "" };
+        let parsedHook = "👉 Genius लोग ही Comment में उत्तर दें! 🧠";
+        let parsedSocial = "❤️ Like | ➕ Follow 🎯";
+        let parsedCaptionLines = [];
+        let parsedAns = "A";
+
+        let state = "TITLE";
+
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+
+            if (/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]/i.test(line)) {
+                state = "ANSWER";
+                let ansMatch = line.match(/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]\s*([A-Da-d])/i);
+                if (ansMatch) parsedAns = ansMatch[1].toUpperCase();
+                continue;
+            }
+
+            if (/^(?:Explanation|व्याख्या)\s*[:\-]/i.test(line)) {
+                continue; // Skip explanation
+            }
+
+            if (/^Caption\s*[:\-]/i.test(line)) {
+                state = "CAPTION";
+                let capText = line.replace(/^Caption\s*[:\-]\s*/i, '').trim();
+                if (capText) parsedCaptionLines.push(capText);
+                continue;
+            }
+
+            if (state === "TITLE") {
+                parsedTitle = line;
+                state = "QUESTION";
+                continue;
+            }
+
+            if (state === "QUESTION") {
+                let qMatch = line.match(/^(Q\.?\s*\d+[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*(.*)/i);
+                if (qMatch) {
+                    parsedPrefix = qMatch[1].trim();
+                    parsedQText = qMatch[2].trim();
+                } else {
+                    parsedQText = line;
+                }
+                state = "OPTIONS";
+                continue;
+            }
+
+            if (state === "OPTIONS") {
+                let optMatch = line.match(/^([A-Da-d])[\)\.\-]\s*(.*)/);
+                if (optMatch) {
+                    let key = optMatch[1].toUpperCase();
+                    parsedOpts[key] = cleanAndMoveEmojiToEnd(optMatch[2]);
+                    if (parsedOpts.A && parsedOpts.B && parsedOpts.C && parsedOpts.D) {
+                        state = "FOOTER";
+                    }
+                    continue;
+                }
+            }
+
+            if (state === "FOOTER") {
+                if (line.includes("👇") || line.includes("Comment")) {
+                    parsedHook = line;
+                    continue;
+                }
+                if (line.includes("Like") || line.includes("Follow")) {
+                    parsedSocial = line;
+                    continue;
+                }
+                parsedCaptionLines.push(line);
+                continue;
+            }
+
+            if (state === "CAPTION") {
+                parsedCaptionLines.push(line);
+                continue;
+            }
+        }
+
+        quizData = {
+            id: "q_" + Date.now(),
+            title: parsedTitle || "🏛️ POLITY GK QUIZ 🧠",
+            qPrefix: parsedPrefix || "Q.",
+            questionText: parsedQText,
+            options: parsedOpts,
+            hook: parsedHook,
+            social: parsedSocial,
+            correctOption: parsedAns,
+            caption: parsedCaptionLines.join("\n"),
+            explanation: ""
+        };
+
+        saveToHistory({ ...quizData, rawText: raw });
+
+        updateCaptionText();
+        updatePollFormatText();
+        saveAllSettings();
+        redrawCanvas();
+        calcBatchEstimate();
+        calcMultiEstimate();
+
+        navigator.clipboard.writeText(document.getElementById('fb-caption-box').innerText).catch(() => {});
+        alert(`🎉 ${quizData.qPrefix} तैयार हो गया है! सही उत्तर [${quizData.correctOption}] मार्क हुआ और कैप्शन क्लिपबोर्ड पर कॉपी हो गया।`);
+    }
+
+    function toggleAnswerMode() {
+        const chk = document.getElementById('chk-answer-mode');
+        chk.checked = !chk.checked;
+        onToggleAnswerChange();
+    }
+
+    function onToggleAnswerChange() {
+        isAnswerRevealed = document.getElementById('chk-answer-mode').checked;
+        updateCaptionText();
+        saveAllSettings();
+        redrawCanvas();
+    }
+
+    function updateCaptionText() {
+        let baseCaption = (quizData.caption || "").replace(/#ans_[A-Da-d]/gi, '').trim();
+
+        if (isAnswerRevealed) {
+            const correctText = quizData.options[quizData.correctOption] || "";
+            const hashMatches = baseCaption.match(/#[^\s#]+/g);
+            let tagsString = hashMatches ? hashMatches.join(" ") : "";
+            document.getElementById('fb-caption-box').innerText = 
+`✅ सही उत्तर: [विकल्प ${quizData.correctOption}] ${correctText}
+
+${tagsString}`.trim();
+        } else {
+            document.getElementById('fb-caption-box').innerText = baseCaption;
+        }
+        document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}] ${quizData.options ? (quizData.options[quizData.correctOption] || '') : ''}`;
+    }
+
+    function updatePollFormatText() {
+        const pollText = 
+`❓ Question: ${quizData.questionText}
+
+🔹 Option 1: ${quizData.options.A}
+🔹 Option 2: ${quizData.options.B}
+🔹 Option 3: ${quizData.options.C}
+🔹 Option 4: ${quizData.options.D}
+
+👉 सही उत्तर चुनें और अपना ज्ञान परखें!`;
+        document.getElementById('fb-poll-box').innerText = pollText;
+    }
+
+    function copyPollFormat() {
+        navigator.clipboard.writeText(document.getElementById('fb-poll-box').innerText).then(() => {
+            alert("📊 फेसबुक पोल टेक्स्ट क्लिपबोर्ड पर कॉपी हो गया है!");
+        });
+    }
+
+    function saveAllSettings() {
+        const prefs = {
+            fontFam: document.getElementById('cfg-font').value,
+            bgColor: document.getElementById('cfg-bg-color').value,
+            qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
+            optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
+            isAnswerMode: document.getElementById('chk-answer-mode').checked,
+            rawText: document.getElementById('raw-paste-box').value,
+            currentQuiz: quizData
+        };
+        localStorage.setItem(STORAGE_PREFS, JSON.stringify(prefs));
+    }
+
+    function loadAllSettings() {
+        const saved = localStorage.getItem(STORAGE_PREFS);
+        if (saved) {
+            try {
+                const p = JSON.parse(saved);
+                if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
+                if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
+                if (p.qSize) {
+                    document.getElementById('cfg-q-size').value = p.qSize;
+                    document.getElementById('q-size-lbl').innerText = p.qSize;
+                }
+                if (p.optSize) {
+                    document.getElementById('cfg-opt-size').value = p.optSize;
+                    document.getElementById('opt-size-lbl').innerText = p.optSize;
+                }
+                if (p.isAnswerMode !== undefined) {
+                    document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
+                    isAnswerRevealed = p.isAnswerMode;
+                }
+                if (p.rawText) document.getElementById('raw-paste-box').value = p.rawText;
+                if (p.currentQuiz) quizData = p.currentQuiz;
+            } catch(e) {}
+        }
+    }
+
+    function exportJSONBackup() {
+        const backupData = {
+            prefs: localStorage.getItem(STORAGE_PREFS),
+            history: localStorage.getItem(STORAGE_HISTORY)
+        };
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2)));
+        downloadAnchor.setAttribute("download", `QuizStudio_Backup_${new Date().toISOString().slice(0,10)}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    function importJSONBackup(event) {
+        const fileReader = new FileReader();
+        if (event.target.files[0]) {
+            fileReader.readAsText(event.target.files[0], "UTF-8");
+            fileReader.onload = (e) => {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.prefs) localStorage.setItem(STORAGE_PREFS, parsed.prefs);
+                    if (parsed.history) localStorage.setItem(STORAGE_HISTORY, parsed.history);
+                    loadAllSettings();
+                    updateCaptionText();
+                    updatePollFormatText();
+                    redrawCanvas();
+                    calcBatchEstimate();
+                    calcMultiEstimate();
+                    updateHistoryCount();
+                    alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
+                } catch (err) {
+                    alert("त्रुटि: अमान्य JSON फ़ाइल!");
+                }
+            };
+        }
+    }
+
+    /* ==================== QUESTION BANK CRUD ==================== */
+    function getHistoryList() {
+        try {
+            let hist = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+            return hist.map((item, idx) => {
+                if (!item.id) item.id = "q_" + (Date.now() + idx);
+                return item;
+            });
+        } catch(e) { return []; }
+    }
+
+    function saveHistoryList(list) {
+        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(list));
+        updateHistoryCount();
+    }
+
+    function saveToHistory(item) {
+        let history = getHistoryList();
+        history = history.filter(h => h.qPrefix !== item.qPrefix && h.id !== item.id);
+        history.unshift(item);
+        if (history.length > 250) history.pop();
+        saveHistoryList(history);
+    }
+
+    function updateHistoryCount() {
+        const list = getHistoryList();
+        document.getElementById('history-total-count').innerText = list.length;
+    }
+
+    function openHistoryModal() {
+        const modal = document.getElementById('history-modal');
+        const container = document.getElementById('history-items-container');
+        container.innerHTML = "";
+
+        const history = getHistoryList();
+        if (history.length === 0) {
+            container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई प्रश्न सहेजा नहीं गया है।</div>`;
+        } else {
+            history.forEach((h, idx) => {
+                const div = document.createElement('div');
+                div.className = "h-item";
+                div.innerHTML = `
+                    <div class="h-item-title">[#${idx+1}] ${h.qPrefix}: ${h.questionText}</div>
+                    <div class="h-item-sub">✅ उत्तर: [${h.correctOption}] ${h.options ? (h.options[h.correctOption] || '') : ''}</div>
+                    <div class="h-actions">
+                        <button class="btn-crud btn-crud-load" onclick="loadFromHistoryById('${h.id}')">👁️ लोड करें</button>
+                        <button class="btn-crud btn-crud-edit" onclick="openEditModalById('${h.id}')">✏️ एडिट</button>
+                        <button class="btn-crud btn-crud-del" onclick="deleteFromHistoryById('${h.id}')">🗑️ डिलीट</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        modal.style.display = 'flex';
+    }
+
+    function closeHistoryModal() {
+        document.getElementById('history-modal').style.display = 'none';
+    }
+
+    function loadFromHistoryById(id) {
+        const list = getHistoryList();
+        const found = list.find(q => q.id === id);
+        if (found) {
+            quizData = JSON.parse(JSON.stringify(found));
+            if (found.rawText) document.getElementById('raw-paste-box').value = found.rawText;
+            updateCaptionText();
+            updatePollFormatText();
+            redrawCanvas();
+            closeHistoryModal();
+            alert(`✅ ${quizData.qPrefix} स्टूडियो में लोड कर दिया गया है!`);
+        }
+    }
+
+    function deleteFromHistoryById(id) {
+        if (!confirm("क्या आप वाकई इस प्रश्न को डिलीट करना चाहते हैं?")) return;
+        let list = getHistoryList();
+        list = list.filter(q => q.id !== id);
+        saveHistoryList(list);
+        openHistoryModal();
+        calcBatchEstimate();
+        calcMultiEstimate();
+    }
+
+    function openAddQuestionModal() {
+        document.getElementById('edit-modal-title').innerText = "➕ नया प्रश्न जोड़ें (Add Question)";
+        document.getElementById('edit-q-id').value = "";
+        document.getElementById('edit-q-prefix').value = "Q." + (getHistoryList().length + 1);
+        document.getElementById('edit-q-text').value = "";
+        document.getElementById('edit-opt-a').value = "";
+        document.getElementById('edit-opt-b').value = "";
+        document.getElementById('edit-opt-c').value = "";
+        document.getElementById('edit-opt-d').value = "";
+        document.getElementById('edit-correct-ans').value = "A";
+
+        document.getElementById('edit-modal').style.display = 'flex';
+    }
+
+    function openEditModalById(id) {
+        const list = getHistoryList();
+        const item = list.find(q => q.id === id);
+        if (!item) return;
+
+        document.getElementById('edit-modal-title').innerText = "✏️ प्रश्न संपादित करें (Edit Question)";
+        document.getElementById('edit-q-id').value = item.id;
+        document.getElementById('edit-q-prefix').value = item.qPrefix || "Q.";
+        document.getElementById('edit-q-text').value = item.questionText || "";
+        document.getElementById('edit-opt-a').value = item.options ? (item.options.A || "") : "";
+        document.getElementById('edit-opt-b').value = item.options ? (item.options.B || "") : "";
+        document.getElementById('edit-opt-c').value = item.options ? (item.options.C || "") : "";
+        document.getElementById('edit-opt-d').value = item.options ? (item.options.D || "") : "";
+        document.getElementById('edit-correct-ans').value = item.correctOption || "A";
+
+        document.getElementById('edit-modal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+        document.getElementById('edit-modal').style.display = 'none';
+    }
+
+    function saveQuestionEditForm() {
+        const id = document.getElementById('edit-q-id').value;
+        const prefix = cleanString(document.getElementById('edit-q-prefix').value) || "Q.";
+        const qText = cleanString(document.getElementById('edit-q-text').value);
+        const optA = cleanString(document.getElementById('edit-opt-a').value);
+        const optB = cleanString(document.getElementById('edit-opt-b').value);
+        const optC = cleanString(document.getElementById('edit-opt-c').value);
+        const optD = cleanString(document.getElementById('edit-opt-d').value);
+        const ans = document.getElementById('edit-correct-ans').value;
+
+        if (!qText || !optA || !optB) {
+            alert("कृपया प्रश्न और कम से कम दो विकल्प अवश्य भरें!");
+            return;
+        }
+
+        let list = getHistoryList();
+        if (id) {
+            list = list.map(q => {
+                if (q.id === id) {
+                    return {
+                        ...q,
+                        qPrefix: prefix,
+                        questionText: qText,
+                        options: { A: optA, B: optB, C: optC, D: optD },
+                        correctOption: ans,
+                        explanation: ""
+                    };
+                }
+                return q;
+            });
+        } else {
+            const newObj = {
+                id: "q_" + Date.now(),
+                title: "🏛️ POLITY GK QUIZ 🧠",
+                qPrefix: prefix,
+                questionText: qText,
+                options: { A: optA, B: optB, C: optC, D: optD },
+                correctOption: ans,
+                explanation: "",
+                hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
+                social: "❤️ Like | ➕ Follow 🎯",
+                caption: `${qText}\n#ExamPreparation #GKQuiz`
+            };
+            list.unshift(newObj);
+        }
+
+        saveHistoryList(list);
+        closeEditModal();
+        openHistoryModal();
+        calcBatchEstimate();
+        calcMultiEstimate();
+        alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
+    }
+
+    /* ==================== SINGLE CARD DRAW ENGINE (HD) ==================== */
+    function renderCardToCanvas(targetCtx, data, isRevealed) {
+        const bgColor = document.getElementById('cfg-bg-color').value || "#ecfdf5";
+        const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
+        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
+        const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
+
+        targetCtx.clearRect(0, 0, 1080, 1350);
+
+        targetCtx.fillStyle = bgColor;
+        targetCtx.fillRect(0, 0, 1080, 1350);
+
+        const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 32;
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, "#ffffff", false);
+        targetCtx.strokeStyle = "#e2e8f0";
+        targetCtx.lineWidth = 3;
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
+
+        // Security Watermark: A one notes
+        targetCtx.save();
+        targetCtx.beginPath();
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, false);
+        targetCtx.clip();
+        targetCtx.rotate(-28 * Math.PI / 180);
+        targetCtx.fillStyle = "rgba(15, 23, 42, 0.02)";
+        targetCtx.font = "900 48px 'Poppins', sans-serif";
+        for (let x = -800; x < 1800; x += 360) {
+            for (let y = -600; y < 2000; y += 160) {
+                targetCtx.fillText("A ONE NOTES", x, y);
+            }
+        }
+        targetCtx.restore();
+
+        // Title
+        targetCtx.textAlign = "center";
+        targetCtx.textBaseline = "middle";
+        targetCtx.fillStyle = "#0f172a";
+        targetCtx.font = `900 52px ${fontFam}`;
+        targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 118);
+
+        // Capsule Badge: A one notes
+        const badgeText = "A ONE NOTES";
+        targetCtx.font = "900 24px 'Poppins', sans-serif";
+        const badgeWidth = targetCtx.measureText(badgeText).width;
+        const pillW = badgeWidth + 52;
+        const pillH = 46;
+        const pillX = (1080 - pillW) / 2;
+        const pillY = 164;
+
+        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, "#f1f5f9", false);
+        targetCtx.strokeStyle = "#cbd5e1";
+        targetCtx.lineWidth = 2;
+        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, null, true);
+
+        targetCtx.fillStyle = "#1e293b";
+        targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
+
+        // Question
+        targetCtx.textAlign = "left";
+        const qStartY = pillY + pillH + 68;
+        const qEndY = drawColorfulQuestion(targetCtx, data.qPrefix || "Q.", data.questionText || "", 95, qStartY, 890, qSize, fontFam);
+
+        // 4 Options
+        const optStartY = qEndY + 36;
+        const optGap = 124;
+        const optW = 890, optH = 94, optX = 95;
+
+        const optStyles = [
+            { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
+            { bg: "#ecfdf5", border: "#a7f3d0", badgeBg: "#059669", text: "#064e3b", label: "B" },
+            { bg: "#fffbeb", border: "#fde68a", badgeBg: "#d97706", text: "#78350f", label: "C" },
+            { bg: "#faf5ff", border: "#e9d5ff", badgeBg: "#9333ea", text: "#581c87", label: "D" }
+        ];
+
+        optStyles.forEach((st, idx) => {
+            const curY = optStartY + (idx * optGap);
+            const isCorrect = (data.correctOption === st.label);
+            let boxBg = st.bg, boxBorder = st.border, badgeBg = st.badgeBg, badgeText = st.label;
+
+            if (isRevealed && isCorrect) {
+                boxBg = "#dcfce7"; boxBorder = "#16a34a"; badgeBg = "#15803d"; badgeText = "✔";
+            }
+
+            roundRect(targetCtx, optX, curY, optW, optH, 20, boxBg, false);
+            targetCtx.strokeStyle = boxBorder;
+            targetCtx.lineWidth = (isRevealed && isCorrect) ? 4 : 2.5;
+            roundRect(targetCtx, optX, curY, optW, optH, 20, null, true);
+
+            roundRect(targetCtx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
+            targetCtx.fillStyle = "#ffffff";
+            targetCtx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
+            targetCtx.textAlign = "center";
+            targetCtx.textBaseline = "middle";
+            targetCtx.fillText(badgeText, optX + 47, curY + (optH / 2));
+
+            targetCtx.textAlign = "left";
+            targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : st.text;
+            targetCtx.font = `700 ${optSize}px ${fontFam}`;
+            const optVal = data.options ? (data.options[st.label] || "") : "";
+            targetCtx.fillText(optVal, optX + 96, curY + (optH / 2));
+        });
+
+        // Footer: No Explanation box on reveal, keeps bottom clean and balanced
+        const footerY = optStartY + (4 * optGap) + 38;
+        if (isRevealed) {
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, "#dcfce7", false);
+            targetCtx.strokeStyle = "#16a34a";
+            targetCtx.lineWidth = 2.5;
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, null, true);
+
+            targetCtx.textAlign = "center";
+            targetCtx.textBaseline = "middle";
+            targetCtx.fillStyle = "#15803d";
+            targetCtx.font = `800 32px ${fontFam}`;
+            const corrText = data.options ? (data.options[data.correctOption] || "") : "";
+            targetCtx.fillText(`✅ सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 540, footerY + (84 / 2));
+
+            targetCtx.fillStyle = "#0f172a";
+            targetCtx.font = `800 28px ${fontFam}`;
+            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
+        } else {
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, "#dcfce7", false);
+            targetCtx.strokeStyle = "#86efac";
+            targetCtx.lineWidth = 2.5;
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, null, true);
+
+            targetCtx.textAlign = "center";
+            targetCtx.textBaseline = "middle";
+            targetCtx.fillStyle = "#14532d";
+            targetCtx.font = `800 34px ${fontFam}`;
+            targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + (84 / 2));
+
+            targetCtx.fillStyle = "#0f172a";
+            targetCtx.font = `800 28px ${fontFam}`;
+            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
+        }
+    }
+
+    function redrawCanvas() {
+        renderCardToCanvas(ctx, quizData, isAnswerRevealed);
+    }
+
+    function drawColorfulQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam) {
+        ctx.textBaseline = "top";
+        ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
+        ctx.fillStyle = "#0284c7";
+        const fullPrefix = prefix + " ";
+        const prefixWidth = ctx.measureText(fullPrefix).width;
+        ctx.fillText(fullPrefix, x, y);
+
+        const highlightTokens = ["कौन-सी", "कौन-सा", "कहाँ", "किस", "किसे", "कितने", "कब", "एकमात्र", "केवल", "प्रमुख", "सबसे", "प्रथम", "नहीं", "तहत", "समान", "दृष्टि", "लंबी", "स्थलीय", "प्रसिद्ध", "शुरुआत", "वर्ष", "कौन"];
+        
+        ctx.font = `800 ${fontSize}px ${fontFam}`;
+        const words = text.split(' ');
+        let curX = x + prefixWidth;
+        let curY = y;
+        const lineH = Math.round(fontSize * 1.38);
+
+        words.forEach(word => {
+            const cleanWord = word.replace(/[?,.!"']/g, '');
+            const isHighlight = highlightTokens.some(t => cleanWord.includes(t)) || word.startsWith("'") || word.startsWith('"');
+            ctx.fillStyle = isHighlight ? "#dc2626" : "#0f172a";
+            const wordW = ctx.measureText(word + ' ').width;
+
+            if (curX + wordW > x + maxW) {
+                curX = x;
+                curY += lineH;
+            }
+
+            ctx.fillText(word + ' ', curX, curY);
+            curX += wordW;
+        });
+
+        return curY + lineH;
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+        if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+        if (stroke) ctx.stroke();
+    }
+
+    async function shareDirectly() {
+        const caption = document.getElementById('fb-caption-box').innerText;
+        canvas.toBlob(async (blob) => {
+            if (!blob) { alert("इमेज तैयार नहीं हो सकी!"); return; }
+            const file = new File([blob], `Quiz_${quizData.qPrefix}.png`, { type: 'image/png' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({ title: `Quiz ${quizData.qPrefix}`, text: caption, files: [file] });
+                } catch (err) {}
+            } else {
+                downloadImage();
+                copyCaption();
+                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड और कैप्शन कॉपी हो गया है!");
+            }
+        });
+    }
+
+    function downloadImage() {
+        const link = document.createElement('a');
+        const modePrefix = isAnswerRevealed ? "Solved_" : "";
+        link.download = `${modePrefix}Quiz_${quizData.qPrefix.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    function copyCaption() {
+        const cap = document.getElementById('fb-caption-box').innerText;
+        navigator.clipboard.writeText(cap).then(() => {
+            alert("📋 फेसबुक कैप्शन कॉपी हो गया है!");
+        });
+    }
+
+    /* ==================== 10-Q MULTI-SHEET COMPILER ==================== */
+    function calcBatchEstimate() {
+        const count = parseInt(document.getElementById('batch-count').value) || 10;
+        const pages = Math.ceil(count / 10);
+        document.getElementById('batch-estimate-lbl').innerText = `ℹ️ कुल इमेज बनेंगी: ${pages} इमेज (${count} प्रश्न)`;
+    }
+
+    function compileBatchFeedSheets() {
+        const list = getHistoryList();
+        if (list.length === 0) {
+            alert("Question Bank खाली है! पहले प्रश्न जोड़ें या पेस्ट करें।");
+            return;
+        }
+
+        const start = Math.max(0, (parseInt(document.getElementById('batch-start').value) || 1) - 1);
+        const count = parseInt(document.getElementById('batch-count').value) || 10;
+
+        const slice = list.slice(start, start + count);
+        if (slice.length === 0) {
+            alert("चयनित रेंज में कोई प्रश्न नहीं मिले!");
+            return;
+        }
+
+        compiledPages = [];
+        for (let i = 0; i < slice.length; i += 10) {
+            compiledPages.push(slice.slice(i, i + 10));
+        }
+
+        currentBatchPageIndex = 0;
+        document.getElementById('sheet-preview-card').style.display = "flex";
+        document.getElementById('batch-actions').style.display = "grid";
+        document.getElementById('batch-caption-card').style.display = "flex";
+        document.getElementById('batch-nav').style.display = compiledPages.length > 1 ? "flex" : "none";
+
+        renderBatchPage();
+        generateBatchCaptionText(slice);
+    }
+
+    function navigateBatch(delta) {
+        currentBatchPageIndex += delta;
+        currentBatchPageIndex = Math.max(0, Math.min(currentBatchPageIndex, compiledPages.length - 1));
+        renderBatchPage();
+    }
+
+    function renderBatchPage() {
+        if (!compiledPages[currentBatchPageIndex]) return;
+        document.getElementById('batch-page-indicator').innerText = `Page ${currentBatchPageIndex + 1} of ${compiledPages.length}`;
+        document.getElementById('btn-batch-prev').disabled = (currentBatchPageIndex === 0);
+        document.getElementById('btn-batch-next').disabled = (currentBatchPageIndex === compiledPages.length - 1);
+
+        const currentQuestions = compiledPages[currentBatchPageIndex];
+        draw10QFeedSheet(currentQuestions, currentBatchPageIndex + 1, compiledPages.length);
+    }
+
+    function draw10QFeedSheet(questions, pageNum, totalPages) {
+        const W = 1080;
+        const H = 1350;
+
+        sCtx.clearRect(0, 0, W, H);
+
+        sCtx.fillStyle = "#ffffff";
+        sCtx.fillRect(0, 0, W, H);
+
+        sCtx.strokeStyle = "#0f172a";
+        sCtx.lineWidth = 5;
+        sCtx.strokeRect(14, 14, W - 28, H - 28);
+
+        sCtx.strokeStyle = "#38bdf8";
+        sCtx.lineWidth = 2;
+        sCtx.strokeRect(20, 20, W - 40, H - 40);
+
+        sCtx.save();
+        sCtx.rotate(-28 * Math.PI / 180);
+        sCtx.fillStyle = "rgba(15, 23, 42, 0.02)";
+        sCtx.font = "900 42px 'Poppins', sans-serif";
+        for (let x = -600; x < 1800; x += 360) {
+            for (let y = -600; y < 2000; y += 160) {
+                sCtx.fillText("A ONE NOTES", x, y);
+            }
+        }
+        sCtx.restore();
+
+        const brandText = totalPages > 1 ? `A ONE NOTES • SPECIAL PART ${pageNum}` : "A ONE NOTES";
+        sCtx.font = "900 24px 'Poppins', sans-serif";
+        const brandW = sCtx.measureText(brandText).width;
+        const pillW = brandW + 56;
+        const pillH = 42;
+        const pillX = (W - pillW) / 2;
+        const pillY = 26;
+
+        roundRect(sCtx, pillX, pillY, pillW, pillH, 21, "#0f172a", false);
+        sCtx.strokeStyle = "#f59e0b";
+        sCtx.lineWidth = 2;
+        roundRect(sCtx, pillX, pillY, pillW, pillH, 21, null, true);
+
+        sCtx.fillStyle = "#f8fafc";
+        sCtx.textAlign = "center";
+        sCtx.textBaseline = "middle";
+        sCtx.fillText(brandText, W / 2, pillY + (pillH / 2));
+
+        sCtx.fillStyle = "#0f172a";
+        sCtx.font = "900 36px 'Hind', sans-serif";
+        sCtx.fillText("⚡ टॉप-10 अति-महत्वपूर्ण प्रश्नोत्तरी 🧠", W / 2, 94);
+
+        const tagLine = "🎯 सभी प्रश्न IAS, UPPCS, UPSSSC, SSC एवं Railway परीक्षाओं के लिए अति-महत्वपूर्ण हैं";
+        const tagBoxY = 120;
+        roundRect(sCtx, 36, tagBoxY, W - 72, 38, 10, "#eff6ff", false);
+        sCtx.strokeStyle = "#3b82f6";
+        sCtx.lineWidth = 1.6;
+        roundRect(sCtx, 36, tagBoxY, W - 72, 38, 10, null, true);
+
+        sCtx.fillStyle = "#1d4ed8";
+        sCtx.font = "800 20px 'Hind', sans-serif";
+        sCtx.fillText(tagLine, W / 2, tagBoxY + 19);
+
+        const hookY = 164;
+        roundRect(sCtx, 36, hookY, W - 72, 40, 10, "#ecfdf5", false);
+        sCtx.strokeStyle = "#10b981";
+        sCtx.lineWidth = 2;
+        roundRect(sCtx, 36, hookY, W - 72, 40, 10, null, true);
+
+        sCtx.fillStyle = "#065f46";
+        sCtx.font = "800 21px 'Hind', sans-serif";
+        sCtx.fillText("👇 10 में से 7 सही करके दिखाएं! अपनी तैयारी अभी परखें ⚡", W / 2, hookY + 20);
+
+        const colW = 496;
+        const leftX = 32;
+        const rightX = W - colW - 32;
+        const gridStartY = 212;
+        const blockH = 210;
+        const gap = 8;
+
+        questions.forEach((q, idx) => {
+            const isRight = idx >= 5;
+            const rowIdx = isRight ? (idx - 5) : idx;
+            const x = isRight ? rightX : leftX;
+            const y = gridStartY + (rowIdx * (blockH + gap));
+
+            drawBatchQuestionItem(sCtx, q, idx + 1, x, y, colW, blockH);
+        });
+
+        const footerY = H - 56;
+        roundRect(sCtx, 32, footerY, W - 64, 42, 10, "#0f172a", false);
+        sCtx.fillStyle = "#ffffff";
+        sCtx.font = "800 18px 'Hind', sans-serif";
+        sCtx.textAlign = "center";
+        sCtx.textBaseline = "middle";
+        sCtx.fillText("❤️ Like | ➕ Follow @AOneNotes | 🎯 अपने सभी सहपाठियों को शेयर करें", W / 2, footerY + 21);
+    }
+
+    function drawBatchQuestionItem(ctx, q, num, x, y, w, h) {
+        roundRect(ctx, x, y, w, h, 10, "#f8fafc", false);
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 1.4;
+        roundRect(ctx, x, y, w, h, 10, null, true);
+
+        roundRect(ctx, x, y, w, 4, 2, "#0284c7", false);
+
+        const badgeW = 34, badgeH = 22;
+        roundRect(ctx, x + 8, y + 8, badgeW, badgeH, 5, "#0284c7", false);
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "900 13px 'Poppins', sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(num < 10 ? "0" + num : num, x + 8 + (badgeW / 2), y + 8 + (badgeH / 2));
+
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "800 16.5px 'Hind', sans-serif";
+        const title = `${q.questionText}`;
+        wrapTextLines(ctx, title, x + 48, y + 8, w - 56, 20, 2);
+
+        const optW = (w - 24) / 2;
+        const optH = 26;
+        const optStartY = y + 60;
+        const keys = ["A", "B", "C", "D"];
+
+        keys.forEach((k, ki) => {
+            const isR = (ki % 2 === 1);
+            const isR2 = (ki >= 2);
+            const ox = isR ? (x + 14 + optW) : (x + 8);
+            const oy = isR2 ? (optStartY + optH + 8) : optStartY;
+            const isAns = (q.correctOption === k);
+
+            roundRect(ctx, ox, oy, optW, optH, 5, isAns ? "#dcfce7" : "#ffffff", false);
+            ctx.strokeStyle = isAns ? "#16a34a" : "#cbd5e1";
+            ctx.lineWidth = isAns ? 1.5 : 1;
+            roundRect(ctx, ox, oy, optW, optH, 5, null, true);
+
+            ctx.fillStyle = isAns ? "#15803d" : "#334155";
+            ctx.font = isAns ? "800 13.5px 'Hind', sans-serif" : "600 13px 'Hind', sans-serif";
+            const optVal = q.options ? (q.options[k] || "") : "";
+            const prefix = isAns ? `✔ ${k}) ` : `${k}) `;
+            ctx.fillText(truncateStr(ctx, prefix + optVal, optW - 10), ox + 6, oy + 4);
+        });
+
+        const ansBoxY = optStartY + (optH * 2) + 16;
+        const ansBoxH = (y + h - 10) - ansBoxY;
+
+        roundRect(ctx, x + 8, ansBoxY, w - 16, ansBoxH, 6, "#f0fdf4", false);
+        ctx.strokeStyle = "#86efac";
+        ctx.lineWidth = 1;
+        roundRect(ctx, x + 8, ansBoxY, w - 16, ansBoxH, 6, null, true);
+
+        ctx.fillStyle = "#15803d";
+        ctx.font = "800 14px 'Hind', sans-serif";
+        const correctText = q.options ? (q.options[q.correctOption] || "") : "";
+        ctx.fillText(`💡 सही उत्तर: [विकल्प ${q.correctOption}] ${correctText}`, x + 16, ansBoxY + (ansBoxH / 2) - 8);
+    }
+
+    function wrapTextLines(ctx, text, x, y, maxW, lineH, maxLines = 8) {
+        const words = (text || "").split(' ');
+        let line = '';
+        let count = 0;
+        for (let n = 0; n < words.length; n++) {
+            let test = line + words[n] + ' ';
+            let metrics = ctx.measureText(test);
+            if (metrics.width > maxW && n > 0) {
+                count++;
+                if (count >= maxLines) {
+                    ctx.fillText(line.trim() + "...", x, y);
+                    return;
+                }
+                ctx.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += lineH;
+            } else {
+                line = test;
+            }
+        }
+        ctx.fillText(line, x, y);
+    }
+
+    function truncateStr(ctx, text, maxW) {
+        if (ctx.measureText(text).width <= maxW) return text;
+        while (ctx.measureText(text + "...").width > maxW && text.length > 0) {
+            text = text.substring(0, text.length - 1);
+        }
+        return text + "...";
+    }
+
+    function generateBatchCaptionText(questions) {
+        let text = `🔥 A ONE NOTES SPECIAL TEST SERIES (टॉप ${questions.length} अति-महत्वपूर्ण प्रश्नोत्तर) 🎯\n`;
+        text += `📌 विशेष: IAS, UPPCS, UPSSSC, SSC एवं Railway परीक्षाओं के लिए विशेष संग्रह!\n\n`;
+        questions.slice(0, 10).forEach((q, i) => {
+            text += `${i + 1}. ${q.questionText}\n`;
+        });
+        if (questions.length > 10) {
+            text += `... और अन्य सभी प्रश्न ऊपर स्लाइड में देखें!\n`;
+        }
+        text += `\n✅ प्रामाणिक उत्तर इमेज में संलग्न है।\n`;
+        text += `👉 इस पोस्ट को Save करें और अपनी तैयारी मजबूत बनाएं!\n\n`;
+        text += `#AOneNotes #GKQuiz #IndianPolity #IAS #UPPCS #UPSSSC #SSC #Railway`;
+
+        document.getElementById('batch-caption-box').innerText = text;
+    }
+
+    function copyBatchCaption() {
+        navigator.clipboard.writeText(document.getElementById('batch-caption-box').innerText).then(() => {
+            alert("📋 बैच पोस्ट कैप्शन कॉपी हो गया!");
+        });
+    }
+
+    function downloadCurrentBatchSheet() {
+        const link = document.createElement('a');
+        link.download = `AOneNotes_Feed_Page_${currentBatchPageIndex + 1}.jpg`;
+        link.href = sheetCanvas.toDataURL('image/jpeg', 0.98);
+        link.click();
+    }
+
+    function downloadAllBatchSheets() {
+        if (compiledPages.length === 0) return;
+        const initialIdx = currentBatchPageIndex;
+        compiledPages.forEach((pg, idx) => {
+            currentBatchPageIndex = idx;
+            renderBatchPage();
+            const link = document.createElement('a');
+            link.download = `AOneNotes_Feed_Page_${idx + 1}.jpg`;
+            link.href = sheetCanvas.toDataURL('image/jpeg', 0.98);
+            link.click();
+        });
+        currentBatchPageIndex = initialIdx;
+        renderBatchPage();
+    }
+
+    async function shareCurrentBatchSheet() {
+        const caption = document.getElementById('batch-caption-box').innerText;
+        sheetCanvas.toBlob(async (blob) => {
+            if (!blob) return;
+            const file = new File([blob], `Quiz_Sheet_P${currentBatchPageIndex + 1}.jpg`, { type: 'image/jpeg' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({ title: "A One Notes Sheet", text: caption, files: [file] });
+                } catch (err) {}
+            } else {
+                downloadCurrentBatchSheet();
+                copyBatchCaption();
+                alert("इमेज डाउनलोड हो गई और कैप्शन कॉपी हुआ। फेसबुक पर पोस्ट करें!");
+            }
+        }, 'image/jpeg', 0.98);
+    }
+
+    /* ==================== SECTION 3: MULTI-IMAGE RANGE SHARE (HD ANSWER MODE) ==================== */
+    function calcMultiEstimate() {
+        const list = getHistoryList();
+        const start = Math.max(1, parseInt(document.getElementById('multi-start').value) || 1);
+        let end = parseInt(document.getElementById('multi-end').value) || start;
+        if (end < start) end = start;
+
+        const count = Math.max(0, Math.min(list.length, end) - start + 1);
+        document.getElementById('multi-estimate-lbl').innerText = `ℹ️ कुल HD कार्ड्स: ${count} इमेज (Answer Mode Enabled)`;
+
+        const slice = list.slice(start - 1, end);
+        document.getElementById('multi-caption-box').innerText = generateMultiPostCaption(slice, start, end);
+    }
+
+    function generateMultiPostCaption(questions, startNum, endNum) {
+        if (!questions || questions.length === 0) {
+            return "रेंज चुनने पर यहाँ सभी प्रश्नों का कंबाइंड कैप्शन तैयार होगा...";
+        }
+
+        let cap = `🔥 A ONE NOTES SPECIAL SOLVED QUIZ SERIES [Q.${startNum} से Q.${endNum}] 🎯\n`;
+        cap += `📌 सभी प्रतियोगी परीक्षाओं (IAS, PCS, UPSSSC, SSC, Railway) के लिए अति-महत्वपूर्ण प्रश्नोत्तर!\n\n`;
+
+        questions.forEach((q, i) => {
+            cap += `${startNum + i}. ${q.questionText}\n`;
+        });
+
+        cap += `\n✅ सभी प्रश्नों के सही उत्तर इमेज में मार्क हैं।`;
+        cap += `\n👉 अभी पूरा सेट देखें, पोस्ट सेव करें और अपने मित्रों के साथ शेयर करें! 📚✨\n\n`;
+        cap += `#AOneNotes #GKQuiz #ImportantGK #DailyQuiz #SolvedSeries #GeneralKnowledge`;
+
+        return cap;
+    }
+
+    function copyMultiCaption() {
+        navigator.clipboard.writeText(document.getElementById('multi-caption-box').innerText).then(() => {
+            alert("📋 मल्टी-पोस्ट कैप्शन कॉपी हो गया!");
+        });
+    }
+
+    async function getSolvedCardBlob(questionObj) {
+        const offscreen = document.createElement('canvas');
+        offscreen.width = 1080;
+        offscreen.height = 1350;
+        const offCtx = offscreen.getContext('2d');
+
+        renderCardToCanvas(offCtx, questionObj, true);
+
+        return new Promise(resolve => {
+            offscreen.toBlob(resolve, 'image/jpeg', 0.98);
+        });
+    }
+
+    async function shareMultiSolvedCards() {
+        const list = getHistoryList();
+        if (list.length === 0) {
+            alert("Question Bank खाली है! पहले प्रश्न जोड़ें।");
+            return;
+        }
+
+        const start = Math.max(1, parseInt(document.getElementById('multi-start').value) || 1);
+        let end = parseInt(document.getElementById('multi-end').value) || start;
+        if (end < start) end = start;
+
+        const slice = list.slice(start - 1, end);
+        if (slice.length === 0) {
+            alert("चयनित रेंज में कोई प्रश्न नहीं मिले!");
+            return;
+        }
+
+        const caption = generateMultiPostCaption(slice, start, end);
+        document.getElementById('multi-caption-box').innerText = caption;
+
+        try {
+            await navigator.clipboard.writeText(caption);
+        } catch (e) {}
+
+        alert(`⏳ कुल ${slice.length} HD इमेज तैयार हो रही हैं, कृपया कुछ सेकंड प्रतीक्षा करें...`);
+
+        const files = [];
+        for (let i = 0; i < slice.length; i++) {
+            const q = slice[i];
+            const blob = await getSolvedCardBlob(q);
+            if (blob) {
+                const prefixClean = (q.qPrefix || `Q${start + i}`).replace(/[^a-zA-Z0-9]/g, '_');
+                files.push(new File([blob], `Solved_${prefixClean}.jpg`, { type: 'image/jpeg' }));
+            }
+        }
+
+        if (navigator.canShare && navigator.canShare({ files })) {
+            try {
+                await navigator.share({
+                    title: `A One Notes Series (${slice.length} Questions)`,
+                    text: caption,
+                    files: files
+                });
+                return;
+            } catch (err) {
+                console.log("Share dismissed or failed", err);
+            }
+        }
+
+        files.forEach((f, idx) => {
+            setTimeout(() => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(f);
+                a.download = f.name;
+                a.click();
+            }, idx * 250);
+        });
+
+        window.open('https://www.facebook.com/', '_blank');
+        alert(`✅ सभी ${files.length} HD इमेज डाउनलोड हो गईं और कैप्शन क्लिपबोर्ड पर कॉपी हो गया! फेसबुक पर पेस्ट करें।`);
+    }
+
+    async function downloadAllMultiSolvedCards() {
+        const list = getHistoryList();
+        if (list.length === 0) {
+            alert("Question Bank खाली है!");
+            return;
+        }
+
+        const start = Math.max(1, parseInt(document.getElementById('multi-start').value) || 1);
+        let end = parseInt(document.getElementById('multi-end').value) || start;
+        if (end < start) end = start;
+
+        const slice = list.slice(start - 1, end);
+        if (slice.length === 0) {
+            alert("चयनित रेंज में कोई प्रश्न नहीं मिले!");
+            return;
+        }
+
+        copyMultiCaption();
+        alert(`📥 ${slice.length} HD इमेज डाउनलोड हो रही हैं...`);
+
+        for (let i = 0; i < slice.length; i++) {
+            const q = slice[i];
+            const blob = await getSolvedCardBlob(q);
+            if (blob) {
+                const prefixClean = (q.qPrefix || `Q${start + i}`).replace(/[^a-zA-Z0-9]/g, '_');
+                const link = document.createElement('a');
+                link.download = `Solved_${prefixClean}.jpg`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            }
+        }
+    }
+
+    window.onload = function() {
+        loadAllSettings();
+        updateHistoryCount();
+        updateCaptionText();
+        updatePollFormatText();
+        redrawCanvas();
+        calcBatchEstimate();
+        calcMultiEstimate();
     };
-    reader.readAsText(file);
-  }
-
-  function notify(msg) {
-    const toast = document.getElementById('toastMsg');
-    toast.innerText = msg;
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2600);
-  }
-
-  /* ==========================================================
-     INITIALIZATION ON LOAD
-     ========================================================== */
-  window.onload = async () => {
-    loadTypographySettings();       // 1. पिछली फ़ॉन्ट सेटिंग्स लोड करें
-    await migrateOldLocalStorage();  // 2. LocalStorage डेटा को IndexedDB में लाएँ
-    parseSmartInput();              // 3. डिफ़ॉल्ट सवाल पार्स करें
-    await renderLibrary();          // 4. लाइब्रेरी सूची रेंडर करें
-    setTimeout(updatePreviewScale, 300);
-  };
 </script>
+
 </body>
 </html>
