@@ -463,7 +463,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     <!-- FB CAPTION BOX -->
     <div class="detail-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Caption (Bot Tag #ans_X Included):</span>
+            <span style="font-weight: 800; color: #38bdf8; font-size: 13px;">📝 Facebook Caption:</span>
             <button class="btn-action" style="background:#0284c7; padding:5px 12px; font-size:12px;" onclick="copyCaption()">📋 Copy Caption</button>
         </div>
         <div class="detail-text" id="fb-caption-box">कैप्शन यहाँ तैयार होकर आएगा...</div>
@@ -840,15 +840,12 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     }
 
     function updateCaptionText() {
-        const hashMatches = quizData.caption.match(/#[^\s#]+/g);
-        let tagsString = hashMatches ? hashMatches.join(" ") : "";
-        const botTag = `#ans_${quizData.correctOption}`;
-        if (!tagsString.includes(botTag)) {
-            tagsString = `${tagsString} ${botTag}`.trim();
-        }
+        let baseCaption = (quizData.caption || "").replace(/#ans_[A-Da-d]/gi, '').trim();
 
         if (isAnswerRevealed) {
             const correctText = quizData.options[quizData.correctOption] || "";
+            const hashMatches = baseCaption.match(/#[^\s#]+/g);
+            let tagsString = hashMatches ? hashMatches.join(" ") : "";
             document.getElementById('fb-caption-box').innerText = 
 `✅ सही उत्तर: [विकल्प ${quizData.correctOption}] ${correctText}
 
@@ -856,11 +853,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
 
 ${tagsString}`.trim();
         } else {
-            let baseCaption = quizData.caption;
-            if (!baseCaption.includes(botTag)) {
-                baseCaption = `${baseCaption}\n\n${botTag}`;
-            }
-            document.getElementById('fb-caption-box').innerText = baseCaption.trim();
+            document.getElementById('fb-caption-box').innerText = baseCaption;
         }
         document.getElementById('private-explanation').innerText = `[सही उत्तर: ${quizData.correctOption}]\n\n${quizData.explanation}`;
     }
