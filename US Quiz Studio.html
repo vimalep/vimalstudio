@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>US Viral Trivia Quiz Studio HD</title>
+    <title>US Viral Trivia Quiz Studio HD (Smart Paste Edition)</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -71,7 +71,7 @@
             margin-bottom: 3px;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
             padding: 8px 10px;
             background: #0a1120;
@@ -81,6 +81,14 @@
             font-size: 13px;
             font-weight: 600;
             outline: none;
+            font-family: inherit;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 140px;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.45;
         }
 
         /* US TOPIC SELECTOR CHIPS */
@@ -108,6 +116,32 @@
             box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
         }
 
+        /* SMART PASTE BUTTONS */
+        .btn-action-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .btn-action {
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-clipboard {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+
         /* ANSWER MODE TOGGLE */
         .answer-toggle-card {
             background: #0a1120;
@@ -133,24 +167,6 @@
             cursor: pointer;
             accent-color: #10b981;
         }
-
-        /* GENERATE BUTTON */
-        .btn-generate {
-            background: linear-gradient(135deg, #ef4444, #3b82f6);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; }
 
         /* CANVAS PREVIEW */
         .canvas-card {
@@ -286,10 +302,27 @@
 
     <!-- CONTROLS -->
     <div class="control-box">
-        <div class="box-title">🔑 Google Gemini API Key</div>
-        <input type="password" id="gemini-key" placeholder="Paste Gemini API Key here..." onchange="saveAllSettings()">
+        <div class="box-title">📝 Paste US Trivia Raw Text (No API Needed)</div>
+        <textarea id="raw-paste-box">🇺🇸 US HISTORY QUIZ 🇺🇸
+Q.1 Which US President was the only one to serve two non-consecutive terms before 2024?
+A) Theodore Roosevelt 🐻
+B) Grover Cleveland 🏛️
+C) William McKinley 📜
+D) Woodrow Wilson 🇺🇸
+Answer: B) Grover Cleveland 🏛️
+Explanation: Grover Cleveland served as both the 22nd president (1885–1889) and the 24th president (1893–1897) of the United States.
+Caption: 90% of Americans forget this key piece of presidential history! Can you get it right without looking? Drop your answer below! 👇🧠 #USHistory</textarea>
 
-        <div class="box-title" style="margin-top: 4px;">🎯 Choose US Topic</div>
+        <div class="btn-action-grid">
+            <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
+                <span>📋 1-Click Paste & Run</span>
+            </button>
+            <button class="btn-action" onclick="generateFromRawText()">
+                <span>✨ Generate HD Card</span>
+            </button>
+        </div>
+
+        <div class="box-title" style="margin-top: 4px;">🎯 Choose US Topic (Category)</div>
         <div class="subject-grid">
             <button class="btn-sub active" onclick="setSubject('US History & American Presidents', '🇺🇸 US HISTORY QUIZ 🇺🇸', '#USHistory', this)">🇺🇸 US History</button>
             <button class="btn-sub" onclick="setSubject('US Geography, States & National Parks', '🗺️ US GEOGRAPHY QUIZ 🗺️', '#USGeography', this)">🗺️ US Geography</button>
@@ -341,10 +374,6 @@
             <span class="toggle-text">✅ Reveal Answer on Image (Answer Mode)</span>
             <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
         </div>
-
-        <button class="btn-generate" id="btn-ai-trigger" onclick="generateQuizPost()">
-            <span>✨ Generate US Trivia Card (AI)</span>
-        </button>
     </div>
 
     <!-- CANVAS PREVIEW (1080 x 1350) -->
@@ -356,7 +385,7 @@
     <div class="action-grid">
         <button class="btn-act btn-share" onclick="shareDirectly()">📲 Share to Facebook / Insta</button>
         <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD Image</button>
-        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 Saved Question Bank</button>
+        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 Saved Question Bank (<span id="history-total-count">0</span>)</button>
     </div>
 
     <!-- EXPLANATION -->
@@ -367,7 +396,7 @@
 
     <!-- FB CAPTION -->
     <div class="detail-card">
-        <div class="box-title" style="color: #38bdf8;">📝 Facebook Viral Caption (With 1 US Hashtag):</div>
+        <div class="box-title" style="color: #38bdf8;">📝 Facebook Viral Caption:</div>
         <div class="detail-text" id="fb-caption-box">Caption ready to copy will appear here...</div>
         <button class="btn-sub" style="background:#0284c7; color:white; border:none; padding:8px; margin-top:4px;" onclick="copyCaption()">📋 Copy FB Caption</button>
     </div>
@@ -388,8 +417,8 @@
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "US_QUIZ_STUDIO_PREFS_V1";
-    const STORAGE_HISTORY = "US_QUIZ_STUDIO_ARCHIVE_V1";
+    const STORAGE_PREFS = "US_QUIZ_STUDIO_PREFS_V2";
+    const STORAGE_HISTORY = "US_QUIZ_STUDIO_ARCHIVE_V2";
 
     let currentSubjectTopic = "US History & American Presidents";
     let currentHeaderTitle = "🇺🇸 US HISTORY QUIZ 🇺🇸";
@@ -410,9 +439,14 @@
         caption: "90% of Americans forget this key piece of presidential history! Can you get it right without looking? Drop your answer below! 👇🧠\n\n#USHistory"
     };
 
+    function cleanString(str) {
+        if (!str) return "";
+        return str.replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g, '').trim();
+    }
+
     function cleanAndMoveEmojiToEnd(text) {
         if (!text) return "";
-        let clean = text.trim();
+        let clean = cleanString(text);
         const emojiRegex = /([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}])/gu;
         const emojisFound = clean.match(emojiRegex);
         const textWithoutEmojis = clean.replace(emojiRegex, '').replace(/\s+/g, ' ').trim();
@@ -423,10 +457,150 @@
         return textWithoutEmojis;
     }
 
-    function sanitizeQuestion(raw) {
-        return raw.replace(/^(Q\.?\s*\d*[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*/gi, '')
-                  .replace(/^[A-Za-z]\s*[\.\:\-\)]\s*/gi, '')
-                  .trim();
+    async function pasteFromClipboardAndGenerate() {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text && text.trim().length > 0) {
+                document.getElementById('raw-paste-box').value = text;
+                generateFromRawText();
+            } else {
+                alert("Clipboard is empty! Please copy trivia text first.");
+            }
+        } catch (err) {
+            alert("Clipboard access was not permitted. Please paste manually into the box.");
+        }
+    }
+
+    function generateFromRawText() {
+        const raw = document.getElementById('raw-paste-box').value;
+        if (!raw || !raw.trim()) {
+            alert("Please paste question text into the box!");
+            return;
+        }
+
+        const lines = raw.split(/\r?\n/).map(l => cleanString(l)).filter(l => l.length > 0);
+        if (lines.length < 4) {
+            alert("Text is too short! Please paste complete Question and Options.");
+            return;
+        }
+
+        let parsedTitle = "";
+        let parsedNum = parseInt(document.getElementById('global-counter-val').value) || 1;
+        let parsedQText = "";
+        let parsedOpts = { A: "", B: "", C: "", D: "" };
+        let parsedAns = "B";
+        let parsedExplanation = "";
+        let parsedCaptionLines = [];
+
+        let state = "TITLE";
+
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+
+            // 1. Answer match
+            if (/^(?:Answer|Ans|Correct)\s*[:\-]/i.test(line)) {
+                state = "ANSWER";
+                let ansMatch = line.match(/^(?:Answer|Ans|Correct)\s*[:\-]\s*([A-Da-d])/i);
+                if (ansMatch) parsedAns = ansMatch[1].toUpperCase();
+                continue;
+            }
+
+            // 2. Explanation / Fun Fact match
+            if (/^(?:Explanation|Fun Fact|Fact)\s*[:\-]/i.test(line)) {
+                state = "EXPLANATION";
+                parsedExplanation = line.replace(/^(?:Explanation|Fun Fact|Fact)\s*[:\-]\s*/i, '').trim();
+                continue;
+            }
+
+            // 3. Caption match
+            if (/^Caption\s*[:\-]/i.test(line)) {
+                state = "CAPTION";
+                let cap = line.replace(/^Caption\s*[:\-]\s*/i, '').trim();
+                if (cap) parsedCaptionLines.push(cap);
+                continue;
+            }
+
+            // 4. Header title detection (e.g. 🇺🇸 US HISTORY QUIZ 🇺🇸)
+            if (state === "TITLE") {
+                if (line.includes("QUIZ") || line.includes("TRIVIA") || line.includes("🇺🇸") || line.includes("🎬") || line.includes("🏈")) {
+                    parsedTitle = line;
+                    state = "QUESTION";
+                    continue;
+                } else {
+                    state = "QUESTION";
+                }
+            }
+
+            // 5. Question extraction
+            if (state === "QUESTION") {
+                let qMatch = line.match(/^(Q\.?\s*(\d+)[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*(.*)/i);
+                if (qMatch) {
+                    if (qMatch[2]) parsedNum = parseInt(qMatch[2]);
+                    parsedQText = qMatch[3].trim();
+                } else {
+                    parsedQText = line;
+                }
+                state = "OPTIONS";
+                continue;
+            }
+
+            // 6. Options extraction (A, B, C, D)
+            if (state === "OPTIONS") {
+                let optMatch = line.match(/^([A-Da-d])[\)\.\-]\s*(.*)/);
+                if (optMatch) {
+                    let key = optMatch[1].toUpperCase();
+                    parsedOpts[key] = cleanAndMoveEmojiToEnd(optMatch[2]);
+                    if (parsedOpts.A && parsedOpts.B && parsedOpts.C && parsedOpts.D) {
+                        state = "AFTER_OPTIONS";
+                    }
+                    continue;
+                }
+            }
+
+            if (state === "EXPLANATION") {
+                parsedExplanation += " " + line;
+                continue;
+            }
+
+            if (state === "CAPTION" || state === "AFTER_OPTIONS") {
+                parsedCaptionLines.push(line);
+                continue;
+            }
+        }
+
+        if (parsedTitle) currentHeaderTitle = parsedTitle;
+
+        quizData = {
+            questionNumber: parsedNum,
+            questionText: parsedQText || quizData.questionText,
+            options: {
+                A: parsedOpts.A || quizData.options.A,
+                B: parsedOpts.B || quizData.options.B,
+                C: parsedOpts.C || quizData.options.C,
+                D: parsedOpts.D || quizData.options.D
+            },
+            correctOption: parsedAns,
+            explanation: parsedExplanation || "No explanation provided.",
+            caption: parsedCaptionLines.length > 0 ? parsedCaptionLines.join("\n") : `90% of Americans forget this fact! Drop your answer below! 👇🧠\n\n${currentSubjectHashtag}`
+        };
+
+        document.getElementById('global-counter-val').value = parsedNum + 1;
+        document.getElementById('private-explanation').innerText = `[Correct Answer: Option ${quizData.correctOption}]\n\n${quizData.explanation}`;
+
+        saveToHistory({
+            questionNumber: quizData.questionNumber,
+            questionText: quizData.questionText,
+            options: quizData.options,
+            correctOption: quizData.correctOption,
+            explanation: quizData.explanation,
+            caption: quizData.caption,
+            date: new Date().toLocaleDateString('en-US')
+        });
+
+        updateCaptionText();
+        saveAllSettings();
+        redrawCanvas();
+        alert(`🎉 Q.${quizData.questionNumber} Card Generated successfully!`);
     }
 
     function toggleAnswerMode() {
@@ -470,7 +644,6 @@ ${currentSubjectHashtag}`;
 
     function saveAllSettings() {
         const prefs = {
-            apiKey: document.getElementById('gemini-key').value.trim(),
             subjectTopic: currentSubjectTopic,
             headerTitle: currentHeaderTitle,
             hashtag: currentSubjectHashtag,
@@ -479,29 +652,22 @@ ${currentSubjectHashtag}`;
             bgColor: document.getElementById('cfg-bg-color').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 44,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 32,
-            isAnswerMode: document.getElementById('chk-answer-mode').checked
+            isAnswerMode: document.getElementById('chk-answer-mode').checked,
+            rawText: document.getElementById('raw-paste-box').value,
+            currentQuiz: quizData
         };
         localStorage.setItem(STORAGE_PREFS, JSON.stringify(prefs));
-        if (prefs.apiKey) localStorage.setItem("GEMINI_API_KEY_LOCAL", prefs.apiKey);
-        quizData.questionNumber = prefs.counter;
     }
 
     function loadAllSettings() {
         const saved = localStorage.getItem(STORAGE_PREFS);
-        const savedApiKey = localStorage.getItem("GEMINI_API_KEY_LOCAL");
-        if (savedApiKey) document.getElementById('gemini-key').value = savedApiKey;
-
         if (saved) {
             try {
                 const p = JSON.parse(saved);
-                if (p.apiKey) document.getElementById('gemini-key').value = p.apiKey;
                 if (p.subjectTopic) currentSubjectTopic = p.subjectTopic;
                 if (p.headerTitle) currentHeaderTitle = p.headerTitle;
                 if (p.hashtag) currentSubjectHashtag = p.hashtag;
-                if (p.counter) {
-                    document.getElementById('global-counter-val').value = p.counter;
-                    quizData.questionNumber = p.counter;
-                }
+                if (p.counter) document.getElementById('global-counter-val').value = p.counter;
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
                 if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
                 if (p.qSize) {
@@ -516,6 +682,8 @@ ${currentSubjectHashtag}`;
                     document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
                     isAnswerRevealed = p.isAnswerMode;
                 }
+                if (p.rawText) document.getElementById('raw-paste-box').value = p.rawText;
+                if (p.currentQuiz) quizData = p.currentQuiz;
 
                 document.querySelectorAll('.btn-sub').forEach(btn => {
                     if (btn.innerText.includes(currentHeaderTitle.split(' ')[1] || "History")) {
@@ -528,14 +696,23 @@ ${currentSubjectHashtag}`;
         }
     }
 
-    function saveToHistory(item) {
-        let history = [];
+    function getHistoryList() {
         try {
-            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
-        } catch(e) {}
+            return JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
+        } catch(e) { return []; }
+    }
+
+    function saveToHistory(item) {
+        let history = getHistoryList();
+        history = history.filter(h => h.questionNumber !== item.questionNumber);
         history.unshift(item);
         if (history.length > 100) history.pop();
         localStorage.setItem(STORAGE_HISTORY, JSON.stringify(history));
+        updateHistoryCount();
+    }
+
+    function updateHistoryCount() {
+        document.getElementById('history-total-count').innerText = getHistoryList().length;
     }
 
     function openHistoryModal() {
@@ -543,11 +720,7 @@ ${currentSubjectHashtag}`;
         const container = document.getElementById('history-items-container');
         container.innerHTML = "";
 
-        let history = [];
-        try {
-            history = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
-        } catch(e) {}
-
+        const history = getHistoryList();
         if (history.length === 0) {
             container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">No saved US trivia questions yet.</div>`;
         } else {
@@ -582,102 +755,7 @@ ${currentSubjectHashtag}`;
         alert(`✅ Loaded Question Q.${h.questionNumber}`);
     }
 
-    /* GENERATE US TRIVIA WITH GEMINI 3.6 FLASH */
-    async function generateQuizPost() {
-        let apiKey = document.getElementById('gemini-key').value.trim() || localStorage.getItem("GEMINI_API_KEY_LOCAL");
-        if (!apiKey) {
-            alert("Please paste your Google Gemini API Key first!");
-            return;
-        }
-
-        const currentNum = parseInt(document.getElementById('global-counter-val').value) || 1;
-        const btn = document.getElementById('btn-ai-trigger');
-        btn.disabled = true;
-        btn.innerHTML = `<span>⏳ Crafting viral US trivia...</span>`;
-
-        const prompt = `Act as an expert American pub trivia host and viral social media creator.
-Generate 1 fascinating, high-engagement multiple-choice trivia question for American audiences on: "${currentSubjectTopic}".
-STRICT RULES:
-1. Natural American English only.
-2. Numbering: Do NOT write "Q." or numbers in the question text.
-3. Options: Provide 4 realistic options (A, B, C, D) with a relevant emoji strictly placed at the END of each option string.
-4. Explanation: A fun, engaging 2-sentence fact explaining the answer.
-5. Caption: An engaging 2-line Facebook caption designed to trigger comments and debates, ending with EXACTLY ONE hashtag: "${currentSubjectHashtag}".
-
-Output strictly raw valid JSON (no markdown formatting, no code fences):
-{
-  "question": "Question text here?",
-  "options": {
-    "A": "Option text emoji",
-    "B": "Option text emoji",
-    "C": "Option text emoji",
-    "D": "Option text emoji"
-  },
-  "correct": "B",
-  "explanation": "Fun fact explanation here...",
-  "caption": "Viral 2-line caption here...\\n\\n${currentSubjectHashtag}"
-}`;
-
-        try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-            });
-
-            if (!res.ok) {
-                const errData = await res.json();
-                throw new Error(errData.error?.message || `HTTP ${res.status}`);
-            }
-
-            const data = await res.json();
-            let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-            const jsonMatch = text.match(/\{[\s\S]*\}/);
-            if (jsonMatch) text = jsonMatch[0];
-
-            const parsed = JSON.parse(text);
-
-            quizData.questionNumber = currentNum;
-            quizData.questionText = sanitizeQuestion(parsed.question);
-            quizData.options = {
-                A: cleanAndMoveEmojiToEnd(parsed.options.A),
-                B: cleanAndMoveEmojiToEnd(parsed.options.B),
-                C: cleanAndMoveEmojiToEnd(parsed.options.C),
-                D: cleanAndMoveEmojiToEnd(parsed.options.D)
-            };
-            quizData.correctOption = parsed.correct || "B";
-            quizData.explanation = parsed.explanation || "No explanation available.";
-            quizData.caption = parsed.caption || `Can you solve this US Trivia challenge? Drop your answer below! 👇🇺🇸\n\n${currentSubjectHashtag}`;
-
-            saveToHistory({
-                questionNumber: currentNum,
-                questionText: quizData.questionText,
-                options: quizData.options,
-                correctOption: quizData.correctOption,
-                explanation: quizData.explanation,
-                caption: quizData.caption,
-                date: new Date().toLocaleDateString('en-US')
-            });
-
-            document.getElementById('private-explanation').innerText = `[Correct Answer: Option ${quizData.correctOption}]\n\n${quizData.explanation}`;
-            updateCaptionText();
-
-            const nextNum = currentNum + 1;
-            document.getElementById('global-counter-val').value = nextNum;
-            saveAllSettings();
-
-            redrawCanvas();
-            alert(`🎉 US Trivia Q.${currentNum} successfully generated!`);
-        } catch (err) {
-            alert("Error: " + err.message);
-            console.error(err);
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = `<span>✨ Generate US Trivia Card (AI)</span>`;
-        }
-    }
-
-    /* REDRAW CANVAS IN 1080 x 1350 RES (CLEAN US BRANDING) */
+    /* REDRAW CANVAS IN 1080 x 1350 RES */
     function redrawCanvas() {
         const bgColor = document.getElementById('cfg-bg-color').value;
         const fontFam = document.getElementById('cfg-font').value;
@@ -690,7 +768,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, 1080, 1350);
 
-        // 2. White Card Shell (Crisp & Modern)
+        // 2. White Card Shell
         const cardX = 42;
         const cardY = 42;
         const cardW = 996;
@@ -702,16 +780,14 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.lineWidth = 3;
         roundRect(ctx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // NO WATERMARK (As requested: 100% clean, non-branded authentic look)
-
-        // 3. TOP CATEGORY HEADER (60px Extra Bold)
+        // 3. TOP CATEGORY HEADER
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#0f172a";
         ctx.font = `900 56px ${fontFam}`;
         ctx.fillText(currentHeaderTitle, 540, 125);
 
-        // 4. US SUB-TAG PILL: "DAILY TRIVIA CHALLENGE"
+        // 4. US SUB-TAG PILL
         const pillW = 460;
         const pillH = 52;
         const pillX = (1080 - pillW) / 2;
@@ -726,9 +802,9 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         ctx.font = `900 22px ${fontFam}`;
         ctx.fillText("⭐ DAILY TRIVIA CHALLENGE ⭐", 540, pillY + (pillH / 2));
 
-        // 5. COLORFUL QUESTION BLOCK (Locked 65px gap below pill)
+        // 5. COLORFUL QUESTION BLOCK
         ctx.textAlign = "left";
-        const qStartY = pillY + pillH + 65; // Fixed top anchor at 287px
+        const qStartY = pillY + pillH + 65;
         const qEndY = drawColorfulQuestion(ctx, quizData.questionNumber, quizData.questionText, 95, qStartY, 890, qSize, fontFam);
 
         // 6. 4 COLORED OPTIONS CONTAINERS
@@ -824,7 +900,6 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         }
     }
 
-    /* TOP-ALIGNED QUESTION WITH HIGHLIGHTED KEYWORDS */
     function drawColorfulQuestion(ctx, num, text, x, y, maxW, fontSize, fontFam) {
         ctx.textBaseline = "top";
         ctx.font = `900 ${fontSize + 2}px ${fontFam}`;
@@ -833,7 +908,6 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
         const prefixWidth = ctx.measureText(prefix).width;
         ctx.fillText(prefix, x, y);
 
-        // Highlight American Interrogatives / Key words
         const highlightTokens = ["Which", "What", "Who", "Where", "When", "How", "Only", "First", "Most", "Largest", "Never", "Not"];
         
         ctx.font = `800 ${fontSize}px ${fontFam}`;
@@ -911,13 +985,11 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
                         text: caption,
                         files: [file]
                     });
-                } catch (err) {
-                    console.log("Share cancelled", err);
-                }
+                } catch (err) {}
             } else {
                 downloadImage();
                 copyCaption();
-                alert("Direct share not supported on desktop. Image downloaded & caption copied!");
+                alert("Direct share not supported. Image downloaded & caption copied!");
             }
         });
     }
@@ -939,6 +1011,7 @@ Output strictly raw valid JSON (no markdown formatting, no code fences):
 
     window.onload = function() {
         loadAllSettings();
+        updateHistoryCount();
         document.getElementById('private-explanation').innerText = `[Correct: ${quizData.correctOption}]\n\n${quizData.explanation}`;
         updateCaptionText();
         redrawCanvas();
