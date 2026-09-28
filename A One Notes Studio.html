@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>A one Notes - Studio Pro Mobile</title>
+  <title>A one Notes - Studio Pro Mobile (10 Qs Auto-Save)</title>
   
-  <!-- Premium Fonts -->
+  <!-- Premium English Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&family=Mukta:wght@500;600;700;800&family=Hind:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
   
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -76,37 +76,6 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* MODE SWITCHER TABS */
-    .mode-switch-bar {
-      display: flex;
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 4px;
-      gap: 6px;
-    }
-    .mode-tab-btn {
-      flex: 1;
-      padding: 10px 8px;
-      border: none;
-      border-radius: 9px;
-      font-size: 13px;
-      font-weight: 800;
-      background: transparent;
-      color: #94a3b8;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-    .mode-tab-btn.active {
-      background: #38bdf8;
-      color: #04101e;
-      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
-    }
-
     .dark-card {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -127,6 +96,36 @@
       letter-spacing: 0.5px;
     }
 
+    .row-flex {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .row-flex > div { flex: 1; }
+
+    label {
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    input, select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 7px;
+      color: #f8fafc;
+      padding: 7px 10px;
+      font-size: 13px;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--border-focus);
+    }
+
     textarea {
       width: 100%;
       background: var(--bg-input);
@@ -137,7 +136,7 @@
       font-size: 13.5px;
       font-family: inherit;
       outline: none;
-      height: 165px;
+      height: 140px;
       line-height: 1.45;
       resize: vertical;
     }
@@ -203,17 +202,6 @@
     .typo-label span {
       color: #38bdf8;
       font-weight: 800;
-    }
-
-    select {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid var(--border-color);
-      border-radius: 7px;
-      color: #f8fafc;
-      padding: 7px 10px;
-      font-size: 13px;
-      outline: none;
     }
 
     input[type="range"] {
@@ -284,25 +272,20 @@
       white-space: nowrap;
     }
 
-    /* PREVIEW CONTAINER - ASPECT RATIO PREVENTS COLLAPSE */
     .preview-viewport-wrapper {
       width: 100%;
       border-radius: 12px;
       overflow: hidden;
-      background: #0b1222;
-      border: 1.5px solid #1f293d;
-      position: relative;
-      margin: 4px 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      border: 1px solid #1f293d;
     }
     #previewViewport {
       width: 100%;
-      aspect-ratio: 1080 / 1350;
       position: relative;
-      overflow: hidden;
-      display: block;
     }
 
-    /* 1080x1350 4:5 MAIN CANVAS */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -312,7 +295,7 @@
       max-height: 1350px;
       background: #ffffff;
       padding: 24px 32px 20px 32px;
-      position: absolute !important;
+      position: absolute;
       top: 0;
       left: 0;
       transform-origin: top left;
@@ -323,7 +306,6 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* ONE-LINER LAYOUT STYLES (10 QUESTIONS) */
     .top-header-wrap {
       position: relative;
       display: flex;
@@ -365,6 +347,7 @@
       font-family: 'Poppins', sans-serif;
       margin-left: 6px;
     }
+    
     .top-hook-badge {
       position: relative;
       z-index: 2;
@@ -376,7 +359,9 @@
       border: 2px dashed #dc2626;
       border-radius: 30px;
       box-shadow: 0 2px 8px rgba(220, 38, 38, 0.12);
+      letter-spacing: 0.3px;
     }
+
     .top-follow-pill {
       position: relative;
       z-index: 2;
@@ -388,6 +373,7 @@
       border-radius: 40px;
       font-family: 'Poppins', sans-serif;
     }
+
     .title-banner {
       display: flex;
       justify-content: center;
@@ -430,6 +416,17 @@
       align-items: center;
       font-family: 'Poppins', sans-serif;
     }
+
+    .table-container {
+      flex: 1;
+      position: relative;
+      border: 2px solid #86efac;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
     .watermark {
       position: absolute;
       top: 50%;
@@ -444,16 +441,6 @@
       z-index: 1;
       text-transform: uppercase;
       font-family: 'Poppins', sans-serif;
-    }
-    .table-container {
-      flex: 1;
-      position: relative;
-      border: 2px solid #86efac;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
     }
     table {
       width: 100%;
@@ -471,6 +458,7 @@
       border-bottom: 2px solid #86efac;
       height: 42px;
     }
+    
     thead th.th-q, tbody td.td-q {
       width: 68% !important;
       border-right: 2px solid #86efac;
@@ -482,11 +470,15 @@
     }
     thead th.th-q { color: #dc2626; }
     thead th.th-a { color: #15803d; }
+
     tbody tr {
       border-bottom: 1.5px solid #bbf7d0;
       height: calc((100% - 42px) / 10);
     }
-    tbody tr:last-child { border-bottom: none; }
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
     td {
       padding: 4px 12px;
       line-height: 1.3;
@@ -494,8 +486,21 @@
       overflow: hidden;
       word-break: break-word;
     }
-    .td-q { color: #0f172a; font-size: 22px; font-weight: 700; }
-    .q-wrap { display: flex; align-items: flex-start; gap: 10px; width: 100%; }
+    .td-q {
+      color: #0f172a;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    /* प्रश्न और नंबर का फ्लेक्स लेआउट */
+    .q-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+    }
+    
+    /* 1. Circle Badge for Question Number */
     .q-num {
       display: inline-flex;
       align-items: center;
@@ -514,9 +519,23 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
-    .q-text { flex: 1; min-width: 0; word-break: break-word; }
-    .td-a { font-size: 22px; font-weight: 700; }
+
+    /* 2. Text Wrapper (नेक्स्ट लाइन नंबर के नीचे नहीं जाएगी) */
+    .q-text {
+      flex: 1;
+      min-width: 0;
+      word-break: break-word;
+    }
+
+    .word-red { color: #dc2626; font-weight: 800; }
+    .q-mark { color: #dc2626; font-weight: 900; }
+    .td-a {
+      font-size: 22px;
+      font-weight: 700;
+    }
     .ans-green { color: #15803d; font-weight: 700; }
+    .ans-maroon { color: #800000; font-weight: 800; }
+    
     .ans-challenge {
       background: #fef3c7;
       border: 1.5px dashed #d97706;
@@ -527,6 +546,7 @@
       border-radius: 6px;
       display: inline-block;
     }
+
     .footer-wrap {
       position: relative;
       display: flex;
@@ -562,6 +582,7 @@
     }
     .footer-title .f-red { color: #dc2626; }
     .footer-title .f-black { color: #0f172a; }
+
     .footer-follow-btn {
       position: relative;
       z-index: 2;
@@ -574,236 +595,31 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    /* ==========================================================
-       MCQ LAYOUT STYLES (A ONE NOTES BRANDING + POSTER BORDER)
-       ========================================================== */
-    .mcq-view-active {
-      background-color: #fffdf0 !important;
-      padding: 38px 46px 34px 46px !important;
-      position: absolute !important;
-      overflow: hidden;
-      border: 14px solid #fef08a !important;
-      box-shadow: inset 0 0 0 3px #facc15, 0 10px 30px rgba(0,0,0,0.15) !important;
-      box-sizing: border-box !important;
-    }
-    .mcq-bg-watermark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      opacity: 0.048;
-      font-size: 34px;
-      font-weight: 900;
-      color: #b45309;
-      transform: rotate(-30deg) scale(1.3);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      line-height: 2.7;
-      user-select: none;
-      z-index: 1;
-      white-space: nowrap;
-      font-family: 'Poppins', sans-serif;
-    }
-    .mcq-content-layer {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .mcq-header-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      margin-top: 5px;
-    }
-    .mcq-category-title {
-      font-size: 42px;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-transform: uppercase;
-      font-family: 'Poppins', 'Mukta', sans-serif;
-      text-align: center;
-    }
-    .mcq-brand-capsule {
-      background: #ffffff;
-      border: 2.2px solid #cbd5e1;
-      border-radius: 35px;
-      padding: 6px 34px;
-      font-size: 26px;
-      font-weight: 900;
-      color: #0f172a;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-      font-family: 'Poppins', sans-serif;
-    }
-    .mcq-question-area {
-      margin: 20px 0 15px 0;
-      font-size: 42px;
-      font-weight: 800;
-      line-height: 1.45;
-      color: #0f172a;
-      word-break: break-word;
-      font-family: 'Mukta', 'Poppins', sans-serif;
-    }
-    .mcq-q-blue {
-      color: #0284c7;
-      font-size: 1.05em;
-      font-weight: 900;
-      margin-right: 10px;
-      font-family: 'Poppins', sans-serif;
-      display: inline-block;
-    }
-
-    .mcq-options-container {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      margin-bottom: 20px;
-      width: 100%;
-    }
-    .mcq-option-card {
-      display: flex;
-      align-items: center;
-      border-radius: 18px;
-      padding: 18px 24px;
-      border: 2.5px solid;
-      background: #ffffff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    }
-    .mcq-opt-badge {
-      width: 52px;
-      height: 52px;
-      min-width: 52px;
-      border-radius: 12px;
-      color: #ffffff;
-      font-size: 27px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-      flex-shrink: 0;
-    }
-    .mcq-opt-label {
-      font-size: 34px;
-      font-weight: 700;
-      color: #0f172a;
-      margin-left: 20px;
-      flex: 1;
-      font-family: 'Mukta', 'Poppins', sans-serif;
-      word-break: break-word;
-    }
-
-    /* Option Color Themes */
-    .opt-card-A { background: #f0f7ff; border-color: #93c5fd; }
-    .opt-card-A .mcq-opt-badge { background: #2563eb; }
-
-    .opt-card-B { background: #f0fdf4; border-color: #86efac; }
-    .opt-card-B .mcq-opt-badge { background: #059669; }
-
-    .opt-card-C { background: #fffbeb; border-color: #fde68a; }
-    .opt-card-C .mcq-opt-badge { background: #d97706; }
-
-    .opt-card-D { background: #faf5ff; border-color: #e9d5ff; }
-    .opt-card-D .mcq-opt-badge { background: #7c3aed; }
-
-    .mcq-option-card.correct-revealed {
-      border: 3.5px solid #16a34a !important;
-      background: #ecfdf5 !important;
-      box-shadow: 0 6px 20px rgba(22, 163, 74, 0.25) !important;
-    }
-    .mcq-option-card.correct-revealed::after {
-      content: '✔';
-      font-size: 32px;
-      color: #16a34a;
-      font-weight: 900;
-      margin-left: 10px;
-    }
-
-    /* BOTTOM YELLOW HOOK PILL */
-    .mcq-footer-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 5px;
-    }
-    .mcq-comment-pill {
-      width: 100%;
-      background: #fef08a;
-      border: 2px solid #facc15;
-      border-radius: 40px;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 29px;
-      font-weight: 800;
-      color: #713f12;
-      box-shadow: 0 4px 12px rgba(250, 204, 21, 0.25);
-      font-family: 'Mukta', 'Poppins', sans-serif;
-      text-align: center;
-    }
-    .mcq-like-follow {
-      font-size: 24px;
-      font-weight: 800;
-      color: #334155;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Poppins', 'Mukta', sans-serif;
-    }
-
-    /* ARCHIVE SECTION */
     .subject-pill-row {
-      display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      gap: 8px !important;
-      overflow-x: auto !important;
-      padding-bottom: 6px !important;
-      margin-bottom: 10px !important;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      width: 100% !important;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
     }
-    .subject-pill-row::-webkit-scrollbar { display: none; }
-    
     .subj-pill {
-      padding: 6px 14px !important;
-      border-radius: 20px !important;
-      font-size: 12px !important;
-      font-weight: 700 !important;
-      background: #1e293b !important;
-      color: #94a3b8 !important;
-      border: 1px solid #334155 !important;
-      white-space: nowrap !important;
-      cursor: pointer !important;
-      flex-shrink: 0 !important;
-      display: inline-flex !important;
-      align-items: center !important;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      white-space: nowrap;
+      cursor: pointer;
     }
     .subj-pill.active {
-      background: #38bdf8 !important;
-      color: #04101e !important;
-      border-color: #38bdf8 !important;
-      font-weight: 800;
+      background: #dc2626;
+      color: #fff;
+      border-color: #dc2626;
     }
-
     .library-list {
-      max-height: 150px;
+      max-height: 140px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -812,25 +628,17 @@
     .saved-row {
       background: #0f172a;
       border: 1px solid #1e293b;
-      padding: 8px 12px;
+      padding: 7px 10px;
       border-radius: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 13px;
+      font-size: 12.5px;
     }
     .btn-xs {
-      padding: 4px 10px;
-      font-size: 11.5px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-    }
-    .archive-btn-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-top: 10px;
+      padding: 3px 7px;
+      font-size: 11px;
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -842,240 +650,35 @@
 
   <div class="app-header">
     <h1>⚡ A one Notes Studio</h1>
-    <span class="app-badge">MULTI-MODE PRO</span>
+    <span class="app-badge">10 Qs ULTRA VIRAL</span>
   </div>
 
-  <!-- MODE SWITCHER TABS -->
-  <div class="mode-switch-bar">
-    <button class="mode-tab-btn" id="btnTabOneLiner" onclick="setAppMode('oneliner')">
-      📝 10 Qs One-Liner
-    </button>
-    <button class="mode-tab-btn active" id="btnTabMCQ" onclick="setAppMode('mcq')">
-      🔘 MCQ Quiz Mode
-    </button>
-  </div>
-
-  <!-- INPUT CARD -->
+  <!-- MANUAL SMART PASTE CARD -->
   <div class="dark-card">
     <div class="card-title">
-      <span id="inputBoxTitle">📝 MCQ Raw Input:</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">READY</span>
+      <span>📝 Raw Content (Smart Paste):</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">Part 1 Detected</span>
+    </div>
+
+    <!-- VIRAL HOOK SELECTOR -->
+    <div class="row-flex" style="margin-bottom: 10px;">
+      <div style="flex: 1.2;">
+        <label>🔥 Viral Header Hook:</label>
+        <select id="selViralHook" onchange="updateCustomHook(this.value)">
+          <option value="🔥 90% Aspirants Fail In Q7" selected>🔥 90% Aspirants Fail In Q7</option>
+          <option value="🎯 Top 10 Repeated Questions">🎯 Top 10 Repeated Questions</option>
+          <option value="⚡ Only Real Aspirants Score 10/10">⚡ Only Real Aspirants Score 10/10</option>
+          <option value="🧠 Daily GK Challenge: Test Yourself">🧠 Daily GK Challenge: Test Yourself</option>
+          <option value="custom">✏️ Custom Hook (Type below)...</option>
+        </select>
+      </div>
+      <div style="flex: 1;">
+        <label>Hook Text:</label>
+        <input type="text" id="txtCustomHook" value="🔥 90% Aspirants Fail In Q7" oninput="applyHookDirectly()">
+      </div>
     </div>
     
-    <textarea id="smartInput" placeholder="यहाँ टेक्स्ट पेस्ट करें..." oninput="autoSaveHandler()"></textarea>
-
-    <div class="status-counter">
-      <span id="statusCounter">📊 Loaded Status: Ready</span>
-      <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
-    </div>
-
-    <!-- TOGGLES -->
-    <div id="oneLinerToggleWrap" style="display: none;">
-      <label class="challenge-toggle-box" for="chkChallengeMode">
-        <span>🎯 Q10 Comment Challenge Mode (One-Liner)</span>
-        <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
-      </label>
-    </div>
-
-    <div id="mcqToggleWrap">
-      <label class="challenge-toggle-box" for="chkRevealAnswer">
-        <span>✅ Highlight Correct Answer (हरे रंग में उत्तर दिखाएं)</span>
-        <input type="checkbox" id="chkRevealAnswer" onchange="toggleRevealAnswer()">
-      </label>
-    </div>
-
-    <!-- Typography Controls -->
-    <div class="typo-panel">
-      <div class="typo-row">
-        <div>
-          <div class="typo-label">Font Style:</div>
-          <select id="selFontFamily" onchange="applyTypography(true)">
-            <option value="'Poppins', sans-serif" selected>Poppins (Clean & Modern)</option>
-            <option value="'Mukta', sans-serif">Mukta (Hindi & English)</option>
-            <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
-            <option value="'Hind', sans-serif">Hind (Bold Book)</option>
-          </select>
-        </div>
-        <div>
-          <div class="typo-label">Question Boldness:</div>
-          <select id="selQWeight" onchange="applyTypography(true)">
-            <option value="700">Bold (700)</option>
-            <option value="800" selected>Extra Bold (800)</option>
-            <option value="900">Black (900)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="typo-row">
-        <div>
-          <div class="typo-label"><span id="lblTitleText">Header Size:</span> <span id="lblTitleSize">42px</span></div>
-          <input type="range" id="rngTitleSize" min="24" max="54" value="42" oninput="applyTypography(true)">
-        </div>
-        <div>
-          <div class="typo-label">Ques Size: <span id="lblQSize">42px</span></div>
-          <input type="range" id="rngQSize" min="20" max="85" value="42" oninput="applyTypography(true)">
-        </div>
-        <div>
-          <div class="typo-label"><span id="lblAnsText">Options Size:</span> <span id="lblASize">34px</span></div>
-          <input type="range" id="rngASize" min="18" max="52" value="34" oninput="applyTypography(true)">
-        </div>
-      </div>
-    </div>
-
-    <input type="hidden" id="fbCaption" value="">
-
-    <!-- Actions -->
-    <div class="btn-grid">
-      <button class="btn-caption" onclick="copyViralCaption()">📋 Copy FB Caption</button>
-      <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
-      <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
-      <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
-      <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to FB</button>
-    </div>
-  </div>
-
-  <!-- LIVE PREVIEW -->
-  <div class="dark-card" style="padding: 10px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <div class="card-title" style="margin:0;">📱 Live Mobile Preview</div>
-      <span style="font-size: 11px; color: #10b981; font-weight: 700;" id="ratioBadge">● 4:5 FB Ratio (MCQ Mode)</span>
-    </div>
-
-    <div class="preview-viewport-wrapper">
-      <div id="previewViewport">
-        
-        <!-- CAPTURE CARD -->
-        <div id="capture-card" class="mcq-view-active">
-          
-          <!-- ================= MCQ LAYOUT ================= -->
-          <div id="mcqLayoutWrap" class="mcq-content-layer">
-            <div class="mcq-bg-watermark">
-              <div>A ONE NOTES &nbsp;•&nbsp; A ONE NOTES &nbsp;•&nbsp; A ONE NOTES</div>
-              <div>A ONE NOTES &nbsp;•&nbsp; A ONE NOTES &nbsp;•&nbsp; A ONE NOTES</div>
-              <div>A ONE NOTES &nbsp;•&nbsp; A ONE NOTES &nbsp;•&nbsp; A ONE NOTES</div>
-              <div>A ONE NOTES &nbsp;•&nbsp; A ONE NOTES &nbsp;•&nbsp; A ONE NOTES</div>
-            </div>
-
-            <div class="mcq-header-box">
-              <div class="mcq-category-title" id="mcqCategoryTitle">🌍 WORLD GEOGRAPHY QUIZ 🧠</div>
-              <div class="mcq-brand-capsule" id="mcqBrandCapsule">A ONE NOTES</div>
-            </div>
-
-            <div class="mcq-question-area" id="mcqQuestionArea">
-              <span class="mcq-q-blue" id="mcqQPrefix">Q.1</span>
-              <span id="mcqQuestionText">Which is the deepest trench in the world? 🌊</span>
-            </div>
-
-            <div class="mcq-options-container" id="mcqOptionsContainer">
-              <!-- Dynamically populated -->
-            </div>
-
-            <div class="mcq-footer-box">
-              <div class="mcq-comment-pill" id="mcqCtaPill">👇 Comment your answer below! 🔥</div>
-              <div class="mcq-like-follow" id="mcqLikeFollow">❤️ Like | ➕ Follow 🎯</div>
-            </div>
-          </div>
-
-          <!-- ================= ONE-LINER LAYOUT ================= -->
-          <div id="oneLinerLayoutWrap" style="display: none; height: 100%; flex-direction: column; justify-content: space-between;">
-            <div>
-              <div class="top-header-wrap">
-                <div class="top-line-behind"></div>
-                <div class="top-logo">
-                  <span class="logo-red">A one</span><span class="logo-black">Notes</span>
-                </div>
-                <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
-                <div class="top-follow-pill">A one Notes : Follow</div>
-              </div>
-
-              <div class="title-banner">
-                <div class="title-pill">
-                  <div class="title-main" id="outSubject">HISTORY</div>
-                  <div class="title-sub" id="outSubTopic">( Ancient India )</div>
-                  <div class="title-part" id="outPart">Part 1</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="watermark">A one Notes</div>
-
-            <div class="table-container">
-              <table>
-                <thead>
-                  <tr>
-                    <th class="th-q">Questions</th>
-                    <th class="th-a">Answers</th>
-                  </tr>
-                </thead>
-                <tbody id="qaBody"></tbody>
-              </table>
-            </div>
-
-            <div class="footer-wrap">
-              <div class="footer-line-behind"></div>
-              <div class="footer-brand">
-                <span class="footer-book-icon">📖</span>
-                <div class="footer-title">
-                  <span class="f-red">A one</span><span class="f-black">Notes</span>
-                </div>
-              </div>
-              <div class="footer-follow-btn">Important For All Exams</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ARCHIVE (INDEXEDDB) -->
-  <div class="dark-card">
-    <div class="card-title">📚 Question Bank (Archive)</div>
-
-    <div class="subject-pill-row">
-      <button class="subj-pill active" onclick="filterBySubject('All', this)">All</button>
-      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
-      <button class="subj-pill" onclick="filterBySubject('Current Affairs', this)">Current Affairs</button>
-      <button class="subj-pill" onclick="filterBySubject('History', this)">History</button>
-      <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
-    </div>
-
-    <div class="library-list" id="savedListContainer"></div>
-
-    <div class="archive-btn-row">
-      <button class="btn-dark" onclick="saveToDatabase(true)">💾 Save</button>
-      <button class="btn-dark" onclick="downloadSubjectPDF()">📄 PDF</button>
-      <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
-      <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0;">
-        📥 Import <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
-      </label>
-    </div>
-  </div>
-
-</div>
-
-<script>
-  let currentAppMode = 'mcq';
-  let isChallengeMode = true;
-  let isRevealAnswer = false;
-  let autoSaveTimer = null;
-  let currentSubjectFilter = 'All';
-
-  // DEFAULT DATA STORES
-  let modeDataStore = {
-    mcq: `🌍 WORLD GEOGRAPHY QUIZ 🧠
-Q.1 Which is the deepest trench in the world? 🌊
-        A) Java Trench 🇮🇩
-        B) Mariana Trench 🇵🇭
-        C) Puerto Rico Trench 🇵🇷
-        D) South Sandwich Trench 🇦🇶
-👇 Comment your answer below! 🔥
-              ❤️ Like | ➕ Follow 🎯
-Caption: Test your knowledge on the Deepest Oceanic Trench / Mariana Trench! Drop the correct option below. 👇🚀
-#GeneralKnowledge
-Answer: B) Mariana Trench 🇵🇭`,
-
-    oneliner: `🎯 History, Ancient India, Part 1
+    <textarea id="smartInput" placeholder="Paste 10 questions here..." oninput="autoSaveHandler()">🎯 History, Ancient India, Part 1
 1. Which was the first site discovered in the Indus Valley Civilization?
 Ans: Harappa
 2. Who was the founder of the Maurya Empire?
@@ -1096,50 +699,194 @@ Ans: Lothal
 Ans: Banabhatta
 10. Who was the 24th Tirthankara of Jainism?
 Ans: Mahavira
-#HistoryGK`
-  };
+How many did you get right out of 10? Drop your score in the comments and share this with your fellow aspirants!
+#HistoryGK</textarea>
 
+    <div class="status-counter">
+      <span id="statusCounter">📊 Loaded Questions: 10 / 10</span>
+      <span id="autoSaveIndicator" style="color: #10b981; font-size: 11px;">● Auto-Save Active</span>
+    </div>
+
+    <!-- VIRAL CHALLENGE TOGGLE -->
+    <label class="challenge-toggle-box" for="chkChallengeMode">
+      <span>🎯 Q10 Comment Challenge Mode (Boosts Viral Reach)</span>
+      <input type="checkbox" id="chkChallengeMode" onchange="toggleChallengeMode()" checked>
+    </label>
+
+    <!-- Typography Controls -->
+    <div class="typo-panel">
+      <div class="typo-row">
+        <div>
+          <div class="typo-label">Font Family:</div>
+          <select id="selFontFamily" onchange="applyTypography(true)">
+            <option value="'Poppins', sans-serif" selected>Poppins (Clean & Bold)</option>
+            <option value="'Inter', sans-serif">Inter (Modern Sans)</option>
+            <option value="'Montserrat', sans-serif">Montserrat (Geometric)</option>
+            <option value="'Roboto', sans-serif">Roboto (Classic)</option>
+            <option value="'Merriweather', serif">Merriweather (Editorial)</option>
+          </select>
+        </div>
+        <div>
+          <div class="typo-label">Question Boldness:</div>
+          <select id="selQWeight" onchange="applyTypography(true)">
+            <option value="700" selected>Bold (700)</option>
+            <option value="800">Extra Bold (800)</option>
+            <option value="900">Black (900)</option>
+            <option value="600">Semi Bold (600)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="typo-row">
+        <div>
+          <div class="typo-label">Title Size: <span id="lblTitleSize">32px</span></div>
+          <input type="range" id="rngTitleSize" min="24" max="44" value="32" oninput="applyTypography(true)">
+        </div>
+        <div>
+          <div class="typo-label">Ques Size: <span id="lblQSize">22px</span></div>
+          <input type="range" id="rngQSize" min="16" max="36" value="22" oninput="applyTypography(true)">
+        </div>
+        <div>
+          <div class="typo-label">Ans Size: <span id="lblASize">22px</span></div>
+          <input type="range" id="rngASize" min="16" max="36" value="22" oninput="applyTypography(true)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden Caption for FB -->
+    <input type="hidden" id="fbCaption" value="">
+
+    <!-- Actions -->
+    <div class="btn-grid">
+      <button class="btn-caption" onclick="copyViralCaption()">📋 Copy FB Viral Caption</button>
+      <button class="btn-paste" onclick="onlyPasteClipboard()">📋 Click Paste</button>
+      <button class="btn-run" onclick="generateCards()">⚡ Generate / Run</button>
+      <button class="btn-emerald" onclick="downloadImage()">📥 Download HD (4:5)</button>
+      <button class="btn-fb" onclick="shareToFacebook()">🚀 Direct Share to FB</button>
+    </div>
+  </div>
+
+  <!-- LIVE PREVIEW -->
+  <div class="dark-card" style="padding: 10px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+      <div class="card-title" style="margin:0;">📱 Live Mobile Preview</div>
+      <span style="font-size: 11px; color: #10b981; font-weight: 700;">● 4:5 FB Ratio (10 Qs Ultra)</span>
+    </div>
+
+    <div class="preview-viewport-wrapper">
+      <div id="previewViewport">
+        <div id="capture-card">
+          
+          <div class="top-header-wrap">
+            <div class="top-line-behind"></div>
+            <div class="top-logo">
+              <span class="logo-red">A one</span><span class="logo-black">Notes</span>
+            </div>
+            
+            <div class="top-hook-badge" id="outHookBadge">🔥 90% Aspirants Fail In Q7</div>
+
+            <div class="top-follow-pill">A one Notes : Follow</div>
+          </div>
+
+          <div class="title-banner">
+            <div class="title-pill">
+              <div class="title-main" id="outSubject">HISTORY</div>
+              <div class="title-sub" id="outSubTopic">( Ancient India )</div>
+              <div class="title-part" id="outPart">Part 1</div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <div class="watermark">A one Notes</div>
+            <table>
+              <thead>
+                <tr>
+                  <th class="th-q">Questions</th>
+                  <th class="th-a">Answers</th>
+                </tr>
+              </thead>
+              <tbody id="qaBody"></tbody>
+            </table>
+          </div>
+
+          <div class="footer-wrap">
+            <div class="footer-line-behind"></div>
+            <div class="footer-brand">
+              <span class="footer-book-icon">📖</span>
+              <div class="footer-title">
+                <span class="f-red">A one</span><span class="f-black">Notes</span>
+              </div>
+            </div>
+            <div class="footer-follow-btn">Important For All Exams</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHIVE (IndexedDB) -->
+  <div class="dark-card">
+    <div class="card-title">📚 Question Bank (Archive)</div>
+
+    <div class="subject-pill-row">
+      <button class="subj-pill active" onclick="filterBySubject('History', this)">History</button>
+      <button class="subj-pill" onclick="filterBySubject('Geography', this)">Geography</button>
+      <button class="subj-pill" onclick="filterBySubject('Polity', this)">Polity</button>
+      <button class="subj-pill" onclick="filterBySubject('Science', this)">Science</button>
+      <button class="subj-pill" onclick="filterBySubject('Economics', this)">Economics</button>
+    </div>
+
+    <div class="library-list" id="savedListContainer"></div>
+
+    <div style="display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;">
+      <button class="btn-dark" style="flex:1;" onclick="saveToDatabase(true)">💾 Save</button>
+      <button class="btn-dark" style="flex:1;" onclick="downloadSubjectPDF()">📄 PDF</button>
+      <button class="btn-dark" onclick="exportJSON()">📤 Backup</button>
+      <label class="btn-dark" style="cursor: pointer; display: flex; align-items: center; margin: 0;">
+        📥 Import <input type="file" id="jsonFileInput" style="display: none;" accept=".json" onchange="importJSON(event)">
+      </label>
+    </div>
+  </div>
+
+</div>
+
+<script>
   let parsedQAData = [];
-  let currentMCQData = {
-    category: '🌍 WORLD GEOGRAPHY QUIZ 🧠',
-    brand: 'A ONE NOTES',
-    qPrefix: 'Q.1',
-    questionHTML: '',
-    options: [],
-    correctLetter: '',
-    ctaMain: '👇 Comment your answer below! 🔥',
-    ctaSub: '❤️ Like | ➕ Follow 🎯'
+  let currentMeta = { 
+    subject: 'History', 
+    subTopic: 'Ancient India', 
+    part: 'Part 1', 
+    caption: '',
+    hook: '🔥 90% Aspirants Fail In Q7'
   };
-
-  let currentMeta = {
-    subject: 'Geography',
-    subTopic: 'World Geography',
-    part: 'Quiz 1',
-    caption: ''
-  };
+  let currentSubjectFilter = 'History';
+  let autoSaveTimer = null;
+  let isChallengeMode = true;
 
   const pastelRowColors = [
     '#ffffff', '#f8fafc', '#f0fdf4', '#fefce8', '#eff6ff',
     '#faf5ff', '#fff7ed', '#f0fdfa', '#fdf2f8', '#fffbeb'
   ];
 
-  const engagementColors = ['#dc2626', '#1d4ed8', '#047857', '#d97706', '#7c3aed', '#0f172a', '#b91c1c'];
+  const questionWords = new Set([
+    'what', 'where', 'when', 'who', 'whom', 'whose', 'which', 'why', 'how', 'name',
+    'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
+    'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
+    'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
+  ]);
 
-  function colorizeQuestionWords(plainText) {
-    if (!plainText) return '';
-    const words = plainText.trim().split(/\s+/);
-    return words.map((w, idx) => {
-      const color = engagementColors[idx % engagementColors.length];
-      return `<span style="color: ${color};">${w}</span>`;
-    }).join(' ');
-  }
+  const stopWords = new Set([
+    'the', 'is', 'at', 'which', 'on', 'a', 'an', 'and', 'or', 'in', 'of', 'for', 'to', 'from',
+    'by', 'with', 'was', 'were', 'has', 'had', 'been', 'be', 'are', 'this', 'that', 'these', 'those'
+  ]);
 
   /* ==========================================================
-     1. INDEXEDDB DATABASE
+     1. INDEXEDDB ENGINE (असीमित स्टोरेज, नो 5MB लिमिट)
      ========================================================== */
-  const DB_NAME = 'AoneNotesMultiStudioDB_v10';
+  const DB_NAME = 'AoneNotesDB';
   const DB_VERSION = 1;
-  const STORE_NAME = 'allSets';
+  const STORE_NAME = 'aoneQuestionSets';
 
   function initDB() {
     return new Promise((resolve, reject) => {
@@ -1149,7 +896,6 @@ Ans: Mahavira
         if (!db.objectStoreNames.contains(STORE_NAME)) {
           const store = db.createObjectStore(STORE_NAME, { keyPath: 'id' });
           store.createIndex('subject', 'subject', { unique: false });
-          store.createIndex('mode', 'mode', { unique: false });
         }
       };
       request.onsuccess = () => resolve(request.result);
@@ -1190,14 +936,31 @@ Ans: Mahavira
     });
   }
 
+  // पुराने LocalStorage डेटा को IndexedDB में ऑटोमैटिक ट्रांसफर करना
+  async function migrateOldLocalStorage() {
+    try {
+      const oldData = localStorage.getItem('aone_notes_db_v1');
+      if (oldData) {
+        const parsed = JSON.parse(oldData);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          for (const item of parsed) {
+            await dbPut(item);
+          }
+          localStorage.removeItem('aone_notes_db_v1');
+        }
+      }
+    } catch (e) {
+      console.warn("Storage Migration Note:", e);
+    }
+  }
+
   /* ==========================================================
-     2. SETTINGS MEMORY (PERSISTENCE)
+     2. SETTINGS MEMORY (फ़ॉन्ट साइज़ और स्टाइल्स को याद रखना)
      ========================================================== */
-  const SETTINGS_KEY = 'aone_multi_typography_settings_v10';
+  const SETTINGS_KEY = 'aone_notes_typography_settings';
 
   function saveTypographySettings() {
     const settings = {
-      appMode: currentAppMode,
       fontFamily: document.getElementById('selFontFamily').value,
       qWeight: document.getElementById('selQWeight').value,
       titleSize: document.getElementById('rngTitleSize').value,
@@ -1212,14 +975,13 @@ Ans: Mahavira
     if (!raw) return;
     try {
       const s = JSON.parse(raw);
-      if (s.appMode) currentAppMode = s.appMode;
       if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
       if (s.qWeight) document.getElementById('selQWeight').value = s.qWeight;
       if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
       if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
       if (s.aSize) document.getElementById('rngASize').value = s.aSize;
     } catch (e) {
-      console.warn(e);
+      console.warn("Settings load error:", e);
     }
   }
 
@@ -1237,23 +999,18 @@ Ans: Mahavira
     const card = document.getElementById('capture-card');
     card.style.fontFamily = selectedFont;
 
-    if (currentAppMode === 'mcq') {
-      document.getElementById('mcqCategoryTitle').style.fontSize = titleSize + 'px';
-      document.getElementById('mcqQuestionArea').style.fontSize = qSize + 'px';
-      document.getElementById('mcqQuestionArea').style.fontWeight = qWeight;
-      document.querySelectorAll('.mcq-opt-label').forEach(el => {
-        el.style.fontSize = aSize + 'px';
-      });
-    } else {
-      document.getElementById('outSubject').style.fontSize = titleSize + 'px';
-      document.querySelectorAll('.td-q').forEach(el => {
-        el.style.fontSize = qSize + 'px';
-        el.style.fontWeight = qWeight;
-      });
-      document.querySelectorAll('.td-a').forEach(el => {
-        el.style.fontSize = aSize + 'px';
-      });
-    }
+    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
+    document.getElementById('outSubTopic').style.fontSize = Math.round(titleSize * 0.75) + 'px';
+    document.getElementById('outPart').style.fontSize = Math.round(titleSize * 0.70) + 'px';
+
+    document.querySelectorAll('.td-q').forEach(el => {
+      el.style.fontSize = qSize + 'px';
+      el.style.fontWeight = qWeight;
+    });
+
+    document.querySelectorAll('.td-a').forEach(el => {
+      el.style.fontSize = aSize + 'px';
+    });
 
     if (shouldSave) {
       saveTypographySettings();
@@ -1262,200 +1019,87 @@ Ans: Mahavira
   }
 
   /* ==========================================================
-     3. MODE SWITCHING WITH PRESERVATION
+     3. HOOK & CHALLENGE CONTROLS
      ========================================================== */
-  function setAppMode(mode) {
-    const currentInputVal = document.getElementById('smartInput').value;
-    if (currentInputVal && currentInputVal.trim().length > 0) {
-      modeDataStore[currentAppMode] = currentInputVal;
+  function updateCustomHook(val) {
+    if (val !== 'custom') {
+      document.getElementById('txtCustomHook').value = val;
     }
-
-    currentAppMode = mode;
-    const card = document.getElementById('capture-card');
-    const mcqLayout = document.getElementById('mcqLayoutWrap');
-    const oneLinerLayout = document.getElementById('oneLinerLayoutWrap');
-    const btnOne = document.getElementById('btnTabOneLiner');
-    const btnMCQ = document.getElementById('btnTabMCQ');
-    const oneLinerToggle = document.getElementById('oneLinerToggleWrap');
-    const mcqToggle = document.getElementById('mcqToggleWrap');
-    const ratioBadge = document.getElementById('ratioBadge');
-    const boxTitle = document.getElementById('inputBoxTitle');
-    const lblTitle = document.getElementById('lblTitleText');
-    const lblAns = document.getElementById('lblAnsText');
-
-    if (mode === 'mcq') {
-      btnMCQ.classList.add('active');
-      btnOne.classList.remove('active');
-      card.classList.add('mcq-view-active');
-      card.style.background = '#fffdf0';
-      mcqLayout.style.display = 'flex';
-      oneLinerLayout.style.display = 'none';
-      oneLinerToggle.style.display = 'none';
-      mcqToggle.style.display = 'block';
-      ratioBadge.innerText = '● 4:5 FB Ratio (MCQ Mode)';
-      boxTitle.innerText = '📝 MCQ Raw Input:';
-      lblTitle.innerText = 'Header Size:';
-      lblAns.innerText = 'Options Size:';
-    } else {
-      btnOne.classList.add('active');
-      btnMCQ.classList.remove('active');
-      card.classList.remove('mcq-view-active');
-      card.style.background = '#ffffff';
-      card.style.border = 'none';
-      card.style.boxShadow = 'none';
-      mcqLayout.style.display = 'none';
-      oneLinerLayout.style.display = 'flex';
-      oneLinerToggle.style.display = 'block';
-      mcqToggle.style.display = 'none';
-      ratioBadge.innerText = '● 4:5 FB Ratio (10 Qs One-Liner)';
-      boxTitle.innerText = '📝 10 Qs Raw Content:';
-      lblTitle.innerText = 'Subject Size:';
-      lblAns.innerText = 'Answer Size:';
-    }
-
-    document.getElementById('smartInput').value = modeDataStore[mode] || '';
-
-    parseSmartInput();
-    saveTypographySettings();
-    setTimeout(updatePreviewScale, 50);
+    applyHookDirectly();
   }
 
-  function toggleRevealAnswer() {
-    isRevealAnswer = document.getElementById('chkRevealAnswer').checked;
-    renderMCQCard();
-    notify(isRevealAnswer ? "✅ Answer Highlighted" : "Quiz Mode Neutral");
+  function applyHookDirectly() {
+    const val = document.getElementById('txtCustomHook').value.trim() || '🔥 90% Aspirants Fail In Q7';
+    currentMeta.hook = val;
+    document.getElementById('outHookBadge').innerText = val;
+    saveToDatabase(false);
   }
 
   function toggleChallengeMode() {
     isChallengeMode = document.getElementById('chkChallengeMode').checked;
-    renderOneLinerCard();
-    notify(isChallengeMode ? "🎯 Q10 Challenge Active" : "Standard Q10 Mode");
+    renderCard();
+    saveToDatabase(false);
+    notify(isChallengeMode ? "🎯 Q10 Challenge Mode Activated!" : "Standard Q10 Mode Activated!");
   }
 
-  /* ==========================================================
-     4. BULLETPROOF PARSERS (ROBUST FOR MOBILE COPY-PASTE)
-     ========================================================== */
+  async function copyViralCaption() {
+    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
+    try {
+      await navigator.clipboard.writeText(caption);
+      notify("📋 Caption Copied to Clipboard!");
+    } catch (e) {
+      notify("❌ Failed to copy caption.");
+    }
+  }
+
+  async function onlyPasteClipboard() {
+    try {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        const text = await navigator.clipboard.readText();
+        if (text && text.trim().length > 0) {
+          document.getElementById('smartInput').value = text;
+          generateCards();
+          return;
+        }
+      }
+    } catch (err) {
+      console.warn("Clipboard access denied", err);
+    }
+    notify("💡 Paste text manually, then tap 'Generate / Run'");
+    document.getElementById('smartInput').focus();
+  }
+
+  function generateCards() {
+    try {
+      parseSmartInput();
+      saveToDatabase(false);
+      notify("⚡ 10 Questions Generated & Auto-Saved!");
+    } catch (e) {
+      alert("Parsing Error: " + e.message);
+    }
+  }
+
+  function autoSaveHandler() {
+    const ind = document.getElementById('autoSaveIndicator');
+    if (ind) ind.innerText = "⏳ Saving...";
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => {
+      parseSmartInput();
+      saveToDatabase(false);
+      if (ind) ind.innerText = "● Auto-Saved";
+    }, 1000);
+  }
+
   function cleanLine(str) {
     return str.replace(/\u00A0/g, ' ')
-              .replace(/[\u2000-\u200B\u200C\u200D\uFEFF]/g, ' ')
+              .replace(/[\u200B-\u200D\uFEFF]/g, '')
               .trim();
   }
 
   function parseSmartInput() {
-    const raw = document.getElementById('smartInput').value || '';
+    let raw = document.getElementById('smartInput').value || '';
     if (!raw.trim()) return;
 
-    if (currentAppMode === 'mcq') {
-      parseMCQInput(raw);
-    } else {
-      parseOneLinerInput(raw);
-    }
-  }
-
-  // --- MCQ PARSER ---
-  function parseMCQInput(raw) {
-    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
-    
-    currentMCQData = {
-      category: '🌍 WORLD GEOGRAPHY QUIZ 🧠',
-      brand: 'A ONE NOTES',
-      qPrefix: 'Q.1',
-      questionHTML: '',
-      options: [],
-      correctLetter: '',
-      ctaMain: '👇 Comment your answer below! 🔥',
-      ctaSub: '❤️ Like | ➕ Follow 🎯'
-    };
-
-    let captionLines = [];
-    let detectedQ = '';
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-
-      // 1. CAPTION / HASHTAG LINES
-      if (line.toLowerCase().startsWith('caption:') || line.includes('#')) {
-        captionLines.push(line.replace(/^caption:\s*/i, ''));
-        continue;
-      }
-
-      // 2. ANSWER LINE
-      const ansMatch = line.match(/^(?:Answer|Ans|उत्तर)[\:\-\s]*\(?([A-D])\)?[\)\.\:\-\s]*(.*)/i);
-      if (ansMatch) {
-        if (ansMatch[1]) {
-          currentMCQData.correctLetter = ansMatch[1].toUpperCase();
-        } else if (ansMatch[2]) {
-          const firstChar = ansMatch[2].trim().charAt(0).toUpperCase();
-          if (['A','B','C','D'].includes(firstChar)) currentMCQData.correctLetter = firstChar;
-        }
-        continue;
-      }
-
-      // 3. OPTIONS: A) B) C) D) or (A) (B)
-      const optMatch = line.match(/^[\(\[]?\s*([A-D])\s*[\)\.\:\-]?\s+(.*)/i);
-      if (optMatch) {
-        currentMCQData.options.push({
-          letter: optMatch[1].toUpperCase(),
-          text: optMatch[2].trim()
-        });
-        continue;
-      }
-
-      // 4. CTA / HOOK LINE
-      if (line.includes('Comment') || line.includes('Option') || line.includes('लिखें') || line.includes('👇')) {
-        currentMCQData.ctaMain = line;
-        continue;
-      }
-      if (line.includes('Like') || line.includes('Follow') || line.includes('❤️') || line.includes('➕')) {
-        currentMCQData.ctaSub = line;
-        continue;
-      }
-
-      // 5. TOP CATEGORY TITLE (Line 1 Auto-Detect)
-      if (i === 0 && (line.includes('QUIZ') || line.includes('AFFAIRS') || line.includes('🌍') || line.includes('🏛️') || line.includes('🎯') || line.includes('🧠') || line.length < 50)) {
-        currentMCQData.category = line;
-        continue;
-      }
-
-      // 6. BRAND CAPSULE
-      if (i === 1 && !line.match(/^[QA-D0-9\(\.]/i) && line.length < 35 && !line.includes('?')) {         currentMCQData.brand = line;         continue;       }        // 7. QUESTION DETECTION       if (!detectedQ && (line.match(/^(?:Q\.?\s*\d*\vert{}\d+[\.\)]|\bQ\b)/i) || line.includes('?'))) {
-        let prefix = 'Q.1';
-        let cleanQ = line;
-        const pMatch = line.match(/^(Q\.?\s*\d*|\d+[\.\)])\s*/i);
-        if (pMatch) {
-          prefix = pMatch[1].trim();
-          if (!prefix.endsWith('.') && !prefix.includes('.')) prefix += '.';
-          cleanQ = line.substring(pMatch[0].length).trim();
-        } else if (cleanQ.toLowerCase().startsWith('q.')) {
-          cleanQ = cleanQ.substring(2).trim();
-        }
-        currentMCQData.qPrefix = prefix;
-        detectedQ = cleanQ;
-        continue;
-      }
-    }
-
-    if (detectedQ) {
-      currentMCQData.questionHTML = colorizeQuestionWords(detectedQ);
-    } else {
-      currentMCQData.questionHTML = colorizeQuestionWords('Which is the deepest trench in the world? 🌊');
-    }
-
-    if (captionLines.length > 0) {
-      currentMeta.caption = captionLines.join('\n');
-    } else {
-      currentMeta.caption = `${detectedQ || 'GK Quiz'}\n\nDrop your answer below! 👇🚀\n#Quiz #GeneralKnowledge`;
-    }
-    document.getElementById('fbCaption').value = currentMeta.caption;
-
-    document.getElementById('headerDetectedBadge').innerText = currentMCQData.category.replace(/[^\w\s\u0900-\u097F]/gi, '').trim().substring(0, 22);
-    document.getElementById('statusCounter').innerText = `📊 Loaded MCQ: ${currentMCQData.qPrefix} (${currentMCQData.options.length} Options)`;
-
-    renderMCQCard();
-  }
-
-  // --- ONE-LINER PARSER (10 QUESTIONS) ---
-  function parseOneLinerInput(raw) {
     const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
     parsedQAData = [];
     let captionLines = [];
@@ -1465,44 +1109,61 @@ Ans: Mahavira
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // A. Header Line
+      // A. Header
       if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
         if (line.includes('🎯') || line.toLowerCase().includes('part') || line.includes('भाग') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
           headerParsed = true;
           const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
           const parts = clean.split(',').map(s => s.trim());
-          if (parts[0]) currentMeta.subject = parts[0].toUpperCase();
+          
+          if (parts[0]) {
+            const low = parts[0].toLowerCase();
+            if (low.includes('history') || low.includes('इतिहास')) currentMeta.subject = 'History';
+            else if (low.includes('geography') || low.includes('भूगोल')) currentMeta.subject = 'Geography';
+            else if (low.includes('polity') || low.includes('राज')) currentMeta.subject = 'Polity';
+            else if (low.includes('science') || low.includes('विज्ञान')) currentMeta.subject = 'Science';
+            else if (low.includes('eco') || low.includes('अर्थ')) currentMeta.subject = 'Economics';
+            else currentMeta.subject = parts[0];
+          }
           if (parts[1]) currentMeta.subTopic = parts[1];
           if (parts[2]) currentMeta.part = parts[2];
+
           document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part})`;
           continue;
         }
       }
 
       // B. Question Line
-      const qStartMatch = line.match(/^(?:Q\.?\s*(\d+|[०-९]+)|(\d+|[०-९]+)[\.\)])\s*(.*)/i);
+      const qStartMatch = line.match(/^(\d+|[०-९]+)\.\s*(.*)/);
       if (qStartMatch) {
-        if (currentQ) parsedQAData.push(currentQ);
-        const num = qStartMatch[1] || qStartMatch[2];
-        let restOfLine = qStartMatch[3].trim();
+        if (currentQ) {
+          parsedQAData.push(currentQ);
+        }
+        const num = qStartMatch[1];
+        let restOfLine = qStartMatch[2].trim();
 
         const qMarkIdx = restOfLine.indexOf('?');
         if (qMarkIdx !== -1) {
           const actualQ = restOfLine.substring(0, qMarkIdx).trim();
           const afterQ = restOfLine.substring(qMarkIdx + 1).trim();
-          const sameLineAns = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
-          if (sameLineAns) {
-            parsedQAData.push({ num: num, q: actualQ, a: sameLineAns[1].trim() });
+          
+          const sameLineAnsMatch = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
+          if (sameLineAnsMatch) {
+            parsedQAData.push({ num: num, q: actualQ, a: sameLineAnsMatch[1].trim() });
             currentQ = null;
             continue;
           } else if (afterQ.length > 0) {
             parsedQAData.push({ num: num, q: actualQ, a: afterQ });
             currentQ = null;
             continue;
+          } else {
+            currentQ = { num: num, q: actualQ, a: '' };
+            continue;
           }
+        } else {
+          currentQ = { num: num, q: restOfLine, a: '' };
+          continue;
         }
-        currentQ = { num: num, q: restOfLine.replace(/\?+$/, '').trim(), a: '' };
-        continue;
       }
 
       // C. Answer Line
@@ -1510,6 +1171,7 @@ Ans: Mahavira
       if (ansMatch) {
         const ansText = ansMatch[1].trim();
         if (currentQ) {
+          currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
           currentQ.a = ansText;
           parsedQAData.push(currentQ);
           currentQ = null;
@@ -1521,17 +1183,36 @@ Ans: Mahavira
 
       // D. Multi-line continuation
       if (currentQ && !currentQ.a) {
-        currentQ.q += ' ' + line.replace(/\?+$/, '').trim();
+        const qMarkIdx = line.indexOf('?');
+        if (qMarkIdx !== -1) {
+          currentQ.q += ' ' + line.substring(0, qMarkIdx).trim();
+          const afterQ = line.substring(qMarkIdx + 1).trim();
+          const inlineAns = afterQ.match(/^(?:Ans|Answer|उत्तर)[\:\-\s]*(.*)/i);
+          if (inlineAns) {
+            currentQ.a = inlineAns[1].trim();
+            parsedQAData.push(currentQ);
+            currentQ = null;
+          } else if (afterQ.length > 0) {
+            currentQ.a = afterQ;
+            parsedQAData.push(currentQ);
+            currentQ = null;
+          }
+        } else {
+          currentQ.q += ' ' + line;
+        }
         continue;
       }
 
-      // E. Captions & Hashtags
-      if (line.includes('#') || parsedQAData.length >= 10) {
+      // E. Captions
+      if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर') || parsedQAData.length >= 10) {
         captionLines.push(line);
       }
     }
 
-    if (currentQ) parsedQAData.push(currentQ);
+    if (currentQ) {
+      currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+      parsedQAData.push(currentQ);
+    }
 
     if (captionLines.length > 0) {
       currentMeta.caption = captionLines.join('\n');
@@ -1539,48 +1220,82 @@ Ans: Mahavira
     }
 
     document.getElementById('statusCounter').innerText = `📊 Loaded Questions: ${parsedQAData.length} / 10`;
-    renderOneLinerCard();
+
+    renderCard();
   }
 
-  /* ==========================================================
-     5. RENDER FUNCTIONS
-     ========================================================== */
-  function renderMCQCard() {
-    document.getElementById('mcqCategoryTitle').innerText = currentMCQData.category || '🌍 WORLD GEOGRAPHY QUIZ 🧠';
-    document.getElementById('mcqBrandCapsule').innerText = 'A ONE NOTES';
-    
-    document.getElementById('mcqQPrefix').innerText = currentMCQData.qPrefix || 'Q.1';
-    document.getElementById('mcqQuestionText').innerHTML = currentMCQData.questionHTML || 'Which is the deepest trench in the world? 🌊';
+  function formatQuestion(qText, rowIndex) {
+    if (!qText) return '';
+    let words = qText.trim().split(/\s+/);
+    if (words.length === 0) return qText;
 
-    document.getElementById('mcqCtaPill').innerText = currentMCQData.ctaMain || '👇 Comment your answer below! 🔥';
-    document.getElementById('mcqLikeFollow').innerText = currentMCQData.ctaSub || '❤️ Like | ➕ Follow 🎯';
-
-    const container = document.getElementById('mcqOptionsContainer');
-    container.innerHTML = '';
-
-    currentMCQData.options.forEach((opt) => {
-      const card = document.createElement('div');
-      card.className = `mcq-option-card opt-card-${opt.letter}`;
-
-      if (isRevealAnswer && opt.letter === currentMCQData.correctLetter) {
-        card.classList.add('correct-revealed');
+    const candidateIndices = [];
+    words.forEach((w, idx) => {
+      const clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '').toLowerCase();
+      if (!questionWords.has(clean) && !stopWords.has(clean) && clean.length > 3) {
+        candidateIndices.push(idx);
       }
-
-      card.innerHTML = `
-        <div class="mcq-opt-badge">${opt.letter}</div>
-        <div class="mcq-opt-label">${opt.text}</div>
-      `;
-      container.appendChild(card);
     });
 
-    applyTypography(false);
-    updatePreviewScale();
+    const targetKeyIndex = candidateIndices.length > 0 ? candidateIndices[rowIndex % candidateIndices.length] : -1;
+
+    return words.map((w, wIdx) => {
+      let hasQMark = w.includes('?');
+      let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
+
+      let isQWord = questionWords.has(clean.toLowerCase());
+      let isKeyTarget = (wIdx === targetKeyIndex);
+
+      let styled = clean;
+      if (isQWord || isKeyTarget) {
+        styled = `<span class="word-red">${clean}</span>`;
+      }
+
+      if (hasQMark) styled += `<span class="q-mark">?</span>`;
+      return styled;
+    }).join(' ') + `<span class="q-mark">?</span>`;
   }
 
-  function renderOneLinerCard() {
-    document.getElementById('outSubject').innerText = currentMeta.subject || 'HISTORY';
+  function formatAnswer(aText, isTenthItem) {
+    if (isTenthItem && isChallengeMode) {
+      return `<span class="ans-challenge">💬 Comment your answer 👇</span>`;
+    }
+
+    if (!aText) return '';
+    let text = aText.trim();
+
+    if (text.includes('(') && text.includes(')')) {
+      return text.replace(/([^(]+)?(\([^)]+\))([^)]+)?/g, function(match, p1, p2, p3) {
+        let res = '';
+        if (p1) res += `<span class="ans-green">${p1}</span>`;
+        if (p2) res += `<span class="ans-maroon">${p2}</span>`;
+        if (p3) res += `<span class="ans-green">${p3}</span>`;
+        return res;
+      });
+    }
+
+    if (text.includes(',')) {
+      let idx = text.indexOf(',');
+      let before = text.substring(0, idx);
+      let after = text.substring(idx);
+      return `<span class="ans-green">${before}</span><span class="ans-maroon">${after}</span>`;
+    }
+
+    return `<span class="ans-green">${text}</span>`;
+  }
+
+  function renderCard() {
+    document.getElementById('outSubject').innerText = currentMeta.subject;
     document.getElementById('outSubTopic').innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
-    document.getElementById('outPart').innerText = currentMeta.part || 'Part 1';
+    document.getElementById('outHookBadge').innerText = currentMeta.hook || '🔥 90% Aspirants Fail In Q7';
+    
+    const partElem = document.getElementById('outPart');
+    if (currentMeta.part) {
+      partElem.innerText = currentMeta.part;
+      partElem.style.display = 'flex';
+    } else {
+      partElem.style.display = 'none';
+    }
 
     const tbody = document.getElementById('qaBody');
     tbody.innerHTML = '';
@@ -1593,22 +1308,21 @@ Ans: Mahavira
 
       const tdQ = document.createElement('td');
       tdQ.className = 'td-q';
-      const cleanNum = String(item.num ? item.num : (index + 1)).replace(/\.$/, '');
+      
+      const rawNum = item.num ? item.num : (index + 1);
+      const cleanNum = String(rawNum).replace(/\.$/, '');
 
+      // Flex wrapper से नंबर सर्कल में रहेगा और नेक्स्ट लाइन सीधी रहेगी
       tdQ.innerHTML = `
         <div class="q-wrap">
           <span class="q-num">${cleanNum}</span>
-          <div class="q-text">${item.q}?</div>
+          <div class="q-text">${formatQuestion(item.q, index)}</div>
         </div>
       `;
 
       const tdA = document.createElement('td');
       tdA.className = 'td-a';
-      if (index === 9 && isChallengeMode) {
-        tdA.innerHTML = `<span class="ans-challenge">💬 Comment answer 👇</span>`;
-      } else {
-        tdA.innerHTML = `<span class="ans-green">${item.a}</span>`;
-      }
+      tdA.innerHTML = formatAnswer(item.a, index === 9);
 
       tr.appendChild(tdQ);
       tr.appendChild(tdA);
@@ -1624,8 +1338,7 @@ Ans: Mahavira
     const card = document.getElementById('capture-card');
     if (!viewport || !card) return;
 
-    const wrapper = viewport.parentElement;
-    const containerWidth = wrapper.clientWidth || 360;
+    const containerWidth = viewport.parentElement.clientWidth;
     const scale = containerWidth / 1080;
     
     card.style.transform = `scale(${scale})`;
@@ -1633,77 +1346,6 @@ Ans: Mahavira
   }
 
   window.addEventListener('resize', updatePreviewScale);
-
-  /* ==========================================================
-     6. ACTIONS & ULTRA-ROBUST CLIPBOARD PASTE
-     ========================================================== */
-  async function copyViralCaption() {
-    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
-    try {
-      await navigator.clipboard.writeText(caption);
-      notify("📋 Facebook Caption Copied to Clipboard!");
-    } catch (e) {
-      notify("❌ Failed to copy caption.");
-    }
-  }
-
-  // ROBUST CLICK PASTE (Handles Android Chrome & Permissions)
-  async function onlyPasteClipboard() {
-    const input = document.getElementById('smartInput');
-    let pastedText = '';
-
-    try {
-      if (navigator.clipboard && navigator.clipboard.readText) {
-        pastedText = await navigator.clipboard.readText();
-      }
-    } catch (err) {
-      console.warn("Clipboard access blocked by browser:", err);
-    }
-
-    if (pastedText && pastedText.trim().length > 0) {
-      input.value = pastedText;
-      generateCards();
-      notify("📋 क्लिपबोर्ड से पेस्ट होकर कार्ड तैयार हो गया!");
-      return;
-    }
-
-    // Fallback if browser permission is blocked
-    input.focus();
-    notify("💡 बॉक्स में थोड़ा देर दबाकर (Long Press) 'Paste' करें।");
-  }
-
-  // INSTANT PASTE LISTENER (When pasting via Keyboard/Gboard directly)
-  window.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('smartInput');
-    input.addEventListener('paste', () => {
-      setTimeout(() => {
-        generateCards();
-        notify("⚡ पेस्ट होते ही कार्ड तैयार हो गया!");
-      }, 60);
-    });
-  });
-
-  function generateCards() {
-    try {
-      parseSmartInput();
-      saveToDatabase(false);
-      updatePreviewScale();
-      notify("⚡ Card Generated & Auto-Saved!");
-    } catch (e) {
-      alert("Parsing Error: " + e.message);
-    }
-  }
-
-  function autoSaveHandler() {
-    const ind = document.getElementById('autoSaveIndicator');
-    if (ind) ind.innerText = "⏳ Saving...";
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(() => {
-      parseSmartInput();
-      saveToDatabase(false);
-      if (ind) ind.innerText = "● Auto-Saved";
-    }, 600);
-  }
 
   async function getCardCanvas() {
     const card = document.getElementById('capture-card');
@@ -1715,7 +1357,7 @@ Ans: Mahavira
       height: 1350,
       scale: 2,
       useCORS: true,
-      backgroundColor: (currentAppMode === 'mcq') ? '#fffdf0' : '#ffffff',
+      backgroundColor: '#ffffff',
       logging: false
     });
 
@@ -1727,19 +1369,20 @@ Ans: Mahavira
     notify("⏳ Generating HD Image...");
     const canvas = await getCardCanvas();
     const link = document.createElement('a');
-    link.download = `A_one_Notes_${currentAppMode}_${Date.now()}.png`;
+    link.download = `A_one_Notes_${currentMeta.subject}_${currentMeta.part}.png`;
     link.href = canvas.toDataURL('image/png', 1.0);
     link.click();
-    notify("📥 HD Image Downloaded (4:5)!");
+    notify("📥 HD Image Downloaded!");
   }
 
   async function shareToFacebook() {
     const caption = document.getElementById('fbCaption').value || currentMeta.caption;
+    
     try {
       await navigator.clipboard.writeText(caption);
     } catch (e) {}
 
-    notify("⏳ Sharing post & copying caption...");
+    notify("⏳ Sharing post...");
     const canvas = await getCardCanvas();
 
     canvas.toBlob(async (blob) => {
@@ -1749,7 +1392,7 @@ Ans: Mahavira
         try {
           await navigator.share({
             files: [file],
-            title: 'A one Notes Quiz',
+            title: currentMeta.subject,
             text: caption
           });
           notify("🚀 Share dialog opened!");
@@ -1768,26 +1411,29 @@ Ans: Mahavira
   }
 
   /* ==========================================================
-     7. ARCHIVE (INDEXEDDB) LOGIC
+     4. ASYNC INDEXEDDB ARCHIVE OPERATIONS
      ========================================================== */
   async function saveToDatabase(isManual = false) {
+    if (parsedQAData.length === 0) return;
     const db = await dbGetAll();
     const rawVal = document.getElementById('smartInput').value;
 
     const existing = db.find(item => 
       item.subject === currentMeta.subject && 
-      item.mode === currentAppMode &&
-      item.smartRaw === rawVal
+      item.subTopic === currentMeta.subTopic && 
+      item.part === currentMeta.part
     );
 
     const entry = {
       id: existing ? existing.id : Date.now(),
-      mode: currentAppMode,
       subject: currentMeta.subject,
       subTopic: currentMeta.subTopic,
       part: currentMeta.part,
       caption: currentMeta.caption,
+      hook: currentMeta.hook,
       smartRaw: rawVal,
+      questions: parsedQAData.slice(0, 10),
+      isChallengeMode: isChallengeMode,
       date: new Date().toLocaleDateString('en-US')
     };
 
@@ -1801,21 +1447,18 @@ Ans: Mahavira
     const container = document.getElementById('savedListContainer');
     container.innerHTML = '';
 
-    const filtered = (currentSubjectFilter === 'All') 
-      ? db 
-      : db.filter(item => item.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+    const filtered = db.filter(item => item.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">No posts saved in archive.</div>`;
+      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">No posts saved for ${currentSubjectFilter}.</div>`;
       return;
     }
 
     filtered.forEach(item => {
       const div = document.createElement('div');
       div.className = 'saved-row';
-      const badge = item.mode === 'mcq' ? '🔘 MCQ' : '📝 10Qs';
       div.innerHTML = `
-        <div><span style="color:#38bdf8; font-weight:800;">[${badge}]</span> <strong>${item.subTopic || item.subject}</strong></div>
+        <div><strong>${item.subTopic}</strong> (${item.part})</div>
         <div style="display: flex; gap: 5px;">
           <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
           <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
@@ -1837,56 +1480,66 @@ Ans: Mahavira
     const item = db.find(x => x.id === id);
     if (!item) return;
 
-    if (item.mode && item.mode !== currentAppMode) {
-      setAppMode(item.mode);
-    }
-
     document.getElementById('smartInput').value = item.smartRaw || '';
     currentMeta = {
       subject: item.subject,
       subTopic: item.subTopic,
       part: item.part,
-      caption: item.caption
+      caption: item.caption,
+      hook: item.hook || '🔥 90% Aspirants Fail In Q7'
     };
+    parsedQAData = item.questions;
+    isChallengeMode = item.isChallengeMode !== undefined ? item.isChallengeMode : true;
+    document.getElementById('chkChallengeMode').checked = isChallengeMode;
+    document.getElementById('txtCustomHook').value = currentMeta.hook;
 
-    parseSmartInput();
-    notify(`📖 Loaded: ${item.subject}`);
+    renderCard();
+    notify(`📖 Loaded: ${item.subject} (${item.part})`);
   }
 
   async function deleteItem(id) {
     await dbDelete(id);
     await renderLibrary();
-    notify("🗑️ Deleted from archive");
+    notify("🗑️ Post deleted from database");
   }
 
   async function downloadSubjectPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     const all = await dbGetAll();
-    const db = (currentSubjectFilter === 'All') ? all : all.filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
+    const db = all.filter(x => x.subject.toLowerCase() === currentSubjectFilter.toLowerCase());
 
     if (db.length === 0) {
-      alert("No notes saved to generate PDF!");
+      alert(`No notes saved under "${currentSubjectFilter}"!`);
       return;
     }
 
     doc.setFontSize(18);
-    doc.text(`A one Notes - Archive Export`, 14, 20);
-    doc.line(14, 25, 196, 25);
+    doc.text(`A one Notes - ${currentSubjectFilter}`, 14, 20);
+    doc.setFontSize(11);
+    doc.text(`10 Question Sets & Answer Key`, 14, 28);
+    doc.line(14, 32, 196, 32);
 
-    let yPos = 35;
+    let yPos = 40;
+
     db.forEach((set) => {
       if (yPos > 260) { doc.addPage(); yPos = 20; }
-      doc.setFontSize(12);
-      doc.text(`[${set.mode.toUpperCase()}] ${set.subject} - ${set.date}`, 14, yPos);
-      yPos += 7;
-      doc.setFontSize(9);
-      const splitText = doc.splitTextToSize(set.smartRaw, 175);
-      doc.text(splitText, 14, yPos);
-      yPos += (splitText.length * 5) + 8;
+      doc.setFontSize(13);
+      doc.text(`${set.subTopic} (${set.part})`, 14, yPos);
+      yPos += 8;
+
+      set.questions.forEach((qa) => {
+        if (yPos > 275) { doc.addPage(); yPos = 20; }
+        doc.setFontSize(10);
+        doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
+        yPos += 5;
+        doc.text(`Ans: ${qa.a}`, 16, yPos);
+        yPos += 7;
+      });
+      yPos += 6;
     });
 
-    doc.save(`A_one_Notes_Archive.pdf`);
+    doc.save(`A_one_Notes_${currentSubjectFilter}.pdf`);
     notify("📄 PDF Downloaded!");
   }
 
@@ -1911,7 +1564,7 @@ Ans: Mahavira
             await dbPut(item);
           }
           await renderLibrary();
-          notify("📥 Backup imported to IndexedDB!");
+          notify("📥 Backup imported successfully to IndexedDB!");
         }
       } catch (err) {
         alert("Invalid JSON file!");
@@ -1931,10 +1584,11 @@ Ans: Mahavira
      INITIALIZATION ON LOAD
      ========================================================== */
   window.onload = async () => {
-    loadTypographySettings();
-    setAppMode(currentAppMode);
-    await renderLibrary();
-    setTimeout(updatePreviewScale, 150);
+    loadTypographySettings();       // 1. पिछली फ़ॉन्ट सेटिंग्स लोड करें
+    await migrateOldLocalStorage();  // 2. LocalStorage डेटा को IndexedDB में लाएँ
+    parseSmartInput();              // 3. डिफ़ॉल्ट सवाल पार्स करें
+    await renderLibrary();          // 4. लाइब्रेरी सूची रेंडर करें
+    setTimeout(updatePreviewScale, 300);
   };
 </script>
 </body>
