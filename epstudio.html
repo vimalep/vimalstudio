@@ -48,12 +48,13 @@
             padding: 14px;
             border-radius: 12px;
             color: #fff;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 900;
             text-align: center;
-            letter-spacing: 8px;
+            letter-spacing: 10px;
             margin: 16px 0;
             outline: none;
+            -webkit-text-security: disc; /* Numbers ko dot me hide karega */
         }
         .pin-btn {
             width: 100%;
@@ -196,7 +197,8 @@
         <div style="font-size: 18px; font-weight: 900; color: #f8fafc;">सुरक्षित एरिया (Protected Zone)</div>
         <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">कृपया 4 अंकों का गुप्त पिन दर्ज करें</div>
         
-        <input type="password" id="pinInputCode" class="pin-input" maxlength="4" placeholder="••••" autofocus>
+        <!-- AUTOMATIC NUMERIC DIALPAD ACTIVATED -->
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" id="pinInputCode" class="pin-input" maxlength="4" placeholder="••••" autocomplete="one-time-code" autofocus>
         <button class="pin-btn" onclick="verifyPinCode()">अनलाक करें ➔</button>
     </div>
 </div>
