@@ -258,7 +258,7 @@
       position: relative;
     }
 
-    /* CAPTURE CARD BASE */
+    /* CAPTURE CARD BASE (1080 x 1350 - 4:5 FB Ratio) */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -267,7 +267,7 @@
       max-width: 1080px;
       max-height: 1350px;
       background: #ffffff;
-      padding: 28px 40px 24px 40px;
+      padding: 24px 38px 20px 38px;
       position: absolute;
       top: 0;
       left: 0;
@@ -280,7 +280,7 @@
     }
 
     /* --------------------------------------
-       THEME 1: DEFAULT GREEN/RED TABLE
+       THEME 1: CLASSIC GREEN/RED TABLE
        -------------------------------------- */
     .theme-default .top-header-wrap {
       position: relative;
@@ -300,7 +300,9 @@
       z-index: 1;
       transform: translateY(-50%);
     }
-    .theme-default .top-logo {
+    .theme-default .top-logo-circle { display: none; }
+    .theme-default .top-tagline-block { display: none; }
+    .theme-default .top-logo-badge {
       position: relative;
       z-index: 2;
       background: #ffffff;
@@ -310,20 +312,20 @@
       display: inline-flex;
       align-items: center;
     }
-    .theme-default .top-logo .logo-red {
+    .theme-default .top-logo-badge .logo-red {
       color: #dc2626;
       font-weight: 900;
       font-size: 25px;
       font-family: 'Poppins', sans-serif;
     }
-    .theme-default .top-logo .logo-black {
+    .theme-default .top-logo-badge .logo-black {
       color: #0f172a;
       font-weight: 900;
       font-size: 25px;
       font-family: 'Poppins', sans-serif;
       margin-left: 6px;
     }
-    .theme-default .top-tagline {
+    .theme-default .top-tagline-default {
       position: relative;
       z-index: 2;
       background: #ffffff;
@@ -480,14 +482,11 @@
       min-width: 0;
       word-break: break-word;
     }
-    .theme-default .word-red { color: #dc2626; font-weight: 900; }
-    .theme-default .q-mark { color: #dc2626; font-weight: 900; }
     .theme-default .td-a {
       font-size: 21px;
       font-weight: 700;
     }
     .theme-default .ans-green { color: #15803d; font-weight: 700; }
-    .theme-default .ans-maroon { color: #800000; font-weight: 800; }
 
     .theme-default .footer-wrap {
       position: relative;
@@ -538,49 +537,53 @@
     }
 
     /* --------------------------------------
-       THEME 2: PHOTO THEME (K95 / 2-LINE STYLE)
+       THEME 2: PHOTO THEME (EXAM PREPARATION RED CAPSULE)
        -------------------------------------- */
     .theme-k95 {
-      padding: 24px 36px !important;
+      padding: 24px 38px 18px 38px !important;
       position: relative;
     }
     .theme-k95 .top-header-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 2px solid #b91c1c;
+      border-bottom: 2.5px solid #dc2626;
       padding-bottom: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       height: auto;
     }
     .theme-k95 .top-line-behind { display: none; }
+    .theme-k95 .top-logo-badge { display: none; }
+    .theme-k95 .top-tagline-default { display: none; }
     
-    .theme-k95 .top-logo {
+    .theme-k95 .top-logo-circle {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      width: 76px;
-      height: 76px;
-      border: 3px solid #dc2626;
+      width: 78px;
+      height: 78px;
+      border: 3.5px solid #dc2626;
       border-radius: 50%;
       background: #fff;
-      padding: 0;
+      padding: 2px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
-    .theme-k95 .top-logo .logo-red {
-      color: #000;
-      font-size: 24px;
+    .theme-k95 .top-logo-circle .circle-top {
+      color: #dc2626;
+      font-size: 17px;
       font-weight: 900;
       line-height: 1;
       font-family: 'Poppins', sans-serif;
     }
-    .theme-k95 .top-logo .logo-black {
-      color: #dc2626;
-      font-size: 14px;
-      font-weight: 800;
+    .theme-k95 .top-logo-circle .circle-bot {
+      color: #0f172a;
+      font-size: 11px;
+      font-weight: 900;
       line-height: 1;
-      margin-left: 0;
+      margin-top: 2px;
       font-family: 'Poppins', sans-serif;
+      text-transform: uppercase;
     }
 
     .theme-k95 .top-tagline-block {
@@ -589,32 +592,33 @@
       align-items: center;
       text-align: center;
     }
-    .theme-k95 .k95-brand-title {
-      font-size: 46px;
+    .theme-k95 .exam-brand-title {
+      font-size: 40px;
       font-weight: 900;
       color: #0f172a;
       letter-spacing: -0.5px;
       font-family: 'Poppins', sans-serif;
-      line-height: 1;
+      line-height: 1.1;
       display: flex;
       align-items: center;
-      gap: 2px;
+      gap: 6px;
     }
-    .theme-k95 .k95-brand-title span { color: #dc2626; }
-    .theme-k95 .top-tagline {
-      font-size: 20px;
+    .theme-k95 .exam-brand-title span { color: #dc2626; }
+    
+    .theme-k95 .exam-brand-subtitle {
+      font-size: 19px;
       font-weight: 800;
       color: #1e293b;
       margin-top: 4px;
       border-top: 2.5px solid #dc2626;
-      padding-top: 3px;
+      padding-top: 4px;
       letter-spacing: 0.5px;
     }
 
     .theme-k95 .top-follow-pill {
       background: #dc2626;
       color: #ffffff;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 800;
       padding: 8px 24px;
       border-radius: 40px;
@@ -623,34 +627,52 @@
       box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
     }
 
-    /* K95 Subject Title Banner (Capsule) */
+    /* Red Pill Header + BHAG System */
     .theme-k95 .title-banner {
       display: flex;
       justify-content: center;
+      align-items: center;
       margin-bottom: 12px;
+      position: relative;
     }
     .theme-k95 .title-pill {
-      background: #e60000;
+      background: #dc2626;
       border-radius: 50px;
-      padding: 6px 70px;
-      box-shadow: 0 4px 14px rgba(230, 0, 0, 0.35);
+      padding: 6px 36px;
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 14px;
     }
     .theme-k95 .title-main {
       background: transparent;
       color: #fff;
-      font-size: 36px;
+      font-size: 34px;
       font-weight: 900;
       padding: 0;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
     }
-    .theme-k95 .title-sub, .theme-k95 .title-part {
-      display: none !important;
+    .theme-k95 .title-sub {
+      background: rgba(0, 0, 0, 0.25);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 3px 14px;
+      border-radius: 20px;
+    }
+    .theme-k95 .title-part {
+      background: #ffffff;
+      color: #dc2626;
+      font-size: 20px;
+      font-weight: 900;
+      padding: 3px 16px;
+      border-radius: 20px;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     }
 
-    /* K95 Table/List Replacement */
+    /* K95 Que-Ans 2-line layout */
     .theme-k95 .table-container {
       border: none !important;
       background: transparent;
@@ -662,9 +684,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(-25deg);
-      font-size: 110px;
+      font-size: 85px;
       font-weight: 900;
-      color: rgba(220, 38, 38, 0.055);
+      color: rgba(220, 38, 38, 0.05);
       white-space: nowrap;
       pointer-events: none;
       user-select: none;
@@ -690,7 +712,7 @@
       display: flex;
       flex-direction: column;
       border-bottom: none !important;
-      padding: 3px 0;
+      padding: 2.5px 0;
       height: auto !important;
     }
     .theme-k95 td {
@@ -715,14 +737,14 @@
     .theme-k95 .q-num-box {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
     .theme-k95 .q-num {
       color: #000 !important;
       font-weight: 900 !important;
       font-size: 21px !important;
-      min-width: 24px;
+      min-width: 26px;
       text-align: left !important;
       font-family: inherit !important;
     }
@@ -736,8 +758,8 @@
       flex: 1;
     }
     .theme-k95 .td-a {
-      margin-top: 2px;
-      padding-left: 64px !important;
+      margin-top: 1px;
+      padding-left: 68px !important;
       font-size: 21px;
       font-weight: 800;
       line-height: 1.3;
@@ -745,10 +767,10 @@
     .theme-k95 .ans-k95-wrap {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
     .theme-k95 .a-prefix {
-      color: #15803d;
+      color: #000;
       font-weight: 900;
     }
     .theme-k95 .a-text {
@@ -759,7 +781,7 @@
     /* K95 Footer */
     .theme-k95 .footer-wrap {
       height: 48px;
-      margin-top: 8px;
+      margin-top: 6px;
       border-top: 1.5px solid #cbd5e1;
       padding-top: 6px;
       display: flex;
@@ -776,10 +798,10 @@
       padding: 0;
     }
     .theme-k95 .footer-book-icon {
-      font-size: 30px;
+      font-size: 28px;
     }
     .theme-k95 .footer-title {
-      font-size: 34px;
+      font-size: 32px;
       font-weight: 900;
       font-family: 'Poppins', sans-serif;
       letter-spacing: -0.5px;
@@ -850,10 +872,10 @@
   <div class="dark-card">
     <div class="card-title">
       <span>📝 Raw Text (Smart Paste):</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">इतिहास (भाग 2)</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">सामान्य विज्ञान (भाग 1)</span>
     </div>
     
-    <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें..." oninput="autoSaveHandler()">🎯 सामान्य विज्ञान, रसायन एवं भौतिक विज्ञान, भाग 1
+    <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें..." oninput="autoSaveHandler()">🎯 सामान्य विज्ञान, भौतिक व रसायन, भाग 1
 1. नीला लिटमस पत्र अम्ल में किस रंग का हो जाता है?
 Ans: लाल
 2. लाल लिटमस पत्र क्षार में किस रंग का हो जाता है?
@@ -895,7 +917,7 @@ Ans: कॉपर पाइराइट्स से
         <div>
           <div class="typo-label">थीम स्टाइल (Theme Select):</div>
           <select id="selTheme" onchange="changeTheme()">
-            <option value="theme-k95" selected>🔥 Photo Style (K95 Red Capsule)</option>
+            <option value="theme-k95" selected>🔥 Photo Capsule Style (Exam Prep)</option>
             <option value="theme-default">📋 Classic Green-Red Table</option>
           </select>
         </div>
@@ -913,8 +935,8 @@ Ans: कॉपर पाइराइट्स से
 
       <div class="typo-row">
         <div>
-          <div class="typo-label">Title Size: <span id="lblTitleSize">36px</span></div>
-          <input type="range" id="rngTitleSize" min="26" max="46" value="36" oninput="applyTypography(true)">
+          <div class="typo-label">Title Size: <span id="lblTitleSize">34px</span></div>
+          <input type="range" id="rngTitleSize" min="24" max="44" value="34" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Ques Size: <span id="lblQSize">20px</span></div>
@@ -950,35 +972,45 @@ Ans: कॉपर पाइराइट्स से
       <div id="previewViewport">
         <div id="capture-card" class="theme-k95">
           
-          <!-- TOP HEADER -->
+          <!-- TOP HEADER WITH EXAM PREPARATION BRANDING -->
           <div class="top-header-wrap">
             <div class="top-line-behind"></div>
             
-            <div class="top-logo">
-              <span class="logo-red">K95</span>
-              <span class="logo-black">Exam</span>
+            <!-- Circular Badge for Photo Theme -->
+            <div class="top-logo-circle">
+              <span class="circle-top">Exam</span>
+              <span class="circle-bot">Prep</span>
             </div>
 
+            <!-- Default Theme Logo -->
+            <div class="top-logo-badge">
+              <span class="logo-red">Exam</span>
+              <span class="logo-black">Preparation</span>
+            </div>
+
+            <div class="top-tagline-default">Study Hard &nbsp;|&nbsp; Achieve More</div>
+
+            <!-- Central Brand Title (Photo Theme) -->
             <div class="top-tagline-block">
-              <div class="k95-brand-title">K95<span>Exam</span></div>
-              <div class="top-tagline">सही तैयारी &nbsp;|&nbsp; सफलता की गारंटी</div>
+              <div class="exam-brand-title"><span>Exam</span> Preparation</div>
+              <div class="exam-brand-subtitle">सही तैयारी &nbsp;|&nbsp; सफलता की गारंटी</div>
             </div>
 
-            <div class="top-follow-pill">K95Exam : Follow</div>
+            <div class="top-follow-pill">Exam Preparation : Follow</div>
           </div>
 
-          <!-- TITLE BANNER -->
+          <!-- TITLE BANNER (INCLUDES BHAG SYSTEM) -->
           <div class="title-banner">
             <div class="title-pill">
               <div class="title-main" id="outSubject">सामान्य विज्ञान</div>
-              <div class="title-sub" id="outSubTopic">( रसायन एवं भौतिक )</div>
+              <div class="title-sub" id="outSubTopic">( भौतिक व रसायन )</div>
               <div class="title-part" id="outPart">भाग 1</div>
             </div>
           </div>
 
           <!-- TABLE / QA CONTAINER -->
           <div class="table-container">
-            <div class="watermark">K95 Exam</div>
+            <div class="watermark">Exam Preparation</div>
             <table>
               <thead>
                 <tr>
@@ -996,7 +1028,7 @@ Ans: कॉपर पाइराइट्स से
             <div class="footer-brand">
               <span class="footer-book-icon">📚</span>
               <div class="footer-title">
-                <span class="f-red">K95</span><span class="f-black">Exam</span>
+                <span class="f-red">Exam</span> <span class="f-black">Preparation</span>
               </div>
             </div>
             <div class="footer-follow-btn">सभी परीक्षाओं के लिए महत्वपूर्ण</div>
@@ -1035,19 +1067,13 @@ Ans: कॉपर पाइराइट्स से
 
 <script>
   let parsedQAData = [];
-  let currentMeta = { subject: 'सामान्य विज्ञान', subTopic: 'रसायन एवं भौतिक विज्ञान', part: 'भाग 1', caption: '' };
+  let currentMeta = { subject: 'सामान्य विज्ञान', subTopic: 'भौतिक व रसायन', part: 'भाग 1', caption: '' };
   let currentSubjectFilter = 'सामान्य विज्ञान';
   let autoSaveTimer = null;
   let currentTheme = 'theme-k95';
 
-  const hindiQuestionWords = new Set([
-    'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
-    'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
-    'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
-  ]);
-
   /* ==========================================================
-     1. THEME TOGGLER
+     1. THEME SWITCHER
      ========================================================== */
   function changeTheme() {
     currentTheme = document.getElementById('selTheme').value;
@@ -1125,539 +1151,4 @@ Ans: कॉपर पाइराइट्स से
       aSize: document.getElementById('rngASize').value,
       theme: currentTheme
     };
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  }
-
-  function loadTypographySettings() {
-    const raw = localStorage.getItem(SETTINGS_KEY);
-    const savedTheme = localStorage.getItem('exam_prep_chosen_theme');
-    if (savedTheme) {
-      currentTheme = savedTheme;
-      document.getElementById('selTheme').value = savedTheme;
-      document.getElementById('capture-card').className = savedTheme;
-    }
-    if (!raw) return;
-    try {
-      const s = JSON.parse(raw);
-      if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
-      if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
-      if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
-      if (s.aSize) document.getElementById('rngASize').value = s.aSize;
-    } catch (e) {
-      console.warn("Settings error:", e);
-    }
-  }
-
-  function applyTypography(shouldSave = false) {
-    const selectedFont = document.getElementById('selFontFamily').value;
-    const titleSize = document.getElementById('rngTitleSize').value;
-    const qSize = document.getElementById('rngQSize').value;
-    const aSize = document.getElementById('rngASize').value;
-
-    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
-    document.getElementById('lblQSize').innerText = qSize + 'px';
-    document.getElementById('lblASize').innerText = aSize + 'px';
-
-    const card = document.getElementById('capture-card');
-    card.style.fontFamily = selectedFont;
-
-    document.getElementById('outSubject').style.fontSize = titleSize + 'px';
-    const subTopicEl = document.getElementById('outSubTopic');
-    const partEl = document.getElementById('outPart');
-    if (subTopicEl) subTopicEl.style.fontSize = Math.round(titleSize * 0.70) + 'px';
-    if (partEl) partEl.style.fontSize = Math.round(titleSize * 0.65) + 'px';
-
-    document.querySelectorAll('.td-q').forEach(el => {
-      el.style.fontSize = qSize + 'px';
-    });
-
-    document.querySelectorAll('.td-a').forEach(el => {
-      el.style.fontSize = aSize + 'px';
-    });
-
-    if (shouldSave) {
-      saveTypographySettings();
-    }
-  }
-
-  /* ==========================================================
-     4. PARSER LOGIC
-     ========================================================== */
-  async function onlyPasteClipboard() {
-    try {
-      if (navigator.clipboard && navigator.clipboard.readText) {
-        const text = await navigator.clipboard.readText();
-        if (text && text.trim().length > 0) {
-          document.getElementById('smartInput').value = text;
-          generateCards();
-          notify("📋 पेस्ट होकर तुरंत अपडेट हो गया!");
-          return;
-        }
-      }
-    } catch (err) {}
-    notify("💡 बॉक्स में Paste करें और Generate दबाएं।");
-    document.getElementById('smartInput').focus();
-  }
-
-  function generateCards() {
-    try {
-      parseSmartInput();
-      saveToDatabase(false);
-      notify("⚡ कार्ड जनरेट और सेव हो गया!");
-    } catch (e) {
-      alert("Error: " + e.message);
-    }
-  }
-
-  function autoSaveHandler() {
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(() => {
-      parseSmartInput();
-      saveToDatabase(false);
-    }, 1200);
-  }
-
-  function cleanLine(str) {
-    return str.replace(/\u00A0/g, ' ')
-              .replace(/[\u200B-\u200D\uFEFF]/g, '')
-              .trim();
-  }
-
-  function parseSmartInput() {
-    let raw = document.getElementById('smartInput').value || '';
-    if (!raw.trim()) return;
-
-    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
-    parsedQAData = [];
-    let captionLines = [];
-    let currentQ = null;
-    let headerParsed = false;
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-
-      // A. Header Line
-      if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
-        if (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
-          headerParsed = true;
-          const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
-          const parts = clean.split(',').map(s => s.trim());
-          
-          if (parts[0]) {
-            if (parts[0].includes('इतिहास')) currentMeta.subject = 'इतिहास';
-            else if (parts[0].includes('भूगोल')) currentMeta.subject = 'भूगोल';
-            else if (parts[0].includes('राज')) currentMeta.subject = 'राजव्यवस्था';
-            else if (parts[0].includes('विज्ञान')) currentMeta.subject = 'सामान्य विज्ञान';
-            else if (parts[0].includes('अर्थ')) currentMeta.subject = 'अर्थव्यवस्था';
-            else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) currentMeta.subject = 'करेंट अफेयर्स';
-            else currentMeta.subject = parts[0];
-          }
-          if (parts[1]) currentMeta.subTopic = parts[1];
-          if (parts[2]) currentMeta.part = parts[2];
-
-          document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part || ''})`;
-          continue;
-        }
-      }
-
-      // B. Question Line
-      const qStartMatch = line.match(/^(\d+|[०-९]+)[\.\)]\s*(.*)/);
-      if (qStartMatch) {
-        if (currentQ) parsedQAData.push(currentQ);
-        const num = qStartMatch[1];
-        let rest = qStartMatch[2].trim();
-
-        const qMarkIdx = rest.indexOf('?');
-        if (qMarkIdx !== -1) {
-          const actualQ = rest.substring(0, qMarkIdx).trim();
-          const afterQ = rest.substring(qMarkIdx + 1).trim();
-          const sameLineAns = afterQ.match(/^(?:Ans|उत्तर|Answer)[\:\-\s]*(.*)/i);
-          if (sameLineAns) {
-            parsedQAData.push({ num: num, q: actualQ, a: sameLineAns[1].trim() });
-            currentQ = null;
-            continue;
-          } else if (afterQ.length > 0) {
-            parsedQAData.push({ num: num, q: actualQ, a: afterQ });
-            currentQ = null;
-            continue;
-          } else {
-            currentQ = { num: num, q: actualQ, a: '' };
-            continue;
-          }
-        } else {
-          currentQ = { num: num, q: rest, a: '' };
-          continue;
-        }
-      }
-
-      // C. Answer Line
-      const ansMatch = line.match(/^(?:Ans|उत्तर|Answer|उ\.?)[\:\-\s]*(.*)/i);
-      if (ansMatch) {
-        const ansText = ansMatch[1].trim();
-        if (currentQ) {
-          currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
-          currentQ.a = ansText;
-          parsedQAData.push(currentQ);
-          currentQ = null;
-        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
-          parsedQAData[parsedQAData.length - 1].a = ansText;
-        }
-        continue;
-      }
-
-      // D. Multi-line Ques
-      if (currentQ && !currentQ.a) {
-        currentQ.q += ' ' + line;
-        continue;
-      }
-
-      // E. Social Caption
-      if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर')) {
-        captionLines.push(line);
-      }
-    }
-
-    if (currentQ) {
-      currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
-      parsedQAData.push(currentQ);
-    }
-
-    if (captionLines.length > 0) {
-      currentMeta.caption = captionLines.join(' ');
-      document.getElementById('fbCaption').value = currentMeta.caption;
-    }
-
-    document.getElementById('statusCounter').innerText = `📊 लोड हुए प्रश्न: ${parsedQAData.length} / 15`;
-    renderCard();
-  }
-
-  /* ==========================================================
-     5. RENDER CARD (THEME AWARE)
-     ========================================================== */
-  function renderCard() {
-    document.getElementById('outSubject').innerText = currentMeta.subject;
-    
-    const subTopicEl = document.getElementById('outSubTopic');
-    const partEl = document.getElementById('outPart');
-
-    if (currentTheme === 'theme-default') {
-      subTopicEl.innerText = currentMeta.subTopic ? `( ${currentMeta.subTopic} )` : '';
-      subTopicEl.style.display = currentMeta.subTopic ? 'flex' : 'none';
-      if (currentMeta.part) {
-        partEl.innerText = currentMeta.part;
-        partEl.style.display = 'flex';
-      } else {
-        partEl.style.display = 'none';
-      }
-    }
-
-    const tbody = document.getElementById('qaBody');
-    tbody.innerHTML = '';
-    const displayList = parsedQAData.slice(0, 15);
-
-    displayList.forEach((item, index) => {
-      const tr = document.createElement('tr');
-      const rawNum = item.num ? item.num : (index + 1);
-      const cleanNum = String(rawNum).replace(/\.$/, '');
-
-      if (currentTheme === 'theme-k95') {
-        // Photo Theme: 2-line layout per question (Que line & Ans line)
-        const tdQ = document.createElement('td');
-        tdQ.className = 'td-q';
-        tdQ.innerHTML = `
-          <div class="q-wrap">
-            <div class="q-num-box">
-              <span class="q-num">${cleanNum}.</span>
-              <span class="q-prefix">Que.</span>
-            </div>
-            <div class="q-text">${item.q.replace(/\?+$/, '')}?</div>
-          </div>
-        `;
-
-        const tdA = document.createElement('td');
-        tdA.className = 'td-a';
-        tdA.innerHTML = `
-          <div class="ans-k95-wrap">
-            <span class="a-prefix">Ans.</span>
-            <span class="a-text">${item.a || ''}</span>
-          </div>
-        `;
-
-        tr.appendChild(tdQ);
-        tr.appendChild(tdA);
-      } else {
-        // Classic Table Layout
-        const tdQ = document.createElement('td');
-        tdQ.className = 'td-q';
-        tdQ.innerHTML = `
-          <div class="q-wrap">
-            <span class="q-num">${cleanNum}.</span>
-            <div class="q-text">${item.q}?</div>
-          </div>
-        `;
-
-        const tdA = document.createElement('td');
-        tdA.className = 'td-a';
-        tdA.innerHTML = `<span class="ans-green">${item.a || ''}</span>`;
-
-        tr.appendChild(tdQ);
-        tr.appendChild(tdA);
-      }
-
-      tbody.appendChild(tr);
-    });
-
-    applyTypography(false);
-    updatePreviewScale();
-  }
-
-  function updatePreviewScale() {
-    const viewport = document.getElementById('previewViewport');
-    const card = document.getElementById('capture-card');
-    if (!viewport || !card) return;
-
-    const containerWidth = viewport.parentElement.clientWidth;
-    const scale = containerWidth / 1080;
-    
-    card.style.transform = `scale(${scale})`;
-    viewport.style.height = `${1350 * scale}px`;
-  }
-
-  window.addEventListener('resize', updatePreviewScale);
-
-  /* ==========================================================
-     6. EXPORT & DOWNLOAD
-     ========================================================== */
-  async function getCardCanvas() {
-    const card = document.getElementById('capture-card');
-    const oldTransform = card.style.transform;
-    card.style.transform = 'none';
-
-    const canvas = await html2canvas(card, {
-      width: 1080,
-      height: 1350,
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false
-    });
-
-    card.style.transform = oldTransform;
-    return canvas;
-  }
-
-  async function downloadImage() {
-    notify("⏳ HD इमेज तैयार हो रही है...");
-    const canvas = await getCardCanvas();
-    const link = document.createElement('a');
-    link.download = `Exam_Prep_${currentMeta.subject}_${currentMeta.part || 'Post'}.png`;
-    link.href = canvas.toDataURL('image/png', 1.0);
-    link.click();
-    notify("📥 HD इमेज डाउनलोड हो गई!");
-  }
-
-  async function shareToFacebook() {
-    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
-    try {
-      await navigator.clipboard.writeText(caption);
-    } catch (e) {}
-
-    notify("⏳ शेयरिंग शुरू हो रही है...");
-    const canvas = await getCardCanvas();
-
-    canvas.toBlob(async (blob) => {
-      const file = new File([blob], 'exam_prep_post.png', { type: 'image/png' });
-
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({
-            files: [file],
-            title: currentMeta.subject,
-            text: caption
-          });
-          notify("🚀 शेयर डायलॉग खुला!");
-          return;
-        } catch (err) {}
-      }
-
-      const link = document.createElement('a');
-      link.download = 'exam_prep_post.png';
-      link.href = URL.createObjectURL(blob);
-      link.click();
-
-      window.open('https://www.facebook.com/', '_blank');
-      notify("📋 कैप्शन कॉपी हुआ! फेसबुक पर पेस्ट करें।");
-    }, 'image/png');
-  }
-
-  /* ==========================================================
-     7. ARCHIVE OPERATIONS
-     ========================================================== */
-  async function saveToDatabase(isManual = false) {
-    if (parsedQAData.length === 0) return;
-    const db = await dbGetAll();
-    const rawVal = document.getElementById('smartInput').value;
-
-    const existing = db.find(item => 
-      item.subject === currentMeta.subject && 
-      item.subTopic === currentMeta.subTopic && 
-      item.part === currentMeta.part
-    );
-
-    const entry = {
-      id: existing ? existing.id : Date.now(),
-      subject: currentMeta.subject,
-      subTopic: currentMeta.subTopic,
-      part: currentMeta.part,
-      caption: currentMeta.caption,
-      smartRaw: rawVal,
-      questions: parsedQAData,
-      date: new Date().toLocaleDateString('hi-IN')
-    };
-
-    await dbPut(entry);
-    await renderLibrary();
-    if (isManual) notify("💾 पोस्ट IndexedDB में सुरक्षित सेव हो गई!");
-  }
-
-  async function renderLibrary() {
-    const db = await dbGetAll();
-    const container = document.getElementById('savedListContainer');
-    container.innerHTML = '';
-
-    const filtered = db.filter(item => item.subject === currentSubjectFilter);
-
-    if (filtered.length === 0) {
-      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">इस विषय में कोई पोस्ट नहीं है।</div>`;
-      return;
-    }
-
-    filtered.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'saved-row';
-      div.innerHTML = `
-        <div><strong>${item.subTopic || item.subject}</strong> (${item.part || 'Part'})</div>
-        <div style="display: flex; gap: 5px;">
-          <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
-          <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
-        </div>
-      `;
-      container.appendChild(div);
-    });
-  }
-
-  function filterBySubject(subj, btn) {
-    currentSubjectFilter = subj;
-    document.querySelectorAll('.subj-pill').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderLibrary();
-  }
-
-  async function loadItem(id) {
-    const db = await dbGetAll();
-    const item = db.find(x => x.id === id);
-    if (!item) return;
-
-    document.getElementById('smartInput').value = item.smartRaw || '';
-    currentMeta = {
-      subject: item.subject,
-      subTopic: item.subTopic,
-      part: item.part,
-      caption: item.caption
-    };
-    parsedQAData = item.questions;
-
-    renderCard();
-    notify(`📖 लोड हुआ: ${item.subject}`);
-  }
-
-  async function deleteItem(id) {
-    await dbDelete(id);
-    await renderLibrary();
-    notify("🗑️ पोस्ट डिलीट कर दी गई");
-  }
-
-  async function downloadSubjectPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    const all = await dbGetAll();
-    const db = all.filter(x => x.subject === currentSubjectFilter);
-
-    if (db.length === 0) {
-      alert(`विषय "${currentSubjectFilter}" में कोई प्रश्न सेव नहीं हैं!`);
-      return;
-    }
-
-    doc.setFontSize(18);
-    doc.text(`Exam Preparation - ${currentSubjectFilter}`, 14, 20);
-    doc.line(14, 26, 196, 26);
-    let yPos = 34;
-
-    db.forEach((set) => {
-      if (yPos > 260) { doc.addPage(); yPos = 20; }
-      doc.setFontSize(13);
-      doc.text(`${set.subTopic || set.subject} (${set.part || ''})`, 14, yPos);
-      yPos += 8;
-
-      set.questions.forEach((qa) => {
-        if (yPos > 275) { doc.addPage(); yPos = 20; }
-        doc.setFontSize(10);
-        doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
-        yPos += 5;
-        doc.text(`Ans: ${qa.a}`, 16, yPos);
-        yPos += 7;
-      });
-      yPos += 6;
-    });
-
-    doc.save(`Exam_Preparation_${currentSubjectFilter}.pdf`);
-    notify("📄 PDF डाउनलोड हो गया!");
-  }
-
-  async function exportJSON() {
-    const db = await dbGetAll();
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
-    const a = document.createElement('a');
-    a.href = dataStr;
-    a.download = `Exam_Prep_Backup_${Date.now()}.json`;
-    a.click();
-  }
-
-  async function importJSON(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = async function(e) {
-      try {
-        const imported = JSON.parse(e.target.result);
-        if (Array.isArray(imported)) {
-          for (const item of imported) {
-            await dbPut(item);
-          }
-          await renderLibrary();
-          notify("📥 बैकअप लोड हुआ!");
-        }
-      } catch (err) {
-        alert("अमान्य JSON फाइल!");
-      }
-    };
-    reader.readAsText(file);
-  }
-
-  function notify(msg) {
-    const toast = document.getElementById('toastMsg');
-    toast.innerText = msg;
-    toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2600);
-  }
-
-  /* INITIALIZATION */
-  window.onload = async () => {
-    loadTypographySettings();
-    parseSmartInput();
-    await renderLibrary();
-    setTimeout(updatePreviewScale, 300);
-  };
-</script>
-</body>
-</html>
+    localStorage.setItem
