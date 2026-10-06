@@ -14,7 +14,7 @@
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
-            padding: 20px 16px 40px 16px;
+            padding: 16px 12px 30px 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -71,106 +71,117 @@
         /* MAIN DASHBOARD */
         .dashboard-container {
             width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .dash-header {
-            text-align: center;
-            padding: 10px 0 16px 0;
-            border-bottom: 2px solid #1e293b;
-        }
-        .dash-logo {
-            font-size: 26px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .dash-tagline {
-            font-size: 13px;
-            color: #94a3b8;
-            margin-top: 4px;
-            font-weight: 600;
-            font-family: 'Hind', sans-serif;
-        }
-
-        .app-list {
+            max-width: 520px;
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .app-card {
+        .dash-header {
+            text-align: center;
+            padding: 4px 0 10px 0;
+            border-bottom: 2px solid #1e293b;
+        }
+        .dash-logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        .dash-tagline {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 3px;
+            font-weight: 600;
+            font-family: 'Hind', sans-serif;
+        }
+
+        /* 4x2 GRID (2 COLUMNS, 4 ROWS) */
+        .app-grid-4x2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        .grid-card {
             background: #0f172a;
             border: 1px solid #334155;
             border-radius: 14px;
-            padding: 14px 16px;
+            padding: 12px 10px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 14px;
+            text-align: center;
             text-decoration: none;
             color: inherit;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+            position: relative;
         }
-        .app-card:hover {
+        .grid-card:hover, .grid-card:active {
             border-color: #38bdf8;
-            background: #1e293b;
+            transform: translateY(-2px);
+            background: #152238;
         }
 
-        .app-icon {
-            width: 52px;
-            height: 52px;
+        .grid-icon-box {
+            width: 46px;
+            height: 46px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
-            flex-shrink: 0;
+            font-size: 24px;
+            margin-bottom: 8px;
             background: #1e293b;
             border: 1px solid #475569;
+            flex-shrink: 0;
         }
 
-        .app-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .app-title {
-            font-size: 15px;
+        .grid-title {
+            font-size: 13px;
             font-weight: 800;
             color: #f8fafc;
+            line-height: 1.25;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .app-desc {
-            font-size: 12px;
+        .grid-desc {
+            font-size: 10.5px;
             color: #94a3b8;
             font-weight: 600;
             font-family: 'Hind', sans-serif;
-            line-height: 1.35;
-        }
-        .arrow-badge {
-            color: #38bdf8;
-            font-size: 18px;
-            font-weight: 900;
+            line-height: 1.25;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .card-arena .app-icon { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; }
-        .card-ca .app-icon { background: rgba(14, 165, 233, 0.15); border-color: #0ea5e9; }
-        .card-1q .app-icon { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; }
-        .card-5q .app-icon { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; }
-        .card-20q .app-icon { background: rgba(16, 185, 129, 0.15); border-color: #10b981; }
-        .card-us .app-icon { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; }
-        .card-a1 .app-icon { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; }
+        /* CARD ACCENT COLORS */
+        .card-arena { border-color: #f59e0b; background: rgba(245, 158, 11, 0.08); }
+        .card-arena .grid-icon-box { background: rgba(245, 158, 11, 0.15); border-color: #f59e0b; }
+        .card-ca .grid-icon-box { background: rgba(14, 165, 233, 0.15); border-color: #0ea5e9; }
+        .card-1q .grid-icon-box { background: rgba(234, 179, 8, 0.15); border-color: #eab308; }
+        .card-5q .grid-icon-box { background: rgba(59, 130, 246, 0.15); border-color: #3b82f6; }
+        .card-20q .grid-icon-box { background: rgba(16, 185, 129, 0.15); border-color: #10b981; }
+        .card-a1 .grid-icon-box { background: rgba(249, 115, 22, 0.15); border-color: #f97316; }
+        .card-us .grid-icon-box { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; font-weight: 900; color: #f87171; font-size: 18px; }
+        .card-mcq { border: 1.5px solid #0284c7; background: #081d3b; }
+        .card-mcq .grid-icon-box { background: rgba(2, 132, 199, 0.25); border-color: #38bdf8; }
 
         .dash-footer {
-            margin-top: auto;
-            padding-top: 20px;
+            margin-top: 14px;
+            padding-top: 12px;
             text-align: center;
-            font-size: 12px;
+            font-size: 11.5px;
             color: #64748b;
             font-weight: 600;
         }
@@ -196,81 +207,63 @@
         <div class="dash-tagline">मास्टर ऐप डैशबोर्ड और क्रिएटर टूलकिट</div>
     </div>
 
-    <div class="app-list">
-        <a href="index.html" class="app-card card-arena" style="border-color: #f59e0b; background: rgba(245, 158, 11, 0.08);">
-            <div class="app-icon">🎯</div>
-            <div class="app-info">
-                <div class="app-title" style="color: #fbbf24;">Exam Arena Live Portal ⭐</div>
-                <div class="app-desc">छात्रों का लाइव टेस्ट, स्पीड लीडरबोर्ड और दैनिक क्विज़ प्रतियोगिता</div>
-            </div>
-            <div class="arrow-badge" style="color: #f59e0b;">➔</div>
+    <!-- 4x2 GRID CONTAINER (8 APPS) -->
+    <div class="app-grid-4x2">
+        <!-- 1. Exam Arena Live Portal -->
+        <a href="index.html" class="grid-card card-arena">
+            <div class="grid-icon-box">🎯</div>
+            <div class="grid-title" style="color: #fbbf24;">Exam Arena ★</div>
+            <div class="grid-desc">लाइव टेस्ट & लीडरबोर्ड</div>
         </a>
 
-        <a href="Daily Current Affairs App.html" class="app-card card-ca">
-            <div class="app-icon">📰</div>
-            <div class="app-info">
-                <div class="app-title">Daily Current Affairs Studio</div>
-                <div class="app-desc">डेली करेंट अफेयर्स, 1-क्लिक AI प्रश्नोत्तरी और परीक्षा नोट्स जनरेटर</div>
-            </div>
-            <div class="arrow-badge">➔</div>
+        <!-- 2. Daily Current Affairs Studio -->
+        <a href="Daily%20Current%20Affairs%20App.html" class="grid-card card-ca">
+            <div class="grid-icon-box">📰</div>
+            <div class="grid-title">Current Affairs</div>
+            <div class="grid-desc">1-क्लिक AI क्विज़ & नोट्स</div>
         </a>
 
-        <a href="Quiz Studio.html" class="app-card card-1q">
-            <div class="app-icon">⚡</div>
-            <div class="app-info">
-                <div class="app-title">EP Quiz Card Studio (Hindi)</div>
-                <div class="app-desc">ग्लोबल काउंटर, रंग-बिरंगे विकल्प, वॉटरमार्क, व्याख्या और डायरेक्ट शेयर</div>
-            </div>
-            <div class="arrow-badge">➔</div>
+        <!-- 3. EP Quiz Card Studio -->
+        <a href="Quiz%20Studio.html" class="grid-card card-1q">
+            <div class="grid-icon-box">⚡</div>
+            <div class="grid-title">EP Quiz Card</div>
+            <div class="grid-desc">ग्लोइंग कार्ड & शेयर</div>
         </a>
 
-        <a href="5 QNA Mobile.html" class="app-card card-5q">
-            <div class="app-icon">🎬</div>
-            <div class="app-info">
-                <div class="app-title">5 Questions Q&A Studio</div>
-                <div class="app-desc">मल्टी-व्यू प्रश्नोत्तरी प्लेयर, FX एनीमेशन, ऑडियो और रील्स रिकॉर्डिंग</div>
-            </div>
-            <div class="arrow-badge">➔</div>
+        <!-- 4. 5 Questions Q&A Studio -->
+        <a href="5%20QNA%20Mobile.html" class="grid-card card-5q">
+            <div class="grid-icon-box">🎬</div>
+            <div class="grid-title">5 QNA Studio</div>
+            <div class="grid-desc">मल्टी-व्यू & रील्स प्लेयर</div>
         </a>
 
-        <a href="EP 15 question.html" class="app-card card-20q">
-            <div class="app-icon">📋</div>
-            <div class="app-info">
-                <div class="app-title">EP 15 Question Sheet</div>
-                <div class="app-desc">1080×1350 एचडी 2-कॉलम पोस्टर (H/G/P) + 1-क्लिक FB कैप्शन</div>
-            </div>
-            <div class="arrow-badge">➔</div>
+        <!-- 5. EP 15 Question Sheet -->
+        <a href="EP%2015%20question.html" class="grid-card card-20q">
+            <div class="grid-icon-box">📋</div>
+            <div class="grid-title">EP 15 Sheet</div>
+            <div class="grid-desc">HD 2-कॉलम पोस्टर (H/G/P)</div>
         </a>
 
-        <a href="A One Notes Studio.html" class="app-card card-a1">
-            <div class="app-icon">🔥</div>
-            <div class="app-info">
-                <div class="app-title">A one Notes Studio </div>
-                <div class="app-desc">10-लाइन पेस्टल कार्ड, वायरल हुक बैज, Q10 चैलेंज मोड + 1-क्लिक FB कैप्शन</div>
-            </div>
-            <div class="arrow-badge">➔</div>
+        <!-- 6. A one Notes Studio -->
+        <a href="A%20One%20Notes%20Studio.html" class="grid-card card-a1">
+            <div class="grid-icon-box">🔥</div>
+            <div class="grid-title">A one Notes</div>
+            <div class="grid-desc">10-लाइन पेस्टल & Q10</div>
         </a>
 
-        <a href="US Quiz Studio.html" class="app-card card-us">
-            <div class="app-icon">🇺🇸</div>
-            <div class="app-info">
-                <div class="app-title">US Viral Trivia Studio</div>
-                <div class="app-desc">US Audience • 100% English • Hollywood, Sports, History & Pop Trivia</div>
-            </div>
-            <div class="arrow-badge">➔</div>
+        <!-- 7. US Viral Trivia Studio -->
+        <a href="US%20Quiz%20Studio.html" class="grid-card card-us">
+            <div class="grid-icon-box">US</div>
+            <div class="grid-title">US Viral Trivia</div>
+            <div class="grid-desc">100% English Global</div>
         </a>
-        <!-- MCQ & QNA VIDEO MAKER STUDIO CARD -->
-<div class="control-box" style="border: 1px solid #38bdf8; background: #0f172a; margin-top: 10px;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-            <div style="font-size: 14px; font-weight: 800; color: #38bdf8;">🎬 MCQ & QNA Video Studio</div>
-            <div style="font-size: 11px; color: #94a3b8;">Create animated reels, quizzes & voiceover videos</div>
-        </div>
-        <a href="MCQ%20%26%20QNA%20Video%20Maker.html" 
-           style="background: linear-gradient(135deg, #0284c7, #0369a1); color: white; text-decoration: none; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.4);">
-           Open Studio 🚀
+
+        <!-- 8. MCQ & QNA Video Maker Studio -->
+        <a href="MCQ%20%26%20QNA%20Video%20Maker.html" class="grid-card card-mcq">
+            <div class="grid-icon-box">🎬</div>
+            <div class="grid-title" style="color: #38bdf8;">MCQ Studio Pro</div>
+            <div class="grid-desc">AI वॉइसओवर & वीडियो मेकर</div>
         </a>
-</div>
     </div>
 
     <div class="dash-footer">
@@ -279,7 +272,7 @@
 </div>
 
 <script>
-  // Yahan apna 4 ankon ka secret pin badal sakte hain (Abhi "9821" set hai)
+  // Secret PIN (2019)
   const CORRECT_PIN = "2019";
 
   function verifyPinCode() {
