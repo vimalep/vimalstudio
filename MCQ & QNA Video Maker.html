@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Exam Preparation Quiz Ultimate Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Montserrat:wght@500;700;800&family=Poppins:wght@500;700;800&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; display: flex; justify-content: center; align-items: center; color: #f8fafc; font-family: 'Segoe UI', Roboto, sans-serif; }
+        
+        /* ================= 1. STUDIO CREATOR PANEL ================= */
+        #creator-panel { width: 100%; height: 100%; background: #1e293b; padding: 20px; display: flex; flex-direction: column; overflow-y: auto; gap: 20px; }
+        h2 { text-align: center; color: #38bdf8; font-size: 22px; font-weight: 700; letter-spacing: 0.5px; border-bottom: 2px solid #334155; padding-bottom: 10px; }
+        
+        .studio-card { background: #0f172a; padding: 16px; border-radius: 12px; border: 1px solid #334155; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); }
+        .section-title { font-size: 14px; font-weight: 600; color: #94a3b8; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .title-input-container input, .studio-card select, .studio-card input[type="text"], .studio-card input[type="number"], .studio-card input[type="color"] { width: 100%; padding: 10px; background: #1e293b; border: 1px solid #475569; border-radius: 8px; color: #f8fafc; font-size: 14px; font-weight: bold; }
+        .title-input-container input:focus, .studio-card select:focus, .studio-card input[type="text"]:focus { outline: 2px solid #38bdf8; }
+        #bulk-data { width: 100%; height: 160px; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 12px; color: #f8fafc; font-size: 14px; resize: none; font-family: monospace; line-height: 1.5; }
+        
+        .checkbox-container { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: #f8fafc; cursor: pointer; }
+        .checkbox-container input { width: 18px; height: 18px; accent-color: #38bdf8; cursor: pointer; }
+
+        .scanner-status-bar { margin-top: 8px; display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 10px 14px; border-radius: 8px; border: 1px solid #334155; font-size: 13px; font-weight: bold; }
+        .scanner-good { color: #2ed573; }
+        .scanner-bad { color: #ef4444; }
+
+        .btn-row { display: flex; gap: 10px; margin-top: 5px; }
+        .btn-secondary { flex: 1; background: #475569; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .btn-secondary:hover { background: #64748b; }
+        .btn-backup { background: #059669; }
+        .btn-backup:hover { background: #10b981; }
+        .btn-restore { background: #d97706; }
+        .btn-restore:hover { background: #f59e0b; }
+        
+        /* QUESTION MANAGER LIST STYLING */
+        .q-preview-list { display: flex; flex-direction: column; gap: 12px; max-height: 380px; overflow-y: auto; padding-right: 5px; margin-top: 10px; }
+        .q-preview-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; position: relative; }
+        .q-preview-card.in-range { border: 2px solid #38bdf8; background: #0f172a; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+        .q-preview-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: bold; color: #38bdf8; }
+        .q-preview-title { font-size: 15px; font-weight: 700; color: #f8fafc; line-height: 1.3; }
+        .q-preview-opts { font-size: 12px; color: #94a3b8; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .q-preview-actions { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+        .btn-q-edit { background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
+        .btn-q-del { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
+
+        .btn-studio-play { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 16px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); }
+
+        /* ================= 2. PLAY SCREEN (CONTROLS AT BOTTOM) ================= */
+        #video-screen { display: none; width: 100%; height: 100%; background: #0a0a0a; position: relative; flex-direction: column; justify-content: space-between; overflow: hidden !important; color: #ffffff; }
+        
+        #video-screen.dark-mode { background: #0a0a0a !important; color: #ffffff !important; }
+        #video-screen.dark-mode .q-title { color: #ffeb3b !important; }
+        #video-screen.dark-mode .opt-item { color: #ffffff !important; }
+        #video-screen.dark-mode .q-badge { background: #0284c7; color: white; }
+        #video-screen.dark-mode .banner-text-anim { background: linear-gradient(90deg, #ffffff, #00f2fe, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        #video-screen.light-mode { background: #ffffff !important; color: #111111 !important; }
+        #video-screen.light-mode .quiz-header { border-color: #0284c7; color: #0f172a; box-shadow: 0 0 10px rgba(2,132,199,0.2); }
+        #video-screen.light-mode .header-subtitle { color: #0284c7; }
+        #video-screen.light-mode .q-title { color: #0f172a !important; } 
+        #video-screen.light-mode .opt-item { color: #334155 !important; } 
+        #video-screen.light-mode .q-badge { background: #0284c7; color: white; }
+        #video-screen.light-mode .live-banner { background: linear-gradient(135deg, #e0f2fe, #f0f9ff) !important; border-top: 2px solid #0284c7 !important; box-shadow: 0 -4px 12px rgba(2, 132, 199, 0.15); color: #0369a1 !important; }
+        #video-screen.light-mode .banner-text-anim { background: none; -webkit-text-fill-color: #0369a1; color: #0369a1 !important; font-weight: 800; font-size: 14px; letter-spacing: 0.8px; }
+
+        #video-screen.yellow-mode { background: #fef08a !important; color: #1e1b4b !important; }
+        #video-screen.yellow-mode .quiz-header { border-color: #b45309; color: #451a03; box-shadow: 0 0 10px rgba(180,83,9,0.2); }
+        #video-screen.yellow-mode .header-subtitle { color: #b45309; }
+        #video-screen.yellow-mode .q-title { color: #000000 !important; } 
+        #video-screen.yellow-mode .opt-item { color: #1e40af !important; } 
+        #video-screen.yellow-mode .q-badge { background: #b45309; color: white; }
+        #video-screen.yellow-mode .live-banner { background: #fde047 !important; border-top: 2px solid #ca8a04; color: #451a03 !important; }
+        #video-screen.yellow-mode .banner-text-anim { background: none; -webkit-text-fill-color: #451a03; color: #451a03 !important; font-weight: 800; }
+
+        #video-screen.purple-mode { background: linear-gradient(135deg, #0f0728, #1e0842) !important; color: #ffffff !important; }
+        #video-screen.purple-mode .quiz-header { border-color: #f59e0b; color: #ffffff; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(168, 85, 247, 0.3); }
+        #video-screen.purple-mode .header-subtitle { color: #f59e0b; }
+        #video-screen.purple-mode .q-title { color: #fde047 !important; text-shadow: 0 0 10px rgba(253, 224, 71, 0.3); } 
+        #video-screen.purple-mode .opt-item { color: #ffffff !important; } 
+        #video-screen.purple-mode .q-badge { background: linear-gradient(135deg, #8b5cf6, #d946ef); color: white; }
+        #video-screen.purple-mode .live-banner { background: linear-gradient(135deg, #1e0842, #3b0764) !important; border-top: 2px solid #f59e0b !important; color: #fde047 !important; }
+        #video-screen.purple-mode .banner-text-anim { background: linear-gradient(90deg, #ffffff, #f59e0b, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+
+        /* WORD HIGHLIGHTING KARAOKE STYLING */
+        .q-word {
+            display: inline-block;
+            transition: all 0.12s ease;
+            border-radius: 4px;
+            padding: 0 2px;
+        }
+        .word-highlight {
+            color: #00f2fe !important;
+            background: rgba(0, 242, 254, 0.25);
+            box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
+            transform: scale(1.06);
+            font-weight: 800;
+        }
+        #video-screen.purple-mode .word-highlight {
+            color: #fde047 !important;
+            background: rgba(253, 224, 71, 0.3);
+            box-shadow: 0 0 14px rgba(253, 224, 71, 0.9);
+        }
+        #video-screen.light-mode .word-highlight {
+            color: #0284c7 !important;
+            background: rgba(2, 132, 199, 0.25);
+        }
+        #video-screen.yellow-mode .word-highlight {
+            color: #1e40af !important;
+            background: rgba(30, 64, 175, 0.25);
+        }
+
+        .main-content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%; overflow: hidden; position: relative; width: 100%; }
+        .quiz-header-container { display: flex; justify-content: center; align-items: center; padding: 12px 20px 6px 20px; z-index: 10; width: 100%; }
+        
+        .quiz-header { text-align: center; background: transparent; border: 3px solid #00f2fe; border-radius: 20px; padding: 6px 20px; font-size: 18px; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(0, 242, 254, 0.4), inset 0 0 10px rgba(0, 242, 254, 0.2); display: inline-flex; flex-direction: column; justify-content: center; align-items: center; color: inherit; max-width: 90%; }
+        .header-subtitle { font-size: 12px; color: #00f2fe; margin-top: 2px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0, 242, 254, 0.5); }
+        
+        .quiz-window { flex-grow: 1; overflow: hidden !important; position: relative; padding: 10px 20px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; }
+        #questions-track { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-start; overflow: hidden !important; }
+        
+        @keyframes slideInFromRight { 0% { transform: translateX(60px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+
+        .q-block { display: none; flex-direction: column; background: transparent; border: none; padding: 5px 0; box-sizing: border-box; position: absolute; top: 2px; width: 100%; overflow: hidden !important; max-height: 98%; opacity: 0; }
+        .q-block.active-q { display: flex; z-index: 5; opacity: 1; animation: slideInFromRight 0.4s ease-out forwards; }
+        
+        .q-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 6px; width: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .q-title { font-weight: bold; line-height: 1.3; margin-bottom: 10px; text-align: left; }
+        
+        .q-main-layout-split { display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start; justify-content: space-between; }
+        .q-left-content { flex: 1; display: flex; flex-direction: column; gap: 8px; width: 100%; }
+        
+        .q-right-image-box { width: 38%; max-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: transparent; border: none; }
+        .q-right-image-box img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+
+        .options-list { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+        .opt-item { display: flex; align-items: center; font-size: 17px; font-weight: 600; color: inherit; position: relative; padding: 6px 12px; line-height: 1.3; border: 2px solid transparent; border-radius: 8px; transition: all 0.2s ease; max-width: 75%; width: fit-content; min-width: 230px; }
+        
+        .opt-item.reveal-correct { border: 3px solid #2ed573 !important; background: rgba(46, 213, 115, 0.15) !important; box-shadow: 0 0 12px rgba(46, 213, 115, 0.4) !important; font-weight: 800 !important; color: #2ed573 !important; }
+        .qna-answer-box { display: none; background: transparent; border: 3px solid #2ed573; padding: 8px 12px; border-radius: 8px; font-size: 18px; font-weight: 800; color: #2ed573; margin-top: 8px; text-align: left; box-shadow: 0 0 12px rgba(46, 213, 115, 0.3); max-width: 75%; width: fit-content; }
+
+        @keyframes studio-loop-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+        @keyframes studio-loop-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
+        @keyframes studio-loop-swing { 0% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(0deg); } }
+
+        .img-pulse { animation: studio-loop-pulse 3s ease-in-out infinite; }
+        .img-float { animation: studio-loop-float 4s ease-in-out infinite; }
+        .img-swing { animation: studio-loop-swing 3.5s ease-in-out infinite; }
+
+        .explanation-box { background: rgba(0,0,0,0.1); border-left: 4px solid #00f2fe; padding: 8px 10px; border-radius: 6px; font-size: 13px; color: inherit; line-height: 1.3; margin-top: 8px; display: none; max-width: 80%; }
+        .timer-wrapper { display: none; margin-top: 10px; width: 100%; text-align: center; }
+        .timer-number { font-size: 20px; font-weight: 800; color: #d97706; margin-bottom: 3px; display: block; }
+        .timer-bar-container { width: 100%; height: 6px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; }
+        .timer-bar-fill { height: 100%; width: 100%; background: #2ed573; transform-origin: left; transform: scaleX(1); }
+        @keyframes fastBlink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .timer-danger { background-color: #ef4444 !important; animation: fastBlink 0.2s infinite; }
+
+        .end-block { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: inherit; padding: 30px 20px; background: transparent; border: 2px dashed #00f2fe; border-radius: 14px; width: 100%; position: absolute; top: 10px; }
+        .end-block.active-q { display: flex; z-index: 5; }
+        .end-block h3 { font-size: 22px; margin-bottom: 8px; color: #00f2fe; font-weight: 800; }
+        .end-block p { font-size: 16px; font-weight: 600; opacity: 0.8; }
+
+        .live-banner { padding: 10px; display: flex; justify-content: space-around; align-items: center; font-weight: 800; font-size: 13px; z-index: 10; overflow: hidden; }
+        .banner-text-anim { display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px; }
+        .heart-icon { color: #ff4757; animation: pulse 0.8s infinite alternate; font-size: 15px; display: inline-block; -webkit-text-fill-color: initial; }
+        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.3); } }
+
+        /* BOTTOM HORIZONTAL CONTROL PANEL FOR MOBILE */
+        .control-panel { 
+            background: rgba(0,0,0,0.9); 
+            padding: 8px 10px; 
+            display: flex; 
+            flex-direction: row; 
+            justify-content: space-around; 
+            align-items: center; 
+            gap: 6px; 
+            z-index: 10; 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        .ctrl-btn-manual { 
+            flex: 1;
+            min-width: 60px;
+            padding: 8px 4px; 
+            font-size: 12px; 
+            font-weight: bold; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            color: white; 
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 4px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+            transition: transform 0.1s ease, background 0.2s ease; 
+            text-align: center;
+            touch-action: manipulation;
+        }
+        .ctrl-btn-manual:active {
+            transform: scale(0.92);
+            opacity: 0.85;
+        }
+        .btn-manual-play { background: #059669; }
+        .btn-manual-play:hover { background: #10b981; }
+        .btn-manual-pause { background: #d97706; }
+        .btn-manual-pause:hover { background: #b45309; }
+        .btn-manual-silence { background: #64748b; }
+        .btn-manual-silence:hover { background: #475569; }
+        .btn-manual-silence.active-silence { background: #ef4444 !important; }
+        .btn-manual-ans { background: #28a745; }
+        .btn-manual-ans:hover { background: #218838; }
+        .btn-manual-prev { background: #6c757d; }
+        .btn-manual-prev:hover { background: #5a6268; }
+        .btn-manual-next { background: #0284c7; }
+        .btn-manual-next:hover { background: #0369a1; }
+        .btn-manual-timer { background: #ffc107; color: black; }
+        .btn-manual-timer:hover { background: #e0a800; }
+        .btn-manual-like { background: #8b5cf6; }
+        .btn-manual-like:hover { background: #7c3aed; }
+        .btn-manual-home { background: #dc3545; max-width: 65px; }
+        .btn-manual-home:hover { background: #c82333; }
+
+        .jump-box-container { display: flex; gap: 2px; align-items: center; }
+        .jump-input { width: 42px; padding: 6px 2px; border-radius: 6px; border: 1px solid #0284c7; background: #0f172a; color: #38bdf8; text-align: center; font-weight: bold; font-size: 12px; }
+        .btn-jump-go { background: #0284c7; color: white; border: none; padding: 6px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; touch-action: manipulation; }
+        .btn-jump-go:active { transform: scale(0.92); }
+
+        #like-popup-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 999; justify-content: center; align-items: center; backdrop-filter: blur(2px); transition: all 0.3s ease; }
+        .popup-emoji-only { font-size: 140px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.7)); animation: emojiPopBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite alternate; }
+        @keyframes emojiPopBounce { 0% { transform: scale(0.4) rotate(-10deg); opacity: 0; } 50% { transform: scale(1.1) rotate(5deg); opacity: 1; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="creator-panel">
+        <h2 id="lbl-main-title">Exam Preparation Studio Pro</h2>
+
+        <!-- BACKUP & RESTORE CARD -->
+        <div class="studio-card" style="border: 1px dashed #059669; background: #064e3b15;">
+            <div class="section-title" style="color: #10b981;">💾 Data Backup & Restore Studio</div>
+            <div class="btn-row">
+                <button class="btn-secondary btn-backup" onclick="downloadBackupJSON()">📥 Export / Save Backup</button>
+                <button class="btn-secondary btn-restore" onclick="document.getElementById('restore-file-input').click()">📤 Import / Restore Backup</button>
+                <input type="file" id="restore-file-input" accept=".json" style="display:none;" onchange="restoreBackupJSON(this)">
+            </div>
+        </div>
+
+        <!-- Mode & Language Card -->
+        <div class="studio-card">
+            <div class="section-title" id="lbl-sec-lang">Select Language, Mode & Layout Style</div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <select id="cfg-app-lang" onchange="switchLanguageMode()" style="flex: 1; min-width: 150px;">
+                    <option value="hi" selected>Hindi / हिंदी मोड</option>
+                    <option value="en">English / इंग्लिश मोड</option>
+                </select>
+                <select id="cfg-screen-mode" style="flex: 1; min-width: 150px;" onchange="autoSaveToStorage()">
+                    <option value="dark" selected>Pro Dark Theme (Black)</option>
+                    <option value="purple">✨ Royal Purple Gold Theme (High Engagement)</option>
+                    <option value="light">Classic Light Theme (White)</option>
+                    <option value="yellow">Bright Yellow Theme</option>
+                </select>
+                <label class="checkbox-container" style="background: #1e293b; padding: 5px 15px; border-radius: 8px; border: 1px solid #475569;">
+                    <input type="checkbox" id="cfg-qna-mode" onchange="autoSaveToStorage()">
+                    <span style="color: #38bdf8; font-weight: bold;">🚀 QnA STUDY MODE (Hide Options)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- SUBJECT & CHAPTER SELECTION WITH COUNTERS -->
+        <div class="studio-card" style="border: 1px solid #38bdf8;">
+            <div class="section-title" style="color: #38bdf8;">📁 0. Subject & Chapter Question Bank Manager</div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- SUBJECT ROW -->
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <select id="select-subject" onchange="onSubjectChange()" style="flex: 1; min-width: 180px;">
+                        <option value="">-- Select Subject --</option>
+                    </select>
+                    <button class="btn-secondary" style="background: #0284c7; padding: 10px 12px; max-width: 120px;" onclick="addNewSubject()">➕ Add Sub</button>
+                    <button class="btn-secondary" style="background: #ef4444; padding: 10px 12px; max-width: 120px;" onclick="deleteCurrentSubject()">🗑️ Del Sub</button>
+                </div>
+
+                <!-- CHAPTER ROW -->
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <select id="select-chapter" onchange="onChapterChange()" style="flex: 1; min-width: 180px;">
+                        <option value="">-- Select Chapter --</option>
+                    </select>
+                    <button class="btn-secondary" style="background: #0284c7; padding: 10px 12px; max-width: 120px;" onclick="addNewChapter()">➕ Add Ch</button>
+                    <button class="btn-secondary" style="background: #ef4444; padding: 10px 12px; max-width: 120px;" onclick="deleteCurrentChapter()">🗑️ Del Ch</button>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="studio-header-title" value="Mission 2026" placeholder="वीडियो का शीर्षक (Title) रखें..." oninput="autoSaveToStorage()">
+                    <button class="btn-secondary" style="background: #10b981; max-width: 180px;" onclick="saveCurrentQuestionsToChapter()">💾 Save Questions</button>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px 14px; border-radius: 8px; border: 1px solid #334155; font-size: 13px; font-weight: bold; color: #38bdf8;">
+                    <div id="stat-sub-count">Selected Subject Total: 0 Qs</div>
+                    <div id="stat-db-count" style="color: #2ed573;">Overall Database: 0 Qs</div>
+                </div>
+
+                <!-- Range Selector with Live Update -->
+                <div style="display: flex; gap: 10px; align-items: center; background: #1a2333; padding: 10px; border-radius: 8px;">
+                    <span style="font-size: 13px; font-weight: bold; color: #38bdf8;">🎯 Video Range Selector:</span>
+                    <span style="font-size: 12px;">From Q#:</span>
+                    <input type="number" id="q-range-start" value="1" min="1" oninput="renderQuestionManagerList()" style="width: 75px; padding: 5px;">
+                    <span style="font-size: 12px;">To Q#:</span>
+                    <input type="number" id="q-range-end" value="10" min="1" oninput="renderQuestionManagerList()" style="width: 75px; padding: 5px;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice & App Mode Customizer -->
+        <div class="studio-card">
+            <div class="section-title" id="lbl-sec-voice">Voice Style, Narration Engine & Manual Controller Settings</div>
+            <div class="control-row">
+                <div style="display: flex; flex-direction: column; gap: 8px; background: #1a2333; padding: 12px; border-radius: 8px; border: 1px dashed #38bdf8; margin-bottom: 5px;">
+                    <span style="font-size: 14px; font-weight: bold; color: #38bdf8;">🎤 वीडियो संचालन मोड (App Engine Mode):</span>
+                    <label style="cursor:pointer; font-size:13px; font-weight: bold; margin-top: 4px;"><input type="radio" name="appControlVoiceMode" value="hybrid" checked onchange="autoSaveToStorage()"> 🤖 1. हाइब्रिड मोड (सवाल आप बोलें + जवाब/व्याख्या AI स्वतः बोलेगा)</label>
+                    <label style="cursor:pointer; font-size:13px; font-weight: bold;"><input type="radio" name="appControlVoiceMode" value="manual" onchange="autoSaveToStorage()"> 🗣️ 2. फुल्ली मैनुअल मोड (तीनों चीजें आपकी आवाज़ में - AI शांत रहेगा)</label>
+                    <label style="cursor:pointer; font-size:13px; font-weight: bold;"><input type="radio" name="appControlVoiceMode" value="full_ai" onchange="autoSaveToStorage()"> ⚡ 3. फुल्ली AI मोड (सवाल, टाइमर, जवाब व व्याख्या सब AI स्वतः बोलेगा व चलाएगा)</label>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 150px;">
+                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 6px;">AI Engine Voice Character:</span>
+                        <select id="cfg-voice-a" onchange="autoSaveToStorage()">
+                            <option value="female" selected>Natural Female Voice (महिला)</option>
+                            <option value="male">Natural Male Voice (पुरुष)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: flex-end;">
+                        <button class="btn-secondary" style="padding: 10px 15px;" onclick="triggerVoiceTesting()">🔊 Test Voice</button>
+                    </div>
+                </div>
+                <div>
+                    <div class="slider-container">
+                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8; min-width: 85px;" id="lbl-sub-speed">Audio Speed:</span>
+                        <input type="range" id="cfg-speed" min="0.5" max="2.0" step="0.1" value="0.95" oninput="updateSpeedDisplay(this.value)">
+                        <span id="speed-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">0.95x</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bulk Question Input Box -->
+        <div class="studio-card">
+            <div class="section-title" id="lbl-sec-bulk">1. Bulk Question Paste Box (One line space between questions)</div>
+            <textarea id="bulk-data" oninput="executeDataScannerLive()" placeholder="प्रश्न, विकल्प और व्याख्या पेस्ट करें..."></textarea>
+            
+            <div class="scanner-status-bar">
+                <div>Status: <span id="scan-badge-msg" class="scanner-good">Ready to scan inputs...</span></div>
+                <div id="scan-counter-lbl">Total Valid: 0</div>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn-secondary" onclick="runInstantTextFormatter()">✨ Clean Options & Fix Gaps</button>
+            </div>
+        </div>
+
+        <!-- QUESTION MANAGER CARD -->
+        <div class="studio-card" style="border: 1px solid #10b981;">
+            <div class="section-title" style="color: #10b981;">📝 2. Added Questions List & Photo Manager (Highlighted = Selected Range)</div>
+            <div id="q-preview-container" class="q-preview-list"></div>
+        </div>
+
+        <!-- Typography & Photo Customizer -->
+        <div class="studio-card">
+            <div class="section-title" id="lbl-sec-style">3. Layout, Typography & Photo Customizer</div>
+            <div class="control-row">
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div class="slider-container" style="flex: 1; min-width: 200px;">
+                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8;" id="lbl-sub-size">Font Size:</span>
+                        <input type="range" id="cfg-size" min="16" max="45" value="30" oninput="updateSizeDisplay(this.value)">
+                        <span id="size-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">30px</span>
+                    </div>
+                    <div class="slider-container" style="flex: 1; min-width: 200px;">
+                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8;">Photo Size:</span>
+                        <input type="range" id="cfg-img-size" min="100" max="500" value="300" oninput="updateImgSizeDisplay(this.value)">
+                        <span id="img-size-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">300px</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 20px; align-items: center; margin-top: 5px; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8;">Choose Typography Face:</span>
+                        <select id="cfg-font-family" style="width: 160px; padding: 6px;" onchange="autoSaveToStorage()">
+                            <option value="'Segoe UI', sans-serif" selected>Default System</option>
+                            <option value="'Kalam', cursive">Kalam Handwriting</option>
+                            <option value="'Poppins', sans-serif">Poppins Premium</option>
+                            <option value="'Montserrat', sans-serif">Montserrat Bold</option>
+                            <option value="'Roboto', sans-serif">Roboto Clean</option>
+                        </select>
+                    </div>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="cfg-font-weight" checked onchange="autoSaveToStorage()">
+                        <span>Render Heavy Bold Titles</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-studio-play" id="btn-compile-text" onclick="compileStudioQuiz()">Compile & Play Multi-View 🚀</button>
+    </div>
+
+    <!-- ================= DISPLAY MOUNT POINT ================= -->
+    <div id="video-screen">
+        <div id="like-popup-overlay">
+            <div class="popup-emoji-only">👍</div>
+        </div>
+
+        <!-- MAIN SCREEN CONTENT -->
+        <div class="main-content-area">
+            <div class="quiz-header-container">
+                <div class="quiz-header" id="display-header-box">
+                    <div id="display-header-title">Mission 2026</div>
+                    <div class="header-subtitle" id="display-header-sub">General Knowledge | Chapter 1</div>
+                </div>
+            </div>
+            
+            <div class="quiz-window" id="window-viewport">
+                <div id="questions-track"></div>
+            </div>
+
+            <div class="live-banner" id="display-footer-banner">
+                <div class="banner-text-anim" id="lbl-banner-like"><span class="heart-icon">❤️</span> LIKE THIS VIDEO</div>
+                <div class="banner-text-anim" id="lbl-banner-share">📢 SHARE & FOLLOW</div>
+            </div>
+        </div>
+
+        <!-- BOTTOM HORIZONTAL CONTROL PANEL FOR MOBILE -->
+        <div class="control-panel">
+            <button class="ctrl-btn-manual btn-manual-play" id="manualPlayBtn" onclick="handlePlayFullAI()">▶️ <span>Play</span></button>
+            <button class="ctrl-btn-manual btn-manual-pause" id="manualPauseBtn" onclick="togglePauseFullAI()">⏸️ <span>Pause</span></button>
+            <button class="ctrl-btn-manual btn-manual-silence" id="manualSilenceBtn" onclick="toggleSilenceAI()">🔇 <span>Silence</span></button>
+            <button class="ctrl-btn-manual btn-manual-timer" id="manualTimerBtn" onclick="triggerManualCountdown()">⏱️ <span>Timer</span></button>
+            <button class="ctrl-btn-manual btn-manual-ans" id="manualAnsBtn" onclick="handleShowAnswer()">🟢 <span>Answer</span></button>
+            <button class="ctrl-btn-manual btn-manual-prev" id="manualPrevBtn" onclick="handlePrevQuestion()">⬅️ <span>Prev</span></button>
+            <button class="ctrl-btn-manual btn-manual-next" id="manualNextBtn" onclick="handleNextQuestion()">➡️ <span>Next</span></button>
+            
+            <!-- DIRECT JUMP BOX (GO TO QUESTION) -->
+            <div class="jump-box-container">
+                <input type="number" id="jumpQNo" placeholder="Q#" min="1" class="jump-input">
+                <button class="btn-jump-go" onclick="handleJumpToQuestion()">Go</button>
+            </div>
+
+            <button class="ctrl-btn-manual btn-manual-like" id="manualLikeBtn" onclick="triggerManualLikeAlert()">👍 <span>Like</span></button>
+            <button class="ctrl-btn-manual btn-manual-home" onclick="stopToHome()">🏠 <span>Home</span></button>
+        </div>
+    </div>
+
+    <script>
+        let totalQuestions = 0;
+        let currentQIndex = 0;
+        let countdownInterval;
+        let karaokeInterval;
+        let imageStorage = {}; 
+        let parsedQuestions = [];
+        let speechRunToken = 0;
+        let studioPlayState = "question"; 
+        let voiceFailSafeTimeout = null;
+        let aiNextTimeout = null;
+        let isQnAModeActive = false;
+        let isFullAIAutoPlaying = false;
+        let isAISilenced = false;
+        let isFullAIPaused = false;
+        let cachedVoices = [];
+        let currentUtterance = null; // Global Reference prevents Garbage Collection in Speech Synthesis!
+
+        const LOCAL_STORAGE_KEY = "QUIZ_STUDIO_PERSISTENT_DATA_V2";
+
+        let dbMaster = {
+            "General Knowledge": {
+                "Chapter 1 - Basics": ""
+            }
+        };
+
+        const photoAnimations = ['img-pulse', 'img-float', 'img-swing'];
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playBeepSound(freq = 600, duration = 0.08) {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+
+        function playChimeSound() {
+            try {
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); 
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2); 
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            } catch(e) {}
+        }
+
+        const langPack = {
+            hi: {
+                mainTitle: "Exam Preparation Studio Pro",
+                secLang: "Select Language, Mode & Layout Style / सेटिंग्स बदलें",
+                secVoice: "Voice Style, Narration Engine & Manual Controller Settings",
+                subSpeed: "Audio Speed:",
+                secBulk: "1. Bulk Question Paste Box (One line space between questions)",
+                bulkPlaceholder: "प्रश्न, विकल्प और व्याख्या पेस्ट करें...",
+                secStyle: "3. Layout, Typography & Photo Customizer",
+                subSize: "Font Size:",
+                btnCompile: "Compile & Play Multi-View 🚀",
+                bannerLike: "❤️ LIKE THIS VIDEO",
+                bannerShare: "📢 SHARE & FOLLOW"
+            },
+            en: {
+                mainTitle: "Exam Preparation Studio Pro",
+                secLang: "Select Language, Mode & Layout Style Settings",
+                secVoice: "Voice Style, Narration Engine & Manual Controller Settings",
+                subSpeed: "Audio Speed:",
+                secBulk: "1. Bulk Question Paste Box (One line space between questions)",
+                bulkPlaceholder: "Paste Questions, Options, and Explanations here...",
+                secStyle: "3. Layout, Typography & Accent Customizer",
+                subSize: "Font Size:",
+                btnCompile: "Compile & Play Multi-View 🚀",
+                bannerLike: "❤️ LIKE THIS VIDEO",
+                bannerShare: "📢 SHARE & FOLLOW"
+            }
+        };
+
+        const hiNum = {
+            0: "", 1: "एक", 2: "दो", 3: "तीन", 4: "चार", 5: "पाँच", 6: "छह", 7: "सात", 8: "आठ", 9: "नौ", 10: "दस",
+            11: "ग्यारह", 12: "बारह", 13: "तेरह", 14: "चौदह", 15: "पन्द्रह", 16: "सोलह", 17: "सत्रह", 18: "अठाहर", 19: "उन्नीस", 20: "बीस"
+        };
+
+        function numberToHindiWords(num) {
+            if (num === 0) return "शून्य";
+            let str = "";
+            if (num >= 1000) { str += hiNum[Math.floor(num / 1000)] + " हजार "; num %= 1000; }
+            if (num >= 100) { str += hiNum[Math.floor(num / 100)] + " सौ "; num %= 100; }
+            if (num > 0) { str += hiNum[num] || num; }
+            return str.trim();
+        }
+
+        function convertNumbersInTextToHindiWords(text) {
+            return text.replace(/\d+/g, function(match) {
+                let n = parseInt(match);
+                return numberToHindiWords(n);
+            });
+        }
+
+        function loadVoices() {
+            if (typeof speechSynthesis !== 'undefined') {
+                cachedVoices = speechSynthesis.getVoices();
+            }
+        }
+
+        /* AUTO SAVE & AUTO LOAD FUNCTIONS FOR LOCALSTORAGE PERSISTENCE */
+        function autoSaveToStorage() {
+            try {
+                let dataToSave = {
+                    dbMaster: dbMaster,
+                    title: document.getElementById('studio-header-title')?.value || "Mission 2026",
+                    bulkData: document.getElementById('bulk-data')?.value || "",
+                    selectedSub: document.getElementById('select-subject')?.value || "",
+                    selectedCh: document.getElementById('select-chapter')?.value || "",
+                    lang: document.getElementById('cfg-app-lang')?.value || "hi",
+                    theme: document.getElementById('cfg-screen-mode')?.value || "dark",
+                    qnaMode: document.getElementById('cfg-qna-mode')?.checked || false,
+                    fontSize: document.getElementById('cfg-size')?.value || "30",
+                    imgSize: document.getElementById('cfg-img-size')?.value || "300",
+                    fontFamily: document.getElementById('cfg-font-family')?.value || "'Segoe UI', sans-serif",
+                    voiceMode: document.querySelector('input[name="appControlVoiceMode"]:checked')?.value || "hybrid",
+                    imageStorage: imageStorage
+                };
+                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
+            } catch(e) { console.error("AutoSave Error:", e); }
+        }
+
+        function autoLoadFromStorage() {
+            try {
+                let savedRaw = localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (!savedRaw) return false;
+                let data = JSON.parse(savedRaw);
+                if (data.dbMaster && Object.keys(data.dbMaster).length > 0) {
+                    dbMaster = data.dbMaster;
+                }
+                if (data.title) document.getElementById('studio-header-title').value = data.title;
+                if (data.lang) document.getElementById('cfg-app-lang').value = data.lang;
+                if (data.theme) document.getElementById('cfg-screen-mode').value = data.theme;
+                if (data.qnaMode !== undefined) document.getElementById('cfg-qna-mode').checked = data.qnaMode;
+                if (data.fontSize) {
+                    document.getElementById('cfg-size').value = data.fontSize;
+                    updateSizeDisplay(data.fontSize);
+                }
+                if (data.imgSize) {
+                    document.getElementById('cfg-img-size').value = data.imgSize;
+                    updateImgSizeDisplay(data.imgSize);
+                }
+                if (data.fontFamily) document.getElementById('cfg-font-family').value = data.fontFamily;
+                if (data.imageStorage) imageStorage = data.imageStorage;
+                if (data.voiceMode) {
+                    let rad = document.querySelector(`input[name="appControlVoiceMode"][value="${data.voiceMode}"]`);
+                    if (rad) rad.checked = true;
+                }
+
+                renderSubjectDropdown();
+                if (data.selectedSub && dbMaster[data.selectedSub]) {
+                    document.getElementById('select-subject').value = data.selectedSub;
+                    renderChapterDropdown();
+                    if (data.selectedCh) {
+                        document.getElementById('select-chapter').value = data.selectedCh;
+                    }
+                }
+                loadQuestionsForSelection();
+                return true;
+            } catch(e) {
+                console.error("AutoLoad Error:", e);
+                return false;
+            }
+        }
+
+        window.onload = function() {
+            loadVoices();
+            if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+            if(!autoLoadFromStorage()) {
+                renderSubjectDropdown();
+                switchLanguageMode();
+                executeDataScannerLive();
+            }
+        };
+
+        function countQuestionsInText(text) {
+            if(!text || !text.trim()) return 0;
+            const lines = text.trim().split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            let idx = 0, count = 0;
+            while(idx < lines.length) {
+                count++;
+                idx += 6; 
+                if(lines[idx] && !lines[idx].includes('?') && lines[idx].length > 4 && isNaN(lines[idx])) idx++;
+            }
+            return count;
+        }
+
+        function renderSubjectDropdown() {
+            let selectSub = document.getElementById('select-subject');
+            let grandTotal = 0;
+            let currentSelected = selectSub.value;
+
+            selectSub.innerHTML = `<option value="">-- Select Subject --</option>`;
+            
+            for(let sub in dbMaster) {
+                let subTotal = 0;
+                for(let ch in dbMaster[sub]) {
+                    let qCount = countQuestionsInText(dbMaster[sub][ch]);
+                    subTotal += qCount;
+                }
+                grandTotal += subTotal;
+                selectSub.innerHTML += `<option value="${sub}">${sub} (${subTotal} Qs)</option>`;
+            }
+
+            if(currentSelected && dbMaster[currentSelected]) selectSub.value = currentSelected;
+            document.getElementById('stat-db-count').innerText = `Overall Database: ${grandTotal} Qs`;
+            renderChapterDropdown();
+        }
+
+        function renderChapterDropdown() {
+            let currentSub = document.getElementById('select-subject').value;
+            let selectCh = document.getElementById('select-chapter');
+
+            if (!currentSub || !dbMaster[currentSub]) {
+                selectCh.innerHTML = `<option value="">-- Select Chapter --</option>`;
+                document.getElementById('stat-sub-count').innerText = `Selected Subject Total: 0 Qs`;
+                return;
+            }
+
+            let subTotal = 0;
+            let html = `<option value="ALL" selected>📁 All Chapters (${currentSub})</option>`;
+
+            for(let ch in dbMaster[currentSub]) {
+                let qCount = countQuestionsInText(dbMaster[currentSub][ch]);
+                subTotal += qCount;
+                html += `<option value="${ch}">${ch} (${qCount} Qs)</option>`;
+            }
+
+            selectCh.innerHTML = html;
+            selectCh.value = "ALL";
+            document.getElementById('stat-sub-count').innerText = `Selected Subject Total: ${subTotal} Qs`;
+        }
+
+        function addNewSubject() {
+            let name = prompt("नए विषय (Subject) का नाम लिखें:");
+            if(name && name.trim()) {
+                name = name.trim();
+                if(!dbMaster[name]) {
+                    dbMaster[name] = {};
+                    renderSubjectDropdown();
+                    document.getElementById('select-subject').value = name;
+                    renderChapterDropdown();
+                    loadQuestionsForSelection();
+                    autoSaveToStorage();
+                }
+            }
+        }
+
+        function deleteCurrentSubject() {
+            let sub = document.getElementById('select-subject').value;
+            if(!sub || !dbMaster[sub]) {
+                alert("कृपया डिलीट करने के लिए पहले Subject चुनें!");
+                return;
+            }
+            if(confirm(`क्या आप वाकई Subject '${sub}' और इसके सभी Chapters को डिलीट करना चाहते हैं?`)) {
+                delete dbMaster[sub];
+                renderSubjectDropdown();
+                document.getElementById('select-subject').value = "";
+                renderChapterDropdown();
+                loadQuestionsForSelection();
+                autoSaveToStorage();
+                alert(`🗑️ Subject '${sub}' डिलीट हो गया है!`);
+            }
+        }
+
+        function addNewChapter() {
+            let currentSub = document.getElementById('select-subject').value;
+            if(!currentSub) {
+                alert("कृपया पहले Subject चुनें!");
+                return;
+            }
+            let name = prompt(`विषय '${currentSub}' के लिए नए चैप्टर का नाम लिखें:`);
+            if(name && name.trim()) {
+                name = name.trim();
+                if(!dbMaster[currentSub][name]) {
+                    dbMaster[currentSub][name] = "";
+                    renderChapterDropdown();
+                    document.getElementById('select-chapter').value = name;
+                    loadQuestionsForSelection();
+                    autoSaveToStorage();
+                }
+            }
+        }
+
+        function deleteCurrentChapter() {
+            let sub = document.getElementById('select-subject').value;
+            let ch = document.getElementById('select-chapter').value;
+            if(!sub || !dbMaster[sub]) {
+                alert("कृपया पहले Subject चुनें!");
+                return;
+            }
+            if(!ch || ch === "ALL") {
+                alert("कृपया डिलीट करने के लिए एक विशिष्ट (Specific) Chapter चुनें!");
+                return;
+            }
+            if(confirm(`क्या आप वाकई Chapter '${ch}' को डिलीट करना चाहते हैं?`)) {
+                delete dbMaster[sub][ch];
+                renderSubjectDropdown();
+                document.getElementById('select-subject').value = sub;
+                renderChapterDropdown();
+                loadQuestionsForSelection();
+                autoSaveToStorage();
+                alert(`🗑️ Chapter '${ch}' डिलीट हो गया है!`);
+            }
+        }
+
+        function loadQuestionsForSelection() {
+            let sub = document.getElementById('select-subject').value;
+            let ch = document.getElementById('select-chapter').value;
+            
+            if(!sub || !dbMaster[sub]) {
+                document.getElementById('bulk-data').value = "";
+                executeDataScannerLive();
+                return;
+            }
+
+            if(ch === "ALL") {
+                let combinedText = [];
+                for(let key in dbMaster[sub]) {
+                    if(dbMaster[sub][key] && dbMaster[sub][key].trim()) {
+                        combinedText.push(dbMaster[sub][key].trim());
+                    }
+                }
+                document.getElementById('bulk-data').value = combinedText.join('\n\n');
+            } else if(ch && dbMaster[sub][ch] !== undefined) {
+                document.getElementById('bulk-data').value = dbMaster[sub][ch];
+            } else {
+                document.getElementById('bulk-data').value = "";
+            }
+            executeDataScannerLive();
+        }
+
+        function onSubjectChange() {
+            renderChapterDropdown();
+            loadQuestionsForSelection();
+            autoSaveToStorage();
+        }
+
+        function onChapterChange() {
+            loadQuestionsForSelection();
+            autoSaveToStorage();
+        }
+
+        function saveCurrentQuestionsToChapter() {
+            let sub = document.getElementById('select-subject').value;
+            let ch = document.getElementById('select-chapter').value;
+            let data = document.getElementById('bulk-data').value.trim();
+
+            if(!sub) {
+                alert("कृपया पहले Subject और Chapter सेलेक्ट करें!");
+                return;
+            }
+            if(!ch || ch === "ALL") {
+                alert("⚠️ 'All Chapters' मोड में सेव नहीं किया जा सकता। कृपया सेव करने के लिए एक विशिष्ट (Specific) चैप्टर सेलेक्ट करें!");
+                return;
+            }
+            if(!data) {
+                alert("प्रश्न बॉक्स में पहले प्रश्न पेस्ट करें!");
+                return;
+            }
+
+            dbMaster[sub][ch] = data;
+            renderSubjectDropdown();
+            document.getElementById('select-subject').value = sub;
+            renderChapterDropdown();
+            document.getElementById('select-chapter').value = ch;
+            loadQuestionsForSelection();
+            autoSaveToStorage();
+            alert(`✅ Successfully Saved & Auto-Persisted under '${sub} -> ${ch}'`);
+        }
+
+        function downloadBackupJSON() {
+            let imgUrls = {};
+            let maxCount = Math.max(100, parsedQuestions.length);
+            for(let i=1; i<=maxCount; i++) {
+                let urlVal = document.getElementById(`studio-url-${i}`)?.value || "";
+                if(urlVal) imgUrls[i] = urlVal;
+            }
+
+            let backupData = {
+                title: document.getElementById('studio-header-title').value,
+                dbMaster: dbMaster,
+                bulkData: document.getElementById('bulk-data').value,
+                selectedSub: document.getElementById('select-subject').value,
+                selectedCh: document.getElementById('select-chapter').value,
+                lang: document.getElementById('cfg-app-lang').value,
+                theme: document.getElementById('cfg-screen-mode').value,
+                qnaMode: document.getElementById('cfg-qna-mode').checked,
+                fontSize: document.getElementById('cfg-size').value,
+                imgSize: document.getElementById('cfg-img-size').value,
+                fontFamily: document.getElementById('cfg-font-family').value,
+                imgUrls: imgUrls,
+                imageStorage: imageStorage,
+                exportedAt: new Date().toISOString()
+            };
+
+            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData));
+            let downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `Quiz_Master_Backup_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        function restoreBackupJSON(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        let backupData = JSON.parse(e.target.result);
+                        if(backupData.title !== undefined) document.getElementById('studio-header-title').value = backupData.title;
+                        if(backupData.dbMaster) {
+                            dbMaster = backupData.dbMaster;
+                            renderSubjectDropdown();
+                        }
+                        if(backupData.selectedSub) document.getElementById('select-subject').value = backupData.selectedSub;
+                        renderChapterDropdown();
+                        if(backupData.selectedCh) document.getElementById('select-chapter').value = backupData.selectedCh;
+                        
+                        if(backupData.bulkData !== undefined) document.getElementById('bulk-data').value = backupData.bulkData;
+                        if(backupData.lang !== undefined) document.getElementById('cfg-app-lang').value = backupData.lang;
+                        if(backupData.theme !== undefined) document.getElementById('cfg-screen-mode').value = backupData.theme;
+                        if(backupData.qnaMode !== undefined) document.getElementById('cfg-qna-mode').checked = backupData.qnaMode;
+                        if(backupData.fontSize !== undefined) {
+                            document.getElementById('cfg-size').value = backupData.fontSize;
+                            updateSizeDisplay(backupData.fontSize);
+                        }
+                        if(backupData.imgSize !== undefined) {
+                            document.getElementById('cfg-img-size').value = backupData.imgSize;
+                            updateImgSizeDisplay(backupData.imgSize);
+                        }
+                        if(backupData.fontFamily !== undefined) document.getElementById('cfg-font-family').value = backupData.fontFamily;
+
+                        if(backupData.imageStorage) imageStorage = backupData.imageStorage;
+
+                        executeDataScannerLive();
+
+                        if(backupData.imgUrls) {
+                            for(let i in backupData.imgUrls) {
+                                let inp = document.getElementById(`studio-url-${i}`);
+                                if(inp) inp.value = backupData.imgUrls[i];
+                            }
+                        }
+
+                        switchLanguageMode();
+                        autoSaveToStorage();
+                        alert("✅ Full Backup Restored & Auto-Saved Successfully!");
+                    } catch(err) {
+                        alert("❌ Invalid Backup File Format!");
+                    }
+                };
+                reader.readAsText(input.files[0]);
+            }
+        }
+
+        function renderQuestionManagerList() {
+            const container = document.getElementById('q-preview-container');
+            if(!container) return;
+
+            if(parsedQuestions.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:#94a3b8; font-size:13px; padding:10px;">कोई सवाल ऐड नहीं है। ऊपर बॉक्स में पेस्ट करें।</div>`;
+                return;
+            }
+
+            let startRange = parseInt(document.getElementById('q-range-start').value) || 1;
+            let endRange = parseInt(document.getElementById('q-range-end').value) || parsedQuestions.length;
+
+            let html = "";
+            parsedQuestions.forEach((q, idx) => {
+                let qNum = idx + 1;
+                let isInRange = (qNum >= startRange && qNum <= endRange);
+                let rangeClass = isInRange ? "in-range" : "";
+                let badgeText = isInRange ? "🎯 READY TO PLAY" : "⚪ OUT OF RANGE";
+                let badgeBg = isInRange ? "#0284c7" : "#475569";
+
+                let hasPhoto = (document.getElementById(`studio-url-${qNum}`)?.value || imageStorage[qNum]);
+                let photoStatus = hasPhoto ? "🖼️ Photo Attached" : "⚠️ No Photo";
+
+                html += `
+                    <div class="q-preview-card ${rangeClass}">
+                        <div class="q-preview-header">
+                            <span>Q.${qNum} <span style="background:${badgeBg}; color:white; padding:2px 8px; border-radius:10px; font-size:10px; margin-left:5px;">${badgeText}</span></span>
+                            <span style="font-size:11px; color: ${hasPhoto ? '#2ed573' : '#ef4444'}; font-weight:bold;">${photoStatus}</span>
+                        </div>
+                        <div class="q-preview-title">${q.question}</div>
+                        <div class="q-preview-opts">
+                            <div>A) ${q.o1}</div>
+                            <div>B) ${q.o2}</div>
+                            <div>C) ${q.o3}</div>
+                            <div>D) ${q.o4}</div>
+                        </div>
+                        
+                        <div class="img-inputs" style="margin-top:6px;">
+                            <input type="text" id="studio-url-${qNum}" value="${document.getElementById(`studio-url-${qNum}`)?.value || ''}" placeholder="Paste Photo URL for Q.${qNum}..." oninput="renderQuestionManagerList()">
+                            <label class="file-label" id="lbl-${qNum}" for="file-${qNum}">${imageStorage[qNum] ? '✅ Loaded' : '📁 Photo'}</label>
+                            <input type="file" id="file-${qNum}" accept="image/*" onchange="handleLocalFile(this, ${qNum})">
+                            <button class="btn-del" onclick="clearImgSlot(${qNum})">🗑️</button>
+                        </div>
+
+                        <div class="q-preview-actions">
+                            <button class="btn-q-edit" onclick="editSingleQuestion(${idx})">✏️ Edit Question</button>
+                            <button class="btn-q-del" onclick="deleteSingleQuestion(${idx})">🗑️ Delete</button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function editSingleQuestion(index) {
+            let q = parsedQuestions[index];
+            let newText = prompt("Edit Question Text:", q.question);
+            if(newText !== null && newText.trim() !== "") {
+                q.question = newText.trim();
+                rebuildBulkTextareaFromParsed();
+            }
+        }
+
+        function deleteSingleQuestion(index) {
+            if(confirm(`क्या आप Question #${index+1} डिलीट करना चाहते हैं?`)) {
+                parsedQuestions.splice(index, 1);
+                rebuildBulkTextareaFromParsed();
+            }
+        }
+
+        function rebuildBulkTextareaFromParsed() {
+            let lines = [];
+            parsedQuestions.forEach(q => {
+                lines.push(q.question);
+                lines.push(q.o1);
+                lines.push(q.o2);
+                lines.push(q.o3);
+                lines.push(q.o4);
+                lines.push(q.correctAns);
+                if(q.explanation) lines.push(q.explanation);
+                lines.push(""); 
+            });
+            document.getElementById('bulk-data').value = lines.join('\n').trim();
+            executeDataScannerLive();
+            autoSaveToStorage();
+        }
+
+        function executeDataScannerLive() {
+            const rawText = document.getElementById('bulk-data').value.trim();
+            const badge = document.getElementById('scan-badge-msg');
+            const lbl = document.getElementById('scan-counter-lbl');
+            
+            if(!rawText) {
+                badge.innerText = "Empty input data stream.";
+                badge.className = "scanner-good";
+                lbl.innerText = "Total Valid: 0";
+                parsedQuestions = [];
+                renderQuestionManagerList();
+                return;
+            }
+
+            const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            parseBulkInputs(lines);
+
+            badge.innerText = `✓ Data Structure Perfect!`;
+            badge.className = "scanner-good";
+            lbl.innerText = `Total Valid: ${parsedQuestions.length}`;
+            
+            if(parsedQuestions.length > 0) {
+                document.getElementById('q-range-end').value = parsedQuestions.length;
+            }
+            renderQuestionManagerList();
+        }
+
+        function switchLanguageMode() {
+            const currentLang = document.getElementById('cfg-app-lang').value;
+            const pack = langPack[currentLang];
+            if (!pack) return; 
+
+            document.getElementById('lbl-main-title').innerText = pack.mainTitle;
+            document.getElementById('lbl-sec-lang').innerText = pack.secLang;
+            document.getElementById('lbl-sec-voice').innerText = pack.secVoice;
+            document.getElementById('lbl-sub-speed').innerText = pack.subSpeed;
+            document.getElementById('lbl-sec-bulk').innerText = pack.secBulk;
+            document.getElementById('bulk-data').placeholder = pack.bulkPlaceholder;
+            document.getElementById('btn-compile-text').innerText = pack.btnCompile;
+            document.getElementById('lbl-banner-like').innerHTML = pack.bannerLike;
+            document.getElementById('lbl-banner-share').innerHTML = pack.bannerShare;
+            autoSaveToStorage();
+        }
+
+        function handleLocalFile(input, id) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageStorage[id] = e.target.result;
+                    renderQuestionManagerList();
+                    autoSaveToStorage();
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function clearImgSlot(id) {
+            let urlInp = document.getElementById(`studio-url-${id}`);
+            if(urlInp) urlInp.value = "";
+            delete imageStorage[id];
+            renderQuestionManagerList();
+            autoSaveToStorage();
+        }
+
+        function updateSizeDisplay(val) { document.getElementById('size-val').innerText = val + "px"; }
+        function updateImgSizeDisplay(val) { document.getElementById('img-size-val').innerText = val + "px"; }
+        function updateSpeedDisplay(val) { document.getElementById('speed-val').innerText = val + "x"; }
+
+        function runInstantTextFormatter() {
+            let txtArea = document.getElementById('bulk-data');
+            let rawLines = txtArea.value.split('\n');
+            let cleanedLines = [];
+
+            rawLines.forEach(line => {
+                let trimmed = line.trim();
+                if (trimmed.length === 0) return; 
+
+                if (/^[A-Da-d1-4]\s*[\)\.\-\s]/i.test(trimmed)) {
+                    trimmed = trimmed.replace(/^[A-Da-d1-4]\s*[\)\.\-\s]\s*/i, '');
+                }
+                cleanedLines.push(trimmed);
+            });
+
+            let optimizedStream = [];
+            let i = 0;
+            while(i < cleanedLines.length) {
+                optimizedStream.push(cleanedLines[i++]); 
+                optimizedStream.push(cleanedLines[i++] || 'Option A');
+                optimizedStream.push(cleanedLines[i++] || 'Option B');
+                optimizedStream.push(cleanedLines[i++] || 'Option C');
+                optimizedStream.push(cleanedLines[i++] || 'Option D');
+                optimizedStream.push(cleanedLines[i++] || '1');
+                
+                if(cleanedLines[i] && !cleanedLines[i].includes('?') && !/^[A-Da-d1-4]/i.test(cleanedLines[i]) && cleanedLines[i].length > 3) {
+                    optimizedStream.push(cleanedLines[i++]);
+                }
+                optimizedStream.push(''); 
+            }
+            txtArea.value = optimizedStream.join('\n').trim();
+            executeDataScannerLive();
+            autoSaveToStorage();
+        }
+
+        function toggleSilenceAI() {
+            isAISilenced = !isAISilenced;
+            let btn = document.getElementById('manualSilenceBtn');
+            if (isAISilenced) {
+                btn.classList.add('active-silence');
+                btn.innerHTML = "🔊 <span>Voice Off</span>";
+                if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel();
+                }
+            } else {
+                btn.classList.remove('active-silence');
+                btn.innerHTML = "🔇 <span>Silence</span>";
+            }
+        }
+
+        function highlightWordIndex(qIndex, wordIdx) {
+            let titleEl = document.getElementById(`qtitle-box-${qIndex}`);
+            if(!titleEl) return;
+            let spans = titleEl.querySelectorAll('.q-word');
+            spans.forEach((span, idx) => {
+                if(idx === wordIdx) {
+                    span.classList.add('word-highlight');
+                } else {
+                    span.classList.remove('word-highlight');
+                }
+            });
+        }
+
+        function clearWordHighlights() {
+            clearInterval(karaokeInterval);
+            document.querySelectorAll('.q-word').forEach(s => s.classList.remove('word-highlight'));
+        }
+
+        function speakText(text, callback, isQuestionSpeech = false) {
+            clearTimeout(voiceFailSafeTimeout);
+            clearWordHighlights();
+            let localToken = ++speechRunToken;
+
+            function clearTalking() {
+                if (localToken !== speechRunToken) return;
+                clearTimeout(voiceFailSafeTimeout);
+                clearWordHighlights();
+                if (callback) callback();
+            }
+
+            if (isAISilenced) {
+                let controlMode = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
+                let simDelay = (controlMode === "full_ai" && isFullAIAutoPlaying) ? Math.min(Math.max(text.length * 15, 200), 500) : 50;
+                
+                voiceFailSafeTimeout = setTimeout(clearTalking, simDelay);
+                return;
+            }
+
+            if (typeof speechSynthesis === 'undefined') {
+                clearTalking();
+                return;
+            }
+
+            try {
+                speechSynthesis.cancel();
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                }
+            } catch(e){}
+
+            setTimeout(() => {
+                if (localToken !== speechRunToken) return;
+
+                const currentLang = document.getElementById('cfg-app-lang')?.value || "hi";
+                let processed = convertNumbersInTextToHindiWords(text);
+                processed = processed.replace(/\s+/g, " ").trim();
+
+                // STORE UTTERANCE IN GLOBAL VARIABLE TO PREVENT GARBAGE COLLECTION!
+                currentUtterance = new SpeechSynthesisUtterance(processed);
+                let selectedSpeed = parseFloat(document.getElementById('cfg-speed')?.value) || 0.95;
+                currentUtterance.rate = selectedSpeed;
+                currentUtterance.volume = 1.0; 
+
+                let gender = document.getElementById('cfg-voice-a')?.value || "female";
+                let voices = speechSynthesis.getVoices();
+                if (!voices || voices.length === 0) voices = cachedVoices;
+
+                let targetVoice = voices.find(v => {
+                    let matchLang = currentLang === 'hi' ? (v.lang.includes('hi-IN') || v.lang.includes('hi_IN')) : (v.lang.includes('en-US') || v.lang.includes('en-GB'));
+                    if (gender === 'female') {
+                        return matchLang && (v.name.toLowerCase().includes('female') || v.name.includes('Zira') || (v.name.includes('Google') && !v.name.toLowerCase().includes('male')));
+                    } else {
+                        return matchLang && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('david') || v.name.includes('Google'));
+                    }
+                });
+
+                if(!targetVoice) {
+                    targetVoice = voices.find(v => currentLang === 'hi' ? (v.lang.includes('hi-IN') || v.lang.includes('hi')) : v.lang.includes('en'));
+                }
+                if(targetVoice) currentUtterance.voice = targetVoice;
+                currentUtterance.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
+
+                // KARAOKE HIGHLIGHTING STARTS STRICTLY WHEN AUDIO STARTS OUTPUTTING (currentUtterance.onstart)
+                currentUtterance.onstart = function() {
+                    if (localToken !== speechRunToken) return;
+
+                    let titleEl = document.getElementById(`qtitle-box-${currentQIndex}`);
+                    let spans = titleEl ? titleEl.querySelectorAll('.q-word') : [];
+
+                    if (isQuestionSpeech && spans.length > 0) {
+                        let wordCount = spans.length;
+                        let msPerWord = Math.max((wordCount * 360) / selectedSpeed / wordCount, 160);
+                        let currentWIndex = 0;
+
+                        highlightWordIndex(currentQIndex, currentWIndex);
+
+                        clearInterval(karaokeInterval);
+                        karaokeInterval = setInterval(() => {
+                            if (localToken !== speechRunToken || isFullAIPaused) return;
+                            currentWIndex++;
+                            if (currentWIndex < wordCount) {
+                                highlightWordIndex(currentQIndex, currentWIndex);
+                            } else {
+                                clearInterval(karaokeInterval);
+                            }
+                        }, msPerWord);
+                    }
+                };
+
+                let prefixStr = (currentLang === 'hi' ? "प्रश्न. " : "Question. ");
+                currentUtterance.onboundary = function(e) {
+                    if (isQuestionSpeech && e.name === 'word') {
+                        let titleEl = document.getElementById(`qtitle-box-${currentQIndex}`);
+                        let spans = titleEl ? titleEl.querySelectorAll('.q-word') : [];
+                        let charPos = e.charIndex - prefixStr.length;
+                        if (charPos >= 0 && spans.length > 0) {
+                            let cumulative = 0;
+                            spans.forEach((span, idx) => {
+                                let wLen = span.innerText.length + 1;
+                                if (charPos >= cumulative && charPos < cumulative + wLen) {
+                                    clearInterval(karaokeInterval); 
+                                    highlightWordIndex(currentQIndex, idx);
+                                }
+                                cumulative += wLen;
+                            });
+                        }
+                    }
+                };
+
+                let estimatedTime = Math.max((text.length / 8) * 1000, 3500) / selectedSpeed;
+                voiceFailSafeTimeout = setTimeout(clearTalking, estimatedTime + 1500); 
+
+                currentUtterance.onend = function() {
+                    clearTalking();
+                };
+                currentUtterance.onerror = function(e) {
+                    clearTalking();
+                };
+
+                try { 
+                    speechSynthesis.resume();
+                    speechSynthesis.speak(currentUtterance); 
+                } catch(e) { 
+                    clearTalking(); 
+                }
+            }, 30);
+        }
+
+        function parseBulkInputs(lines) {
+            parsedQuestions = [];
+            let idx = 0;
+            while(idx < lines.length) {
+                let question = lines[idx++];
+                let o1 = lines[idx++] || 'A';
+                let o2 = lines[idx++] || 'B';
+                let o3 = lines[idx++] || 'C';
+                let o4 = lines[idx++] || 'D';
+                let correctAns = lines[idx++] || '1';
+                let explanation = "";
+                
+                if (lines[idx] && !lines[idx].includes('?') && lines[idx].length > 4 && !/^[1-4]$/.test(lines[idx])) {
+                    explanation = lines[idx++];
+                }
+                
+                parsedQuestions.push({ question, o1, o2, o3, o4, correctAns, explanation });
+                while(lines[idx] === "") { idx++; }
+            }
+        }
+
+        function triggerVoiceTesting() {
+            const currentLang = document.getElementById('cfg-app-lang').value;
+            let testTxt = currentLang === 'hi' ? "यह एक वॉइस टेस्ट मैसेज है।" : "This is a voice testing audio signal.";
+            speakText(testTxt, null);
+        }
+
+        function compileStudioQuiz() {
+            isFullAIAutoPlaying = false;
+            isFullAIPaused = false;
+            let pauseBtn = document.getElementById('manualPauseBtn');
+            if(pauseBtn) pauseBtn.innerHTML = "⏸️ <span>Pause</span>";
+
+            isQnAModeActive = document.getElementById('cfg-qna-mode').checked;
+
+            const customTitle = document.getElementById('studio-header-title').value.trim() || "Mission 2026";
+            const subjectVal = document.getElementById('select-subject').value.trim() || "General";
+            const chapterVal = document.getElementById('select-chapter').value.trim() || "Topic";
+
+            let displayCh = (chapterVal === "ALL") ? "All Chapters" : chapterVal;
+            let subHeaderStr = `${subjectVal} | ${displayCh}`;
+
+            document.getElementById('display-header-title').innerText = customTitle;
+            document.getElementById('display-header-sub').innerText = subHeaderStr;
+
+            const targetTheme = document.getElementById('cfg-screen-mode').value;
+            const videoScreen = document.getElementById('video-screen');
+            videoScreen.classList.remove('dark-mode', 'light-mode', 'yellow-mode', 'purple-mode');
+            if (targetTheme === 'light') videoScreen.classList.add('light-mode');
+            else if (targetTheme === 'yellow') videoScreen.classList.add('yellow-mode');
+            else if (targetTheme === 'purple') videoScreen.classList.add('purple-mode');
+            else videoScreen.classList.add('dark-mode');
+
+            const activeFont = document.getElementById('cfg-font-family').value;
+            videoScreen.style.fontFamily = activeFont;
+
+            const rawText = document.getElementById('bulk-data').value.trim();
+            const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            
+            parseBulkInputs(lines);
+
+            let rangeStart = parseInt(document.getElementById('q-range-start').value) || 1;
+            let rangeEnd = parseInt(document.getElementById('q-range-end').value) || parsedQuestions.length;
+
+            rangeStart = Math.max(1, rangeStart);
+            rangeEnd = Math.min(parsedQuestions.length, rangeEnd);
+
+            let playQuestions = parsedQuestions.slice(rangeStart - 1, rangeEnd);
+
+            const track = document.getElementById('questions-track');
+            track.innerHTML = "";
+            totalQuestions = playQuestions.length;
+            currentQIndex = 0;
+            studioPlayState = "question"; 
+
+            const fontSize = document.getElementById('cfg-size').value + "px";
+            const imgMaxHeight = document.getElementById('cfg-img-size').value + "px";
+            const isBold = document.getElementById('cfg-font-weight').checked ? 'bold' : 'normal';
+            
+            playQuestions.forEach((q, i) => {
+                let realIndex = (rangeStart - 1) + i + 1;
+                let finalImgSrc = document.getElementById(`studio-url-${realIndex}`)?.value.trim() || imageStorage[realIndex] || "";
+                
+                let hideC = (q.o3 === 'C' || q.o3 === '') ? 'display:none;' : '';
+                let hideD = (q.o4 === 'D' || q.o4 === '') ? 'display:none;' : '';
+
+                let cleanUITitle = q.question.replace(/\[C\]/gi, '').trim();
+                let wordsArr = cleanUITitle.split(/\s+/);
+                let titleWordsHTML = wordsArr.map((w, wIdx) => `<span class="q-word" id="qword-${i}-${wIdx}">${w}</span>`).join(" ");
+
+                let optionsListStyle = isQnAModeActive ? 'display:none;' : '';
+
+                track.innerHTML += `
+                    <div class="q-block" id="block-${i}" style="font-family: ${activeFont};">
+                        <div class="q-badge">Question: ${i + 1} / ${totalQuestions}</div>
+
+                        <div class="q-title" id="qtitle-box-${i}" style="font-size: ${fontSize}; font-weight: ${isBold};">${titleWordsHTML}</div>
+                        
+                        <div class="q-main-layout-split">
+                            <div class="q-left-content">
+                                <div class="options-list" style="${optionsListStyle}">
+                                    <div class="opt-item" id="opt1-${i}" style="font-size: calc(${fontSize} - 6px);">A. ${q.o1}</div>
+                                    <div class="opt-item" id="opt2-${i}" style="font-size: calc(${fontSize} - 6px);">B. ${q.o2}</div>
+                                    <div class="opt-item" id="opt3-${i}" style="${hideC} font-size: calc(${fontSize} - 6px);">C. ${q.o3}</div>
+                                    <div class="opt-item" id="opt4-${i}" style="${hideD} font-size: calc(${fontSize} - 6px);">D. ${q.o4}</div>
+                                </div>
+                                <div class="qna-answer-box" id="qna-box-${i}"></div>
+                                <div class="explanation-box" id="exp-box-${i}">${q.explanation}</div>
+                            </div>
+
+                            <div class="q-right-image-box" style="${finalImgSrc ? '' : 'display:none;'} max-height: ${imgMaxHeight};">
+                                <img id="studio_img_tag_${i}" src="${finalImgSrc}" alt="Studio Pic" style="max-height: ${imgMaxHeight};">
+                            </div>
+                        </div>
+
+                        <div class="timer-wrapper" id="timer-wrapper-${i}">
+                            <span class="timer-number" id="timer-text-${i}">5</span>
+                            <div class="timer-bar-container">
+                                <div class="timer-bar-fill" id="bar-${i}"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            parsedQuestions = playQuestions; 
+
+            let thanksHeading = '✨ Thanks For Watching ✨';
+            let currentLang = document.getElementById('cfg-app-lang').value;
+            let thanksSub = currentLang === 'hi' ? 'Next part ke liye like aur follow karein!' : 'Please like and follow for the next part!';
+            
+            track.innerHTML += `
+                <div class="end-block" id="end-block-view">
+                    <h3>${thanksHeading}</h3>
+                    <p>${thanksSub}</p>
+                </div>
+            `;
+
+            if (totalQuestions === 0) {
+                alert(currentLang === 'hi' ? "कृपया सही रेंज या प्रश्न पेस्ट करें!" : "Please enter valid question range or paste questions!");
+                return;
+            }
+
+            document.getElementById('creator-panel').style.display = 'none';
+            document.getElementById('video-screen').style.display = 'flex';
+
+            initQuestionLayout();
+        }
+
+        function runFullAISequence() {
+            if (studioPlayState !== "question" || isFullAIPaused) return;
+            let qData = parsedQuestions[currentQIndex];
+            if (!qData) return;
+
+            let cleanUITitle = qData.question.replace(/\[C\]/gi, '').trim();
+            let currentLang = document.getElementById('cfg-app-lang').value;
+            let speechText = (currentLang === 'hi' ? "प्रश्न. " : "Question. ") + cleanUITitle;
+
+            speakText(speechText, () => {
+                let currentModeCheck = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
+                if (currentModeCheck === "full_ai" && studioPlayState === "question" && isFullAIAutoPlaying && !isFullAIPaused) {
+                    triggerManualCountdown(() => {
+                        let innerModeCheck = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
+                        if (innerModeCheck === "full_ai" && studioPlayState === "question" && isFullAIAutoPlaying && !isFullAIPaused) {
+                            handleShowAnswer();
+                        }
+                    });
+                }
+            }, true);
+        }
+
+        function handlePlayFullAI() {
+            if (typeof speechSynthesis !== 'undefined') {
+                try { speechSynthesis.resume(); } catch(e){}
+            }
+            stopAllAudioAndTimers();
+            isFullAIAutoPlaying = true;
+            isFullAIPaused = false;
+            let pauseBtn = document.getElementById('manualPauseBtn');
+            if(pauseBtn) pauseBtn.innerHTML = "⏸️ <span>Pause</span>";
+            runFullAISequence();
+        }
+
+        function togglePauseFullAI() {
+            let btn = document.getElementById('manualPauseBtn');
+            if (!isFullAIPaused) {
+                isFullAIPaused = true;
+                if (btn) btn.innerHTML = "▶️ <span>Resume</span>";
+                clearInterval(countdownInterval);
+                clearTimeout(voiceFailSafeTimeout);
+                clearTimeout(aiNextTimeout);
+                clearWordHighlights();
+                if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel();
+                }
+            } else {
+                isFullAIPaused = false;
+                if (btn) btn.innerHTML = "⏸️ <span>Pause</span>";
+                let controlMode = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
+                if (controlMode === "full_ai" && isFullAIAutoPlaying) {
+                    if (studioPlayState === "question") {
+                        runFullAISequence();
+                    } else if (studioPlayState === "answer") {
+                        handleNextQuestion(true);
+                    }
+                }
+            }
+        }
+
+        function initQuestionLayout() {
+            document.querySelectorAll('.q-block').forEach(el => el.classList.remove('active-q'));
+            let endBlock = document.getElementById('end-block-view');
+            if(endBlock) endBlock.classList.remove('active-q');
+
+            document.getElementById('manualPlayBtn').style.display = 'flex';
+            document.getElementById('manualPauseBtn').style.display = 'flex';
+            document.getElementById('manualSilenceBtn').style.display = 'flex';
+            document.getElementById('manualTimerBtn').style.display = 'flex';
+            document.getElementById('manualAnsBtn').style.display = 'flex';
+            document.getElementById('manualPrevBtn').style.display = 'flex';
+            document.getElementById('manualNextBtn').style.display = 'flex';
+            
+            document.getElementById('manualPlayBtn').disabled = false;
+            document.getElementById('manualPauseBtn').disabled = false;
+            document.getElementById('manualSilenceBtn').disabled = false;
+            document.getElementById('manualTimerBtn').disabled = false;
+            document.getElementById('manualAnsBtn').disabled = false;
+            document.getElementById('manualPrevBtn').disabled = (currentQIndex === 0);
+            document.getElementById('manualNextBtn').disabled = false;
+
+            if (currentQIndex === totalQuestions) {
+                studioPlayState = "ended";
+                isFullAIAutoPlaying = false;
+                isFullAIPaused = false;
+                document.getElementById('manualPlayBtn').style.display = 'none';
+                document.getElementById('manualPauseBtn').style.display = 'none';
+                document.getElementById('manualSilenceBtn').style.display = 'none';
+                document.getElementById('manualTimerBtn').style.display = 'none';
+                document.getElementById('manualAnsBtn').style.display = 'none';
+                document.getElementById('manualPrevBtn').style.display = 'none';
+                document.getElementById('manualNextBtn').style.display = 'none';
+                if(endBlock) endBlock.classList.add('active-q');
+                return;
+            }
+
+            studioPlayState = "question";
+
+            playChimeSound();
+
+            let activeCard = document.getElementById(`block-${currentQIndex}`);
+            if(activeCard) activeCard.classList.add('active-q');
+
+            let expBox = document.getElementById(`exp-box-${currentQIndex}`);
+            let qnaB = document.getElementById(`qna-box-${currentQIndex}`);
+            let timerWrap = document.getElementById(`timer-wrapper-${currentQIndex}`);
+            let imgTag = document.getElementById(`studio_img_tag_${currentQIndex}`);
+
+            if(expBox) expBox.style.display = "none";
+            if(qnaB) qnaB.style.display = "none";
+            if(timerWrap) timerWrap.style.display = "none";
+            
+            for(let opt=1; opt<=4; opt++) {
+                let oBox = document.getElementById(`opt${opt}-${currentQIndex}`);
+                if(oBox) oBox.classList.remove('reveal-correct');
+            }
+
+            if(imgTag) {
+                imgTag.className = "";
+                let randomAnim = photoAnimations[Math.floor(Math.random() * photoAnimations.length)];
+                imgTag.classList.add(randomAnim);
+            }
+
+            let controlMode = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
+            
+            // केवल "फुल्ली AI मोड" में सवाल अपने-आप AI बोलेगा।
+            // हाइब्रिड और फुल्ली मैनुअल मोड में AI सवाल नहीं बोलेगा!
+            if (controlMode === "full_ai" && isFullAIAutoPlaying && !isFullAIPaused) {
+                runFullAISequence();
+            } else {
+                stopAllAudioAndTimers();
+            }
+        }
+
+        function triggerManualCountdown(onTimerComplete) {
+            if (studioPlayState !== "question") return;
+            
+            let timerWrap = document.getElementById(`timer-wrapper-${currentQIndex}`);
+            let fillBar = document.getElementById(`bar-${currentQIndex}`);
+            let timerText = document.getElementById(`timer-text-${currentQIndex}`);
+            if (!timerWrap || !fillBar) return;
+
+            timerWrap.style.display = "block";
+            fillBar.style.transform = `scaleX(1)`;
+            fillBar.className = "timer-bar-fill";
+            fillBar.style.backgroundColor = "#2ed573";
+            if(timerText) timerText.innerText = "5";
+
+            document.getElementById('manualTimerBtn').disabled = true;
+
+            let totalSteps = 500; 
+            let remainingSteps = totalSteps;
+            let lastSec = 5;
+
+            clearInterval(countdownInterval);
+            playBeepSound(700, 0.1); 
+
+            countdownInterval = setInterval(() => {
+                if(isFullAIPaused) return;
+
+                remainingSteps--;
+                let scale = remainingSteps / totalSteps;
+                fillBar.style.transform = `scaleX(${scale})`;
+
+                let currentSec = Math.ceil(remainingSteps / 100);
+                if (timerText && currentSec >= 1) {
+                    timerText.innerText = currentSec;
+                    if (currentSec !== lastSec) {
+                        lastSec = currentSec;
+                        playBeepSound(600 + (5 - currentSec) * 100, 0.08); 
+                    }
+                }
+
+                if (scale <= 0.5 && scale > 0.2) {
+                    fillBar.style.backgroundColor = "#ffc048";
+                } else if (scale <= 0.2) {
+                    fillBar.classList.add("timer-danger");
+                }
+
+                if (remainingSteps <= 0) {
+                    clearInterval(countdownInterval);
+                    timerWrap.style.display = "none";
+                    document.getElementById('manualTimerBtn').disabled = false;
+                    playBeepSound(1000, 0.2); 
+                    if (typeof onTimerComplete === 'function') {
+                        onTimerComplete();
+                    }
+                }
+            }, 10);
+        }
+
+        function triggerManualLikeAlert() {
+            let overlay = document.getElementById('like-popup-overlay');
+            if(!overlay) return;
+
+            overlay.style.display = 'flex';
+            document.getElementById('manualLikeBtn').disabled = true;
+            
+            speakText("हमारी सभी वीडियो प्राप्त करने के लिए वीडियो को लाइक करें।", () => {
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    document.getElementById('manualLikeBtn').disabled = false;
+                }, 500);
+            });
+        }
+
+        function handleShowAnswer() {
+            if (studioPlayState !== "question") return;
+            studioPlayState = "answer";
+            
+            clearInterval(countdownInterval);
+            let timerWrap = document.getElementById(`timer-wrapper-${currentQIndex}`);
+            if (timerWrap) timerWrap.style.display = "none";
+
+            let qData = parsedQuestions[currentQIndex];
+            let correctVal = qData.correctAns;
+            let currentLang = document.getElementById('cfg-app-lang').value;
+
+            let correctTextString = "";
+            if (correctVal === "1") correctTextString = qData.o1;
+            else if (correctVal === "2") correctTextString = qData.o2;
+            else if (correctVal === "3") correctTextString = qData.o3;
+            else if (correctVal === "4") correctTextString = qData.o4;
+
+            // 1. तुरंत स्क्रीन पर उत्तर हरा (Highlight) करें
+            if (isQnAModeActive) {
+                let qnaBox = document.getElementById(`qna-box-${currentQIndex}`);
+                if (qnaBox) {
+                    qnaBox.innerHTML = currentLang === 'hi' ? `सही उत्तर - ${correctTextString}` : `Correct Answer - ${correctTextString}`;
+                    qnaBox.style.display = "block";
+                }
+            } else {
+                let targetBox = document.getElementById(`opt${correctVal}-${currentQIndex}`);
+                if (targetBox) targetBox.classList.add('reveal-correct');
+            }
+
+            if (qData.explanation && qData.explanation.trim() !== "") {
+                const expBox = document.getElementById(`exp-box-${currentQIndex}`);
+                if (expBox) expBox.style.display = "block";
+            }
+
+            // 2. हाइब्रिड और फुल्ली AI मोड में AI उत्तर बोलेगा
+            let controlMode = document.querySelector('input[name="appControlVoiceMode"]:checked').value;
+            if (controlMode === "hybrid" || controlMode === "full_ai") {
+                let narrationText = currentLang === 'hi' ? ("सही उत्तर है " + correctTextString) : ("The correct answer is " + correctTextString);
+                if (qData.explanation && qData.explanation.trim() !== "") {
+                    narrationText += ". " + qData.explanation;
+                }
+
+                document.getElementById('manualAnsBtn').disabled = true;
+                if (typeof speechSynthesis !== 'undefined') {
+                    try { speechSynthesis.resume(); } catch(e){}
+                }
+                speakText(narrationText, () => {
+                    document.getElementById('manualAnsBtn').disabled = false;
+                    if (controlMode === "full_ai" && isFullAIAutoPlaying && !isFullAIPaused) {
+                        let finalCheck = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
+                        if (finalCheck === "full_ai" && studioPlayState !== "ended" && isFullAIAutoPlaying && !isFullAIPaused) {
+                            handleNextQuestion(true);
+                        }
+                    }
+                }, false);
+            }
+        }
+
+        function handlePrevQuestion() {
+            isFullAIAutoPlaying = false;
+            isFullAIPaused = false;
+            let pauseBtn = document.getElementById('manualPauseBtn');
+            if(pauseBtn) pauseBtn.innerHTML = "⏸️ <span>Pause</span>";
+
+            if (currentQIndex > 0) {
+                stopAllAudioAndTimers();
+                currentQIndex--;
+                initQuestionLayout();
+            }
+        }
+
+        function handleNextQuestion(isAuto = false) {
+            if (!isAuto) {
+                isFullAIAutoPlaying = false;
+                isFullAIPaused = false;
+                let pauseBtn = document.getElementById('manualPauseBtn');
+                if(pauseBtn) pauseBtn.innerHTML = "⏸️ <span>Pause</span>";
+            }
+            stopAllAudioAndTimers();
+            currentQIndex++;
+            initQuestionLayout();
+        }
+
+        function handleJumpToQuestion() {
+            isFullAIAutoPlaying = false;
+            isFullAIPaused = false;
+            let pauseBtn = document.getElementById('manualPauseBtn');
+            if(pauseBtn) pauseBtn.innerHTML = "⏸️ <span>Pause</span>";
+
+            let val = parseInt(document.getElementById('jumpQNo').value);
+            if (val && val >= 1 && val <= totalQuestions) {
+                stopAllAudioAndTimers();
+                currentQIndex = val - 1;
+                initQuestionLayout();
+                document.getElementById('jumpQNo').value = "";
+            } else {
+                alert(`कृपया 1 से ${totalQuestions} के बीच सही प्रश्न नंबर डालें!`);
+            }
+        }
+
+        function stopAllAudioAndTimers() {
+            clearInterval(countdownInterval);
+            clearInterval(karaokeInterval);
+            clearTimeout(voiceFailSafeTimeout);
+            clearTimeout(aiNextTimeout);
+            clearWordHighlights();
+            speechRunToken++;
+            
+            if (typeof speechSynthesis !== 'undefined') {
+                try { 
+                    speechSynthesis.cancel(); 
+                    currentUtterance = null;
+                } catch(e) {}
+            }
+
+            if(document.getElementById('manualPlayBtn')) document.getElementById('manualPlayBtn').disabled = false;
+            if(document.getElementById('manualPauseBtn')) document.getElementById('manualPauseBtn').disabled = false;
+            if(document.getElementById('manualSilenceBtn')) document.getElementById('manualSilenceBtn').disabled = false;
+            if(document.getElementById('manualTimerBtn')) document.getElementById('manualTimerBtn').disabled = false;
+            if(document.getElementById('manualAnsBtn')) document.getElementById('manualAnsBtn').disabled = false;
+            if(document.getElementById('manualPrevBtn')) document.getElementById('manualPrevBtn').disabled = false;
+            if(document.getElementById('manualNextBtn')) document.getElementById('manualNextBtn').disabled = false;
+            if(document.getElementById('manualLikeBtn')) document.getElementById('manualLikeBtn').disabled = false;
+        }
+
+        function stopToHome() {
+            isFullAIAutoPlaying = false;
+            isFullAIPaused = false;
+            stopAllAudioAndTimers();
+            
+            if (typeof speechSynthesis !== 'undefined') {
+                try { 
+                    speechSynthesis.cancel(); 
+                    speechSynthesis.pause();
+                    currentUtterance = null;
+                } catch(e) {}
+            }
+
+            currentQIndex = 0;
+            totalQuestions = 0;
+            parsedQuestions = [];
+            studioPlayState = "question"; 
+            
+            const track = document.getElementById('questions-track');
+            if(track) track.innerHTML = ""; 
+
+            if(document.getElementById('like-popup-overlay')) document.getElementById('like-popup-overlay').style.display = 'none';
+            if(document.getElementById('video-screen')) document.getElementById('video-screen').style.display = 'none';
+            if(document.getElementById('creator-panel')) document.getElementById('creator-panel').style.display = 'flex';
+            
+            switchLanguageMode();
+            executeDataScannerLive();
+        }
+    </script>
+</body>
+</html>
