@@ -7,7 +7,7 @@
   
   <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;600;700;800&family=Mukta:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@500;600;700;800&family=Poppins:wght@600;700;800;900&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap" rel="stylesheet">
   
   <!-- Libraries -->
@@ -96,27 +96,17 @@
       letter-spacing: 0.5px;
     }
 
-    label {
-      font-size: 11px;
-      color: #94a3b8;
-      font-weight: bold;
-      display: block;
-      margin-bottom: 3px;
-    }
-
-    input, select {
+    select, input[type="text"] {
       width: 100%;
       background: #0f172a;
       border: 1px solid var(--border-color);
       border-radius: 7px;
       color: #f8fafc;
-      padding: 7px 10px;
+      padding: 8px 10px;
       font-size: 13px;
       outline: none;
     }
-    input:focus, select:focus {
-      border-color: var(--border-focus);
-    }
+    select:focus { border-color: var(--border-focus); }
 
     textarea {
       width: 100%;
@@ -132,9 +122,7 @@
       line-height: 1.45;
       resize: vertical;
     }
-    textarea:focus {
-      border-color: var(--border-focus);
-    }
+    textarea:focus { border-color: var(--border-focus); }
 
     .status-counter {
       font-size: 12px;
@@ -161,9 +149,7 @@
       gap: 10px;
       align-items: center;
     }
-    .typo-row > div {
-      flex: 1;
-    }
+    .typo-row > div { flex: 1; }
     .typo-label {
       font-size: 11.5px;
       font-weight: 700;
@@ -172,10 +158,7 @@
       display: flex;
       justify-content: space-between;
     }
-    .typo-label span {
-      color: #38bdf8;
-      font-weight: 800;
-    }
+    .typo-label span { color: #38bdf8; font-weight: 800; }
 
     input[type="range"] {
       -webkit-appearance: none;
@@ -258,7 +241,9 @@
       position: relative;
     }
 
-    /* CAPTURE CARD BASE (1080 x 1350 - 4:5 FB Ratio) */
+    /* ==========================================================
+       HD CARD (1080 x 1350) - 4:5 FB Post Size
+       ========================================================== */
     #capture-card {
       width: 1080px;
       height: 1350px;
@@ -267,7 +252,7 @@
       max-width: 1080px;
       max-height: 1350px;
       background: #ffffff;
-      padding: 24px 38px 20px 38px;
+      padding: 26px 40px 22px 40px;
       position: absolute;
       top: 0;
       left: 0;
@@ -279,30 +264,102 @@
       font-family: 'Mukta', sans-serif;
     }
 
-    /* --------------------------------------
-       THEME 1: CLASSIC GREEN/RED TABLE
-       -------------------------------------- */
-    .theme-default .top-header-wrap {
+    /* -------------------------------------------
+       HEADER: PHOTO STYLE
+       ------------------------------------------- */
+    .theme-photo .top-header-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2.5px solid #dc2626;
+      padding-bottom: 12px;
+      margin-bottom: 10px;
+    }
+    .theme-photo .top-logo-circle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border: 3.5px solid #dc2626;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+    .theme-photo .circle-top {
+      color: #dc2626;
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1;
+      font-family: 'Poppins', sans-serif;
+    }
+    .theme-photo .circle-bot {
+      color: #0f172a;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 3px;
+      font-family: 'Poppins', sans-serif;
+      text-transform: uppercase;
+    }
+    .theme-photo .top-center-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .theme-photo .brand-main-title {
+      font-size: 44px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.05;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .theme-photo .brand-main-title span { color: #dc2626; }
+    .theme-photo .brand-tagline-text {
+      font-size: 21px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-top: 4px;
+      border-top: 2.5px solid #dc2626;
+      padding-top: 4px;
+      letter-spacing: 0.5px;
+    }
+    .theme-photo .top-follow-pill {
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 19px;
+      font-weight: 800;
+      padding: 8px 24px;
+      border-radius: 40px;
+      font-family: 'Poppins', sans-serif;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+    }
+
+    /* -------------------------------------------
+       HEADER: TABLE STYLE
+       ------------------------------------------- */
+    .theme-table .top-header-wrap {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 52px;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
-    .theme-default .top-line-behind {
+    .theme-table .top-line-behind {
       position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
+      left: 0; right: 0; top: 50%;
       height: 2.5px;
       background: #dc2626;
       z-index: 1;
       transform: translateY(-50%);
     }
-    .theme-default .top-logo-circle { display: none; }
-    .theme-default .top-tagline-block { display: none; }
-    .theme-default .top-logo-badge {
+    .theme-table .table-logo-badge {
       position: relative;
       z-index: 2;
       background: #ffffff;
@@ -311,21 +368,13 @@
       border-radius: 40px;
       display: inline-flex;
       align-items: center;
-    }
-    .theme-default .top-logo-badge .logo-red {
-      color: #dc2626;
+      font-family: 'Poppins', sans-serif;
       font-weight: 900;
       font-size: 25px;
-      font-family: 'Poppins', sans-serif;
     }
-    .theme-default .top-logo-badge .logo-black {
-      color: #0f172a;
-      font-weight: 900;
-      font-size: 25px;
-      font-family: 'Poppins', sans-serif;
-      margin-left: 6px;
-    }
-    .theme-default .top-tagline-default {
+    .theme-table .table-logo-badge .l-red { color: #dc2626; }
+    .theme-table .table-logo-badge .l-blk { color: #0f172a; margin-left: 6px; }
+    .theme-table .table-tagline {
       position: relative;
       z-index: 2;
       background: #ffffff;
@@ -334,7 +383,7 @@
       font-weight: 800;
       color: #0f172a;
     }
-    .theme-default .top-follow-pill {
+    .theme-table .top-follow-pill {
       position: relative;
       z-index: 2;
       background: #dc2626;
@@ -346,20 +395,58 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    .theme-default .title-banner {
+    /* -------------------------------------------
+       TITLE BANNER (SUBJECT + BHAG SYSTEM)
+       ------------------------------------------- */
+    .title-banner {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
     }
-    .theme-default .title-pill {
+    .title-pill-photo {
+      background: linear-gradient(180deg, #e60000 0%, #b91c1c 100%);
+      border-radius: 50px;
+      padding: 7px 36px;
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .photo-title-main {
+      color: #ffffff;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+    .photo-title-sub {
+      background: rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+      font-size: 21px;
+      font-weight: 700;
+      padding: 3px 14px;
+      border-radius: 20px;
+    }
+    .photo-title-part {
+      background: #ffffff;
+      color: #dc2626;
+      font-size: 21px;
+      font-weight: 900;
+      padding: 3px 18px;
+      border-radius: 20px;
+      font-family: 'Poppins', 'Mukta', sans-serif;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+    }
+
+    /* Title banner for Table */
+    .title-pill-table {
       display: inline-flex;
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 3px 8px rgba(0,0,0,0.08);
       align-items: stretch;
     }
-    .theme-default .title-main {
+    .table-title-main {
       background: #dc2626;
       color: #ffffff;
       font-size: 32px;
@@ -368,7 +455,7 @@
       display: flex;
       align-items: center;
     }
-    .theme-default .title-sub {
+    .table-title-sub {
       background: #15803d;
       color: #ffffff;
       font-size: 24px;
@@ -377,7 +464,7 @@
       display: flex;
       align-items: center;
     }
-    .theme-default .title-part {
+    .table-title-part {
       background: #1e3a8a;
       color: #ffffff;
       font-size: 22px;
@@ -388,300 +475,12 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    .theme-default .table-container {
-      flex: 1;
-      position: relative;
-      border: 2px solid #86efac;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-    }
-    .theme-default .watermark {
+    /* -------------------------------------------
+       WATERMARK
+       ------------------------------------------- */
+    .watermark-text {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-18deg);
-      font-size: 80px;
-      font-weight: 900;
-      color: rgba(220, 38, 38, 0.05);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      z-index: 1;
-      text-transform: uppercase;
-      font-family: 'Poppins', sans-serif;
-    }
-    .theme-default table {
-      width: 100%;
-      height: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-      position: relative;
-      z-index: 2;
-    }
-    .theme-default thead th {
-      background: #f0fdf4;
-      padding: 4px 12px;
-      font-size: 23px;
-      font-weight: 800;
-      border-bottom: 2px solid #86efac;
-      height: 38px;
-    }
-    .theme-default thead th.th-q, .theme-default tbody td.td-q {
-      width: 70% !important;
-      border-right: 2px solid #86efac;
-      text-align: left;
-    }
-    .theme-default thead th.th-a, .theme-default tbody td.td-a {
-      width: 30% !important;
-      text-align: left;
-    }
-    .theme-default thead th.th-q { color: #dc2626; }
-    .theme-default thead th.th-a { color: #15803d; }
-
-    .theme-default tbody tr {
-      border-bottom: 1.5px solid #bbf7d0;
-      height: calc((100% - 38px) / 15);
-    }
-    .theme-default tbody tr:last-child {
-      border-bottom: none;
-    }
-    .theme-default td {
-      padding: 2px 10px;
-      line-height: 1.25;
-      vertical-align: middle;
-      overflow: hidden;
-      word-break: break-word;
-    }
-    .theme-default .td-q {
-      color: #0f172a;
-      font-size: 21px;
-      font-weight: 800;
-    }
-    .theme-default .q-wrap {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      width: 100%;
-    }
-    .theme-default .q-num {
-      display: inline-block;
-      color: #1d4ed8;
-      font-size: 21px !important;
-      font-weight: 900;
-      line-height: 1.25;
-      font-family: 'Poppins', sans-serif;
-      flex-shrink: 0;
-      min-width: 32px;
-      text-align: right;
-    }
-    .theme-default .q-text {
-      flex: 1;
-      min-width: 0;
-      word-break: break-word;
-    }
-    .theme-default .td-a {
-      font-size: 21px;
-      font-weight: 700;
-    }
-    .theme-default .ans-green { color: #15803d; font-weight: 700; }
-
-    .theme-default .footer-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 48px;
-      margin-top: 6px;
-    }
-    .theme-default .footer-line-behind {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 50%;
-      height: 2.5px;
-      background: #dc2626;
-      z-index: 1;
-      transform: translateY(-50%);
-    }
-    .theme-default .footer-brand {
-      position: relative;
-      z-index: 2;
-      background: #ffffff;
-      padding: 0 14px 0 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .theme-default .footer-book-icon { font-size: 26px; }
-    .theme-default .footer-title {
-      font-family: 'Poppins', sans-serif;
-      font-size: 24px;
-      font-weight: 900;
-    }
-    .theme-default .footer-title .f-red { color: #dc2626; }
-    .theme-default .footer-title .f-black { color: #0f172a; }
-
-    .theme-default .footer-follow-btn {
-      position: relative;
-      z-index: 2;
-      background: #dc2626;
-      color: #ffffff;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 6px 20px;
-      border-radius: 40px;
-      font-family: 'Mukta', sans-serif;
-    }
-
-    /* --------------------------------------
-       THEME 2: PHOTO THEME (EXAM PREPARATION RED CAPSULE)
-       -------------------------------------- */
-    .theme-k95 {
-      padding: 24px 38px 18px 38px !important;
-      position: relative;
-    }
-    .theme-k95 .top-header-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 2.5px solid #dc2626;
-      padding-bottom: 12px;
-      margin-bottom: 10px;
-      height: auto;
-    }
-    .theme-k95 .top-line-behind { display: none; }
-    .theme-k95 .top-logo-badge { display: none; }
-    .theme-k95 .top-tagline-default { display: none; }
-    
-    .theme-k95 .top-logo-circle {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 78px;
-      height: 78px;
-      border: 3.5px solid #dc2626;
-      border-radius: 50%;
-      background: #fff;
-      padding: 2px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    }
-    .theme-k95 .top-logo-circle .circle-top {
-      color: #dc2626;
-      font-size: 17px;
-      font-weight: 900;
-      line-height: 1;
-      font-family: 'Poppins', sans-serif;
-    }
-    .theme-k95 .top-logo-circle .circle-bot {
-      color: #0f172a;
-      font-size: 11px;
-      font-weight: 900;
-      line-height: 1;
-      margin-top: 2px;
-      font-family: 'Poppins', sans-serif;
-      text-transform: uppercase;
-    }
-
-    .theme-k95 .top-tagline-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    .theme-k95 .exam-brand-title {
-      font-size: 40px;
-      font-weight: 900;
-      color: #0f172a;
-      letter-spacing: -0.5px;
-      font-family: 'Poppins', sans-serif;
-      line-height: 1.1;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .theme-k95 .exam-brand-title span { color: #dc2626; }
-    
-    .theme-k95 .exam-brand-subtitle {
-      font-size: 19px;
-      font-weight: 800;
-      color: #1e293b;
-      margin-top: 4px;
-      border-top: 2.5px solid #dc2626;
-      padding-top: 4px;
-      letter-spacing: 0.5px;
-    }
-
-    .theme-k95 .top-follow-pill {
-      background: #dc2626;
-      color: #ffffff;
-      font-size: 18px;
-      font-weight: 800;
-      padding: 8px 24px;
-      border-radius: 40px;
-      font-family: 'Poppins', sans-serif;
-      letter-spacing: 0.3px;
-      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
-    }
-
-    /* Red Pill Header + BHAG System */
-    .theme-k95 .title-banner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 12px;
-      position: relative;
-    }
-    .theme-k95 .title-pill {
-      background: #dc2626;
-      border-radius: 50px;
-      padding: 6px 36px;
-      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-    }
-    .theme-k95 .title-main {
-      background: transparent;
-      color: #fff;
-      font-size: 34px;
-      font-weight: 900;
-      padding: 0;
-      letter-spacing: 0.5px;
-    }
-    .theme-k95 .title-sub {
-      background: rgba(0, 0, 0, 0.25);
-      color: #fff;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 3px 14px;
-      border-radius: 20px;
-    }
-    .theme-k95 .title-part {
-      background: #ffffff;
-      color: #dc2626;
-      font-size: 20px;
-      font-weight: 900;
-      padding: 3px 16px;
-      border-radius: 20px;
-      font-family: 'Poppins', sans-serif;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-    }
-
-    /* K95 Que-Ans 2-line layout */
-    .theme-k95 .table-container {
-      border: none !important;
-      background: transparent;
-      flex: 1;
-      position: relative;
-    }
-    .theme-k95 .watermark {
-      position: absolute;
-      top: 50%;
+      top: 55%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(-25deg);
       font-size: 85px;
@@ -694,122 +493,203 @@
       text-transform: uppercase;
       font-family: 'Poppins', sans-serif;
     }
-    .theme-k95 table thead { display: none; }
-    .theme-k95 table {
-      width: 100%;
-      height: 100%;
+
+    /* -------------------------------------------
+       CONTENT AREA 1: PHOTO THEME (15 Q&A LIST)
+       ------------------------------------------- */
+    .photo-content-container {
+      flex: 1;
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      z-index: 2;
     }
-    .theme-k95 tbody {
+    .photo-qa-item {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-    }
-    .theme-k95 tbody tr {
-      display: flex;
-      flex-direction: column;
-      border-bottom: none !important;
+      justify-content: center;
       padding: 2.5px 0;
-      height: auto !important;
     }
-    .theme-k95 td {
-      padding: 0 !important;
-      border: none !important;
-      width: 100% !important;
-    }
-    .theme-k95 .td-q {
+    .p-q-row {
       display: flex;
       align-items: flex-start;
-      font-size: 21px;
-      font-weight: 700;
-      color: #000;
       line-height: 1.35;
+      color: #0f172a;
+      font-weight: 700;
     }
-    .theme-k95 .q-wrap {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      width: 100%;
-    }
-    .theme-k95 .q-num-box {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .p-num {
+      min-width: 32px;
+      font-weight: 900;
+      color: #0f172a;
       flex-shrink: 0;
     }
-    .theme-k95 .q-num {
-      color: #000 !important;
-      font-weight: 900 !important;
-      font-size: 21px !important;
-      min-width: 26px;
-      text-align: left !important;
-      font-family: inherit !important;
-    }
-    .theme-k95 .q-prefix {
+    .p-que-tag {
       font-weight: 900;
-      color: #000;
+      color: #0f172a;
+      margin-right: 10px;
+      flex-shrink: 0;
     }
-    .theme-k95 .q-text {
-      color: #111;
-      font-weight: 700;
+    .p-q-text {
       flex: 1;
+      color: #111827;
+      word-break: break-word;
     }
-    .theme-k95 .td-a {
-      margin-top: 1px;
-      padding-left: 68px !important;
-      font-size: 21px;
-      font-weight: 800;
+    .p-a-row {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 1.5px;
+      padding-left: 32px;
       line-height: 1.3;
     }
-    .theme-k95 .ans-k95-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .theme-k95 .a-prefix {
-      color: #000;
+    .p-ans-tag {
       font-weight: 900;
+      color: #059669; /* green */
+      margin-right: 10px;
+      flex-shrink: 0;
     }
-    .theme-k95 .a-text {
-      color: #dc2626;
+    .p-a-text {
       font-weight: 800;
+      color: #dc2626; /* red */
+      word-break: break-word;
     }
 
-    /* K95 Footer */
-    .theme-k95 .footer-wrap {
-      height: 48px;
-      margin-top: 6px;
-      border-top: 1.5px solid #cbd5e1;
-      padding-top: 6px;
+    /* -------------------------------------------
+       CONTENT AREA 2: TABLE THEME
+       ------------------------------------------- */
+    .table-content-container {
+      flex: 1;
+      position: relative;
+      border: 2px solid #86efac;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      z-index: 2;
+    }
+    table.classic-table {
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    table.classic-table thead th {
+      background: #f0fdf4;
+      padding: 4px 12px;
+      font-size: 23px;
+      font-weight: 800;
+      border-bottom: 2px solid #86efac;
+      height: 38px;
+    }
+    table.classic-table th.th-q, table.classic-table td.td-q {
+      width: 70% !important;
+      border-right: 2px solid #86efac;
+      text-align: left;
+    }
+    table.classic-table th.th-a, table.classic-table td.td-a {
+      width: 30% !important;
+      text-align: left;
+    }
+    table.classic-table th.th-q { color: #dc2626; }
+    table.classic-table th.th-a { color: #15803d; }
+    table.classic-table tbody tr {
+      border-bottom: 1.5px solid #bbf7d0;
+      height: calc((100% - 38px) / 15);
+    }
+    table.classic-table tbody tr:last-child { border-bottom: none; }
+    table.classic-table td {
+      padding: 2px 10px;
+      line-height: 1.25;
+      vertical-align: middle;
+      word-break: break-word;
+    }
+    .td-q { color: #0f172a; font-weight: 800; }
+    .q-wrap { display: flex; align-items: flex-start; gap: 8px; width: 100%; }
+    .q-num-tbl {
+      color: #1d4ed8;
+      font-weight: 900;
+      font-family: 'Poppins', sans-serif;
+      min-width: 30px;
+      text-align: right;
+    }
+    .word-red { color: #dc2626; font-weight: 900; }
+    .q-mark { color: #dc2626; font-weight: 900; }
+    .td-a { font-weight: 700; color: #15803d; }
+
+    /* -------------------------------------------
+       FOOTER
+       ------------------------------------------- */
+    .footer-wrap {
+      margin-top: 8px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      position: relative;
+      z-index: 2;
     }
-    .theme-k95 .footer-line-behind { display: none; }
-    .theme-k95 .footer-follow-btn { display: none; }
-    .theme-k95 .footer-brand {
+    .theme-photo .footer-wrap {
+      border-top: 1.5px solid #cbd5e1;
+      padding-top: 8px;
+      justify-content: center;
+      height: 48px;
+    }
+    .theme-photo .footer-brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      background: transparent;
-      padding: 0;
     }
-    .theme-k95 .footer-book-icon {
-      font-size: 28px;
-    }
-    .theme-k95 .footer-title {
-      font-size: 32px;
+    .theme-photo .footer-book-icon { font-size: 30px; }
+    .theme-photo .footer-title {
+      font-size: 34px;
       font-weight: 900;
       font-family: 'Poppins', sans-serif;
       letter-spacing: -0.5px;
     }
-    .theme-k95 .footer-title .f-red { color: #dc2626; }
-    .theme-k95 .footer-title .f-black { color: #0f172a; }
+    .theme-photo .footer-title .f-red { color: #dc2626; }
+    .theme-photo .footer-title .f-blk { color: #0f172a; }
 
-    /* SUBJECT PILLS & ARCHIVE */
+    .theme-table .footer-wrap {
+      justify-content: space-between;
+      height: 48px;
+    }
+    .theme-table .footer-line-behind {
+      position: absolute;
+      left: 0; right: 0; top: 50%;
+      height: 2.5px;
+      background: #dc2626;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .theme-table .footer-brand {
+      position: relative;
+      z-index: 2;
+      background: #ffffff;
+      padding: 0 14px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .theme-table .footer-book-icon { font-size: 26px; }
+    .theme-table .footer-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+    }
+    .theme-table .footer-title .f-red { color: #dc2626; }
+    .theme-table .footer-title .f-blk { color: #0f172a; }
+    .theme-table .footer-pill {
+      position: relative;
+      z-index: 2;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 6px 20px;
+      border-radius: 40px;
+      font-family: 'Mukta', sans-serif;
+    }
+
+    /* ARCHIVE */
     .subject-pill-row {
       display: flex;
       gap: 6px;
@@ -865,10 +745,10 @@
 
   <div class="app-header">
     <h1>⚡ Exam Preparation Studio</h1>
-    <span class="app-badge">MOBILE v3.5 PRO</span>
+    <span class="app-badge">MOBILE v3.6 PRO</span>
   </div>
 
-  <!-- MANUAL SMART PASTE CARD -->
+  <!-- SMART PASTE CARD -->
   <div class="dark-card">
     <div class="card-title">
       <span>📝 Raw Text (Smart Paste):</span>
@@ -915,14 +795,14 @@ Ans: कॉपर पाइराइट्स से
     <div class="typo-panel">
       <div class="typo-row">
         <div>
-          <div class="typo-label">थीम स्टाइल (Theme Select):</div>
-          <select id="selTheme" onchange="changeTheme()">
-            <option value="theme-k95" selected>🔥 Photo Capsule Style (Exam Prep)</option>
-            <option value="theme-default">📋 Classic Green-Red Table</option>
+          <div class="typo-label">थीम स्टाइल (Theme):</div>
+          <select id="selTheme" onchange="onThemeChanged()">
+            <option value="theme-photo" selected>🔥 Photo Capsule Theme (Exact Match)</option>
+            <option value="theme-table">📋 Classic Green-Red Table Theme</option>
           </select>
         </div>
         <div>
-          <div class="typo-label">फ़ॉन्ट स्टाइल (Hindi Font):</div>
+          <div class="typo-label">फ़ॉन्ट (Hindi Font):</div>
           <select id="selFontFamily" onchange="applyTypography(true)">
             <option value="'Mukta', sans-serif" selected>Mukta (मॉडर्न & क्लीन)</option>
             <option value="'Hind', sans-serif">Hind (बोल्ड & स्पष्ट)</option>
@@ -940,16 +820,15 @@ Ans: कॉपर पाइराइट्स से
         </div>
         <div>
           <div class="typo-label">Ques Size: <span id="lblQSize">20px</span></div>
-          <input type="range" id="rngQSize" min="16" max="32" value="20" oninput="applyTypography(true)">
+          <input type="range" id="rngQSize" min="16" max="30" value="20" oninput="applyTypography(true)">
         </div>
         <div>
           <div class="typo-label">Ans Size: <span id="lblASize">20px</span></div>
-          <input type="range" id="rngASize" min="16" max="32" value="20" oninput="applyTypography(true)">
+          <input type="range" id="rngASize" min="16" max="30" value="20" oninput="applyTypography(true)">
         </div>
       </div>
     </div>
 
-    <!-- Hidden Caption for FB -->
     <input type="hidden" id="fbCaption" value="">
 
     <!-- Actions -->
@@ -961,7 +840,7 @@ Ans: कॉपर पाइराइट्स से
     </div>
   </div>
 
-  <!-- LIVE PREVIEW -->
+  <!-- LIVE PREVIEW CARD -->
   <div class="dark-card" style="padding: 10px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
       <div class="card-title" style="margin:0;">📱 लाइव मोबाइल प्रीव्यू</div>
@@ -970,76 +849,29 @@ Ans: कॉपर पाइराइट्स से
 
     <div class="preview-viewport-wrapper">
       <div id="previewViewport">
-        <div id="capture-card" class="theme-k95">
+        
+        <!-- CAPTURE CARD -->
+        <div id="capture-card" class="theme-photo">
           
-          <!-- TOP HEADER WITH EXAM PREPARATION BRANDING -->
-          <div class="top-header-wrap">
-            <div class="top-line-behind"></div>
-            
-            <!-- Circular Badge for Photo Theme -->
-            <div class="top-logo-circle">
-              <span class="circle-top">Exam</span>
-              <span class="circle-bot">Prep</span>
-            </div>
+          <!-- DYNAMIC HEADER -->
+          <div id="cardHeaderArea"></div>
 
-            <!-- Default Theme Logo -->
-            <div class="top-logo-badge">
-              <span class="logo-red">Exam</span>
-              <span class="logo-black">Preparation</span>
-            </div>
+          <!-- DYNAMIC TITLE BANNER -->
+          <div id="cardTitleArea"></div>
 
-            <div class="top-tagline-default">Study Hard &nbsp;|&nbsp; Achieve More</div>
+          <!-- DYNAMIC BODY CONTENT (WATERMARK + LIST / TABLE) -->
+          <div id="cardBodyArea" style="flex:1; display:flex; flex-direction:column; position:relative; overflow:hidden;"></div>
 
-            <!-- Central Brand Title (Photo Theme) -->
-            <div class="top-tagline-block">
-              <div class="exam-brand-title"><span>Exam</span> Preparation</div>
-              <div class="exam-brand-subtitle">सही तैयारी &nbsp;|&nbsp; सफलता की गारंटी</div>
-            </div>
-
-            <div class="top-follow-pill">Exam Preparation : Follow</div>
-          </div>
-
-          <!-- TITLE BANNER (INCLUDES BHAG SYSTEM) -->
-          <div class="title-banner">
-            <div class="title-pill">
-              <div class="title-main" id="outSubject">सामान्य विज्ञान</div>
-              <div class="title-sub" id="outSubTopic">( भौतिक व रसायन )</div>
-              <div class="title-part" id="outPart">भाग 1</div>
-            </div>
-          </div>
-
-          <!-- TABLE / QA CONTAINER -->
-          <div class="table-container">
-            <div class="watermark">Exam Preparation</div>
-            <table>
-              <thead>
-                <tr>
-                  <th class="th-q">प्रश्न</th>
-                  <th class="th-a">उत्तर</th>
-                </tr>
-              </thead>
-              <tbody id="qaBody"></tbody>
-            </table>
-          </div>
-
-          <!-- FOOTER -->
-          <div class="footer-wrap">
-            <div class="footer-line-behind"></div>
-            <div class="footer-brand">
-              <span class="footer-book-icon">📚</span>
-              <div class="footer-title">
-                <span class="f-red">Exam</span> <span class="f-black">Preparation</span>
-              </div>
-            </div>
-            <div class="footer-follow-btn">सभी परीक्षाओं के लिए महत्वपूर्ण</div>
-          </div>
+          <!-- DYNAMIC FOOTER -->
+          <div id="cardFooterArea"></div>
 
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- ARCHIVE (IndexedDB) -->
+  <!-- ARCHIVE (INDEXEDDB) -->
   <div class="dark-card">
     <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
@@ -1069,13 +901,19 @@ Ans: कॉपर पाइराइट्स से
   let parsedQAData = [];
   let currentMeta = { subject: 'सामान्य विज्ञान', subTopic: 'भौतिक व रसायन', part: 'भाग 1', caption: '' };
   let currentSubjectFilter = 'सामान्य विज्ञान';
+  let currentTheme = 'theme-photo';
   let autoSaveTimer = null;
-  let currentTheme = 'theme-k95';
+
+  const hindiQuestionWords = new Set([
+    'क्या', 'कहाँ', 'कहा', 'कब', 'कौन', 'किसने', 'किसे', 
+    'किस', 'किसकी', 'किसका', 'किसके', 'कैसे', 'कैसा', 
+    'कैसी', 'कितना', 'कितने', 'कितनी', 'क्यों'
+  ]);
 
   /* ==========================================================
      1. THEME SWITCHER
      ========================================================== */
-  function changeTheme() {
+  function onThemeChanged() {
     currentTheme = document.getElementById('selTheme').value;
     const card = document.getElementById('capture-card');
     card.className = currentTheme;
@@ -1151,4 +989,659 @@ Ans: कॉपर पाइराइट्स से
       aSize: document.getElementById('rngASize').value,
       theme: currentTheme
     };
-    localStorage.setItem
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
+
+  function loadTypographySettings() {
+    const savedTheme = localStorage.getItem('exam_prep_chosen_theme');
+    if (savedTheme) {
+      currentTheme = savedTheme;
+      document.getElementById('selTheme').value = savedTheme;
+      document.getElementById('capture-card').className = savedTheme;
+    }
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (!raw) return;
+    try {
+      const s = JSON.parse(raw);
+      if (s.fontFamily) document.getElementById('selFontFamily').value = s.fontFamily;
+      if (s.titleSize) document.getElementById('rngTitleSize').value = s.titleSize;
+      if (s.qSize) document.getElementById('rngQSize').value = s.qSize;
+      if (s.aSize) document.getElementById('rngASize').value = s.aSize;
+    } catch (e) {}
+  }
+
+  function applyTypography(shouldSave = false) {
+    const selectedFont = document.getElementById('selFontFamily').value;
+    const titleSize = document.getElementById('rngTitleSize').value;
+    const qSize = document.getElementById('rngQSize').value;
+    const aSize = document.getElementById('rngASize').value;
+
+    document.getElementById('lblTitleSize').innerText = titleSize + 'px';
+    document.getElementById('lblQSize').innerText = qSize + 'px';
+    document.getElementById('lblASize').innerText = aSize + 'px';
+
+    const card = document.getElementById('capture-card');
+    card.style.fontFamily = selectedFont;
+
+    // Apply title sizes
+    document.querySelectorAll('.photo-title-main, .table-title-main').forEach(el => {
+      el.style.fontSize = titleSize + 'px';
+    });
+
+    // Apply Ques sizes
+    document.querySelectorAll('.p-q-row, .td-q').forEach(el => {
+      el.style.fontSize = qSize + 'px';
+    });
+
+    // Apply Ans sizes
+    document.querySelectorAll('.p-a-row, .td-a').forEach(el => {
+      el.style.fontSize = aSize + 'px';
+    });
+
+    if (shouldSave) saveTypographySettings();
+  }
+
+  /* ==========================================================
+     4. PARSER LOGIC
+     ========================================================== */
+  async function onlyPasteClipboard() {
+    try {
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        const text = await navigator.clipboard.readText();
+        if (text && text.trim().length > 0) {
+          document.getElementById('smartInput').value = text;
+          generateCards();
+          notify("📋 पेस्ट होकर तुरंत अपडेट हो गया!");
+          return;
+        }
+      }
+    } catch (err) {}
+    notify("💡 बॉक्स में Paste करें और Generate दबाएं।");
+    document.getElementById('smartInput').focus();
+  }
+
+  function generateCards() {
+    try {
+      parseSmartInput();
+      saveToDatabase(false);
+      notify("⚡ कार्ड तैयार और सुरक्षित सेव हो गया!");
+    } catch (e) {
+      alert("Error: " + e.message);
+    }
+  }
+
+  function autoSaveHandler() {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => {
+      parseSmartInput();
+      saveToDatabase(false);
+    }, 1200);
+  }
+
+  function cleanLine(str) {
+    return str.replace(/\u00A0/g, ' ')
+              .replace(/[\u200B-\u200D\uFEFF]/g, '')
+              .trim();
+  }
+
+  function parseSmartInput() {
+    let raw = document.getElementById('smartInput').value || '';
+    if (!raw.trim()) return;
+
+    const lines = raw.split(/\r?\n/).map(cleanLine).filter(l => l.length > 0);
+    parsedQAData = [];
+    let captionLines = [];
+    let currentQ = null;
+    let headerParsed = false;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+
+      // A. Header Line (Subject, Subtopic, Bhag/Part)
+      if (!headerParsed && parsedQAData.length === 0 && !currentQ) {
+        if (line.includes('🎯') || line.includes('भाग') || line.includes('Part') || (line.includes(',') && !line.match(/^(\d+|[०-९]+)\./))) {
+          headerParsed = true;
+          const clean = line.replace(/^[🎯📌🔥✨📖📚\s]+/, '').trim();
+          const parts = clean.split(',').map(s => s.trim());
+          
+          if (parts[0]) {
+            if (parts[0].includes('इतिहास')) currentMeta.subject = 'इतिहास';
+            else if (parts[0].includes('भूगोल')) currentMeta.subject = 'भूगोल';
+            else if (parts[0].includes('राज')) currentMeta.subject = 'राजव्यवस्था';
+            else if (parts[0].includes('विज्ञान')) currentMeta.subject = 'सामान्य विज्ञान';
+            else if (parts[0].includes('अर्थ')) currentMeta.subject = 'अर्थव्यवस्था';
+            else if (parts[0].includes('करेंट') || parts[0].toLowerCase().includes('current')) currentMeta.subject = 'करेंट अफेयर्स';
+            else currentMeta.subject = parts[0];
+          }
+
+          if (parts.length >= 3) {
+            currentMeta.subTopic = parts[1];
+            currentMeta.part = parts[2];
+          } else if (parts.length === 2) {
+            if (parts[1].includes('भाग') || parts[1].toLowerCase().includes('part')) {
+              currentMeta.subTopic = '';
+              currentMeta.part = parts[1];
+            } else {
+              currentMeta.subTopic = parts[1];
+              currentMeta.part = '';
+            }
+          } else {
+            currentMeta.subTopic = '';
+            currentMeta.part = '';
+          }
+
+          if (!currentMeta.part) {
+            const bhagMatch = line.match(/(भाग\s*[\d०-९]+|Part\s*\d+)/i);
+            if (bhagMatch) currentMeta.part = bhagMatch[0];
+          }
+
+          document.getElementById('headerDetectedBadge').innerText = `${currentMeta.subject} (${currentMeta.part || 'सीरीज'})`;
+          continue;
+        }
+      }
+
+      // B. Question Line
+      const qStartMatch = line.match(/^(\d+|[०-९]+)[\.\)]\s*(.*)/);
+      if (qStartMatch) {
+        if (currentQ) parsedQAData.push(currentQ);
+        const num = qStartMatch[1];
+        let rest = qStartMatch[2].trim();
+
+        const qMarkIdx = rest.indexOf('?');
+        if (qMarkIdx !== -1) {
+          const actualQ = rest.substring(0, qMarkIdx).trim();
+          const afterQ = rest.substring(qMarkIdx + 1).trim();
+          const sameLineAns = afterQ.match(/^(?:Ans|उत्तर|Answer)[\:\-\s]*(.*)/i);
+          if (sameLineAns) {
+            parsedQAData.push({ num: num, q: actualQ, a: sameLineAns[1].trim() });
+            currentQ = null;
+            continue;
+          } else if (afterQ.length > 0) {
+            parsedQAData.push({ num: num, q: actualQ, a: afterQ });
+            currentQ = null;
+            continue;
+          } else {
+            currentQ = { num: num, q: actualQ, a: '' };
+            continue;
+          }
+        } else {
+          currentQ = { num: num, q: rest, a: '' };
+          continue;
+        }
+      }
+
+      // C. Answer Line
+      const ansMatch = line.match(/^(?:Ans|उत्तर|Answer|उ\.?)[\:\-\s]*(.*)/i);
+      if (ansMatch) {
+        const ansText = ansMatch[1].trim();
+        if (currentQ) {
+          currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+          currentQ.a = ansText;
+          parsedQAData.push(currentQ);
+          currentQ = null;
+        } else if (parsedQAData.length > 0 && !parsedQAData[parsedQAData.length - 1].a) {
+          parsedQAData[parsedQAData.length - 1].a = ansText;
+        }
+        continue;
+      }
+
+      // D. Multi-line Ques
+      if (currentQ && !currentQ.a) {
+        currentQ.q += ' ' + line;
+        continue;
+      }
+
+      // E. Social Caption
+      if (line.includes('#') || line.includes('प्रतियोगी') || line.includes('शेयर')) {
+        captionLines.push(line);
+      }
+    }
+
+    if (currentQ) {
+      currentQ.q = currentQ.q.replace(/\?+$/, '').trim();
+      parsedQAData.push(currentQ);
+    }
+
+    if (captionLines.length > 0) {
+      currentMeta.caption = captionLines.join(' ');
+      document.getElementById('fbCaption').value = currentMeta.caption;
+    }
+
+    document.getElementById('statusCounter').innerText = `📊 लोड हुए प्रश्न: ${parsedQAData.length} / 15`;
+    renderCard();
+  }
+
+  function formatQuestion(qText, rowIndex) {
+    if (!qText) return '';
+    let words = qText.trim().split(/\s+/);
+    if (words.length === 0) return qText;
+
+    const targetPos = (rowIndex % 2 === 0) ? 0 : (words.length > 1 ? 1 : 0);
+
+    return words.map((w, wIdx) => {
+      let hasQMark = w.includes('?');
+      let clean = w.replace(/[?,।!\:\-\(\)\[\]"']/g, '');
+
+      let isQWord = hindiQuestionWords.has(clean);
+      let isTarget = (wIdx === targetPos);
+
+      let styled = clean;
+      if (isQWord || isTarget) {
+        styled = `<span class="word-red">${clean}</span>`;
+      }
+
+      if (hasQMark) styled += `<span class="q-mark">?</span>`;
+      return styled;
+    }).join(' ') + `<span class="q-mark">?</span>`;
+  }
+
+  function formatAnswer(aText) {
+    if (!aText) return '';
+    return `<span style="color:#15803d; font-weight:700;">${aText.trim()}</span>`;
+  }
+
+  /* ==========================================================
+     5. RENDER CARD (CLEAN & BUG-FREE ENGINE)
+     ========================================================== */
+  function renderCard() {
+    const headerArea = document.getElementById('cardHeaderArea');
+    const titleArea = document.getElementById('cardTitleArea');
+    const bodyArea = document.getElementById('cardBodyArea');
+    const footerArea = document.getElementById('cardFooterArea');
+
+    const displayList = parsedQAData.slice(0, 15);
+
+    if (currentTheme === 'theme-photo') {
+      // 1. Photo Header
+      headerArea.innerHTML = `
+        <div class="top-header-wrap">
+          <div class="top-logo-circle">
+            <span class="circle-top">Exam</span>
+            <span class="circle-bot">Prep</span>
+          </div>
+          <div class="top-center-brand">
+            <div class="brand-main-title"><span>Exam</span> Preparation</div>
+            <div class="brand-tagline-text">सही तैयारी &nbsp;|&nbsp; सफलता की गारंटी</div>
+          </div>
+          <div class="top-follow-pill">Exam Preparation : Follow</div>
+        </div>
+      `;
+
+      // 2. Photo Title Banner (Subject + SubTopic + Bhag)
+      let subTopicHtml = currentMeta.subTopic ? `<span class="photo-title-sub">(${currentMeta.subTopic})</span>` : '';
+      let partHtml = currentMeta.part ? `<span class="photo-title-part">${currentMeta.part}</span>` : '';
+
+      titleArea.innerHTML = `
+        <div class="title-banner">
+          <div class="title-pill-photo">
+            <span class="photo-title-main">${currentMeta.subject}</span>
+            ${subTopicHtml}
+            ${partHtml}
+          </div>
+        </div>
+      `;
+
+      // 3. Photo Body: Clean Watermark + 15 QA Items
+      let qaListHtml = `<div class="watermark-text">Exam Preparation</div><div class="photo-content-container">`;
+      displayList.forEach((item, index) => {
+        const num = item.num ? item.num : (index + 1);
+        const cleanNum = String(num).replace(/\.$/, '');
+        qaListHtml += `
+          <div class="photo-qa-item">
+            <div class="p-q-row">
+              <span class="p-num">${cleanNum}.</span>
+              <span class="p-que-tag">Que.</span>
+              <span class="p-q-text">${item.q.replace(/\?+$/, '')}?</span>
+            </div>
+            <div class="p-a-row">
+              <span class="p-ans-tag">Ans.</span>
+              <span class="p-a-text">${item.a || ''}</span>
+            </div>
+          </div>
+        `;
+      });
+      qaListHtml += `</div>`;
+      bodyArea.innerHTML = qaListHtml;
+
+      // 4. Photo Footer
+      footerArea.innerHTML = `
+        <div class="footer-wrap">
+          <div class="footer-brand">
+            <span class="footer-book-icon">📚</span>
+            <div class="footer-title">
+              <span class="f-red">Exam</span> <span class="f-blk">Preparation</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+    } else {
+      // CLASSIC TABLE THEME
+      // 1. Table Header
+      headerArea.innerHTML = `
+        <div class="top-header-wrap">
+          <div class="top-line-behind"></div>
+          <div class="table-logo-badge">
+            <span class="l-red">Exam</span><span class="l-blk">Preparation</span>
+          </div>
+          <div class="table-tagline">Study Hard &nbsp;|&nbsp; Achieve More</div>
+          <div class="top-follow-pill">Exam Preparation : Follow</div>
+        </div>
+      `;
+
+      // 2. Table Title Banner
+      let subTopicHtml = currentMeta.subTopic ? `<div class="table-title-sub">(${currentMeta.subTopic})</div>` : '';
+      let partHtml = currentMeta.part ? `<div class="table-title-part">${currentMeta.part}</div>` : '';
+
+      titleArea.innerHTML = `
+        <div class="title-banner">
+          <div class="title-pill-table">
+            <div class="table-title-main">${currentMeta.subject}</div>
+            ${subTopicHtml}
+            ${partHtml}
+          </div>
+        </div>
+      `;
+
+      // 3. Table Body
+      let tableRows = '';
+      displayList.forEach((item, index) => {
+        const num = item.num ? item.num : (index + 1);
+        const cleanNum = String(num).replace(/\.$/, '');
+        tableRows += `
+          <tr>
+            <td class="td-q">
+              <div class="q-wrap">
+                <span class="q-num-tbl">${cleanNum}.</span>
+                <div style="flex:1;">${formatQuestion(item.q, index)}</div>
+              </div>
+            </td>
+            <td class="td-a">${formatAnswer(item.a)}</td>
+          </tr>
+        `;
+      });
+
+      bodyArea.innerHTML = `
+        <div class="table-content-container">
+          <div class="watermark-text">Exam Preparation</div>
+          <table class="classic-table">
+            <thead>
+              <tr>
+                <th class="th-q">प्रश्न</th>
+                <th class="th-a">उत्तर</th>
+              </tr>
+            </thead>
+            <tbody>${tableRows}</tbody>
+          </table>
+        </div>
+      `;
+
+      // 4. Table Footer
+      footerArea.innerHTML = `
+        <div class="footer-wrap">
+          <div class="footer-line-behind"></div>
+          <div class="footer-brand">
+            <span class="footer-book-icon">📖</span>
+            <div class="footer-title">
+              <span class="f-red">Exam</span><span class="f-blk">Preparation</span>
+            </div>
+          </div>
+          <div class="footer-pill">सभी परीक्षाओं के लिए महत्वपूर्ण</div>
+        </div>
+      `;
+    }
+
+    applyTypography(false);
+    updatePreviewScale();
+  }
+
+  function updatePreviewScale() {
+    const viewport = document.getElementById('previewViewport');
+    const card = document.getElementById('capture-card');
+    if (!viewport || !card) return;
+
+    const containerWidth = viewport.parentElement.clientWidth;
+    const scale = containerWidth / 1080;
+    
+    card.style.transform = `scale(${scale})`;
+    viewport.style.height = `${1350 * scale}px`;
+  }
+
+  window.addEventListener('resize', updatePreviewScale);
+
+  /* ==========================================================
+     6. DOWNLOAD HD & SHARE TO FB
+     ========================================================== */
+  async function getCardCanvas() {
+    const card = document.getElementById('capture-card');
+    const oldTransform = card.style.transform;
+    card.style.transform = 'none';
+
+    const canvas = await html2canvas(card, {
+      width: 1080,
+      height: 1350,
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    });
+
+    card.style.transform = oldTransform;
+    return canvas;
+  }
+
+  async function downloadImage() {
+    notify("⏳ HD इमेज तैयार हो रही है...");
+    const canvas = await getCardCanvas();
+    const link = document.createElement('a');
+    link.download = `Exam_Prep_${currentMeta.subject}_${currentMeta.part || 'Post'}.png`;
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.click();
+    notify("📥 HD इमेज डाउनलोड हो गई!");
+  }
+
+  async function shareToFacebook() {
+    const caption = document.getElementById('fbCaption').value || currentMeta.caption;
+    try {
+      await navigator.clipboard.writeText(caption);
+    } catch (e) {}
+
+    notify("⏳ शेयरिंग शुरू हो रही है...");
+    const canvas = await getCardCanvas();
+
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], 'exam_prep_post.png', { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: currentMeta.subject,
+            text: caption
+          });
+          notify("🚀 शेयर डायलॉग खुला!");
+          return;
+        } catch (err) {}
+      }
+
+      const link = document.createElement('a');
+      link.download = 'exam_prep_post.png';
+      link.href = URL.createObjectURL(blob);
+      link.click();
+
+      window.open('https://www.facebook.com/', '_blank');
+      notify("📋 कैप्शन कॉपी हुआ! फेसबुक पर पेस्ट करें।");
+    }, 'image/png');
+  }
+
+  /* ==========================================================
+     7. ARCHIVE (INDEXEDDB)
+     ========================================================== */
+  async function saveToDatabase(isManual = false) {
+    if (parsedQAData.length === 0) return;
+    const db = await dbGetAll();
+    const rawVal = document.getElementById('smartInput').value;
+
+    const existing = db.find(item => 
+      item.subject === currentMeta.subject && 
+      item.subTopic === currentMeta.subTopic && 
+      item.part === currentMeta.part
+    );
+
+    const entry = {
+      id: existing ? existing.id : Date.now(),
+      subject: currentMeta.subject,
+      subTopic: currentMeta.subTopic,
+      part: currentMeta.part,
+      caption: currentMeta.caption,
+      smartRaw: rawVal,
+      questions: parsedQAData,
+      date: new Date().toLocaleDateString('hi-IN')
+    };
+
+    await dbPut(entry);
+    await renderLibrary();
+    if (isManual) notify("💾 पोस्ट सुरक्षित सेव हो गई!");
+  }
+
+  async function renderLibrary() {
+    const db = await dbGetAll();
+    const container = document.getElementById('savedListContainer');
+    container.innerHTML = '';
+
+    const filtered = db.filter(item => item.subject === currentSubjectFilter);
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<div style="padding: 10px; color: #64748b; font-size:12px;">इस विषय में कोई पोस्ट नहीं है।</div>`;
+      return;
+    }
+
+    filtered.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'saved-row';
+      div.innerHTML = `
+        <div><strong>${item.subTopic || item.subject}</strong> (${item.part || 'Part'})</div>
+        <div style="display: flex; gap: 5px;">
+          <button class="btn-xs btn-paste" onclick="loadItem(${item.id})">Load</button>
+          <button class="btn-xs btn-dark" style="color:#ef4444;" onclick="deleteItem(${item.id})">Del</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function filterBySubject(subj, btn) {
+    currentSubjectFilter = subj;
+    document.querySelectorAll('.subj-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderLibrary();
+  }
+
+  async function loadItem(id) {
+    const db = await dbGetAll();
+    const item = db.find(x => x.id === id);
+    if (!item) return;
+
+    document.getElementById('smartInput').value = item.smartRaw || '';
+    currentMeta = {
+      subject: item.subject,
+      subTopic: item.subTopic,
+      part: item.part,
+      caption: item.caption
+    };
+    parsedQAData = item.questions;
+
+    renderCard();
+    notify(`📖 लोड हुआ: ${item.subject} (${item.part || ''})`);
+  }
+
+  async function deleteItem(id) {
+    await dbDelete(id);
+    await renderLibrary();
+    notify("🗑️ पोस्ट डिलीट कर दी गई");
+  }
+
+  async function downloadSubjectPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const all = await dbGetAll();
+    const db = all.filter(x => x.subject === currentSubjectFilter);
+
+    if (db.length === 0) {
+      alert(`विषय "${currentSubjectFilter}" में कोई प्रश्न सेव नहीं हैं!`);
+      return;
+    }
+
+    doc.setFontSize(18);
+    doc.text(`Exam Preparation - ${currentSubjectFilter}`, 14, 20);
+    doc.line(14, 26, 196, 26);
+    let yPos = 34;
+
+    db.forEach((set) => {
+      if (yPos > 260) { doc.addPage(); yPos = 20; }
+      doc.setFontSize(13);
+      doc.text(`${set.subTopic || set.subject} (${set.part || ''})`, 14, yPos);
+      yPos += 8;
+
+      set.questions.forEach((qa) => {
+        if (yPos > 275) { doc.addPage(); yPos = 20; }
+        doc.setFontSize(10);
+        doc.text(`Q${qa.num || ''}: ${qa.q}?`, 16, yPos);
+        yPos += 5;
+        doc.text(`Ans: ${qa.a}`, 16, yPos);
+        yPos += 7;
+      });
+      yPos += 6;
+    });
+
+    doc.save(`Exam_Preparation_${currentSubjectFilter}.pdf`);
+    notify("📄 PDF डाउनलोड हो गया!");
+  }
+
+  async function exportJSON() {
+    const db = await dbGetAll();
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+    const a = document.createElement('a');
+    a.href = dataStr;
+    a.download = `Exam_Prep_Backup_${Date.now()}.json`;
+    a.click();
+  }
+
+  async function importJSON(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      try {
+        const imported = JSON.parse(e.target.result);
+        if (Array.isArray(imported)) {
+          for (const item of imported) {
+            await dbPut(item);
+          }
+          await renderLibrary();
+          notify("📥 बैकअप लोड हुआ!");
+        }
+      } catch (err) {
+        alert("अमान्य JSON फाइल!");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function notify(msg) {
+    const toast = document.getElementById('toastMsg');
+    toast.innerText = msg;
+    toast.style.display = 'block';
+    setTimeout(() => { toast.style.display = 'none'; }, 2600);
+  }
+
+  /* INITIALIZATION */
+  window.onload = async () => {
+    loadTypographySettings();
+    parseSmartInput();
+    await renderLibrary();
+    setTimeout(updatePreviewScale, 300);
+  };
+</script>
+</body>
+</html>
