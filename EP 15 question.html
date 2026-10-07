@@ -396,7 +396,7 @@
     }
 
     /* -------------------------------------------
-       TITLE BANNER (SUBJECT + BHAG SYSTEM)
+       TITLE BANNER (SUBJECT + SUBTOPIC + BHAG)
        ------------------------------------------- */
     .title-banner {
       display: flex;
@@ -495,7 +495,7 @@
     }
 
     /* -------------------------------------------
-       CONTENT AREA 1: PHOTO THEME (15 Q&A LIST)
+       CONTENT AREA 1: PHOTO THEME (OPTION A)
        ------------------------------------------- */
     .photo-content-container {
       flex: 1;
@@ -518,39 +518,36 @@
       color: #0f172a;
       font-weight: 700;
     }
+    /* Fixed width for clean 1, 2 or 3 digit alignment */
     .p-num {
-      min-width: 32px;
+      min-width: 44px;
       font-weight: 900;
       color: #0f172a;
       flex-shrink: 0;
-    }
-    .p-que-tag {
-      font-weight: 900;
-      color: #0f172a;
-      margin-right: 10px;
-      flex-shrink: 0;
+      font-family: 'Poppins', 'Mukta', sans-serif;
     }
     .p-q-text {
       flex: 1;
-      color: #111827;
+      color: #0f172a;
       word-break: break-word;
     }
     .p-a-row {
       display: flex;
       align-items: flex-start;
       margin-top: 1.5px;
-      padding-left: 32px;
+      padding-left: 44px; /* Perfectly aligned under the question text */
       line-height: 1.3;
+      gap: 8px;
     }
     .p-ans-tag {
       font-weight: 900;
-      color: #059669; /* green */
-      margin-right: 10px;
+      color: #059669; /* Green Ans. */
       flex-shrink: 0;
+      font-family: 'Poppins', 'Mukta', sans-serif;
     }
     .p-a-text {
       font-weight: 800;
-      color: #dc2626; /* red */
+      color: #dc2626; /* Red Answer Text */
       word-break: break-word;
     }
 
@@ -745,49 +742,49 @@
 
   <div class="app-header">
     <h1>⚡ Exam Preparation Studio</h1>
-    <span class="app-badge">MOBILE v3.6 PRO</span>
+    <span class="app-badge">MOBILE v3.7 PRO</span>
   </div>
 
   <!-- SMART PASTE CARD -->
   <div class="dark-card">
     <div class="card-title">
       <span>📝 Raw Text (Smart Paste):</span>
-      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">सामान्य विज्ञान (भाग 1)</span>
+      <span id="headerDetectedBadge" style="color: #10b981; font-size: 11px;">इतिहास (भाग 13)</span>
     </div>
     
-    <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें..." oninput="autoSaveHandler()">🎯 सामान्य विज्ञान, भौतिक व रसायन, भाग 1
-1. नीला लिटमस पत्र अम्ल में किस रंग का हो जाता है?
-Ans: लाल
-2. लाल लिटमस पत्र क्षार में किस रंग का हो जाता है?
-Ans: नीला
-3. अम्ल में कौन-से तत्व के परमाणु अनिवार्य रूप से रहते हैं?
-Ans: हाइड्रोजन
-4. प्रयोगशाला में उपयोग में लाया जाने वाला लिटमस पत्र किससे प्राप्त किया जाता है?
-Ans: लाइकेन से
-5. निलंबन में प्रक्षिप्त कणों का आकार कितना होता है?
-Ans: लगभग 1 से 100 सेमी
-6. कोलॉइड में प्रक्षिप्त कणों का आकार कितना होता है?
-Ans: लगभग 1 से 1000 सेमी
-7. कार्बन के दो अपररूप कौन-से हैं?
-Ans: हीरा और ग्रेफाइट
-8. पेंसिल का 'सीसा' किसका बना होता है?
-Ans: ग्रेफाइट का
-9. किसी ठोस पदार्थ का बिना द्रव में बदले सीधे वाष्प में परिवर्तित होना क्या कहलाता है?
-Ans: ऊर्ध्वपातन
-10. कपूर को शुद्ध करने की विधि क्या है?
-Ans: ऊर्ध्वपातन द्वारा
-11. भू-पर्पटी में सर्वाधिक मात्रा में पाया जाने वाला तत्व कौन-सा है?
-Ans: ऑक्सीजन
-12. पृथ्वी पर पाया जाने वाला यूरेनियम कौन-सा है?
-Ans: U-238
-13. लोहे का निष्कर्षण किस अयस्क से किया जाता है?
-Ans: हेमेटाइट से
-14. एल्युमिनियम का निष्कर्षण किस अयस्क से किया जाता है?
-Ans: बॉक्साइट से
-15. ताँबे का निष्कर्षण किस अयस्क से किया जाता है?
-Ans: कॉपर पाइराइट्स से
+    <textarea id="smartInput" placeholder="यहाँ प्रश्न पेस्ट करें..." oninput="autoSaveHandler()">🎯 इतिहास, आधुनिक भारत, भाग 13
+181. महात्मा गांधी दक्षिण अफ्रीका से भारत किस वर्ष लौटे थे?
+Ans: 9 जनवरी 1915 (प्रवासी भारतीय दिवस)
+182. गांधी जी का भारत में प्रथम सत्याग्रह आंदोलन कौन सा था?
+Ans: चंपारण सत्याग्रह (1917, बिहार)
+183. जलियांवाला बाग हत्याकांड किस तारीख को हुआ था?
+Ans: 13 अप्रैल 1919 (अमृतसर)
+184. जलियांवाला बाग में गोली चलाने का आदेश किसने दिया था?
+Ans: जनरल डायर
+185. जलियांवाला बाग हत्याकांड के विरोध में किसने 'नाइटहुड' की उपाधि लौटा दी थी?
+Ans: रवींद्रनाथ टैगोर
+186. 'रॉलेट एक्ट' (काला कानून) किस वर्ष पारित किया गया था?
+Ans: मार्च 1919 में
+187. असहयोग आंदोलन की शुरुआत महात्मा गांधी द्वारा किस वर्ष की गई थी?
+Ans: 1 अगस्त 1920
+188. चौरी-चौरा की ऐतिहासिक घटना कब घटित हुई थी?
+Ans: 4 फरवरी 1922 (गोरखपुर)
+189. चौरी-चौरा कांड के बाद गांधी जी ने कौन सा आंदोलन वापस ले लिया था?
+Ans: असहयोग आंदोलन (1922)
+190. 'स्वराज पार्टी' की स्थापना 1923 में किसने की थी?
+Ans: चितरंजन दास और मोतीलाल नेहरू
+191. हिंदुस्तान रिपब्लिकन एसोसिएशन (HRA) की स्थापना किस वर्ष हुई थी?
+Ans: 1924 ई. (कानपुर में)
+192. काकोरी ट्रेन एक्शन (डकैती) किस वर्ष हुआ था?
+Ans: 9 अगस्त 1925
+193. साइमन कमीशन भारत किस वर्ष आया था?
+Ans: 3 फरवरी 1928 (मुंबई)
+194. साइमन कमीशन के विरोध के दौरान लाठीचार्ज में किस महान नेता की मृत्यु हुई थी?
+Ans: लाला लाजपत राय
+195. कांग्रेस के किस अधिवेशन में 'पूर्ण स्वराज' का प्रस्ताव पारित किया गया था?
+Ans: 1929 के लाहौर अधिवेशन में (अध्यक्ष: जवाहरलाल नेहरू)
 प्रतियोगी परीक्षाओं की तैयारी के लिए महत्वपूर्ण 15 प्रश्न। अभी स्क्रीनशॉट लें और दोस्तों के साथ शेयर करें! 📚✨
-#GeneralScienceGK</textarea>
+#ModernHistoryGK</textarea>
 
     <div class="status-counter" id="statusCounter">📊 लोड हुए प्रश्न: 15 / 15</div>
 
@@ -797,7 +794,7 @@ Ans: कॉपर पाइराइट्स से
         <div>
           <div class="typo-label">थीम स्टाइल (Theme):</div>
           <select id="selTheme" onchange="onThemeChanged()">
-            <option value="theme-photo" selected>🔥 Photo Capsule Theme (Exact Match)</option>
+            <option value="theme-photo" selected>🔥 Photo Capsule Theme (Option A)</option>
             <option value="theme-table">📋 Classic Green-Red Table Theme</option>
           </select>
         </div>
@@ -876,11 +873,11 @@ Ans: कॉपर पाइराइट्स से
     <div class="card-title">📚 प्रश्न बैंक (Archive)</div>
 
     <div class="subject-pill-row">
-      <button class="subj-pill" onclick="filterBySubject('इतिहास', this)">इतिहास</button>
+      <button class="subj-pill active" onclick="filterBySubject('इतिहास', this)">इतिहास</button>
       <button class="subj-pill" onclick="filterBySubject('भूगोल', this)">भूगोल</button>
       <button class="subj-pill" onclick="filterBySubject('राजव्यवस्था', this)">राजव्यवस्था</button>
       <button class="subj-pill" onclick="filterBySubject('करेंट अफेयर्स', this)">करेंट अफेयर्स</button>
-      <button class="subj-pill active" onclick="filterBySubject('सामान्य विज्ञान', this)">सामान्य विज्ञान</button>
+      <button class="subj-pill" onclick="filterBySubject('सामान्य विज्ञान', this)">सामान्य विज्ञान</button>
     </div>
 
     <div class="library-list" id="savedListContainer"></div>
@@ -899,8 +896,8 @@ Ans: कॉपर पाइराइट्स से
 
 <script>
   let parsedQAData = [];
-  let currentMeta = { subject: 'सामान्य विज्ञान', subTopic: 'भौतिक व रसायन', part: 'भाग 1', caption: '' };
-  let currentSubjectFilter = 'सामान्य विज्ञान';
+  let currentMeta = { subject: 'इतिहास', subTopic: 'आधुनिक भारत', part: 'भाग 13', caption: '' };
+  let currentSubjectFilter = 'इतिहास';
   let currentTheme = 'theme-photo';
   let autoSaveTimer = null;
 
@@ -1023,17 +1020,14 @@ Ans: कॉपर पाइराइट्स से
     const card = document.getElementById('capture-card');
     card.style.fontFamily = selectedFont;
 
-    // Apply title sizes
     document.querySelectorAll('.photo-title-main, .table-title-main').forEach(el => {
       el.style.fontSize = titleSize + 'px';
     });
 
-    // Apply Ques sizes
     document.querySelectorAll('.p-q-row, .td-q').forEach(el => {
       el.style.fontSize = qSize + 'px';
     });
 
-    // Apply Ans sizes
     document.querySelectorAll('.p-a-row, .td-a').forEach(el => {
       el.style.fontSize = aSize + 'px';
     });
@@ -1241,7 +1235,7 @@ Ans: कॉपर पाइराइट्स से
   }
 
   /* ==========================================================
-     5. RENDER CARD (CLEAN & BUG-FREE ENGINE)
+     5. RENDER CARD (OPTION A - CLEAN & ACCURATE)
      ========================================================== */
   function renderCard() {
     const headerArea = document.getElementById('cardHeaderArea');
@@ -1281,7 +1275,7 @@ Ans: कॉपर पाइराइट्स से
         </div>
       `;
 
-      // 3. Photo Body: Clean Watermark + 15 QA Items
+      // 3. Photo Body (Option A: Number -> Question, Ans. -> Answer)
       let qaListHtml = `<div class="watermark-text">Exam Preparation</div><div class="photo-content-container">`;
       displayList.forEach((item, index) => {
         const num = item.num ? item.num : (index + 1);
@@ -1290,7 +1284,6 @@ Ans: कॉपर पाइराइट्स से
           <div class="photo-qa-item">
             <div class="p-q-row">
               <span class="p-num">${cleanNum}.</span>
-              <span class="p-que-tag">Que.</span>
               <span class="p-q-text">${item.q.replace(/\?+$/, '')}?</span>
             </div>
             <div class="p-a-row">
