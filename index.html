@@ -21,8 +21,49 @@
         nav a:hover { background-color: #ab1600; }
 
         /* Announcement Ticker */
-        .notice-wrap { max-width: 1250px; margin: 15px auto 5px auto; padding: 0 10px; }
+        .notice-wrap { max-width: 1250px; margin: 15px auto 8px auto; padding: 0 10px; }
         .notice-bar { background: #fff8e1; border: 1px solid #ffe082; color: #856404; padding: 10px 14px; border-radius: 4px; font-size: 13.5px; font-weight: 600; text-align: center; }
+
+        /* Top Trending 8 Highlight Grid (Sarkari Result Style) */
+        .highlight-grid {
+            max-width: 1250px;
+            margin: 10px auto 15px auto;
+            padding: 0 10px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .hl-tile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.35;
+            min-height: 52px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+        .hl-tile:hover {
+            transform: translateY(-2px);
+            opacity: 0.93;
+            color: #ffffff;
+        }
+
+        /* 8 Tile Individual Vibrant Colors */
+        .tile-job-1 { background-color: #689f38; }   /* Olive Green (Job 1) */
+        .tile-job-2 { background-color: #1976d2; }   /* Blue (Job 2) */
+        .tile-job-3 { background-color: #f57c00; }   /* Orange (Job 3) */
+        .tile-admit-1 { background-color: #b71c1c; } /* Deep Red (Admit 1) */
+        .tile-admit-2 { background-color: #e65100; } /* Dark Amber (Admit 2) */
+        .tile-admit-3 { background-color: #2e7d32; } /* Forest Green (Admit 3) */
+        .tile-res-1 { background-color: #7b1fa2; }   /* Purple (Result 1) */
+        .tile-res-2 { background-color: #0288d1; }   /* Cyan Blue (Result 2) */
 
         /* 4 Column Container */
         .container { 
@@ -38,7 +79,7 @@
         .box { background: white; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
         .box-header { padding: 11px 10px; font-size: 15px; font-weight: 800; color: white; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* Distinct Column Colors */
+        /* Column Colors */
         .box-ca .box-header { background-color: #4a148c; }      /* Purple: Current Affairs */
         .box-result .box-header { background-color: #004d40; }  /* Deep Teal: Result */
         .box-admit .box-header { background-color: #b71c1c; }   /* Deep Red: Admit Card */
@@ -51,18 +92,23 @@
         .box-list a { color: #0d47a1; text-decoration: none; font-weight: 600; }
         .box-list a:hover { text-decoration: underline; color: #ab1600; }
 
-        /* Alerts & Badges */
+        /* Badges */
         .badge-new { background-color: #e53935; color: white; font-size: 10px; padding: 1px 5px; border-radius: 3px; font-weight: 800; margin-left: 4px; vertical-align: middle; }
 
-        /* Footer & AdSense Compliance */
+        /* Footer */
         footer { background-color: #1a1a1a; color: #bbb; text-align: center; padding: 25px 10px; margin-top: 40px; font-size: 13px; line-height: 1.7; }
         footer a { color: #ffeb3b; text-decoration: none; margin: 0 8px; font-weight: 600; }
         footer a:hover { text-decoration: underline; }
         .footer-note { font-size: 11.5px; color: #888; margin-top: 8px; }
 
+        /* Mobile & Tablet Responsive */
+        @media (max-width: 900px) {
+            .highlight-grid { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (max-width: 600px) {
             header h1 { font-size: 22px; }
             nav a { padding: 9px 12px; font-size: 12.5px; }
+            .highlight-grid { grid-template-columns: 1fr; }
             .box-list li { font-size: 13px; }
         }
     </style>
@@ -88,17 +134,32 @@
         </div>
     </div>
 
+    <!-- Top Highlight 8 Grid: 3 Jobs, 3 Admit Cards, 2 Results -->
+    <div class="highlight-grid">
+        <!-- 3 Latest Jobs -->
+        <a href="job-sample.html" class="hl-tile tile-job-1">SSC CGL 2026 Apply Online</a>
+        <a href="#" class="hl-tile tile-job-2">Railway RRB NTPC Online Form 2026</a>
+        <a href="#" class="hl-tile tile-job-3">UPSSSC Junior Assistant 2026</a>
+
+        <!-- 3 Latest Admit Cards -->
+        <a href="#" class="hl-tile tile-admit-1">SSC CGL Tier I Admit Card 2026</a>
+        <a href="#" class="hl-tile tile-admit-2">UP TGT / PGT Exam City Intimation</a>
+        <a href="#" class="hl-tile tile-admit-3">Railway NTPC CBT-1 Hall Ticket</a>
+
+        <!-- 2 Latest Results -->
+        <a href="#" class="hl-tile tile-res-1">SSC GD Constable 2026 Final Result</a>
+        <a href="#" class="hl-tile tile-res-2">UP Police Constable 2026 Result</a>
+    </div>
+
     <div class="container">
         
         <!-- 1. Daily Current Affairs Box -->
         <div class="box box-ca" id="current-affairs">
             <div class="box-header">Daily Current Affairs</div>
             <ul class="box-list">
-                <li><a href="ca/ca-12-11-2026.html">12 November 2026 Daily Current Affairs One-Liners</a> <span class="badge-new">NEW</span></li>
-                <li><a href="ca-sample.html">09 November 2026 Daily Current Affairs One-Liners</a> <span class="badge-new">NEW</span></li>
-                <li><a href="#">08 November 2026 Daily Current Affairs MCQs</a></li>
-                <li><a href="#">Weekly Current Affairs Revision (November Week 1)</a></li>
-                <li><a href="#">Monthly Current Affairs October 2026 Compilation</a></li>
+                <li><a href="ca-sample.html">Daily Current Affairs One-Liners</a> <span class="badge-new">NEW</span></li>
+                <li><a href="#">Weekly Current Affairs Revision</a></li>
+                <li><a href="#">Monthly Current Affairs Compilation</a></li>
                 <li><a href="#">Uttar Pradesh Special GK & Current Affairs 2026</a></li>
             </ul>
         </div>
