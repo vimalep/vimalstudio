@@ -2,12 +2,9 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Viral Quiz Studio Pro - Full Suite & Question Manager</title>
-    <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700;800&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -19,7 +16,6 @@
             flex-direction: column;
             align-items: center;
         }
-
         .main-wrap {
             width: 100%;
             max-width: 520px;
@@ -123,6 +119,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
+            margin-top: 8px;
         }
         .btn-action {
             background: linear-gradient(135deg, #8b5cf6, #3b82f6);
@@ -303,6 +300,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-weight: 800;
+            color: #38bdf8;
         }
         .modal-body {
             padding: 12px;
@@ -376,15 +375,14 @@ Caption: संविधान की प्रारूप समिति क�
 #PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity
 Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳
 Explanation: 29 अगस्त 1947 को गठित संविधान सभा की सबसे महत्वपूर्ण 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष डॉ. भीमराव अंबेडकर थे, जिसमें कुल 7 सदस्य थे।</textarea>
-        </div>
-
-        <div class="btn-action-grid">
-            <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
-                <span>📋 1-Click Paste & Run</span>
-            </button>
-            <button class="btn-action" onclick="generateFromRawText()">
-                <span>✨ Generate Single Card</span>
-            </button>
+            <div class="btn-action-grid">
+                <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
+                    <span>📋 1-Click Paste & Run</span>
+                </button>
+                <button class="btn-action" onclick="generateFromRawText()">
+                    <span>✨ Generate Single Card</span>
+                </button>
+            </div>
         </div>
 
         <div class="row-flex" style="margin-top: 4px;">
@@ -398,8 +396,11 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                 </select>
             </div>
             <div>
-                <label>बैकग्राउंड थीम:</label>
+                <label>बैकग्राउंड थीम (New + Old):</label>
                 <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
+                    <option value="#0f172a">🌑 Dark Cyber Night (New)</option>
+                    <option value="#ffedd5">🌅 Royal Sunset Peach (New)</option>
+                    <option value="#e0f2fe">❄️ Sky Blue Frost (New)</option>
                     <option value="#fef9c3">Soft Warm Yellow</option>
                     <option value="#f8fafc">Creamy Light</option>
                     <option value="#ffffff">Pure White</option>
@@ -564,26 +565,26 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     </div>
 </div>
 
-<!-- ==================== MODAL 1: QUESTION BANK MANAGER ==================== -->
-<div id="history-modal" class="modal-overlay" onclick="closeHistoryModal()">
-    <div class="modal-box" onclick="event.stopPropagation()">
+<!-- HISTORY / QUESTION BANK MODAL -->
+<div class="modal-overlay" id="history-modal">
+    <div class="modal-box">
         <div class="modal-header">
-            <span style="font-weight: 800; color: #38bdf8; font-size: 14px;">📚 प्रश्न बैंक प्रबंधन (Question Bank)</span>
-            <button onclick="closeHistoryModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+            <span>📚 प्रश्न बैंक प्रबंधन (Question Bank)</span>
+            <button onclick="closeHistoryModal()" style="background:none;border:none;color:#f87171;font-size:18px;cursor:pointer;">✕</button>
         </div>
         <div class="modal-body">
             <button class="btn-add-new" onclick="openAddQuestionModal()">➕ नया प्रश्न स्वयं जोड़ें (Add New Question)</button>
-            <div id="history-items-container" style="display:flex; flex-direction:column; gap:10px;"></div>
+            <div id="history-items-container" style="display:flex; flex-direction:column; gap:8px;"></div>
         </div>
     </div>
 </div>
 
-<!-- ==================== MODAL 2: ADD / EDIT QUESTION MODAL ==================== -->
-<div id="edit-modal" class="modal-overlay" onclick="closeEditModal()">
-    <div class="modal-box" onclick="event.stopPropagation()">
+<!-- ADD / EDIT QUESTION MODAL -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal-box">
         <div class="modal-header">
-            <span id="edit-modal-title" style="font-weight: 800; color: #38bdf8; font-size: 14px;">✏️ प्रश्न संपादित करें (Edit Question)</span>
-            <button onclick="closeEditModal()" style="background:transparent; border:none; color:white; font-size:18px; cursor:pointer;">✕</button>
+            <span id="edit-modal-title">✏️ प्रश्न संपादित करें (Edit Question)</span>
+            <button onclick="closeEditModal()" style="background:none;border:none;color:#f87171;font-size:18px;cursor:pointer;">✕</button>
         </div>
         <div class="modal-body">
             <input type="hidden" id="edit-q-id">
@@ -628,7 +629,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                 <label>व्याख्या (Detailed Explanation):</label>
                 <textarea id="edit-q-exp" style="min-height:70px;"></textarea>
             </div>
-            <button class="btn-action" style="background:#10b981; margin-top:6px;" onclick="saveQuestionEditForm()">💾 सुरक्षित करें (Save Question)</button>
+            <button class="btn-action" onclick="saveQuestionEditForm()">💾 सुरक्षित करें (Save Question)</button>
         </div>
     </div>
 </div>
@@ -988,7 +989,7 @@ ${tagsString}`.trim();
 
         const history = getHistoryList();
         if (history.length === 0) {
-            container.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई प्रश्न सहेजा नहीं गया है।</div>`;
+            container.innerHTML = `<div style="color:#94a3b8; font-size:13px;">अभी तक कोई प्रश्न सहेजा नहीं गया है।</div>`;
         } else {
             history.forEach((h, idx) => {
                 const div = document.createElement('div');
@@ -1132,20 +1133,33 @@ ${tagsString}`.trim();
 
     /* ==================== SINGLE CARD DRAW ENGINE (HD) ==================== */
     function renderCardToCanvas(targetCtx, data, isRevealed) {
-        const bgColor = document.getElementById('cfg-bg-color').value || "#fef9c3";
+        const bgColor = document.getElementById('cfg-bg-color').value || "#0f172a";
         const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
         const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
         const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
 
+        // थीम के अनुसार रंगों का स्मार्ट समायोजन
+        const isDarkTheme = (bgColor === "#0f172a");
+        const outerBg = isDarkTheme ? "#020617" : bgColor;
+        const cardBg = isDarkTheme ? "#1e293b" : "#ffffff";
+        const cardBorder = isDarkTheme ? "#38bdf8" : "#e2e8f0";
+        const titleColor = isDarkTheme ? "#f8fafc" : "#0f172a";
+        const qDefaultColor = isDarkTheme ? "#f1f5f9" : "#0f172a";
+        const qHighlightColor = isDarkTheme ? "#fbbf24" : "#dc2626";
+        const prefixColor = isDarkTheme ? "#38bdf8" : "#0284c7";
+        const watermarkColor = isDarkTheme ? "rgba(255, 255, 255, 0.03)" : "rgba(15, 23, 42, 0.02)";
+
         targetCtx.clearRect(0, 0, 1080, 1350);
 
-        targetCtx.fillStyle = bgColor;
+        // बाहरी बैकग्राउंड
+        targetCtx.fillStyle = outerBg;
         targetCtx.fillRect(0, 0, 1080, 1350);
 
+        // मुख्य कार्ड
         const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 32;
-        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, "#ffffff", false);
-        targetCtx.strokeStyle = "#e2e8f0";
-        targetCtx.lineWidth = 3;
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cardBg, false);
+        targetCtx.strokeStyle = cardBorder;
+        targetCtx.lineWidth = isDarkTheme ? 4 : 3;
         roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
         // Security Watermark
@@ -1154,7 +1168,7 @@ ${tagsString}`.trim();
         roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, false);
         targetCtx.clip();
         targetCtx.rotate(-28 * Math.PI / 180);
-        targetCtx.fillStyle = "rgba(15, 23, 42, 0.02)";
+        targetCtx.fillStyle = watermarkColor;
         targetCtx.font = "900 44px 'Poppins', sans-serif";
         for (let x = -800; x < 1800; x += 360) {
             for (let y = -600; y < 2000; y += 160) {
@@ -1166,7 +1180,7 @@ ${tagsString}`.trim();
         // Title
         targetCtx.textAlign = "center";
         targetCtx.textBaseline = "middle";
-        targetCtx.fillStyle = "#0f172a";
+        targetCtx.fillStyle = titleColor;
         targetCtx.font = `900 52px ${fontFam}`;
         targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 118);
 
@@ -1179,25 +1193,30 @@ ${tagsString}`.trim();
         const pillX = (1080 - pillW) / 2;
         const pillY = 164;
 
-        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, "#f1f5f9", false);
-        targetCtx.strokeStyle = "#cbd5e1";
+        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, isDarkTheme ? "#0f172a" : "#f1f5f9", false);
+        targetCtx.strokeStyle = isDarkTheme ? "#38bdf8" : "#cbd5e1";
         targetCtx.lineWidth = 2;
         roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, null, true);
 
-        targetCtx.fillStyle = "#1e293b";
+        targetCtx.fillStyle = isDarkTheme ? "#38bdf8" : "#1e293b";
         targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
 
         // Question
         targetCtx.textAlign = "left";
         const qStartY = pillY + pillH + 68;
-        const qEndY = drawColorfulQuestion(targetCtx, data.qPrefix || "Q.", data.questionText || "", 95, qStartY, 890, qSize, fontFam);
+        const qEndY = drawColorfulQuestion(targetCtx, data.qPrefix || "Q.", data.questionText || "", 95, qStartY, 890, qSize, fontFam, qDefaultColor, qHighlightColor, prefixColor);
 
         // 4 Options
         const optStartY = qEndY + 36;
         const optGap = 124;
         const optW = 890, optH = 94, optX = 95;
 
-        const optStyles = [
+        const optStyles = isDarkTheme ? [
+            { bg: "#0f172a", border: "#3b82f6", badgeBg: "#2563eb", text: "#e2e8f0", label: "A" },
+            { bg: "#0f172a", border: "#10b981", badgeBg: "#059669", text: "#e2e8f0", label: "B" },
+            { bg: "#0f172a", border: "#f59e0b", badgeBg: "#d97706", text: "#e2e8f0", label: "C" },
+            { bg: "#0f172a", border: "#a855f7", badgeBg: "#9333ea", text: "#e2e8f0", label: "D" }
+        ] : [
             { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
             { bg: "#ecfdf5", border: "#a7f3d0", badgeBg: "#059669", text: "#064e3b", label: "B" },
             { bg: "#fffbeb", border: "#fde68a", badgeBg: "#d97706", text: "#78350f", label: "C" },
@@ -1210,7 +1229,10 @@ ${tagsString}`.trim();
             let boxBg = st.bg, boxBorder = st.border, badgeBg = st.badgeBg, badgeText = st.label;
 
             if (isRevealed && isCorrect) {
-                boxBg = "#dcfce7"; boxBorder = "#16a34a"; badgeBg = "#15803d"; badgeText = "✔";
+                boxBg = isDarkTheme ? "#064e3b" : "#dcfce7"; 
+                boxBorder = "#22c55e"; 
+                badgeBg = "#16a34a"; 
+                badgeText = "✔";
             }
 
             roundRect(targetCtx, optX, curY, optW, optH, 20, boxBg, false);
@@ -1226,7 +1248,7 @@ ${tagsString}`.trim();
             targetCtx.fillText(badgeText, optX + 47, curY + (optH / 2));
 
             targetCtx.textAlign = "left";
-            targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : st.text;
+            targetCtx.fillStyle = (isRevealed && isCorrect) ? (isDarkTheme ? "#86efac" : "#14532d") : st.text;
             targetCtx.font = `700 ${optSize}px ${fontFam}`;
             const optVal = data.options ? (data.options[st.label] || "") : "";
             targetCtx.fillText(optVal, optX + 96, curY + (optH / 2));
@@ -1235,39 +1257,39 @@ ${tagsString}`.trim();
         // Footer
         const footerY = optStartY + (4 * optGap) + 38;
         if (isRevealed) {
-            roundRect(targetCtx, 95, footerY, 890, 165, 18, "#f8fafc", false);
+            roundRect(targetCtx, 95, footerY, 890, 165, 18, isDarkTheme ? "#0f172a" : "#f8fafc", false);
             targetCtx.strokeStyle = "#16a34a";
             targetCtx.lineWidth = 2.5;
             roundRect(targetCtx, 95, footerY, 890, 165, 18, null, true);
 
-            targetCtx.fillStyle = "#15803d";
+            targetCtx.fillStyle = isDarkTheme ? "#4ade80" : "#15803d";
             targetCtx.font = `800 26px ${fontFam}`;
             targetCtx.textAlign = "left";
             targetCtx.textBaseline = "top";
             const corrText = data.options ? (data.options[data.correctOption] || "") : "";
             targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 120, footerY + 20);
 
-            targetCtx.fillStyle = "#334155";
+            targetCtx.fillStyle = isDarkTheme ? "#cbd5e1" : "#334155";
             targetCtx.font = `600 24px ${fontFam}`;
             wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 120, footerY + 64, 840, 34);
 
-            targetCtx.fillStyle = "#64748b";
+            targetCtx.fillStyle = isDarkTheme ? "#94a3b8" : "#64748b";
             targetCtx.font = `800 22px ${fontFam}`;
             targetCtx.textAlign = "center";
             targetCtx.fillText(data.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
         } else {
-            roundRect(targetCtx, 110, footerY, 860, 84, 42, "#fef08a", false);
-            targetCtx.strokeStyle = "#facc15";
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, isDarkTheme ? "#facc15" : "#fef08a", false);
+            targetCtx.strokeStyle = isDarkTheme ? "#eab308" : "#facc15";
             targetCtx.lineWidth = 2.5;
             roundRect(targetCtx, 110, footerY, 860, 84, 42, null, true);
 
             targetCtx.textAlign = "center";
             targetCtx.textBaseline = "middle";
-            targetCtx.fillStyle = "#854d0e";
+            targetCtx.fillStyle = isDarkTheme ? "#0f172a" : "#854d0e";
             targetCtx.font = `800 34px ${fontFam}`;
             targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + (84 / 2));
 
-            targetCtx.fillStyle = "#0f172a";
+            targetCtx.fillStyle = isDarkTheme ? "#f8fafc" : "#0f172a";
             targetCtx.font = `800 28px ${fontFam}`;
             targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
         }
@@ -1277,10 +1299,10 @@ ${tagsString}`.trim();
         renderCardToCanvas(ctx, quizData, isAnswerRevealed);
     }
 
-    function drawColorfulQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam) {
+    function drawColorfulQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam, defaultCol = "#0f172a", highlightCol = "#dc2626", prefixCol = "#0284c7") {
         ctx.textBaseline = "top";
         ctx.font = `900 ${fontSize + 2}px 'Poppins', sans-serif`;
-        ctx.fillStyle = "#0284c7";
+        ctx.fillStyle = prefixCol;
         const fullPrefix = prefix + " ";
         const prefixWidth = ctx.measureText(fullPrefix).width;
         ctx.fillText(fullPrefix, x, y);
@@ -1296,7 +1318,7 @@ ${tagsString}`.trim();
         words.forEach(word => {
             const cleanWord = word.replace(/[?,.!"']/g, '');
             const isHighlight = highlightTokens.some(t => cleanWord.includes(t)) || word.startsWith("'") || word.startsWith('"');
-            ctx.fillStyle = isHighlight ? "#dc2626" : "#0f172a";
+            ctx.fillStyle = isHighlight ? highlightCol : defaultCol;
             const wordW = ctx.measureText(word + ' ').width;
 
             if (curX + wordW > x + maxW) {
@@ -1730,10 +1752,10 @@ ${tagsString}`.trim();
         offscreen.height = 1350;
         const offCtx = offscreen.getContext('2d');
 
-        renderCardToCanvas(offCtx, questionObj, true); // True = Solved Answer Mode
+        renderCardToCanvas(offCtx, questionObj, true);
 
         return new Promise(resolve => {
-            offscreen.toBlob(resolve, 'image/jpeg', 0.98); // 98% Ultra HD JPEG
+            offscreen.toBlob(resolve, 'image/jpeg', 0.98);
         });
     }
 
@@ -1786,7 +1808,6 @@ ${tagsString}`.trim();
             }
         }
 
-        // Fallback if multiple file sharing is not supported by device/browser
         files.forEach((f, idx) => {
             setTimeout(() => {
                 const a = document.createElement('a');
@@ -1843,6 +1864,5 @@ ${tagsString}`.trim();
         calcMultiEstimate();
     };
 </script>
-
 </body>
 </html>
