@@ -396,15 +396,16 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                 </select>
             </div>
             <div>
-                <label>बैकग्राउंड थीम (New + Old):</label>
+                <label>बैकग्राउंड थीम (Kids Viral + Old):</label>
                 <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="#0f172a">🌑 Dark Cyber Night (New)</option>
-                    <option value="#ffedd5">🌅 Royal Sunset Peach (New)</option>
-                    <option value="#e0f2fe">❄️ Sky Blue Frost (New)</option>
-                    <option value="#fef9c3">Soft Warm Yellow</option>
-                    <option value="#f8fafc">Creamy Light</option>
-                    <option value="#ffffff">Pure White</option>
-                    <option value="#ecfdf5">Mint Light</option>
+                    <option value="kids_gaming">🎮 Gaming Neon Arena (Kids Viral)</option>
+                    <option value="kids_candy">🌈 Rainbow Candy Pop (Cartoon Look)</option>
+                    <option value="kids_space">🚀 Space Adventure (Galaxy Glow)</option>
+                    <option value="kids_comic">🦸 Superhero Comic Blast</option>
+                    <option value="#fef9c3">Soft Warm Yellow (Old)</option>
+                    <option value="#f8fafc">Creamy Light (Old)</option>
+                    <option value="#ffffff">Pure White (Old)</option>
+                    <option value="#ecfdf5">Mint Light (Old)</option>
                 </select>
             </div>
         </div>
@@ -1131,35 +1132,187 @@ ${tagsString}`.trim();
         alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
     }
 
-    /* ==================== SINGLE CARD DRAW ENGINE (HD) ==================== */
+    /* ==================== SINGLE CARD DRAW ENGINE (KIDS ENGAGING + CLASSIC THEMES) ==================== */
     function renderCardToCanvas(targetCtx, data, isRevealed) {
-        const bgColor = document.getElementById('cfg-bg-color').value || "#0f172a";
+        const themeKey = document.getElementById('cfg-bg-color').value || "kids_gaming";
         const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
         const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
         const optSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
 
-        // थीम के अनुसार रंगों का स्मार्ट समायोजन
-        const isDarkTheme = (bgColor === "#0f172a");
-        const outerBg = isDarkTheme ? "#020617" : bgColor;
-        const cardBg = isDarkTheme ? "#1e293b" : "#ffffff";
-        const cardBorder = isDarkTheme ? "#38bdf8" : "#e2e8f0";
-        const titleColor = isDarkTheme ? "#f8fafc" : "#0f172a";
-        const qDefaultColor = isDarkTheme ? "#f1f5f9" : "#0f172a";
-        const qHighlightColor = isDarkTheme ? "#fbbf24" : "#dc2626";
-        const prefixColor = isDarkTheme ? "#38bdf8" : "#0284c7";
-        const watermarkColor = isDarkTheme ? "rgba(255, 255, 255, 0.03)" : "rgba(15, 23, 42, 0.02)";
-
         targetCtx.clearRect(0, 0, 1080, 1350);
 
-        // बाहरी बैकग्राउंड
-        targetCtx.fillStyle = outerBg;
+        // थीम कॉन्फ़िगरेशन
+        let cfg = {
+            isKids: false,
+            bgGrad: [themeKey, themeKey],
+            cardBg: "#ffffff",
+            cardBorder: "#e2e8f0",
+            cardBorderW: 3,
+            shadowColor: "transparent",
+            titleColor: "#0f172a",
+            badgeBg: "#f1f5f9",
+            badgeBorder: "#cbd5e1",
+            badgeText: "#1e293b",
+            qDefault: "#0f172a",
+            qHighlight: "#dc2626",
+            prefixColor: "#0284c7",
+            watermark: "rgba(15, 23, 42, 0.02)",
+            hookBg: "#fef08a",
+            hookBorder: "#facc15",
+            hookText: "#854d0e",
+            socialText: "#0f172a",
+            opts: [
+                { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
+                { bg: "#ecfdf5", border: "#a7f3d0", badgeBg: "#059669", text: "#064e3b", label: "B" },
+                { bg: "#fffbeb", border: "#fde68a", badgeBg: "#d97706", text: "#78350f", label: "C" },
+                { bg: "#faf5ff", border: "#e9d5ff", badgeBg: "#9333ea", text: "#581c87", label: "D" }
+            ]
+        };
+
+        if (themeKey === "kids_gaming") {
+            cfg = {
+                isKids: true,
+                bgGrad: ["#2e1065", "#4c1d95", "#1e1b4b"],
+                cardBg: "#0f172a",
+                cardBorder: "#facc15",
+                cardBorderW: 8,
+                shadowColor: "#a855f7",
+                titleColor: "#fde047",
+                badgeBg: "#ec4899",
+                badgeBorder: "#fbcfe8",
+                badgeText: "#ffffff",
+                qDefault: "#ffffff",
+                qHighlight: "#38bdf8",
+                prefixColor: "#facc15",
+                watermark: "rgba(255, 255, 255, 0.03)",
+                hookBg: "#facc15",
+                hookBorder: "#ffffff",
+                hookText: "#0f172a",
+                socialText: "#fde047",
+                opts: [
+                    { bg: "#1d4ed8", border: "#60a5fa", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "A" },
+                    { bg: "#be185d", border: "#f472b6", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "B" },
+                    { bg: "#047857", border: "#34d399", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "C" },
+                    { bg: "#b45309", border: "#fbbf24", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "D" }
+                ]
+            };
+        } else if (themeKey === "kids_candy") {
+            cfg = {
+                isKids: true,
+                bgGrad: ["#ff6b6b", "#feca57", "#48dbfb"],
+                cardBg: "#ffffff",
+                cardBorder: "#1e293b",
+                cardBorderW: 8,
+                shadowColor: "#1e293b",
+                titleColor: "#e11d48",
+                badgeBg: "#8b5cf6",
+                badgeBorder: "#1e293b",
+                badgeText: "#ffffff",
+                qDefault: "#1e293b",
+                qHighlight: "#e11d48",
+                prefixColor: "#2563eb",
+                watermark: "rgba(236, 72, 153, 0.04)",
+                hookBg: "#ff9f43",
+                hookBorder: "#1e293b",
+                hookText: "#ffffff",
+                socialText: "#1e293b",
+                opts: [
+                    { bg: "#e0f2fe", border: "#0284c7", badgeBg: "#0284c7", text: "#0c4a6e", label: "A" },
+                    { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#831843", label: "B" },
+                    { bg: "#fef9c3", border: "#ca8a04", badgeBg: "#eab308", text: "#713f12", label: "C" },
+                    { bg: "#dcfce7", border: "#16a34a", badgeBg: "#16a34a", text: "#14532d", label: "D" }
+                ]
+            };
+        } else if (themeKey === "kids_space") {
+            cfg = {
+                isKids: true,
+                bgGrad: ["#020617", "#0f172a", "#1e3a8a"],
+                cardBg: "#0b1120",
+                cardBorder: "#38bdf8",
+                cardBorderW: 7,
+                shadowColor: "#0284c7",
+                titleColor: "#38bdf8",
+                badgeBg: "#f59e0b",
+                badgeBorder: "#fef3c7",
+                badgeText: "#0f172a",
+                qDefault: "#f8fafc",
+                qHighlight: "#fbbf24",
+                prefixColor: "#38bdf8",
+                watermark: "rgba(56, 189, 248, 0.03)",
+                hookBg: "#38bdf8",
+                hookBorder: "#ffffff",
+                hookText: "#020617",
+                socialText: "#bae6fd",
+                opts: [
+                    { bg: "#1e293b", border: "#38bdf8", badgeBg: "#0284c7", text: "#f8fafc", label: "A" },
+                    { bg: "#1e293b", border: "#a855f7", badgeBg: "#9333ea", text: "#f8fafc", label: "B" },
+                    { bg: "#1e293b", border: "#f59e0b", badgeBg: "#d97706", text: "#f8fafc", label: "C" },
+                    { bg: "#1e293b", border: "#10b981", badgeBg: "#059669", text: "#f8fafc", label: "D" }
+                ]
+            };
+        } else if (themeKey === "kids_comic") {
+            cfg = {
+                isKids: true,
+                bgGrad: ["#dc2626", "#facc15"],
+                cardBg: "#fefce8",
+                cardBorder: "#000000",
+                cardBorderW: 9,
+                shadowColor: "#000000",
+                titleColor: "#dc2626",
+                badgeBg: "#2563eb",
+                badgeBorder: "#000000",
+                badgeText: "#ffffff",
+                qDefault: "#000000",
+                qHighlight: "#dc2626",
+                prefixColor: "#2563eb",
+                watermark: "rgba(220, 38, 38, 0.04)",
+                hookBg: "#facc15",
+                hookBorder: "#000000",
+                hookText: "#000000",
+                socialText: "#000000",
+                opts: [
+                    { bg: "#ffffff", border: "#000000", badgeBg: "#dc2626", text: "#000000", label: "A" },
+                    { bg: "#ffffff", border: "#000000", badgeBg: "#2563eb", text: "#000000", label: "B" },
+                    { bg: "#ffffff", border: "#000000", badgeBg: "#16a34a", text: "#000000", label: "C" },
+                    { bg: "#ffffff", border: "#000000", badgeBg: "#9333ea", text: "#000000", label: "D" }
+                ]
+            };
+        }
+
+        // 1. बाहरी ग्रेडिएंट बैकग्राउंड
+        const grad = targetCtx.createLinearGradient(0, 0, 1080, 1350);
+        if (cfg.bgGrad.length === 3) {
+            grad.addColorStop(0, cfg.bgGrad[0]);
+            grad.addColorStop(0.5, cfg.bgGrad[1]);
+            grad.addColorStop(1, cfg.bgGrad[2]);
+        } else {
+            grad.addColorStop(0, cfg.bgGrad[0]);
+            grad.addColorStop(1, cfg.bgGrad[1]);
+        }
+        targetCtx.fillStyle = grad;
         targetCtx.fillRect(0, 0, 1080, 1350);
 
-        // मुख्य कार्ड
-        const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 32;
-        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cardBg, false);
-        targetCtx.strokeStyle = cardBorder;
-        targetCtx.lineWidth = isDarkTheme ? 4 : 3;
+        // बच्चों की थीम के लिए बैकग्राउंड में हल्के सितारे/सर्कल डेकोरेशन
+        if (cfg.isKids) {
+            targetCtx.save();
+            targetCtx.fillStyle = "rgba(255, 255, 255, 0.12)";
+            const dots = [[90,80,35],[990,110,45],[70,650,25],[1010,720,40],[120,1280,30],[960,1260,35]];
+            dots.forEach(d => {
+                targetCtx.beginPath();
+                targetCtx.arc(d[0], d[1], d[2], 0, Math.PI * 2);
+                targetCtx.fill();
+            });
+            targetCtx.restore();
+        }
+
+        // 2. मुख्य कार्ड (3D Shadow के साथ)
+        const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 36;
+        if (cfg.isKids) {
+            roundRect(targetCtx, cardX + 10, cardY + 12, cardW, cardH, cardRadius, cfg.shadowColor, false);
+        }
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cfg.cardBg, false);
+        targetCtx.strokeStyle = cfg.cardBorder;
+        targetCtx.lineWidth = cfg.cardBorderW;
         roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
         // Security Watermark
@@ -1168,7 +1321,7 @@ ${tagsString}`.trim();
         roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, false);
         targetCtx.clip();
         targetCtx.rotate(-28 * Math.PI / 180);
-        targetCtx.fillStyle = watermarkColor;
+        targetCtx.fillStyle = cfg.watermark;
         targetCtx.font = "900 44px 'Poppins', sans-serif";
         for (let x = -800; x < 1800; x += 360) {
             for (let y = -600; y < 2000; y += 160) {
@@ -1180,7 +1333,7 @@ ${tagsString}`.trim();
         // Title
         targetCtx.textAlign = "center";
         targetCtx.textBaseline = "middle";
-        targetCtx.fillStyle = titleColor;
+        targetCtx.fillStyle = cfg.titleColor;
         targetCtx.font = `900 52px ${fontFam}`;
         targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 118);
 
@@ -1188,68 +1341,63 @@ ${tagsString}`.trim();
         const badgeText = "EXAM PREPARATION";
         targetCtx.font = "900 24px 'Poppins', sans-serif";
         const badgeWidth = targetCtx.measureText(badgeText).width;
-        const pillW = badgeWidth + 52;
-        const pillH = 46;
+        const pillW = badgeWidth + 56;
+        const pillH = 48;
         const pillX = (1080 - pillW) / 2;
-        const pillY = 164;
+        const pillY = 162;
 
-        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, isDarkTheme ? "#0f172a" : "#f1f5f9", false);
-        targetCtx.strokeStyle = isDarkTheme ? "#38bdf8" : "#cbd5e1";
-        targetCtx.lineWidth = 2;
-        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, null, true);
+        roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, cfg.badgeBg, false);
+        targetCtx.strokeStyle = cfg.badgeBorder;
+        targetCtx.lineWidth = cfg.isKids ? 3 : 2;
+        roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, null, true);
 
-        targetCtx.fillStyle = isDarkTheme ? "#38bdf8" : "#1e293b";
+        targetCtx.fillStyle = cfg.badgeText;
         targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
 
         // Question
         targetCtx.textAlign = "left";
-        const qStartY = pillY + pillH + 68;
-        const qEndY = drawColorfulQuestion(targetCtx, data.qPrefix || "Q.", data.questionText || "", 95, qStartY, 890, qSize, fontFam, qDefaultColor, qHighlightColor, prefixColor);
+        const qStartY = pillY + pillH + 66;
+        const qEndY = drawColorfulQuestion(targetCtx, data.qPrefix || "Q.", data.questionText || "", 95, qStartY, 890, qSize, fontFam, cfg.qDefault, cfg.qHighlight, cfg.prefixColor);
 
         // 4 Options
         const optStartY = qEndY + 36;
         const optGap = 124;
         const optW = 890, optH = 94, optX = 95;
 
-        const optStyles = isDarkTheme ? [
-            { bg: "#0f172a", border: "#3b82f6", badgeBg: "#2563eb", text: "#e2e8f0", label: "A" },
-            { bg: "#0f172a", border: "#10b981", badgeBg: "#059669", text: "#e2e8f0", label: "B" },
-            { bg: "#0f172a", border: "#f59e0b", badgeBg: "#d97706", text: "#e2e8f0", label: "C" },
-            { bg: "#0f172a", border: "#a855f7", badgeBg: "#9333ea", text: "#e2e8f0", label: "D" }
-        ] : [
-            { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
-            { bg: "#ecfdf5", border: "#a7f3d0", badgeBg: "#059669", text: "#064e3b", label: "B" },
-            { bg: "#fffbeb", border: "#fde68a", badgeBg: "#d97706", text: "#78350f", label: "C" },
-            { bg: "#faf5ff", border: "#e9d5ff", badgeBg: "#9333ea", text: "#581c87", label: "D" }
-        ];
-
-        optStyles.forEach((st, idx) => {
+        cfg.opts.forEach((st, idx) => {
             const curY = optStartY + (idx * optGap);
             const isCorrect = (data.correctOption === st.label);
             let boxBg = st.bg, boxBorder = st.border, badgeBg = st.badgeBg, badgeText = st.label;
+            let badgeCol = st.badgeTextCol || "#ffffff";
 
             if (isRevealed && isCorrect) {
-                boxBg = isDarkTheme ? "#064e3b" : "#dcfce7"; 
-                boxBorder = "#22c55e"; 
-                badgeBg = "#16a34a"; 
+                boxBg = "#16a34a"; 
+                boxBorder = "#facc15"; 
+                badgeBg = "#facc15"; 
+                badgeCol = "#0f172a";
                 badgeText = "✔";
             }
 
-            roundRect(targetCtx, optX, curY, optW, optH, 20, boxBg, false);
-            targetCtx.strokeStyle = boxBorder;
-            targetCtx.lineWidth = (isRevealed && isCorrect) ? 4 : 2.5;
-            roundRect(targetCtx, optX, curY, optW, optH, 20, null, true);
+            // बच्चों की थीम में ऑप्शन बॉक्स पर 3D पॉप शैडो
+            if (cfg.isKids) {
+                roundRect(targetCtx, optX + 5, curY + 6, optW, optH, 22, "rgba(0,0,0,0.45)", false);
+            }
 
-            roundRect(targetCtx, optX + 16, curY + 16, 62, 62, 14, badgeBg, false);
-            targetCtx.fillStyle = "#ffffff";
+            roundRect(targetCtx, optX, curY, optW, optH, 22, boxBg, false);
+            targetCtx.strokeStyle = boxBorder;
+            targetCtx.lineWidth = (isRevealed && isCorrect) ? 5 : (cfg.isKids ? 3.5 : 2.5);
+            roundRect(targetCtx, optX, curY, optW, optH, 22, null, true);
+
+            roundRect(targetCtx, optX + 16, curY + 16, 62, 62, 16, badgeBg, false);
+            targetCtx.fillStyle = badgeCol;
             targetCtx.font = `900 ${(badgeText === '✔') ? 34 : 28}px 'Poppins', sans-serif`;
             targetCtx.textAlign = "center";
             targetCtx.textBaseline = "middle";
             targetCtx.fillText(badgeText, optX + 47, curY + (optH / 2));
 
             targetCtx.textAlign = "left";
-            targetCtx.fillStyle = (isRevealed && isCorrect) ? (isDarkTheme ? "#86efac" : "#14532d") : st.text;
-            targetCtx.font = `700 ${optSize}px ${fontFam}`;
+            targetCtx.fillStyle = (isRevealed && isCorrect) ? "#ffffff" : st.text;
+            targetCtx.font = `800 ${optSize}px ${fontFam}`;
             const optVal = data.options ? (data.options[st.label] || "") : "";
             targetCtx.fillText(optVal, optX + 96, curY + (optH / 2));
         });
@@ -1257,39 +1405,42 @@ ${tagsString}`.trim();
         // Footer
         const footerY = optStartY + (4 * optGap) + 38;
         if (isRevealed) {
-            roundRect(targetCtx, 95, footerY, 890, 165, 18, isDarkTheme ? "#0f172a" : "#f8fafc", false);
+            roundRect(targetCtx, 95, footerY, 890, 165, 18, "#f8fafc", false);
             targetCtx.strokeStyle = "#16a34a";
-            targetCtx.lineWidth = 2.5;
+            targetCtx.lineWidth = 3;
             roundRect(targetCtx, 95, footerY, 890, 165, 18, null, true);
 
-            targetCtx.fillStyle = isDarkTheme ? "#4ade80" : "#15803d";
+            targetCtx.fillStyle = "#15803d";
             targetCtx.font = `800 26px ${fontFam}`;
             targetCtx.textAlign = "left";
             targetCtx.textBaseline = "top";
             const corrText = data.options ? (data.options[data.correctOption] || "") : "";
             targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 120, footerY + 20);
 
-            targetCtx.fillStyle = isDarkTheme ? "#cbd5e1" : "#334155";
+            targetCtx.fillStyle = "#1e293b";
             targetCtx.font = `600 24px ${fontFam}`;
             wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 120, footerY + 64, 840, 34);
 
-            targetCtx.fillStyle = isDarkTheme ? "#94a3b8" : "#64748b";
+            targetCtx.fillStyle = cfg.socialText;
             targetCtx.font = `800 22px ${fontFam}`;
             targetCtx.textAlign = "center";
             targetCtx.fillText(data.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + 205);
         } else {
-            roundRect(targetCtx, 110, footerY, 860, 84, 42, isDarkTheme ? "#facc15" : "#fef08a", false);
-            targetCtx.strokeStyle = isDarkTheme ? "#eab308" : "#facc15";
-            targetCtx.lineWidth = 2.5;
+            if (cfg.isKids) {
+                roundRect(targetCtx, 114, footerY + 5, 860, 84, 42, "rgba(0,0,0,0.4)", false);
+            }
+            roundRect(targetCtx, 110, footerY, 860, 84, 42, cfg.hookBg, false);
+            targetCtx.strokeStyle = cfg.hookBorder;
+            targetCtx.lineWidth = cfg.isKids ? 3.5 : 2.5;
             roundRect(targetCtx, 110, footerY, 860, 84, 42, null, true);
 
             targetCtx.textAlign = "center";
             targetCtx.textBaseline = "middle";
-            targetCtx.fillStyle = isDarkTheme ? "#0f172a" : "#854d0e";
-            targetCtx.font = `800 34px ${fontFam}`;
+            targetCtx.fillStyle = cfg.hookText;
+            targetCtx.font = `900 34px ${fontFam}`;
             targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + (84 / 2));
 
-            targetCtx.fillStyle = isDarkTheme ? "#f8fafc" : "#0f172a";
+            targetCtx.fillStyle = cfg.socialText;
             targetCtx.font = `800 28px ${fontFam}`;
             targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
         }
