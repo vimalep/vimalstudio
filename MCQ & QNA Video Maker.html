@@ -381,7 +381,7 @@
 
         <!-- Voice & App Mode Customizer -->
         <div class="studio-card">
-            <div class="section-title" id="lbl-sec-voice">Voice Style, Narration Engine & Manual Controller Settings</div>
+            <div class="section-title" id="lbl-sec-voice">Voice Style, Narration Engine & Manual Controller Settings (Android Chrome Natural Voice)</div>
             <div class="control-row">
                 <div style="display: flex; flex-direction: column; gap: 8px; background: #1a2333; padding: 12px; border-radius: 8px; border: 1px dashed #38bdf8; margin-bottom: 5px;">
                     <span style="font-size: 14px; font-weight: bold; color: #38bdf8;">🎤 वीडियो संचालन मोड (App Engine Mode):</span>
@@ -392,21 +392,21 @@
 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 150px;">
-                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 6px;">AI Engine Voice Character:</span>
+                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 6px;">Human Voice Style & Tone:</span>
                         <select id="cfg-voice-a" onchange="autoSaveToStorage()">
-                            <option value="female" selected>Natural Female Voice (महिला)</option>
-                            <option value="male">Natural Male Voice (पुरुष)</option>
+                            <option value="female" selected>Natural Human Female (Google हिन्दी - मधुर व स्पष्ट)</option>
+                            <option value="male">Natural Deep Male Tone (गंभीर व स्पष्ट पुरुष लहजा)</option>
                         </select>
                     </div>
                     <div style="display: flex; align-items: flex-end;">
-                        <button class="btn-secondary" style="padding: 10px 15px;" onclick="triggerVoiceTesting()">🔊 Test Voice</button>
+                        <button class="btn-secondary" style="padding: 10px 15px;" onclick="triggerVoiceTesting()">🔊 Test Human Voice</button>
                     </div>
                 </div>
-                <div>
-                    <div class="slider-container">
+                <div style="margin-top: 8px;">
+                    <div class="slider-container" style="display: flex; align-items: center; gap: 10px;">
                         <span style="font-size: 13px; font-weight: 600; color: #94a3b8; min-width: 85px;" id="lbl-sub-speed">Audio Speed:</span>
-                        <input type="range" id="cfg-speed" min="0.5" max="2.0" step="0.1" value="0.95" oninput="updateSpeedDisplay(this.value)">
-                        <span id="speed-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">0.95x</span>
+                        <input type="range" id="cfg-speed" min="0.6" max="1.6" step="0.05" value="0.90" oninput="updateSpeedDisplay(this.value)" style="flex:1;">
+                        <span id="speed-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">0.90x</span>
                     </div>
                 </div>
             </div>
@@ -513,7 +513,7 @@
             </div>
 
             <button class="ctrl-btn-manual btn-manual-like" id="manualLikeBtn" onclick="triggerManualLikeAlert()">👍 <span>Like</span></button>
-            <button class="ctrl-btn-manual btn-manual-home" onclick="stopToHome()">🏠 <span>Home</span></button>
+            <button class="ctrl-btn-manual btn-manual-home" id="manualHomeBtn" onclick="stopToHome()">🏠 <span>Home</span></button>
         </div>
     </div>
 
@@ -528,6 +528,7 @@
         let studioPlayState = "question"; // "intro", "question", "answer", "ended"
         let voiceFailSafeTimeout = null;
         let aiNextTimeout = null;
+        let sentencePauseTimeout = null;
         let isQnAModeActive = false;
         let isFullAIAutoPlaying = false;
         let isAISilenced = false;
@@ -590,7 +591,7 @@
             hi: {
                 mainTitle: "Exam Preparation Studio Pro",
                 secLang: "Select Language, Mode & Layout Style / सेटिंग्स बदलें",
-                secVoice: "Voice Style, Narration Engine & Manual Controller Settings",
+                secVoice: "Voice Style, Narration Engine & Manual Controller Settings (Android Chrome Natural Voice)",
                 subSpeed: "Audio Speed:",
                 secBulk: "1. Bulk Question Paste Box (One line space between questions)",
                 bulkPlaceholder: "प्रश्न, विकल्प और व्याख्या पेस्ट करें...",
@@ -615,25 +616,93 @@
             }
         };
 
-        const hiNum = {
-            0: "", 1: "एक", 2: "दो", 3: "तीन", 4: "चार", 5: "पाँच", 6: "छह", 7: "सात", 8: "आठ", 9: "नौ", 10: "दस",
-            11: "ग्यारह", 12: "बारह", 13: "तेरह", 14: "चौदह", 15: "पन्द्रह", 16: "सोलह", 17: "सत्रह", 18: "अठारह", 19: "उन्नीस", 20: "बीस"
-        };
+        /* ================= NATURAL HUMAN SPEECH TEXT PROCESSOR (ANDROID CHROME OPTIMIZED) ================= */
+        function prepareNaturalHumanSpeech(rawText, lang) {
+            let text = rawText.replace(/\s+/g, " ").trim();
 
-        function numberToHindiWords(num) {
-            if (num === 0) return "शून्य";
-            let str = "";
-            if (num >= 1000) { str += hiNum[Math.floor(num / 1000)] + " हजार "; num %= 1000; }
-            if (num >= 100) { str += hiNum[Math.floor(num / 100)] + " सौ "; num %= 100; }
-            if (num > 0) { str += hiNum[num] || num; }
-            return str.trim();
+            if (lang === 'hi') {
+                // Convert common English exam abbreviations into natural Hindi phonetics so TTS doesn't spell awkwardly
+                const phoneticMap = [
+                    [/\bU\.?P\.?\b/gi, "यू पी"],
+                    [/\bM\.?P\.?\b/gi, "एम पी"],
+                    [/\bG\.?K\.?\b/gi, "जी के"],
+                    [/\bG\.?S\.?\b/gi, "जी एस"],
+                    [/\bS\.?S\.?C\.?\b/gi, "एस एस सी"],
+                    [/\bU\.?P\.?S\.?C\.?\b/gi, "यू पी एस सी"],
+                    [/\bU\.?P\.?P\.?C\.?S\.?\b/gi, "यू पी पी सी एस"],
+                    [/\bR\.?R\.?B\.?\b/gi, "आर आर बी"],
+                    [/\bI\.?A\.?S\.?\b/gi, "आई ए एस"],
+                    [/\bI\.?P\.?S\.?\b/gi, "आई पी एस"],
+                    [/\bD\.?N\.?A\.?\b/gi, "डी एन ए"],
+                    [/\bR\.?N\.?A\.?\b/gi, "आर एन ए"],
+                    [/\bC\.?O\.?2\b/gi, "कार्बन डाइऑक्साइड"],
+                    [/\bH\.?2\.?O\b/gi, "जल"],
+                    [/\bkm\/h\b/gi, "किलोमीटर प्रति घंटा"],
+                    [/\bkm\b/gi, "किलोमीटर"],
+                    [/\bcm\b/gi, "सेंटीमीटर"],
+                    [/\bmm\b/gi, "मिलीमीटर"],
+                    [/\bkg\b/gi, "किलोग्राम"],
+                    [/%/g, " प्रतिशत"]
+                ];
+
+                phoneticMap.forEach(([regex, replacement]) => {
+                    text = text.replace(regex, replacement);
+                });
+
+                // Add subtle micro-breathing pauses around Hindi conjunctions & connectors
+                text = text.replace(/\s+(क्योंकि|अर्थात|यानी|इसलिए|जबकि|जिसमें|जिसे|तथा|अथवा)\s+/g, ", $1 ");
+                text = text.replace(/[:\-–—]/g, ", ");
+            } else {
+                text = text.replace(/[:\-–—]/g, ", ");
+            }
+
+            // Clean duplicate commas/spaces
+            text = text.replace(/,\s*,+/g, ",").replace(/\s+/g, " ").trim();
+            return text;
         }
 
-        function convertNumbersInTextToHindiWords(text) {
-            return text.replace(/\d+/g, function(match) {
-                let n = parseInt(match);
-                return numberToHindiWords(n);
-            });
+        function splitIntoNaturalSentences(text) {
+            // Split on Hindi Poorna Viram (।), full stop (.), question mark (?), or exclamation (!)
+            // while keeping abbreviations intact
+            let parts = text.match(/[^।.?!]+[।.?!]*/g);
+            if (!parts) return [text];
+            return parts.map(p => p.trim()).filter(p => p.length > 0);
+        }
+
+        function selectBestHumanVoice(lang, genderStyle) {
+            let voices = speechSynthesis.getVoices();
+            if (!voices || voices.length === 0) voices = cachedVoices;
+            if (!voices || voices.length === 0) return null;
+
+            if (lang === 'hi') {
+                // Priority 1: Android Chrome's high-quality Google Hindi voice (hi-IN / hi_IN)
+                let googleHindi = voices.find(v =>
+                    (v.lang === 'hi-IN' || v.lang === 'hi_IN' || v.lang.toLowerCase().startsWith('hi')) &&
+                    v.name.toLowerCase().includes('google')
+                );
+                if (googleHindi) return googleHindi;
+
+                // Priority 2: Any network / non-local Hindi voice (usually neural/natural)
+                let networkHindi = voices.find(v =>
+                    v.lang.toLowerCase().startsWith('hi') && v.localService === false
+                );
+                if (networkHindi) return networkHindi;
+
+                // Priority 3: Any available Hindi voice
+                let anyHindi = voices.find(v => v.lang.toLowerCase().startsWith('hi'));
+                if (anyHindi) return anyHindi;
+            } else {
+                // English: Prefer Indian English (en-IN) or Google US/UK natural voice
+                let googleEn = voices.find(v =>
+                    (v.lang === 'en-IN' || v.lang === 'en-US' || v.lang === 'en-GB') &&
+                    v.name.toLowerCase().includes('google')
+                );
+                if (googleEn) return googleEn;
+
+                let anyEn = voices.find(v => v.lang.toLowerCase().startsWith('en'));
+                if (anyEn) return anyEn;
+            }
+            return null;
         }
 
         function loadVoices() {
@@ -688,6 +757,8 @@
                     fontSize: document.getElementById('cfg-size')?.value || "30",
                     imgSize: document.getElementById('cfg-img-size')?.value || "300",
                     fontFamily: document.getElementById('cfg-font-family')?.value || "'Segoe UI', sans-serif",
+                    voiceStyle: document.getElementById('cfg-voice-a')?.value || "female",
+                    audioSpeed: document.getElementById('cfg-speed')?.value || "0.90",
                     voiceMode: document.querySelector('input[name="appControlVoiceMode"]:checked')?.value || "hybrid",
                     imageStorage: imageStorage
                 };
@@ -716,6 +787,12 @@
 
                 toggleIntroPanelUI();
                 toggleLastQCommentUI();
+
+                if (data.voiceStyle) document.getElementById('cfg-voice-a').value = data.voiceStyle;
+                if (data.audioSpeed) {
+                    document.getElementById('cfg-speed').value = data.audioSpeed;
+                    updateSpeedDisplay(data.audioSpeed);
+                }
 
                 if (data.fontSize) {
                     document.getElementById('cfg-size').value = data.fontSize;
@@ -978,6 +1055,8 @@
                 introText: document.getElementById('cfg-intro-text').value,
                 lastQComment: document.getElementById('cfg-last-q-comment').checked,
                 lastQText: document.getElementById('cfg-last-q-text').value,
+                voiceStyle: document.getElementById('cfg-voice-a').value,
+                audioSpeed: document.getElementById('cfg-speed').value,
                 fontSize: document.getElementById('cfg-size').value,
                 imgSize: document.getElementById('cfg-img-size').value,
                 fontFamily: document.getElementById('cfg-font-family').value,
@@ -1022,6 +1101,12 @@
                         if(backupData.lastQText !== undefined) document.getElementById('cfg-last-q-text').value = backupData.lastQText;
                         toggleIntroPanelUI();
                         toggleLastQCommentUI();
+
+                        if(backupData.voiceStyle !== undefined) document.getElementById('cfg-voice-a').value = backupData.voiceStyle;
+                        if(backupData.audioSpeed !== undefined) {
+                            document.getElementById('cfg-speed').value = backupData.audioSpeed;
+                            updateSpeedDisplay(backupData.audioSpeed);
+                        }
 
                         if(backupData.fontSize !== undefined) {
                             document.getElementById('cfg-size').value = backupData.fontSize;
@@ -1208,7 +1293,7 @@
 
         function updateSizeDisplay(val) { document.getElementById('size-val').innerText = val + "px"; }
         function updateImgSizeDisplay(val) { document.getElementById('img-size-val').innerText = val + "px"; }
-        function updateSpeedDisplay(val) { document.getElementById('speed-val').innerText = val + "x"; }
+        function updateSpeedDisplay(val) { document.getElementById('speed-val').innerText = parseFloat(val).toFixed(2) + "x"; autoSaveToStorage(); }
 
         function runInstantTextFormatter() {
             let txtArea = document.getElementById('bulk-data');
@@ -1278,14 +1363,17 @@
             document.querySelectorAll('.q-word').forEach(s => s.classList.remove('word-highlight'));
         }
 
+        /* ================= NATURAL HUMAN SPEECH ENGINE (SENTENCE CHUNKING + BREATHING PAUSES) ================= */
         function speakText(text, callback, isQuestionSpeech = false) {
             clearTimeout(voiceFailSafeTimeout);
+            clearTimeout(sentencePauseTimeout);
             clearWordHighlights();
             let localToken = ++speechRunToken;
 
             function clearTalking() {
                 if (localToken !== speechRunToken) return;
                 clearTimeout(voiceFailSafeTimeout);
+                clearTimeout(sentencePauseTimeout);
                 clearWordHighlights();
                 if (callback) callback();
             }
@@ -1293,7 +1381,6 @@
             if (isAISilenced) {
                 let controlMode = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
                 let simDelay = (controlMode === "full_ai" && isFullAIAutoPlaying) ? Math.min(Math.max(text.length * 15, 200), 500) : 50;
-                
                 voiceFailSafeTimeout = setTimeout(clearTalking, simDelay);
                 return;
             }
@@ -1310,100 +1397,105 @@
                 }
             } catch(e){}
 
-            setTimeout(() => {
-                if (localToken !== speechRunToken) return;
+            const currentLang = document.getElementById('cfg-app-lang')?.value || "hi";
+            let naturalText = prepareNaturalHumanSpeech(text, currentLang);
+            let sentences = splitIntoNaturalSentences(naturalText);
+            if (sentences.length === 0) {
+                clearTalking();
+                return;
+            }
 
-                const currentLang = document.getElementById('cfg-app-lang')?.value || "hi";
-                let processed = convertNumbersInTextToHindiWords(text);
-                processed = processed.replace(/\s+/g, " ").trim();
+            let baseSpeed = parseFloat(document.getElementById('cfg-speed')?.value) || 0.90;
+            let voiceStyle = document.getElementById('cfg-voice-a')?.value || "female";
+            let targetVoice = selectBestHumanVoice(currentLang, voiceStyle);
 
-                currentUtterance = new SpeechSynthesisUtterance(processed);
-                let selectedSpeed = parseFloat(document.getElementById('cfg-speed')?.value) || 0.95;
-                currentUtterance.rate = selectedSpeed;
-                currentUtterance.volume = 1.0; 
-
-                let gender = document.getElementById('cfg-voice-a')?.value || "female";
-                let voices = speechSynthesis.getVoices();
-                if (!voices || voices.length === 0) voices = cachedVoices;
-
-                let targetVoice = voices.find(v => {
-                    let matchLang = currentLang === 'hi' ? (v.lang.includes('hi-IN') || v.lang.includes('hi_IN')) : (v.lang.includes('en-US') || v.lang.includes('en-GB'));
-                    if (gender === 'female') {
-                        return matchLang && (v.name.toLowerCase().includes('female') || v.name.includes('Zira') || (v.name.includes('Google') && !v.name.toLowerCase().includes('male')));
-                    } else {
-                        return matchLang && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('david') || v.name.includes('Google'));
-                    }
-                });
-
-                if(!targetVoice) {
-                    targetVoice = voices.find(v => currentLang === 'hi' ? (v.lang.includes('hi-IN') || v.lang.includes('hi')) : v.lang.includes('en'));
-                }
-                if(targetVoice) currentUtterance.voice = targetVoice;
-                currentUtterance.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
-
-                currentUtterance.onstart = function() {
-                    if (localToken !== speechRunToken) return;
-
-                    let titleEl = document.getElementById(`qtitle-box-${currentQIndex}`);
-                    let spans = titleEl ? titleEl.querySelectorAll('.q-word') : [];
-
-                    if (isQuestionSpeech && spans.length > 0) {
-                        let wordCount = spans.length;
-                        let msPerWord = Math.max((wordCount * 360) / selectedSpeed / wordCount, 160);
-                        let currentWIndex = 0;
-
-                        highlightWordIndex(currentQIndex, currentWIndex);
-
-                        clearInterval(karaokeInterval);
-                        karaokeInterval = setInterval(() => {
-                            if (localToken !== speechRunToken || isFullAIPaused) return;
-                            currentWIndex++;
-                            if (currentWIndex < wordCount) {
-                                highlightWordIndex(currentQIndex, currentWIndex);
-                            } else {
-                                clearInterval(karaokeInterval);
-                            }
-                        }, msPerWord);
-                    }
-                };
-
-                let prefixStr = (currentLang === 'hi' ? "प्रश्न. " : "Question. ");
-                currentUtterance.onboundary = function(e) {
-                    if (isQuestionSpeech && e.name === 'word') {
-                        let titleEl = document.getElementById(`qtitle-box-${currentQIndex}`);
-                        let spans = titleEl ? titleEl.querySelectorAll('.q-word') : [];
-                        let charPos = e.charIndex - prefixStr.length;
-                        if (charPos >= 0 && spans.length > 0) {
-                            let cumulative = 0;
-                            spans.forEach((span, idx) => {
-                                let wLen = span.innerText.length + 1;
-                                if (charPos >= cumulative && charPos < cumulative + wLen) {
-                                    clearInterval(karaokeInterval); 
-                                    highlightWordIndex(currentQIndex, idx);
-                                }
-                                cumulative += wLen;
-                            });
+            // Start Karaoke highlighter smoothly across full question if question speech
+            if (isQuestionSpeech) {
+                let titleEl = document.getElementById(`qtitle-box-${currentQIndex}`);
+                let spans = titleEl ? titleEl.querySelectorAll('.q-word') : [];
+                if (spans.length > 0) {
+                    let wordCount = spans.length;
+                    let msPerWord = Math.max((wordCount * 380) / baseSpeed / wordCount, 170);
+                    let currentWIndex = 0;
+                    highlightWordIndex(currentQIndex, currentWIndex);
+                    clearInterval(karaokeInterval);
+                    karaokeInterval = setInterval(() => {
+                        if (localToken !== speechRunToken || isFullAIPaused) return;
+                        currentWIndex++;
+                        if (currentWIndex < wordCount) {
+                            highlightWordIndex(currentQIndex, currentWIndex);
+                        } else {
+                            clearInterval(karaokeInterval);
                         }
-                    }
-                };
+                    }, msPerWord);
+                }
+            }
 
-                let estimatedTime = Math.max((text.length / 8) * 1000, 3500) / selectedSpeed;
-                voiceFailSafeTimeout = setTimeout(clearTalking, estimatedTime + 1500); 
+            let sentenceIdx = 0;
+
+            function speakNextSentence() {
+                if (localToken !== speechRunToken) return;
+                if (isFullAIPaused) return;
+
+                if (sentenceIdx >= sentences.length) {
+                    clearTalking();
+                    return;
+                }
+
+                let chunk = sentences[sentenceIdx];
+                sentenceIdx++;
+
+                currentUtterance = new SpeechSynthesisUtterance(chunk);
+                if (targetVoice) currentUtterance.voice = targetVoice;
+                currentUtterance.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
+                currentUtterance.volume = 1.0;
+
+                // Human prosody modulation:
+                // Questions have slightly livelier tone; Male tone uses slightly lower pitch for warm depth
+                if (voiceStyle === 'male') {
+                    currentUtterance.pitch = isQuestionSpeech ? 0.94 : 0.88;
+                } else {
+                    currentUtterance.pitch = isQuestionSpeech ? 1.04 : 0.99;
+                }
+
+                // Slightly slower on questions for viewer comprehension, smooth conversational pace on explanations
+                currentUtterance.rate = isQuestionSpeech ? Math.max(baseSpeed - 0.03, 0.65) : baseSpeed;
+
+                let chunkEstimate = Math.max((chunk.length / 7.5) * 1000, 2800) / baseSpeed;
+                clearTimeout(voiceFailSafeTimeout);
+                voiceFailSafeTimeout = setTimeout(() => {
+                    if (localToken !== speechRunToken) return;
+                    speakNextSentence();
+                }, chunkEstimate + 1400);
 
                 currentUtterance.onend = function() {
-                    clearTalking();
-                };
-                currentUtterance.onerror = function(e) {
-                    clearTalking();
+                    if (localToken !== speechRunToken) return;
+                    clearTimeout(voiceFailSafeTimeout);
+                    if (sentenceIdx < sentences.length) {
+                        // Natural 240ms human breathing pause between sentences!
+                        sentencePauseTimeout = setTimeout(speakNextSentence, 240);
+                    } else {
+                        clearTalking();
+                    }
                 };
 
-                try { 
+                currentUtterance.onerror = function() {
+                    if (localToken !== speechRunToken) return;
+                    clearTimeout(voiceFailSafeTimeout);
+                    speakNextSentence();
+                };
+
+                try {
                     speechSynthesis.resume();
-                    speechSynthesis.speak(currentUtterance); 
-                } catch(e) { 
-                    clearTalking(); 
+                    speechSynthesis.speak(currentUtterance);
+                } catch(e) {
+                    clearTalking();
                 }
-            }, 30);
+            }
+
+            setTimeout(() => {
+                if (localToken === speechRunToken) speakNextSentence();
+            }, 35);
         }
 
         function parseBulkInputs(lines) {
@@ -1429,8 +1521,10 @@
 
         function triggerVoiceTesting() {
             const currentLang = document.getElementById('cfg-app-lang').value;
-            let testTxt = currentLang === 'hi' ? "यह एक वॉइस टेस्ट मैसेज है।" : "This is a voice testing audio signal.";
-            speakText(testTxt, null);
+            let testTxt = currentLang === 'hi' 
+                ? "नमस्कार दोस्तों! यह आपकी प्राकृतिक इंसानी आवाज़ का परीक्षण है। भारत को स्वतंत्रता वर्ष 1947 में प्राप्त हुई थी।" 
+                : "Hello friends! This is a natural human voice test. India gained independence in the year 1947.";
+            speakText(testTxt, null, false);
         }
 
         function compileStudioQuiz() {
@@ -1609,16 +1703,11 @@
             document.getElementById('manualPrevBtn').style.display = 'flex';
             document.getElementById('manualNextBtn').style.display = 'flex';
 
+            stopAllAudioAndTimers();
             document.getElementById('manualTimerBtn').disabled = true;
             document.getElementById('manualAnsBtn').disabled = true;
             document.getElementById('manualPrevBtn').disabled = true;
             document.getElementById('manualNextBtn').disabled = false;
-
-            stopAllAudioAndTimers();
-            // Keep Timer/Ans/Prev disabled during intro
-            document.getElementById('manualTimerBtn').disabled = true;
-            document.getElementById('manualAnsBtn').disabled = true;
-            document.getElementById('manualPrevBtn').disabled = true;
         }
 
         function runFullAISequence() {
@@ -1644,7 +1733,7 @@
 
             let cleanUITitle = qData.question.replace(/\[C\]/gi, '').trim();
             let currentLang = document.getElementById('cfg-app-lang').value;
-            let speechText = (currentLang === 'hi' ? "प्रश्न. " : "Question. ") + cleanUITitle;
+            let speechText = (currentLang === 'hi' ? "प्रश्न, " : "Question, ") + cleanUITitle;
 
             let isLastViewerChallenge = (isLastQCommentEnabled && currentQIndex === totalQuestions - 1);
 
@@ -1652,7 +1741,6 @@
                 let currentModeCheck = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
                 if (currentModeCheck === "full_ai" && studioPlayState === "question" && isFullAIAutoPlaying && !isFullAIPaused) {
                     if (isLastViewerChallenge) {
-                        // NO TIMER FOR LAST COMMENT CHALLENGE QUESTION!
                         let commentBox = document.getElementById(`comment-box-${currentQIndex}`);
                         if (commentBox) commentBox.style.display = "block";
                         studioPlayState = "answer";
@@ -1693,6 +1781,7 @@
                 if (btn) btn.innerHTML = "▶️ <span>Resume</span>";
                 clearInterval(countdownInterval);
                 clearTimeout(voiceFailSafeTimeout);
+                clearTimeout(sentencePauseTimeout);
                 clearTimeout(aiNextTimeout);
                 clearWordHighlights();
                 if (window.speechSynthesis && window.speechSynthesis.speaking) {
@@ -1751,7 +1840,6 @@
             studioPlayState = "question";
             let isLastViewerChallenge = (isLastQCommentEnabled && currentQIndex === totalQuestions - 1);
 
-            // Disable Timer button on Last Question if Viewer Comment Challenge is active
             document.getElementById('manualTimerBtn').disabled = isLastViewerChallenge;
             document.getElementById('manualAnsBtn').disabled = false;
 
@@ -1797,7 +1885,7 @@
         function triggerManualCountdown(onTimerComplete) {
             if (studioPlayState !== "question") return;
             let isLastViewerChallenge = (isLastQCommentEnabled && currentQIndex === totalQuestions - 1);
-            if (isLastViewerChallenge) return; // Prevent timer on last comment challenge question
+            if (isLastViewerChallenge) return;
             
             let timerWrap = document.getElementById(`timer-wrapper-${currentQIndex}`);
             let fillBar = document.getElementById(`bar-${currentQIndex}`);
@@ -1865,7 +1953,7 @@
                     overlay.style.display = 'none';
                     document.getElementById('manualLikeBtn').disabled = false;
                 }, 500);
-            });
+            }, false);
         }
 
         function handleShowAnswer() {
@@ -1879,7 +1967,6 @@
             let isLastViewerChallenge = (isLastQCommentEnabled && currentQIndex === totalQuestions - 1);
             let controlMode = document.querySelector('input[name="appControlVoiceMode"]:checked').value;
 
-            // IF LAST QUESTION VIEWER COMMENT CHALLENGE IS ACTIVE: DO NOT REVEAL ANSWER, SPEAK COMMENT PROMPT
             if (isLastViewerChallenge) {
                 let commentBox = document.getElementById(`comment-box-${currentQIndex}`);
                 if (commentBox) commentBox.style.display = "block";
@@ -1926,9 +2013,9 @@
             }
 
             if (controlMode === "hybrid" || controlMode === "full_ai") {
-                let narrationText = currentLang === 'hi' ? ("सही उत्तर है " + correctTextString) : ("The correct answer is " + correctTextString);
+                let narrationText = currentLang === 'hi' ? ("सही उत्तर है, " + correctTextString + "।") : ("The correct answer is, " + correctTextString + ".");
                 if (qData.explanation && qData.explanation.trim() !== "") {
-                    narrationText += ". " + qData.explanation;
+                    narrationText += " " + qData.explanation;
                 }
 
                 document.getElementById('manualAnsBtn').disabled = true;
@@ -2008,6 +2095,7 @@
             clearInterval(countdownInterval);
             clearInterval(karaokeInterval);
             clearTimeout(voiceFailSafeTimeout);
+            clearTimeout(sentencePauseTimeout);
             clearTimeout(aiNextTimeout);
             clearWordHighlights();
             speechRunToken++;
