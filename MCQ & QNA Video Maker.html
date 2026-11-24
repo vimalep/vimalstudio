@@ -6,10 +6,10 @@
     <title>Exam Preparation Quiz Ultimate Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Montserrat:wght@500;700;800&family=Poppins:wght@500;700;800&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Montserrat:wght@500;700;800&family=Noto+Sans+Devanagari:wght@500;700;800;900&family=Poppins:wght@500;700;800&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; display: flex; justify-content: center; align-items: center; color: #f8fafc; font-family: 'Segoe UI', Roboto, sans-serif; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; display: flex; justify-content: center; align-items: center; color: #f8fafc; font-family: 'Noto Sans Devanagari', 'Segoe UI', Roboto, sans-serif; }
         
         /* ================= 1. STUDIO CREATOR PANEL ================= */
         #creator-panel { width: 100%; height: 100%; background: #1e293b; padding: 20px; display: flex; flex-direction: column; overflow-y: auto; gap: 20px; }
@@ -21,7 +21,7 @@
         .title-input-container input, .studio-card select, .studio-card input[type="text"], .studio-card input[type="number"], .studio-card input[type="color"] { width: 100%; padding: 10px; background: #1e293b; border: 1px solid #475569; border-radius: 8px; color: #f8fafc; font-size: 14px; font-weight: bold; }
         .title-input-container input:focus, .studio-card select:focus, .studio-card input[type="text"]:focus, .studio-card textarea:focus { outline: 2px solid #38bdf8; }
         #bulk-data, .studio-textarea { width: 100%; height: 160px; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 12px; color: #f8fafc; font-size: 14px; resize: none; font-family: monospace; line-height: 1.5; }
-        .studio-textarea { height: 75px; font-family: 'Segoe UI', Roboto, sans-serif; }
+        .studio-textarea { height: 75px; font-family: 'Noto Sans Devanagari', 'Segoe UI', Roboto, sans-serif; }
         
         .checkbox-container { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: #f8fafc; cursor: pointer; }
         .checkbox-container input { width: 18px; height: 18px; accent-color: #38bdf8; cursor: pointer; }
@@ -50,47 +50,59 @@
         .q-preview-actions { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
         .btn-q-edit { background: #0284c7; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
         .btn-q-del { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; font-weight: bold; }
+        .img-inputs { display: flex; gap: 6px; align-items: center; }
+        .img-inputs input[type="file"] { display: none; }
+        .file-label { background: #334155; color: #f8fafc; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; white-space: nowrap; }
+        .btn-del { background: #ef4444; color: white; border: none; padding: 6px 8px; border-radius: 6px; cursor: pointer; font-size: 11px; }
 
-        .btn-studio-play { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border: none; padding: 16px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3); }
+        .btn-studio-play { background: linear-gradient(135deg, #eab308, #ca8a04); color: #000000; border: none; padding: 16px; width: 100%; border-radius: 8px; font-size: 17px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35); }
 
-        /* ================= 2. PLAY SCREEN (CONTROLS AT BOTTOM) ================= */
-        #video-screen { display: none; width: 100%; height: 100%; background: #0a0a0a; position: relative; flex-direction: column; justify-content: space-between; overflow: hidden !important; color: #ffffff; }
+        /* ================= 2. VIRAL SHORTS/REELS PLAY SCREEN ================= */
+        #video-screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            position: relative;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden !important;
+            color: #ffffff;
+        }
         
-        #video-screen.dark-mode { background: #0a0a0a !important; color: #ffffff !important; }
-        #video-screen.dark-mode .q-title { color: #ffeb3b !important; }
-        #video-screen.dark-mode .opt-item { color: #ffffff !important; }
-        #video-screen.dark-mode .q-badge { background: #0284c7; color: white; }
-        #video-screen.dark-mode .banner-text-anim { background: linear-gradient(90deg, #ffffff, #00f2fe, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        #video-screen.dark-mode .intro-card-box { border-color: #00f2fe; background: rgba(2, 132, 199, 0.12); }
+        /* Theme Modes */
+        #video-screen.dark-mode { background: #000000 !important; color: #ffffff !important; }
+        #video-screen.dark-mode .header-main-title { color: #facc15 !important; text-shadow: 0 0 18px rgba(250, 204, 21, 0.25); }
+        #video-screen.dark-mode .header-divider { background: linear-gradient(90deg, transparent, #eab308, transparent); }
+        #video-screen.dark-mode .header-subtitle { color: #d4d4d8 !important; }
+        #video-screen.dark-mode .q-title { color: #ffffff !important; }
+        #video-screen.dark-mode .opt-item { background: #141414 !important; border: 1.5px solid #262626 !important; color: #ffffff !important; }
+        #video-screen.dark-mode .intro-card-box { border-color: #eab308; background: rgba(234, 179, 8, 0.08); }
 
-        #video-screen.light-mode { background: #ffffff !important; color: #111111 !important; }
-        #video-screen.light-mode .quiz-header { border-color: #0284c7; color: #0f172a; box-shadow: 0 0 10px rgba(2,132,199,0.2); }
-        #video-screen.light-mode .header-subtitle { color: #0284c7; }
+        #video-screen.light-mode { background: #ffffff !important; color: #0f172a !important; }
+        #video-screen.light-mode .header-main-title { color: #b45309 !important; text-shadow: none; }
+        #video-screen.light-mode .header-divider { background: linear-gradient(90deg, transparent, #b45309, transparent); }
+        #video-screen.light-mode .header-subtitle { color: #475569 !important; }
         #video-screen.light-mode .q-title { color: #0f172a !important; } 
-        #video-screen.light-mode .opt-item { color: #334155 !important; } 
-        #video-screen.light-mode .q-badge { background: #0284c7; color: white; }
-        #video-screen.light-mode .live-banner { background: linear-gradient(135deg, #e0f2fe, #f0f9ff) !important; border-top: 2px solid #0284c7 !important; box-shadow: 0 -4px 12px rgba(2, 132, 199, 0.15); color: #0369a1 !important; }
-        #video-screen.light-mode .banner-text-anim { background: none; -webkit-text-fill-color: #0369a1; color: #0369a1 !important; font-weight: 800; font-size: 14px; letter-spacing: 0.8px; }
-        #video-screen.light-mode .intro-card-box { border-color: #0284c7; background: #f0f9ff; color: #0f172a; }
+        #video-screen.light-mode .opt-item { background: #f1f5f9 !important; border: 1.5px solid #cbd5e1 !important; color: #0f172a !important; } 
+        #video-screen.light-mode .intro-card-box { border-color: #b45309; background: #fef3c7; color: #0f172a; }
+        #video-screen.light-mode .channel-name-text { color: #0f172a !important; }
 
         #video-screen.yellow-mode { background: #fef08a !important; color: #1e1b4b !important; }
-        #video-screen.yellow-mode .quiz-header { border-color: #b45309; color: #451a03; box-shadow: 0 0 10px rgba(180,83,9,0.2); }
-        #video-screen.yellow-mode .header-subtitle { color: #b45309; }
+        #video-screen.yellow-mode .header-main-title { color: #78350f !important; text-shadow: none; }
+        #video-screen.yellow-mode .header-divider { background: linear-gradient(90deg, transparent, #78350f, transparent); }
+        #video-screen.yellow-mode .header-subtitle { color: #451a03 !important; }
         #video-screen.yellow-mode .q-title { color: #000000 !important; } 
-        #video-screen.yellow-mode .opt-item { color: #1e40af !important; } 
-        #video-screen.yellow-mode .q-badge { background: #b45309; color: white; }
-        #video-screen.yellow-mode .live-banner { background: #fde047 !important; border-top: 2px solid #ca8a04; color: #451a03 !important; }
-        #video-screen.yellow-mode .banner-text-anim { background: none; -webkit-text-fill-color: #451a03; color: #451a03 !important; font-weight: 800; }
+        #video-screen.yellow-mode .opt-item { background: #fef9c3 !important; border: 1.5px solid #ca8a04 !important; color: #1e1b4b !important; } 
         #video-screen.yellow-mode .intro-card-box { border-color: #b45309; background: #fef9c3; color: #451a03; }
+        #video-screen.yellow-mode .channel-name-text { color: #451a03 !important; }
 
-        #video-screen.purple-mode { background: linear-gradient(135deg, #0f0728, #1e0842) !important; color: #ffffff !important; }
-        #video-screen.purple-mode .quiz-header { border-color: #f59e0b; color: #ffffff; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(168, 85, 247, 0.3); }
-        #video-screen.purple-mode .header-subtitle { color: #f59e0b; }
-        #video-screen.purple-mode .q-title { color: #fde047 !important; text-shadow: 0 0 10px rgba(253, 224, 71, 0.3); } 
-        #video-screen.purple-mode .opt-item { color: #ffffff !important; } 
-        #video-screen.purple-mode .q-badge { background: linear-gradient(135deg, #8b5cf6, #d946ef); color: white; }
-        #video-screen.purple-mode .live-banner { background: linear-gradient(135deg, #1e0842, #3b0764) !important; border-top: 2px solid #f59e0b !important; color: #fde047 !important; }
-        #video-screen.purple-mode .banner-text-anim { background: linear-gradient(90deg, #ffffff, #f59e0b, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+        #video-screen.purple-mode { background: radial-gradient(circle at top, #1e0842 0%, #070312 100%) !important; color: #ffffff !important; }
+        #video-screen.purple-mode .header-main-title { color: #facc15 !important; text-shadow: 0 0 18px rgba(250, 204, 21, 0.35); }
+        #video-screen.purple-mode .header-divider { background: linear-gradient(90deg, transparent, #facc15, transparent); }
+        #video-screen.purple-mode .header-subtitle { color: #e2e8f0 !important; }
+        #video-screen.purple-mode .q-title { color: #ffffff !important; } 
+        #video-screen.purple-mode .opt-item { background: rgba(30, 15, 60, 0.85) !important; border: 1.5px solid rgba(168, 85, 247, 0.35) !important; color: #ffffff !important; } 
         #video-screen.purple-mode .intro-card-box { border-color: #f59e0b; background: rgba(139, 92, 246, 0.18); color: #fde047; }
 
         /* WORD HIGHLIGHTING KARAOKE STYLING */
@@ -101,64 +113,278 @@
             padding: 0 2px;
         }
         .word-highlight {
-            color: #00f2fe !important;
-            background: rgba(0, 242, 254, 0.25);
-            box-shadow: 0 0 12px rgba(0, 242, 254, 0.8);
-            transform: scale(1.06);
-            font-weight: 800;
-        }
-        #video-screen.purple-mode .word-highlight {
-            color: #fde047 !important;
-            background: rgba(253, 224, 71, 0.3);
-            box-shadow: 0 0 14px rgba(253, 224, 71, 0.9);
+            color: #facc15 !important;
+            background: rgba(250, 204, 21, 0.18);
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.45);
+            transform: scale(1.04);
         }
         #video-screen.light-mode .word-highlight {
-            color: #0284c7 !important;
-            background: rgba(2, 132, 199, 0.25);
+            color: #b45309 !important;
+            background: rgba(245, 158, 11, 0.25);
         }
         #video-screen.yellow-mode .word-highlight {
-            color: #1e40af !important;
-            background: rgba(30, 64, 175, 0.25);
+            color: #991b1b !important;
+            background: rgba(239, 68, 68, 0.18);
         }
 
-        .main-content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%; overflow: hidden; position: relative; width: 100%; }
-        .quiz-header-container { display: flex; justify-content: center; align-items: center; padding: 12px 20px 6px 20px; z-index: 10; width: 100%; }
+        .main-content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            max-width: 540px;
+            margin: 0 auto;
+        }
+
+        /* CLEAN TOP HEADER MATCHING VIDEO */
+        .quiz-header-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 18px 16px 6px 16px;
+            z-index: 10;
+            width: 100%;
+            text-align: center;
+        }
+        .header-main-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #facc15;
+            letter-spacing: 0.5px;
+            line-height: 1.25;
+        }
+        .header-divider {
+            width: 140px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #eab308, transparent);
+            margin: 8px auto;
+            border-radius: 2px;
+        }
+        .header-subtitle {
+            font-size: 16px;
+            color: #d4d4d8;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
         
-        .quiz-header { text-align: center; background: transparent; border: 3px solid #00f2fe; border-radius: 20px; padding: 6px 20px; font-size: 18px; font-weight: bold; letter-spacing: 0.5px; box-shadow: 0 0 15px rgba(0, 242, 254, 0.4), inset 0 0 10px rgba(0, 242, 254, 0.2); display: inline-flex; flex-direction: column; justify-content: center; align-items: center; color: inherit; max-width: 90%; }
-        .header-subtitle { font-size: 12px; color: #00f2fe; margin-top: 2px; font-weight: 700; letter-spacing: 1px; text-shadow: 0 0 5px rgba(0, 242, 254, 0.5); }
+        .quiz-window {
+            flex-grow: 1;
+            overflow: hidden !important;
+            position: relative;
+            padding: 12px 18px 6px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+        }
+        #questions-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden !important;
+        }
         
-        .quiz-window { flex-grow: 1; overflow: hidden !important; position: relative; padding: 10px 20px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; }
-        #questions-track { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: flex-start; overflow: hidden !important; }
-        
-        @keyframes slideInFromRight { 0% { transform: translateX(60px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
-        @keyframes introPopIn { 0% { transform: scale(0.92); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes questionFadeUp {
+            0% { transform: translateY(18px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes optionSlideUp {
+            0% { transform: translateY(22px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes introPopIn {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes correctPop {
+            0% { transform: scale(1); }
+            45% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
 
         /* INTRO SLIDE STYLING */
-        .intro-block { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; height: 92%; position: absolute; top: 5px; z-index: 6; }
+        .intro-block { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; height: 92%; position: absolute; z-index: 6; }
         .intro-block.active-q { display: flex; animation: introPopIn 0.45s ease-out forwards; }
-        .intro-card-box { border: 3px solid #00f2fe; border-radius: 18px; padding: 24px 20px; max-width: 92%; width: 100%; box-shadow: 0 0 25px rgba(0, 242, 254, 0.25); display: flex; flex-direction: column; align-items: center; gap: 12px; }
-        .intro-pill { background: linear-gradient(135deg, #ef4444, #f97316); color: white; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
-        .intro-main-text { font-size: 24px; font-weight: 800; line-height: 1.4; }
+        .intro-card-box { border: 2px solid #eab308; border-radius: 18px; padding: 26px 20px; max-width: 94%; width: 100%; box-shadow: 0 0 25px rgba(234, 179, 8, 0.2); display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .intro-pill { background: linear-gradient(135deg, #eab308, #ca8a04); color: #000000; padding: 5px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        .intro-main-text { font-size: 24px; font-weight: 800; line-height: 1.45; }
 
-        .q-block { display: none; flex-direction: column; background: transparent; border: none; padding: 5px 0; box-sizing: border-box; position: absolute; top: 2px; width: 100%; overflow: hidden !important; max-height: 98%; opacity: 0; }
-        .q-block.active-q { display: flex; z-index: 5; opacity: 1; animation: slideInFromRight 0.4s ease-out forwards; }
-        
-        .q-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 800; margin-bottom: 6px; width: fit-content; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .q-badge.challenge-badge { background: linear-gradient(135deg, #f59e0b, #ef4444) !important; color: #ffffff !important; animation: pulse 0.9s infinite alternate; }
-        .q-title { font-weight: bold; line-height: 1.3; margin-bottom: 10px; text-align: left; }
-        
-        .q-main-layout-split { display: flex; flex-direction: row; gap: 20px; width: 100%; align-items: flex-start; justify-content: space-between; }
-        .q-left-content { flex: 1; display: flex; flex-direction: column; gap: 8px; width: 100%; }
-        
-        .q-right-image-box { width: 38%; max-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: transparent; border: none; }
-        .q-right-image-box img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+        /* QUESTION BLOCK */
+        .q-block {
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            background: transparent;
+            border: none;
+            padding: 6px 0 0 0;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            overflow: hidden !important;
+            max-height: 100%;
+            opacity: 0;
+        }
+        .q-block.active-q {
+            display: flex;
+            z-index: 5;
+            opacity: 1;
+        }
+        .q-block.active-q .q-title {
+            animation: questionFadeUp 0.4s ease-out forwards;
+        }
 
-        .options-list { display: flex; flex-direction: column; gap: 6px; width: 100%; }
-        .opt-item { display: flex; align-items: center; font-size: 17px; font-weight: 600; color: inherit; position: relative; padding: 6px 12px; line-height: 1.3; border: 2px solid transparent; border-radius: 8px; transition: all 0.2s ease; max-width: 75%; width: fit-content; min-width: 230px; }
+        /* CENTERED BOLD WHITE QUESTION */
+        .q-title {
+            font-weight: 800;
+            line-height: 1.38;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+            padding: 0 4px;
+        }
         
-        .opt-item.reveal-correct { border: 3px solid #2ed573 !important; background: rgba(46, 213, 115, 0.15) !important; box-shadow: 0 0 12px rgba(46, 213, 115, 0.4) !important; font-weight: 800 !important; color: #2ed573 !important; }
-        .qna-answer-box { display: none; background: transparent; border: 3px solid #2ed573; padding: 8px 12px; border-radius: 8px; font-size: 18px; font-weight: 800; color: #2ed573; margin-top: 8px; text-align: left; box-shadow: 0 0 12px rgba(46, 213, 115, 0.3); max-width: 75%; width: fit-content; }
-        .comment-challenge-box { display: none; background: rgba(245, 158, 11, 0.15); border: 2px dashed #f59e0b; padding: 10px 14px; border-radius: 10px; font-size: 16px; font-weight: 800; color: #fbbf24; margin-top: 10px; text-align: left; max-width: 85%; width: fit-content; }
+        .q-main-layout-split {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+        .q-left-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .q-right-image-box {
+            width: 100%;
+            max-height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: transparent;
+            border: none;
+            margin-top: 4px;
+        }
+        .q-right-image-box img { max-width: 90%; max-height: 100%; object-fit: contain; border-radius: 10px; }
+
+        /* FULL-WIDTH ROUNDED OPTION CARDS WITH GOLD CIRCULAR BADGES & STAGGERED ANIMATION */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+            width: 100%;
+        }
+        .opt-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 700;
+            position: relative;
+            padding: 13px 16px;
+            line-height: 1.3;
+            border-radius: 14px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+            opacity: 0;
+            transition: background 0.35s ease, border-color 0.35s ease, opacity 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .q-block.active-q .opt-item:nth-child(1) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards; }
+        .q-block.active-q .opt-item:nth-child(2) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards; }
+        .q-block.active-q .opt-item:nth-child(3) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.50s forwards; }
+        .q-block.active-q .opt-item:nth-child(4) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.66s forwards; }
+
+        .opt-badge {
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #facc15, #eab308);
+            color: #000000;
+            font-weight: 900;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        .opt-text {
+            flex: 1;
+            text-align: left;
+        }
+        .opt-check {
+            display: none;
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-left: 8px;
+        }
+
+        /* GOLD ANSWER HIGHLIGHT + DIMMING WRONG OPTIONS (EXACT VIDEO EFFECT) */
+        .opt-item.reveal-correct {
+            opacity: 1 !important;
+            background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%) !important;
+            border: 2px solid #fef08a !important;
+            box-shadow: 0 0 22px rgba(234, 179, 8, 0.55) !important;
+            color: #000000 !important;
+            font-weight: 800 !important;
+            animation: correctPop 0.4s ease forwards !important;
+        }
+        .opt-item.reveal-correct .opt-badge {
+            background: #ffffff !important;
+            color: #000000 !important;
+        }
+        .opt-item.reveal-correct .opt-check {
+            display: inline-block !important;
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .opt-item.dim-option {
+            opacity: 0.24 !important;
+        }
+
+        .qna-answer-box {
+            display: none;
+            background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);
+            border: 2px solid #fef08a;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #000000;
+            margin-top: 8px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.45);
+            width: 100%;
+        }
+        .comment-challenge-box {
+            display: none;
+            background: rgba(234, 179, 8, 0.14);
+            border: 2px dashed #eab308;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            color: #facc15;
+            margin-top: 10px;
+            text-align: center;
+            width: 100%;
+        }
         #video-screen.light-mode .comment-challenge-box, #video-screen.yellow-mode .comment-challenge-box { color: #b45309; background: rgba(245, 158, 11, 0.2); }
 
         @keyframes studio-loop-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
@@ -169,27 +395,133 @@
         .img-float { animation: studio-loop-float 4s ease-in-out infinite; }
         .img-swing { animation: studio-loop-swing 3.5s ease-in-out infinite; }
 
-        .explanation-box { background: rgba(0,0,0,0.1); border-left: 4px solid #00f2fe; padding: 8px 10px; border-radius: 6px; font-size: 13px; color: inherit; line-height: 1.3; margin-top: 8px; display: none; max-width: 80%; }
-        .timer-wrapper { display: none; margin-top: 10px; width: 100%; text-align: center; }
-        .timer-number { font-size: 20px; font-weight: 800; color: #d97706; margin-bottom: 3px; display: block; }
-        .timer-bar-container { width: 100%; height: 6px; background: rgba(0,0,0,0.2); border-radius: 4px; overflow: hidden; }
-        .timer-bar-fill { height: 100%; width: 100%; background: #2ed573; transform-origin: left; transform: scaleX(1); }
+        .explanation-box {
+            background: rgba(255,255,255,0.08);
+            border-left: 4px solid #eab308;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: inherit;
+            line-height: 1.35;
+            margin-top: 10px;
+            display: none;
+            width: 100%;
+            text-align: left;
+        }
+        .timer-wrapper { display: none; margin-top: 14px; width: 100%; text-align: center; }
+        .timer-number { font-size: 20px; font-weight: 800; color: #facc15; margin-bottom: 4px; display: block; }
+        .timer-bar-container { width: 100%; height: 6px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
+        .timer-bar-fill { height: 100%; width: 100%; background: #eab308; transform-origin: left; transform: scaleX(1); }
         @keyframes fastBlink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         .timer-danger { background-color: #ef4444 !important; animation: fastBlink 0.2s infinite; }
 
-        .end-block { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: inherit; padding: 30px 20px; background: transparent; border: 2px dashed #00f2fe; border-radius: 14px; width: 100%; position: absolute; top: 10px; }
+        .end-block { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: inherit; padding: 30px 20px; background: rgba(20, 20, 20, 0.9); border: 2px solid #eab308; border-radius: 16px; width: 100%; position: absolute; }
         .end-block.active-q { display: flex; z-index: 5; }
-        .end-block h3 { font-size: 22px; margin-bottom: 8px; color: #00f2fe; font-weight: 800; }
-        .end-block p { font-size: 16px; font-weight: 600; opacity: 0.8; }
+        .end-block h3 { font-size: 24px; margin-bottom: 8px; color: #facc15; font-weight: 800; }
+        .end-block p { font-size: 16px; font-weight: 600; opacity: 0.85; }
 
-        .live-banner { padding: 10px; display: flex; justify-content: space-around; align-items: center; font-weight: 800; font-size: 13px; z-index: 10; overflow: hidden; }
-        .banner-text-anim { display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px; }
-        .heart-icon { color: #ff4757; animation: pulse 0.8s infinite alternate; font-size: 15px; display: inline-block; -webkit-text-fill-color: initial; }
-        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.3); } }
+        /* BOTTOM BRANDING BAR + ANIMATED SUBSCRIBE BUTTON (MATCHING VIDEO) */
+        .channel-footer-bar {
+            padding: 12px 20px 22px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .channel-brand-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .channel-avatar-badge {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #facc15, #ca8a04);
+            color: #000000;
+            font-weight: 900;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 8px rgba(234, 179, 8, 0.4);
+        }
+        .channel-name-text {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+
+        /* Animated Subscribe Pill */
+        .sub-btn-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sub-pill-btn {
+            background: #ff0000;
+            color: #ffffff;
+            padding: 8px 18px;
+            border-radius: 22px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
+            animation: subStateCycle 4.5s infinite ease-in-out;
+        }
+        .sub-cursor-hand {
+            position: absolute;
+            right: -6px;
+            bottom: -10px;
+            font-size: 20px;
+            pointer-events: none;
+            animation: cursorTapCycle 4.5s infinite ease-in-out;
+        }
+        @keyframes subStateCycle {
+            0%, 38% { background: #ff0000; color: #ffffff; transform: scale(1); box-shadow: 0 4px 12px rgba(255, 0, 0, 0.45); }
+            45% { transform: scale(0.90); }
+            52%, 88% { background: #27272a; color: #e4e4e7; transform: scale(1); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+            100% { background: #ff0000; color: #ffffff; transform: scale(1); }
+        }
+        @keyframes cursorTapCycle {
+            0%, 22% { transform: translate(18px, 18px) scale(1); opacity: 0; }
+            34% { transform: translate(0px, 0px) scale(1); opacity: 1; }
+            45% { transform: translate(-2px, -2px) scale(0.82); opacity: 1; }
+            55% { transform: translate(0px, 0px) scale(1); opacity: 1; }
+            72%, 100% { transform: translate(14px, 14px) scale(1); opacity: 0; }
+        }
+
+        /* FLOATING TOGGLE TO HIDE/SHOW CONTROLS FOR CLEAN SCREEN RECORDING */
+        #toggle-controls-fab {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: rgba(30, 41, 59, 0.55);
+            color: #94a3b8;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            opacity: 0.55;
+            transition: opacity 0.2s;
+        }
+        #toggle-controls-fab:hover { opacity: 1; color: #ffffff; }
 
         /* BOTTOM HORIZONTAL CONTROL PANEL FOR MOBILE */
         .control-panel { 
-            background: rgba(0,0,0,0.9); 
+            background: rgba(10, 10, 10, 0.95); 
             padding: 8px 10px; 
             display: flex; 
             flex-direction: row; 
@@ -197,13 +529,16 @@
             align-items: center; 
             gap: 6px; 
             z-index: 10; 
-            border-top: 1px solid rgba(255,255,255,0.1); 
+            border-top: 1px solid rgba(255,255,255,0.12); 
             width: 100%;
             flex-wrap: wrap;
         }
+        .control-panel.hidden-controls {
+            display: none !important;
+        }
         .ctrl-btn-manual { 
             flex: 1;
-            min-width: 60px;
+            min-width: 58px;
             padding: 8px 4px; 
             font-size: 12px; 
             font-weight: bold; 
@@ -221,38 +556,22 @@
             text-align: center;
             touch-action: manipulation;
         }
-        .ctrl-btn-manual:active {
-            transform: scale(0.92);
-            opacity: 0.85;
-        }
-        .ctrl-btn-manual:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
+        .ctrl-btn-manual:active { transform: scale(0.92); opacity: 0.85; }
+        .ctrl-btn-manual:disabled { opacity: 0.45; cursor: not-allowed; }
         .btn-manual-play { background: #059669; }
-        .btn-manual-play:hover { background: #10b981; }
         .btn-manual-pause { background: #d97706; }
-        .btn-manual-pause:hover { background: #b45309; }
         .btn-manual-silence { background: #64748b; }
-        .btn-manual-silence:hover { background: #475569; }
         .btn-manual-silence.active-silence { background: #ef4444 !important; }
-        .btn-manual-ans { background: #28a745; }
-        .btn-manual-ans:hover { background: #218838; }
+        .btn-manual-ans { background: #eab308; color: #000000; }
         .btn-manual-prev { background: #6c757d; }
-        .btn-manual-prev:hover { background: #5a6268; }
         .btn-manual-next { background: #0284c7; }
-        .btn-manual-next:hover { background: #0369a1; }
-        .btn-manual-timer { background: #ffc107; color: black; }
-        .btn-manual-timer:hover { background: #e0a800; }
+        .btn-manual-timer { background: #f59e0b; color: black; }
         .btn-manual-like { background: #8b5cf6; }
-        .btn-manual-like:hover { background: #7c3aed; }
         .btn-manual-home { background: #dc3545; max-width: 65px; }
-        .btn-manual-home:hover { background: #c82333; }
 
         .jump-box-container { display: flex; gap: 2px; align-items: center; }
         .jump-input { width: 42px; padding: 6px 2px; border-radius: 6px; border: 1px solid #0284c7; background: #0f172a; color: #38bdf8; text-align: center; font-weight: bold; font-size: 12px; }
         .btn-jump-go { background: #0284c7; color: white; border: none; padding: 6px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; touch-action: manipulation; }
-        .btn-jump-go:active { transform: scale(0.92); }
 
         #like-popup-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 999; justify-content: center; align-items: center; backdrop-filter: blur(2px); transition: all 0.3s ease; }
         .popup-emoji-only { font-size: 140px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.7)); animation: emojiPopBounce 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite alternate; }
@@ -283,8 +602,8 @@
                     <option value="en">English / इंग्लिश मोड</option>
                 </select>
                 <select id="cfg-screen-mode" style="flex: 1; min-width: 150px;" onchange="autoSaveToStorage()">
-                    <option value="dark" selected>Pro Dark Theme (Black)</option>
-                    <option value="purple">✨ Royal Purple Gold Theme (High Engagement)</option>
+                    <option value="dark" selected>Viral Pitch Black + Gold Theme (Video Style)</option>
+                    <option value="purple">✨ Royal Purple Gold Theme</option>
                     <option value="light">Classic Light Theme (White)</option>
                     <option value="yellow">Bright Yellow Theme</option>
                 </select>
@@ -292,6 +611,33 @@
                     <input type="checkbox" id="cfg-qna-mode" onchange="autoSaveToStorage()">
                     <span style="color: #38bdf8; font-weight: bold;">🚀 QnA STUDY MODE (Hide Options)</span>
                 </label>
+            </div>
+        </div>
+
+        <!-- CHANGEABLE VIDEO TITLE, PART & CHANNEL BRANDING CARD -->
+        <div class="studio-card" style="border: 1px solid #eab308; background: rgba(234, 179, 8, 0.06);">
+            <div class="section-title" style="color: #facc15;">🎬 Video Top Header & Channel Branding (Changeable)</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div style="flex: 2; min-width: 180px;">
+                        <span style="font-size: 12px; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 4px;">Top Golden Main Title (शीर्षक):</span>
+                        <input type="text" id="studio-header-title" value="भारतीय राजव्यवस्था" placeholder="जैसे: भारतीय राजव्यवस्था" oninput="autoSaveToStorage()">
+                    </div>
+                    <div style="flex: 1; min-width: 130px;">
+                        <span style="font-size: 12px; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 4px;">Part / Subtitle (भाग):</span>
+                        <input type="text" id="studio-header-part" value="भाग 4" placeholder="जैसे: भाग 4" oninput="autoSaveToStorage()">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <div style="flex: 2; min-width: 180px;">
+                        <span style="font-size: 12px; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 4px;">Bottom Channel Name:</span>
+                        <input type="text" id="studio-channel-name" value="Exam Preparation" placeholder="Channel Name..." oninput="autoSaveToStorage()">
+                    </div>
+                    <div style="flex: 1; min-width: 110px;">
+                        <span style="font-size: 12px; color: #94a3b8; font-weight: bold; display: block; margin-bottom: 4px;">Logo Badge Text:</span>
+                        <input type="text" id="studio-channel-badge" value="EP" maxlength="4" placeholder="EP" oninput="autoSaveToStorage()">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -335,46 +681,28 @@
             </div>
         </div>
 
-        <!-- SUBJECT & CHAPTER SELECTION WITH COUNTERS -->
-        <div class="studio-card" style="border: 1px solid #38bdf8;">
-            <div class="section-title" style="color: #38bdf8;">📁 0. Subject & Chapter Question Bank Manager</div>
-            
-            <div style="display: flex; flex-direction: column; gap: 12px;">
-                <!-- SUBJECT ROW -->
-                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                    <select id="select-subject" onchange="onSubjectChange()" style="flex: 1; min-width: 180px;">
-                        <option value="">-- Select Subject --</option>
-                    </select>
-                    <button class="btn-secondary" style="background: #0284c7; padding: 10px 12px; max-width: 120px;" onclick="addNewSubject()">➕ Add Sub</button>
-                    <button class="btn-secondary" style="background: #ef4444; padding: 10px 12px; max-width: 120px;" onclick="deleteCurrentSubject()">🗑️ Del Sub</button>
-                </div>
+        <!-- VIDEO RANGE & TIMER CONTROL CARD -->
+        <div class="studio-card" style="border: 1px solid #38bdf8; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <span style="font-size: 13px; font-weight: bold; color: #38bdf8;">🎯 Video Range Selector:</span>
+                <span style="font-size: 12px;">From Q#:</span>
+                <input type="number" id="q-range-start" value="1" min="1" oninput="renderQuestionManagerList()" style="width: 75px; padding: 5px;">
+                <span style="font-size: 12px;">To Q#:</span>
+                <input type="number" id="q-range-end" value="10" min="1" oninput="renderQuestionManagerList()" style="width: 75px; padding: 5px;">
+            </div>
 
-                <!-- CHAPTER ROW -->
-                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                    <select id="select-chapter" onchange="onChapterChange()" style="flex: 1; min-width: 180px;">
-                        <option value="">-- Select Chapter --</option>
-                    </select>
-                    <button class="btn-secondary" style="background: #0284c7; padding: 10px 12px; max-width: 120px;" onclick="addNewChapter()">➕ Add Ch</button>
-                    <button class="btn-secondary" style="background: #ef4444; padding: 10px 12px; max-width: 120px;" onclick="deleteCurrentChapter()">🗑️ Del Ch</button>
-                </div>
-
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="studio-header-title" value="Mission 2026" placeholder="वीडियो का शीर्षक (Title) रखें..." oninput="autoSaveToStorage()">
-                    <button class="btn-secondary" style="background: #10b981; max-width: 180px;" onclick="saveCurrentQuestionsToChapter()">💾 Save Questions</button>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 10px 14px; border-radius: 8px; border: 1px solid #334155; font-size: 13px; font-weight: bold; color: #38bdf8;">
-                    <div id="stat-sub-count">Selected Subject Total: 0 Qs</div>
-                    <div id="stat-db-count" style="color: #2ed573;">Overall Database: 0 Qs</div>
-                </div>
-
-                <!-- Range Selector with Live Update -->
-                <div style="display: flex; gap: 10px; align-items: center; background: #1a2333; padding: 10px; border-radius: 8px;">
-                    <span style="font-size: 13px; font-weight: bold; color: #38bdf8;">🎯 Video Range Selector:</span>
-                    <span style="font-size: 12px;">From Q#:</span>
-                    <input type="number" id="q-range-start" value="1" min="1" oninput="renderQuestionManagerList()" style="width: 75px; padding: 5px;">
-                    <span style="font-size: 12px;">To Q#:</span>
-                    <input type="number" id="q-range-end" value="10" min="1" oninput="renderQuestionManagerList()" style="width: 75px; padding: 5px;">
+            <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap; padding-top: 10px; border-top: 1px dashed #334155;">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="cfg-enable-timer" checked onchange="toggleTimerConfigUI(); autoSaveToStorage();">
+                    <span style="color: #facc15;">⏱️ Enable Countdown Timer (अनचेक = Timer हटाएं)</span>
+                </label>
+                <div id="timer-seconds-box" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <span style="font-size: 12px; color: #94a3b8; font-weight: bold;">Seconds:</span>
+                    <input type="number" id="cfg-timer-seconds" value="5" min="1" max="30" oninput="autoSaveToStorage()" style="width: 65px; padding: 5px;">
+                    <label class="checkbox-container" style="font-size: 12px; background: #1e293b; padding: 4px 10px; border-radius: 6px; border: 1px solid #334155;">
+                        <input type="checkbox" id="cfg-timer-visual" checked onchange="autoSaveToStorage()">
+                        <span>📊 Show Timer Bar on Screen</span>
+                    </label>
                 </div>
             </div>
         </div>
@@ -385,17 +713,17 @@
             <div class="control-row">
                 <div style="display: flex; flex-direction: column; gap: 8px; background: #1a2333; padding: 12px; border-radius: 8px; border: 1px dashed #38bdf8; margin-bottom: 5px;">
                     <span style="font-size: 14px; font-weight: bold; color: #38bdf8;">🎤 वीडियो संचालन मोड (App Engine Mode):</span>
-                    <label style="cursor:pointer; font-size:13px; font-weight: bold; margin-top: 4px;"><input type="radio" name="appControlVoiceMode" value="hybrid" checked onchange="autoSaveToStorage()"> 🤖 1. हाइब्रिड मोड (सवाल आप बोलें + जवाब/व्याख्या AI स्वतः बोलेगा)</label>
+                    <label style="cursor:pointer; font-size:13px; font-weight: bold; margin-top: 4px;"><input type="radio" name="appControlVoiceMode" value="hybrid" onchange="autoSaveToStorage()"> 🤖 1. हाइब्रिड मोड (सवाल आप बोलें + जवाब/व्याख्या AI स्वतः बोलेगा)</label>
                     <label style="cursor:pointer; font-size:13px; font-weight: bold;"><input type="radio" name="appControlVoiceMode" value="manual" onchange="autoSaveToStorage()"> 🗣️ 2. फुल्ली मैनुअल मोड (तीनों चीजें आपकी आवाज़ में - AI शांत रहेगा)</label>
-                    <label style="cursor:pointer; font-size:13px; font-weight: bold;"><input type="radio" name="appControlVoiceMode" value="full_ai" onchange="autoSaveToStorage()"> ⚡ 3. फुल्ली AI मोड (इंट्रो, सवाल, टाइमर, जवाब व व्याख्या सब AI स्वतः चलाएगा)</label>
+                    <label style="cursor:pointer; font-size:13px; font-weight: bold;"><input type="radio" name="appControlVoiceMode" value="full_ai" checked onchange="autoSaveToStorage()"> ⚡ 3. फुल्ली AI मोड (इंट्रो, सवाल, टाइमर, जवाब व व्याख्या सब AI स्वतः चलाएगा)</label>
                 </div>
 
                 <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 150px;">
                         <span style="font-size: 13px; font-weight: 600; color: #94a3b8; display: block; margin-bottom: 6px;">Human Voice Style & Tone:</span>
                         <select id="cfg-voice-a" onchange="autoSaveToStorage()">
-                            <option value="female" selected>Natural Human Female (Google हिन्दी - मधुर व स्पष्ट)</option>
-                            <option value="male">Natural Deep Male Tone (गंभीर व स्पष्ट पुरुष लहजा)</option>
+                            <option value="male" selected>Video Style Hindi Male (Microsoft Madhur / Deep Male)</option>
+                            <option value="female">Natural Human Female (Google हिन्दी - मधुर व स्पष्ट)</option>
                         </select>
                     </div>
                     <div style="display: flex; align-items: flex-end;">
@@ -405,8 +733,8 @@
                 <div style="margin-top: 8px;">
                     <div class="slider-container" style="display: flex; align-items: center; gap: 10px;">
                         <span style="font-size: 13px; font-weight: 600; color: #94a3b8; min-width: 85px;" id="lbl-sub-speed">Audio Speed:</span>
-                        <input type="range" id="cfg-speed" min="0.6" max="1.6" step="0.05" value="0.90" oninput="updateSpeedDisplay(this.value)" style="flex:1;">
-                        <span id="speed-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">0.90x</span>
+                        <input type="range" id="cfg-speed" min="0.6" max="1.6" step="0.05" value="1.05" oninput="updateSpeedDisplay(this.value)" style="flex:1;">
+                        <span id="speed-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">1.05x</span>
                     </div>
                 </div>
             </div>
@@ -415,7 +743,21 @@
         <!-- Bulk Question Input Box -->
         <div class="studio-card">
             <div class="section-title" id="lbl-sec-bulk">1. Bulk Question Paste Box (One line space between questions)</div>
-            <textarea id="bulk-data" oninput="executeDataScannerLive()" placeholder="प्रश्न, विकल्प और व्याख्या पेस्ट करें..."></textarea>
+            <textarea id="bulk-data" oninput="executeDataScannerLive(); autoSaveToStorage();" placeholder="प्रश्न, विकल्प और व्याख्या पेस्ट करें...">भारत के संविधान की प्रस्तावना में 'समाजवादी' और 'धर्मनिरपेक्ष' शब्द किस संशोधन द्वारा जोड़े गए थे?
+42वें संशोधन
+44वें संशोधन
+52वें संशोधन
+86वें संशोधन
+1
+42वें संविधान संशोधन अधिनियम, 1976 द्वारा प्रस्तावना में समाजवादी, धर्मनिरपेक्ष और अखंडता शब्द जोड़े गए थे।
+
+भारतीय संविधान के किस अनुच्छेद के अंतर्गत राष्ट्रपति को अध्यादेश जारी करने की शक्ति प्राप्त है?
+अनुच्छेद 110
+अनुच्छेद 123
+अनुच्छेद 213
+अनुच्छेद 352
+2
+संविधान के अनुच्छेद 123 के तहत भारत के राष्ट्रपति को संसद के सत्र न चलने की स्थिति में अध्यादेश जारी करने की शक्ति है।</textarea>
             
             <div class="scanner-status-bar">
                 <div>Status: <span id="scan-badge-msg" class="scanner-good">Ready to scan inputs...</span></div>
@@ -439,24 +781,24 @@
             <div class="control-row">
                 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
                     <div class="slider-container" style="flex: 1; min-width: 200px;">
-                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8;" id="lbl-sub-size">Font Size:</span>
-                        <input type="range" id="cfg-size" min="16" max="45" value="30" oninput="updateSizeDisplay(this.value)">
-                        <span id="size-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">30px</span>
+                        <span style="font-size: 13px; font-weight: 600; color: #94a3b8;" id="lbl-sub-size">Question Font Size:</span>
+                        <input type="range" id="cfg-size" min="18" max="38" value="25" oninput="updateSizeDisplay(this.value)">
+                        <span id="size-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">25px</span>
                     </div>
                     <div class="slider-container" style="flex: 1; min-width: 200px;">
                         <span style="font-size: 13px; font-weight: 600; color: #94a3b8;">Photo Size:</span>
-                        <input type="range" id="cfg-img-size" min="100" max="500" value="300" oninput="updateImgSizeDisplay(this.value)">
-                        <span id="img-size-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">300px</span>
+                        <input type="range" id="cfg-img-size" min="100" max="400" value="200" oninput="updateImgSizeDisplay(this.value)">
+                        <span id="img-size-val" style="font-size: 13px; font-weight: bold; color: #38bdf8;">200px</span>
                     </div>
                 </div>
-                <div style="display: flex; gap: 20px; align-items: center; margin-top: 5px; flex-wrap: wrap;">
+                <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px; flex-wrap: wrap;">
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 13px; font-weight: 600; color: #94a3b8;">Choose Typography Face:</span>
-                        <select id="cfg-font-family" style="width: 160px; padding: 6px;" onchange="autoSaveToStorage()">
-                            <option value="'Segoe UI', sans-serif" selected>Default System</option>
-                            <option value="'Kalam', cursive">Kalam Handwriting</option>
+                        <select id="cfg-font-family" style="width: 180px; padding: 6px;" onchange="autoSaveToStorage()">
+                            <option value="'Noto Sans Devanagari', 'Segoe UI', sans-serif" selected>Noto Sans Hindi Bold (Video Style)</option>
                             <option value="'Poppins', sans-serif">Poppins Premium</option>
                             <option value="'Montserrat', sans-serif">Montserrat Bold</option>
+                            <option value="'Kalam', cursive">Kalam Handwriting</option>
                             <option value="'Roboto', sans-serif">Roboto Clean</option>
                         </select>
                     </div>
@@ -464,15 +806,21 @@
                         <input type="checkbox" id="cfg-font-weight" checked onchange="autoSaveToStorage()">
                         <span>Render Heavy Bold Titles</span>
                     </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="cfg-auto-hide-bar" onchange="autoSaveToStorage()">
+                        <span style="color: #facc15;">🎥 Hide Bottom Bar on Play (Clean Recording)</span>
+                    </label>
                 </div>
             </div>
         </div>
 
-        <button class="btn-studio-play" id="btn-compile-text" onclick="compileStudioQuiz()">Compile & Play Multi-View 🚀</button>
+        <button class="btn-studio-play" id="btn-compile-text" onclick="compileStudioQuiz()">Compile & Play Viral Video 🚀</button>
     </div>
 
     <!-- ================= DISPLAY MOUNT POINT ================= -->
     <div id="video-screen">
+
+
         <div id="like-popup-overlay">
             <div class="popup-emoji-only">👍</div>
         </div>
@@ -480,29 +828,35 @@
         <!-- MAIN SCREEN CONTENT -->
         <div class="main-content-area">
             <div class="quiz-header-container">
-                <div class="quiz-header" id="display-header-box">
-                    <div id="display-header-title">Mission 2026</div>
-                    <div class="header-subtitle" id="display-header-sub">General Knowledge | Chapter 1</div>
-                </div>
+                <div class="header-main-title" id="display-header-title">भारतीय राजव्यवस्था</div>
+                <div class="header-divider"></div>
+                <div class="header-subtitle" id="display-header-sub">भाग 4 | प्रश्न 1 / 30</div>
             </div>
             
             <div class="quiz-window" id="window-viewport">
                 <div id="questions-track"></div>
             </div>
 
-            <div class="live-banner" id="display-footer-banner">
-                <div class="banner-text-anim" id="lbl-banner-like"><span class="heart-icon">❤️</span> LIKE THIS VIDEO</div>
-                <div class="banner-text-anim" id="lbl-banner-share">📢 SHARE & FOLLOW</div>
+            <!-- CHANNEL BRANDING & ANIMATED SUBSCRIBE FOOTER -->
+            <div class="channel-footer-bar" id="display-footer-banner">
+                <div class="channel-brand-left">
+                    <div class="channel-avatar-badge" id="display-channel-badge">EP</div>
+                    <div class="channel-name-text" id="display-channel-name">Exam Preparation</div>
+                </div>
+                <div class="sub-btn-wrapper">
+                    <div class="sub-pill-btn">🔔 Subscribe</div>
+                    <span class="sub-cursor-hand">👆</span>
+                </div>
             </div>
         </div>
 
         <!-- BOTTOM HORIZONTAL CONTROL PANEL FOR MOBILE -->
-        <div class="control-panel">
+        <div class="control-panel" id="bottom-control-panel">
             <button class="ctrl-btn-manual btn-manual-play" id="manualPlayBtn" onclick="handlePlayFullAI()">▶️ <span>Play</span></button>
             <button class="ctrl-btn-manual btn-manual-pause" id="manualPauseBtn" onclick="togglePauseFullAI()">⏸️ <span>Pause</span></button>
             <button class="ctrl-btn-manual btn-manual-silence" id="manualSilenceBtn" onclick="toggleSilenceAI()">🔇 <span>Silence</span></button>
             <button class="ctrl-btn-manual btn-manual-timer" id="manualTimerBtn" onclick="triggerManualCountdown()">⏱️ <span>Timer</span></button>
-            <button class="ctrl-btn-manual btn-manual-ans" id="manualAnsBtn" onclick="handleShowAnswer()">🟢 <span>Answer</span></button>
+            <button class="ctrl-btn-manual btn-manual-ans" id="manualAnsBtn" onclick="handleShowAnswer()">🟡 <span>Answer</span></button>
             <button class="ctrl-btn-manual btn-manual-prev" id="manualPrevBtn" onclick="handlePrevQuestion()">⬅️ <span>Prev</span></button>
             <button class="ctrl-btn-manual btn-manual-next" id="manualNextBtn" onclick="handleNextQuestion()">➡️ <span>Next</span></button>
             
@@ -535,24 +889,41 @@
         let isFullAIPaused = false;
         let cachedVoices = [];
         let currentUtterance = null;
+        let activePartText = "भाग 4";
 
-        // Intro & Comment Challenge Flags
+        // Intro, Timer & Comment Challenge Flags
         let isIntroEnabled = false;
         let isIntroVisualEnabled = true;
         let introTextContent = "";
+        let isTimerEnabled = true;
+        let isTimerVisualEnabled = true;
+        let customTimerSeconds = 5;
         let isLastQCommentEnabled = false;
         let lastQCommentText = "";
 
-        const LOCAL_STORAGE_KEY = "QUIZ_STUDIO_PERSISTENT_DATA_V2";
+        const LOCAL_STORAGE_KEY = "QUIZ_STUDIO_PERSISTENT_DATA_V5";
 
         let dbMaster = {
-            "General Knowledge": {
-                "Chapter 1 - Basics": ""
+            "भारतीय राजव्यवस्था": {
+                "भाग 4 - महत्वपूर्ण प्रश्न": ""
             }
         };
 
         const photoAnimations = ['img-pulse', 'img-float', 'img-swing'];
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function toggleBottomControlBar() {
+            const panel = document.getElementById('bottom-control-panel');
+            if (panel) panel.classList.toggle('hidden-controls');
+        }
+
+        function updateTopCounterDisplay(qNum, totalNum) {
+            const subEl = document.getElementById('display-header-sub');
+            if (!subEl) return;
+            const currentLang = document.getElementById('cfg-app-lang')?.value || "hi";
+            let qLabel = currentLang === 'hi' ? `प्रश्न ${qNum} / ${totalNum}` : `Question ${qNum} / ${totalNum}`;
+            subEl.innerText = activePartText ? `${activePartText} | ${qLabel}` : qLabel;
+        }
 
         function playBeepSound(freq = 600, duration = 0.08) {
             try {
@@ -596,10 +967,8 @@
                 secBulk: "1. Bulk Question Paste Box (One line space between questions)",
                 bulkPlaceholder: "प्रश्न, विकल्प और व्याख्या पेस्ट करें...",
                 secStyle: "3. Layout, Typography & Photo Customizer",
-                subSize: "Font Size:",
-                btnCompile: "Compile & Play Multi-View 🚀",
-                bannerLike: "❤️ LIKE THIS VIDEO",
-                bannerShare: "📢 SHARE & FOLLOW"
+                subSize: "Question Font Size:",
+                btnCompile: "Compile & Play Viral Video 🚀"
             },
             en: {
                 mainTitle: "Exam Preparation Studio Pro",
@@ -609,39 +978,67 @@
                 secBulk: "1. Bulk Question Paste Box (One line space between questions)",
                 bulkPlaceholder: "Paste Questions, Options, and Explanations here...",
                 secStyle: "3. Layout, Typography & Accent Customizer",
-                subSize: "Font Size:",
-                btnCompile: "Compile & Play Multi-View 🚀",
-                bannerLike: "❤️ LIKE THIS VIDEO",
-                bannerShare: "📢 SHARE & FOLLOW"
+                subSize: "Question Font Size:",
+                btnCompile: "Compile & Play Viral Video 🚀"
             }
         };
 
-        /* ================= NATURAL HUMAN SPEECH TEXT PROCESSOR (ANDROID CHROME OPTIMIZED) ================= */
+        /* ================= HINDI NUMBER TO WORDS FOR NATURAL VOICE ================= */
+        function numberToHindiWords(numStr) {
+            const num = parseInt(numStr, 10);
+            if (isNaN(num) || num < 0 || num > 9999) return numStr;
+            const units = [
+                "शून्य", "एक", "दो", "तीन", "चार", "पाँच", "छह", "सात", "आठ", "नौ",
+                "दस", "ग्यारह", "बारह", "तेरह", "चौदह", "पंद्रह", "सोलह", "सत्रह", "अठारह", "उन्नीस",
+                "बीस", "इक्कीस", "बाईस", "तेईस", "चौबीस", "पच्चीस", "छब्बीस", "सत्ताईस", "अट्ठाईस", "उनतीस",
+                "तीस", "इकतीस", "बत्तीस", "तैंतीस", "चौंतीस", "पैंतीस", "छत्तीस", "सैंतीस", "अड़तीस", "उनतालीस",
+                "चालीस", "इकतालीस", "बयालीस", "तैंतालीस", "चवालीस", "पैंतालीस", "छियालीस", "सैंतालीस", "अड़तालीस", "उनचास",
+                "पचास", "इक्यावन", "बावन", "तिरेपन", "चौवन", "पचपन", "छप्पन", "सत्तावन", "अट्ठावन", "उनसठ",
+                "साठ", "इकसठ", "बासठ", "तिरेसठ", "चौंसठ", "पैंसठ", "छियासठ", "सड़सठ", "अड़सठ", "उनहत्तर",
+                "सत्तर", "इकहत्तर", "बहत्तर", "तिहत्तर", "चौहत्तर", "पचहत्तर", "छिहत्तर", "सतहत्तर", "अठहत्तर", "उनासी",
+                "अस्सी", "इक्यासी", "बयासी", "तिरासी", "चौरासी", "पचासी", "छियासी", "सत्तासी", "अट्ठासी", "नवासी",
+                "नब्बे", "इक्यानवे", "बानवे", "तिरानवे", "चौरानवे", "पचानवे", "छियानवे", "सत्तानवे", "अट्ठानवे", "निन्यानवे"
+            ];
+            if (num < 100) return units[num];
+            if (num < 1000) {
+                const h = Math.floor(num / 100);
+                const rem = num % 100;
+                return units[h] + " सौ" + (rem > 0 ? " " + units[rem] : "");
+            }
+            const th = Math.floor(num / 1000);
+            const rem = num % 1000;
+            if (rem === 0) return units[th] + " हज़ार";
+            if (rem < 100) return units[th] + " हज़ार " + units[rem];
+            const h = Math.floor(rem / 100);
+            const last = rem % 100;
+            return units[th] + " हज़ार " + units[h] + " सौ" + (last > 0 ? " " + units[last] : "");
+        }
+
+        /* ================= NATURAL HUMAN SPEECH TEXT PROCESSOR ================= */
         function prepareNaturalHumanSpeech(rawText, lang) {
             let text = rawText.replace(/\s+/g, " ").trim();
 
             if (lang === 'hi') {
-                // Convert common English exam abbreviations into natural Hindi phonetics so TTS doesn't spell awkwardly
                 const phoneticMap = [
-                    [/\bU\.?P\.?\b/gi, "यू पी"],
-                    [/\bM\.?P\.?\b/gi, "एम पी"],
-                    [/\bG\.?K\.?\b/gi, "जी के"],
-                    [/\bG\.?S\.?\b/gi, "जी एस"],
-                    [/\bS\.?S\.?C\.?\b/gi, "एस एस सी"],
-                    [/\bU\.?P\.?S\.?C\.?\b/gi, "यू पी एस सी"],
-                    [/\bU\.?P\.?P\.?C\.?S\.?\b/gi, "यू पी पी सी एस"],
-                    [/\bR\.?R\.?B\.?\b/gi, "आर आर बी"],
-                    [/\bI\.?A\.?S\.?\b/gi, "आई ए एस"],
-                    [/\bI\.?P\.?S\.?\b/gi, "आई पी एस"],
-                    [/\bD\.?N\.?A\.?\b/gi, "डी एन ए"],
-                    [/\bR\.?N\.?A\.?\b/gi, "आर एन ए"],
-                    [/\bC\.?O\.?2\b/gi, "कार्बन डाइऑक्साइड"],
-                    [/\bH\.?2\.?O\b/gi, "जल"],
-                    [/\bkm\/h\b/gi, "किलोमीटर प्रति घंटा"],
-                    [/\bkm\b/gi, "किलोमीटर"],
-                    [/\bcm\b/gi, "सेंटीमीटर"],
-                    [/\bmm\b/gi, "मिलीमीटर"],
-                    [/\bkg\b/gi, "किलोग्राम"],
+                    [/ U\.?P\.? /gi, "यू पी"],
+                    [/ M\.?P\.? /gi, "एम पी"],
+                    [/ G\.?K\.? /gi, "जी के"],
+                    [/ G\.?S\.? /gi, "जी एस"],
+                    [/ S\.?S\.?C\.? /gi, "एस एस सी"],
+                    [/ U\.?P\.?S\.?C\.? /gi, "यू पी एस सी"],
+                    [/ U\.?P\.?P\.?C\.?S\.? /gi, "यू पी पी सी एस"],
+                    [/ R\.?R\.?B\.? /gi, "आर आर बी"],
+                    [/ I\.?A\.?S\.? /gi, "आई ए एस"],
+                    [/ I\.?P\.?S\.? /gi, "आई पी एस"],
+                    [/ D\.?N\.?A\.? /gi, "डी एन ए"],
+                    [/ R\.?N\.?A\.? /gi, "आर एन ए"],
+                    [/ C\.?O\.?2 /gi, "कार्बन डाइऑक्साइड"],
+                    [/ H\.?2\.?O /gi, "जल"],
+                    [/ km\/h /gi, "किलोमीटर प्रति घंटा"],
+                    [/ km /gi, "किलोमीटर"],
+                    [/ cm /gi, "सेंटीमीटर"],
+                    [/ mm /gi, "मिलीमीटर"],
+                    [/ kg /gi, "किलोग्राम"],
                     [/%/g, " प्रतिशत"]
                 ];
 
@@ -649,21 +1046,20 @@
                     text = text.replace(regex, replacement);
                 });
 
-                // Add subtle micro-breathing pauses around Hindi conjunctions & connectors
                 text = text.replace(/\s+(क्योंकि|अर्थात|यानी|इसलिए|जबकि|जिसमें|जिसे|तथा|अथवा)\s+/g, ", $1 ");
                 text = text.replace(/[:\-–—]/g, ", ");
             } else {
                 text = text.replace(/[:\-–—]/g, ", ");
             }
 
-            // Clean duplicate commas/spaces
+            if (lang === 'hi') {
+                text = text.replace(/\b\d{1,4}\b/g, (match) => numberToHindiWords(match));
+            }
             text = text.replace(/,\s*,+/g, ",").replace(/\s+/g, " ").trim();
             return text;
         }
 
         function splitIntoNaturalSentences(text) {
-            // Split on Hindi Poorna Viram (।), full stop (.), question mark (?), or exclamation (!)
-            // while keeping abbreviations intact
             let parts = text.match(/[^।.?!]+[।.?!]*/g);
             if (!parts) return [text];
             return parts.map(p => p.trim()).filter(p => p.length > 0);
@@ -675,32 +1071,38 @@
             if (!voices || voices.length === 0) return null;
 
             if (lang === 'hi') {
-                // Priority 1: Android Chrome's high-quality Google Hindi voice (hi-IN / hi_IN)
-                let googleHindi = voices.find(v =>
-                    (v.lang === 'hi-IN' || v.lang === 'hi_IN' || v.lang.toLowerCase().startsWith('hi')) &&
-                    v.name.toLowerCase().includes('google')
+                let hiVoices = voices.filter(v =>
+                    v.lang === 'hi-IN' || v.lang === 'hi_IN' || v.lang.toLowerCase().startsWith('hi')
                 );
-                if (googleHindi) return googleHindi;
+                if (genderStyle === 'male') {
+                    // Priority 1: Microsoft Madhur Online (Natural Male Hindi - exact video style)
+                    let madhur = hiVoices.find(v => v.name.toLowerCase().includes('madhur'));
+                    if (madhur) return madhur;
 
-                // Priority 2: Any network / non-local Hindi voice (usually neural/natural)
-                let networkHindi = voices.find(v =>
-                    v.lang.toLowerCase().startsWith('hi') && v.localService === false
-                );
+                    // Priority 2: Any Hindi Male voice (Hemant, Prabhat, Male, etc.)
+                    let anyMale = hiVoices.find(v => /hemant|prabhat|male|man|ravi|kumar/i.test(v.name));
+                    if (anyMale) return anyMale;
+                } else {
+                    let swaraOrGoogle = hiVoices.find(v => /swara|kalpana|google|female|woman/i.test(v.name));
+                    if (swaraOrGoogle) return swaraOrGoogle;
+                }
+
+                let networkHindi = hiVoices.find(v => v.localService === false);
                 if (networkHindi) return networkHindi;
 
-                // Priority 3: Any available Hindi voice
-                let anyHindi = voices.find(v => v.lang.toLowerCase().startsWith('hi'));
-                if (anyHindi) return anyHindi;
-            } else {
-                // English: Prefer Indian English (en-IN) or Google US/UK natural voice
-                let googleEn = voices.find(v =>
-                    (v.lang === 'en-IN' || v.lang === 'en-US' || v.lang === 'en-GB') &&
-                    v.name.toLowerCase().includes('google')
-                );
-                if (googleEn) return googleEn;
+                let googleHindi = hiVoices.find(v => v.name.toLowerCase().includes('google'));
+                if (googleHindi) return googleHindi;
 
-                let anyEn = voices.find(v => v.lang.toLowerCase().startsWith('en'));
-                if (anyEn) return anyEn;
+                if (hiVoices.length > 0) return hiVoices[0];
+            } else {
+                let enVoices = voices.filter(v => v.lang.toLowerCase().startsWith('en'));
+                if (genderStyle === 'male') {
+                    let enMale = enVoices.find(v => /prabhat|ravi|guy|david|mark|daniel|male/i.test(v.name));
+                    if (enMale) return enMale;
+                }
+                let googleEn = enVoices.find(v => v.name.toLowerCase().includes('google'));
+                if (googleEn) return googleEn;
+                if (enVoices.length > 0) return enVoices[0];
             }
             return null;
         }
@@ -711,10 +1113,15 @@
             }
         }
 
-        /* INTRO & COMMENT CHALLENGE UI TOGGLES */
+        /* INTRO, TIMER & COMMENT CHALLENGE UI TOGGLES */
         function toggleIntroPanelUI() {
             const checked = document.getElementById('cfg-enable-intro').checked;
             document.getElementById('intro-config-box').style.display = checked ? 'flex' : 'none';
+        }
+
+        function toggleTimerConfigUI() {
+            const checked = document.getElementById('cfg-enable-timer').checked;
+            document.getElementById('timer-seconds-box').style.display = checked ? 'flex' : 'none';
         }
 
         function toggleLastQCommentUI() {
@@ -742,24 +1149,30 @@
             try {
                 let dataToSave = {
                     dbMaster: dbMaster,
-                    title: document.getElementById('studio-header-title')?.value || "Mission 2026",
+                    title: document.getElementById('studio-header-title')?.value || "भारतीय राजव्यवस्था",
+                    partTitle: document.getElementById('studio-header-part')?.value || "भाग 4",
+                    channelName: document.getElementById('studio-channel-name')?.value || "Exam Preparation",
+                    channelBadge: document.getElementById('studio-channel-badge')?.value || "EP",
+                    autoHideBar: document.getElementById('cfg-auto-hide-bar')?.checked || false,
                     bulkData: document.getElementById('bulk-data')?.value || "",
-                    selectedSub: document.getElementById('select-subject')?.value || "",
-                    selectedCh: document.getElementById('select-chapter')?.value || "",
+
                     lang: document.getElementById('cfg-app-lang')?.value || "hi",
                     theme: document.getElementById('cfg-screen-mode')?.value || "dark",
                     qnaMode: document.getElementById('cfg-qna-mode')?.checked || false,
                     enableIntro: document.getElementById('cfg-enable-intro')?.checked || false,
                     introVisual: document.getElementById('cfg-intro-visual')?.checked ?? true,
                     introText: document.getElementById('cfg-intro-text')?.value || "",
+                    enableTimer: document.getElementById('cfg-enable-timer')?.checked ?? true,
+                    timerVisual: document.getElementById('cfg-timer-visual')?.checked ?? true,
+                    timerSeconds: document.getElementById('cfg-timer-seconds')?.value || "5",
                     lastQComment: document.getElementById('cfg-last-q-comment')?.checked || false,
                     lastQText: document.getElementById('cfg-last-q-text')?.value || "",
-                    fontSize: document.getElementById('cfg-size')?.value || "30",
-                    imgSize: document.getElementById('cfg-img-size')?.value || "300",
-                    fontFamily: document.getElementById('cfg-font-family')?.value || "'Segoe UI', sans-serif",
-                    voiceStyle: document.getElementById('cfg-voice-a')?.value || "female",
-                    audioSpeed: document.getElementById('cfg-speed')?.value || "0.90",
-                    voiceMode: document.querySelector('input[name="appControlVoiceMode"]:checked')?.value || "hybrid",
+                    fontSize: document.getElementById('cfg-size')?.value || "25",
+                    imgSize: document.getElementById('cfg-img-size')?.value || "200",
+                    fontFamily: document.getElementById('cfg-font-family')?.value || "'Noto Sans Devanagari', 'Segoe UI', sans-serif",
+                    voiceStyle: document.getElementById('cfg-voice-a')?.value || "male",
+                    audioSpeed: document.getElementById('cfg-speed')?.value || "1.05",
+                    voiceMode: document.querySelector('input[name="appControlVoiceMode"]:checked')?.value || "full_ai",
                     imageStorage: imageStorage
                 };
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
@@ -774,7 +1187,12 @@
                 if (data.dbMaster && Object.keys(data.dbMaster).length > 0) {
                     dbMaster = data.dbMaster;
                 }
-                if (data.title) document.getElementById('studio-header-title').value = data.title;
+                if (data.title !== undefined) document.getElementById('studio-header-title').value = data.title;
+                if (data.partTitle !== undefined) document.getElementById('studio-header-part').value = data.partTitle;
+                if (data.channelName !== undefined) document.getElementById('studio-channel-name').value = data.channelName;
+                if (data.channelBadge !== undefined) document.getElementById('studio-channel-badge').value = data.channelBadge;
+                if (data.autoHideBar !== undefined) document.getElementById('cfg-auto-hide-bar').checked = data.autoHideBar;
+
                 if (data.lang) document.getElementById('cfg-app-lang').value = data.lang;
                 if (data.theme) document.getElementById('cfg-screen-mode').value = data.theme;
                 if (data.qnaMode !== undefined) document.getElementById('cfg-qna-mode').checked = data.qnaMode;
@@ -782,10 +1200,14 @@
                 if (data.enableIntro !== undefined) document.getElementById('cfg-enable-intro').checked = data.enableIntro;
                 if (data.introVisual !== undefined) document.getElementById('cfg-intro-visual').checked = data.introVisual;
                 if (data.introText !== undefined) document.getElementById('cfg-intro-text').value = data.introText;
+                if (data.enableTimer !== undefined) document.getElementById('cfg-enable-timer').checked = data.enableTimer;
+                if (data.timerVisual !== undefined) document.getElementById('cfg-timer-visual').checked = data.timerVisual;
+                if (data.timerSeconds !== undefined) document.getElementById('cfg-timer-seconds').value = data.timerSeconds;
                 if (data.lastQComment !== undefined) document.getElementById('cfg-last-q-comment').checked = data.lastQComment;
                 if (data.lastQText !== undefined) document.getElementById('cfg-last-q-text').value = data.lastQText;
 
                 toggleIntroPanelUI();
+                toggleTimerConfigUI();
                 toggleLastQCommentUI();
 
                 if (data.voiceStyle) document.getElementById('cfg-voice-a').value = data.voiceStyle;
@@ -809,15 +1231,10 @@
                     if (rad) rad.checked = true;
                 }
 
-                renderSubjectDropdown();
-                if (data.selectedSub && dbMaster[data.selectedSub]) {
-                    document.getElementById('select-subject').value = data.selectedSub;
-                    renderChapterDropdown();
-                    if (data.selectedCh) {
-                        document.getElementById('select-chapter').value = data.selectedCh;
-                    }
+                if (data.bulkData !== undefined) {
+                    document.getElementById('bulk-data').value = data.bulkData;
                 }
-                loadQuestionsForSelection();
+                executeDataScannerLive();
                 return true;
             } catch(e) {
                 console.error("AutoLoad Error:", e);
@@ -831,7 +1248,6 @@
                 speechSynthesis.onvoiceschanged = loadVoices;
             }
             if(!autoLoadFromStorage()) {
-                renderSubjectDropdown();
                 switchLanguageMode();
                 executeDataScannerLive();
             }
@@ -1043,6 +1459,10 @@
 
             let backupData = {
                 title: document.getElementById('studio-header-title').value,
+                partTitle: document.getElementById('studio-header-part').value,
+                channelName: document.getElementById('studio-channel-name').value,
+                channelBadge: document.getElementById('studio-channel-badge').value,
+                autoHideBar: document.getElementById('cfg-auto-hide-bar').checked,
                 dbMaster: dbMaster,
                 bulkData: document.getElementById('bulk-data').value,
                 selectedSub: document.getElementById('select-subject').value,
@@ -1081,13 +1501,12 @@
                     try {
                         let backupData = JSON.parse(e.target.result);
                         if(backupData.title !== undefined) document.getElementById('studio-header-title').value = backupData.title;
-                        if(backupData.dbMaster) {
-                            dbMaster = backupData.dbMaster;
-                            renderSubjectDropdown();
-                        }
-                        if(backupData.selectedSub) document.getElementById('select-subject').value = backupData.selectedSub;
-                        renderChapterDropdown();
-                        if(backupData.selectedCh) document.getElementById('select-chapter').value = backupData.selectedCh;
+                        if(backupData.partTitle !== undefined) document.getElementById('studio-header-part').value = backupData.partTitle;
+                        if(backupData.channelName !== undefined) document.getElementById('studio-channel-name').value = backupData.channelName;
+                        if(backupData.channelBadge !== undefined) document.getElementById('studio-channel-badge').value = backupData.channelBadge;
+                        if(backupData.autoHideBar !== undefined) document.getElementById('cfg-auto-hide-bar').checked = backupData.autoHideBar;
+
+
                         
                         if(backupData.bulkData !== undefined) document.getElementById('bulk-data').value = backupData.bulkData;
                         if(backupData.lang !== undefined) document.getElementById('cfg-app-lang').value = backupData.lang;
@@ -1266,8 +1685,6 @@
             document.getElementById('lbl-sec-bulk').innerText = pack.secBulk;
             document.getElementById('bulk-data').placeholder = pack.bulkPlaceholder;
             document.getElementById('btn-compile-text').innerText = pack.btnCompile;
-            document.getElementById('lbl-banner-like').innerHTML = pack.bannerLike;
-            document.getElementById('lbl-banner-share').innerHTML = pack.bannerShare;
             autoSaveToStorage();
         }
 
@@ -1363,7 +1780,7 @@
             document.querySelectorAll('.q-word').forEach(s => s.classList.remove('word-highlight'));
         }
 
-        /* ================= NATURAL HUMAN SPEECH ENGINE (SENTENCE CHUNKING + BREATHING PAUSES) ================= */
+        /* ================= NATURAL HUMAN SPEECH ENGINE ================= */
         function speakText(text, callback, isQuestionSpeech = false) {
             clearTimeout(voiceFailSafeTimeout);
             clearTimeout(sentencePauseTimeout);
@@ -1405,11 +1822,10 @@
                 return;
             }
 
-            let baseSpeed = parseFloat(document.getElementById('cfg-speed')?.value) || 0.90;
-            let voiceStyle = document.getElementById('cfg-voice-a')?.value || "female";
+            let baseSpeed = parseFloat(document.getElementById('cfg-speed')?.value) || 1.05;
+            let voiceStyle = document.getElementById('cfg-voice-a')?.value || "male";
             let targetVoice = selectBestHumanVoice(currentLang, voiceStyle);
 
-            // Start Karaoke highlighter smoothly across full question if question speech
             if (isQuestionSpeech) {
                 let titleEl = document.getElementById(`qtitle-box-${currentQIndex}`);
                 let spans = titleEl ? titleEl.querySelectorAll('.q-word') : [];
@@ -1450,16 +1866,13 @@
                 currentUtterance.lang = currentLang === 'hi' ? 'hi-IN' : 'en-US';
                 currentUtterance.volume = 1.0;
 
-                // Human prosody modulation:
-                // Questions have slightly livelier tone; Male tone uses slightly lower pitch for warm depth
                 if (voiceStyle === 'male') {
-                    currentUtterance.pitch = isQuestionSpeech ? 0.94 : 0.88;
+                    currentUtterance.pitch = isQuestionSpeech ? 0.93 : 0.90;
                 } else {
                     currentUtterance.pitch = isQuestionSpeech ? 1.04 : 0.99;
                 }
 
-                // Slightly slower on questions for viewer comprehension, smooth conversational pace on explanations
-                currentUtterance.rate = isQuestionSpeech ? Math.max(baseSpeed - 0.03, 0.65) : baseSpeed;
+                currentUtterance.rate = isQuestionSpeech ? baseSpeed : Math.min(baseSpeed + 0.03, 1.6);
 
                 let chunkEstimate = Math.max((chunk.length / 7.5) * 1000, 2800) / baseSpeed;
                 clearTimeout(voiceFailSafeTimeout);
@@ -1472,7 +1885,6 @@
                     if (localToken !== speechRunToken) return;
                     clearTimeout(voiceFailSafeTimeout);
                     if (sentenceIdx < sentences.length) {
-                        // Natural 240ms human breathing pause between sentences!
                         sentencePauseTimeout = setTimeout(speakNextSentence, 240);
                     } else {
                         clearTalking();
@@ -1535,22 +1947,33 @@
 
             isQnAModeActive = document.getElementById('cfg-qna-mode').checked;
 
-            // Read Intro & Last Question Comment Settings
+            // Read Intro, Timer & Last Question Comment Settings
             isIntroEnabled = document.getElementById('cfg-enable-intro').checked;
             isIntroVisualEnabled = document.getElementById('cfg-intro-visual').checked;
             introTextContent = document.getElementById('cfg-intro-text').value.trim();
+            isTimerEnabled = document.getElementById('cfg-enable-timer').checked;
+            isTimerVisualEnabled = document.getElementById('cfg-timer-visual').checked;
+            customTimerSeconds = Math.max(1, Math.min(30, parseInt(document.getElementById('cfg-timer-seconds').value) || 5));
             isLastQCommentEnabled = document.getElementById('cfg-last-q-comment').checked;
             lastQCommentText = document.getElementById('cfg-last-q-text').value.trim() || "इस प्रश्न का सही उत्तर आप सभी कमेंट बॉक्स में ज़रूर लिखें!";
 
-            const customTitle = document.getElementById('studio-header-title').value.trim() || "Mission 2026";
-            const subjectVal = document.getElementById('select-subject').value.trim() || "General";
-            const chapterVal = document.getElementById('select-chapter').value.trim() || "Topic";
-
-            let displayCh = (chapterVal === "ALL") ? "All Chapters" : chapterVal;
-            let subHeaderStr = `${subjectVal} | ${displayCh}`;
+            // Read Changeable Top Title, Part & Channel Branding
+            const customTitle = document.getElementById('studio-header-title').value.trim() || "भारतीय राजव्यवस्था";
+            activePartText = document.getElementById('studio-header-part').value.trim();
+            const chName = document.getElementById('studio-channel-name').value.trim() || "Exam Preparation";
+            const chBadge = document.getElementById('studio-channel-badge').value.trim() || "EP";
 
             document.getElementById('display-header-title').innerText = customTitle;
-            document.getElementById('display-header-sub').innerText = subHeaderStr;
+            document.getElementById('display-channel-name').innerText = chName;
+            document.getElementById('display-channel-badge').innerText = chBadge;
+
+            // Handle Control Panel Visibility Option
+            const autoHideBar = document.getElementById('cfg-auto-hide-bar').checked;
+            const ctrlPanel = document.getElementById('bottom-control-panel');
+            if (ctrlPanel) {
+                if (autoHideBar) ctrlPanel.classList.add('hidden-controls');
+                else ctrlPanel.classList.remove('hidden-controls');
+            }
 
             const targetTheme = document.getElementById('cfg-screen-mode').value;
             const videoScreen = document.getElementById('video-screen');
@@ -1581,9 +2004,11 @@
             totalQuestions = playQuestions.length;
             currentQIndex = 0;
 
+            updateTopCounterDisplay(1, totalQuestions);
+
             const fontSize = document.getElementById('cfg-size').value + "px";
             const imgMaxHeight = document.getElementById('cfg-img-size').value + "px";
-            const isBold = document.getElementById('cfg-font-weight').checked ? 'bold' : 'normal';
+            const isBold = document.getElementById('cfg-font-weight').checked ? '800' : 'normal';
 
             // ADD INTRO CARD BLOCK IF ENABLED
             if (isIntroEnabled && introTextContent !== "") {
@@ -1610,25 +2035,33 @@
 
                 let optionsListStyle = isQnAModeActive ? 'display:none;' : '';
 
-                let isLastViewerChallenge = (isLastQCommentEnabled && i === totalQuestions - 1);
-                let badgeLabel = isLastViewerChallenge 
-                    ? `Question: ${i + 1} / ${totalQuestions} — 💬 COMMENT CHALLENGE` 
-                    : `Question: ${i + 1} / ${totalQuestions}`;
-                let badgeExtraClass = isLastViewerChallenge ? 'challenge-badge' : '';
-
                 track.innerHTML += `
                     <div class="q-block" id="block-${i}" style="font-family: ${activeFont};">
-                        <div class="q-badge ${badgeExtraClass}">${badgeLabel}</div>
-
                         <div class="q-title" id="qtitle-box-${i}" style="font-size: ${fontSize}; font-weight: ${isBold};">${titleWordsHTML}</div>
                         
                         <div class="q-main-layout-split">
                             <div class="q-left-content">
                                 <div class="options-list" style="${optionsListStyle}">
-                                    <div class="opt-item" id="opt1-${i}" style="font-size: calc(${fontSize} - 6px);">A. ${q.o1}</div>
-                                    <div class="opt-item" id="opt2-${i}" style="font-size: calc(${fontSize} - 6px);">B. ${q.o2}</div>
-                                    <div class="opt-item" id="opt3-${i}" style="${hideC} font-size: calc(${fontSize} - 6px);">C. ${q.o3}</div>
-                                    <div class="opt-item" id="opt4-${i}" style="${hideD} font-size: calc(${fontSize} - 6px);">D. ${q.o4}</div>
+                                    <div class="opt-item" id="opt1-${i}" style="font-size: calc(${fontSize} - 5px);">
+                                        <span class="opt-badge">A</span>
+                                        <span class="opt-text">${q.o1}</span>
+                                        <span class="opt-check">✓</span>
+                                    </div>
+                                    <div class="opt-item" id="opt2-${i}" style="font-size: calc(${fontSize} - 5px);">
+                                        <span class="opt-badge">B</span>
+                                        <span class="opt-text">${q.o2}</span>
+                                        <span class="opt-check">✓</span>
+                                    </div>
+                                    <div class="opt-item" id="opt3-${i}" style="${hideC} font-size: calc(${fontSize} - 5px);">
+                                        <span class="opt-badge">C</span>
+                                        <span class="opt-text">${q.o3}</span>
+                                        <span class="opt-check">✓</span>
+                                    </div>
+                                    <div class="opt-item" id="opt4-${i}" style="${hideD} font-size: calc(${fontSize} - 5px);">
+                                        <span class="opt-badge">D</span>
+                                        <span class="opt-text">${q.o4}</span>
+                                        <span class="opt-check">✓</span>
+                                    </div>
                                 </div>
                                 <div class="qna-answer-box" id="qna-box-${i}"></div>
                                 <div class="comment-challenge-box" id="comment-box-${i}">💬 ${lastQCommentText}</div>
@@ -1641,7 +2074,7 @@
                         </div>
 
                         <div class="timer-wrapper" id="timer-wrapper-${i}">
-                            <span class="timer-number" id="timer-text-${i}">5</span>
+                            <span class="timer-number" id="timer-text-${i}">${customTimerSeconds}</span>
                             <div class="timer-bar-container">
                                 <div class="timer-bar-fill" id="bar-${i}"></div>
                             </div>
@@ -1654,7 +2087,7 @@
 
             let thanksHeading = '✨ Thanks For Watching ✨';
             let currentLang = document.getElementById('cfg-app-lang').value;
-            let thanksSub = currentLang === 'hi' ? 'Next part ke liye like aur follow karein!' : 'Please like and follow for the next part!';
+            let thanksSub = currentLang === 'hi' ? 'अगले भाग के लिए Subscribe ज़रूर करें!' : 'Please subscribe for the next part!';
             
             track.innerHTML += `
                 <div class="end-block" id="end-block-view">
@@ -1680,6 +2113,7 @@
 
         function initIntroLayout() {
             studioPlayState = "intro";
+            updateTopCounterDisplay(1, totalQuestions);
             document.querySelectorAll('.q-block').forEach(el => el.classList.remove('active-q'));
             let endBlock = document.getElementById('end-block-view');
             if (endBlock) endBlock.classList.remove('active-q');
@@ -1690,7 +2124,6 @@
             if (isIntroVisualEnabled) {
                 if (introBlock) introBlock.classList.add('active-q');
             } else {
-                // Hidden Text Mode: Show Q1 on screen while AI speaks intro
                 if (introBlock) introBlock.classList.remove('active-q');
                 if (firstQCard) firstQCard.classList.add('active-q');
             }
@@ -1713,7 +2146,6 @@
         function runFullAISequence() {
             if (isFullAIPaused) return;
 
-            // 1. HANDLE INTRO IF IN INTRO STATE
             if (studioPlayState === "intro") {
                 speakText(introTextContent, () => {
                     let currentModeCheck = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
@@ -1750,6 +2182,13 @@
                                 handleNextQuestion(true);
                             }
                         }, false);
+                    } else if (!isTimerEnabled) {
+                        aiNextTimeout = setTimeout(() => {
+                            let innerModeCheck = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
+                            if (innerModeCheck === "full_ai" && studioPlayState === "question" && isFullAIAutoPlaying && !isFullAIPaused) {
+                                handleShowAnswer();
+                            }
+                        }, 550);
                     } else {
                         triggerManualCountdown(() => {
                             let innerModeCheck = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
@@ -1837,10 +2276,12 @@
                 return;
             }
 
+            updateTopCounterDisplay(currentQIndex + 1, totalQuestions);
             studioPlayState = "question";
             let isLastViewerChallenge = (isLastQCommentEnabled && currentQIndex === totalQuestions - 1);
 
-            document.getElementById('manualTimerBtn').disabled = isLastViewerChallenge;
+            document.getElementById('manualTimerBtn').style.display = isTimerEnabled ? 'flex' : 'none';
+            document.getElementById('manualTimerBtn').disabled = (isLastViewerChallenge || !isTimerEnabled);
             document.getElementById('manualAnsBtn').disabled = false;
 
             playChimeSound();
@@ -1861,7 +2302,10 @@
             
             for(let opt=1; opt<=4; opt++) {
                 let oBox = document.getElementById(`opt${opt}-${currentQIndex}`);
-                if(oBox) oBox.classList.remove('reveal-correct');
+                if(oBox) {
+                    oBox.classList.remove('reveal-correct');
+                    oBox.classList.remove('dim-option');
+                }
             }
 
             if(imgTag) {
@@ -1886,23 +2330,28 @@
             if (studioPlayState !== "question") return;
             let isLastViewerChallenge = (isLastQCommentEnabled && currentQIndex === totalQuestions - 1);
             if (isLastViewerChallenge) return;
+
+            if (!isTimerEnabled) {
+                if (typeof onTimerComplete === 'function') onTimerComplete();
+                return;
+            }
             
             let timerWrap = document.getElementById(`timer-wrapper-${currentQIndex}`);
             let fillBar = document.getElementById(`bar-${currentQIndex}`);
             let timerText = document.getElementById(`timer-text-${currentQIndex}`);
             if (!timerWrap || !fillBar) return;
 
-            timerWrap.style.display = "block";
+            timerWrap.style.display = isTimerVisualEnabled ? "block" : "none";
             fillBar.style.transform = `scaleX(1)`;
             fillBar.className = "timer-bar-fill";
-            fillBar.style.backgroundColor = "#2ed573";
-            if(timerText) timerText.innerText = "5";
+            fillBar.style.backgroundColor = "#eab308";
+            if(timerText) timerText.innerText = String(customTimerSeconds);
 
             document.getElementById('manualTimerBtn').disabled = true;
 
-            let totalSteps = 500; 
+            let totalSteps = customTimerSeconds * 100; 
             let remainingSteps = totalSteps;
-            let lastSec = 5;
+            let lastSec = customTimerSeconds;
 
             clearInterval(countdownInterval);
             playBeepSound(700, 0.1); 
@@ -1919,12 +2368,12 @@
                     timerText.innerText = currentSec;
                     if (currentSec !== lastSec) {
                         lastSec = currentSec;
-                        playBeepSound(600 + (5 - currentSec) * 100, 0.08); 
+                        playBeepSound(600 + (customTimerSeconds - currentSec) * 80, 0.08); 
                     }
                 }
 
                 if (scale <= 0.5 && scale > 0.2) {
-                    fillBar.style.backgroundColor = "#ffc048";
+                    fillBar.style.backgroundColor = "#f59e0b";
                 } else if (scale <= 0.2) {
                     fillBar.classList.add("timer-danger");
                 }
@@ -1948,7 +2397,7 @@
             overlay.style.display = 'flex';
             document.getElementById('manualLikeBtn').disabled = true;
             
-            speakText("हमारी सभी वीडियो प्राप्त करने के लिए वीडियो को लाइक करें।", () => {
+            speakText("हमारी सभी वीडियो प्राप्त करने के लिए वीडियो को लाइक और सब्सक्राइब करें।", () => {
                 setTimeout(() => {
                     overlay.style.display = 'none';
                     document.getElementById('manualLikeBtn').disabled = false;
@@ -1999,12 +2448,22 @@
             if (isQnAModeActive) {
                 let qnaBox = document.getElementById(`qna-box-${currentQIndex}`);
                 if (qnaBox) {
-                    qnaBox.innerHTML = currentLang === 'hi' ? `सही उत्तर - ${correctTextString}` : `Correct Answer - ${correctTextString}`;
+                    qnaBox.innerHTML = currentLang === 'hi' ? `✓ सही उत्तर - ${correctTextString}` : `✓ Correct Answer - ${correctTextString}`;
                     qnaBox.style.display = "block";
                 }
             } else {
-                let targetBox = document.getElementById(`opt${correctVal}-${currentQIndex}`);
-                if (targetBox) targetBox.classList.add('reveal-correct');
+                // Highlight correct option in Gold & Dim wrong options (Video Style)
+                for (let opt = 1; opt <= 4; opt++) {
+                    let optEl = document.getElementById(`opt${opt}-${currentQIndex}`);
+                    if (!optEl) continue;
+                    if (String(opt) === String(correctVal)) {
+                        optEl.classList.add('reveal-correct');
+                        optEl.classList.remove('dim-option');
+                    } else {
+                        optEl.classList.add('dim-option');
+                        optEl.classList.remove('reveal-correct');
+                    }
+                }
             }
 
             if (qData.explanation && qData.explanation.trim() !== "") {
@@ -2013,7 +2472,7 @@
             }
 
             if (controlMode === "hybrid" || controlMode === "full_ai") {
-                let narrationText = currentLang === 'hi' ? ("सही उत्तर है, " + correctTextString + "।") : ("The correct answer is, " + correctTextString + ".");
+                let narrationText = currentLang === 'hi' ? ("इसका सही जवाब है, " + correctTextString + "।") : ("The correct answer is, " + correctTextString + ".");
                 if (qData.explanation && qData.explanation.trim() !== "") {
                     narrationText += " " + qData.explanation;
                 }
