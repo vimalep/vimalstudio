@@ -105,6 +105,24 @@
         #video-screen.purple-mode .opt-item { background: rgba(30, 15, 60, 0.85) !important; border: 1.5px solid rgba(168, 85, 247, 0.35) !important; color: #ffffff !important; } 
         #video-screen.purple-mode .intro-card-box { border-color: #f59e0b; background: rgba(139, 92, 246, 0.18); color: #fde047; }
 
+        #video-screen.navy-mode { background: radial-gradient(circle at top, #0c2340 0%, #030b17 100%) !important; color: #ffffff !important; }
+        #video-screen.navy-mode .header-main-title { color: #38bdf8 !important; text-shadow: 0 0 18px rgba(56, 189, 248, 0.35); }
+        #video-screen.navy-mode .header-divider { background: linear-gradient(90deg, transparent, #38bdf8, transparent); }
+        #video-screen.navy-mode .header-subtitle { color: #bae6fd !important; }
+        #video-screen.navy-mode .q-title { color: #ffffff !important; }
+        #video-screen.navy-mode .opt-item { background: rgba(15, 35, 65, 0.9) !important; border: 1.5px solid rgba(56, 189, 248, 0.35) !important; color: #ffffff !important; }
+        #video-screen.navy-mode .opt-badge { background: linear-gradient(135deg, #38bdf8, #0284c7) !important; color: #ffffff !important; }
+        #video-screen.navy-mode .intro-card-box { border-color: #38bdf8; background: rgba(2, 132, 199, 0.18); color: #e0f2fe; }
+
+        #video-screen.emerald-mode { background: radial-gradient(circle at top, #063729 0%, #02140f 100%) !important; color: #ffffff !important; }
+        #video-screen.emerald-mode .header-main-title { color: #fde047 !important; text-shadow: 0 0 18px rgba(253, 224, 71, 0.3); }
+        #video-screen.emerald-mode .header-divider { background: linear-gradient(90deg, transparent, #10b981, transparent); }
+        #video-screen.emerald-mode .header-subtitle { color: #a7f3d0 !important; }
+        #video-screen.emerald-mode .q-title { color: #ffffff !important; }
+        #video-screen.emerald-mode .opt-item { background: rgba(6, 55, 41, 0.9) !important; border: 1.5px solid rgba(16, 185, 129, 0.4) !important; color: #ffffff !important; }
+        #video-screen.emerald-mode .opt-badge { background: linear-gradient(135deg, #34d399, #059669) !important; color: #000000 !important; }
+        #video-screen.emerald-mode .intro-card-box { border-color: #10b981; background: rgba(16, 185, 129, 0.16); color: #ecfdf5; }
+
         /* WORD HIGHLIGHTING KARAOKE STYLING */
         .q-word {
             display: inline-block;
@@ -206,9 +224,45 @@
             100% { transform: scale(1); opacity: 1; }
         }
         @keyframes correctPop {
-            0% { transform: scale(1); }
-            45% { transform: scale(1.03); }
+            0% { transform: scale(0.96); }
+            40% { transform: scale(1.05); }
+            70% { transform: scale(0.99); }
             100% { transform: scale(1); }
+        }
+        @keyframes telegramBadgePop {
+            0% { transform: scale(0.4) rotate(-25deg); }
+            55% { transform: scale(1.25) rotate(8deg); }
+            80% { transform: scale(0.95) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes telegramSweep {
+            0% { transform: translateX(-120%) skewX(-20deg); opacity: 0.85; }
+            100% { transform: translateX(260%) skewX(-20deg); opacity: 0; }
+        }
+        @keyframes telegramSparkle {
+            0% { transform: translate(0, 0) scale(0.3); opacity: 1; }
+            60% { opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1.15); opacity: 0; }
+        }
+        .tg-confetti-dot {
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 20;
+            animation: telegramSparkle 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .opt-item.reveal-correct::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 45%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+            animation: telegramSweep 0.65s ease-out forwards;
+            pointer-events: none;
         }
 
         /* INTRO SLIDE STYLING */
@@ -282,25 +336,30 @@
         }
         .q-right-image-box img { max-width: 90%; max-height: 100%; object-fit: contain; border-radius: 10px; }
 
-        /* FULL-WIDTH ROUNDED OPTION CARDS WITH GOLD CIRCULAR BADGES & STAGGERED ANIMATION */
+        /* CENTERED COMPACT OPTION CARDS WITH SIDE MARGINS FOR MOBILE */
         .options-list {
             display: flex;
             flex-direction: column;
-            gap: 13px;
+            align-items: center;
+            gap: 12px;
             width: 100%;
+            padding: 0 18px;
         }
         .opt-item {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
             font-weight: 700;
             position: relative;
-            padding: 13px 16px;
+            padding: 11px 14px;
             line-height: 1.3;
             border-radius: 14px;
-            width: 100%;
+            width: 88%;
+            max-width: 390px;
+            margin: 0 auto;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
             opacity: 1;
+            overflow: hidden;
             transition: background 0.35s ease, border-color 0.35s ease, opacity 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
         }
 
@@ -350,11 +409,13 @@
         .opt-item.reveal-correct .opt-badge {
             background: #ffffff !important;
             color: #000000 !important;
+            animation: telegramBadgePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         .opt-item.reveal-correct .opt-check {
             display: inline-block !important;
             color: #ffffff !important;
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            animation: telegramBadgePop 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         .opt-item.dim-option {
             opacity: 0.24 !important;
@@ -372,7 +433,10 @@
             margin-top: 8px;
             text-align: center;
             box-shadow: 0 0 20px rgba(234, 179, 8, 0.45);
-            width: 100%;
+            width: 88%;
+            max-width: 390px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .comment-challenge-box {
             display: none;
@@ -610,6 +674,8 @@
                 </select>
                 <select id="cfg-screen-mode" style="flex: 1; min-width: 150px;" onchange="autoSaveToStorage()">
                     <option value="dark" selected>Viral Pitch Black + Gold Theme (Video Style)</option>
+                    <option value="navy">🌊 Midnight Navy + Neon Cyan Theme (New)</option>
+                    <option value="emerald">🌿 Royal Emerald + Gold Theme (New)</option>
                     <option value="purple">✨ Royal Purple Gold Theme</option>
                     <option value="light">Classic Light Theme (White)</option>
                     <option value="yellow">Bright Yellow Theme</option>
@@ -772,7 +838,9 @@
             </div>
 
             <div class="btn-row">
-                <button class="btn-secondary" onclick="runInstantTextFormatter()">✨ Clean Options & Fix Gaps</button>
+                <button class="btn-secondary" style="background: #0284c7;" onclick="pasteFromClipboardBulk()">📋 1-Click Paste</button>
+                <button class="btn-secondary" style="background: #ef4444;" onclick="clearBulkQuestionBox()">🗑️ Clear Box</button>
+                <button class="btn-secondary" onclick="runInstantTextFormatter()">✨ Clean & Fix Format</button>
             </div>
         </div>
 
@@ -1719,6 +1787,33 @@
         function updateImgSizeDisplay(val) { document.getElementById('img-size-val').innerText = val + "px"; }
         function updateSpeedDisplay(val) { document.getElementById('speed-val').innerText = parseFloat(val).toFixed(2) + "x"; autoSaveToStorage(); }
 
+        async function pasteFromClipboardBulk() {
+            const box = document.getElementById('bulk-data');
+            try {
+                if (navigator.clipboard && navigator.clipboard.readText) {
+                    const clipText = await navigator.clipboard.readText();
+                    if (clipText && clipText.trim()) {
+                        box.value = clipText.trim();
+                        executeDataScannerLive();
+                        autoSaveToStorage();
+                        return;
+                    }
+                }
+            } catch (e) {}
+            box.focus();
+            alert("कृपया बॉक्स में लॉन्ग-प्रेस करके Paste दबाएं (ब्राउज़र ने क्लिपबोर्ड अनुमति ब्लॉक की है)।");
+        }
+
+        function clearBulkQuestionBox() {
+            const box = document.getElementById('bulk-data');
+            if (!box.value.trim()) return;
+            if (confirm("क्या आप बॉक्स के सभी प्रश्न साफ़ (Clear) करना चाहते हैं?")) {
+                box.value = "";
+                executeDataScannerLive();
+                autoSaveToStorage();
+            }
+        }
+
         function runInstantTextFormatter() {
             let txtArea = document.getElementById('bulk-data');
             let rawLines = txtArea.value.split('\n');
@@ -1984,10 +2079,12 @@
 
             const targetTheme = document.getElementById('cfg-screen-mode').value;
             const videoScreen = document.getElementById('video-screen');
-            videoScreen.classList.remove('dark-mode', 'light-mode', 'yellow-mode', 'purple-mode', 'is-playing');
+            videoScreen.classList.remove('dark-mode', 'light-mode', 'yellow-mode', 'purple-mode', 'navy-mode', 'emerald-mode', 'is-playing');
             if (targetTheme === 'light') videoScreen.classList.add('light-mode');
             else if (targetTheme === 'yellow') videoScreen.classList.add('yellow-mode');
             else if (targetTheme === 'purple') videoScreen.classList.add('purple-mode');
+            else if (targetTheme === 'navy') videoScreen.classList.add('navy-mode');
+            else if (targetTheme === 'emerald') videoScreen.classList.add('emerald-mode');
             else videoScreen.classList.add('dark-mode');
 
             const activeFont = document.getElementById('cfg-font-family').value;
@@ -2443,6 +2540,28 @@
             }, false);
         }
 
+        function triggerTelegramConfetti(targetEl) {
+            if (!targetEl) return;
+            const colors = ['#ffffff', '#fef08a', '#38bdf8', '#4ade80', '#f472b6', '#fb923c'];
+            const vectors = [
+                [-26, -24], [0, -30], [26, -24],
+                [-32, 0], [32, 0],
+                [-24, 22], [0, 26], [24, 22],
+                [-14, -28], [16, -26], [-18, 24], [18, 24]
+            ];
+            vectors.forEach(([tx, ty], idx) => {
+                const dot = document.createElement('span');
+                dot.className = 'tg-confetti-dot';
+                dot.style.backgroundColor = colors[idx % colors.length];
+                dot.style.left = (25 + (idx * 5) % 55) + '%';
+                dot.style.top = '50%';
+                dot.style.setProperty('--tx', tx + 'px');
+                dot.style.setProperty('--ty', ty + 'px');
+                targetEl.appendChild(dot);
+                setTimeout(() => dot.remove(), 800);
+            });
+        }
+
         function handleShowAnswer() {
             if (studioPlayState !== "question") return;
             studioPlayState = "answer";
@@ -2497,6 +2616,7 @@
                     if (String(opt) === String(correctVal)) {
                         optEl.classList.add('reveal-correct');
                         optEl.classList.remove('dim-option');
+                        triggerTelegramConfetti(optEl);
                     } else {
                         optEl.classList.add('dim-option');
                         optEl.classList.remove('reveal-correct');
