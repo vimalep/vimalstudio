@@ -213,7 +213,8 @@
 
         /* INTRO SLIDE STYLING */
         .intro-block { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; height: 92%; position: absolute; z-index: 6; }
-        .intro-block.active-q { display: flex; animation: introPopIn 0.45s ease-out forwards; }
+        .intro-block.active-q { display: flex; opacity: 1; }
+        .intro-block.active-q.play-started { animation: introPopIn 0.45s ease-out forwards; }
         .intro-card-box { border: 2px solid #eab308; border-radius: 18px; padding: 26px 20px; max-width: 94%; width: 100%; box-shadow: 0 0 25px rgba(234, 179, 8, 0.2); display: flex; flex-direction: column; align-items: center; gap: 14px; }
         .intro-pill { background: linear-gradient(135deg, #eab308, #ca8a04); color: #000000; padding: 5px 16px; border-radius: 20px; font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
         .intro-main-text { font-size: 24px; font-weight: 800; line-height: 1.45; }
@@ -239,7 +240,7 @@
             z-index: 5;
             opacity: 1;
         }
-        .q-block.active-q .q-title {
+        .q-block.active-q.play-started .q-title {
             animation: questionFadeUp 0.4s ease-out forwards;
         }
 
@@ -299,14 +300,15 @@
             border-radius: 14px;
             width: 100%;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
-            opacity: 0;
+            opacity: 1;
             transition: background 0.35s ease, border-color 0.35s ease, opacity 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
         }
 
-        .q-block.active-q .opt-item:nth-child(1) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards; }
-        .q-block.active-q .opt-item:nth-child(2) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards; }
-        .q-block.active-q .opt-item:nth-child(3) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.50s forwards; }
-        .q-block.active-q .opt-item:nth-child(4) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.66s forwards; }
+        .q-block.active-q.play-started .opt-item { opacity: 0; }
+        .q-block.active-q.play-started .opt-item:nth-child(1) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards; }
+        .q-block.active-q.play-started .opt-item:nth-child(2) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards; }
+        .q-block.active-q.play-started .opt-item:nth-child(3) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.50s forwards; }
+        .q-block.active-q.play-started .opt-item:nth-child(4) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.66s forwards; }
 
         .opt-badge {
             width: 34px;
@@ -391,9 +393,9 @@
         @keyframes studio-loop-float { 0% { transform: translateY(0px); } 50% { transform: translateY(-5px); } 100% { transform: translateY(0px); } }
         @keyframes studio-loop-swing { 0% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(0deg); } }
 
-        .img-pulse { animation: studio-loop-pulse 3s ease-in-out infinite; }
-        .img-float { animation: studio-loop-float 4s ease-in-out infinite; }
-        .img-swing { animation: studio-loop-swing 3.5s ease-in-out infinite; }
+        #video-screen.is-playing .img-pulse { animation: studio-loop-pulse 3s ease-in-out infinite; }
+        #video-screen.is-playing .img-float { animation: studio-loop-float 4s ease-in-out infinite; }
+        #video-screen.is-playing .img-swing { animation: studio-loop-swing 3.5s ease-in-out infinite; }
 
         .explanation-box {
             background: rgba(255,255,255,0.08);
@@ -475,7 +477,6 @@
             align-items: center;
             gap: 6px;
             box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
-            animation: subStateCycle 4.5s infinite ease-in-out;
         }
         .sub-cursor-hand {
             position: absolute;
@@ -483,6 +484,12 @@
             bottom: -10px;
             font-size: 20px;
             pointer-events: none;
+            opacity: 0;
+        }
+        #video-screen.is-playing .sub-pill-btn {
+            animation: subStateCycle 4.5s infinite ease-in-out;
+        }
+        #video-screen.is-playing .sub-cursor-hand {
             animation: cursorTapCycle 4.5s infinite ease-in-out;
         }
         @keyframes subStateCycle {
@@ -1977,7 +1984,7 @@
 
             const targetTheme = document.getElementById('cfg-screen-mode').value;
             const videoScreen = document.getElementById('video-screen');
-            videoScreen.classList.remove('dark-mode', 'light-mode', 'yellow-mode', 'purple-mode');
+            videoScreen.classList.remove('dark-mode', 'light-mode', 'yellow-mode', 'purple-mode', 'is-playing');
             if (targetTheme === 'light') videoScreen.classList.add('light-mode');
             else if (targetTheme === 'yellow') videoScreen.classList.add('yellow-mode');
             else if (targetTheme === 'purple') videoScreen.classList.add('purple-mode');
@@ -2201,6 +2208,28 @@
             }, true);
         }
 
+        function triggerActiveSlideAnimation() {
+            const videoScreen = document.getElementById('video-screen');
+            if (videoScreen) videoScreen.classList.add('is-playing');
+
+            if (studioPlayState === "intro") {
+                let introBlock = document.getElementById('intro-block-view');
+                if (introBlock) {
+                    introBlock.classList.remove('play-started');
+                    void introBlock.offsetWidth;
+                    introBlock.classList.add('play-started');
+                }
+            } else {
+                let activeCard = document.getElementById(`block-${currentQIndex}`);
+                if (activeCard) {
+                    activeCard.classList.remove('play-started');
+                    void activeCard.offsetWidth;
+                    activeCard.classList.add('play-started');
+                }
+            }
+            playChimeSound();
+        }
+
         function handlePlayFullAI() {
             if (typeof speechSynthesis !== 'undefined') {
                 try { speechSynthesis.resume(); } catch(e){}
@@ -2210,6 +2239,7 @@
             isFullAIPaused = false;
             let pauseBtn = document.getElementById('manualPauseBtn');
             if(pauseBtn) pauseBtn.innerHTML = "⏸️ <span>Pause</span>";
+            triggerActiveSlideAnimation();
             runFullAISequence();
         }
 
@@ -2217,6 +2247,7 @@
             let btn = document.getElementById('manualPauseBtn');
             if (!isFullAIPaused) {
                 isFullAIPaused = true;
+                document.getElementById('video-screen')?.classList.remove('is-playing');
                 if (btn) btn.innerHTML = "▶️ <span>Resume</span>";
                 clearInterval(countdownInterval);
                 clearTimeout(voiceFailSafeTimeout);
@@ -2228,6 +2259,7 @@
                 }
             } else {
                 isFullAIPaused = false;
+                document.getElementById('video-screen')?.classList.add('is-playing');
                 if (btn) btn.innerHTML = "⏸️ <span>Pause</span>";
                 let controlMode = document.querySelector('input[name="appControlVoiceMode"]:checked')?.value;
                 if (controlMode === "full_ai" && isFullAIAutoPlaying) {
@@ -2284,10 +2316,16 @@
             document.getElementById('manualTimerBtn').disabled = (isLastViewerChallenge || !isTimerEnabled);
             document.getElementById('manualAnsBtn').disabled = false;
 
-            playChimeSound();
-
             let activeCard = document.getElementById(`block-${currentQIndex}`);
-            if(activeCard) activeCard.classList.add('active-q');
+            if(activeCard) {
+                activeCard.classList.remove('play-started');
+                activeCard.classList.add('active-q');
+                if (isFullAIAutoPlaying && !isFullAIPaused) {
+                    playChimeSound();
+                    void activeCard.offsetWidth;
+                    activeCard.classList.add('play-started');
+                }
+            }
 
             let expBox = document.getElementById(`exp-box-${currentQIndex}`);
             let qnaB = document.getElementById(`qna-box-${currentQIndex}`);
