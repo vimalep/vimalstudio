@@ -251,7 +251,7 @@
             border-radius: 50%;
             pointer-events: none;
             z-index: 20;
-            animation: telegramSparkle 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: telegramSparkle var(--sparkle-dur, 0.85s) cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .opt-item.reveal-correct::after {
             content: "";
@@ -261,7 +261,7 @@
             width: 45%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
-            animation: telegramSweep 0.65s ease-out forwards;
+            animation: telegramSweep calc(var(--ans-anim-dur, 0.45s) * 1.45) ease-out forwards;
             pointer-events: none;
         }
 
@@ -364,10 +364,10 @@
         }
 
         .q-block.active-q.play-started .opt-item { opacity: 0; }
-        .q-block.active-q.play-started .opt-item:nth-child(1) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.18s forwards; }
-        .q-block.active-q.play-started .opt-item:nth-child(2) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards; }
-        .q-block.active-q.play-started .opt-item:nth-child(3) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.50s forwards; }
-        .q-block.active-q.play-started .opt-item:nth-child(4) { animation: optionSlideUp 0.38s cubic-bezier(0.22, 1, 0.36, 1) 0.66s forwards; }
+        .q-block.active-q.play-started .opt-item:nth-child(1) { animation: optionSlideUp var(--opt-anim-dur, 0.38s) cubic-bezier(0.22, 1, 0.36, 1) calc(var(--opt-stagger, 0.16s) * 1) forwards; }
+        .q-block.active-q.play-started .opt-item:nth-child(2) { animation: optionSlideUp var(--opt-anim-dur, 0.38s) cubic-bezier(0.22, 1, 0.36, 1) calc(var(--opt-stagger, 0.16s) * 2) forwards; }
+        .q-block.active-q.play-started .opt-item:nth-child(3) { animation: optionSlideUp var(--opt-anim-dur, 0.38s) cubic-bezier(0.22, 1, 0.36, 1) calc(var(--opt-stagger, 0.16s) * 3) forwards; }
+        .q-block.active-q.play-started .opt-item:nth-child(4) { animation: optionSlideUp var(--opt-anim-dur, 0.38s) cubic-bezier(0.22, 1, 0.36, 1) calc(var(--opt-stagger, 0.16s) * 4) forwards; }
 
         .opt-badge {
             width: 34px;
@@ -404,18 +404,18 @@
             box-shadow: 0 0 22px rgba(234, 179, 8, 0.55) !important;
             color: #000000 !important;
             font-weight: 800 !important;
-            animation: correctPop 0.4s ease forwards !important;
+            animation: correctPop var(--ans-anim-dur, 0.45s) ease forwards !important;
         }
         .opt-item.reveal-correct .opt-badge {
             background: #ffffff !important;
             color: #000000 !important;
-            animation: telegramBadgePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: telegramBadgePop calc(var(--ans-anim-dur, 0.45s) * 1.15) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         .opt-item.reveal-correct .opt-check {
             display: inline-block !important;
             color: #ffffff !important;
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-            animation: telegramBadgePop 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation: telegramBadgePop calc(var(--ans-anim-dur, 0.45s) * 1.25) cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
         .opt-item.dim-option {
             opacity: 0.24 !important;
@@ -474,12 +474,30 @@
             width: 100%;
             text-align: left;
         }
-        .timer-wrapper { display: none; margin-top: 14px; width: 100%; text-align: center; }
+        .timer-wrapper { display: none; margin-top: 16px; width: 100%; text-align: center; }
         .timer-number { font-size: 20px; font-weight: 800; color: #facc15; margin-bottom: 4px; display: block; }
-        .timer-bar-container { width: 100%; height: 6px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; }
+        .timer-bar-container { width: 88%; max-width: 390px; margin: 0 auto; height: 7px; background: rgba(255,255,255,0.15); border-radius: 6px; overflow: hidden; }
         .timer-bar-fill { height: 100%; width: 100%; background: #eab308; transform-origin: left; transform: scaleX(1); }
         @keyframes fastBlink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         .timer-danger { background-color: #ef4444 !important; animation: fastBlink 0.2s infinite; }
+        .timer-text-danger { color: #ef4444 !important; animation: fastBlink 0.25s infinite; }
+
+        /* NEW TIMER DESIGN 2: CIRCULAR RING PROGRESS */
+        .timer-circle-box { position: relative; width: 74px; height: 74px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        .timer-circle-svg { width: 74px; height: 74px; transform: rotate(-90deg); }
+        .timer-circle-bg { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.18); stroke-width: 6; }
+        .timer-circle-fg { fill: none; stroke: #facc15; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 188.5; stroke-dashoffset: 0; transition: stroke 0.2s ease; }
+        .timer-circle-num { position: absolute; font-size: 24px; font-weight: 900; color: #facc15; }
+
+        /* NEW TIMER DESIGN 3: NEON PULSE ORB */
+        @keyframes orbRipple { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.65); } 70% { transform: scale(1.06); box-shadow: 0 0 0 14px rgba(250, 204, 21, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(250, 204, 21, 0); } }
+        .timer-pulse-orb { width: 66px; height: 66px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle, rgba(250,204,21,0.28) 0%, rgba(234,179,8,0.08) 100%); border: 3px solid #facc15; display: flex; align-items: center; justify-content: center; font-size: 25px; font-weight: 900; color: #facc15; animation: orbRipple 1s infinite ease-out; }
+        .timer-pulse-orb.danger-orb { border-color: #ef4444; color: #ef4444; background: radial-gradient(circle, rgba(239,68,68,0.3) 0%, rgba(239,68,68,0.08) 100%); }
+
+        /* NEW TIMER DESIGN 4: DIGITAL STOPWATCH PILL */
+        .timer-digital-pill { display: inline-flex; align-items: center; gap: 10px; background: #141414; border: 2px solid #facc15; padding: 8px 20px; border-radius: 30px; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.28); }
+        .timer-digital-icon { font-size: 18px; }
+        .timer-digital-val { font-size: 20px; font-weight: 900; color: #facc15; letter-spacing: 1px; font-variant-numeric: tabular-nums; }
 
         .end-block { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: inherit; padding: 30px 20px; background: rgba(20, 20, 20, 0.9); border: 2px solid #eab308; border-radius: 16px; width: 100%; position: absolute; }
         .end-block.active-q { display: flex; z-index: 5; }
@@ -771,10 +789,17 @@
                 </label>
                 <div id="timer-seconds-box" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                     <span style="font-size: 12px; color: #94a3b8; font-weight: bold;">Seconds:</span>
-                    <input type="number" id="cfg-timer-seconds" value="5" min="1" max="30" oninput="autoSaveToStorage()" style="width: 65px; padding: 5px;">
+                    <input type="number" id="cfg-timer-seconds" value="5" min="1" max="30" oninput="autoSaveToStorage()" style="width: 60px; padding: 5px;">
+                    <span style="font-size: 12px; color: #94a3b8; font-weight: bold;">Timer Style:</span>
+                    <select id="cfg-timer-style" onchange="autoSaveToStorage()" style="width: auto; min-width: 155px; padding: 5px 8px; font-size: 12px;">
+                        <option value="circle" selected>⭕ Circular Ring Timer (New)</option>
+                        <option value="bar">▬ Straight Progress Bar</option>
+                        <option value="pulse">🔮 Neon Pulse Orb (New)</option>
+                        <option value="digital">⏱️ Digital Stopwatch Pill (New)</option>
+                    </select>
                     <label class="checkbox-container" style="font-size: 12px; background: #1e293b; padding: 4px 10px; border-radius: 6px; border: 1px solid #334155;">
                         <input type="checkbox" id="cfg-timer-visual" checked onchange="autoSaveToStorage()">
-                        <span>📊 Show Timer Bar on Screen</span>
+                        <span>👁️ Show Timer on Screen</span>
                     </label>
                 </div>
             </div>
@@ -886,6 +911,26 @@
                         <span style="color: #facc15;">🎥 Hide Bottom Bar on Play (Clean Recording)</span>
                     </label>
                 </div>
+
+                <!-- ANIMATION SPEED CONTROLS (OPTIONS OPENING & CORRECT ANSWER) -->
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px dashed #334155;">
+                    <div style="flex: 1; min-width: 180px;">
+                        <span style="font-size: 12px; font-weight: bold; color: #38bdf8; display: block; margin-bottom: 4px;">🎞️ Options Opening Speed (ऑप्शन खुलने की गति):</span>
+                        <select id="cfg-opt-anim-speed" onchange="autoSaveToStorage()" style="padding: 7px; font-size: 13px;">
+                            <option value="normal" selected>Normal / Fast (0.38s - Default)</option>
+                            <option value="slow">Slow & Smooth (0.75s - धीमा)</option>
+                            <option value="very_slow">Extra Slow (1.20s - बहुत धीमा)</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 180px;">
+                        <span style="font-size: 12px; font-weight: bold; color: #facc15; display: block; margin-bottom: 4px;">✨ Correct Answer Animation Speed (सही उत्तर एनीमेशन):</span>
+                        <select id="cfg-ans-anim-speed" onchange="autoSaveToStorage()" style="padding: 7px; font-size: 13px;">
+                            <option value="normal" selected>Normal / Punchy (0.45s - Default)</option>
+                            <option value="slow">Slow & Dramatic (0.95s - धीमा)</option>
+                            <option value="very_slow">Extra Slow (1.50s - बहुत धीमा)</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -973,6 +1018,7 @@
         let isTimerEnabled = true;
         let isTimerVisualEnabled = true;
         let customTimerSeconds = 5;
+        let customTimerStyle = "circle";
         let isLastQCommentEnabled = false;
         let lastQCommentText = "";
 
@@ -1240,6 +1286,9 @@
                     enableTimer: document.getElementById('cfg-enable-timer')?.checked ?? true,
                     timerVisual: document.getElementById('cfg-timer-visual')?.checked ?? true,
                     timerSeconds: document.getElementById('cfg-timer-seconds')?.value || "5",
+                    timerStyle: document.getElementById('cfg-timer-style')?.value || "circle",
+                    optAnimSpeed: document.getElementById('cfg-opt-anim-speed')?.value || "normal",
+                    ansAnimSpeed: document.getElementById('cfg-ans-anim-speed')?.value || "normal",
                     lastQComment: document.getElementById('cfg-last-q-comment')?.checked || false,
                     lastQText: document.getElementById('cfg-last-q-text')?.value || "",
                     fontSize: document.getElementById('cfg-size')?.value || "25",
@@ -1278,6 +1327,9 @@
                 if (data.enableTimer !== undefined) document.getElementById('cfg-enable-timer').checked = data.enableTimer;
                 if (data.timerVisual !== undefined) document.getElementById('cfg-timer-visual').checked = data.timerVisual;
                 if (data.timerSeconds !== undefined) document.getElementById('cfg-timer-seconds').value = data.timerSeconds;
+                if (data.timerStyle !== undefined) document.getElementById('cfg-timer-style').value = data.timerStyle;
+                if (data.optAnimSpeed !== undefined) document.getElementById('cfg-opt-anim-speed').value = data.optAnimSpeed;
+                if (data.ansAnimSpeed !== undefined) document.getElementById('cfg-ans-anim-speed').value = data.ansAnimSpeed;
                 if (data.lastQComment !== undefined) document.getElementById('cfg-last-q-comment').checked = data.lastQComment;
                 if (data.lastQText !== undefined) document.getElementById('cfg-last-q-text').value = data.lastQText;
 
@@ -2056,6 +2108,34 @@
             isTimerEnabled = document.getElementById('cfg-enable-timer').checked;
             isTimerVisualEnabled = document.getElementById('cfg-timer-visual').checked;
             customTimerSeconds = Math.max(1, Math.min(30, parseInt(document.getElementById('cfg-timer-seconds').value) || 5));
+            customTimerStyle = document.getElementById('cfg-timer-style')?.value || "circle";
+
+            // Apply Option Opening & Correct Answer Animation Speeds
+            const optSpeedMode = document.getElementById('cfg-opt-anim-speed')?.value || "normal";
+            const ansSpeedMode = document.getElementById('cfg-ans-anim-speed')?.value || "normal";
+            const vScreenRoot = document.getElementById('video-screen');
+
+            if (optSpeedMode === "very_slow") {
+                vScreenRoot.style.setProperty('--opt-anim-dur', '1.20s');
+                vScreenRoot.style.setProperty('--opt-stagger', '0.50s');
+            } else if (optSpeedMode === "slow") {
+                vScreenRoot.style.setProperty('--opt-anim-dur', '0.75s');
+                vScreenRoot.style.setProperty('--opt-stagger', '0.32s');
+            } else {
+                vScreenRoot.style.setProperty('--opt-anim-dur', '0.38s');
+                vScreenRoot.style.setProperty('--opt-stagger', '0.16s');
+            }
+
+            if (ansSpeedMode === "very_slow") {
+                vScreenRoot.style.setProperty('--ans-anim-dur', '1.50s');
+                vScreenRoot.style.setProperty('--sparkle-dur', '1.60s');
+            } else if (ansSpeedMode === "slow") {
+                vScreenRoot.style.setProperty('--ans-anim-dur', '0.95s');
+                vScreenRoot.style.setProperty('--sparkle-dur', '1.15s');
+            } else {
+                vScreenRoot.style.setProperty('--ans-anim-dur', '0.45s');
+                vScreenRoot.style.setProperty('--sparkle-dur', '0.80s');
+            }
             isLastQCommentEnabled = document.getElementById('cfg-last-q-comment').checked;
             lastQCommentText = document.getElementById('cfg-last-q-text').value.trim() || "इस प्रश्न का सही उत्तर आप सभी कमेंट बॉक्स में ज़रूर लिखें!";
 
@@ -2178,10 +2258,29 @@
                         </div>
 
                         <div class="timer-wrapper" id="timer-wrapper-${i}">
-                            <span class="timer-number" id="timer-text-${i}">${customTimerSeconds}</span>
-                            <div class="timer-bar-container">
-                                <div class="timer-bar-fill" id="bar-${i}"></div>
-                            </div>
+                            ${customTimerStyle === 'circle' ? `
+                                <div class="timer-circle-box">
+                                    <svg class="timer-circle-svg" viewBox="0 0 70 70">
+                                        <circle class="timer-circle-bg" cx="35" cy="35" r="30"></circle>
+                                        <circle class="timer-circle-fg" id="circle-fg-${i}" cx="35" cy="35" r="30"></circle>
+                                    </svg>
+                                    <span class="timer-circle-num" id="timer-text-${i}">${customTimerSeconds}</span>
+                                </div>
+                            ` : customTimerStyle === 'pulse' ? `
+                                <div class="timer-pulse-orb" id="pulse-orb-${i}">
+                                    <span id="timer-text-${i}">${customTimerSeconds}</span>
+                                </div>
+                            ` : customTimerStyle === 'digital' ? `
+                                <div class="timer-digital-pill" id="digital-pill-${i}">
+                                    <span class="timer-digital-icon">⏳</span>
+                                    <span class="timer-digital-val" id="timer-text-${i}">00:0${customTimerSeconds}</span>
+                                </div>
+                            ` : `
+                                <span class="timer-number" id="timer-text-${i}">${customTimerSeconds}</span>
+                                <div class="timer-bar-container">
+                                    <div class="timer-bar-fill" id="bar-${i}"></div>
+                                </div>
+                            `}
                         </div>
                     </div>
                 `;
@@ -2473,14 +2572,36 @@
             
             let timerWrap = document.getElementById(`timer-wrapper-${currentQIndex}`);
             let fillBar = document.getElementById(`bar-${currentQIndex}`);
+            let circleFg = document.getElementById(`circle-fg-${currentQIndex}`);
+            let pulseOrb = document.getElementById(`pulse-orb-${currentQIndex}`);
+            let digitalPill = document.getElementById(`digital-pill-${currentQIndex}`);
             let timerText = document.getElementById(`timer-text-${currentQIndex}`);
-            if (!timerWrap || !fillBar) return;
+            if (!timerWrap) return;
 
+            const CIRCUMFERENCE = 188.5;
             timerWrap.style.display = isTimerVisualEnabled ? "block" : "none";
-            fillBar.style.transform = `scaleX(1)`;
-            fillBar.className = "timer-bar-fill";
-            fillBar.style.backgroundColor = "#eab308";
-            if(timerText) timerText.innerText = String(customTimerSeconds);
+
+            if (fillBar) {
+                fillBar.style.transform = `scaleX(1)`;
+                fillBar.className = "timer-bar-fill";
+                fillBar.style.backgroundColor = "#eab308";
+            }
+            if (circleFg) {
+                circleFg.style.strokeDashoffset = "0";
+                circleFg.style.stroke = "#facc15";
+            }
+            if (pulseOrb) {
+                pulseOrb.classList.remove("danger-orb");
+            }
+            if (digitalPill) {
+                digitalPill.style.borderColor = "#facc15";
+            }
+            if (timerText) {
+                timerText.classList.remove("timer-text-danger");
+                timerText.innerText = customTimerStyle === 'digital'
+                    ? `00:${String(customTimerSeconds).padStart(2, '0')}`
+                    : String(customTimerSeconds);
+            }
 
             document.getElementById('manualTimerBtn').disabled = true;
 
@@ -2495,12 +2616,15 @@
                 if(isFullAIPaused) return;
 
                 remainingSteps--;
-                let scale = remainingSteps / totalSteps;
-                fillBar.style.transform = `scaleX(${scale})`;
+                let scale = Math.max(0, remainingSteps / totalSteps);
+                if (fillBar) fillBar.style.transform = `scaleX(${scale})`;
+                if (circleFg) circleFg.style.strokeDashoffset = String(CIRCUMFERENCE * (1 - scale));
 
                 let currentSec = Math.ceil(remainingSteps / 100);
                 if (timerText && currentSec >= 1) {
-                    timerText.innerText = currentSec;
+                    timerText.innerText = customTimerStyle === 'digital'
+                        ? `00:${String(currentSec).padStart(2, '0')}`
+                        : String(currentSec);
                     if (currentSec !== lastSec) {
                         lastSec = currentSec;
                         playBeepSound(600 + (customTimerSeconds - currentSec) * 80, 0.08); 
@@ -2508,9 +2632,14 @@
                 }
 
                 if (scale <= 0.5 && scale > 0.2) {
-                    fillBar.style.backgroundColor = "#f59e0b";
+                    if (fillBar) fillBar.style.backgroundColor = "#f59e0b";
+                    if (circleFg) circleFg.style.stroke = "#f59e0b";
                 } else if (scale <= 0.2) {
-                    fillBar.classList.add("timer-danger");
+                    if (fillBar) fillBar.classList.add("timer-danger");
+                    if (circleFg) circleFg.style.stroke = "#ef4444";
+                    if (pulseOrb) pulseOrb.classList.add("danger-orb");
+                    if (digitalPill) digitalPill.style.borderColor = "#ef4444";
+                    if (timerText) timerText.classList.add("timer-text-danger");
                 }
 
                 if (remainingSteps <= 0) {
@@ -2558,7 +2687,7 @@
                 dot.style.setProperty('--tx', tx + 'px');
                 dot.style.setProperty('--ty', ty + 'px');
                 targetEl.appendChild(dot);
-                setTimeout(() => dot.remove(), 800);
+                setTimeout(() => dot.remove(), 1700);
             });
         }
 
