@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viral Quiz Studio Pro</title>
+<title>Viral Quiz Studio Pro - AI BG Remover</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -22,6 +22,8 @@ textarea{resize:vertical;min-height:135px;font-family:monospace;font-size:11.5px
 .btn-b{background:linear-gradient(135deg,#0284c7,#0369a1)}
 .btn-g{background:#10b981}.btn-s{background:#334155;border:1px solid #475569;font-size:11.5px;padding:8px}
 .btn-shuf{background:linear-gradient(135deg,#ec4899,#f59e0b);color:#fff;border:none;padding:7px 10px;border-radius:7px;font-size:12px;font-weight:800;cursor:pointer;height:36px;white-space:nowrap}
+.btn-ai{background:linear-gradient(135deg,#f59e0b,#ec4899);color:#fff;border:none;padding:9px;border-radius:8px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 12px rgba(236,72,153,.35)}
+.btn-ai:disabled{opacity:.6;cursor:wait}
 .tog{background:#0f172a;border:1.5px solid #10b981;border-radius:8px;padding:8px 11px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
 .tog span{font-size:12.5px;font-weight:800;color:#34d399}
 .chk{width:19px;height:19px;cursor:pointer;accent-color:#10b981}
@@ -35,6 +37,7 @@ canvas{width:100%;height:auto;display:block}
 .sub{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .sub-t{font-size:11px;font-weight:800;color:#7dd3fc;display:flex;justify-content:space-between;align-items:center}
 .m-rst{background:#334155;color:#e2e8f0;border:none;padding:2px 7px;border-radius:4px;font-size:10px;cursor:pointer}
+.ai-st{font-size:11px;color:#fde047;font-weight:700;text-align:center;display:none}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;padding:14px;justify-content:center;align-items:center}
 .mbox{background:#1e293b;border:1px solid #475569;border-radius:12px;width:100%;max-width:490px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
 .mhdr{padding:11px;background:#0f172a;border-bottom:1px solid #334155;display:flex;justify-content:space-between;font-weight:800;color:#38bdf8}
@@ -143,9 +146,9 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 <!-- CANVAS PREVIEW -->
 <div class="c-card"><canvas id="qCanvas" width="1080" height="1350"></canvas></div>
 
-<!-- SUBJECT CUTOUT PHOTO PANEL (BELOW PREVIEW) -->
+<!-- SUBJECT CUTOUT PHOTO PANEL (WITH FREE UNLIMITED AI BG REMOVER) -->
 <div class="img-box">
-<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Cutout Photo (Crop + Auto-BG Remove):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
+<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Cutout Photo (AI + Fast BG Remove):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
 <div class="img-btns">
 <button class="ibtn" onclick="document.getElementById('img-in').click()">📁 Upload</button>
 <button class="ibtn" onclick="pasteSubImg()">📋 Paste Img</button>
@@ -156,12 +159,15 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 
 <div id="img-opts" style="display:none;flex-direction:column;gap:8px">
 <div class="sub">
-<div class="tog" style="border-color:#facc15;padding:5px 8px" onclick="const c=document.getElementById('chk-bg');c.checked=!c.checked;processImg()">
-<span style="color:#fde047;font-size:12px">🪄 Smart Auto-Remove BG (बैकग्राउंड हटाएं)</span>
-<input type="checkbox" id="chk-bg" checked style="width:17px;height:17px;accent-color:#facc15" onclick="event.stopPropagation();processImg()">
+<button class="btn-ai" id="btn-ai-bg" onclick="runAiBgRemove()">✨ AI Deep Remove BG (remove.bg Style • Free)</button>
+<div class="ai-st" id="ai-status">⏳ AI मॉडल लोड हो रहा है, कृपया प्रतीक्षा करें...</div>
+
+<div class="tog" style="border-color:#38bdf8;padding:5px 8px;margin-top:2px" onclick="const c=document.getElementById('chk-bg');c.checked=!c.checked;processImg()">
+<span style="color:#7dd3fc;font-size:12px">⚡ Fast Color BG Remove (सिंगल कलर के लिए)</span>
+<input type="checkbox" id="chk-bg" checked style="width:17px;height:17px;accent-color:#38bdf8" onclick="event.stopPropagation();processImg()">
 </div>
 <div class="row">
-<div><label>BG Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
+<div><label>Color Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
 <div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Cutout</option><option value="center">⬇️ Center Banner</option></select></div>
 </div>
 </div>
@@ -222,10 +228,15 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 </div>
 </div>
 
+<script type="module">
+import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm';
+window.aiRemoveBackgroundFn = removeBackground;
+</script>
+
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_V17",H_KEY="QUIZ_PRO_HIST_V17";
-let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
+const P_KEY="QUIZ_PRO_PREFS_V18",H_KEY="QUIZ_PRO_HIST_V18";
+let ansMode=false,rawSub=null,aiCutoutSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
  id:"def_386",title:"🌍 WORLD GK QUIZ 🧠",qPrefix:"386.",
  questionText:"विश्व की सबसे लंबी पर्वत श्रृंखला कौन-सी है?",questionEn:"",
@@ -274,15 +285,61 @@ function resetCrop(){
  ['ct','cb','cl','cr','ox','oy'].forEach(id=>{document.getElementById(id).value=0;document.getElementById(id+'-l').innerText="0";});
  document.getElementById('sc').value=115;document.getElementById('sc-l').innerText="115";processImg();
 }
+
+/* AI DEEP BACKGROUND REMOVER (IN-BROWSER REMOVE.BG ENGINE) */
+async function runAiBgRemove(){
+ if(!rawSub)return;
+ if(!window.aiRemoveBackgroundFn){
+  alert("AI इंजन अभी लोड हो रहा है, कृपया 3 सेकंड बाद पुनः दबाएं या इंटरनेट कनेक्शन जांचें।");
+  return;
+ }
+ const btn=document.getElementById('btn-ai-bg'),st=document.getElementById('ai-status');
+ btn.disabled=true;btn.innerText="⏳ AI प्रोसेसिंग चल रही है...";
+ st.style.display="block";st.innerText="⏳ पहली बार AI मॉडल (~30MB) डाउनलोड होने में 5-10 सेकंड लग सकते हैं...";
+
+ try{
+  const blob=await window.aiRemoveBackgroundFn(rawSub.src,{
+   progress:(key,current,total)=>{
+    if(total>0){
+     let pct=Math.round((current/total)*100);
+     st.innerText=`⏳ AI मॉडल डाउनलोड/प्रोसेसिंग: ${pct}%`;
+    }
+   }
+  });
+  const url=URL.createObjectURL(blob);
+  const aiImg=new Image();
+  aiImg.onload=()=>{
+   aiCutoutSub=aiImg;
+   document.getElementById('chk-bg').checked=true;
+   st.innerText="✅ AI द्वारा बैकग्राउंड पूरी तरह साफ़ कर दिया गया!";
+   st.style.color="#34d399";
+   btn.disabled=false;btn.innerText="✨ AI Deep Remove BG (Done ✔)";
+   processImg();
+  };
+  aiImg.src=url;
+ }catch(err){
+  console.error(err);
+  st.innerText="❌ AI प्रोसेसिंग विफल रही (नीचे दिया गया Fast Color Remove उपयोग करें)";
+  st.style.color="#fca5a5";
+  btn.disabled=false;btn.innerText="✨ AI Deep Remove BG (Retry)";
+ }
+}
+
 function processImg(){
  if(!rawSub)return;
  let rm=document.getElementById('chk-bg').checked;
+ let baseImg=(rm && aiCutoutSub) ? aiCutoutSub : rawSub;
+
  let ct=document.getElementById('ct').value/100,cb=document.getElementById('cb').value/100,cl=document.getElementById('cl').value/100,cr=document.getElementById('cr').value/100;
- let sx=Math.floor(rawSub.width*cl),sy=Math.floor(rawSub.height*ct),sw=Math.max(20,Math.floor(rawSub.width*(1-cl-cr))),sh=Math.max(20,Math.floor(rawSub.height*(1-ct-cb)));
+ let sx=Math.floor(baseImg.width*cl),sy=Math.floor(baseImg.height*ct),sw=Math.max(20,Math.floor(baseImg.width*(1-cl-cr))),sh=Math.max(20,Math.floor(baseImg.height*(1-ct-cb)));
  let ow=sw,oh=sh;if(ow>850||oh>850){let rt=Math.min(850/ow,850/oh);ow=Math.round(ow*rt);oh=Math.round(oh*rt);}
  let off=document.createElement('canvas');off.width=ow;off.height=oh;let oCtx=off.getContext('2d');
- oCtx.drawImage(rawSub,sx,sy,sw,sh,0,0,ow,oh);
- if(!rm){let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL();return;}
+ oCtx.drawImage(baseImg,sx,sy,sw,sh,0,0,ow,oh);
+
+ if(!rm || aiCutoutSub){
+  let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL();return;
+ }
+
  let tol=parseInt(document.getElementById('cfg-tol').value)||38,tSq=tol*tol*3,sSq=(tol+16)*(tol+16)*3;
  let id=oCtx.getImageData(0,0,ow,oh),d=id.data,vis=new Uint8Array(ow*oh),q=new Int32Array(ow*oh),hd=0,tl=0;
  let cns=[0,(ow-1)*4,((oh-1)*ow)*4,((oh-1)*ow+ow-1)*4].map(i=>[d[i],d[i+1],d[i+2]]);
@@ -302,13 +359,20 @@ function processImg(){
 }
 function setSub(url){
  if(!url)return clearSubImg();
- let i=new Image();i.onload=()=>{rawSub=i;document.getElementById('img-st').innerText="✅ Ready";document.getElementById('img-st').style.color="#34d399";document.getElementById('rm-img').style.display="inline-block";document.getElementById('img-opts').style.display="flex";resetCrop();};i.src=url;
+ let i=new Image();i.onload=()=>{
+  rawSub=i;aiCutoutSub=null;
+  document.getElementById('img-st').innerText="✅ Ready";document.getElementById('img-st').style.color="#34d399";
+  document.getElementById('rm-img').style.display="inline-block";document.getElementById('img-opts').style.display="flex";
+  document.getElementById('ai-status').style.display="none";document.getElementById('ai-status').style.color="#fde047";
+  document.getElementById('btn-ai-bg').innerText="✨ AI Deep Remove BG (remove.bg Style • Free)";
+  resetCrop();
+ };i.src=url;
 }
 function loadSubFile(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>setSub(ev.target.result);r.readAsDataURL(f);e.target.value="";}
 async function pasteSubImg(){
  try{for(let it of await navigator.clipboard.read()){let tp=it.types.find(t=>t.startsWith('image/'));if(tp){let r=new FileReader();r.onload=e=>setSub(e.target.result);r.readAsDataURL(await it.getType(tp));return;}}alert("क्लिपबोर्ड में कोई इमेज नहीं मिली!");}catch(e){alert("Upload का उपयोग करें।");}
 }
-function clearSubImg(){rawSub=null;procSub=null;document.getElementById('img-st').innerText="No Image";document.getElementById('img-st').style.color="#94a3b8";document.getElementById('rm-img').style.display="none";document.getElementById('img-opts').style.display="none";draw();}
+function clearSubImg(){rawSub=null;aiCutoutSub=null;procSub=null;document.getElementById('img-st').innerText="No Image";document.getElementById('img-st').style.color="#94a3b8";document.getElementById('rm-img').style.display="none";document.getElementById('img-opts').style.display="none";draw();}
 
 async function pasteAndRun(){
  try{let t=await navigator.clipboard.readText();if(t&&t.trim()){document.getElementById('raw-box').value=t;parseRawText();}else alert("क्लिपबोर्ड खाली है!");}catch(e){alert("कृपया बॉक्स में पेस्ट करके Generate दबाएं।");}
