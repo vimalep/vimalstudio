@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EP Image Studio - Ultimate Hub</title>
+    <title>EP Image Studio - Next-Gen Hub</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,10 +93,29 @@
             outline: none;
         }
         textarea { 
-            min-height: 140px; 
+            min-height: 150px; 
             line-height: 1.45; 
             font-family: inherit;
             resize: vertical; 
+        }
+
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #1e293b;
+            padding: 8px 10px;
+            border-radius: 7px;
+            border: 1px solid #475569;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            color: #facc15;
+        }
+        .checkbox-wrap input {
+            width: 16px;
+            height: 16px;
+            accent-color: #ec4899;
         }
 
         .slider-wrap {
@@ -112,6 +131,7 @@
             gap: 8px;
             align-items: center;
             margin-top: 4px;
+            flex-wrap: wrap;
         }
         .img-badge {
             background: #1e293b;
@@ -143,7 +163,7 @@
         }
         .btn-grid-3 {
             display: grid;
-            grid-template-columns: 1.2fr 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 8px;
         }
         .btn-grid-2 {
@@ -167,6 +187,7 @@
             transition: 0.2s;
         }
         .btn-action:hover { opacity: 0.92; }
+        .btn-action:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-green { background: #10b981; }
         .btn-purple { background: linear-gradient(135deg, #8b5cf6, #6366f1); }
         .btn-amber { background: #d97706; }
@@ -180,6 +201,7 @@
             text-align: center;
             border: 2px solid #38bdf8;
             overflow: hidden;
+            position: relative;
         }
         canvas { 
             display: block; 
@@ -187,6 +209,23 @@
             max-width: 100%; 
             height: auto; 
             border-radius: 6px; 
+        }
+
+        .slide-nav {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .slide-nav button {
+            background: #1e293b;
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         .caption-card {
@@ -208,6 +247,17 @@
             color: #e2e8f0;
             white-space: pre-wrap;
             user-select: text;
+        }
+
+        .status-toast {
+            display: none;
+            background: #ec4899;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
         }
 
         /* MODAL DIALOGS */
@@ -267,7 +317,7 @@
 <body>
 
 <div class="app-container">
-    <div class="header">⚡ EP Image Studio - Daily & Weekly/Monthly Mega Hub</div>
+    <div class="header">⚡ EP Image Studio - Next-Gen FB Growth Hub</div>
 
     <!-- 1. MEGA HUB: ARCHIVE, BULK EXPORT & BACKUP -->
     <div class="group-box" style="border: 1.5px solid #ec4899; background: #180d24;">
@@ -301,10 +351,17 @@
         </div>
     </div>
 
-    <!-- 2. STYLE, FONT & WATERMARK (3%) -->
+    <!-- 2. STYLE, MODE & GROWTH HOOKS -->
     <div class="group-box">
-        <label style="color: #38bdf8;">🎨 स्टाइल, हिंदी फ़ॉन्ट व वॉटरमार्क सेटिंग्स:</label>
+        <label style="color: #38bdf8;">🚀 पोस्ट मोड, थीम और ग्रोथ सेटिंग्स:</label>
         <div class="row">
+            <div>
+                <label>📲 पोस्ट फ़ॉर्मेट (Single vs Carousel):</label>
+                <select id="postModeSelect" onchange="onModeChange()">
+                    <option value="single10" selected>🖼️ 1-Image Mode (सभी 10 प्रश्न एक साथ)</option>
+                    <option value="carousel5">🎠 5-Slide Carousel Mode (हर स्लाइड में 2 बड़े प्रश्न)</option>
+                </select>
+            </div>
             <div>
                 <label>विज़ुअल थीम:</label>
                 <select id="gridThemeSelect" onchange="applySelectedTheme()">
@@ -325,15 +382,11 @@
                 </select>
             </div>
             <div>
-                <label>📐 QA लेआउट:</label>
+                <label>📐 QA लेआउट (1-Image Mode):</label>
                 <select id="gridLineLayout" onchange="savePrefsAndRefresh()">
                     <option value="doubleLine" selected>⬇️ 2-Line Pill Mode (संतुलित स्पेस)</option>
                     <option value="singleLine">➡️ Single Line Mode (आमने-सामने QA)</option>
                 </select>
-            </div>
-            <div class="slider-wrap">
-                <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">3%</span></label>
-                <input type="range" id="watermarkOpacity" min="0.01" max="0.10" step="0.01" value="0.03" oninput="document.getElementById('wmVal').innerText=Math.round(this.value*100)+'%'; savePrefsAndRefresh();">
             </div>
         </div>
 
@@ -346,6 +399,17 @@
                 <label>📏 Answer Size: <span id="aSizeVal">21px</span></label>
                 <input type="range" id="aSizeInput" min="16" max="28" value="21" oninput="document.getElementById('aSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
             </div>
+            <div class="slider-wrap">
+                <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">3%</span></label>
+                <input type="range" id="watermarkOpacity" min="0.01" max="0.10" step="0.01" value="0.03" oninput="document.getElementById('wmVal').innerText=Math.round(this.value*100)+'%'; savePrefsAndRefresh();">
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 4px;">
+            <label class="checkbox-wrap" style="flex:1;">
+                <input type="checkbox" id="hideLastAnsCheck" onchange="savePrefsAndRefresh()">
+                <span>🔥 Comment Hook: Q10 का उत्तर छिपाएं ("उत्तर: ???") ताकि लोग कमेंट करें</span>
+            </label>
         </div>
     </div>
 
@@ -395,26 +459,26 @@
 
     <!-- 5. DATA SHEET & ACTION BUTTONS -->
     <div class="group-box">
-        <label style="color: #34d399;">📝 10 प्रश्न-उत्तर इनपुट बॉक्स (Line 1: Q, Line 2: Ans):</label>
-        <textarea id="qaInput" oninput="savePrefsAndRefresh()">विश्व सेप्सिस दिवस मनाया जाता है .?
+        <label style="color: #34d399;">📝 10 प्रश्न-उत्तर इनपुट बॉक्स (Line 1: Q, Line 2: Ans | टैग के लिए [UPPSC] या [SSC] लिखें):</label>
+        <textarea id="qaInput" oninput="savePrefsAndRefresh()">[UPPSC] विश्व सेप्सिस दिवस कब मनाया जाता है?
 13 सितंबर
-अंतरिक्ष शिखर सम्मेलन' कहाँ हुआ है ?
+अंतरिक्ष शिखर सम्मेलन कहाँ आयोजित हुआ है?
 पेरिस
-DRDO ने माइक्रोवेव रक्षा परीक्षण के लिए कौन-सा कार्यक्रम शुरू किया है .?
+[SSC] DRDO ने माइक्रोवेव रक्षा परीक्षण के लिए कौन-सा कार्यक्रम शुरू किया है?
 SHIELD
-कारगिल की पहली महिला सैन्य अधिकारी बनी हैं ?
+कारगिल की पहली महिला सैन्य अधिकारी कौन बनी हैं?
 स्टैनजिंग त्यांगयांग
-ग्लोबल ड्राईलैंड कांग्रेस 2026 का उद्घाटन कहाँ किया गया है .?
+ग्लोबल ड्राईलैंड कांग्रेस 2026 का उद्घाटन कहाँ किया गया है?
 नई दिल्ली
-किसकी आत्मकथा 'अपराजिता' का विमोचन किया गया है ?
+किसकी आत्मकथा 'अपराजिता' का विमोचन किया गया है?
 अरुंधति भट्टाचार्य
-भारतीय नौसेना ने किस देश के साथ 'समुद्र लक्ष्मण' अभ्यास शुरू किया है .?
+[DEFENCE] भारतीय नौसेना ने किस देश के साथ 'समुद्र लक्ष्मण' अभ्यास शुरू किया है?
 मलेशिया
-दुनिया का "पहला कृत्रिम ऊर्जा द्वीप" कहाँ स्थित है .?
+दुनिया का पहला कृत्रिम ऊर्जा द्वीप कहाँ स्थित है?
 बेल्जियम
-ISRO ने हाल ही में किस देश की अंतरिक्ष एजेंसी CNES के साथ 'TRISHNA' मिशन के लिए समझौता किया है .?
+[ISRO] ISRO ने किस देश की एजेंसी CNES के साथ 'TRISHNA' मिशन के लिए समझौता किया है?
 फ्रांस
-भारत-रूस अं. औद्योगिक व्यापार मेला आयोजित किया गया है ?
+भारत-रूस अंतर्राष्ट्रीय औद्योगिक व्यापार मेला कहाँ आयोजित किया गया है?
 नई दिल्ली</textarea>
         
         <div class="btn-grid-3">
@@ -430,26 +494,36 @@ ISRO ने हाल ही में किस देश की अंतर�
         </div>
     </div>
 
+    <div id="statusToast" class="status-toast"></div>
+
     <!-- 6. LIVE PREVIEW CANVAS -->
     <div class="preview-box">
         <canvas id="canvas"></canvas>
+        <div class="slide-nav" id="carouselNav">
+            <button onclick="changeSlide(-1)">⬅️ पिछली स्लाइड</button>
+            <span id="slideIndicator" style="color:#facc15; font-weight:bold; font-size:13px;">Slide 1 / 5</span>
+            <button onclick="changeSlide(1)">अगली स्लाइड ➡️</button>
+        </div>
     </div>
 
-    <!-- 7. ACTIONS: DOWNLOAD & SHARE -->
+    <!-- 7. ACTIONS: DOWNLOAD, CAROUSEL, REEL & SHARE -->
     <div class="btn-grid-2">
-        <button class="btn-action btn-green" onclick="downloadImageHD('png')">
+        <button class="btn-action btn-green" id="primaryDownloadBtn" onclick="handlePrimaryDownload()">
             <span>📥 Download HD PNG (Auto-Saved)</span>
         </button>
-        <button class="btn-action btn-amber" onclick="downloadImageHD('jpeg')">
-            <span>🖼️ Download High Quality JPEG</span>
+        <button class="btn-action btn-mega" id="reelExportBtn" onclick="exportAutoReelVideo()">
+            <span>🎬 Export 15-Sec Reel Video</span>
         </button>
     </div>
-    <div class="btn-grid-2">
+    <div class="btn-grid-3">
+        <button class="btn-action btn-amber" onclick="downloadImageHD('jpeg')">
+            <span>🖼️ Download JPEG</span>
+        </button>
         <button class="btn-action" style="background:#0284c7;" onclick="shareDirectly()">
             <span>📲 Direct Share</span>
         </button>
         <button class="btn-action btn-purple" onclick="saveToDailyArchiveManual()">
-            <span>💾 Save to Archive Now</span>
+            <span>💾 Save to Archive</span>
         </button>
     </div>
 
@@ -472,15 +546,13 @@ ISRO ने हाल ही में किस देश की अंतर�
         </div>
         <div class="row">
             <button class="btn-action btn-mega" style="font-size:12px; padding:8px;" onclick="loadLast7DaysWeekly()">
-                ⚡ लोड करें: पिछले 7 दिन (Sunday Revision)
+                ⚡ मर्ज करें: पिछले 7 दिन (70 प्रश्न एक साथ)
             </button>
             <button class="btn-action" style="font-size:12px; padding:8px; background:#ef4444;" onclick="clearArchiveHistory()">
                 🗑️ पूरा आर्काइव साफ़ करें
             </button>
         </div>
-        <div class="archive-list" id="archiveItemsList">
-            <!-- Dynamic archive items -->
-        </div>
+        <div class="archive-list" id="archiveItemsList"></div>
     </div>
 </div>
 
@@ -496,7 +568,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             <input type="text" id="editDateInput">
         </div>
         <div>
-            <label>10 प्रश्न-उत्तर:</label>
+            <label>प्रश्न-उत्तर:</label>
             <textarea id="editTextarea" style="min-height:220px;"></textarea>
         </div>
         <div class="row">
@@ -507,7 +579,7 @@ ISRO ने हाल ही में किस देश की अंतर�
 </div>
 
 <script>
-    const STORAGE_PREFS = "EP_STUDIO_ULTIMATE_PREFS";
+    const STORAGE_PREFS = "EP_STUDIO_ULTIMATE_PREFS_V2";
     const STORAGE_ARCHIVE = "EP_STUDIO_DAILY_ARCHIVE_V2";
 
     const STATIC_GK_BANK = [
@@ -541,10 +613,10 @@ ISRO ने हाल ही में किस देश की अंतर�
             dateBg: '#b71c1c',
             badgeBg: '#b71c1c',
             qColor: '#0c1a30',
-            qHighlightColor: '#dc2626',      // Red for questions
-            pillBg: '#e0f2fe',              // Soft blue capsule
+            qHighlightColor: '#dc2626',
+            pillBg: '#e0f2fe',
             pillBorder: '#38bdf8',
-            aColor: '#0284c7',              // Rich Blue for answer text
+            aColor: '#0284c7',
             timelineColor: '#cbd5e1',
             footerBg: '#0c1a30',
             footerText: '#ffcc00',
@@ -620,6 +692,7 @@ ISRO ने हाल ही में किस देश की अंतर�
     let gridImages = { 1: null, 2: null, 3: null };
     let debounceTimer = null;
     let editingIndex = -1;
+    let currentSlideIdx = 0; // 0 to 4 for Carousel Mode
 
     const HIGHLIGHT_TOKENS = [
         "कहाँ", "कौन-सा", "कौन-सी", "किस", "किसे", "किसने", "किसकी", "कितने", "कितनी", 
@@ -629,10 +702,39 @@ ISRO ने हाल ही में किस देश की अंतर�
         "राज्य", "अध्यक्ष", "निदेशक", "अवार्ड", "पुरस्कार", "पदक", "जीत", "दर्ज"
     ];
 
+    function showToast(msg, duration = 3000) {
+        const t = document.getElementById('statusToast');
+        t.innerText = msg;
+        t.style.display = 'block';
+        if (duration > 0) {
+            setTimeout(() => { t.style.display = 'none'; }, duration);
+        }
+    }
+
     function getAutoFormattedDate() {
         const today = new Date();
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         return `${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+    }
+
+    function onModeChange() {
+        const mode = document.getElementById('postModeSelect').value;
+        const nav = document.getElementById('carouselNav');
+        const dlBtn = document.getElementById('primaryDownloadBtn');
+        if (mode === 'carousel5') {
+            nav.style.display = 'flex';
+            dlBtn.innerHTML = '<span>📥 Download All 5 Slides (PNG)</span>';
+        } else {
+            nav.style.display = 'none';
+            dlBtn.innerHTML = '<span>📥 Download HD PNG (Auto-Saved)</span>';
+        }
+        savePrefsAndRefresh();
+    }
+
+    function changeSlide(delta) {
+        currentSlideIdx = (currentSlideIdx + delta + 5) % 5;
+        document.getElementById('slideIndicator').innerText = `Slide ${currentSlideIdx + 1} / 5`;
+        generateQA(true);
     }
 
     function applySelectedTheme() {
@@ -651,15 +753,18 @@ ISRO ने हाल ही में किस देश की अंतर�
         savePrefsAndRefresh();
     }
 
-    // UPDATED CLEAN CAPTION (NO DIVIDER LINE, NO PROMOTIONS, NO EXTRA HASHTAGS)
     function updateCaption() {
         const headerDate = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
         const footerQ = document.getElementById('footerQuestionInput').value;
+        const hideLast = document.getElementById('hideLastAnsCheck').checked;
+
+        let hookLine = hideLast 
+            ? `🔥 प्रश्न नंबर 10 का सही उत्तर क्या है? कमेंट बॉक्स में बताएं!` 
+            : `🧠 आज का सवाल:\n👉 "${footerQ}"`;
 
         const caption = `Daily Current Affairs - ${headerDate}
 📌 आज के शीर्ष 10 महत्वपूर्ण प्रश्न-उत्तर
-🧠 आज का सवाल:
-👉 "${footerQ}"
+${hookLine}
 #currentaffairs`;
 
         document.getElementById('captionDisplay').innerText = caption;
@@ -681,7 +786,7 @@ ISRO ने हाल ही में किस देश की अंतर�
     function copyCaption() {
         const cap = document.getElementById('captionDisplay').innerText;
         navigator.clipboard.writeText(cap).then(() => {
-            alert("📋 फेसबुक कैप्शन कॉपी हो गया है!");
+            showToast("📋 फेसबुक कैप्शन कॉपी हो गया है!");
         });
     }
 
@@ -737,6 +842,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             if (text && text.trim().length > 0) {
                 document.getElementById('qaInput').value = text;
                 savePrefsAndRefresh();
+                showToast("📋 टेक्स्ट पेस्ट हो गया!");
             } else {
                 alert("क्लिपबोर्ड खाली है!");
             }
@@ -753,7 +859,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         document.getElementById('gridDateInput').value = "Daily Current Affairs";
         pickRandomGKQuestion();
         savePrefsAndRefresh();
-        alert("✨ नए दिन के लिए स्टूडियो तैयार है!");
+        showToast("✨ नए दिन के लिए स्टूडियो तैयार है!");
     }
 
     function getArchive() {
@@ -787,7 +893,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         const dateStr = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
         const qaRawText = document.getElementById('qaInput').value;
         saveToDailyArchive(dateStr, qaRawText);
-        alert(`💾 ${dateStr} का डेटा आर्काइव में सुरक्षित कर लिया गया है!`);
+        showToast(`💾 ${dateStr} का डेटा आर्काइव में सुरक्षित हो गया!`);
     }
 
     function openArchiveModal() {
@@ -798,15 +904,17 @@ ISRO ने हाल ही में किस देश की अंतर�
         const archive = getArchive();
 
         if (archive.length === 0) {
-            list.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई दिन सहेजा नहीं गया है। जैसे ही आप इमेज डाउनलोड करेंगे या 'Save' दबाएँगे, डेटा यहाँ दिखेगा।</div>`;
+            list.innerHTML = `<div style="text-align:center; color:#94a3b8; padding:20px; font-size:13px;">अभी तक कोई दिन सहेजा नहीं गया है।</div>`;
         } else {
             archive.forEach((item, index) => {
+                const lineCount = item.text.split(/\r?\n/).filter(l => l.trim()).length;
+                const qCount = Math.floor(lineCount / 2);
                 const div = document.createElement('div');
                 div.className = 'archive-item';
                 div.innerHTML = `
                     <div>
                         <div style="font-weight:bold; color:#38bdf8; font-size:13px;">📅 ${item.date}</div>
-                        <div style="font-size:11px; color:#94a3b8;">10 प्रश्न सुरक्षित</div>
+                        <div style="font-size:11px; color:#94a3b8;">${qCount} प्रश्न सुरक्षित</div>
                     </div>
                     <div class="item-btns">
                         <button class="btn-action" style="font-size:11px; padding:5px 8px;" onclick="loadSingleArchiveDay(${index})">लोड</button>
@@ -831,7 +939,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             document.getElementById('gridHeaderInput').value = archive[index].date;
             savePrefsAndRefresh();
             closeArchiveModal();
-            alert(`✅ ${archive[index].date} का डेटा लोड हो गया!`);
+            showToast(`✅ ${archive[index].date} लोड हो गया!`);
         }
     }
 
@@ -857,7 +965,7 @@ ISRO ने हाल ही में किस देश की अंतर�
         setArchive(archive);
         closeEditModal();
         openArchiveModal();
-        alert("✅ प्रश्न अपडेट कर दिए गए हैं!");
+        showToast("✅ प्रश्न अपडेट कर दिए गए!");
     }
 
     function deleteArchiveItem(index) {
@@ -874,22 +982,24 @@ ISRO ने हाल ही में किस देश की अंतर�
         openArchiveModal();
     }
 
+    // FIXED: Merges all 7 days' questions into textarea for Word/PDF/Review
     function loadLast7DaysWeekly() {
         const archive = getArchive();
         if (archive.length < 2) {
-            alert("साप्ताहिक रिवीजन के लिए आर्काइव में कम से कम 2 से 7 दिनों का डेटा होना आवश्यक है।");
+            alert("साप्ताहिक मर्ज के लिए आर्काइव में कम से कम 2 से 7 दिनों का डेटा होना आवश्यक है।");
             return;
         }
 
         const last7 = archive.slice(0, 7);
+        const mergedText = last7.map(item => item.text).join('\n');
         document.getElementById('gridHeaderInput').value = "Weekly Mega Revision";
-        document.getElementById('gridDateInput').value = "Sunday Special Mega Revision";
-        document.getElementById('qaInput').value = last7[0].text;
+        document.getElementById('gridDateInput').value = `Last ${last7.length} Days Digest`;
+        document.getElementById('qaInput').value = mergedText;
         
         savePrefsAndRefresh();
         closeArchiveModal();
         exportWeeklyCaption();
-        alert(`🎉 पिछले ${last7.length} दिनों का डेटा तैयार है!`);
+        showToast(`🎉 पिछले ${last7.length} दिनों के सभी प्रश्न मर्ज हो गए! (कैनवास पर पहले 10 दिखेंगे, Word/PDF में सभी आएंगे)`);
     }
 
     function exportArchiveJSON() {
@@ -921,13 +1031,15 @@ ISRO ने हाल ही में किस देश की अंतर�
                         existing.unshift(imp);
                     });
                     setArchive(existing);
-                    alert("✅ बैकअप सफलतापूर्वक रीस्टोर कर लिया गया है!");
+                    showToast("✅ बैकअप सफलतापूर्वक रीस्टोर हो गया!");
                     openArchiveModal();
                 } else {
                     alert("अमान्य बैकअप फ़ाइल!");
                 }
             } catch(err) {
                 alert("JSON फ़ाइल पढ़ने में त्रुटि हुई।");
+            } finally {
+                event.target.value = '';
             }
         };
         reader.readAsText(file);
@@ -960,10 +1072,11 @@ ISRO ने हाल ही में किस देश की अंतर�
             const lines = day.text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
             let count = 1;
             for (let i = 0; i < lines.length; i += 2) {
-                let q = cleanQuestionText(lines[i]);
+                let parsed = parseQuestionWithTag(lines[i]);
                 let a = cleanAnswerText(lines[i+1]);
-                if (q) {
-                    docContent += `<div class="qa-item"><div class="q">Q${count}. ${q}</div><div class="a">उत्तर: ${a}</div></div>`;
+                if (parsed.q) {
+                    let tagPrefix = parsed.tag ? `[${parsed.tag}] ` : '';
+                    docContent += `<div class="qa-item"><div class="q">Q${count}. ${tagPrefix}${parsed.q}</div><div class="a">उत्तर: ${a}</div></div>`;
                     count++;
                 }
             }
@@ -990,6 +1103,10 @@ ISRO ने हाल ही में किस देश की अंतर�
         }
 
         const printWindow = window.open('', '_blank');
+        if (!printWindow) {
+            alert("कृपया ब्राउज़र में Pop-ups की अनुमति दें ताकि PDF प्रिंट विंडो खुल सके।");
+            return;
+        }
         let html = `<!DOCTYPE html><html><head><title>Current Affairs Digest</title>
         <style>
             body { font-family: 'Noto Sans Devanagari', Arial, sans-serif; padding: 25px; color: #111; }
@@ -1012,10 +1129,11 @@ ISRO ने हाल ही में किस देश की अंतर�
             const lines = day.text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
             let count = 1;
             for (let i = 0; i < lines.length; i += 2) {
-                let q = cleanQuestionText(lines[i]);
+                let parsed = parseQuestionWithTag(lines[i]);
                 let a = cleanAnswerText(lines[i+1]);
-                if (q) {
-                    html += `<div class="qa-row"><span class="q">Q${count}. ${q}</span> <span class="a">उत्तर: ${a}</span></div>`;
+                if (parsed.q) {
+                    let tagPrefix = parsed.tag ? `[${parsed.tag}] ` : '';
+                    html += `<div class="qa-row"><span class="q">Q${count}. ${tagPrefix}${parsed.q}</span> <span class="a">उत्तर: ${a}</span></div>`;
                     count++;
                 }
             }
@@ -1031,12 +1149,14 @@ ISRO ने हाल ही में किस देश की अंतर�
 
     function savePrefsAndRefresh() {
         const data = {
+            mode: document.getElementById('postModeSelect').value,
             theme: document.getElementById('gridThemeSelect').value,
             font: document.getElementById('hindiFontSelect').value,
             layout: document.getElementById('gridLineLayout').value,
             wmOpacity: document.getElementById('watermarkOpacity').value,
             qSize: document.getElementById('qSizeInput').value,
             aSize: document.getElementById('aSizeInput').value,
+            hideLast: document.getElementById('hideLastAnsCheck').checked,
             qaText: document.getElementById('qaInput').value,
             footerQ: document.getElementById('footerQuestionInput').value
         };
@@ -1051,6 +1171,13 @@ ISRO ने हाल ही में किस देश की अंतर�
             const saved = localStorage.getItem(STORAGE_PREFS);
             if (saved) {
                 const p = JSON.parse(saved);
+                if (p.mode) {
+                    document.getElementById('postModeSelect').value = p.mode;
+                    if (p.mode === 'carousel5') {
+                        document.getElementById('carouselNav').style.display = 'flex';
+                        document.getElementById('primaryDownloadBtn').innerHTML = '<span>📥 Download All 5 Slides (PNG)</span>';
+                    }
+                }
                 if (p.theme) { document.getElementById('gridThemeSelect').value = p.theme; currentThemeKey = p.theme; }
                 if (p.font) document.getElementById('hindiFontSelect').value = p.font;
                 if (p.layout) document.getElementById('gridLineLayout').value = p.layout;
@@ -1066,6 +1193,9 @@ ISRO ने हाल ही में किस देश की अंतर�
                     document.getElementById('aSizeInput').value = p.aSize;
                     document.getElementById('aSizeVal').innerText = p.aSize + 'px';
                 }
+                if (typeof p.hideLast === 'boolean') {
+                    document.getElementById('hideLastAnsCheck').checked = p.hideLast;
+                }
                 if (p.qaText) document.getElementById('qaInput').value = p.qaText;
                 if (p.footerQ) document.getElementById('footerQuestionInput').value = p.footerQ;
             }
@@ -1080,19 +1210,44 @@ ISRO ने हाल ही में किस देश की अंतर�
         }, 80);
     }
 
-    function cleanQuestionText(rawQ) {
-        if (!rawQ) return "";
+    // Extracts optional [TAG] like [UPPSC] or [SSC]
+    function parseQuestionWithTag(rawQ) {
+        if (!rawQ) return { tag: "", q: "" };
         let clean = rawQ.replace(/^(?:[Qqप्र\.]*\s*\d+[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*/, '').trim();
+        let tag = "";
+        const tagMatch = clean.match(/^\[([^\]]+)\]\s*(.*)/);
+        if (tagMatch) {
+            tag = tagMatch[1].trim().toUpperCase();
+            clean = tagMatch[2].trim();
+        }
         clean = clean.replace(/\s*[\.\s]+\?+\s*$/, '?').trim();
-        if (!clean.endsWith('?') && !clean.endsWith('।') && !clean.endsWith('.')) {
+        if (clean && !clean.endsWith('?') && !clean.endsWith('।') && !clean.endsWith('.')) {
             clean += '?';
         }
-        return clean;
+        return { tag, q: clean };
     }
 
     function cleanAnswerText(rawA) {
         if (!rawA) return "";
         return rawA.replace(/^(?:Ans|उत्तर|Answer)\s*[:\-]\s*/i, '').trim();
+    }
+
+    function getParsedItems() {
+        const inputData = document.getElementById('qaInput').value.trim();
+        const hideLast = document.getElementById('hideLastAnsCheck').checked;
+        const lines = inputData.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+        let parsedItems = [];
+        for (let i = 0; i < lines.length; i += 2) {
+            let parsed = lines[i] ? parseQuestionWithTag(lines[i]) : { tag: "", q: "" };
+            let a = lines[i + 1] ? cleanAnswerText(lines[i + 1]) : "";
+            if (parsed.q) parsedItems.push({ tag: parsed.tag, q: parsed.q, a });
+        }
+        const top10 = parsedItems.slice(0, 10);
+        if (hideLast && top10.length === 10) {
+            top10[9].a = "??? (कमेंट में बताएं 👇)";
+            top10[9].isHidden = true;
+        }
+        return top10;
     }
 
     function drawOverCardWatermark(ctx, canvas, opacity) {
@@ -1158,28 +1313,48 @@ ISRO ने हाल ही में किस देश की अंतर�
         if (stroke) ctx.stroke();
     }
 
-    function drawSmartHighlightedLine(ctx, text, startX, y, theme, defaultColor, isLastLine) {
+    function drawExamTagBadge(ctx, tag, x, y, fontSize) {
+        if (!tag) return 0;
+        ctx.save();
+        ctx.font = `800 ${Math.max(12, fontSize - 6)}px 'Poppins', sans-serif`;
+        const w = ctx.measureText(tag).width + 14;
+        const h = fontSize + 2;
+        ctx.fillStyle = "#f59e0b";
+        roundRect(ctx, x, y - 2, w, h, 5, true, false);
+        ctx.fillStyle = "#0f172a";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(tag, x + w / 2, y - 2 + h / 2);
+        ctx.restore();
+        return w + 8;
+    }
+
+    function drawSmartHighlightedLine(ctx, text, startX, y, theme, defaultColor, isLastLine, maxWidth = 9999) {
         const words = text.split(' ').filter(w => w.length > 0);
         let curX = startX;
+        const maxX = startX + maxWidth;
 
-        words.forEach((word, idx) => {
+        for (let idx = 0; idx < words.length; idx++) {
+            const word = words[idx];
             const clean = word.replace(/[?,.!"'।:]/g, '');
             const isEndWord = isLastLine && (idx === words.length - 1);
             const isKeyword = HIGHLIGHT_TOKENS.some(t => clean === t || clean.includes(t)) || 
                               word.startsWith("'") || word.startsWith('"') || word.includes("'") || word.includes('"');
 
-            if (isEndWord || isKeyword) {
-                ctx.fillStyle = theme.qHighlightColor; // RED
-            } else {
+            const wWidth = ctx.measureText(word + " ").width;
+            if (curX + wWidth > maxX && idx > 0) {
                 ctx.fillStyle = defaultColor;
+                ctx.fillText("...", curX, y);
+                break;
             }
-            
+
+            ctx.fillStyle = (isEndWord || isKeyword) ? theme.qHighlightColor : defaultColor;
             ctx.fillText(word + " ", curX, y);
-            curX += ctx.measureText(word + " ").width;
-        });
+            curX += wWidth;
+        }
     }
 
-    function drawAnswerPill(ctx, ansText, textStartX, pillY, baseASize, hindiFont, theme) {
+    function drawAnswerPill(ctx, ansText, textStartX, pillY, baseASize, hindiFont, theme, isHidden = false) {
         ctx.save();
         ctx.font = `800 ${baseASize}px ${hindiFont}`;
         const prefix = "उत्तर: ";
@@ -1188,12 +1363,12 @@ ISRO ने हाल ही में किस देश की अंतर�
         const pillHeight = baseASize + 10;
         const pillWidth = textW + 24;
 
-        ctx.fillStyle = theme.pillBg;
-        ctx.strokeStyle = theme.pillBorder;
-        ctx.lineWidth = 1.2;
+        ctx.fillStyle = isHidden ? "#fef08a" : theme.pillBg;
+        ctx.strokeStyle = isHidden ? "#eab308" : theme.pillBorder;
+        ctx.lineWidth = 1.4;
         roundRect(ctx, textStartX, pillY, pillWidth, pillHeight, pillHeight / 2, true, true);
 
-        ctx.fillStyle = theme.aColor;
+        ctx.fillStyle = isHidden ? "#b91c1c" : theme.aColor;
         ctx.textAlign = "left";
         ctx.textBaseline = "middle";
         ctx.fillText(totalText, textStartX + 12, pillY + (pillHeight / 2));
@@ -1202,13 +1377,19 @@ ISRO ने हाल ही में किस देश की अंतर�
 
     function renderBalancedQA(ctx, item, textStartX, currentY, actualBoxHeight, textAvailWidth, baseQSize, baseASize, hindiFont, theme) {
         ctx.font = `700 ${baseQSize}px ${hindiFont}`;
+        ctx.textBaseline = "top";
+        
+        let tagOffset = item.tag ? drawExamTagBadge(ctx, item.tag, textStartX, currentY + 11, baseQSize) : 0;
+        let firstLineAvail = textAvailWidth - tagOffset;
+
         const words = item.q.split(' ');
         let lines = [];
         let curLine = '';
 
         for (let n = 0; n < words.length; n++) {
             let test = curLine + words[n] + ' ';
-            if (ctx.measureText(test).width > textAvailWidth && n > 0) {
+            let limitW = lines.length === 0 ? firstLineAvail : textAvailWidth;
+            if (ctx.measureText(test).width > limitW && n > 0) {
                 lines.push(curLine.trim());
                 curLine = words[n] + ' ';
                 if (lines.length === 2) break;
@@ -1224,63 +1405,35 @@ ISRO ने हाल ही में किस देश की अंतर�
 
         if (lines.length <= 1) {
             ctx.font = `700 ${baseQSize}px ${hindiFont}`;
-            ctx.textBaseline = "top";
-            drawSmartHighlightedLine(ctx, item.q, textStartX, currentY + 14, theme, theme.qColor, true);
+            drawSmartHighlightedLine(ctx, item.q, textStartX + tagOffset, currentY + 14, theme, theme.qColor, true, firstLineAvail);
 
             const pillY = currentY + actualBoxHeight - baseASize - 16;
-            drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize, hindiFont, theme);
+            drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize, hindiFont, theme, item.isHidden);
         } else {
             const lineGap = baseQSize + 4;
             ctx.font = `700 ${baseQSize}px ${hindiFont}`;
-            ctx.textBaseline = "top";
-            drawSmartHighlightedLine(ctx, lines[0], textStartX, currentY + 9, theme, theme.qColor, false);
-            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 9 + lineGap, theme, theme.qColor, true);
+            drawSmartHighlightedLine(ctx, lines[0], textStartX + tagOffset, currentY + 9, theme, theme.qColor, false, firstLineAvail);
+            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 9 + lineGap, theme, theme.qColor, true, textAvailWidth);
 
             const pillY = currentY + actualBoxHeight - baseASize - 13;
-            drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize, hindiFont, theme);
+            drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize, hindiFont, theme, item.isHidden);
         }
     }
 
-    async function generateQA(isPreviewOnly) {
-        const theme = THEMES[currentThemeKey];
-        const hindiFont = document.getElementById('hindiFontSelect').value;
-        const inputData = document.getElementById('qaInput').value.trim();
-        const lineLayout = document.getElementById('gridLineLayout').value;
-        const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
-        
-        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 21;
-        const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 21;
-
-        const lines = inputData.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-        let parsedItems = [];
-        for (let i = 0; i < lines.length; i += 2) {
-            let q = lines[i] ? cleanQuestionText(lines[i]) : "";
-            let a = lines[i + 1] ? cleanAnswerText(lines[i + 1]) : "";
-            if (q) parsedItems.push({ q, a });
-        }
-
-        const canvas = document.getElementById('canvas'); 
-        canvas.width = 1080; 
-        canvas.height = 1350;
-
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // 1. Background
+    // Draws Header + Footer common to all modes
+    function drawHeaderAndFooter(ctx, canvas, theme, customSubBadge = null) {
         ctx.fillStyle = theme.bg;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 2. Main Title
         const headerTitle = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
         const startTopOffset = 70;
         
         ctx.fillStyle = theme.headerColor; 
         ctx.font = `700 70px "Rozha One", sans-serif`; 
         ctx.textAlign = "center";
-        ctx.fillText(headerTitle, canvas.width / 2, startTopOffset);
+        ctx.fillText(headerTitle, canvas.width / 2, startTopOffset, 1000);
 
-        // 3. Date Capsule Badge
-        const dateText = document.getElementById('gridDateInput').value || "Daily Current Affairs";
+        const dateText = customSubBadge || document.getElementById('gridDateInput').value || "Daily Current Affairs";
         ctx.save(); 
         ctx.fillStyle = theme.dateBg;
         ctx.font = `700 22px 'Poppins', sans-serif`;
@@ -1296,7 +1449,6 @@ ISRO ने हाल ही में किस देश की अंतर�
         ctx.fillText(dateText, canvas.width / 2, startTopOffset + 16 + 19); 
         ctx.restore();
 
-        // 4. Ribbon & Exam Preparation Badge
         const ribbonY = startTopOffset + 82;
         ctx.save();
         ctx.fillStyle = theme.headerColor;
@@ -1314,7 +1466,126 @@ ISRO ने हाल ही में किस देश की अंतर�
         ctx.fillText(partText, canvas.width / 2 + 250 + (partW / 2), ribbonY - 3);
         ctx.restore();
 
-        // 5. 10 QA Cards Layout
+        // Footer Strip (with maxWidth fix so long text never overflows)
+        const footerHeight = 65;
+        const footerQ = document.getElementById('footerQuestionInput').value;
+        const footerFullText = `🧠 आज का सवाल: ${footerQ} (उत्तर कमेंट करें 👇)`;
+
+        ctx.save(); 
+        ctx.fillStyle = theme.footerBg; 
+        ctx.fillRect(0, canvas.height - footerHeight, canvas.width, footerHeight);
+        
+        ctx.fillStyle = "#ffcc00"; 
+        ctx.fillRect(0, canvas.height - footerHeight, canvas.width, 3.5);
+        
+        ctx.fillStyle = theme.footerText; 
+        ctx.font = '700 23px "Kalam", cursive'; 
+        ctx.textAlign = "center"; 
+        ctx.textBaseline = "middle";
+        ctx.fillText(footerFullText, canvas.width / 2, canvas.height - (footerHeight / 2) + 2, 1020); 
+        ctx.restore();
+    }
+
+    // Renders a single Carousel Slide (2 Big Questions per slide)
+    function renderCarouselSlide(ctx, canvas, items, slideIndex) {
+        const theme = THEMES[currentThemeKey];
+        const hindiFont = document.getElementById('hindiFontSelect').value;
+        const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
+
+        drawHeaderAndFooter(ctx, canvas, theme, `Swipe Card ${slideIndex + 1} of 5 • Daily GK`);
+
+        const startIdx = slideIndex * 2;
+        const slideItems = items.slice(startIdx, startIdx + 2);
+        const startY = 205;
+        const cardH = 490;
+        const gap = 30;
+
+        slideItems.forEach((item, localIdx) => {
+            const qNum = startIdx + localIdx + 1;
+            const y = startY + localIdx * (cardH + gap);
+
+            ctx.save();
+            ctx.fillStyle = theme.cardBg;
+            ctx.strokeStyle = theme.pillBorder;
+            ctx.lineWidth = 2.5;
+            roundRect(ctx, 55, y, 970, cardH, 22, true, true);
+            ctx.restore();
+
+            // Number Badge
+            ctx.save();
+            ctx.fillStyle = theme.badgeBg;
+            ctx.beginPath();
+            ctx.arc(115, y + 60, 34, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "800 28px 'Poppins', sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(qNum, 115, y + 61);
+            ctx.restore();
+
+            // Optional Tag
+            let tagX = 170;
+            if (item.tag) {
+                drawExamTagBadge(ctx, item.tag, tagX, y + 42, 26);
+            }
+
+            // Big Wrapped Question (up to 4 lines)
+            const bigQSize = 36;
+            ctx.font = `700 ${bigQSize}px ${hindiFont}`;
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+            const maxW = 890;
+            const words = item.q.split(' ');
+            let qLines = [];
+            let cur = '';
+            words.forEach(w => {
+                if (ctx.measureText(cur + w + ' ').width > maxW && cur.length > 0) {
+                    qLines.push(cur.trim());
+                    cur = w + ' ';
+                } else {
+                    cur += w + ' ';
+                }
+            });
+            if (cur.trim()) qLines.push(cur.trim());
+
+            qLines.slice(0, 4).forEach((line, lIdx) => {
+                drawSmartHighlightedLine(ctx, line, 95, y + 125 + (lIdx * 52), theme, theme.qColor, lIdx === qLines.length - 1, maxW);
+            });
+
+            // Big Answer Pill at bottom of card
+            drawAnswerPill(ctx, item.a, 95, y + cardH - 85, 34, hindiFont, theme, item.isHidden);
+        });
+
+        drawOverCardWatermark(ctx, canvas, wmOpacity);
+    }
+
+    async function generateQA(isPreviewOnly) {
+        const mode = document.getElementById('postModeSelect').value;
+        const theme = THEMES[currentThemeKey];
+        const hindiFont = document.getElementById('hindiFontSelect').value;
+        const lineLayout = document.getElementById('gridLineLayout').value;
+        const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
+        
+        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 21;
+        const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 21;
+        const parsedItems = getParsedItems();
+
+        const canvas = document.getElementById('canvas'); 
+        canvas.width = 1080; 
+        canvas.height = 1350;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (mode === 'carousel5') {
+            renderCarouselSlide(ctx, canvas, parsedItems, currentSlideIdx);
+            return;
+        }
+
+        // Standard 10-Question Single Image Mode
+        drawHeaderAndFooter(ctx, canvas, theme);
+
+        const startTopOffset = 70;
         const startY = startTopOffset + 115; 
         const footerHeight = 65;
         const availableHeight = canvas.height - startY - footerHeight - 15;
@@ -1336,7 +1607,7 @@ ISRO ने हाल ही में किस देश की अंतर�
             ctx.restore();
         }
 
-        parsedItems.slice(0, 10).forEach((item, idx) => {
+        parsedItems.forEach((item, idx) => {
             let currentY = startY + (idx * rowHeight);
             let boxX = 45; 
             let boxWidth = 990;
@@ -1359,11 +1630,11 @@ ISRO ने हाल ही में किस देश की अंतर�
         if (gridImages[2]) drawCoverImage(ctx, gridImages[2], 45, startY + (4 * rowHeight) + 3, imgWidth, imgHeight, 14);
         if (gridImages[3]) drawCoverImage(ctx, gridImages[3], 840, startY + (8 * rowHeight) + 3, imgWidth, imgHeight, 14);
 
-        // 6. Watermark at 3%
+        // Watermark
         drawOverCardWatermark(ctx, canvas, wmOpacity);
 
-        // 7. Numbers and QA Text
-        parsedItems.slice(0, 10).forEach((item, idx) => {
+        // Numbers and QA Text
+        parsedItems.forEach((item, idx) => {
             let currentY = startY + (idx * rowHeight);
             let displayNum = idx + 1;
 
@@ -1397,12 +1668,6 @@ ISRO ने हाल ही में किस देश की अंतर�
             let textStartX = boxX + 85;
 
             if (lineLayout === 'singleLine') {
-                let textAvailWidth = boxWidth - 320;
-                ctx.font = `700 ${qFontSize}px ${hindiFont}`; 
-                ctx.textAlign = "left"; 
-                ctx.textBaseline = "middle";
-                drawSmartHighlightedLine(ctx, item.q, textStartX, currentY + (actualBoxHeight / 2) - 8, theme, theme.qColor, true);
-
                 ctx.save();
                 ctx.font = `800 ${aFontSize}px ${hindiFont}`;
                 const ansText = "उत्तर: " + item.a;
@@ -1410,14 +1675,22 @@ ISRO ने हाल ही में किस देश की अंतर�
                 const pillH = aFontSize + 10;
                 const pillW = textW + 22;
                 const pillX = boxX + boxWidth - pillW - 16;
-                const pillY = currentY + (actualBoxHeight / 2) - (pillH / 2);
+                const pillY = currentY + (actualBoxHeight / 2) - (pillH / 2) + 2;
 
-                ctx.fillStyle = theme.pillBg;
-                ctx.strokeStyle = theme.pillBorder;
+                let tagOffset = item.tag ? drawExamTagBadge(ctx, item.tag, textStartX, currentY + (actualBoxHeight / 2) - 8, qFontSize) : 0;
+                let maxQWidth = (pillX - 15) - (textStartX + tagOffset);
+
+                ctx.font = `700 ${qFontSize}px ${hindiFont}`; 
+                ctx.textAlign = "left"; 
+                ctx.textBaseline = "middle";
+                drawSmartHighlightedLine(ctx, item.q, textStartX + tagOffset, currentY + (actualBoxHeight / 2) + 2, theme, theme.qColor, true, maxQWidth);
+
+                ctx.fillStyle = item.isHidden ? "#fef08a" : theme.pillBg;
+                ctx.strokeStyle = item.isHidden ? "#eab308" : theme.pillBorder;
                 ctx.lineWidth = 1.2;
                 roundRect(ctx, pillX, pillY, pillW, pillH, pillH / 2, true, true);
 
-                ctx.fillStyle = theme.aColor;
+                ctx.fillStyle = item.isHidden ? "#b91c1c" : theme.aColor;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(ansText, pillX + (pillW / 2), pillY + (pillH / 2));
@@ -1427,27 +1700,42 @@ ISRO ने हाल ही में किस देश की अंतर�
                 renderBalancedQA(ctx, item, textStartX, currentY + 3, actualBoxHeight, textAvailWidth, qFontSize, aFontSize, hindiFont, theme);
             }
         });
+    }
 
-        // 8. Footer Strip
-        const footerQ = document.getElementById('footerQuestionInput').value;
-        const footerFullText = `🧠 आज का सवाल: ${footerQ} (उत्तर कमेंट करें 👇)`;
+    function handlePrimaryDownload() {
+        const mode = document.getElementById('postModeSelect').value;
+        if (mode === 'carousel5') {
+            downloadAll5CarouselSlides();
+        } else {
+            downloadImageHD('png');
+        }
+    }
 
-        ctx.save(); 
-        ctx.fillStyle = theme.footerBg; 
-        ctx.fillRect(0, canvas.height - footerHeight, canvas.width, footerHeight);
+    function downloadAll5CarouselSlides() {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const parsedItems = getParsedItems();
+        const headerDate = (document.getElementById('gridHeaderInput').value || getAutoFormattedDate()).replace(/\s+/g, '_');
         
-        ctx.fillStyle = "#ffcc00"; 
-        ctx.fillRect(0, canvas.height - footerHeight, canvas.width, 3.5);
-        
-        ctx.fillStyle = theme.footerText; 
-        ctx.font = '700 24px "Kalam", cursive'; 
-        ctx.textAlign = "center"; 
-        ctx.textBaseline = "middle";
-        ctx.fillText(footerFullText, canvas.width / 2, canvas.height - (footerHeight / 2) + 2); 
-        ctx.restore();
+        saveToDailyArchive(document.getElementById('gridHeaderInput').value || getAutoFormattedDate(), document.getElementById('qaInput').value);
+
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                renderCarouselSlide(ctx, canvas, parsedItems, i);
+                const link = document.createElement('a');
+                link.download = `CA_${headerDate}_Slide_${i + 1}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                if (i === 4) {
+                    setTimeout(() => generateQA(true), 300);
+                    showToast("✅ सभी 5 Carousel स्लाइड्स डाउनलोड हो गई हैं!");
+                }
+            }, i * 350);
+        }
     }
 
     function downloadImageHD(format = 'png') {
+        const canvas = document.getElementById('canvas');
         const headerDate = (document.getElementById('gridHeaderInput').value || getAutoFormattedDate()).replace(/\s+/g, '_');
         const rawText = document.getElementById('qaInput').value;
 
@@ -1462,9 +1750,60 @@ ISRO ने हाल ही में किस देश की अंतर�
             link.href = canvas.toDataURL('image/png');
         }
         link.click();
+        showToast("📥 इमेज डाउनलोड और आर्काइव में सेव हो गई!");
+    }
+
+    // Exports a 15-Second Animated Video (WebM) cycling through all 5 Carousel Slides
+    function exportAutoReelVideo() {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const parsedItems = getParsedItems();
+        const headerDate = (document.getElementById('gridHeaderInput').value || getAutoFormattedDate()).replace(/\s+/g, '_');
+        const btn = document.getElementById('reelExportBtn');
+
+        if (!canvas.captureStream || typeof MediaRecorder === 'undefined') {
+            alert("आपका ब्राउज़र डायरेक्ट वीडियो रिकॉर्डिंग सपोर्ट नहीं करता। कृपया Chrome का उपयोग करें।");
+            return;
+        }
+
+        btn.disabled = true;
+        showToast("🎬 रील वीडियो तैयार हो रहा है (15 सेकंड प्रतीक्षा करें)...", 0);
+
+        const stream = canvas.captureStream(30);
+        const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+        const chunks = [];
+
+        recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+        recorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'video/webm' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Current_Affairs_Reel_${headerDate}.webm`;
+            a.click();
+            URL.revokeObjectURL(url);
+            btn.disabled = false;
+            generateQA(true);
+            showToast("✅ 15-सेकंड रील वीडियो डाउनलोड हो गया!");
+        };
+
+        recorder.start();
+        let slide = 0;
+        renderCarouselSlide(ctx, canvas, parsedItems, slide);
+
+        const interval = setInterval(() => {
+            slide++;
+            if (slide < 5) {
+                renderCarouselSlide(ctx, canvas, parsedItems, slide);
+            } else {
+                clearInterval(interval);
+                recorder.stop();
+            }
+        }, 3000); // 3 seconds per slide * 5 slides = 15 seconds
     }
 
     async function shareDirectly() {
+        const canvas = document.getElementById('canvas');
         const caption = document.getElementById('captionDisplay').innerText;
         canvas.toBlob(async (blob) => {
             if (!blob) return;
@@ -1487,7 +1826,12 @@ ISRO ने हाल ही में किस देश की अंतर�
         if (!document.getElementById('footerQuestionInput').value) {
             pickRandomGKQuestion();
         }
-        generateQA(true);
+        updateCaption();
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => { generateQA(true); });
+        } else {
+            generateQA(true);
+        }
     };
 </script>
 </body>
