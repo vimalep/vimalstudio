@@ -1,2205 +1,649 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viral Quiz Studio Pro - Clean Layout & Live Crop Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Hind:wght@500;600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background: #0b1329;
-            color: #f8fafc;
-            font-family: 'Hind', sans-serif;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .main-wrap {
-            width: 100%;
-            max-width: 520px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .studio-header {
-            text-align: center;
-            font-size: 19px;
-            font-weight: 800;
-            color: #38bdf8;
-            border-bottom: 2px solid #1e293b;
-            padding-bottom: 6px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .control-box {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .row-flex {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .row-flex > div { flex: 1; }
-
-        label {
-            font-size: 11px;
-            color: #94a3b8;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 8px 10px;
-            background: #0f172a;
-            border: 1px solid #475569;
-            border-radius: 7px;
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 600;
-            outline: none;
-            font-family: inherit;
-        }
-        input[type="color"] {
-            padding: 2px 4px;
-            height: 38px;
-            cursor: pointer;
-        }
-        input[type="range"] {
-            padding: 0;
-            accent-color: #38bdf8;
-            cursor: pointer;
-        }
-        textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
-
-        .answer-toggle-card {
-            background: #0f172a;
-            border: 1.5px solid #10b981;
-            border-radius: 8px;
-            padding: 9px 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-        .toggle-text {
-            font-size: 13px;
-            font-weight: 800;
-            color: #34d399;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .checkbox-custom {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: #10b981;
-        }
-
-        .btn-action-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 8px;
-        }
-        .btn-action {
-            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 13.5px;
-            font-weight: 800;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-clipboard {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-        }
-
-        /* WORD COLOR SHUFFLE & PAPER COLOR PANEL */
-        .paper-color-panel {
-            background: #0f172a;
-            border: 1px solid #475569;
-            border-radius: 8px;
-            padding: 9px 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .btn-shuffle-colors {
-            background: linear-gradient(135deg, #ec4899, #f59e0b);
-            color: #ffffff;
-            border: none;
-            padding: 8px 10px;
-            border-radius: 7px;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            height: 38px;
-            white-space: nowrap;
-        }
-
-        /* IMAGE CONTROLS CARD (NOW BELOW PREVIEW) */
-        .img-control-panel {
-            background: #1e293b;
-            border: 1.5px dashed #38bdf8;
-            border-radius: 12px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .img-btn-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
-            gap: 6px;
-        }
-        .btn-img-tool {
-            background: #0f172a;
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-            padding: 9px 4px;
-            border-radius: 7px;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-        .btn-img-search {
-            background: #1e1b4b;
-            color: #c4b5fd;
-            border: 1px solid #8b5cf6;
-        }
-        .btn-img-remove {
-            background: #450a0a;
-            color: #fca5a5;
-            border: 1px solid #ef4444;
-            padding: 8px 10px;
-            border-radius: 7px;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-        .blend-toggle-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #0f172a;
-            padding: 7px 10px;
-            border-radius: 6px;
-            border: 1px solid #334155;
-            cursor: pointer;
-        }
-        .sub-box {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 9px;
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-        .sub-box-title {
-            font-size: 11.5px;
-            font-weight: 800;
-            color: #7dd3fc;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .btn-mini-reset {
-            background: #334155;
-            color: #e2e8f0;
-            border: none;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 10.5px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .backup-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 2px;
-        }
-        .btn-backup {
-            background: #334155;
-            color: #f1f5f9;
-            border: 1px solid #475569;
-            padding: 8px;
-            border-radius: 6px;
-            font-size: 11.5px;
-            font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        /* CANVAS PREVIEW */
-        .canvas-card {
-            width: 100%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            display: flex;
-            justify-content: center;
-        }
-        canvas {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .action-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 8px;
-        }
-        .btn-act {
-            border: none;
-            padding: 11px;
-            border-radius: 8px;
-            font-size: 13.5px;
-            font-weight: 800;
-            cursor: pointer;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            color: white;
-        }
-        .btn-share {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            box-shadow: 0 3px 10px rgba(37, 99, 235, 0.4);
-        }
-        .btn-download { background: #10b981; }
-        .btn-history-trigger {
-            background: #334155;
-            color: #f1f5f9;
-            grid-column: span 2;
-            border: 1px solid #475569;
-        }
-
-        /* MODALS */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 999;
-            padding: 14px;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-box {
-            background: #1e293b;
-            border: 1px solid #475569;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 490px;
-            max-height: 88vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .modal-header {
-            padding: 12px;
-            background: #0f172a;
-            border-bottom: 1px solid #334155;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 800;
-            color: #38bdf8;
-        }
-        .modal-body {
-            padding: 12px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .h-item {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .h-item-title { font-size: 13px; font-weight: 800; color: #38bdf8; }
-        .h-item-sub { font-size: 11.5px; color: #10b981; }
-        .h-item-exp { font-size: 11px; color: #94a3b8; line-height: 1.4; }
-        
-        .h-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 4px;
-        }
-        .btn-crud {
-            padding: 5px 9px;
-            font-size: 11px;
-            font-weight: 700;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            color: white;
-        }
-        .btn-crud-load { background: #0284c7; }
-        .btn-crud-edit { background: #d97706; }
-        .btn-crud-del { background: #dc2626; }
-        .btn-add-new {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 9px;
-            border-radius: 7px;
-            font-weight: 800;
-            font-size: 12.5px;
-            cursor: pointer;
-            margin-bottom: 6px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viral Quiz Studio Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0b1329;color:#f8fafc;font-family:'Hind',sans-serif;padding:12px;display:flex;flex-direction:column;align-items:center}
+.wrap{width:100%;max-width:520px;display:flex;flex-direction:column;gap:12px}
+.hdr{text-align:center;font-size:18px;font-weight:800;color:#38bdf8;border-bottom:2px solid #1e293b;padding-bottom:6px;font-family:'Poppins',sans-serif}
+.box{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:11px;display:flex;flex-direction:column;gap:9px}
+.row{display:flex;gap:8px;align-items:center}.row>div{flex:1}
+label{font-size:11px;color:#94a3b8;font-weight:700;display:block;margin-bottom:2px}
+input,select,textarea{width:100%;padding:7px 9px;background:#0f172a;border:1px solid #475569;border-radius:7px;color:#fff;font-size:12.5px;font-weight:600;outline:none;font-family:inherit}
+input[type=color]{padding:2px;height:36px;cursor:pointer}
+input[type=range]{padding:0;accent-color:#38bdf8;cursor:pointer}
+textarea{resize:vertical;min-height:135px;font-family:monospace;font-size:11.5px;line-height:1.35}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn{background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;border:none;padding:11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.btn-b{background:linear-gradient(135deg,#0284c7,#0369a1)}
+.btn-g{background:#10b981}.btn-s{background:#334155;border:1px solid #475569;font-size:11.5px;padding:8px}
+.btn-shuf{background:linear-gradient(135deg,#ec4899,#f59e0b);color:#fff;border:none;padding:7px 10px;border-radius:7px;font-size:12px;font-weight:800;cursor:pointer;height:36px;white-space:nowrap}
+.tog{background:#0f172a;border:1.5px solid #10b981;border-radius:8px;padding:8px 11px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.tog span{font-size:12.5px;font-weight:800;color:#34d399}
+.chk{width:19px;height:19px;cursor:pointer;accent-color:#10b981}
+.c-card{width:100%;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.6)}
+canvas{width:100%;height:auto;display:block}
+.img-box{background:#1e293b;border:1.5px dashed #38bdf8;border-radius:12px;padding:11px;display:flex;flex-direction:column;gap:8px}
+.img-btns{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:5px}
+.ibtn{background:#0f172a;color:#38bdf8;border:1px solid #38bdf8;padding:8px 4px;border-radius:7px;font-size:11.5px;font-weight:800;cursor:pointer}
+.ibtn-p{color:#c4b5fd;border-color:#8b5cf6;background:#1e1b4b}
+.ibtn-r{background:#450a0a;color:#fca5a5;border:1px solid #ef4444;padding:8px 10px;border-radius:7px;font-weight:800;cursor:pointer}
+.sub{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px}
+.sub-t{font-size:11px;font-weight:800;color:#7dd3fc;display:flex;justify-content:space-between;align-items:center}
+.m-rst{background:#334155;color:#e2e8f0;border:none;padding:2px 7px;border-radius:4px;font-size:10px;cursor:pointer}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;padding:14px;justify-content:center;align-items:center}
+.mbox{background:#1e293b;border:1px solid #475569;border-radius:12px;width:100%;max-width:490px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+.mhdr{padding:11px;background:#0f172a;border-bottom:1px solid #334155;display:flex;justify-content:space-between;font-weight:800;color:#38bdf8}
+.mbdy{padding:11px;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
+.hi{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:9px;display:flex;flex-direction:column;gap:5px}
+.cbtn{padding:4px 8px;font-size:11px;font-weight:700;border:none;border-radius:5px;cursor:pointer;color:#fff}
+</style>
 </head>
 <body>
+<div class="wrap">
+<div class="hdr">⚡ Viral Quiz Card Studio Pro</div>
 
-<div class="main-wrap">
-    <div class="studio-header">⚡ Viral Quiz Card Studio Pro</div>
-
-    <!-- ==================== TOP CONTROLS: TEXT, THEME & STYLING ==================== -->
-    <div class="control-box">
-        <div>
-            <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
-            <textarea id="raw-paste-box">🏛️ POLITY GK QUIZ 🧠
-Q. 'बर्डमैन ऑफ इंडिया' के नाम से प्रसिद्ध पक्षी वैज्ञानिक कौन हैं?
-- Who is the ornithologist known as the 'Birdman of India'?
-A) जिम कॉर्बेट
-B) सलीम अली
-C) एम. कृष्णन
-D) कैलाश सांखला
-👇 1 Second में सही उत्तर Comment करें! ⚡
-❤️ Like | ➕ Follow 🎯
-Caption: 'बर्डमैन ऑफ इंडिया' (Birdman of India) के नाम से किसे जाना जाता है? सही उत्तर कमेंट करें! 👇🧠
-#PolityQuiz #GKQuiz #BirdmanOfIndia #StaticGK
-Answer: B) सलीम अली
-Explanation: प्रसिद्ध भारतीय पक्षी विज्ञानी और प्रकृतिवादी डॉ. सलीम अली को 'बर्डमैन ऑफ इंडिया' कहा जाता है। उन्हें 1976 में पद्म विभूषण से सम्मानित किया गया था।</textarea>
-            <div class="btn-action-grid">
-                <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
-                    <span>📋 1-Click Paste & Run</span>
-                </button>
-                <button class="btn-action" onclick="generateFromRawText()">
-                    <span>✨ Generate Single Card</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- THEME & FONT SELECTION -->
-        <div class="row-flex" style="margin-top: 2px;">
-            <div>
-                <label>फ़ॉन्ट स्टाइल:</label>
-                <select id="cfg-font" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="'Hind', sans-serif">Hind (साफ बोल्ड)</option>
-                    <option value="'Kalam', cursive">Kalam (आकर्षक लिखावट)</option>
-                    <option value="'Rozha One', serif">Rozha One (क्लासिक)</option>
-                    <option value="'Poppins', sans-serif">Poppins (मॉडर्न)</option>
-                </select>
-            </div>
-            <div>
-                <label>बैकग्राउंड थीम:</label>
-                <select id="cfg-bg-color" onchange="onThemeChange(); saveAllSettings(); redrawCanvas();">
-                    <option value="paper_classic">📜 Classic Textured Paper (Open Look)</option>
-                    <option value="kids_candy">🌈 Rainbow Candy Pop (Cartoon)</option>
-                    <option value="#fef9c3">Soft Warm Yellow (Plain)</option>
-                    <option value="#ffffff">Pure White (Plain)</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- BACKGROUND COLOR, CUSTOM BG IMAGE & WORD COLOR SHUFFLE -->
-        <div class="paper-color-panel">
-            <div style="display:flex; gap:8px; align-items:flex-end;">
-                <div id="paper-color-controls" style="display:flex; gap:6px; flex:2;">
-                    <div style="flex: 2;">
-                        <label>🎨 पेपर बैकग्राउंड कलर:</label>
-                        <select id="cfg-paper-preset" onchange="applyPaperPresetColor(this.value)">
-                            <option value="#e9e6df">📜 Classic Khaddar Cream</option>
-                            <option value="#ffffff">⬜ Pure White Textured</option>
-                            <option value="#fef3c7">🟨 Soft Warm Yellow</option>
-                            <option value="#dcfce7">🟩 Mint Green Paper</option>
-                            <option value="#e0f2fe">🟦 Sky Blue Paper</option>
-                            <option value="#fae8ff">🟪 Soft Lavender Paper</option>
-                            <option value="#ffedd5">🟧 Peach Cream Paper</option>
-                        </select>
-                    </div>
-                    <div style="flex: 0.7;">
-                        <label>Custom:</label>
-                        <input type="color" id="cfg-paper-custom" value="#e9e6df" oninput="onCustomPaperColorInput(this.value)">
-                    </div>
-                </div>
-                <div>
-                    <label>शब्दों के रंग:</label>
-                    <button class="btn-shuffle-colors" onclick="shuffleQuestionWordColors()" title="प्रश्न के शब्दों के रंग बदलें">
-                        🎲 Shuffle Colors
-                    </button>
-                </div>
-            </div>
-
-            <!-- Custom Background Image Upload & Readability Sliders -->
-            <div class="sub-box" style="margin-top:2px;">
-                <div class="sub-box-title">
-                    <span>🌄 Card Background Photo (कस्टम बैकग्राउंड इमेज):</span>
-                    <span id="bg-img-status" style="color:#94a3b8;">None</span>
-                </div>
-                <div class="row-flex">
-                    <button class="btn-img-tool" onclick="document.getElementById('bg-img-input').click()">
-                        <span>📁 Upload BG Photo</span>
-                    </button>
-                    <button class="btn-img-tool" onclick="pasteBgImageFromClipboard()">
-                        <span>📋 Paste BG Photo</span>
-                    </button>
-                    <button class="btn-img-remove" id="btn-remove-bg-img" onclick="removeCustomBgImage()" style="display:none;" title="बैकग्राउंड फोटो हटाएं">
-                        ❌
-                    </button>
-                    <input type="file" id="bg-img-input" accept="image/*" style="display:none" onchange="handleBgImageUpload(event)">
-                </div>
-                <div class="row-flex" id="bg-img-sliders" style="display:none;">
-                    <div>
-                        <label>BG Blur (धुंधलापन): <span id="bg-blur-lbl">3</span>px</label>
-                        <input type="range" id="cfg-bg-blur" min="0" max="16" value="3" oninput="document.getElementById('bg-blur-lbl').innerText=this.value; redrawCanvas();">
-                    </div>
-                    <div>
-                        <label>Light Overlay (सफेद परत): <span id="bg-tint-lbl">72</span>%</label>
-                        <input type="range" id="cfg-bg-tint" min="0" max="92" value="72" oninput="document.getElementById('bg-tint-lbl').innerText=this.value; redrawCanvas();">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row-flex">
-            <div>
-                <label>प्रश्न साइज़: <span id="q-size-lbl">42</span>px</label>
-                <input type="range" id="cfg-q-size" min="30" max="60" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
-            </div>
-            <div>
-                <label>ऑप्शन साइज़: <span id="opt-size-lbl">34</span>px</label>
-                <input type="range" id="cfg-opt-size" min="24" max="44" value="34" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
-            </div>
-        </div>
-
-        <!-- ANSWER MODE TOGGLE -->
-        <div class="answer-toggle-card" onclick="toggleAnswerMode()">
-            <span class="toggle-text">✅ उत्तर व व्याख्या फोटो में दिखाएं (Answer Mode)</span>
-            <input type="checkbox" id="chk-answer-mode" class="checkbox-custom" onclick="event.stopPropagation(); onToggleAnswerChange();">
-        </div>
-
-        <!-- JSON BACKUP / RESTORE -->
-        <div class="backup-grid">
-            <button class="btn-backup" onclick="exportJSONBackup()">📤 Export Backup (JSON)</button>
-            <button class="btn-backup" onclick="document.getElementById('import-file').click()">📥 Import Backup (JSON)</button>
-            <input type="file" id="import-file" style="display:none" accept=".json" onchange="importJSONBackup(event)">
-        </div>
-    </div>
-
-    <!-- ==================== CANVAS PREVIEW (SINGLE CARD: 1080 x 1350) ==================== -->
-    <div class="canvas-card">
-        <canvas id="quizCanvas" width="1080" height="1350"></canvas>
-    </div>
-
-    <!-- ==================== SUBJECT CUTOUT PHOTO PANEL (BELOW PREVIEW) ==================== -->
-    <div class="img-control-panel">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size: 12.5px; font-weight: 800; color: #38bdf8;">🖼️ Subject Cutout Photo (Crop + Auto-BG Remove):</span>
-            <span id="img-status-badge" style="font-size: 11px; color: #94a3b8; font-weight: 700;">No Image</span>
-        </div>
-        <div class="img-btn-row">
-            <button class="btn-img-tool" onclick="document.getElementById('quiz-img-input').click()">
-                <span>📁 Upload</span>
-            </button>
-            <button class="btn-img-tool" onclick="pasteImageFromClipboard()">
-                <span>📋 Paste Img</span>
-            </button>
-            <button class="btn-img-tool btn-img-search" onclick="searchImageOnGoogle()">
-                <span>🔍 Google</span>
-            </button>
-            <button class="btn-img-remove" id="btn-remove-img" onclick="removeQuizImage()" style="display:none;" title="फोटो हटाएं">
-                ❌
-            </button>
-            <input type="file" id="quiz-img-input" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
-        </div>
-        
-        <div id="img-options-area" style="display:none; flex-direction:column; gap:8px;">
-            <!-- Smart Background Remover Toggle + Tolerance -->
-            <div class="sub-box">
-                <div class="blend-toggle-row" onclick="toggleSmartBgRemoval()" style="padding:5px 8px;">
-                    <span style="font-size: 12px; font-weight: 800; color: #fde047;">🪄 Smart Auto-Remove BG (बैकग्राउंड हटाएं)</span>
-                    <input type="checkbox" id="chk-remove-white-bg" checked style="width:18px; height:18px; accent-color:#facc15;" onclick="event.stopPropagation(); processAndRenderImage();">
-                </div>
-                <div class="row-flex" id="bg-tolerance-row">
-                    <div>
-                        <label>BG Clean Tolerance (सफाई पावर): <span id="tol-val-lbl">38</span></label>
-                        <input type="range" id="cfg-bg-tolerance" min="10" max="95" value="38" oninput="document.getElementById('tol-val-lbl').innerText=this.value; processAndRenderImage();">
-                    </div>
-                    <div style="flex:0.8;">
-                        <label>पोजीशन (Layout):</label>
-                        <select id="cfg-img-pos" onchange="saveAllSettings(); redrawCanvas();">
-                            <option value="right">👉 Right Cutout</option>
-                            <option value="center">⬇️ Center Banner</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- In-App Cropper & Position/Zoom Controls -->
-            <div class="sub-box">
-                <div class="sub-box-title">
-                    <span>✂️ Crop Edges & Position Adjuster (Live Preview):</span>
-                    <button class="btn-mini-reset" onclick="resetCropAndPos()">↺ Reset</button>
-                </div>
-                <div class="row-flex">
-                    <div>
-                        <label>Top Crop: <span id="crop-top-lbl">0</span>%</label>
-                        <input type="range" id="cfg-crop-top" min="0" max="45" value="0" oninput="document.getElementById('crop-top-lbl').innerText=this.value; processAndRenderImage();">
-                    </div>
-                    <div>
-                        <label>Bottom Crop: <span id="crop-bot-lbl">0</span>%</label>
-                        <input type="range" id="cfg-crop-bot" min="0" max="45" value="0" oninput="document.getElementById('crop-bot-lbl').innerText=this.value; processAndRenderImage();">
-                    </div>
-                </div>
-                <div class="row-flex">
-                    <div>
-                        <label>Left Crop: <span id="crop-left-lbl">0</span>%</label>
-                        <input type="range" id="cfg-crop-left" min="0" max="45" value="0" oninput="document.getElementById('crop-left-lbl').innerText=this.value; processAndRenderImage();">
-                    </div>
-                    <div>
-                        <label>Right Crop: <span id="crop-right-lbl">0</span>%</label>
-                        <input type="range" id="cfg-crop-right" min="0" max="45" value="0" oninput="document.getElementById('crop-right-lbl').innerText=this.value; processAndRenderImage();">
-                    </div>
-                </div>
-                <div class="row-flex">
-                    <div>
-                        <label>Zoom: <span id="img-scale-lbl">115</span>%</label>
-                        <input type="range" id="cfg-img-scale" min="60" max="160" value="115" oninput="document.getElementById('img-scale-lbl').innerText=this.value; redrawCanvas();">
-                    </div>
-                    <div>
-                        <label>Move X: <span id="img-offx-lbl">0</span></label>
-                        <input type="range" id="cfg-img-offx" min="-150" max="150" value="0" oninput="document.getElementById('img-offx-lbl').innerText=this.value; redrawCanvas();">
-                    </div>
-                    <div>
-                        <label>Move Y: <span id="img-offy-lbl">0</span></label>
-                        <input type="range" id="cfg-img-offy" min="-150" max="150" value="0" oninput="document.getElementById('img-offy-lbl').innerText=this.value; redrawCanvas();">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== ACTIONS FOR SINGLE CARD ==================== -->
-    <div class="action-grid">
-        <button class="btn-act btn-share" onclick="shareDirectly()">📲 Direct Share Single</button>
-        <button class="btn-act btn-download" onclick="downloadImage()">📥 Download HD Single</button>
-        <button class="btn-act btn-history-trigger" onclick="openHistoryModal()">📚 प्रश्न बैंक प्रबंधन (Add, Edit, Delete) [<span id="history-total-count">0</span>]</button>
-    </div>
+<div class="box">
+<div>
+<label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
+<textarea id="raw-box">🌍 WORLD GK QUIZ 🧠
+386. विश्व की सबसे लंबी पर्वत श्रृंखला कौन-सी है?
+A) हिमालय (Himalaya)
+B) एंडीज (Andes) ▲
+C) रॉकी (Rockies) 🌲
+D) आल्प्स (Alps) 🏔️
+👇 अपना जवाब A, B, C या D में कमेंट करें!
+❤️ Like | ➕ Follow | 🎯 Next Quiz
+Caption: विश्व की सबसे लंबी पर्वत श्रृंखला (Andes) से जुड़ा प्रश्न! सही उत्तर कमेंट करें। 👇🌍
+#WorldGKQuiz #GeographyQuiz #AndesMountains #ExamPreparation
+Answer: B) एंडीज (Andes) ▲
+Explanation: दक्षिण अमेरिका महाद्वीप के पश्चिमी तट पर स्थित 'एंडीज पर्वत श्रृंखला' विश्व की सबसे लंबी स्थलीय पर्वत श्रृंखला है, जिसकी लंबाई लगभग 7,000 किमी है।</textarea>
+<div class="g2" style="margin-top:7px">
+<button class="btn btn-b" onclick="pasteAndRun()">📋 1-Click Paste & Run</button>
+<button class="btn" onclick="parseRawText()">✨ Generate Card</button>
+</div>
 </div>
 
-<!-- HISTORY / QUESTION BANK MODAL -->
-<div class="modal-overlay" id="history-modal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <span>📚 प्रश्न बैंक प्रबंधन (Question Bank)</span>
-            <button onclick="closeHistoryModal()" style="background:none;border:none;color:#f87171;font-size:18px;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <button class="btn-add-new" onclick="openAddQuestionModal()">➕ नया प्रश्न स्वयं जोड़ें (Add New Question)</button>
-            <div id="history-items-container" style="display:flex; flex-direction:column; gap:8px;"></div>
-        </div>
-    </div>
+<div class="row">
+<div>
+<label>फ़ॉन्ट स्टाइल:</label>
+<select id="cfg-font" onchange="savePrefs();draw()">
+<option value="'Hind', sans-serif">Hind (साफ बोल्ड)</option>
+<option value="'Kalam', cursive">Kalam (लिखावट)</option>
+<option value="'Rozha One', serif">Rozha One (क्लासिक)</option>
+<option value="'Poppins', sans-serif">Poppins (मॉडर्न)</option>
+</select>
+</div>
+<div>
+<label>थीम (Theme):</label>
+<select id="cfg-theme" onchange="onThemeChange();savePrefs();draw()">
+<option value="world_capsule">🌍 World GK Capsule (Map Style)</option>
+<option value="aaj_ka_sawal">🧠 आज का सवाल (Clean Cream)</option>
+<option value="paper_classic">📜 Classic Textured Paper</option>
+<option value="kids_candy">🌈 Rainbow Candy Pop</option>
+<option value="#fef9c3">Soft Warm Yellow (Plain)</option>
+<option value="#ffffff">Pure White (Plain)</option>
+</select>
+</div>
 </div>
 
-<!-- ADD / EDIT QUESTION MODAL -->
-<div class="modal-overlay" id="edit-modal">
-    <div class="modal-box">
-        <div class="modal-header">
-            <span id="edit-modal-title">✏️ प्रश्न संपादित करें (Edit Question)</span>
-            <button onclick="closeEditModal()" style="background:none;border:none;color:#f87171;font-size:18px;cursor:pointer;">✕</button>
-        </div>
-        <div class="modal-body">
-            <input type="hidden" id="edit-q-id">
-            <div>
-                <label>प्रश्न क्रमांक (Prefix - उदा. Q.170):</label>
-                <input type="text" id="edit-q-prefix">
-            </div>
-            <div>
-                <label>प्रश्न (Hindi Question):</label>
-                <textarea id="edit-q-text" style="min-height:55px;"></textarea>
-            </div>
-            <div>
-                <label>अंग्रेजी प्रश्न (English Question - Optional):</label>
-                <input type="text" id="edit-q-en" placeholder="e.g. Who is the ornithologist known as the 'Birdman of India'?">
-            </div>
-            <div class="row-flex">
-                <div>
-                    <label>विकल्प A:</label>
-                    <input type="text" id="edit-opt-a">
-                </div>
-                <div>
-                    <label>विकल्प B:</label>
-                    <input type="text" id="edit-opt-b">
-                </div>
-            </div>
-            <div class="row-flex">
-                <div>
-                    <label>विकल्प C:</label>
-                    <input type="text" id="edit-opt-c">
-                </div>
-                <div>
-                    <label>विकल्प D:</label>
-                    <input type="text" id="edit-opt-d">
-                </div>
-            </div>
-            <div>
-                <label>सही उत्तर (Correct Answer):</label>
-                <select id="edit-correct-ans">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                </select>
-            </div>
-            <div>
-                <label>व्याख्या (Detailed Explanation):</label>
-                <textarea id="edit-q-exp" style="min-height:65px;"></textarea>
-            </div>
-            <button class="btn-action" onclick="saveQuestionEditForm()">💾 सुरक्षित करें (Save Question)</button>
-        </div>
-    </div>
+<div class="sub">
+<div class="row" style="align-items:flex-end">
+<div id="paper-col-box" style="display:none;gap:6px;flex:2">
+<div style="flex:2">
+<label>🎨 पेपर बैकग्राउंड कलर:</label>
+<select id="cfg-paper-pre" onchange="setPaperCol(this.value)">
+<option value="#e9e6df">📜 Classic Khaddar</option>
+<option value="#ffffff">⬜ Pure White</option>
+<option value="#fef3c7">🟨 Warm Yellow</option>
+<option value="#dcfce7">🟩 Mint Green</option>
+<option value="#e0f2fe">🟦 Sky Blue</option>
+<option value="#fae8ff">🟪 Soft Lavender</option>
+</select>
+</div>
+<div style="flex:.7"><label>Custom:</label><input type="color" id="cfg-paper-col" value="#e9e6df" oninput="setPaperCol(this.value)"></div>
+</div>
+<div><label>शब्दों के रंग:</label><button class="btn-shuf" onclick="wordSeed=(wordSeed+1)%12;draw()">🎲 Shuffle Colors</button></div>
+</div>
+
+<div class="sub-t" style="margin-top:3px"><span>🌄 Card Background Photo (कस्टम बैकग्राउंड इमेज):</span><span id="bg-st" style="color:#94a3b8">None</span></div>
+<div class="row">
+<button class="ibtn" onclick="document.getElementById('bg-in').click()">📁 Upload BG</button>
+<button class="ibtn" onclick="pasteBgImg()">📋 Paste BG</button>
+<button class="ibtn-r" id="rm-bg" style="display:none" onclick="clearBgImg()">❌</button>
+<input type="file" id="bg-in" accept="image/*" style="display:none" onchange="loadBgFile(event)">
+</div>
+<div class="row" id="bg-sld" style="display:none">
+<div><label>Blur: <span id="b-lbl">3</span>px</label><input type="range" id="cfg-blur" min="0" max="16" value="3" oninput="document.getElementById('b-lbl').innerText=this.value;draw()"></div>
+<div><label>White Overlay: <span id="t-lbl">72</span>%</label><input type="range" id="cfg-tint" min="0" max="92" value="72" oninput="document.getElementById('t-lbl').innerText=this.value;draw()"></div>
+</div>
+</div>
+
+<div class="row">
+<div><label>प्रश्न साइज़: <span id="qs-lbl">44</span>px</label><input type="range" id="cfg-qs" min="30" max="60" value="44" oninput="document.getElementById('qs-lbl').innerText=this.value;savePrefs();draw()"></div>
+<div><label>ऑप्शन साइज़: <span id="os-lbl">34</span>px</label><input type="range" id="cfg-os" min="24" max="44" value="34" oninput="document.getElementById('os-lbl').innerText=this.value;savePrefs();draw()"></div>
+</div>
+
+<div class="tog" onclick="toggleAns()">
+<span>✅ उत्तर व व्याख्या फोटो में दिखाएं (Answer Mode)</span>
+<input type="checkbox" id="chk-ans" class="chk" onclick="event.stopPropagation();ansMode=this.checked;savePrefs();draw()">
+</div>
+
+<div class="g2">
+<button class="btn btn-s" onclick="exportJson()">📤 Export JSON</button>
+<button class="btn btn-s" onclick="document.getElementById('imp-f').click()">📥 Import JSON</button>
+<input type="file" id="imp-f" accept=".json" style="display:none" onchange="importJson(event)">
+</div>
+</div>
+
+<!-- CANVAS PREVIEW -->
+<div class="c-card"><canvas id="qCanvas" width="1080" height="1350"></canvas></div>
+
+<!-- SUBJECT CUTOUT PHOTO PANEL (BELOW PREVIEW) -->
+<div class="img-box">
+<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Cutout Photo & Red Pointer Label:</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
+<div class="img-btns">
+<button class="ibtn" onclick="document.getElementById('img-in').click()">📁 Upload</button>
+<button class="ibtn" onclick="pasteSubImg()">📋 Paste Img</button>
+<button class="ibtn ibtn-p" onclick="googleImg()">🔍 Google</button>
+<button class="ibtn-r" id="rm-img" style="display:none" onclick="clearSubImg()">❌</button>
+<input type="file" id="img-in" accept="image/*" style="display:none" onchange="loadSubFile(event)">
+</div>
+
+<div id="img-opts" style="display:none;flex-direction:column;gap:8px">
+<div class="sub">
+<div class="tog" style="border-color:#facc15;padding:5px 8px" onclick="const c=document.getElementById('chk-bg');c.checked=!c.checked;processImg()">
+<span style="color:#fde047;font-size:12px">🪄 Smart Auto-Remove BG (बैकग्राउंड हटाएं)</span>
+<input type="checkbox" id="chk-bg" checked style="width:17px;height:17px;accent-color:#facc15" onclick="event.stopPropagation();processImg()">
+</div>
+<div class="row">
+<div><label>BG Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
+<div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Cutout</option><option value="center">⬇️ Center Banner</option></select></div>
+</div>
+</div>
+
+<div class="sub" style="border-color:#ef4444">
+<div class="sub-t" style="color:#fca5a5"><span>🏷️ Red Callout Label & Pointer Arrow:</span></div>
+<div class="row">
+<div style="flex:2"><label>लेबल टेक्स्ट:</label><input type="text" id="cfg-tag" placeholder="उदा. एंडीज पर्वत श्रृंखला" oninput="draw()"></div>
+<div style="flex:1"><label>Arrow:</label><select id="cfg-dir" onchange="draw()"><option value="down-left">↙️ नीचे-बाएं</option><option value="left">⬅️ बाएं</option><option value="down">⬇️ नीचे</option><option value="none">बिना तीर</option></select></div>
+</div>
+</div>
+
+<div class="sub">
+<div class="sub-t"><span>✂️ Crop Edges & Position Adjuster:</span><button class="m-rst" onclick="resetCrop()">↺ Reset</button></div>
+<div class="row">
+<div><label>Top: <span id="ct-l">0</span>%</label><input type="range" id="ct" min="0" max="45" value="0" oninput="document.getElementById('ct-l').innerText=this.value;processImg()"></div>
+<div><label>Bottom: <span id="cb-l">0</span>%</label><input type="range" id="cb" min="0" max="45" value="0" oninput="document.getElementById('cb-l').innerText=this.value;processImg()"></div>
+</div>
+<div class="row">
+<div><label>Left: <span id="cl-l">0</span>%</label><input type="range" id="cl" min="0" max="45" value="0" oninput="document.getElementById('cl-l').innerText=this.value;processImg()"></div>
+<div><label>Right: <span id="cr-l">0</span>%</label><input type="range" id="cr" min="0" max="45" value="0" oninput="document.getElementById('cr-l').innerText=this.value;processImg()"></div>
+</div>
+<div class="row">
+<div><label>Zoom: <span id="sc-l">115</span>%</label><input type="range" id="sc" min="60" max="160" value="115" oninput="document.getElementById('sc-l').innerText=this.value;draw()"></div>
+<div><label>X: <span id="ox-l">0</span></label><input type="range" id="ox" min="-150" max="150" value="0" oninput="document.getElementById('ox-l').innerText=this.value;draw()"></div>
+<div><label>Y: <span id="oy-l">0</span></label><input type="range" id="oy" min="-150" max="150" value="0" oninput="document.getElementById('oy-l').innerText=this.value;draw()"></div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- SHARE & DOWNLOAD -->
+<div class="g2">
+<button class="btn btn-b" onclick="shareImg()">📲 Direct Share Single</button>
+<button class="btn btn-g" onclick="dlImg()">📥 Download HD Single</button>
+<button class="btn btn-s" style="grid-column:span 2" onclick="openHist()">📚 प्रश्न बैंक प्रबंधन (Add, Edit, Delete) [<span id="h-cnt">0</span>]</button>
+</div>
+</div>
+
+<!-- HISTORY MODAL -->
+<div class="modal" id="h-mod">
+<div class="mbox">
+<div class="mhdr"><span>📚 प्रश्न बैंक (Question Bank)</span><button onclick="document.getElementById('h-mod').style.display='none'" style="background:none;border:none;color:#f87171;font-size:18px;cursor:pointer">✕</button></div>
+<div class="mbdy">
+<button class="btn btn-g" onclick="openEdit(null)">➕ नया प्रश्न जोड़ें (Add New)</button>
+<div id="h-list" style="display:flex;flex-direction:column;gap:8px"></div>
+</div>
+</div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal" id="e-mod">
+<div class="mbox">
+<div class="mhdr"><span id="e-tit">✏️ प्रश्न संपादित करें</span><button onclick="document.getElementById('e-mod').style.display='none'" style="background:none;border:none;color:#f87171;font-size:18px;cursor:pointer">✕</button></div>
+<div class="mbdy">
+<input type="hidden" id="eq-id">
+<div><label>Prefix (उदा. 386. या Q.):</label><input type="text" id="eq-pre"></div>
+<div><label>Hindi Question:</label><textarea id="eq-txt" style="min-height:50px"></textarea></div>
+<div><label>English Question (Optional):</label><input type="text" id="eq-en"></div>
+<div class="row"><div><label>Option A:</label><input type="text" id="eq-a"></div><div><label>Option B:</label><input type="text" id="eq-b"></div></div>
+<div class="row"><div><label>Option C:</label><input type="text" id="eq-c"></div><div><label>Option D:</label><input type="text" id="eq-d"></div></div>
+<div><label>Correct Answer:</label><select id="eq-ans"><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+<div><label>Explanation:</label><textarea id="eq-exp" style="min-height:60px"></textarea></div>
+<button class="btn" onclick="saveEdit()">💾 सुरक्षित करें</button>
+</div>
+</div>
 </div>
 
 <script>
-    const canvas = document.getElementById('quizCanvas');
-    const ctx = canvas.getContext('2d');
-
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V15";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V15";
-
-    let isAnswerRevealed = false;
-    let rawUploadedImage = null;
-    let processedQuizImage = null;
-    let customBgImage = null;
-    let paperPatternCache = {};
-    let colorSeedOffset = 0;
-
-    let quizData = {
-        id: "default_birdman",
-        title: "🏛️ POLITY GK QUIZ 🧠",
-        qPrefix: "Q.",
-        questionText: "'बर्डमैन ऑफ इंडिया' के नाम से प्रसिद्ध पक्षी वैज्ञानिक कौन हैं?",
-        questionEn: "Who is the ornithologist known as the 'Birdman of India'?",
-        options: {
-            A: "जिम कॉर्बेट",
-            B: "सलीम अली",
-            C: "एम. कृष्णन",
-            D: "कैलाश सांखला"
-        },
-        hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
-        social: "❤️ Like | ➕ Follow 🎯",
-        correctOption: "B",
-        explanation: "प्रसिद्ध भारतीय पक्षी विज्ञानी और प्रकृतिवादी डॉ. सलीम अली को 'बर्डमैन ऑफ इंडिया' कहा जाता है। उन्हें 1976 में पद्म विभूषण से सम्मानित किया गया था।",
-        caption: "'बर्डमैन ऑफ इंडिया' (Birdman of India) के नाम से किसे जाना जाता है? सही उत्तर कमेंट करें! 👇🧠\n#PolityQuiz #GKQuiz #BirdmanOfIndia #StaticGK"
-    };
-
-    /* ==================== HELPER: BUILD CAPTION FOR SHARE ==================== */
-    function getShareCaptionText() {
-        let baseCaption = (quizData.caption || "").replace(/#ans_[A-Da-d]/gi, '').trim();
-        if (isAnswerRevealed) {
-            const correctText = quizData.options[quizData.correctOption] || "";
-            const hashMatches = baseCaption.match(/#[^\s#]+/g);
-            let tagsString = hashMatches ? hashMatches.join(" ") : "";
-            return `✅ सही उत्तर: [विकल्प ${quizData.correctOption}] ${correctText}\n\n📖 व्याख्या: ${quizData.explanation}\n\n${tagsString}`.trim();
-        }
-        return baseCaption;
-    }
-
-    /* ==================== SHUFFLE RANDOM WORD COLORS ==================== */
-    function shuffleQuestionWordColors() {
-        colorSeedOffset = (colorSeedOffset + 1) % 12;
-        redrawCanvas();
-    }
-
-    /* ==================== PAPER BACKGROUND COLOR CONTROLS ==================== */
-    function onThemeChange() {
-        const themeKey = document.getElementById('cfg-bg-color').value;
-        const panel = document.getElementById('paper-color-controls');
-        panel.style.display = (themeKey === "paper_classic") ? "flex" : "none";
-    }
-
-    function applyPaperPresetColor(hex) {
-        document.getElementById('cfg-paper-preset').value = hex;
-        document.getElementById('cfg-paper-custom').value = hex;
-        saveAllSettings();
-        redrawCanvas();
-    }
-
-    function onCustomPaperColorInput(hex) {
-        document.getElementById('cfg-paper-custom').value = hex;
-        saveAllSettings();
-        redrawCanvas();
-    }
-
-    /* ==================== CUSTOM BACKGROUND IMAGE UPLOAD & PASTE ==================== */
-    function setCustomBgImage(dataUrl) {
-        if (!dataUrl) {
-            removeCustomBgImage();
-            return;
-        }
-        const img = new Image();
-        img.onload = () => {
-            customBgImage = img;
-            document.getElementById('bg-img-status').innerText = "✅ Active";
-            document.getElementById('bg-img-status').style.color = "#34d399";
-            document.getElementById('btn-remove-bg-img').style.display = "inline-block";
-            document.getElementById('bg-img-sliders').style.display = "flex";
-            redrawCanvas();
-        };
-        img.src = dataUrl;
-    }
-
-    function handleBgImageUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (e) => setCustomBgImage(e.target.result);
-        reader.readAsDataURL(file);
-        event.target.value = "";
-    }
-
-    async function pasteBgImageFromClipboard() {
-        try {
-            const clipboardItems = await navigator.clipboard.read();
-            for (const item of clipboardItems) {
-                const imageType = item.types.find(type => type.startsWith('image/'));
-                if (imageType) {
-                    const blob = await item.getType(imageType);
-                    const reader = new FileReader();
-                    reader.onload = (e) => setCustomBgImage(e.target.result);
-                    reader.readAsDataURL(blob);
-                    return;
-                }
-            }
-            alert("क्लिपबोर्ड में कोई इमेज नहीं मिली! पहले कोई बैकग्राउंड फोटो Copy करें।");
-        } catch (err) {
-            alert("क्लिपबोर्ड से इमेज पेस्ट नहीं हो सकी। कृपया 'Upload BG Photo' बटन दबाएं।");
-        }
-    }
-
-    function removeCustomBgImage() {
-        customBgImage = null;
-        document.getElementById('bg-img-status').innerText = "None";
-        document.getElementById('bg-img-status').style.color = "#94a3b8";
-        document.getElementById('btn-remove-bg-img').style.display = "none";
-        document.getElementById('bg-img-sliders').style.display = "none";
-        redrawCanvas();
-    }
-
-    /* ==================== TEXTURE GENERATOR ==================== */
-    function getPaperTexturePattern(targetCtx, baseHexColor) {
-        const key = (baseHexColor || "#e9e6df").toLowerCase();
-        if (paperPatternCache[key]) return paperPatternCache[key];
-
-        const pCanvas = document.createElement('canvas');
-        pCanvas.width = 160;
-        pCanvas.height = 160;
-        const pCtx = pCanvas.getContext('2d');
-
-        pCtx.fillStyle = key;
-        pCtx.fillRect(0, 0, 160, 160);
-
-        for (let i = 0; i < 160; i += 3) {
-            pCtx.fillStyle = (i % 6 === 0) ? "rgba(0,0,0,0.036)" : "rgba(255,255,255,0.28)";
-            pCtx.fillRect(0, i, 160, 1);
-            pCtx.fillRect(i, 0, 1, 160);
-        }
-
-        for (let s = 0; s < 360; s++) {
-            const rx = Math.random() * 160;
-            const ry = Math.random() * 160;
-            pCtx.fillStyle = Math.random() > 0.5 ? "rgba(60,50,40,0.055)" : "rgba(255,255,255,0.24)";
-            pCtx.fillRect(rx, ry, 1.5, 1.5);
-        }
-
-        const pattern = targetCtx.createPattern(pCanvas, 'repeat');
-        paperPatternCache[key] = pattern;
-        return pattern;
-    }
-
-    /* ==================== SUBJECT PHOTO CROP + SMART FLOOD-FILL BG REMOVAL ==================== */
-    function searchImageOnGoogle() {
-        const cleanQ = (quizData.questionText || "").replace(/['"?।]/g, ' ').trim();
-        const ansText = quizData.options[quizData.correctOption] || "";
-        const query = encodeURIComponent(`${ansText} ${cleanQ.split(' ').slice(0, 4).join(' ')} sketch png`);
-        window.open(`https://www.google.com/search?tbm=isch&q=${query}`, '_blank');
-    }
-
-    function toggleSmartBgRemoval() {
-        const chk = document.getElementById('chk-remove-white-bg');
-        chk.checked = !chk.checked;
-        processAndRenderImage();
-    }
-
-    function resetCropAndPos() {
-        document.getElementById('cfg-crop-top').value = 0;
-        document.getElementById('crop-top-lbl').innerText = "0";
-        document.getElementById('cfg-crop-bot').value = 0;
-        document.getElementById('crop-bot-lbl').innerText = "0";
-        document.getElementById('cfg-crop-left').value = 0;
-        document.getElementById('crop-left-lbl').innerText = "0";
-        document.getElementById('cfg-crop-right').value = 0;
-        document.getElementById('crop-right-lbl').innerText = "0";
-        document.getElementById('cfg-img-scale').value = 115;
-        document.getElementById('img-scale-lbl').innerText = "115";
-        document.getElementById('cfg-img-offx').value = 0;
-        document.getElementById('img-offx-lbl').innerText = "0";
-        document.getElementById('cfg-img-offy').value = 0;
-        document.getElementById('img-offy-lbl').innerText = "0";
-        processAndRenderImage();
-    }
-
-    function processAndRenderImage() {
-        if (!rawUploadedImage) return;
-
-        const removeBg = document.getElementById('chk-remove-white-bg').checked;
-        document.getElementById('bg-tolerance-row').style.opacity = removeBg ? "1" : "0.45";
-
-        const cTop = (parseInt(document.getElementById('cfg-crop-top').value) || 0) / 100;
-        const cBot = (parseInt(document.getElementById('cfg-crop-bot').value) || 0) / 100;
-        const cLeft = (parseInt(document.getElementById('cfg-crop-left').value) || 0) / 100;
-        const cRight = (parseInt(document.getElementById('cfg-crop-right').value) || 0) / 100;
-
-        const sx = Math.floor(rawUploadedImage.width * cLeft);
-        const sy = Math.floor(rawUploadedImage.height * cTop);
-        const sw = Math.max(20, Math.floor(rawUploadedImage.width * (1 - cLeft - cRight)));
-        const sh = Math.max(20, Math.floor(rawUploadedImage.height * (1 - cTop - cBot)));
-
-        const maxDim = 900;
-        let outW = sw, outH = sh;
-        if (outW > maxDim || outH > maxDim) {
-            const ratio = Math.min(maxDim / outW, maxDim / outH);
-            outW = Math.round(outW * ratio);
-            outH = Math.round(outH * ratio);
-        }
-
-        const off = document.createElement('canvas');
-        off.width = outW;
-        off.height = outH;
-        const oCtx = off.getContext('2d');
-        oCtx.drawImage(rawUploadedImage, sx, sy, sw, sh, 0, 0, outW, outH);
-
-        if (!removeBg) {
-            const plainImg = new Image();
-            plainImg.onload = () => {
-                processedQuizImage = plainImg;
-                redrawCanvas();
-            };
-            plainImg.src = off.toDataURL('image/png');
-            return;
-        }
-
-        const tolerance = parseInt(document.getElementById('cfg-bg-tolerance').value) || 38;
-        const tolSq = tolerance * tolerance * 3;
-        const softTolSq = (tolerance + 16) * (tolerance + 16) * 3;
-
-        const imgData = oCtx.getImageData(0, 0, outW, outH);
-        const d = imgData.data;
-        const visited = new Uint8Array(outW * outH);
-        const queue = new Int32Array(outW * outH);
-        let head = 0, tail = 0;
-
-        const corners = [
-            0,
-            (outW - 1) * 4,
-            ((outH - 1) * outW) * 4,
-            ((outH - 1) * outW + (outW - 1)) * 4
-        ];
-        const refColors = corners.map(idx => [d[idx], d[idx + 1], d[idx + 2]]);
-
-        function colorDistSq(r, g, b) {
-            let minD = 999999;
-            for (let c = 0; c < refColors.length; c++) {
-                const dr = r - refColors[c][0];
-                const dg = g - refColors[c][1];
-                const db = b - refColors[c][2];
-                const dist = dr * dr + dg * dg + db * db;
-                if (dist < minD) minD = dist;
-            }
-            return minD;
-        }
-
-        for (let x = 0; x < outW; x++) {
-            const topIdx = x;
-            const botIdx = (outH - 1) * outW + x;
-            if (!visited[topIdx]) { visited[topIdx] = 1; queue[tail++] = topIdx; }
-            if (!visited[botIdx]) { visited[botIdx] = 1; queue[tail++] = botIdx; }
-        }
-        for (let y = 0; y < outH; y++) {
-            const leftIdx = y * outW;
-            const rightIdx = y * outW + (outW - 1);
-            if (!visited[leftIdx]) { visited[leftIdx] = 1; queue[tail++] = leftIdx; }
-            if (!visited[rightIdx]) { visited[rightIdx] = 1; queue[tail++] = rightIdx; }
-        }
-
-        while (head < tail) {
-            const pIdx = queue[head++];
-            const px = pIdx % outW;
-            const py = (pIdx - px) / outW;
-            const i4 = pIdx * 4;
-
-            const dist = colorDistSq(d[i4], d[i4 + 1], d[i4 + 2]);
-            if (dist <= tolSq) {
-                d[i4 + 3] = 0;
-                if (px > 0 && !visited[pIdx - 1]) { visited[pIdx - 1] = 1; queue[tail++] = pIdx - 1; }
-                if (px < outW - 1 && !visited[pIdx + 1]) { visited[pIdx + 1] = 1; queue[tail++] = pIdx + 1; }
-                if (py > 0 && !visited[pIdx - outW]) { visited[pIdx - outW] = 1; queue[tail++] = pIdx - outW; }
-                if (py < outH - 1 && !visited[pIdx + outW]) { visited[pIdx + outW] = 1; queue[tail++] = pIdx + outW; }
-            } else if (dist <= softTolSq) {
-                const alphaRatio = (dist - tolSq) / (softTolSq - tolSq);
-                d[i4 + 3] = Math.round(d[i4 + 3] * alphaRatio);
-            }
-        }
-
-        oCtx.putImageData(imgData, 0, 0);
-
-        const blendedImg = new Image();
-        blendedImg.onload = () => {
-            processedQuizImage = blendedImg;
-            redrawCanvas();
-        };
-        blendedImg.src = off.toDataURL('image/png');
-    }
-
-    function setQuizImageFromDataUrl(dataUrl) {
-        if (!dataUrl) {
-            removeQuizImage();
-            return;
-        }
-        const img = new Image();
-        img.onload = () => {
-            rawUploadedImage = img;
-            document.getElementById('img-status-badge').innerText = "✅ Image Ready";
-            document.getElementById('img-status-badge').style.color = "#34d399";
-            document.getElementById('btn-remove-img').style.display = "inline-block";
-            document.getElementById('img-options-area').style.display = "flex";
-            resetCropAndPos();
-        };
-        img.src = dataUrl;
-    }
-
-    function handleImageUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (e) => setQuizImageFromDataUrl(e.target.result);
-        reader.readAsDataURL(file);
-        event.target.value = "";
-    }
-
-    async function pasteImageFromClipboard() {
-        try {
-            const clipboardItems = await navigator.clipboard.read();
-            for (const item of clipboardItems) {
-                const imageType = item.types.find(type => type.startsWith('image/'));
-                if (imageType) {
-                    const blob = await item.getType(imageType);
-                    const reader = new FileReader();
-                    reader.onload = (e) => setQuizImageFromDataUrl(e.target.result);
-                    reader.readAsDataURL(blob);
-                    return;
-                }
-            }
-            alert("क्लिपबोर्ड में कोई इमेज नहीं मिली! पहले Google या Gallery से कोई फोटो Copy करें।");
-        } catch (err) {
-            alert("इमेज पेस्ट करने की अनुमति नहीं मिली। कृपया 'Upload' बटन का उपयोग करें।");
-        }
-    }
-
-    function removeQuizImage() {
-        rawUploadedImage = null;
-        processedQuizImage = null;
-        document.getElementById('img-status-badge').innerText = "No Image";
-        document.getElementById('img-status-badge').style.color = "#94a3b8";
-        document.getElementById('btn-remove-img').style.display = "none";
-        document.getElementById('img-options-area').style.display = "none";
-        redrawCanvas();
-    }
-
-    /* ==================== TEXT PARSER & CLEANER ==================== */
-    function cleanString(str) {
-        if (!str) return "";
-        return str.replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g, '').trim();
-    }
-
-    function cleanAndMoveEmojiToEnd(text) {
-        if (!text) return "";
-        let clean = cleanString(text).replace(/\s+/g, ' ');
-        const emojiRegex = /([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F02F}\u{1F0A0}-\u{1F0FF}])/gu;
-        const emojisFound = clean.match(emojiRegex);
-        const textWithoutEmojis = clean.replace(emojiRegex, '').replace(/\s+/g, ' ').trim();
-
-        if (emojisFound && emojisFound.length > 0) {
-            return textWithoutEmojis + " " + emojisFound.join('');
-        }
-        return textWithoutEmojis;
-    }
-
-    async function pasteFromClipboardAndGenerate() {
-        try {
-            const text = await navigator.clipboard.readText();
-            if (text && text.trim().length > 0) {
-                document.getElementById('raw-paste-box').value = text;
-                generateFromRawText();
-            } else {
-                alert("क्लिपबोर्ड खाली है! कृपया पहले टेक्स्ट कॉपी करें।");
-            }
-        } catch (err) {
-            alert("क्लिपबोर्ड एक्सेस की अनुमति नहीं मिली। कृपया बॉक्स में पेस्ट करके 'Generate Single Card' दबाएं।");
-        }
-    }
-
-    function generateFromRawText() {
-        const raw = document.getElementById('raw-paste-box').value;
-        if (!raw || !raw.trim()) {
-            alert("कृपया टेक्स्ट बॉक्स में पूरा क्विज़ टेक्स्ट पेस्ट करें!");
-            return;
-        }
-
-        const lines = raw.split(/\r?\n/).map(l => cleanString(l)).filter(l => l.length > 0);
-        if (lines.length < 4) {
-            alert("टेक्स्ट बहुत छोटा है! कृपया पूरा फ़ॉर्मेट पेस्ट करें।");
-            return;
-        }
-
-        let parsedTitle = "";
-        let parsedPrefix = "Q.";
-        let parsedQText = "";
-        let parsedQEn = "";
-        let parsedOpts = { A: "", B: "", C: "", D: "" };
-        let parsedHook = "👇 1 Second में सही उत्तर Comment करें! ⚡";
-        let parsedSocial = "❤️ Like | ➕ Follow 🎯";
-        let parsedCaptionLines = [];
-        let parsedAns = "A";
-        let parsedExpLines = [];
-
-        let state = "TITLE";
-
-        for (let i = 0; i < lines.length; i++) {
-            let line = lines[i];
-
-            if (/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]/i.test(line)) {
-                state = "ANSWER";
-                let ansMatch = line.match(/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]\s*([A-Da-d])/i);
-                if (ansMatch) parsedAns = ansMatch[1].toUpperCase();
-                continue;
-            }
-
-            if (/^(?:Explanation|व्याख्या)\s*[:\-]/i.test(line)) {
-                state = "EXPLANATION";
-                let expText = line.replace(/^(?:Explanation|व्याख्या)\s*[:\-]\s*/i, '').trim();
-                if (expText) parsedExpLines.push(expText);
-                continue;
-            }
-
-            if (/^Caption\s*[:\-]/i.test(line)) {
-                state = "CAPTION";
-                let capText = line.replace(/^Caption\s*[:\-]\s*/i, '').trim();
-                if (capText) parsedCaptionLines.push(capText);
-                continue;
-            }
-
-            if (state === "TITLE") {
-                parsedTitle = line;
-                state = "QUESTION";
-                continue;
-            }
-
-            if (state === "QUESTION") {
-                let qMatch = line.match(/^(Q\.?\s*\d*[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*(.*)/i);
-                if (qMatch && qMatch[1].trim().length > 0) {
-                    parsedPrefix = qMatch[1].trim();
-                    parsedQText = qMatch[2].trim();
-                } else {
-                    parsedQText = line;
-                }
-                state = "OPTIONS_OR_EN";
-                continue;
-            }
-
-            if (state === "OPTIONS_OR_EN") {
-                let optMatch = line.match(/^([A-Da-d])[\)\.\-]\s*(.*)/);
-                if (optMatch) {
-                    let key = optMatch[1].toUpperCase();
-                    parsedOpts[key] = cleanAndMoveEmojiToEnd(optMatch[2]);
-                    state = "OPTIONS";
-                    continue;
-                } else {
-                    parsedQEn = line.replace(/^[\-\–\•]\s*/, '').trim();
-                    state = "OPTIONS";
-                    continue;
-                }
-            }
-
-            if (state === "OPTIONS") {
-                let optMatch = line.match(/^([A-Da-d])[\)\.\-]\s*(.*)/);
-                if (optMatch) {
-                    let key = optMatch[1].toUpperCase();
-                    parsedOpts[key] = cleanAndMoveEmojiToEnd(optMatch[2]);
-                    if (parsedOpts.A && parsedOpts.B && parsedOpts.C && parsedOpts.D) {
-                        state = "FOOTER";
-                    }
-                    continue;
-                }
-            }
-
-            if (state === "FOOTER") {
-                if (line.includes("👇") || line.includes("Comment")) {
-                    parsedHook = line;
-                    continue;
-                }
-                if (line.includes("Like") || line.includes("Follow")) {
-                    parsedSocial = line;
-                    continue;
-                }
-                parsedCaptionLines.push(line);
-                continue;
-            }
-
-            if (state === "CAPTION") {
-                parsedCaptionLines.push(line);
-                continue;
-            }
-
-            if (state === "EXPLANATION") {
-                parsedExpLines.push(line);
-                continue;
-            }
-        }
-
-        quizData = {
-            id: "q_" + Date.now(),
-            title: parsedTitle || "🏛️ POLITY GK QUIZ 🧠",
-            qPrefix: parsedPrefix || "Q.",
-            questionText: parsedQText,
-            questionEn: parsedQEn,
-            options: parsedOpts,
-            hook: parsedHook,
-            social: parsedSocial,
-            correctOption: parsedAns,
-            caption: parsedCaptionLines.join("\n"),
-            explanation: parsedExpLines.join(" ")
-        };
-
-        saveToHistory({ ...quizData, rawText: raw });
-
-        saveAllSettings();
-        redrawCanvas();
-
-        navigator.clipboard.writeText(getShareCaptionText()).catch(() => {});
-        alert(`🎉 ${quizData.qPrefix} तैयार हो गया है! सही उत्तर [${quizData.correctOption}] लॉक हुआ और कैप्शन क्लिपबोर्ड पर कॉपी हो गया।`);
-    }
-
-    function toggleAnswerMode() {
-        const chk = document.getElementById('chk-answer-mode');
-        chk.checked = !chk.checked;
-        onToggleAnswerChange();
-    }
-
-    function onToggleAnswerChange() {
-        isAnswerRevealed = document.getElementById('chk-answer-mode').checked;
-        saveAllSettings();
-        redrawCanvas();
-    }
-
-    function saveAllSettings() {
-        const prefs = {
-            fontFam: document.getElementById('cfg-font').value,
-            bgColor: document.getElementById('cfg-bg-color').value,
-            paperColor: document.getElementById('cfg-paper-custom').value,
-            qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
-            optSize: parseInt(document.getElementById('cfg-opt-size').value) || 34,
-            imgPos: document.getElementById('cfg-img-pos').value,
-            isAnswerMode: document.getElementById('chk-answer-mode').checked,
-            rawText: document.getElementById('raw-paste-box').value,
-            currentQuiz: quizData
-        };
-        try {
-            localStorage.setItem(STORAGE_PREFS, JSON.stringify(prefs));
-        } catch (e) {}
-    }
-
-    function loadAllSettings() {
-        const saved = localStorage.getItem(STORAGE_PREFS);
-        if (saved) {
-            try {
-                const p = JSON.parse(saved);
-                if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
-                if (p.bgColor) {
-                    const sel = document.getElementById('cfg-bg-color');
-                    if ([...sel.options].some(o => o.value === p.bgColor)) {
-                        sel.value = p.bgColor;
-                    }
-                }
-                if (p.paperColor) {
-                    document.getElementById('cfg-paper-custom').value = p.paperColor;
-                    document.getElementById('cfg-paper-preset').value = p.paperColor;
-                }
-                if (p.imgPos) document.getElementById('cfg-img-pos').value = p.imgPos;
-                if (p.qSize) {
-                    document.getElementById('cfg-q-size').value = p.qSize;
-                    document.getElementById('q-size-lbl').innerText = p.qSize;
-                }
-                if (p.optSize) {
-                    document.getElementById('cfg-opt-size').value = p.optSize;
-                    document.getElementById('opt-size-lbl').innerText = p.optSize;
-                }
-                if (p.isAnswerMode !== undefined) {
-                    document.getElementById('chk-answer-mode').checked = p.isAnswerMode;
-                    isAnswerRevealed = p.isAnswerMode;
-                }
-                if (p.rawText) document.getElementById('raw-paste-box').value = p.rawText;
-                if (p.currentQuiz) quizData = p.currentQuiz;
-            } catch(e) {}
-        }
-        onThemeChange();
-    }
-
-    function exportJSONBackup() {
-        const backupData = {
-            prefs: localStorage.getItem(STORAGE_PREFS),
-            history: localStorage.getItem(STORAGE_HISTORY)
-        };
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2)));
-        downloadAnchor.setAttribute("download", `QuizStudio_Backup_${new Date().toISOString().slice(0,10)}.json`);
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-    }
-
-    function importJSONBackup(event) {
-        const fileReader = new FileReader();
-        if (event.target.files[0]) {
-            fileReader.readAsText(event.target.files[0], "UTF-8");
-            fileReader.onload = (e) => {
-                try {
-                    const parsed = JSON.parse(e.target.result);
-                    if (parsed.prefs) localStorage.setItem(STORAGE_PREFS, parsed.prefs);
-                    if (parsed.history) localStorage.setItem(STORAGE_HISTORY, parsed.history);
-                    loadAllSettings();
-                    redrawCanvas();
-                    updateHistoryCount();
-                    alert("✅ बैकअप सफलतापूर्वक रिस्टोर हो गया है!");
-                } catch (err) {
-                    alert("त्रुटि: अमान्य JSON फ़ाइल!");
-                }
-            };
-        }
-    }
-
-    /* ==================== QUESTION BANK CRUD ==================== */
-    function getHistoryList() {
-        try {
-            let hist = JSON.parse(localStorage.getItem(STORAGE_HISTORY)) || [];
-            return hist.map((item, idx) => {
-                if (!item.id) item.id = "q_" + (Date.now() + idx);
-                return item;
-            });
-        } catch(e) { return []; }
-    }
-
-    function saveHistoryList(list) {
-        localStorage.setItem(STORAGE_HISTORY, JSON.stringify(list));
-        updateHistoryCount();
-    }
-
-    function saveToHistory(item) {
-        let history = getHistoryList();
-        history = history.filter(h => h.questionText !== item.questionText && h.id !== item.id);
-        history.unshift(item);
-        if (history.length > 250) history.pop();
-        saveHistoryList(history);
-    }
-
-    function updateHistoryCount() {
-        const list = getHistoryList();
-        document.getElementById('history-total-count').innerText = list.length;
-    }
-
-    function openHistoryModal() {
-        const modal = document.getElementById('history-modal');
-        const container = document.getElementById('history-items-container');
-        container.innerHTML = "";
-
-        const history = getHistoryList();
-        if (history.length === 0) {
-            container.innerHTML = `<div style="color:#94a3b8; font-size:13px;">अभी तक कोई प्रश्न सहेजा नहीं गया है।</div>`;
-        } else {
-            history.forEach((h, idx) => {
-                const div = document.createElement('div');
-                div.className = "h-item";
-                div.innerHTML = `
-                    <div class="h-item-title">[#${idx+1}] ${h.qPrefix}: ${h.questionText}</div>
-                    <div class="h-item-sub">✅ उत्तर: [${h.correctOption}] ${h.options ? (h.options[h.correctOption] || '') : ''}</div>
-                    <div class="h-item-exp">📖 ${h.explanation || ''}</div>
-                    <div class="h-actions">
-                        <button class="btn-crud btn-crud-load" onclick="loadFromHistoryById('${h.id}')">👁️ लोड करें</button>
-                        <button class="btn-crud btn-crud-edit" onclick="openEditModalById('${h.id}')">✏️ एडिट</button>
-                        <button class="btn-crud btn-crud-del" onclick="deleteFromHistoryById('${h.id}')">🗑️ डिलीट</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-        modal.style.display = 'flex';
-    }
-
-    function closeHistoryModal() {
-        document.getElementById('history-modal').style.display = 'none';
-    }
-
-    function loadFromHistoryById(id) {
-        const list = getHistoryList();
-        const found = list.find(q => q.id === id);
-        if (found) {
-            quizData = JSON.parse(JSON.stringify(found));
-            if (found.rawText) document.getElementById('raw-paste-box').value = found.rawText;
-            redrawCanvas();
-            closeHistoryModal();
-            alert(`✅ ${quizData.qPrefix} स्टूडियो में लोड कर दिया गया है!`);
-        }
-    }
-
-    function deleteFromHistoryById(id) {
-        if (!confirm("क्या आप वाकई इस प्रश्न को डिलीट करना चाहते हैं?")) return;
-        let list = getHistoryList();
-        list = list.filter(q => q.id !== id);
-        saveHistoryList(list);
-        openHistoryModal();
-    }
-
-    function openAddQuestionModal() {
-        document.getElementById('edit-modal-title').innerText = "➕ नया प्रश्न जोड़ें (Add Question)";
-        document.getElementById('edit-q-id').value = "";
-        document.getElementById('edit-q-prefix').value = "Q." + (getHistoryList().length + 1);
-        document.getElementById('edit-q-text').value = "";
-        document.getElementById('edit-q-en').value = "";
-        document.getElementById('edit-opt-a').value = "";
-        document.getElementById('edit-opt-b').value = "";
-        document.getElementById('edit-opt-c').value = "";
-        document.getElementById('edit-opt-d').value = "";
-        document.getElementById('edit-correct-ans').value = "A";
-        document.getElementById('edit-q-exp').value = "";
-
-        document.getElementById('edit-modal').style.display = 'flex';
-    }
-
-    function openEditModalById(id) {
-        const list = getHistoryList();
-        const item = list.find(q => q.id === id);
-        if (!item) return;
-
-        document.getElementById('edit-modal-title').innerText = "✏️ प्रश्न संपादित करें (Edit Question)";
-        document.getElementById('edit-q-id').value = item.id;
-        document.getElementById('edit-q-prefix').value = item.qPrefix || "Q.";
-        document.getElementById('edit-q-text').value = item.questionText || "";
-        document.getElementById('edit-q-en').value = item.questionEn || "";
-        document.getElementById('edit-opt-a').value = item.options ? (item.options.A || "") : "";
-        document.getElementById('edit-opt-b').value = item.options ? (item.options.B || "") : "";
-        document.getElementById('edit-opt-c').value = item.options ? (item.options.C || "") : "";
-        document.getElementById('edit-opt-d').value = item.options ? (item.options.D || "") : "";
-        document.getElementById('edit-correct-ans').value = item.correctOption || "A";
-        document.getElementById('edit-q-exp').value = item.explanation || "";
-
-        document.getElementById('edit-modal').style.display = 'flex';
-    }
-
-    function closeEditModal() {
-        document.getElementById('edit-modal').style.display = 'none';
-    }
-
-    function saveQuestionEditForm() {
-        const id = document.getElementById('edit-q-id').value;
-        const prefix = cleanString(document.getElementById('edit-q-prefix').value) || "Q.";
-        const qText = cleanString(document.getElementById('edit-q-text').value);
-        const qEn = cleanString(document.getElementById('edit-q-en').value);
-        const optA = cleanString(document.getElementById('edit-opt-a').value);
-        const optB = cleanString(document.getElementById('edit-opt-b').value);
-        const optC = cleanString(document.getElementById('edit-opt-c').value);
-        const optD = cleanString(document.getElementById('edit-opt-d').value);
-        const ans = document.getElementById('edit-correct-ans').value;
-        const exp = cleanString(document.getElementById('edit-q-exp').value);
-
-        if (!qText || !optA || !optB) {
-            alert("कृपया प्रश्न और कम से कम दो विकल्प अवश्य भरें!");
-            return;
-        }
-
-        let list = getHistoryList();
-        if (id) {
-            list = list.map(q => {
-                if (q.id === id) {
-                    return {
-                        ...q,
-                        qPrefix: prefix,
-                        questionText: qText,
-                        questionEn: qEn,
-                        options: { A: optA, B: optB, C: optC, D: optD },
-                        correctOption: ans,
-                        explanation: exp
-                    };
-                }
-                return q;
-            });
-        } else {
-            const newObj = {
-                id: "q_" + Date.now(),
-                title: "🏛️ POLITY GK QUIZ 🧠",
-                qPrefix: prefix,
-                questionText: qText,
-                questionEn: qEn,
-                options: { A: optA, B: optB, C: optC, D: optD },
-                correctOption: ans,
-                explanation: exp,
-                hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
-                social: "❤️ Like | ➕ Follow 🎯",
-                caption: `${qText}\n#ExamPreparation #GKQuiz`
-            };
-            list.unshift(newObj);
-        }
-
-        saveHistoryList(list);
-        closeEditModal();
-        openHistoryModal();
-        alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
-    }
-
-    /* ==================== SUBJECT IMAGE RENDER HELPER (WITH ZOOM & X/Y OFFSET) ==================== */
-    function drawQuizImageBox(targetCtx, img, bx, by, bw, bh, scaleFactor, offX, offY, isBlended, borderColor, isKids) {
-        targetCtx.save();
-
-        const iw = img.width;
-        const ih = img.height;
-        const imgRatio = iw / ih;
-        const boxRatio = bw / bh;
-
-        let drawW, drawH;
-        if (imgRatio > boxRatio) {
-            drawW = bw * scaleFactor;
-            drawH = drawW / imgRatio;
-        } else {
-            drawH = bh * scaleFactor;
-            drawW = drawH * imgRatio;
-        }
-
-        const drawX = bx + (bw - drawW) / 2 + offX;
-        const drawY = by + (bh - drawH) / 2 + offY;
-
-        if (isBlended) {
-            targetCtx.shadowColor = "rgba(0, 0, 0, 0.24)";
-            targetCtx.shadowBlur = 14;
-            targetCtx.shadowOffsetX = 3;
-            targetCtx.shadowOffsetY = 6;
-            targetCtx.drawImage(img, drawX, drawY, drawW, drawH);
-        } else {
-            roundRect(targetCtx, bx, by, bw, bh, 22, "#ffffff", false);
-            targetCtx.save();
-            roundRect(targetCtx, bx, by, bw, bh, 22, null, false);
-            targetCtx.clip();
-            targetCtx.drawImage(img, drawX, drawY, drawW, drawH);
-            targetCtx.restore();
-
-            targetCtx.strokeStyle = borderColor;
-            targetCtx.lineWidth = isKids ? 4.5 : 3;
-            roundRect(targetCtx, bx, by, bw, bh, 22, null, true);
-        }
-
-        targetCtx.restore();
-    }
-
-    /* ==================== MULTI-COLOR RANDOM WORD QUESTION RENDERER ==================== */
-    function drawMultiColorQuestion(ctx, prefix, text, x, y, maxW, fontSize, fontFam, defaultCol, palette, prefixCol) {
-        ctx.textBaseline = "top";
-        ctx.font = `900 ${fontSize + 4}px 'Poppins', sans-serif`;
-        ctx.fillStyle = prefixCol;
-        const fullPrefix = prefix + " ";
-        const prefixWidth = ctx.measureText(fullPrefix).width;
-        ctx.fillText(fullPrefix, x, y);
-
-        const stopWords = new Set(["के", "की", "का", "को", "में", "से", "पर", "और", "या", "है", "हैं", "था", "थे", "थी", "हूँ", "हो", "जाता", "जाती", "कहा", "लिए", "द्वारा", "तथा", "एवं", "इस", "उस", "एक"]);
-
-        ctx.font = `800 ${fontSize}px ${fontFam}`;
-        const words = (text || "").split(' ');
-        let curX = x + prefixWidth;
-        let curY = y;
-        const lineH = Math.round(fontSize * 1.38);
-
-        let insideQuote = false;
-        let quoteColor = palette[0];
-        let colorPickIdx = colorSeedOffset;
-
-        words.forEach((word, idx) => {
-            const cleanWord = word.replace(/[?,.!"'‘’“”।\-]/g, '').trim();
-
-            const startsQuote = /^['"‘“]/.test(word);
-            const endsQuote = /['"’”][?,.!।]*$/.test(word);
-
-            if (startsQuote) {
-                insideQuote = true;
-                quoteColor = palette[colorPickIdx % palette.length];
-                colorPickIdx++;
-            }
-
-            let chosenColor = defaultCol;
-
-            if (insideQuote) {
-                chosenColor = quoteColor;
-            } else if (cleanWord.length > 0 && !stopWords.has(cleanWord)) {
-                const hashVal = (cleanWord.charCodeAt(0) + idx + colorSeedOffset) % 5;
-                if (hashVal === 0 || hashVal === 1 || hashVal === 3) {
-                    chosenColor = palette[colorPickIdx % palette.length];
-                    colorPickIdx++;
-                }
-            }
-
-            if (endsQuote) {
-                insideQuote = false;
-            }
-
-            ctx.fillStyle = chosenColor;
-            const wordW = ctx.measureText(word + ' ').width;
-
-            if (curX + wordW > x + maxW) {
-                curX = x;
-                curY += lineH;
-            }
-
-            ctx.fillText(word + ' ', curX, curY);
-            curX += wordW;
-        });
-
-        return curY + lineH;
-    }
-
-    /* ==================== CUSTOM BACKGROUND IMAGE HELPER ==================== */
-    function drawCustomCardBackdrop(targetCtx, x, y, w, h, radius) {
-        if (!customBgImage) return false;
-        const blurPx = parseInt(document.getElementById('cfg-bg-blur').value) || 0;
-        const tintPct = (parseInt(document.getElementById('cfg-bg-tint').value) || 0) / 100;
-
-        targetCtx.save();
-        if (radius > 0) {
-            roundRect(targetCtx, x, y, w, h, radius, null, false);
-            targetCtx.clip();
-        }
-
-        if (blurPx > 0) {
-            targetCtx.filter = `blur(${blurPx}px)`;
-        }
-
-        const iw = customBgImage.width;
-        const ih = customBgImage.height;
-        const scale = Math.max(w / iw, h / ih);
-        const dw = iw * scale;
-        const dh = ih * scale;
-        const dx = x + (w - dw) / 2;
-        const dy = y + (h - dh) / 2;
-
-        const pad = blurPx * 2;
-        targetCtx.drawImage(customBgImage, dx - pad, dy - pad, dw + pad * 2, dh + pad * 2);
-
-        targetCtx.filter = "none";
-        if (tintPct > 0) {
-            targetCtx.fillStyle = `rgba(255, 255, 255, ${tintPct})`;
-            targetCtx.fillRect(x, y, w, h);
-        }
-
-        targetCtx.restore();
-        return true;
-    }
-
-    /* ==================== UNIFIED SINGLE CARD DRAW ENGINE ==================== */
-    function renderCardToCanvas(targetCtx, data, isRevealed) {
-        const themeKey = document.getElementById('cfg-bg-color').value || "paper_classic";
-        const customPaperColor = document.getElementById('cfg-paper-custom').value || "#e9e6df";
-        const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
-        const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
-        const baseOptSize = parseInt(document.getElementById('cfg-opt-size').value) || 34;
-        const imgPos = document.getElementById('cfg-img-pos').value || "right";
-        const imgScale = (parseInt(document.getElementById('cfg-img-scale').value) || 115) / 100;
-        const imgOffX = parseInt(document.getElementById('cfg-img-offx').value) || 0;
-        const imgOffY = parseInt(document.getElementById('cfg-img-offy').value) || 0;
-        const isBlended = document.getElementById('chk-remove-white-bg').checked;
-        const hasImage = Boolean(processedQuizImage);
-
-        const lightPalette = ["#dc2626", "#1d4ed8", "#047857", "#7e22ce", "#be123c", "#b45309"];
-
-        targetCtx.clearRect(0, 0, 1080, 1350);
-
-        // ==================== MODE A: SEAMLESS OPEN TEXTURED PAPER ====================
-        if (themeKey === "paper_classic") {
-            if (!drawCustomCardBackdrop(targetCtx, 0, 0, 1080, 1350, 0)) {
-                targetCtx.fillStyle = getPaperTexturePattern(targetCtx, customPaperColor);
-                targetCtx.fillRect(0, 0, 1080, 1350);
-            }
-
-            // Double Decorative Frame Border
-            targetCtx.strokeStyle = "rgba(30, 41, 59, 0.25)";
-            targetCtx.lineWidth = 4;
-            roundRect(targetCtx, 18, 18, 1044, 1314, 28, null, true);
-
-            targetCtx.strokeStyle = "rgba(217, 119, 6, 0.35)";
-            targetCtx.lineWidth = 2;
-            roundRect(targetCtx, 28, 28, 1024, 1294, 22, null, true);
-
-            // Subtle Watermark across page
-            targetCtx.save();
-            targetCtx.rotate(-28 * Math.PI / 180);
-            targetCtx.fillStyle = "rgba(15, 23, 42, 0.025)";
-            targetCtx.font = "900 44px 'Poppins', sans-serif";
-            for (let x = -800; x < 1800; x += 360) {
-                for (let y = -600; y < 2000; y += 160) {
-                    targetCtx.fillText("EXAM PREPARATION", x, y);
-                }
-            }
-            targetCtx.restore();
-
-            // TOP LINE 1: Topic Title
-            targetCtx.save();
-            targetCtx.textAlign = "center";
-            targetCtx.textBaseline = "middle";
-            targetCtx.shadowColor = "rgba(0,0,0,0.12)";
-            targetCtx.shadowBlur = 6;
-            targetCtx.shadowOffsetY = 3;
-            targetCtx.fillStyle = "#dc2626";
-            targetCtx.font = `900 54px ${fontFam}`;
-            targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 92);
-            targetCtx.restore();
-
-            // TOP LINE 2: EXAM PREPARATION Capsule Badge
-            const badgeText = "EXAM PREPARATION";
-            targetCtx.font = "900 24px 'Poppins', sans-serif";
-            const badgeWidth = targetCtx.measureText(badgeText).width;
-            const pillW = badgeWidth + 62;
-            const pillH = 48;
-            const pillX = (1080 - pillW) / 2;
-            const pillY = 140;
-
-            roundRect(targetCtx, pillX + 3, pillY + 4, pillW, pillH, 24, "rgba(0,0,0,0.22)", false);
-            roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, "#1e293b", false);
-            targetCtx.strokeStyle = "#f59e0b";
-            targetCtx.lineWidth = 2.5;
-            roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, null, true);
-
-            targetCtx.fillStyle = "#ffffff";
-            targetCtx.textAlign = "center";
-            targetCtx.textBaseline = "middle";
-            targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
-
-            // MULTI-COLOR HINDI QUESTION SECTION
-            targetCtx.textAlign = "left";
-            const qStartY = 232;
-            const effectiveQSize = (hasImage && imgPos === "center") ? Math.min(qSize, 38) : qSize;
-            let qEndY = drawMultiColorQuestion(
-                targetCtx,
-                data.qPrefix || "Q.",
-                data.questionText || "",
-                74,
-                qStartY,
-                932,
-                effectiveQSize,
-                fontFam,
-                "#111827",
-                lightPalette,
-                "#1d4ed8"
-            );
-
-            // Optional English Bilingual Question Line
-            if (data.questionEn && data.questionEn.trim().length > 0) {
-                targetCtx.fillStyle = "#15803d";
-                targetCtx.font = "700 28px 'Hind', sans-serif";
-                qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 74, qEndY + 8, 932, 36);
-            }
-
-            // OPTIONS + CUTOUT IMAGE
-            let optStartY = qEndY + 42;
-            const optX = 82;
-            let optGap = isRevealed ? 94 : 112;
-            let optSize = baseOptSize + 2;
-
-            if (hasImage && imgPos === "center") {
-                const bannerH = 225;
-                drawQuizImageBox(targetCtx, processedQuizImage, 82, optStartY, 916, bannerH, imgScale, imgOffX, imgOffY, isBlended, "#334155", false);
-                optStartY += bannerH + 26;
-                optGap = 74;
-                optSize = Math.min(baseOptSize, 28);
-            } else if (hasImage && imgPos === "right") {
-                const imgBoxX = 505;
-                const imgBoxY = optStartY - 22;
-                const imgBoxW = 515;
-                const imgBoxH = isRevealed ? 460 : 540;
-                drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, imgBoxY, imgBoxW, imgBoxH, imgScale, imgOffX, imgOffY, isBlended, "#334155", false);
-            }
-
-            const keys = ["A", "B", "C", "D"];
-            const circleCols = ["#1d4ed8", "#be185d", "#b45309", "#047857"];
-
-            keys.forEach((k, idx) => {
-                const curY = optStartY + (idx * optGap);
-                const isCorrect = (data.correctOption === k);
-
-                if (isRevealed && isCorrect) {
-                    const pillHighlightW = (hasImage && imgPos === "right") ? 425 : 900;
-                    roundRect(targetCtx, optX - 14, curY - 14, pillHighlightW, 72, 36, "#dcfce7", false);
-                    targetCtx.strokeStyle = "#16a34a";
-                    targetCtx.lineWidth = 3.5;
-                    roundRect(targetCtx, optX - 14, curY - 14, pillHighlightW, 72, 36, null, true);
-                }
-
-                const circleR = 25;
-                const cx = optX + circleR;
-                const cy = curY + 22;
-
-                targetCtx.beginPath();
-                targetCtx.arc(cx + 2, cy + 3, circleR, 0, Math.PI * 2);
-                targetCtx.fillStyle = "rgba(0,0,0,0.2)";
-                targetCtx.fill();
-
-                targetCtx.beginPath();
-                targetCtx.arc(cx, cy, circleR, 0, Math.PI * 2);
-                targetCtx.fillStyle = (isRevealed && isCorrect) ? "#16a34a" : circleCols[idx];
-                targetCtx.fill();
-
-                targetCtx.fillStyle = "#ffffff";
-                targetCtx.font = "900 27px 'Poppins', sans-serif";
-                targetCtx.textAlign = "center";
-                targetCtx.textBaseline = "middle";
-                targetCtx.fillText((isRevealed && isCorrect) ? "✔" : k, cx, cy + 1);
-
-                targetCtx.textAlign = "left";
-                targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : "#2e1065";
-                targetCtx.font = `800 ${optSize}px ${fontFam}`;
-                const optVal = data.options ? (data.options[k] || "") : "";
-                const maxTextW = (hasImage && imgPos === "right") ? 355 : 830;
-                targetCtx.fillText(truncateCanvasText(targetCtx, optVal, maxTextW), optX + 68, cy + 2);
-            });
-
-            // BOTTOM 2 LINES
-            const footerY = Math.max(optStartY + (4 * optGap) + 18, isRevealed ? 1030 : 1125);
-            if (isRevealed) {
-                roundRect(targetCtx, 65, footerY, 950, 175, 18, "rgba(255,255,255,0.94)", false);
-                targetCtx.strokeStyle = "#16a34a";
-                targetCtx.lineWidth = 3.5;
-                roundRect(targetCtx, 65, footerY, 950, 175, 18, null, true);
-
-                targetCtx.fillStyle = "#15803d";
-                targetCtx.font = `800 26px ${fontFam}`;
-                targetCtx.textAlign = "left";
-                targetCtx.textBaseline = "top";
-                const corrText = data.options ? (data.options[data.correctOption] || "") : "";
-                targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 90, footerY + 16);
-
-                targetCtx.fillStyle = "#1e293b";
-                targetCtx.font = `600 23px ${fontFam}`;
-                wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 90, footerY + 56, 900, 31);
-
-                targetCtx.fillStyle = "#0f172a";
-                targetCtx.font = `800 24px ${fontFam}`;
-                targetCtx.textAlign = "center";
-                targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 206);
-            } else {
-                roundRect(targetCtx, 69, footerY + 6, 950, 86, 43, "rgba(0,0,0,0.22)", false);
-
-                const ctaGrad = targetCtx.createLinearGradient(65, footerY, 1015, footerY + 86);
-                ctaGrad.addColorStop(0, "#f59e0b");
-                ctaGrad.addColorStop(0.5, "#ea580c");
-                ctaGrad.addColorStop(1, "#f59e0b");
-                roundRect(targetCtx, 65, footerY, 950, 86, 43, ctaGrad, false);
-
-                targetCtx.strokeStyle = "#1e293b";
-                targetCtx.lineWidth = 3;
-                roundRect(targetCtx, 65, footerY, 950, 86, 43, null, true);
-
-                targetCtx.textAlign = "center";
-                targetCtx.textBaseline = "middle";
-                targetCtx.fillStyle = "#ffffff";
-                targetCtx.font = `900 34px ${fontFam}`;
-                targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 43);
-
-                targetCtx.fillStyle = "#0f172a";
-                targetCtx.font = `800 28px ${fontFam}`;
-                targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
-            }
-
-            return;
-        }
-
-        // ==================== MODE B: REMAINING CARD THEMES (CANDY POP & PLAIN COLORS) ====================
-        let cfg = {
-            isKids: false,
-            bgGrad: [themeKey, themeKey],
-            cardBg: "#ffffff",
-            cardBorder: "#cbd5e1",
-            cardBorderW: 3,
-            shadowColor: "transparent",
-            titleColor: "#dc2626",
-            badgeBg: "#7c3aed",
-            badgeBorder: "#1e293b",
-            badgeText: "#ffffff",
-            qDefault: "#0f172a",
-            prefixColor: "#0284c7",
-            hookBg: "#fb923c",
-            hookBorder: "#1e293b",
-            hookText: "#ffffff",
-            socialText: "#0f172a",
-            imgBorder: "#1e293b",
-            opts: [
-                { bg: "#e0f2fe", border: "#0284c7", badgeBg: "#0284c7", text: "#0f172a", label: "A" },
-                { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#0f172a", label: "B" },
-                { bg: "#fef9c3", border: "#ca8a04", badgeBg: "#eab308", text: "#0f172a", label: "C" },
-                { bg: "#dcfce7", border: "#16a34a", badgeBg: "#16a34a", text: "#0f172a", label: "D" }
-            ]
-        };
-
-        if (themeKey === "kids_candy") {
-            cfg = {
-                ...cfg,
-                isKids: true,
-                bgGrad: ["#ff6b6b", "#feca57", "#48dbfb"],
-                cardBg: "#ffffff",
-                cardBorder: "#1e293b",
-                cardBorderW: 8,
-                shadowColor: "#1e293b",
-                titleColor: "#e11d48",
-                badgeBg: "#8b5cf6",
-                badgeBorder: "#1e293b",
-                badgeText: "#ffffff",
-                qDefault: "#1e293b",
-                prefixColor: "#2563eb",
-                hookBg: "#ff9f43",
-                hookBorder: "#1e293b",
-                hookText: "#ffffff",
-                socialText: "#1e293b",
-                imgBorder: "#1e293b",
-                opts: [
-                    { bg: "#e0f2fe", border: "#0284c7", badgeBg: "#0284c7", text: "#0c4a6e", label: "A" },
-                    { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#831843", label: "B" },
-                    { bg: "#fef9c3", border: "#ca8a04", badgeBg: "#eab308", text: "#713f12", label: "C" },
-                    { bg: "#dcfce7", border: "#16a34a", badgeBg: "#16a34a", text: "#14532d", label: "D" }
-                ]
-            };
-        }
-
-        const grad = targetCtx.createLinearGradient(0, 0, 1080, 1350);
-        if (cfg.bgGrad.length === 3) {
-            grad.addColorStop(0, cfg.bgGrad[0]);
-            grad.addColorStop(0.5, cfg.bgGrad[1]);
-            grad.addColorStop(1, cfg.bgGrad[2]);
-        } else {
-            grad.addColorStop(0, cfg.bgGrad[0]);
-            grad.addColorStop(1, cfg.bgGrad[1]);
-        }
-        targetCtx.fillStyle = grad;
-        targetCtx.fillRect(0, 0, 1080, 1350);
-
-        const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 36;
-        if (cfg.isKids) {
-            roundRect(targetCtx, cardX + 10, cardY + 12, cardW, cardH, cardRadius, cfg.shadowColor, false);
-        }
-        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cfg.cardBg, false);
-
-        drawCustomCardBackdrop(targetCtx, cardX, cardY, cardW, cardH, cardRadius);
-
-        targetCtx.strokeStyle = cfg.cardBorder;
-        targetCtx.lineWidth = cfg.cardBorderW;
-        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
-
-        // Title
-        targetCtx.textAlign = "center";
-        targetCtx.textBaseline = "middle";
-        targetCtx.fillStyle = cfg.titleColor;
-        targetCtx.font = `900 52px ${fontFam}`;
-        targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 114);
-
-        // Capsule Badge
-        const badgeText = "EXAM PREPARATION";
-        targetCtx.font = "900 24px 'Poppins', sans-serif";
-        const badgeWidth = targetCtx.measureText(badgeText).width;
-        const pillW = badgeWidth + 56;
-        const pillH = 46;
-        const pillX = (1080 - pillW) / 2;
-        const pillY = 156;
-
-        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, cfg.badgeBg, false);
-        targetCtx.strokeStyle = cfg.badgeBorder;
-        targetCtx.lineWidth = cfg.isKids ? 3 : 2;
-        roundRect(targetCtx, pillX, pillY, pillW, pillH, 23, null, true);
-
-        targetCtx.fillStyle = cfg.badgeText;
-        targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
-
-        // Multi-Color Question
-        targetCtx.textAlign = "left";
-        const qStartY = pillY + pillH + 52;
-        const effectiveQSize = (hasImage && imgPos === "center") ? Math.min(qSize, 38) : qSize;
-        let qEndY = drawMultiColorQuestion(
-            targetCtx,
-            data.qPrefix || "Q.",
-            data.questionText || "",
-            95,
-            qStartY,
-            890,
-            effectiveQSize,
-            fontFam,
-            cfg.qDefault,
-            lightPalette,
-            cfg.prefixColor
-        );
-
-        if (data.questionEn && data.questionEn.trim().length > 0) {
-            targetCtx.fillStyle = "#15803d";
-            targetCtx.font = "700 26px 'Hind', sans-serif";
-            qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 95, qEndY + 4, 890, 32);
-        }
-
-        let optStartY = qEndY + 30;
-        let optX = 95;
-        let optW = 890;
-        let optH = 90;
-        let optGap = 114;
-        let optSize = Math.min(baseOptSize, 30);
-
-        if (hasImage && imgPos === "center") {
-            const bannerH = 225;
-            drawQuizImageBox(targetCtx, processedQuizImage, 95, optStartY, 890, bannerH, imgScale, imgOffX, imgOffY, isBlended, cfg.imgBorder, cfg.isKids);
-            optStartY += bannerH + 22;
-            optH = 72;
-            optGap = 90;
-            optSize = Math.min(baseOptSize, 27);
-        } else if (hasImage && imgPos === "right") {
-            optW = 520;
-            optSize = Math.min(baseOptSize, 26);
-            const totalOptsBlockH = (3 * optGap) + optH;
-            const imgBoxX = optX + optW + 24;
-            const imgBoxW = 890 - optW - 24;
-            drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, optStartY, imgBoxW, totalOptsBlockH, imgScale, imgOffX, imgOffY, isBlended, cfg.imgBorder, cfg.isKids);
-        }
-
-        cfg.opts.forEach((st, idx) => {
-            const curY = optStartY + (idx * optGap);
-            const isCorrect = (data.correctOption === st.label);
-            let boxBg = st.bg, boxBorder = st.border, badgeBg = st.badgeBg, badgeText = st.label;
-            let badgeCol = "#ffffff";
-
-            if (isRevealed && isCorrect) {
-                boxBg = "#16a34a"; 
-                boxBorder = "#facc15"; 
-                badgeBg = "#facc15"; 
-                badgeCol = "#0f172a";
-                badgeText = "✔";
-            }
-
-            if (cfg.isKids) {
-                roundRect(targetCtx, optX + 5, curY + 6, optW, optH, 20, "rgba(0,0,0,0.35)", false);
-            }
-
-            roundRect(targetCtx, optX, curY, optW, optH, 20, boxBg, false);
-            targetCtx.strokeStyle = boxBorder;
-            targetCtx.lineWidth = (isRevealed && isCorrect) ? 5 : (cfg.isKids ? 3.5 : 2.5);
-            roundRect(targetCtx, optX, curY, optW, optH, 20, null, true);
-
-            const bSize = Math.min(58, optH - 22);
-            const bOffset = (optH - bSize) / 2;
-            roundRect(targetCtx, optX + 14, curY + bOffset, bSize, bSize, 14, badgeBg, false);
-            targetCtx.fillStyle = badgeCol;
-            targetCtx.font = `900 ${(badgeText === '✔') ? 30 : 26}px 'Poppins', sans-serif`;
-            targetCtx.textAlign = "center";
-            targetCtx.textBaseline = "middle";
-            targetCtx.fillText(badgeText, optX + 14 + (bSize / 2), curY + (optH / 2));
-
-            targetCtx.textAlign = "left";
-            targetCtx.fillStyle = (isRevealed && isCorrect) ? "#ffffff" : st.text;
-            targetCtx.font = `800 ${optSize}px ${fontFam}`;
-            const optVal = data.options ? (data.options[st.label] || "") : "";
-            const maxTextW = optW - (bSize + 36);
-            const fittedText = truncateCanvasText(targetCtx, optVal, maxTextW);
-            targetCtx.fillText(fittedText, optX + bSize + 26, curY + (optH / 2));
-        });
-
-        const footerY = optStartY + (3 * optGap) + optH + 34;
-        if (isRevealed) {
-            const expBoxH = Math.min(165, 1275 - footerY - 35);
-            roundRect(targetCtx, 95, footerY, 890, expBoxH, 18, "#f8fafc", false);
-            targetCtx.strokeStyle = "#16a34a";
-            targetCtx.lineWidth = 3;
-            roundRect(targetCtx, 95, footerY, 890, expBoxH, 18, null, true);
-
-            targetCtx.fillStyle = "#15803d";
-            targetCtx.font = `800 25px ${fontFam}`;
-            targetCtx.textAlign = "left";
-            targetCtx.textBaseline = "top";
-            const corrText = data.options ? (data.options[data.correctOption] || "") : "";
-            targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 118, footerY + 16);
-
-            targetCtx.fillStyle = "#1e293b";
-            targetCtx.font = `600 22px ${fontFam}`;
-            wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 118, footerY + 56, 844, 30);
-
-            targetCtx.fillStyle = cfg.socialText;
-            targetCtx.font = `800 22px ${fontFam}`;
-            targetCtx.textAlign = "center";
-            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + expBoxH + 24);
-        } else {
-            if (cfg.isKids) {
-                roundRect(targetCtx, 114, footerY + 5, 860, 80, 40, "rgba(0,0,0,0.35)", false);
-            }
-            roundRect(targetCtx, 110, footerY, 860, 80, 40, cfg.hookBg, false);
-            targetCtx.strokeStyle = cfg.hookBorder;
-            targetCtx.lineWidth = cfg.isKids ? 3.5 : 2.5;
-            roundRect(targetCtx, 110, footerY, 860, 80, 40, null, true);
-
-            targetCtx.textAlign = "center";
-            targetCtx.textBaseline = "middle";
-            targetCtx.fillStyle = cfg.hookText;
-            targetCtx.font = `900 32px ${fontFam}`;
-            targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 40);
-
-            targetCtx.fillStyle = cfg.socialText;
-            targetCtx.font = `800 26px ${fontFam}`;
-            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 122);
-        }
-    }
-
-    function drawSimpleWrappedLines(ctx, text, x, y, maxW, lineH) {
-        ctx.textBaseline = "top";
-        const words = (text || "").split(' ');
-        let line = '';
-        let curY = y;
-        for (let n = 0; n < words.length; n++) {
-            let testLine = line + words[n] + ' ';
-            if (ctx.measureText(testLine).width > maxW && n > 0) {
-                ctx.fillText(line.trim(), x, curY);
-                line = words[n] + ' ';
-                curY += lineH;
-            } else {
-                line = testLine;
-            }
-        }
-        ctx.fillText(line.trim(), x, curY);
-        return curY + lineH;
-    }
-
-    function truncateCanvasText(ctx, text, maxW) {
-        if (ctx.measureText(text).width <= maxW) return text;
-        let t = text;
-        while (ctx.measureText(t + "...").width > maxW && t.length > 0) {
-            t = t.slice(0, -1);
-        }
-        return t + "...";
-    }
-
-    function redrawCanvas() {
-        renderCardToCanvas(ctx, quizData, isAnswerRevealed);
-    }
-
-    function wrapTextSimple(ctx, text, x, y, maxW, lineH) {
-        ctx.textBaseline = "top";
-        const words = (text || "").split(' ');
-        let line = '';
-        for (let n = 0; n < words.length; n++) {
-            let testLine = line + words[n] + ' ';
-            let metrics = ctx.measureText(testLine);
-            if (metrics.width > maxW && n > 0) {
-                ctx.fillText(line, x, y);
-                line = words[n] + ' ';
-                y += lineH;
-            } else {
-                line = testLine;
-            }
-        }
-        ctx.fillText(line, x, y);
-    }
-
-    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
-        ctx.beginPath();
-        ctx.moveTo(x + radius, y);
-        ctx.lineTo(x + width - radius, y);
-        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-        ctx.lineTo(x + width, y + height - radius);
-        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-        ctx.lineTo(x + radius, y + height);
-        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-        ctx.lineTo(x, y + radius);
-        ctx.quadraticCurveTo(x, y, x + radius, y);
-        ctx.closePath();
-        if (fill) { ctx.fillStyle = fill; ctx.fill(); }
-        if (stroke) ctx.stroke();
-    }
-
-    async function shareDirectly() {
-        const caption = getShareCaptionText();
-        navigator.clipboard.writeText(caption).catch(() => {});
-        canvas.toBlob(async (blob) => {
-            if (!blob) { alert("इमेज तैयार नहीं हो सकी!"); return; }
-            const file = new File([blob], `Quiz_${quizData.qPrefix}.png`, { type: 'image/png' });
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                try {
-                    await navigator.share({ title: `Quiz ${quizData.qPrefix}`, text: caption, files: [file] });
-                } catch (err) {}
-            } else {
-                downloadImage();
-                alert("डायरेक्ट शेयर समर्थित नहीं है। फ़ोटो डाउनलोड और कैप्शन क्लिपबोर्ड पर कॉपी हो गया है!");
-            }
-        });
-    }
-
-    function downloadImage() {
-        const link = document.createElement('a');
-        const modePrefix = isAnswerRevealed ? "Solved_" : "";
-        link.download = `${modePrefix}Quiz_${quizData.qPrefix.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    }
-
-    window.onload = function() {
-        loadAllSettings();
-        updateHistoryCount();
-        redrawCanvas();
-    };
+const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
+const P_KEY="QUIZ_PRO_PREFS_FINAL",H_KEY="QUIZ_PRO_HIST_FINAL";
+let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
+let qData={
+ id:"def_386",title:"🌍 WORLD GK QUIZ 🧠",qPrefix:"386.",
+ questionText:"विश्व की सबसे लंबी पर्वत श्रृंखला कौन-सी है?",questionEn:"",
+ options:{A:"हिमालय (Himalaya)",B:"एंडीज (Andes) ▲",C:"रॉकी (Rockies) 🌲",D:"आल्प्स (Alps) 🏔️"},
+ hook:"👇 अपना जवाब A, B, C या D में कमेंट करें!",social:"❤️ Like | ➕ Follow | 🎯 Next Quiz",
+ correctOption:"B",explanation:"दक्षिण अमेरिका महाद्वीप के पश्चिमी तट पर स्थित 'एंडीज पर्वत श्रृंखला' विश्व की सबसे लंबी स्थलीय पर्वत श्रृंखला है, जिसकी लंबाई लगभग 7,000 किमी है।",
+ caption:"विश्व की सबसे लंबी पर्वत श्रृंखला (Andes) से जुड़ा प्रश्न! सही उत्तर कमेंट करें। 👇🌍\n#WorldGKQuiz #GeographyQuiz #AndesMountains #ExamPreparation"
+};
+
+const cln=s=>(s||"").replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g,'').trim();
+function moveEmoji(t){
+ let c=cln(t).replace(/\s+/g,' '),rx=/([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}▲])/gu,m=c.match(rx),w=c.replace(rx,'').replace(/\s+/g,' ').trim();
+ return m?w+" "+m.join(''):w;
+}
+function getCap(){
+ let b=(qData.caption||"").replace(/#ans_[A-Da-d]/gi,'').trim();
+ if(ansMode){
+  let tags=(b.match(/#[^\s#]+/g)||[]).join(" ");
+  return `✅ सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}\n\n📖 व्याख्या: ${qData.explanation}\n\n${tags}`.trim();
+ }
+ return b;
+}
+
+function onThemeChange(){
+ document.getElementById('paper-col-box').style.display=document.getElementById('cfg-theme').value==="paper_classic"?"flex":"none";
+}
+function setPaperCol(h){
+ document.getElementById('cfg-paper-pre').value=h;document.getElementById('cfg-paper-col').value=h;savePrefs();draw();
+}
+
+function setBg(url){
+ if(!url)return clearBgImg();
+ let i=new Image();i.onload=()=>{bgImg=i;document.getElementById('bg-st').innerText="✅ Active";document.getElementById('bg-st').style.color="#34d399";document.getElementById('rm-bg').style.display="inline-block";document.getElementById('bg-sld').style.display="flex";draw();};i.src=url;
+}
+function loadBgFile(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>setBg(ev.target.result);r.readAsDataURL(f);e.target.value="";}
+async function pasteBgImg(){
+ try{for(let it of await navigator.clipboard.read()){let tp=it.types.find(t=>t.startsWith('image/'));if(tp){let r=new FileReader();r.onload=e=>setBg(e.target.result);r.readAsDataURL(await it.getType(tp));return;}}alert("क्लिपबोर्ड में कोई इमेज नहीं मिली!");}catch(e){alert("Upload BG का उपयोग करें।");}
+}
+function clearBgImg(){bgImg=null;document.getElementById('bg-st').innerText="None";document.getElementById('bg-st').style.color="#94a3b8";document.getElementById('rm-bg').style.display="none";document.getElementById('bg-sld').style.display="none";draw();}
+
+function googleImg(){
+ let q=cln(qData.questionText).replace(/['"?।]/g,' '),a=(qData.options[qData.correctOption]||"").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}▲]/gu,'');
+ window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(a+" "+q.split(' ').slice(0,4).join(' ')+" png")}`,'_blank');
+}
+function resetCrop(){
+ ['ct','cb','cl','cr','ox','oy'].forEach(id=>{document.getElementById(id).value=0;document.getElementById(id+'-l').innerText="0";});
+ document.getElementById('sc').value=115;document.getElementById('sc-l').innerText="115";processImg();
+}
+function processImg(){
+ if(!rawSub)return;
+ let rm=document.getElementById('chk-bg').checked;
+ let ct=document.getElementById('ct').value/100,cb=document.getElementById('cb').value/100,cl=document.getElementById('cl').value/100,cr=document.getElementById('cr').value/100;
+ let sx=Math.floor(rawSub.width*cl),sy=Math.floor(rawSub.height*ct),sw=Math.max(20,Math.floor(rawSub.width*(1-cl-cr))),sh=Math.max(20,Math.floor(rawSub.height*(1-ct-cb)));
+ let ow=sw,oh=sh;if(ow>850||oh>850){let rt=Math.min(850/ow,850/oh);ow=Math.round(ow*rt);oh=Math.round(oh*rt);}
+ let off=document.createElement('canvas');off.width=ow;off.height=oh;let oCtx=off.getContext('2d');
+ oCtx.drawImage(rawSub,sx,sy,sw,sh,0,0,ow,oh);
+ if(!rm){let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL();return;}
+ let tol=parseInt(document.getElementById('cfg-tol').value)||38,tSq=tol*tol*3,sSq=(tol+16)*(tol+16)*3;
+ let id=oCtx.getImageData(0,0,ow,oh),d=id.data,vis=new Uint8Array(ow*oh),q=new Int32Array(ow*oh),hd=0,tl=0;
+ let cns=[0,(ow-1)*4,((oh-1)*ow)*4,((oh-1)*ow+ow-1)*4].map(i=>[d[i],d[i+1],d[i+2]]);
+ const dist=(r,g,b)=>{let m=9e6;for(let c of cns){let dr=r-c[0],dg=g-c[1],db=b-c[2],v=dr*dr+dg*dg+db*db;if(v<m)m=v;}return m;};
+ for(let x=0;x<ow;x++){let a=x,b=(oh-1)*ow+x;if(!vis[a]){vis[a]=1;q[tl++]=a;}if(!vis[b]){vis[b]=1;q[tl++]=b;}}
+ for(let y=0;y<oh;y++){let a=y*ow,b=y*ow+ow-1;if(!vis[a]){vis[a]=1;q[tl++]=a;}if(!vis[b]){vis[b]=1;q[tl++]=b;}}
+ while(hd<tl){
+  let p=q[hd++],px=p%ow,py=(p-px)/ow,i4=p*4,ds=dist(d[i4],d[i4+1],d[i4+2]);
+  if(ds<=tSq){
+   d[i4+3]=0;
+   if(px>0&&!vis[p-1]){vis[p-1]=1;q[tl++]=p-1;}if(px<ow-1&&!vis[p+1]){vis[p+1]=1;q[tl++]=p+1;}
+   if(py>0&&!vis[p-ow]){vis[p-ow]=1;q[tl++]=p-ow;}if(py<oh-1&&!vis[p+ow]){vis[p+ow]=1;q[tl++]=p+ow;}
+  }else if(ds<=sSq)d[i4+3]=Math.round(d[i4+3]*((ds-tSq)/(sSq-tSq)));
+ }
+ oCtx.putImageData(id,0,0);
+ let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL();
+}
+function setSub(url){
+ if(!url)return clearSubImg();
+ let i=new Image();i.onload=()=>{rawSub=i;document.getElementById('img-st').innerText="✅ Ready";document.getElementById('img-st').style.color="#34d399";document.getElementById('rm-img').style.display="inline-block";document.getElementById('img-opts').style.display="flex";resetCrop();};i.src=url;
+}
+function loadSubFile(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=ev=>setSub(ev.target.result);r.readAsDataURL(f);e.target.value="";}
+async function pasteSubImg(){
+ try{for(let it of await navigator.clipboard.read()){let tp=it.types.find(t=>t.startsWith('image/'));if(tp){let r=new FileReader();r.onload=e=>setSub(e.target.result);r.readAsDataURL(await it.getType(tp));return;}}alert("क्लिपबोर्ड में कोई इमेज नहीं मिली!");}catch(e){alert("Upload का उपयोग करें।");}
+}
+function clearSubImg(){rawSub=null;procSub=null;document.getElementById('img-st').innerText="No Image";document.getElementById('img-st').style.color="#94a3b8";document.getElementById('rm-img').style.display="none";document.getElementById('img-opts').style.display="none";draw();}
+
+async function pasteAndRun(){
+ try{let t=await navigator.clipboard.readText();if(t&&t.trim()){document.getElementById('raw-box').value=t;parseRawText();}else alert("क्लिपबोर्ड खाली है!");}catch(e){alert("कृपया बॉक्स में पेस्ट करके Generate दबाएं।");}
+}
+function parseRawText(){
+ let raw=document.getElementById('raw-box').value,lines=raw.split(/\r?\n/).map(cln).filter(Boolean);
+ if(lines.length<4)return alert("पूरा फ़ॉर्मेट पेस्ट करें!");
+ let tit="",pre="Q.",qt="",qen="",opts={A:"",B:"",C:"",D:""},hk="👇 अपना जवाब A, B, C या D में कमेंट करें!",soc="❤️ Like | ➕ Follow | 🎯 Next Quiz",cap=[],ans="A",exp=[],st="TIT";
+ for(let l of lines){
+  if(/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]/i.test(l)){st="ANS";let m=l.match(/[:\-]\s*([A-Da-d])/i);if(m)ans=m[1].toUpperCase();continue;}
+  if(/^(?:Explanation|व्याख्या)\s*[:\-]/i.test(l)){st="EXP";let e=l.replace(/^(?:Explanation|व्याख्या)\s*[:\-]\s*/i,'').trim();if(e)exp.push(e);continue;}
+  if(/^Caption\s*[:\-]/i.test(l)){st="CAP";let c=l.replace(/^Caption\s*[:\-]\s*/i,'').trim();if(c)cap.push(c);continue;}
+  if(st==="TIT"){tit=l;st="Q";continue;}
+  if(st==="Q"){let m=l.match(/^(Q\.?\s*\d*[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*(.*)/i);if(m&&m[1].trim()){pre=m[1].trim();qt=m[2].trim();}else qt=l;st="O_EN";continue;}
+  if(st==="O_EN"){let m=l.match(/^([A-Da-d])[\)\.\-]\s*(.*)/);if(m){opts[m[1].toUpperCase()]=moveEmoji(m[2]);st="OPT";}else{qen=l.replace(/^[\-\–\•]\s*/,'').trim();st="OPT";}continue;}
+  if(st==="OPT"){let m=l.match(/^([A-Da-d])[\)\.\-]\s*(.*)/);if(m){opts[m[1].toUpperCase()]=moveEmoji(m[2]);if(opts.A&&opts.B&&opts.C&&opts.D)st="FTR";continue;}}
+  if(st==="FTR"){if(l.includes("👇")||l.includes("Comment")||l.includes("कमेंट")){hk=l;continue;}if(l.includes("Like")||l.includes("Follow")){soc=l;continue;}cap.push(l);continue;}
+  if(st==="CAP"){cap.push(l);continue;}
+  if(st==="EXP"){exp.push(l);continue;}
+ }
+ qData={id:"q_"+Date.now(),title:tit||"🌍 WORLD GK QUIZ 🧠",qPrefix:pre,questionText:qt,questionEn:qen,options:opts,hook:hk,social:soc,correctOption:ans,caption:cap.join("\n"),explanation:exp.join(" ")};
+ addHist({...qData,rawText:raw});savePrefs();draw();
+ navigator.clipboard.writeText(getCap()).catch(()=>{});
+ alert(`🎉 ${qData.qPrefix} तैयार! उत्तर [${qData.correctOption}] लॉक हुआ और कैप्शन कॉपी हो गया।`);
+}
+
+function toggleAns(){let c=document.getElementById('chk-ans');c.checked=!c.checked;ansMode=c.checked;savePrefs();draw();}
+function savePrefs(){
+ try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ipos:document.getElementById('cfg-ipos').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
+}
+function loadPrefs(){
+ try{
+  let p=JSON.parse(localStorage.getItem(P_KEY));if(!p)return onThemeChange();
+  if(p.font)document.getElementById('cfg-font').value=p.font;
+  if(p.theme&&[...document.getElementById('cfg-theme').options].some(o=>o.value===p.theme))document.getElementById('cfg-theme').value=p.theme;
+  if(p.pcol){document.getElementById('cfg-paper-col').value=p.pcol;document.getElementById('cfg-paper-pre').value=p.pcol;}
+  if(p.ipos)document.getElementById('cfg-ipos').value=p.ipos;
+  if(p.qs){document.getElementById('cfg-qs').value=p.qs;document.getElementById('qs-lbl').innerText=p.qs;}
+  if(p.os){document.getElementById('cfg-os').value=p.os;document.getElementById('os-lbl').innerText=p.os;}
+  if(p.ans!==undefined){document.getElementById('chk-ans').checked=p.ans;ansMode=p.ans;}
+  if(p.raw)document.getElementById('raw-box').value=p.raw;
+  if(p.q)qData=p.q;
+ }catch(e){}
+ onThemeChange();
+}
+
+/* QUESTION BANK */
+const getHist=()=>{try{return(JSON.parse(localStorage.getItem(H_KEY))||[]).map((x,i)=>({...x,id:x.id||"q_"+(Date.now()+i)}));}catch(e){return[];}};
+const setHist=l=>{localStorage.setItem(H_KEY,JSON.stringify(l));document.getElementById('h-cnt').innerText=l.length;};
+function addHist(it){let l=getHist().filter(h=>h.questionText!==it.questionText&&h.id!==it.id);l.unshift(it);if(l.length>250)l.pop();setHist(l);}
+function openHist(){
+ let c=document.getElementById('h-list'),l=getHist();c.innerHTML=l.length?"":"<div style='color:#94a3b8;font-size:13px'>कोई प्रश्न नहीं है।</div>";
+ l.forEach((h,i)=>{
+  let d=document.createElement('div');d.className="hi";
+  d.innerHTML=`<div style="font-size:13px;font-weight:800;color:#38bdf8">[#${i+1}] ${h.qPrefix} ${h.questionText}</div><div style="font-size:11.5px;color:#10b981">✅ [${h.correctOption}] ${h.options?.[h.correctOption]||''}</div><div style="display:flex;gap:6px"><button class="cbtn" style="background:#0284c7" onclick="loadQ('${h.id}')">👁️ लोड</button><button class="cbtn" style="background:#d97706" onclick="openEdit('${h.id}')">✏️ एडिट</button><button class="cbtn" style="background:#dc2626" onclick="delQ('${h.id}')">🗑️ डिलीट</button></div>`;
+  c.appendChild(d);
+ });
+ document.getElementById('h-mod').style.display='flex';
+}
+function loadQ(id){let f=getHist().find(x=>x.id===id);if(f){qData=JSON.parse(JSON.stringify(f));if(f.rawText)document.getElementById('raw-box').value=f.rawText;draw();document.getElementById('h-mod').style.display='none';}}
+function delQ(id){if(confirm("डिलीट करें?")){setHist(getHist().filter(x=>x.id!==id));openHist();}}
+function openEdit(id){
+ let it=id?getHist().find(x=>x.id===id):null;
+ document.getElementById('e-tit').innerText=it?"✏️ प्रश्न एडिट करें":"➕ नया प्रश्न जोड़ें";
+ document.getElementById('eq-id').value=it?it.id:"";
+ document.getElementById('eq-pre').value=it?it.qPrefix:(getHist().length+1)+".";
+ document.getElementById('eq-txt').value=it?it.questionText:"";
+ document.getElementById('eq-en').value=it?(it.questionEn||""):"";
+ document.getElementById('eq-a').value=it?.options?.A||"";
+ document.getElementById('eq-b').value=it?.options?.B||"";
+ document.getElementById('eq-c').value=it?.options?.C||"";
+ document.getElementById('eq-d').value=it?.options?.D||"";
+ document.getElementById('eq-ans').value=it?it.correctOption:"A";
+ document.getElementById('eq-exp').value=it?(it.explanation||""):"";
+ document.getElementById('e-mod').style.display='flex';
+}
+function saveEdit(){
+ let id=document.getElementById('eq-id').value,qt=cln(document.getElementById('eq-txt').value),oa=cln(document.getElementById('eq-a').value),ob=cln(document.getElementById('eq-b').value);
+ if(!qt||!oa||!ob)return alert("प्रश्न और विकल्प भरें!");
+ let obj={qPrefix:cln(document.getElementById('eq-pre').value)||"Q.",questionText:qt,questionEn:cln(document.getElementById('eq-en').value),options:{A:oa,B:ob,C:cln(document.getElementById('eq-c').value),D:cln(document.getElementById('eq-d').value)},correctOption:document.getElementById('eq-ans').value,explanation:cln(document.getElementById('eq-exp').value)};
+ let l=getHist();
+ if(id)l=l.map(x=>x.id===id?{...x,...obj}:x);
+ else l.unshift({id:"q_"+Date.now(),title:"🌍 WORLD GK QUIZ 🧠",hook:"👇 अपना जवाब A, B, C या D में कमेंट करें!",social:"❤️ Like | ➕ Follow | 🎯 Next Quiz",caption:qt+"\n#ExamPreparation #GKQuiz",...obj});
+ setHist(l);document.getElementById('e-mod').style.display='none';openHist();
+}
+function exportJson(){
+ let a=document.createElement('a');a.href="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify({prefs:localStorage.getItem(P_KEY),history:localStorage.getItem(H_KEY)}));a.download=`QuizBackup_${new Date().toISOString().slice(0,10)}.json`;a.click();
+}
+function importJson(e){
+ let f=e.target.files[0];if(!f)return;let r=new FileReader();
+ r.onload=ev=>{try{let p=JSON.parse(ev.target.result);if(p.prefs)localStorage.setItem(P_KEY,p.prefs);if(p.history)localStorage.setItem(H_KEY,p.history);loadPrefs();draw();document.getElementById('h-cnt').innerText=getHist().length;alert("✅ रिस्टोर हो गया!");}catch(err){alert("अमान्य फ़ाइल!");}};r.readAsText(f);
+}
+
+/* CANVAS HELPERS */
+function rRect(c,x,y,w,h,r,fill,stk){
+ c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.quadraticCurveTo(x+w,y,x+w,y+r);c.lineTo(x+w,y+h-r);c.quadraticCurveTo(x+w,y+h,x+w-r,y+h);c.lineTo(x+r,y+h);c.quadraticCurveTo(x,y+h,x,y+h-r);c.lineTo(x,y+r);c.quadraticCurveTo(x,y,x+r,y);c.closePath();
+ if(fill){c.fillStyle=fill;c.fill();}if(stk)c.stroke();
+}
+function trunc(c,t,mw){if(c.measureText(t).width<=mw)return t;while(c.measureText(t+"...").width>mw&&t.length>0)t=t.slice(0,-1);return t+"...";}
+function wrapL(c,t,x,y,mw,lh,cen=false){
+ c.textBaseline="top";c.textAlign=cen?"center":"left";let ws=(t||"").split(' '),ln="",cy=y;
+ for(let i=0;i<ws.length;i++){let tl=ln+ws[i]+" ";if(c.measureText(tl).width>mw&&i>0){c.fillText(ln.trim(),x,cy);ln=ws[i]+" ";cy+=lh;}else ln=tl;}
+ c.fillText(ln.trim(),x,cy);return cy+lh;
+}
+function getPat(c,hex){
+ let k=(hex||"#e9e6df").toLowerCase();if(patCache[k])return patCache[k];
+ let p=document.createElement('canvas');p.width=160;p.height=160;let pc=p.getContext('2d');pc.fillStyle=k;pc.fillRect(0,0,160,160);
+ for(let i=0;i<160;i+=3){pc.fillStyle=i%6===0?"rgba(0,0,0,.035)":"rgba(255,255,255,.28)";pc.fillRect(0,i,160,1);pc.fillRect(i,0,1,160);}
+ for(let s=0;s<320;s++){pc.fillStyle=Math.random()>.5?"rgba(60,50,40,.05)":"rgba(255,255,255,.22)";pc.fillRect(Math.random()*160,Math.random()*160,1.5,1.5);}
+ return patCache[k]=c.createPattern(p,'repeat');
+}
+function drawBgPhoto(c,x,y,w,h,r){
+ if(!bgImg)return false;
+ let bl=parseInt(document.getElementById('cfg-blur').value)||0,tn=(parseInt(document.getElementById('cfg-tint').value)||0)/100;
+ c.save();if(r>0){rRect(c,x,y,w,h,r,null,false);c.clip();}if(bl>0)c.filter=`blur(${bl}px)`;
+ let sc=Math.max(w/bgImg.width,h/bgImg.height),dw=bgImg.width*sc,dh=bgImg.height*sc,pad=bl*2;
+ c.drawImage(bgImg,x+(w-dw)/2-pad,y+(h-dh)/2-pad,dw+pad*2,dh+pad*2);c.filter="none";
+ if(tn>0){c.fillStyle=`rgba(255,255,255,${tn})`;c.fillRect(x,y,w,h);}c.restore();return true;
+}
+function drawSubImg(c,bx,by,bw,bh,bCol){
+ if(!procSub)return;
+ let sc=(parseInt(document.getElementById('sc').value)||115)/100,ox=parseInt(document.getElementById('ox').value)||0,oy=parseInt(document.getElementById('oy').value)||0,bl=document.getElementById('chk-bg').checked;
+ c.save();let ir=procSub.width/procSub.height,br=bw/bh,dw,dh;
+ if(ir>br){dw=bw*sc;dh=dw/ir;}else{dh=bh*sc;dw=dh*ir;}
+ let dx=bx+(bw-dw)/2+ox,dy=by+(bh-dh)/2+oy;
+ if(bl){c.shadowColor="rgba(0,0,0,.24)";c.shadowBlur=14;c.shadowOffsetX=3;c.shadowOffsetY=6;c.drawImage(procSub,dx,dy,dw,dh);}
+ else{rRect(c,bx,by,bw,bh,22,"#fff",false);c.save();rRect(c,bx,by,bw,bh,22,null,false);c.clip();c.drawImage(procSub,dx,dy,dw,dh);c.restore();c.strokeStyle=bCol;c.lineWidth=3;rRect(c,bx,by,bw,bh,22,null,true);}
+ c.restore();
+}
+function drawTag(c,bx,by,bw){
+ let txt=cln(document.getElementById('cfg-tag').value),dir=document.getElementById('cfg-dir').value;if(!txt)return;
+ c.save();let tw=225,th=78,tx=bx+bw-tw-12,ty=by+12;
+ rRect(c,tx+3,ty+4,tw,th,14,"rgba(0,0,0,.26)",false);rRect(c,tx,ty,tw,th,14,"#dc2626",false);c.strokeStyle="#fff";c.lineWidth=3.5;rRect(c,tx,ty,tw,th,14,null,true);
+ c.fillStyle="#fff";c.font="800 23px 'Hind',sans-serif";c.textAlign="center";c.textBaseline="middle";
+ let ws=txt.split(' ');if(ws.length>=2&&c.measureText(txt).width>tw-22){let m=Math.ceil(ws.length/2);c.fillText(ws.slice(0,m).join(' '),tx+tw/2,ty+25);c.fillText(ws.slice(m).join(' '),tx+tw/2,ty+53);}else c.fillText(trunc(c,txt,tw-18),tx+tw/2,ty+th/2);
+ if(dir!=="none"){
+  let sx=tx,sy=ty+th/2,ex=tx-110,ey=ty+130,cx=tx-70,cy=ty+40;
+  if(dir==="left"){ex=tx-125;ey=ty+52;cx=tx-60;cy=ty+32;}
+  else if(dir==="down"){sx=tx+tw/2;sy=ty+th;ex=sx-18;ey=sy+110;cx=sx+10;cy=sy+50;}
+  c.beginPath();c.moveTo(sx,sy);c.quadraticCurveTo(cx,cy,ex,ey);c.strokeStyle="#fff";c.lineWidth=11;c.lineCap="round";c.stroke();
+  c.beginPath();c.moveTo(sx,sy);c.quadraticCurveTo(cx,cy,ex,ey);c.strokeStyle="#dc2626";c.lineWidth=6;c.stroke();
+  let ang=Math.atan2(ey-cy,ex-cx),hl=21;c.beginPath();c.moveTo(ex,ey);c.lineTo(ex-hl*Math.cos(ang-Math.PI/6),ey-hl*Math.sin(ang-Math.PI/6));c.lineTo(ex-hl*Math.cos(ang+Math.PI/6),ey-hl*Math.sin(ang+Math.PI/6));c.closePath();c.fillStyle="#dc2626";c.fill();c.strokeStyle="#fff";c.lineWidth=2.5;c.stroke();
+ }
+ c.restore();
+}
+function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
+ c.textBaseline="top";c.textAlign="left";c.font=`900 ${fs+4}px 'Poppins',sans-serif`;c.fillStyle=preCol;
+ let fp=pre+" ",pw=c.measureText(fp).width;c.fillText(fp,x,y);
+ let sw=new Set(["के","की","का","को","में","से","पर","और","या","है","हैं","था","थे","थी","हूँ","हो","जाता","जाती","कहा","लिए","द्वारा","तथा","एवं","इस","उस","एक"]);
+ c.font=`800 ${fs}px ${ff}`;let ws=(txt||"").split(' '),cx=x+pw,cy=y,lh=Math.round(fs*1.36),inq=false,qc=pal[0],ci=wordSeed;
+ ws.forEach((w,i)=>{
+  let cw=w.replace(/[?,.!"'‘’“”।\-]/g,'').trim();
+  if(/^['"‘“]/.test(w)){inq=true;qc=pal[ci++%pal.length];}
+  let col=defCol;
+  if(inq)col=qc;else if(cw.length>0&&!sw.has(cw)){let hv=(cw.charCodeAt(0)+i+wordSeed)%5;if(hv===0||hv===1||hv===3)col=pal[ci++%pal.length];}
+  if(/['"’”][?,.!।]*$/.test(w))inq=false;
+  c.fillStyle=col;let ww=c.measureText(w+" ").width;if(cx+ww>x+mw){cx=x;cy+=lh;}c.fillText(w+" ",cx,cy);cx+=ww;
+ });
+ return cy+lh;
+}
+
+/* MAIN DRAW ENGINE */
+function draw(){
+ const th=document.getElementById('cfg-theme').value,ff=document.getElementById('cfg-font').value,qs=parseInt(document.getElementById('cfg-qs').value)||44,bos=parseInt(document.getElementById('cfg-os').value)||34,ipos=document.getElementById('cfg-ipos').value,hasI=Boolean(procSub),pal=["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
+ ctx.clearRect(0,0,1080,1350);
+
+ /* THEME 1: WORLD GK CAPSULE */
+ if(th==="world_capsule"){
+  if(!drawBgPhoto(ctx,0,0,1080,1350,0)){let g=ctx.createRadialGradient(540,620,80,540,675,860);g.addColorStop(0,"#fff");g.addColorStop(.55,"#e0f2fe");g.addColorStop(1,"#bae6fd");ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);}
+  ctx.strokeStyle="#3b82f6";ctx.lineWidth=6;rRect(ctx,22,22,1036,1306,34,null,true);
+  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#e11d48";ctx.font=`900 54px ${ff}`;ctx.fillText(qData.title||"🌍 WORLD GK QUIZ 🧠",540,86);
+  let bt="EXAM PREPARATION";ctx.font="900 26px 'Poppins',sans-serif";let bw=ctx.measureText(bt).width,pw=bw+68,ph=50,px=(1080-pw)/2,py=126;
+  ctx.strokeStyle="#eab308";ctx.lineWidth=5;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(85,py+ph/2);ctx.lineTo(px-24,py+ph/2);ctx.moveTo(px+pw+24,py+ph/2);ctx.lineTo(995,py+ph/2);ctx.stroke();
+  rRect(ctx,px,py,pw,ph,25,"#0f172a",false);ctx.strokeStyle="#eab308";ctx.lineWidth=2.5;rRect(ctx,px,py,pw,ph,25,null,true);ctx.fillStyle="#facc15";ctx.fillText(bt,540,py+ph/2+1);
+  let hasE=Boolean(cln(qData.questionEn)),qbh=hasE?235:195;
+  rRect(ctx,54,210,980,qbh,28,"rgba(15,23,42,.14)",false);rRect(ctx,50,204,980,qbh,28,"#fff",false);ctx.strokeStyle="#1e3a8a";ctx.lineWidth=4;rRect(ctx,50,204,980,qbh,28,null,true);
+  let qe=drawColorQ(ctx,qData.qPrefix||"386.",qData.questionText,84,230,912,qs+2,ff,"#0f172a",pal,"#1d4ed8");
+  if(hasE){ctx.fillStyle="#15803d";ctx.font="700 25px 'Hind',sans-serif";wrapL(ctx,"- "+qData.questionEn,84,qe+2,912,30);}
+  let oy=204+qbh+38,ox=52,ow=hasI?535:976,oh=92,og=ansMode?98:114,os=hasI?Math.min(bos,30):bos;
+  if(hasI){
+   if(ipos==="center"){drawSubImg(ctx,52,oy,976,215,"#1e3a8a");drawTag(ctx,52,oy,976);oy+=237;ow=976;oh=74;og=90;os=Math.min(bos,28);}
+   else{drawSubImg(ctx,595,oy-12,445,ansMode?440:520,"#1e3a8a");drawTag(ctx,595,oy-12,445);}
+  }
+  [{c:"#1d4ed8",k:"A"},{c:"#db2777",k:"B"},{c:"#ea580c",k:"C"},{c:"#16a34a",k:"D"}].forEach((s,i)=>{
+   let cy=oy+i*og,ic=qData.correctOption===s.k;
+   rRect(ctx,ox+3,cy+5,ow,oh,oh/2,"rgba(15,23,42,.12)",false);rRect(ctx,ox,cy,ow,oh,oh/2,(ansMode&&ic)?"#16a34a":"#fff",false);
+   ctx.strokeStyle=(ansMode&&ic)?"#facc15":s.c;ctx.lineWidth=(ansMode&&ic)?5:3;rRect(ctx,ox,cy,ow,oh,oh/2,null,true);
+   let cr=(oh-22)/2,cx=ox+14+cr,mid=cy+oh/2;ctx.beginPath();ctx.arc(cx,mid,cr,0,Math.PI*2);ctx.fillStyle=(ansMode&&ic)?"#facc15":s.c;ctx.fill();
+   ctx.fillStyle=(ansMode&&ic)?"#0f172a":"#fff";ctx.font="900 30px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":s.k,cx,mid+1);
+   ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#fff":"#0f172a";ctx.font=`800 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[s.k]||"",ow-(cr*2+42)),cx+cr+18,mid+2);
+  });
+  let fy=oy+3*og+oh+34;
+  if(ansMode){
+   rRect(ctx,52,fy,976,165,20,"#fff",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3.5;rRect(ctx,52,fy,976,165,20,null,true);
+   ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,78,fy+16);
+   ctx.fillStyle="#1e293b";ctx.font=`600 22px ${ff}`;wrapL(ctx,qData.explanation,78,fy+54,924,30);
+   ctx.fillStyle="#0f172a";ctx.font=`800 24px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,fy+195);
+  }else{
+   rRect(ctx,56,fy+6,976,86,43,"rgba(15,23,42,.16)",false);let yg=ctx.createLinearGradient(52,fy,1028,fy+86);yg.addColorStop(0,"#fde047");yg.addColorStop(1,"#facc15");
+   rRect(ctx,52,fy,976,86,43,yg,false);ctx.strokeStyle="#1e3a8a";ctx.lineWidth=3.5;rRect(ctx,52,fy,976,86,43,null,true);
+   let hs=qData.hook||"👇 अपना जवाब A, B, C या D में कमेंट करें!";ctx.font=`900 33px ${ff}`;ctx.textBaseline="middle";let tks=hs.split(' '),tw=0;tks.forEach(t=>tw+=ctx.measureText(t+" ").width);let sx=(1080-tw)/2;ctx.textAlign="left";
+   tks.forEach(t=>{let ct=t.replace(/[,!.]/g,'');ctx.fillStyle=ct==="A"?"#dc2626":ct==="B"?"#db2777":ct==="C"?"#ea580c":ct==="D"?"#16a34a":"#0f172a";ctx.fillText(t+" ",sx,fy+43);sx+=ctx.measureText(t+" ").width;});
+   let sy=fy+130;ctx.strokeStyle="#16a34a";ctx.lineWidth=5;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(85,sy);ctx.lineTo(175,sy);ctx.moveTo(905,sy);ctx.lineTo(995,sy);ctx.stroke();
+   ctx.fillStyle="#0f172a";ctx.font=`800 28px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,sy);
+  }
+  return;
+ }
+
+ /* THEME 2: AAJ KA SAWAL */
+ if(th==="aaj_ka_sawal"){
+  if(!drawBgPhoto(ctx,0,0,1080,1350,0)){ctx.fillStyle="#faf7f0";ctx.fillRect(0,0,1080,1350);}
+  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#dc2626";ctx.font=`900 46px ${ff}`;ctx.fillText(qData.title||"🧠 आज का सवाल",540,86);
+  let bt="EXAM PREPARATION";ctx.font="800 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+76,px=(1080-pw)/2;
+  rRect(ctx,px,132,pw,54,27,"#1e2433",false);ctx.fillStyle="#fff";ctx.fillText(bt,540,160);
+  ctx.fillStyle="#111827";ctx.font=`900 ${qs}px ${ff}`;let qe=wrapL(ctx,`${qData.qPrefix} ${qData.questionText}`.trim(),540,245,920,Math.round(qs*1.36),true);
+  if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="600 31px 'Hind',sans-serif";qe=wrapL(ctx,qData.questionEn,540,qe+12,900,42,true);}
+  let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos+2;
+  if(hasI){
+   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200,"#cbd5e1");drawTag(ctx,88,oy,904);oy+=222;oh=74;og=90;os=Math.min(bos,28);}
+   else{ow=540;os=Math.min(bos,28);drawSubImg(ctx,645,oy,365,3*og+oh,"#cbd5e1");drawTag(ctx,645,oy,365);}
+  }
+  ["A","B","C","D"].forEach((k,i)=>{
+   let cy=oy+i*og,ic=qData.correctOption===k;
+   rRect(ctx,ox,cy,ow,oh,16,(ansMode&&ic)?"#dcfce7":"#fff",false);ctx.strokeStyle=(ansMode&&ic)?"#16a34a":"#e2e8f0";ctx.lineWidth=(ansMode&&ic)?4:2;rRect(ctx,ox,cy,ow,oh,16,null,true);
+   let cx=ox+54,mid=cy+oh/2;ctx.beginPath();ctx.arc(cx,mid,26,0,Math.PI*2);ctx.fillStyle=(ansMode&&ic)?"#16a34a":"#27303f";ctx.fill();
+   ctx.fillStyle="#fff";ctx.font="800 26px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":k,cx,mid+1);
+   ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#14532d":"#111827";ctx.font=`700 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[k]||"",ow-125),ox+106,mid+2);
+  });
+  let fy=oy+3*og+oh+34;
+  if(ansMode){
+   rRect(ctx,88,fy,904,165,16,"#fff",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3;rRect(ctx,88,fy,904,165,16,null,true);
+   ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,114,fy+16);
+   ctx.fillStyle="#1e293b";ctx.font=`600 22px ${ff}`;wrapL(ctx,qData.explanation,114,fy+54,852,30);
+   ctx.fillStyle="#1e293b";ctx.font=`700 24px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,fy+195);
+  }else{
+   rRect(ctx,88,fy,904,96,18,"#f59e0b",false);ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font=`800 35px ${ff}`;ctx.fillText(qData.hook,540,fy+48);
+   ctx.fillStyle="#1e293b";ctx.font=`700 26px ${ff}`;ctx.fillText(qData.social,540,fy+144);
+  }
+  return;
+ }
+
+ /* THEME 3: CLASSIC TEXTURED PAPER */
+ if(th==="paper_classic"){
+  if(!drawBgPhoto(ctx,0,0,1080,1350,0)){ctx.fillStyle=getPat(ctx,document.getElementById('cfg-paper-col').value);ctx.fillRect(0,0,1080,1350);}
+  ctx.strokeStyle="rgba(30,41,59,.25)";ctx.lineWidth=4;rRect(ctx,18,18,1044,1314,28,null,true);
+  ctx.strokeStyle="rgba(217,119,6,.35)";ctx.lineWidth=2;rRect(ctx,28,28,1024,1294,22,null,true);
+  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#dc2626";ctx.font=`900 54px ${ff}`;ctx.fillText(qData.title,540,92);
+  let bt="EXAM PREPARATION";ctx.font="900 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+62,px=(1080-pw)/2;
+  rRect(ctx,px+3,144,pw,48,24,"rgba(0,0,0,.22)",false);rRect(ctx,px,140,pw,48,24,"#1e293b",false);ctx.strokeStyle="#f59e0b";ctx.lineWidth=2.5;rRect(ctx,px,140,pw,48,24,null,true);ctx.fillStyle="#fff";ctx.fillText(bt,540,164);
+  let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,74,232,932,hasI&&ipos==="center"?Math.min(qs,38):qs,ff,"#111827",pal,"#1d4ed8");
+  if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 28px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,74,qe+8,932,36);}
+  let oy=qe+42,ox=82,og=ansMode?94:112,os=bos+2;
+  if(hasI){
+   if(ipos==="center"){drawSubImg(ctx,82,oy,916,225,"#334155");drawTag(ctx,82,oy,916);oy+=251;og=74;os=Math.min(bos,28);}
+   else{drawSubImg(ctx,505,oy-22,515,ansMode?460:540,"#334155");drawTag(ctx,505,oy-22,515);}
+  }
+  ["A","B","C","D"].forEach((k,i)=>{
+   let cy=oy+i*og,ic=qData.correctOption===k,cols=["#1d4ed8","#be185d","#b45309","#047857"];
+   if(ansMode&&ic){let w=hasI&&ipos==="right"?425:900;rRect(ctx,ox-14,cy-14,w,72,36,"#dcfce7",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3.5;rRect(ctx,ox-14,cy-14,w,72,36,null,true);}
+   let cx=ox+25,mid=cy+22;ctx.beginPath();ctx.arc(cx,mid,25,0,Math.PI*2);ctx.fillStyle=(ansMode&&ic)?"#16a34a":cols[i];ctx.fill();
+   ctx.fillStyle="#fff";ctx.font="900 27px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":k,cx,mid+1);
+   ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#14532d":"#2e1065";ctx.font=`800 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[k]||"",hasI&&ipos==="right"?355:830),ox+68,mid+2);
+  });
+  let fy=Math.max(oy+4*og+18,ansMode?1030:1125);
+  if(ansMode){
+   rRect(ctx,65,fy,950,175,18,"rgba(255,255,255,.94)",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3.5;rRect(ctx,65,fy,950,175,18,null,true);
+   ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,90,fy+16);
+   ctx.fillStyle="#1e293b";ctx.font=`600 23px ${ff}`;wrapL(ctx,qData.explanation,90,fy+56,900,31);
+   ctx.fillStyle="#0f172a";ctx.font=`800 24px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,fy+206);
+  }else{
+   let cg=ctx.createLinearGradient(65,fy,1015,fy+86);cg.addColorStop(0,"#f59e0b");cg.addColorStop(.5,"#ea580c");cg.addColorStop(1,"#f59e0b");
+   rRect(ctx,65,fy,950,86,43,cg,false);ctx.strokeStyle="#1e293b";ctx.lineWidth=3;rRect(ctx,65,fy,950,86,43,null,true);
+   ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font=`900 34px ${ff}`;ctx.fillText(qData.hook,540,fy+43);
+   ctx.fillStyle="#0f172a";ctx.font=`800 28px ${ff}`;ctx.fillText(qData.social,540,fy+132);
+  }
+  return;
+ }
+
+ /* THEME 4: CANDY POP & PLAIN COLORS */
+ let isC=th==="kids_candy";
+ if(isC){let g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,"#ff6b6b");g.addColorStop(.5,"#feca57");g.addColorStop(1,"#48dbfb");ctx.fillStyle=g;}else ctx.fillStyle=th;
+ ctx.fillRect(0,0,1080,1350);
+ if(isC)rRect(ctx,52,54,996,1266,36,"#1e293b",false);
+ rRect(ctx,42,42,996,1266,36,"#fff",false);drawBgPhoto(ctx,42,42,996,1266,36);
+ ctx.strokeStyle=isC?"#1e293b":"#cbd5e1";ctx.lineWidth=isC?8:3;rRect(ctx,42,42,996,1266,36,null,true);
+ ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle=isC?"#e11d48":"#dc2626";ctx.font=`900 52px ${ff}`;ctx.fillText(qData.title,540,114);
+ let bt="EXAM PREPARATION";ctx.font="900 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+56,px=(1080-pw)/2;
+ rRect(ctx,px,156,pw,46,23,"#8b5cf6",false);ctx.strokeStyle="#1e293b";ctx.lineWidth=2.5;rRect(ctx,px,156,pw,46,23,null,true);ctx.fillStyle="#fff";ctx.fillText(bt,540,179);
+ let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,95,254,890,hasI&&ipos==="center"?Math.min(qs,38):qs,ff,"#1e293b",pal,"#2563eb");
+ if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 26px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,95,qe+4,890,32);}
+ let oy=qe+30,ox=95,ow=890,oh=90,og=114,os=Math.min(bos,30);
+ if(hasI){
+  if(ipos==="center"){drawSubImg(ctx,95,oy,890,225,"#1e293b");drawTag(ctx,95,oy,890);oy+=247;oh=72;og=90;os=Math.min(bos,27);}
+  else{ow=520;os=Math.min(bos,26);drawSubImg(ctx,639,oy,346,3*og+oh,"#1e293b");drawTag(ctx,639,oy,346);}
+ }
+ [{bg:"#e0f2fe",bd:"#0284c7",k:"A"},{bg:"#fce7f3",bd:"#db2777",k:"B"},{bg:"#fef9c3",bd:"#ca8a04",k:"C"},{bg:"#dcfce7",bd:"#16a34a",k:"D"}].forEach((s,i)=>{
+  let cy=oy+i*og,ic=qData.correctOption===s.k;
+  if(isC)rRect(ctx,ox+5,cy+6,ow,oh,20,"rgba(0,0,0,.3)",false);
+  rRect(ctx,ox,cy,ow,oh,20,(ansMode&&ic)?"#16a34a":s.bg,false);ctx.strokeStyle=(ansMode&&ic)?"#facc15":s.bd;ctx.lineWidth=(ansMode&&ic)?5:3;rRect(ctx,ox,cy,ow,oh,20,null,true);
+  let bs=Math.min(58,oh-22),bo=(oh-bs)/2;rRect(ctx,ox+14,cy+bo,bs,bs,14,(ansMode&&ic)?"#facc15":s.bd,false);
+  ctx.fillStyle=(ansMode&&ic)?"#0f172a":"#fff";ctx.font="900 26px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":s.k,ox+14+bs/2,cy+oh/2);
+  ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#fff":"#0f172a";ctx.font=`800 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[s.k]||"",ow-bs-36),ox+bs+26,cy+oh/2);
+ });
+ let fy=oy+3*og+oh+34;
+ if(ansMode){
+  rRect(ctx,95,fy,890,165,18,"#f8fafc",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3;rRect(ctx,95,fy,890,165,18,null,true);
+  ctx.fillStyle="#15803d";ctx.font=`800 25px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,118,fy+16);
+  ctx.fillStyle="#1e293b";ctx.font=`600 22px ${ff}`;wrapL(ctx,qData.explanation,118,fy+56,844,30);
+  ctx.fillStyle="#1e293b";ctx.font=`800 22px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,fy+195);
+ }else{
+  rRect(ctx,110,fy,860,80,40,"#ff9f43",false);ctx.strokeStyle="#1e293b";ctx.lineWidth=3;rRect(ctx,110,fy,860,80,40,null,true);
+  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font=`900 32px ${ff}`;ctx.fillText(qData.hook,540,fy+40);
+  ctx.fillStyle="#1e293b";ctx.font=`800 26px ${ff}`;ctx.fillText(qData.social,540,fy+122);
+ }
+}
+
+async function shareImg(){
+ let cap=getCap();navigator.clipboard.writeText(cap).catch(()=>{});
+ cvs.toBlob(async b=>{
+  if(!b)return;let f=new File([b],`Quiz_${qData.qPrefix}.png`,{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({title:"Quiz",text:cap,files:[f]});}catch(e){}}
+  else{dlImg();alert("फ़ोटो डाउनलोड और कैप्शन कॉपी हो गया है!");}
+ });
+}
+function dlImg(){let a=document.createElement('a');a.download=`${ansMode?"Solved_":""}Quiz_${qData.qPrefix.replace(/[^a-zA-Z0-9]/g,'_')}.png`;a.href=cvs.toDataURL();a.click();}
+
+window.onload=()=>{loadPrefs();document.getElementById('h-cnt').innerText=getHist().length;draw();};
 </script>
 </body>
 </html>
