@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viral Quiz Studio Pro - Full Layout & Auto-Blend Edition</title>
+    <title>Viral Quiz Studio Pro - Framed Textured Cutout Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Hind:wght@500;600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -361,17 +361,18 @@
         <div>
             <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
             <textarea id="raw-paste-box">🏛️ POLITY GK QUIZ 🧠
-Q.169 संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️
-A) डॉ. राजेंद्र प्रसाद 📜
-B) डॉ. भीमराव अंबेडकर 🇮🇳
-C) जवाहरलाल नेहरू 🏛️
-D) सरदार वल्लभभाई पटेल 🛡️
+Q. 'बर्डमैन ऑफ इंडिया' के नाम से प्रसिद्ध पक्षी वैज्ञानिक कौन हैं?
+- Who is the ornithologist known as the 'Birdman of India'?
+A) जिम कॉर्बेट
+B) सलीम अली
+C) एम. कृष्णन
+D) कैलाश सांखला
 👇 1 Second में सही उत्तर Comment करें! ⚡
 ❤️ Like | ➕ Follow 🎯
-Caption: संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀
-#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity
-Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳
-Explanation: 29 अगस्त 1947 को गठित संविधान सभा की सबसे महत्वपूर्ण 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष डॉ. भीमराव अंबेडकर थे, जिसमें कुल 7 सदस्य थे।</textarea>
+Caption: 'बर्डमैन ऑफ इंडिया' (Birdman of India) के नाम से किसे जाना जाता है? सही उत्तर कमेंट करें! 👇🧠
+#PolityQuiz #GKQuiz #BirdmanOfIndia #StaticGK
+Answer: B) सलीम अली
+Explanation: प्रसिद्ध भारतीय पक्षी विज्ञानी और प्रकृतिवादी डॉ. सलीम अली को 'बर्डमैन ऑफ इंडिया' कहा जाता है। उन्हें 1976 में पद्म विभूषण से सम्मानित किया गया था।</textarea>
             <div class="btn-action-grid">
                 <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
                     <span>📋 1-Click Paste & Run</span>
@@ -385,7 +386,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         <!-- IMAGE UPLOAD, SEARCH & AUTO-BLEND PANEL -->
         <div class="img-control-panel">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Cutout / Diagram Photo जोड़ें (Viral Look):</span>
+                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Cutout / Sketch Photo जोड़ें (Viral Look):</span>
                 <span id="img-status-badge" style="font-size: 10.5px; color: #94a3b8; font-weight: 700;">No Image</span>
             </div>
             <div class="img-btn-row">
@@ -413,15 +414,15 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                     <div>
                         <label>फोटो पोजीशन (Layout):</label>
                         <select id="cfg-img-pos" onchange="saveAllSettings(); redrawCanvas();">
-                            <option value="right">👉 Right Side (Options के साथ Side-by-Side)</option>
-                            <option value="center">⬇️ Center Banner (Question के ठीक नीचे)</option>
+                            <option value="right">👉 Right Cutout (Options के बगल में)</option>
+                            <option value="center">⬇️ Center Banner (Question के नीचे)</option>
                         </select>
                     </div>
                     <div>
                         <label>फोटो साइज़ (Scale):</label>
                         <select id="cfg-img-scale" onchange="saveAllSettings(); redrawCanvas();">
-                            <option value="1.0" selected>Normal (100%)</option>
-                            <option value="1.15">Large (115%)</option>
+                            <option value="1.0">Normal (100%)</option>
+                            <option value="1.15" selected>Large (115%)</option>
                             <option value="0.85">Compact (85%)</option>
                         </select>
                     </div>
@@ -442,8 +443,8 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             <div>
                 <label>बैकग्राउंड थीम (All 4 Lines Included):</label>
                 <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="paper_classic">📜 Classic Canvas Paper (Textured)</option>
-                    <option value="kids_paper">🎨 Kids Fun Paper (Bright Textured)</option>
+                    <option value="paper_classic">📜 Classic Canvas Box (Latest Viral)</option>
+                    <option value="kids_paper">🎨 Kids Fun Canvas Box (Bright)</option>
                     <option value="kids_gaming">🎮 Gaming Neon Arena (Dark)</option>
                     <option value="kids_candy">🌈 Rainbow Candy Pop (Cartoon)</option>
                     <option value="kids_space">🚀 Space Adventure (Galaxy)</option>
@@ -460,8 +461,8 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
                 <input type="range" id="cfg-q-size" min="30" max="60" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
             <div>
-                <label>ऑप्शन साइज़: <span id="opt-size-lbl">30</span>px</label>
-                <input type="range" id="cfg-opt-size" min="22" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                <label>ऑप्शन साइज़: <span id="opt-size-lbl">34</span>px</label>
+                <input type="range" id="cfg-opt-size" min="24" max="44" value="34" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
@@ -549,7 +550,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
             </div>
             <div>
                 <label>अंग्रेजी प्रश्न (English Question - Optional):</label>
-                <input type="text" id="edit-q-en" placeholder="e.g. Who was the Chairman of Drafting Committee?">
+                <input type="text" id="edit-q-en" placeholder="e.g. Who is the ornithologist known as the 'Birdman of India'?">
             </div>
             <div class="row-flex">
                 <div>
@@ -593,8 +594,8 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V10";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V10";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V11";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V11";
 
     let isAnswerRevealed = false;
     let rawUploadedImage = null;
@@ -602,22 +603,22 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     let paperPatternCache = {};
 
     let quizData = {
-        id: "default_169",
+        id: "default_birdman",
         title: "🏛️ POLITY GK QUIZ 🧠",
-        qPrefix: "Q.169",
-        questionText: "संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️",
-        questionEn: "",
+        qPrefix: "Q.",
+        questionText: "'बर्डमैन ऑफ इंडिया' के नाम से प्रसिद्ध पक्षी वैज्ञानिक कौन हैं?",
+        questionEn: "Who is the ornithologist known as the 'Birdman of India'?",
         options: {
-            A: "डॉ. राजेंद्र प्रसाद 📜",
-            B: "डॉ. भीमराव अंबेडकर 🇮🇳",
-            C: "जवाहरलाल नेहरू 🏛️",
-            D: "सरदार वल्लभभाई पटेल 🛡️"
+            A: "जिम कॉर्बेट",
+            B: "सलीम अली",
+            C: "एम. कृष्णन",
+            D: "कैलाश सांखला"
         },
         hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
         social: "❤️ Like | ➕ Follow 🎯",
         correctOption: "B",
-        explanation: "29 अगस्त 1947 को गठित संविधान सभा की सबसे महत्वपूर्ण 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष डॉ. भीमराव अंबेडकर थे, जिसमें कुल 7 सदस्य थे।",
-        caption: "संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀\n#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity"
+        explanation: "प्रसिद्ध भारतीय पक्षी विज्ञानी और प्रकृतिवादी डॉ. सलीम अली को 'बर्डमैन ऑफ इंडिया' कहा जाता है। उन्हें 1976 में पद्म विभूषण से सम्मानित किया गया था।",
+        caption: "'बर्डमैन ऑफ इंडिया' (Birdman of India) के नाम से किसे जाना जाता है? सही उत्तर कमेंट करें! 👇🧠\n#PolityQuiz #GKQuiz #BirdmanOfIndia #StaticGK"
     };
 
     /* ==================== TEXTURE GENERATOR (CANVAS FABRIC/PAPER LOOK) ==================== */
@@ -629,19 +630,19 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         pCanvas.height = 160;
         const pCtx = pCanvas.getContext('2d');
 
-        pCtx.fillStyle = variant === "kids_paper" ? "#fffbeb" : "#ece9e2";
+        pCtx.fillStyle = variant === "kids_paper" ? "#fef3c7" : "#e5e2db";
         pCtx.fillRect(0, 0, 160, 160);
 
         for (let i = 0; i < 160; i += 3) {
-            pCtx.fillStyle = (i % 6 === 0) ? "rgba(0,0,0,0.032)" : "rgba(255,255,255,0.28)";
+            pCtx.fillStyle = (i % 6 === 0) ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.3)";
             pCtx.fillRect(0, i, 160, 1);
             pCtx.fillRect(i, 0, 1, 160);
         }
 
-        for (let s = 0; s < 350; s++) {
+        for (let s = 0; s < 360; s++) {
             const rx = Math.random() * 160;
             const ry = Math.random() * 160;
-            pCtx.fillStyle = Math.random() > 0.5 ? "rgba(80,70,60,0.05)" : "rgba(255,255,255,0.22)";
+            pCtx.fillStyle = Math.random() > 0.5 ? "rgba(70,60,50,0.06)" : "rgba(255,255,255,0.24)";
             pCtx.fillRect(rx, ry, 1.5, 1.5);
         }
 
@@ -654,7 +655,7 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
     function searchImageOnGoogle() {
         const cleanQ = (quizData.questionText || "").replace(/['"?।]/g, ' ').trim();
         const ansText = quizData.options[quizData.correctOption] || "";
-        const query = encodeURIComponent(`${ansText} ${cleanQ.split(' ').slice(0, 4).join(' ')} diagram sketch png`);
+        const query = encodeURIComponent(`${ansText} ${cleanQ.split(' ').slice(0, 4).join(' ')} sketch png`);
         window.open(`https://www.google.com/search?tbm=isch&q=${query}`, '_blank');
     }
 
@@ -686,10 +687,10 @@ Explanation: 29 अगस्त 1947 को गठित संविधान �
         for (let i = 0; i < d.length; i += 4) {
             const r = d[i], g = d[i + 1], b = d[i + 2];
             const brightness = (r + g + b) / 3;
-            if (brightness > 242 && Math.abs(r - g) < 18 && Math.abs(g - b) < 18) {
+            if (brightness > 240 && Math.abs(r - g) < 18 && Math.abs(g - b) < 18) {
                 d[i + 3] = 0;
-            } else if (brightness > 215 && Math.abs(r - g) < 20 && Math.abs(g - b) < 20) {
-                const factor = (242 - brightness) / 27;
+            } else if (brightness > 212 && Math.abs(r - g) < 20 && Math.abs(g - b) < 20) {
+                const factor = (240 - brightness) / 28;
                 d[i + 3] = Math.round(d[i + 3] * Math.max(0, Math.min(1, factor)));
             }
         }
@@ -990,7 +991,7 @@ ${tagsString}`.trim();
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
-            optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
+            optSize: parseInt(document.getElementById('cfg-opt-size').value) || 34,
             imgPos: document.getElementById('cfg-img-pos').value,
             imgScale: document.getElementById('cfg-img-scale').value,
             isAnswerMode: document.getElementById('chk-answer-mode').checked,
@@ -1243,7 +1244,7 @@ ${tagsString}`.trim();
         alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
     }
 
-    /* ==================== IMAGE RENDER HELPER (FRAMED + BLENDED SUPPORT) ==================== */
+    /* ==================== IMAGE RENDER HELPER ==================== */
     function drawQuizImageBox(targetCtx, img, bx, by, bw, bh, scaleFactor, isBlended, borderColor, isKids) {
         targetCtx.save();
 
@@ -1254,10 +1255,10 @@ ${tagsString}`.trim();
 
         let drawW, drawH;
         if (imgRatio > boxRatio) {
-            drawW = (bw - 24) * scaleFactor;
+            drawW = bw * scaleFactor;
             drawH = drawW / imgRatio;
         } else {
-            drawH = (bh - 24) * scaleFactor;
+            drawH = bh * scaleFactor;
             drawW = drawH * imgRatio;
         }
 
@@ -1265,14 +1266,13 @@ ${tagsString}`.trim();
         const drawY = by + (bh - drawH) / 2;
 
         if (isBlended) {
-            // Blended cutout look on textured/colored background
+            // Cutout look blending directly on textured canvas
             targetCtx.shadowColor = "rgba(0, 0, 0, 0.22)";
-            targetCtx.shadowBlur = 14;
+            targetCtx.shadowBlur = 12;
             targetCtx.shadowOffsetX = 3;
             targetCtx.shadowOffsetY = 5;
             targetCtx.drawImage(img, drawX, drawY, drawW, drawH);
         } else {
-            // Clean white framed card (exact reference screenshot style)
             roundRect(targetCtx, bx, by, bw, bh, 22, "#ffffff", false);
             targetCtx.save();
             roundRect(targetCtx, bx, by, bw, bh, 22, null, false);
@@ -1288,24 +1288,225 @@ ${tagsString}`.trim();
         targetCtx.restore();
     }
 
-    /* ==================== UNIFIED SINGLE CARD DRAW ENGINE (ALL THEMES HAVE TOP 2 + BOTTOM 2 LINES) ==================== */
+    /* ==================== UNIFIED SINGLE CARD DRAW ENGINE ==================== */
     function renderCardToCanvas(targetCtx, data, isRevealed) {
         const themeKey = document.getElementById('cfg-bg-color').value || "paper_classic";
         const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
         const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
-        const baseOptSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
+        const baseOptSize = parseInt(document.getElementById('cfg-opt-size').value) || 34;
         const imgPos = document.getElementById('cfg-img-pos').value || "right";
-        const imgScale = parseFloat(document.getElementById('cfg-img-scale').value) || 1.0;
+        const imgScale = parseFloat(document.getElementById('cfg-img-scale').value) || 1.15;
         const isBlended = document.getElementById('chk-remove-white-bg').checked;
         const hasImage = Boolean(processedQuizImage);
 
         targetCtx.clearRect(0, 0, 1080, 1350);
 
-        // Theme Configuration (Every theme shares the exact 2-line Top Header & 2-line Bottom Footer structure)
+        // ==================== MODE A: FRAMED TEXTURED CANVAS BOX (LATEST IMAGE STYLE) ====================
+        if (themeKey === "paper_classic" || themeKey === "kids_paper") {
+            const isKidsPaper = (themeKey === "kids_paper");
+
+            // 1. Clean Off-White Outer Card Background
+            targetCtx.fillStyle = isKidsPaper ? "#fefce8" : "#f8fafc";
+            targetCtx.fillRect(0, 0, 1080, 1350);
+
+            // Subtle outer frame border
+            targetCtx.strokeStyle = isKidsPaper ? "#f59e0b" : "#cbd5e1";
+            targetCtx.lineWidth = isKidsPaper ? 8 : 3;
+            roundRect(targetCtx, 22, 22, 1036, 1306, 32, null, true);
+
+            // Subtle Watermark on outer background
+            targetCtx.save();
+            targetCtx.rotate(-28 * Math.PI / 180);
+            targetCtx.fillStyle = "rgba(15, 23, 42, 0.025)";
+            targetCtx.font = "900 44px 'Poppins', sans-serif";
+            for (let x = -800; x < 1800; x += 360) {
+                for (let y = -600; y < 2000; y += 160) {
+                    targetCtx.fillText("EXAM PREPARATION", x, y);
+                }
+            }
+            targetCtx.restore();
+
+            // 2. TOP LINE 1: Topic Title
+            targetCtx.textAlign = "center";
+            targetCtx.textBaseline = "middle";
+            targetCtx.fillStyle = isKidsPaper ? "#e11d48" : "#dc2626";
+            targetCtx.font = `900 54px ${fontFam}`;
+            targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 96);
+
+            // 3. TOP LINE 2: EXAM PREPARATION Capsule Badge
+            const badgeText = "EXAM PREPARATION";
+            targetCtx.font = "900 24px 'Poppins', sans-serif";
+            const badgeWidth = targetCtx.measureText(badgeText).width;
+            const pillW = badgeWidth + 58;
+            const pillH = 48;
+            const pillX = (1080 - pillW) / 2;
+            const pillY = 144;
+
+            roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, isKidsPaper ? "#7c3aed" : "#1e293b", false);
+            targetCtx.strokeStyle = isKidsPaper ? "#1e293b" : "#f59e0b";
+            targetCtx.lineWidth = 2.5;
+            roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, null, true);
+
+            targetCtx.fillStyle = "#ffffff";
+            targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
+
+            // 4. MIDDLE TEXTURED CANVAS BOX (Exact Reference Image Layout)
+            const boxX = 48;
+            const boxY = 224;
+            const boxW = 984;
+            const boxH = isRevealed ? 740 : 795;
+
+            targetCtx.save();
+            roundRect(targetCtx, boxX, boxY, boxW, boxH, 16, null, false);
+            targetCtx.fillStyle = getPaperTexturePattern(targetCtx, themeKey);
+            targetCtx.fill();
+            targetCtx.restore();
+
+            // Crisp Dark Border around the Textured Box
+            targetCtx.strokeStyle = isKidsPaper ? "#2563eb" : "#334155";
+            targetCtx.lineWidth = isKidsPaper ? 4.5 : 3;
+            roundRect(targetCtx, boxX, boxY, boxW, boxH, 16, null, true);
+
+            // Question inside Textured Box
+            targetCtx.textAlign = "left";
+            const qStartY = boxY + 42;
+            const effectiveQSize = (hasImage && imgPos === "center") ? Math.min(qSize, 38) : qSize;
+            let qEndY = drawColorfulQuestion(
+                targetCtx,
+                data.qPrefix || "Q.",
+                data.questionText || "",
+                boxX + 36,
+                qStartY,
+                boxW - 72,
+                effectiveQSize,
+                fontFam,
+                "#111827",
+                isKidsPaper ? "#dc2626" : "#111827",
+                isKidsPaper ? "#2563eb" : "#111827"
+            );
+
+            // Optional English Bilingual Question Line (Green like sample image)
+            if (data.questionEn && data.questionEn.trim().length > 0) {
+                targetCtx.fillStyle = isKidsPaper ? "#0369a1" : "#166534";
+                targetCtx.font = "700 28px 'Hind', sans-serif";
+                qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, boxX + 36, qEndY + 6, boxW - 72, 36);
+            }
+
+            // Options + Cutout Image inside Textured Box
+            let optStartY = qEndY + 34;
+            const optX = boxX + 42;
+            let optGap = isRevealed ? 86 : 98;
+            let optSize = baseOptSize + 2;
+
+            if (hasImage && imgPos === "center") {
+                const bannerH = 210;
+                drawQuizImageBox(targetCtx, processedQuizImage, boxX + 42, optStartY, boxW - 84, bannerH, imgScale, isBlended, "#334155", isKidsPaper);
+                optStartY += bannerH + 22;
+                optGap = 68;
+                optSize = Math.min(baseOptSize, 28);
+            } else if (hasImage && imgPos === "right") {
+                // Right side large cutout photo blending directly into textured paper
+                const imgBoxX = boxX + 445;
+                const imgBoxY = optStartY - 18;
+                const imgBoxW = boxW - 470;
+                const imgBoxH = (boxY + boxH) - imgBoxY - 16;
+                drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, imgBoxY, imgBoxW, imgBoxH, imgScale, isBlended, "#334155", isKidsPaper);
+            }
+
+            // Draw Clean Circular Badges + Bold Purple/Indigo Text (No Option Boxes!)
+            const keys = ["A", "B", "C", "D"];
+            const kidsCircleCols = ["#dc2626", "#2563eb", "#16a34a", "#9333ea"];
+
+            keys.forEach((k, idx) => {
+                const curY = optStartY + (idx * optGap);
+                const isCorrect = (data.correctOption === k);
+
+                // Highlight pill only when Answer Mode is ON
+                if (isRevealed && isCorrect) {
+                    const pillHighlightW = (hasImage && imgPos === "right") ? 425 : (boxW - 84);
+                    roundRect(targetCtx, optX - 12, curY - 12, pillHighlightW, 66, 33, "#dcfce7", false);
+                    targetCtx.strokeStyle = "#16a34a";
+                    targetCtx.lineWidth = 3.5;
+                    roundRect(targetCtx, optX - 12, curY - 12, pillHighlightW, 66, 33, null, true);
+                }
+
+                // Black/Colored Circle Badge (A, B, C, D)
+                const circleR = 24;
+                const cx = optX + circleR;
+                const cy = curY + 20;
+
+                targetCtx.beginPath();
+                targetCtx.arc(cx, cy, circleR, 0, Math.PI * 2);
+                if (isRevealed && isCorrect) {
+                    targetCtx.fillStyle = "#16a34a";
+                } else {
+                    targetCtx.fillStyle = isKidsPaper ? kidsCircleCols[idx] : "#111827";
+                }
+                targetCtx.fill();
+
+                targetCtx.fillStyle = "#ffffff";
+                targetCtx.font = "900 26px 'Poppins', sans-serif";
+                targetCtx.textAlign = "center";
+                targetCtx.textBaseline = "middle";
+                targetCtx.fillText((isRevealed && isCorrect) ? "✔" : k, cx, cy + 1);
+
+                // Bold Purple/Indigo Option Text directly on textured paper
+                targetCtx.textAlign = "left";
+                targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : (isKidsPaper ? "#1e1b4b" : "#3b178a");
+                targetCtx.font = `800 ${optSize}px ${fontFam}`;
+                const optVal = data.options ? (data.options[k] || "") : "";
+                const maxTextW = (hasImage && imgPos === "right") ? 360 : (boxW - 140);
+                targetCtx.fillText(truncateCanvasText(targetCtx, optVal, maxTextW), optX + 64, cy + 2);
+            });
+
+            // 5. BOTTOM 2 LINES BELOW THE TEXTURED BOX
+            const footerY = boxY + boxH + 26;
+            if (isRevealed) {
+                roundRect(targetCtx, 48, footerY, 984, 175, 18, "#ffffff", false);
+                targetCtx.strokeStyle = "#16a34a";
+                targetCtx.lineWidth = 3.5;
+                roundRect(targetCtx, 48, footerY, 984, 175, 18, null, true);
+
+                targetCtx.fillStyle = "#15803d";
+                targetCtx.font = `800 26px ${fontFam}`;
+                targetCtx.textAlign = "left";
+                targetCtx.textBaseline = "top";
+                const corrText = data.options ? (data.options[data.correctOption] || "") : "";
+                targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 74, footerY + 16);
+
+                targetCtx.fillStyle = "#1e293b";
+                targetCtx.font = `600 23px ${fontFam}`;
+                wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 74, footerY + 56, 932, 31);
+
+                targetCtx.fillStyle = "#0f172a";
+                targetCtx.font = `800 24px ${fontFam}`;
+                targetCtx.textAlign = "center";
+                targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 206);
+            } else {
+                // Bottom Line 1: Orange CTA Pill Box
+                roundRect(targetCtx, 65, footerY + 12, 950, 86, 43, "#f59e0b", false);
+                targetCtx.strokeStyle = "#1e293b";
+                targetCtx.lineWidth = 3;
+                roundRect(targetCtx, 65, footerY + 12, 950, 86, 43, null, true);
+
+                targetCtx.textAlign = "center";
+                targetCtx.textBaseline = "middle";
+                targetCtx.fillStyle = "#ffffff";
+                targetCtx.font = `900 34px ${fontFam}`;
+                targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 55);
+
+                // Bottom Line 2: Social Engagement Line
+                targetCtx.fillStyle = "#0f172a";
+                targetCtx.font = `800 28px ${fontFam}`;
+                targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 144);
+            }
+
+            return;
+        }
+
+        // ==================== MODE B: EXISTING COLORFUL / NEON CARD THEMES ====================
         let cfg = {
             isKids: false,
-            isPaper: false,
-            paperVariant: null,
             bgGrad: [themeKey, themeKey],
             cardBg: "#ffffff",
             cardBorder: "#cbd5e1",
@@ -1332,64 +1533,7 @@ ${tagsString}`.trim();
             ]
         };
 
-        if (themeKey === "paper_classic") {
-            cfg = {
-                ...cfg,
-                isPaper: true,
-                paperVariant: "paper_classic",
-                cardBg: null, // Uses textured paper directly
-                cardBorder: "#334155",
-                cardBorderW: 4,
-                titleColor: "#b91c1c",
-                badgeBg: "#1e293b",
-                badgeBorder: "#f59e0b",
-                badgeText: "#ffffff",
-                qDefault: "#111827",
-                qHighlight: "#b91c1c",
-                prefixColor: "#1d4ed8",
-                watermark: "rgba(15, 23, 42, 0.025)",
-                hookBg: "#f59e0b",
-                hookBorder: "#111827",
-                hookText: "#ffffff",
-                socialText: "#111827",
-                imgBorder: "#1e293b",
-                opts: [
-                    { bg: "rgba(255,255,255,0.88)", border: "#1e40af", badgeBg: "#1e40af", text: "#111827", label: "A" },
-                    { bg: "rgba(255,255,255,0.88)", border: "#9d174d", badgeBg: "#9d174d", text: "#111827", label: "B" },
-                    { bg: "rgba(255,255,255,0.88)", border: "#b45309", badgeBg: "#b45309", text: "#111827", label: "C" },
-                    { bg: "rgba(255,255,255,0.88)", border: "#15803d", badgeBg: "#15803d", text: "#111827", label: "D" }
-                ]
-            };
-        } else if (themeKey === "kids_paper") {
-            cfg = {
-                ...cfg,
-                isKids: true,
-                isPaper: true,
-                paperVariant: "kids_paper",
-                cardBg: null,
-                cardBorder: "#f59e0b",
-                cardBorderW: 8,
-                titleColor: "#e11d48",
-                badgeBg: "#7c3aed",
-                badgeBorder: "#1e293b",
-                badgeText: "#ffffff",
-                qDefault: "#1e1b4b",
-                qHighlight: "#dc2626",
-                prefixColor: "#2563eb",
-                watermark: "rgba(37, 99, 235, 0.03)",
-                hookBg: "#fb923c",
-                hookBorder: "#1e293b",
-                hookText: "#ffffff",
-                socialText: "#1e1b4b",
-                imgBorder: "#1e293b",
-                opts: [
-                    { bg: "#e0f2fe", border: "#0284c7", badgeBg: "#0284c7", text: "#0c4a6e", label: "A" },
-                    { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#831843", label: "B" },
-                    { bg: "#fef08a", border: "#ca8a04", badgeBg: "#eab308", text: "#713f12", label: "C" },
-                    { bg: "#dcfce7", border: "#16a34a", badgeBg: "#16a34a", text: "#14532d", label: "D" }
-                ]
-            };
-        } else if (themeKey === "kids_gaming") {
+        if (themeKey === "kids_gaming") {
             cfg = {
                 ...cfg,
                 isKids: true,
@@ -1507,61 +1651,35 @@ ${tagsString}`.trim();
             };
         }
 
-        // 1. Background Fill (Textured Paper or Gradient)
-        if (cfg.isPaper) {
-            targetCtx.fillStyle = getPaperTexturePattern(targetCtx, cfg.paperVariant);
-            targetCtx.fillRect(0, 0, 1080, 1350);
-
-            // Outer Frame Border on Textured Paper
-            targetCtx.strokeStyle = cfg.cardBorder;
-            targetCtx.lineWidth = cfg.cardBorderW;
-            roundRect(targetCtx, 28, 28, 1024, 1294, 30, null, true);
+        const grad = targetCtx.createLinearGradient(0, 0, 1080, 1350);
+        if (cfg.bgGrad.length === 3) {
+            grad.addColorStop(0, cfg.bgGrad[0]);
+            grad.addColorStop(0.5, cfg.bgGrad[1]);
+            grad.addColorStop(1, cfg.bgGrad[2]);
         } else {
-            const grad = targetCtx.createLinearGradient(0, 0, 1080, 1350);
-            if (cfg.bgGrad.length === 3) {
-                grad.addColorStop(0, cfg.bgGrad[0]);
-                grad.addColorStop(0.5, cfg.bgGrad[1]);
-                grad.addColorStop(1, cfg.bgGrad[2]);
-            } else {
-                grad.addColorStop(0, cfg.bgGrad[0]);
-                grad.addColorStop(1, cfg.bgGrad[1]);
-            }
-            targetCtx.fillStyle = grad;
-            targetCtx.fillRect(0, 0, 1080, 1350);
-
-            const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 36;
-            if (cfg.isKids) {
-                roundRect(targetCtx, cardX + 10, cardY + 12, cardW, cardH, cardRadius, cfg.shadowColor, false);
-            }
-            roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cfg.cardBg, false);
-            targetCtx.strokeStyle = cfg.cardBorder;
-            targetCtx.lineWidth = cfg.cardBorderW;
-            roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
+            grad.addColorStop(0, cfg.bgGrad[0]);
+            grad.addColorStop(1, cfg.bgGrad[1]);
         }
+        targetCtx.fillStyle = grad;
+        targetCtx.fillRect(0, 0, 1080, 1350);
 
-        // Security Watermark
-        targetCtx.save();
-        targetCtx.beginPath();
-        roundRect(targetCtx, 35, 35, 1010, 1280, 30, null, false);
-        targetCtx.clip();
-        targetCtx.rotate(-28 * Math.PI / 180);
-        targetCtx.fillStyle = cfg.watermark;
-        targetCtx.font = "900 44px 'Poppins', sans-serif";
-        for (let x = -800; x < 1800; x += 360) {
-            for (let y = -600; y < 2000; y += 160) {
-                targetCtx.fillText("EXAM PREPARATION", x, y);
-            }
+        const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 36;
+        if (cfg.isKids) {
+            roundRect(targetCtx, cardX + 10, cardY + 12, cardW, cardH, cardRadius, cfg.shadowColor, false);
         }
-        targetCtx.restore();
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cfg.cardBg, false);
+        targetCtx.strokeStyle = cfg.cardBorder;
+        targetCtx.lineWidth = cfg.cardBorderW;
+        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // ==================== TOP LINE 1: TOPIC TITLE ====================
+        // Title
         targetCtx.textAlign = "center";
         targetCtx.textBaseline = "middle";
         targetCtx.fillStyle = cfg.titleColor;
         targetCtx.font = `900 52px ${fontFam}`;
         targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 114);
 
-        // ==================== TOP LINE 2: EXAM PREPARATION CAPSULE BADGE ====================
+        // Capsule Badge
         const badgeText = "EXAM PREPARATION";
         targetCtx.font = "900 24px 'Poppins', sans-serif";
         const badgeWidth = targetCtx.measureText(badgeText).width;
@@ -1578,7 +1696,7 @@ ${tagsString}`.trim();
         targetCtx.fillStyle = cfg.badgeText;
         targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
 
-        // ==================== QUESTION SECTION ====================
+        // Question
         targetCtx.textAlign = "left";
         const qStartY = pillY + pillH + 52;
         const effectiveQSize = (hasImage && imgPos === "center") ? Math.min(qSize, 38) : qSize;
@@ -1590,13 +1708,12 @@ ${tagsString}`.trim();
             qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 95, qEndY + 4, 890, 32);
         }
 
-        // ==================== OPTIONS + RIGHT/CENTER IMAGE ====================
         let optStartY = qEndY + 30;
         let optX = 95;
         let optW = 890;
         let optH = 90;
         let optGap = 114;
-        let optSize = baseOptSize;
+        let optSize = Math.min(baseOptSize, 30);
 
         if (hasImage && imgPos === "center") {
             const bannerH = 225;
@@ -1655,7 +1772,6 @@ ${tagsString}`.trim();
             targetCtx.fillText(fittedText, optX + bSize + 26, curY + (optH / 2));
         });
 
-        // ==================== BOTTOM 2 LINES (FOOTER CTA + SOCIAL LINE) ====================
         const footerY = optStartY + (3 * optGap) + optH + 34;
         if (isRevealed) {
             const expBoxH = Math.min(165, 1275 - footerY - 35);
@@ -1680,7 +1796,6 @@ ${tagsString}`.trim();
             targetCtx.textAlign = "center";
             targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + expBoxH + 24);
         } else {
-            // Bottom Line 1: Hook Pill Box
             if (cfg.isKids) {
                 roundRect(targetCtx, 114, footerY + 5, 860, 80, 40, "rgba(0,0,0,0.35)", false);
             }
@@ -1695,7 +1810,6 @@ ${tagsString}`.trim();
             targetCtx.font = `900 32px ${fontFam}`;
             targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 40);
 
-            // Bottom Line 2: Social Engagement Line
             targetCtx.fillStyle = cfg.socialText;
             targetCtx.font = `800 26px ${fontFam}`;
             targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 122);
