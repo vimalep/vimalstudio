@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EP Image Studio - Next-Gen Hub</title>
+    <title>EP Image & 9:16 Reel Studio - Ultimate Hub</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -207,6 +207,7 @@
             display: block; 
             margin: 0 auto; 
             max-width: 100%; 
+            max-height: 680px;
             height: auto; 
             border-radius: 6px; 
         }
@@ -317,7 +318,7 @@
 <body>
 
 <div class="app-container">
-    <div class="header">⚡ EP Image Studio - Next-Gen FB Growth Hub</div>
+    <div class="header">⚡ EP Image & 9:16 Reel Studio - Ultimate Hub</div>
 
     <!-- 1. MEGA HUB: ARCHIVE, BULK EXPORT & BACKUP -->
     <div class="group-box" style="border: 1.5px solid #ec4899; background: #180d24;">
@@ -353,13 +354,13 @@
 
     <!-- 2. STYLE, MODE & GROWTH HOOKS -->
     <div class="group-box">
-        <label style="color: #38bdf8;">🚀 पोस्ट मोड, थीम और ग्रोथ सेटिंग्स:</label>
+        <label style="color: #38bdf8;">🚀 ओरिएंटेशन, थीम और ग्रोथ सेटिंग्स:</label>
         <div class="row">
             <div>
-                <label>📲 पोस्ट फ़ॉर्मेट (Single vs Carousel):</label>
+                <label>📲 पोस्ट फ़ॉर्मेट व ओरिएंटेशन:</label>
                 <select id="postModeSelect" onchange="onModeChange()">
-                    <option value="single10" selected>🖼️ 1-Image Mode (सभी 10 प्रश्न एक साथ)</option>
-                    <option value="carousel5">🎠 5-Slide Carousel Mode (हर स्लाइड में 2 बड़े प्रश्न)</option>
+                    <option value="single10" selected>🖼️ 4:5 FB Post (1080×1350 - सभी 10 प्रश्न)</option>
+                    <option value="vertical916">📱 9:16 Vertical Slides (1080×1920 - Reels/Story)</option>
                 </select>
             </div>
             <div>
@@ -382,7 +383,7 @@
                 </select>
             </div>
             <div>
-                <label>📐 QA लेआउट (1-Image Mode):</label>
+                <label>📐 QA लेआउट (4:5 Mode):</label>
                 <select id="gridLineLayout" onchange="savePrefsAndRefresh()">
                     <option value="doubleLine" selected>⬇️ 2-Line Pill Mode (संतुलित स्पेस)</option>
                     <option value="singleLine">➡️ Single Line Mode (आमने-सामने QA)</option>
@@ -392,12 +393,12 @@
 
         <div class="row" style="margin-top: 4px;">
             <div class="slider-wrap">
-                <label>📏 Question Size: <span id="qSizeVal">21px</span></label>
-                <input type="range" id="qSizeInput" min="16" max="28" value="21" oninput="document.getElementById('qSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
+                <label>📏 Question Size (4:5): <span id="qSizeVal">20px</span></label>
+                <input type="range" id="qSizeInput" min="16" max="26" value="20" oninput="document.getElementById('qSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
             </div>
             <div class="slider-wrap">
-                <label>📏 Answer Size: <span id="aSizeVal">21px</span></label>
-                <input type="range" id="aSizeInput" min="16" max="28" value="21" oninput="document.getElementById('aSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
+                <label>📏 Answer Size (4:5): <span id="aSizeVal">19px</span></label>
+                <input type="range" id="aSizeInput" min="16" max="26" value="19" oninput="document.getElementById('aSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
             </div>
             <div class="slider-wrap">
                 <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">3%</span></label>
@@ -415,7 +416,7 @@
 
     <!-- 3. MULTI-IMAGE UPLOADER -->
     <div class="group-box" style="border-color: #f59e0b;">
-        <label style="color: #facc15;">📸 1-Click Multi-Image Uploader (1, 2 या 3 फोटो एक साथ चुनें):</label>
+        <label style="color: #facc15;">📸 1-Click Multi-Image Uploader (4:5 पोस्ट के लिए 1, 2 या 3 फोटो चुनें):</label>
         <div class="row">
             <div style="flex: 2;">
                 <input type="file" id="multiImgInput" accept="image/*" multiple onchange="handleMultiImageUpload(event)">
@@ -448,7 +449,7 @@
         <div class="row">
             <div style="flex: 2;">
                 <label>❓ आज का सवाल (Footer Static GK):</label>
-                <input type="text" id="footerQuestionInput" value="भारत का सबसे ऊँचा जलप्रपात किस राज्य में है? (A) कर्नाटक (B) मेघालय" oninput="onFooterQuestionChange()">
+                <input type="text" id="footerQuestionInput" value="भारत की सबसे लंबी तटरेखा वाला राज्य कौन सा है? (A) गुजरात (B) आंध्र प्रदेश" oninput="onFooterQuestionChange()">
             </div>
             <div style="flex: 0.6; min-width: 120px;">
                 <label>&nbsp;</label>
@@ -501,18 +502,18 @@ SHIELD
         <canvas id="canvas"></canvas>
         <div class="slide-nav" id="carouselNav">
             <button onclick="changeSlide(-1)">⬅️ पिछली स्लाइड</button>
-            <span id="slideIndicator" style="color:#facc15; font-weight:bold; font-size:13px;">Slide 1 / 5</span>
+            <span id="slideIndicator" style="color:#facc15; font-weight:bold; font-size:13px;">9:16 Slide 1 / 5</span>
             <button onclick="changeSlide(1)">अगली स्लाइड ➡️</button>
         </div>
     </div>
 
-    <!-- 7. ACTIONS: DOWNLOAD, CAROUSEL, REEL & SHARE -->
+    <!-- 7. ACTIONS: DOWNLOAD, 9:16 REEL & SHARE -->
     <div class="btn-grid-2">
         <button class="btn-action btn-green" id="primaryDownloadBtn" onclick="handlePrimaryDownload()">
-            <span>📥 Download HD PNG (Auto-Saved)</span>
+            <span>📥 Download 4:5 FB Post (PNG)</span>
         </button>
         <button class="btn-action btn-mega" id="reelExportBtn" onclick="exportAutoReelVideo()">
-            <span>🎬 Export 15-Sec Reel Video</span>
+            <span>🎬 Export 9:16 Full-Screen Reel (15s)</span>
         </button>
     </div>
     <div class="btn-grid-3">
@@ -579,7 +580,7 @@ SHIELD
 </div>
 
 <script>
-    const STORAGE_PREFS = "EP_STUDIO_ULTIMATE_PREFS_V2";
+    const STORAGE_PREFS = "EP_STUDIO_ULTIMATE_PREFS_V4";
     const STORAGE_ARCHIVE = "EP_STUDIO_DAILY_ARCHIVE_V2";
 
     const STATIC_GK_BANK = [
@@ -608,7 +609,7 @@ SHIELD
     const THEMES = {
         whiteTheme: {
             bg: '#fffde7',
-            cardBg: 'rgba(255, 255, 255, 0.96)',
+            cardBg: 'rgba(255, 255, 255, 0.97)',
             headerColor: '#0a1172',
             dateBg: '#b71c1c',
             badgeBg: '#b71c1c',
@@ -624,7 +625,7 @@ SHIELD
         },
         instaTheme: {
             bg: '#fff1f2',
-            cardBg: 'rgba(255, 255, 255, 0.96)',
+            cardBg: 'rgba(255, 255, 255, 0.97)',
             headerColor: '#881337',
             dateBg: '#e11d48',
             badgeBg: '#e11d48',
@@ -640,7 +641,7 @@ SHIELD
         },
         fbTheme: {
             bg: '#eff6ff',
-            cardBg: 'rgba(255, 255, 255, 0.97)',
+            cardBg: 'rgba(255, 255, 255, 0.98)',
             headerColor: '#1e3a8a',
             dateBg: '#1d4ed8',
             badgeBg: '#1d4ed8',
@@ -656,13 +657,13 @@ SHIELD
         },
         darkTheme: {
             bg: '#090d16',
-            cardBg: 'rgba(30, 41, 59, 0.95)',
+            cardBg: 'rgba(30, 41, 59, 0.96)',
             headerColor: '#38bdf8',
             dateBg: '#0284c7',
             badgeBg: '#0284c7',
             qColor: '#f8fafc',
             qHighlightColor: '#f87171',
-            pillBg: 'rgba(2, 132, 199, 0.15)',
+            pillBg: 'rgba(2, 132, 199, 0.18)',
             pillBorder: '#0284c7',
             aColor: '#38bdf8',
             timelineColor: '#334155',
@@ -672,13 +673,13 @@ SHIELD
         },
         navyGoldTheme: {
             bg: '#0a1128',
-            cardBg: 'rgba(15, 23, 42, 0.96)',
+            cardBg: 'rgba(15, 23, 42, 0.97)',
             headerColor: '#f59e0b',
             dateBg: '#d97706',
             badgeBg: '#d97706',
             qColor: '#ffffff',
             qHighlightColor: '#f87171',
-            pillBg: 'rgba(56, 189, 248, 0.15)',
+            pillBg: 'rgba(56, 189, 248, 0.18)',
             pillBorder: '#38bdf8',
             aColor: '#38bdf8',
             timelineColor: '#334155',
@@ -692,7 +693,7 @@ SHIELD
     let gridImages = { 1: null, 2: null, 3: null };
     let debounceTimer = null;
     let editingIndex = -1;
-    let currentSlideIdx = 0; // 0 to 4 for Carousel Mode
+    let currentSlideIdx = 0;
 
     const HIGHLIGHT_TOKENS = [
         "कहाँ", "कौन-सा", "कौन-सी", "किस", "किसे", "किसने", "किसकी", "कितने", "कितनी", 
@@ -721,19 +722,19 @@ SHIELD
         const mode = document.getElementById('postModeSelect').value;
         const nav = document.getElementById('carouselNav');
         const dlBtn = document.getElementById('primaryDownloadBtn');
-        if (mode === 'carousel5') {
+        if (mode === 'vertical916') {
             nav.style.display = 'flex';
-            dlBtn.innerHTML = '<span>📥 Download All 5 Slides (PNG)</span>';
+            dlBtn.innerHTML = '<span>📥 Download All 5 Slides (9:16 PNG)</span>';
         } else {
             nav.style.display = 'none';
-            dlBtn.innerHTML = '<span>📥 Download HD PNG (Auto-Saved)</span>';
+            dlBtn.innerHTML = '<span>📥 Download 4:5 FB Post (PNG)</span>';
         }
         savePrefsAndRefresh();
     }
 
     function changeSlide(delta) {
         currentSlideIdx = (currentSlideIdx + delta + 5) % 5;
-        document.getElementById('slideIndicator').innerText = `Slide ${currentSlideIdx + 1} / 5`;
+        document.getElementById('slideIndicator').innerText = `9:16 Slide ${currentSlideIdx + 1} / 5`;
         generateQA(true);
     }
 
@@ -982,7 +983,6 @@ ${hookLine}
         openArchiveModal();
     }
 
-    // FIXED: Merges all 7 days' questions into textarea for Word/PDF/Review
     function loadLast7DaysWeekly() {
         const archive = getArchive();
         if (archive.length < 2) {
@@ -999,7 +999,7 @@ ${hookLine}
         savePrefsAndRefresh();
         closeArchiveModal();
         exportWeeklyCaption();
-        showToast(`🎉 पिछले ${last7.length} दिनों के सभी प्रश्न मर्ज हो गए! (कैनवास पर पहले 10 दिखेंगे, Word/PDF में सभी आएंगे)`);
+        showToast(`🎉 पिछले ${last7.length} दिनों के सभी प्रश्न मर्ज हो गए!`);
     }
 
     function exportArchiveJSON() {
@@ -1173,9 +1173,9 @@ ${hookLine}
                 const p = JSON.parse(saved);
                 if (p.mode) {
                     document.getElementById('postModeSelect').value = p.mode;
-                    if (p.mode === 'carousel5') {
+                    if (p.mode === 'vertical916') {
                         document.getElementById('carouselNav').style.display = 'flex';
-                        document.getElementById('primaryDownloadBtn').innerHTML = '<span>📥 Download All 5 Slides (PNG)</span>';
+                        document.getElementById('primaryDownloadBtn').innerHTML = '<span>📥 Download All 5 Slides (9:16 PNG)</span>';
                     }
                 }
                 if (p.theme) { document.getElementById('gridThemeSelect').value = p.theme; currentThemeKey = p.theme; }
@@ -1210,7 +1210,6 @@ ${hookLine}
         }, 80);
     }
 
-    // Extracts optional [TAG] like [UPPSC] or [SSC]
     function parseQuestionWithTag(rawQ) {
         if (!rawQ) return { tag: "", q: "" };
         let clean = rawQ.replace(/^(?:[Qqप्र\.]*\s*\d+[\.\:\-\)]*|\d+[\.\:\-\)]*)\s*/, '').trim();
@@ -1261,7 +1260,7 @@ ${hookLine}
         ctx.translate(canvas.width / 2, canvas.height / 2);
         ctx.rotate(-28 * Math.PI / 180);
 
-        for (let y = -1400; y <= 1400; y += 210) {
+        for (let y = -1600; y <= 1600; y += 220) {
             for (let x = -1200; x <= 1200; x += 620) {
                 ctx.fillText("EXAM PREPARATION", x, y);
             }
@@ -1316,17 +1315,17 @@ ${hookLine}
     function drawExamTagBadge(ctx, tag, x, y, fontSize) {
         if (!tag) return 0;
         ctx.save();
-        ctx.font = `800 ${Math.max(12, fontSize - 6)}px 'Poppins', sans-serif`;
-        const w = ctx.measureText(tag).width + 14;
-        const h = fontSize + 2;
+        ctx.font = `800 ${Math.max(12, fontSize - 5)}px 'Poppins', sans-serif`;
+        const w = ctx.measureText(tag).width + 16;
+        const h = fontSize + 4;
         ctx.fillStyle = "#f59e0b";
-        roundRect(ctx, x, y - 2, w, h, 5, true, false);
+        roundRect(ctx, x, y - 2, w, h, 6, true, false);
         ctx.fillStyle = "#0f172a";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(tag, x + w / 2, y - 2 + h / 2);
         ctx.restore();
-        return w + 8;
+        return w + 10;
     }
 
     function drawSmartHighlightedLine(ctx, text, startX, y, theme, defaultColor, isLastLine, maxWidth = 9999) {
@@ -1354,24 +1353,23 @@ ${hookLine}
         }
     }
 
-    function drawAnswerPill(ctx, ansText, textStartX, pillY, baseASize, hindiFont, theme, isHidden = false) {
+    function drawAnswerPill(ctx, ansText, textStartX, pillY, baseASize, hindiFont, theme, isHidden = false, isThinking = false) {
         ctx.save();
         ctx.font = `800 ${baseASize}px ${hindiFont}`;
-        const prefix = "उत्तर: ";
-        const totalText = prefix + ansText;
+        const totalText = isThinking ? ansText : ("उत्तर: " + ansText);
         const textW = ctx.measureText(totalText).width;
-        const pillHeight = baseASize + 10;
-        const pillWidth = textW + 24;
+        const pillHeight = baseASize + 14;
+        const pillWidth = textW + 30;
 
-        ctx.fillStyle = isHidden ? "#fef08a" : theme.pillBg;
-        ctx.strokeStyle = isHidden ? "#eab308" : theme.pillBorder;
-        ctx.lineWidth = 1.4;
+        ctx.fillStyle = isThinking ? "#f1f5f9" : (isHidden ? "#fef08a" : theme.pillBg);
+        ctx.strokeStyle = isThinking ? "#94a3b8" : (isHidden ? "#eab308" : theme.pillBorder);
+        ctx.lineWidth = 1.8;
         roundRect(ctx, textStartX, pillY, pillWidth, pillHeight, pillHeight / 2, true, true);
 
-        ctx.fillStyle = isHidden ? "#b91c1c" : theme.aColor;
+        ctx.fillStyle = isThinking ? "#475569" : (isHidden ? "#b91c1c" : theme.aColor);
         ctx.textAlign = "left";
         ctx.textBaseline = "middle";
-        ctx.fillText(totalText, textStartX + 12, pillY + (pillHeight / 2));
+        ctx.fillText(totalText, textStartX + 15, pillY + (pillHeight / 2));
         ctx.restore();
     }
 
@@ -1405,68 +1403,73 @@ ${hookLine}
 
         if (lines.length <= 1) {
             ctx.font = `700 ${baseQSize}px ${hindiFont}`;
-            drawSmartHighlightedLine(ctx, item.q, textStartX + tagOffset, currentY + 14, theme, theme.qColor, true, firstLineAvail);
+            drawSmartHighlightedLine(ctx, item.q, textStartX + tagOffset, currentY + 13, theme, theme.qColor, true, firstLineAvail);
 
-            const pillY = currentY + actualBoxHeight - baseASize - 16;
+            const pillY = currentY + actualBoxHeight - baseASize - 17;
             drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize, hindiFont, theme, item.isHidden);
         } else {
-            const lineGap = baseQSize + 4;
-            ctx.font = `700 ${baseQSize}px ${hindiFont}`;
-            drawSmartHighlightedLine(ctx, lines[0], textStartX + tagOffset, currentY + 9, theme, theme.qColor, false, firstLineAvail);
-            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 9 + lineGap, theme, theme.qColor, true, textAvailWidth);
+            const adjQSize = Math.max(17, baseQSize - 1);
+            const lineGap = adjQSize + 3;
+            ctx.font = `700 ${adjQSize}px ${hindiFont}`;
+            drawSmartHighlightedLine(ctx, lines[0], textStartX + tagOffset, currentY + 7, theme, theme.qColor, false, firstLineAvail);
+            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 7 + lineGap, theme, theme.qColor, true, textAvailWidth);
 
-            const pillY = currentY + actualBoxHeight - baseASize - 13;
-            drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize, hindiFont, theme, item.isHidden);
+            const pillY = currentY + actualBoxHeight - baseASize - 14;
+            drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize - 1, hindiFont, theme, item.isHidden);
         }
     }
 
-    // Draws Header + Footer common to all modes
-    function drawHeaderAndFooter(ctx, canvas, theme, customSubBadge = null) {
+    // 4:5 Header & Footer (1080 x 1350)
+    function drawHeaderAndFooter45(ctx, canvas, theme) {
         ctx.fillStyle = theme.bg;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         const headerTitle = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
-        const startTopOffset = 70;
+        const startTopOffset = 72;
         
+        ctx.save();
         ctx.fillStyle = theme.headerColor; 
-        ctx.font = `700 70px "Rozha One", sans-serif`; 
+        ctx.font = `700 68px "Rozha One", sans-serif`; 
         ctx.textAlign = "center";
+        ctx.textBaseline = "alphabetic";
         ctx.fillText(headerTitle, canvas.width / 2, startTopOffset, 1000);
+        ctx.restore();
 
-        const dateText = customSubBadge || document.getElementById('gridDateInput').value || "Daily Current Affairs";
+        const dateText = document.getElementById('gridDateInput').value || "Daily Current Affairs";
         ctx.save(); 
         ctx.fillStyle = theme.dateBg;
         ctx.font = `700 22px 'Poppins', sans-serif`;
         
         let textMeas = ctx.measureText(dateText).width;
-        let fitWidth = textMeas + 36;
+        let fitWidth = textMeas + 40;
+        let badgeY = startTopOffset + 14;
         
-        roundRect(ctx, (canvas.width - fitWidth) / 2, startTopOffset + 16, fitWidth, 38, 19, true, false);
+        roundRect(ctx, (canvas.width - fitWidth) / 2, badgeY, fitWidth, 38, 19, true, false);
         
         ctx.fillStyle = "#ffffff"; 
         ctx.textAlign = "center"; 
         ctx.textBaseline = "middle";
-        ctx.fillText(dateText, canvas.width / 2, startTopOffset + 16 + 19); 
+        ctx.fillText(dateText, canvas.width / 2, badgeY + 19); 
         ctx.restore();
 
-        const ribbonY = startTopOffset + 82;
+        const ribbonY = startTopOffset + 80;
         ctx.save();
         ctx.fillStyle = theme.headerColor;
         ctx.font = "800 20px 'Poppins', sans-serif";
         ctx.textAlign = "center";
+        ctx.textBaseline = "alphabetic";
         ctx.fillText("UPPSC || SSC || RAILWAY || UP POLICE || BPSC || ALL EXAMS", canvas.width / 2 - 75, ribbonY);
 
         const partText = "Exam Preparation";
         const partW = 180;
         ctx.fillStyle = theme.dateBg;
-        roundRect(ctx, canvas.width / 2 + 250, ribbonY - 18, partW, 30, 8, true, false);
+        roundRect(ctx, canvas.width / 2 + 250, ribbonY - 19, partW, 30, 8, true, false);
         ctx.fillStyle = "#ffffff";
         ctx.font = "800 15px 'Poppins', sans-serif";
         ctx.textBaseline = "middle";
-        ctx.fillText(partText, canvas.width / 2 + 250 + (partW / 2), ribbonY - 3);
+        ctx.fillText(partText, canvas.width / 2 + 250 + (partW / 2), ribbonY - 4);
         ctx.restore();
 
-        // Footer Strip (with maxWidth fix so long text never overflows)
         const footerHeight = 65;
         const footerQ = document.getElementById('footerQuestionInput').value;
         const footerFullText = `🧠 आज का सवाल: ${footerQ} (उत्तर कमेंट करें 👇)`;
@@ -1486,52 +1489,110 @@ ${hookLine}
         ctx.restore();
     }
 
-    // Renders a single Carousel Slide (2 Big Questions per slide)
-    function renderCarouselSlide(ctx, canvas, items, slideIndex) {
+    // 9:16 VERTICAL FULL-SCREEN REEL & SLIDE RENDERER (1080 x 1920 with Safe Zones)
+    function renderVertical916Slide(ctx, canvas, items, slideIndex, isReel = false, showAnswer = true) {
+        canvas.width = 1080;
+        canvas.height = 1920;
+
         const theme = THEMES[currentThemeKey];
         const hindiFont = document.getElementById('hindiFontSelect').value;
         const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
 
-        drawHeaderAndFooter(ctx, canvas, theme, `Swipe Card ${slideIndex + 1} of 5 • Daily GK`);
+        // 1. Background
+        ctx.fillStyle = theme.bg;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+        // 2. Top Progress Bar (for 5 Parts)
+        const barTotalW = 960;
+        const barGap = 14;
+        const segW = (barTotalW - (4 * barGap)) / 5;
+        for (let i = 0; i < 5; i++) {
+            ctx.fillStyle = i <= slideIndex ? theme.dateBg : theme.timelineColor;
+            roundRect(ctx, 60 + i * (segW + barGap), 75, segW, 10, 5, true, false);
+        }
+
+        // 3. Top Header (Safe from Reels status bar: starts at Y=165)
+        const headerTitle = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
+        ctx.save();
+        ctx.fillStyle = theme.headerColor;
+        ctx.font = `700 74px "Rozha One", sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillText(headerTitle, canvas.width / 2, 175, 980);
+        ctx.restore();
+
+        // 4. Part Badge + Brand Pill
+        const badgeLabel = isReel 
+            ? `Part ${slideIndex + 1} / 5 • Quick Quiz Reel` 
+            : `Story Slide ${slideIndex + 1} / 5 • Daily GK`;
+        ctx.save();
+        ctx.fillStyle = theme.dateBg;
+        ctx.font = `800 24px 'Poppins', sans-serif`;
+        const bW = ctx.measureText(badgeLabel).width + 48;
+        roundRect(ctx, (canvas.width - bW) / 2, 198, bW, 44, 22, true, false);
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(badgeLabel, canvas.width / 2, 220);
+        ctx.restore();
+
+        // Exam Ribbon
+        ctx.save();
+        ctx.fillStyle = theme.headerColor;
+        ctx.font = "800 21px 'Poppins', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("EXAM PREPARATION • UPPSC | SSC | RAILWAY | POLICE", canvas.width / 2, 278);
+        ctx.restore();
+
+        // 5. Two Large Vertical Cards (Y=315 to Y=1530 — safely above Reels bottom caption/buttons)
         const startIdx = slideIndex * 2;
         const slideItems = items.slice(startIdx, startIdx + 2);
-        const startY = 205;
-        const cardH = 490;
-        const gap = 30;
+        const startY = 315;
+        const cardH = 585;
+        const gap = 36;
 
         slideItems.forEach((item, localIdx) => {
             const qNum = startIdx + localIdx + 1;
             const y = startY + localIdx * (cardH + gap);
 
+            // Card Box with subtle shadow
             ctx.save();
+            ctx.shadowColor = "rgba(0,0,0,0.08)";
+            ctx.shadowBlur = 16;
             ctx.fillStyle = theme.cardBg;
             ctx.strokeStyle = theme.pillBorder;
-            ctx.lineWidth = 2.5;
-            roundRect(ctx, 55, y, 970, cardH, 22, true, true);
+            ctx.lineWidth = 3;
+            roundRect(ctx, 50, y, 980, cardH, 28, true, true);
             ctx.restore();
 
             // Number Badge
             ctx.save();
             ctx.fillStyle = theme.badgeBg;
             ctx.beginPath();
-            ctx.arc(115, y + 60, 34, 0, Math.PI * 2);
+            ctx.arc(120, y + 66, 38, 0, Math.PI * 2);
             ctx.fill();
             ctx.fillStyle = "#ffffff";
-            ctx.font = "800 28px 'Poppins', sans-serif";
+            ctx.font = "800 32px 'Poppins', sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText(qNum, 115, y + 61);
+            ctx.fillText(qNum, 120, y + 67);
             ctx.restore();
 
-            // Optional Tag
-            let tagX = 170;
+            // Exam Tag if present
             if (item.tag) {
-                drawExamTagBadge(ctx, item.tag, tagX, y + 42, 26);
+                drawExamTagBadge(ctx, item.tag, 180, y + 46, 30);
+            } else {
+                ctx.save();
+                ctx.fillStyle = theme.aColor;
+                ctx.font = "800 22px 'Poppins', sans-serif";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "middle";
+                ctx.fillText(`IMPORTANT QUESTION #${qNum}`, 180, y + 66);
+                ctx.restore();
             }
 
-            // Big Wrapped Question (up to 4 lines)
-            const bigQSize = 36;
+            // Extra-Large Readable Question (46px for 9:16 mobile screen)
+            const bigQSize = 46;
             ctx.font = `700 ${bigQSize}px ${hindiFont}`;
             ctx.textAlign = "left";
             ctx.textBaseline = "top";
@@ -1550,13 +1611,38 @@ ${hookLine}
             if (cur.trim()) qLines.push(cur.trim());
 
             qLines.slice(0, 4).forEach((line, lIdx) => {
-                drawSmartHighlightedLine(ctx, line, 95, y + 125 + (lIdx * 52), theme, theme.qColor, lIdx === qLines.length - 1, maxW);
+                drawSmartHighlightedLine(ctx, line, 90, y + 138 + (lIdx * 66), theme, theme.qColor, lIdx === qLines.length - 1, maxW);
             });
 
-            // Big Answer Pill at bottom of card
-            drawAnswerPill(ctx, item.a, 95, y + cardH - 85, 34, hindiFont, theme, item.isHidden);
+            // Answer Pill OR Suspense Placeholder
+            if (showAnswer) {
+                drawAnswerPill(ctx, item.a, 90, y + cardH - 102, 40, hindiFont, theme, item.isHidden, false);
+            } else {
+                drawAnswerPill(ctx, "⏳ सही उत्तर सोचिए...", 90, y + cardH - 102, 38, hindiFont, theme, false, true);
+            }
         });
 
+        // 6. Footer Card placed inside 9:16 Safe Zone (Y=1575, leaving bottom 250px clear for Reels/Shorts UI)
+        const footerQ = document.getElementById('footerQuestionInput').value;
+        ctx.save();
+        ctx.fillStyle = theme.footerBg;
+        roundRect(ctx, 50, 1570, 980, 110, 22, true, false);
+        ctx.strokeStyle = "#ffcc00";
+        ctx.lineWidth = 3;
+        roundRect(ctx, 50, 1570, 980, 110, 22, false, true);
+
+        ctx.fillStyle = theme.footerText;
+        ctx.font = '700 26px "Kalam", cursive';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`🧠 आज का सवाल: ${footerQ}`, canvas.width / 2, 1608, 930);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = '700 21px "Noto Sans Devanagari", sans-serif';
+        ctx.fillText("👇 अपना उत्तर कमेंट बॉक्स में लिखें और पेज को फॉलो करें!", canvas.width / 2, 1650, 930);
+        ctx.restore();
+
+        // 7. Diagonal Watermark
         drawOverCardWatermark(ctx, canvas, wmOpacity);
     }
 
@@ -1567,32 +1653,32 @@ ${hookLine}
         const lineLayout = document.getElementById('gridLineLayout').value;
         const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
         
-        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 21;
-        const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 21;
+        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 20;
+        const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 19;
         const parsedItems = getParsedItems();
 
         const canvas = document.getElementById('canvas'); 
-        canvas.width = 1080; 
-        canvas.height = 1350;
         const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (mode === 'carousel5') {
-            renderCarouselSlide(ctx, canvas, parsedItems, currentSlideIdx);
+        if (mode === 'vertical916') {
+            renderVertical916Slide(ctx, canvas, parsedItems, currentSlideIdx, false, true);
             return;
         }
 
-        // Standard 10-Question Single Image Mode
-        drawHeaderAndFooter(ctx, canvas, theme);
+        // Standard 4:5 FB Post (1080 x 1350)
+        canvas.width = 1080; 
+        canvas.height = 1350;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        const startTopOffset = 70;
-        const startY = startTopOffset + 115; 
+        drawHeaderAndFooter45(ctx, canvas, theme);
+
+        const startTopOffset = 72;
+        const startY = startTopOffset + 113; 
         const footerHeight = 65;
         const availableHeight = canvas.height - startY - footerHeight - 15;
         const rowHeight = Math.floor(availableHeight / 10);
         const actualBoxHeight = rowHeight - 9;
 
-        // Timeline Line
         if (!gridImages[2]) {
             const firstBadgeCenterY = startY + (actualBoxHeight / 2) + 3;
             const lastBadgeCenterY = startY + (9 * rowHeight) + (actualBoxHeight / 2) + 3;
@@ -1623,17 +1709,14 @@ ${hookLine}
             ctx.restore();
         });
 
-        // Draw Images
         const imgWidth = 195;
         const imgHeight = (rowHeight * 2) - 9;
         if (gridImages[1]) drawCoverImage(ctx, gridImages[1], 840, startY + 3, imgWidth, imgHeight, 14);
         if (gridImages[2]) drawCoverImage(ctx, gridImages[2], 45, startY + (4 * rowHeight) + 3, imgWidth, imgHeight, 14);
         if (gridImages[3]) drawCoverImage(ctx, gridImages[3], 840, startY + (8 * rowHeight) + 3, imgWidth, imgHeight, 14);
 
-        // Watermark
         drawOverCardWatermark(ctx, canvas, wmOpacity);
 
-        // Numbers and QA Text
         parsedItems.forEach((item, idx) => {
             let currentY = startY + (idx * rowHeight);
             let displayNum = idx + 1;
@@ -1704,14 +1787,14 @@ ${hookLine}
 
     function handlePrimaryDownload() {
         const mode = document.getElementById('postModeSelect').value;
-        if (mode === 'carousel5') {
-            downloadAll5CarouselSlides();
+        if (mode === 'vertical916') {
+            downloadAll5VerticalSlides();
         } else {
             downloadImageHD('png');
         }
     }
 
-    function downloadAll5CarouselSlides() {
+    function downloadAll5VerticalSlides() {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const parsedItems = getParsedItems();
@@ -1721,14 +1804,14 @@ ${hookLine}
 
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
-                renderCarouselSlide(ctx, canvas, parsedItems, i);
+                renderVertical916Slide(ctx, canvas, parsedItems, i, false, true);
                 const link = document.createElement('a');
-                link.download = `CA_${headerDate}_Slide_${i + 1}.png`;
+                link.download = `CA_9x16_${headerDate}_Slide_${i + 1}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
                 if (i === 4) {
                     setTimeout(() => generateQA(true), 300);
-                    showToast("✅ सभी 5 Carousel स्लाइड्स डाउनलोड हो गई हैं!");
+                    showToast("✅ सभी 5 (9:16) स्लाइड्स डाउनलोड हो गई हैं!");
                 }
             }, i * 350);
         }
@@ -1753,7 +1836,7 @@ ${hookLine}
         showToast("📥 इमेज डाउनलोड और आर्काइव में सेव हो गई!");
     }
 
-    // Exports a 15-Second Animated Video (WebM) cycling through all 5 Carousel Slides
+    // EXPORTS FULL-SCREEN 9:16 (1080x1920) 15-SECOND REEL VIDEO
     function exportAutoReelVideo() {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
@@ -1767,7 +1850,10 @@ ${hookLine}
         }
 
         btn.disabled = true;
-        showToast("🎬 रील वीडियो तैयार हो रहा है (15 सेकंड प्रतीक्षा करें)...", 0);
+        showToast("🎬 9:16 Full-Screen Reel रिकॉर्ड हो रही है (15 सेकंड प्रतीक्षा करें)...", 0);
+
+        // Set canvas to 9:16 BEFORE starting captureStream so video tracks 1080x1920
+        renderVertical916Slide(ctx, canvas, parsedItems, 0, true, false);
 
         const stream = canvas.captureStream(30);
         const recorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
@@ -1779,27 +1865,28 @@ ${hookLine}
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Current_Affairs_Reel_${headerDate}.webm`;
+            a.download = `Current_Affairs_9x16_Reel_${headerDate}.webm`;
             a.click();
             URL.revokeObjectURL(url);
             btn.disabled = false;
             generateQA(true);
-            showToast("✅ 15-सेकंड रील वीडियो डाउनलोड हो गया!");
+            showToast("✅ 9:16 Full-Screen Quiz Reel डाउनलोड हो गई!");
         };
 
         recorder.start();
-        let slide = 0;
-        renderCarouselSlide(ctx, canvas, parsedItems, slide);
+        let step = 0;
 
         const interval = setInterval(() => {
-            slide++;
-            if (slide < 5) {
-                renderCarouselSlide(ctx, canvas, parsedItems, slide);
+            step++;
+            if (step < 10) {
+                const slideIdx = Math.floor(step / 2);
+                const revealAns = (step % 2 === 1);
+                renderVertical916Slide(ctx, canvas, parsedItems, slideIdx, true, revealAns);
             } else {
                 clearInterval(interval);
                 recorder.stop();
             }
-        }, 3000); // 3 seconds per slide * 5 slides = 15 seconds
+        }, 1500);
     }
 
     async function shareDirectly() {
