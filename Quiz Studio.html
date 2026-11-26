@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viral Quiz Studio Pro - Multi-Color & Premium Polish Edition</title>
+    <title>Viral Quiz Studio Pro - Smart Crop, Auto-BG & Custom Backdrop</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Hind:wght@500;600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -76,6 +76,11 @@
             height: 38px;
             cursor: pointer;
         }
+        input[type="range"] {
+            padding: 0;
+            accent-color: #38bdf8;
+            cursor: pointer;
+        }
         textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
 
         .answer-toggle-card {
@@ -134,10 +139,10 @@
             background: #0f172a;
             border: 1px solid #475569;
             border-radius: 8px;
-            padding: 8px 10px;
+            padding: 9px 10px;
             display: flex;
+            flex-direction: column;
             gap: 8px;
-            align-items: flex-end;
         }
         .btn-shuffle-colors {
             background: linear-gradient(135deg, #ec4899, #f59e0b);
@@ -204,6 +209,33 @@
             padding: 6px 10px;
             border-radius: 6px;
             border: 1px solid #334155;
+            cursor: pointer;
+        }
+        .sub-box {
+            background: #162033;
+            border: 1px solid #334155;
+            border-radius: 7px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .sub-box-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #7dd3fc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-mini-reset {
+            background: #334155;
+            color: #e2e8f0;
+            border: none;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
             cursor: pointer;
         }
 
@@ -411,10 +443,10 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
             </div>
         </div>
 
-        <!-- IMAGE UPLOAD, SEARCH & AUTO-BLEND PANEL -->
+        <!-- POINT 1 & 2: SUBJECT PHOTO UPLOAD, SMART AUTO-BG REMOVER & IN-APP CROP/POSITION -->
         <div class="img-control-panel">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Cutout / Sketch Photo जोड़ें (No Box Look):</span>
+                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Subject Cutout Photo (Crop + Auto-BG Remove):</span>
                 <span id="img-status-badge" style="font-size: 10.5px; color: #94a3b8; font-weight: 700;">No Image</span>
             </div>
             <div class="img-btn-row">
@@ -433,31 +465,73 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                 <input type="file" id="quiz-img-input" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
             </div>
             
-            <div id="img-options-area" style="display:none; flex-direction:column; gap:7px;">
-                <div class="blend-toggle-row" onclick="toggleWhiteBgRemoval()">
-                    <span style="font-size: 12px; font-weight: 800; color: #fde047;">🪄 Remove White BG (बैकग्राउंड में घोलें)</span>
-                    <input type="checkbox" id="chk-remove-white-bg" checked style="width:18px; height:18px; accent-color:#facc15;" onclick="event.stopPropagation(); processAndRenderImage();">
-                </div>
-                <div class="row-flex">
-                    <div>
-                        <label>फोटो पोजीशन (Layout):</label>
-                        <select id="cfg-img-pos" onchange="saveAllSettings(); redrawCanvas();">
-                            <option value="right">👉 Right Cutout (Options के बगल में)</option>
-                            <option value="center">⬇️ Center Banner (Question के नीचे)</option>
-                        </select>
+            <div id="img-options-area" style="display:none; flex-direction:column; gap:8px;">
+                <!-- Smart Background Remover Toggle + Tolerance -->
+                <div class="sub-box">
+                    <div class="blend-toggle-row" onclick="toggleSmartBgRemoval()" style="padding:4px 8px;">
+                        <span style="font-size: 12px; font-weight: 800; color: #fde047;">🪄 Smart Auto-Remove BG (बैकग्राउंड हटाएं)</span>
+                        <input type="checkbox" id="chk-remove-white-bg" checked style="width:18px; height:18px; accent-color:#facc15;" onclick="event.stopPropagation(); processAndRenderImage();">
                     </div>
-                    <div>
-                        <label>फोटो साइज़ (Scale):</label>
-                        <select id="cfg-img-scale" onchange="saveAllSettings(); redrawCanvas();">
-                            <option value="1.0">Normal (100%)</option>
-                            <option value="1.15" selected>Large (115%)</option>
-                            <option value="0.85">Compact (85%)</option>
-                        </select>
+                    <div class="row-flex" id="bg-tolerance-row">
+                        <div>
+                            <label>BG Clean Tolerance (सफाई पावर): <span id="tol-val-lbl">38</span></label>
+                            <input type="range" id="cfg-bg-tolerance" min="10" max="95" value="38" oninput="document.getElementById('tol-val-lbl').innerText=this.value; processAndRenderImage();">
+                        </div>
+                        <div style="flex:0.8;">
+                            <label>पोजीशन (Layout):</label>
+                            <select id="cfg-img-pos" onchange="saveAllSettings(); redrawCanvas();">
+                                <option value="right">👉 Right Cutout</option>
+                                <option value="center">⬇️ Center Banner</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- In-App Cropper & Position/Zoom Controls -->
+                <div class="sub-box">
+                    <div class="sub-box-title">
+                        <span>✂️ Crop Edges & Position Adjuster:</span>
+                        <button class="btn-mini-reset" onclick="resetCropAndPos()">↺ Reset</button>
+                    </div>
+                    <div class="row-flex">
+                        <div>
+                            <label>Top Crop: <span id="crop-top-lbl">0</span>%</label>
+                            <input type="range" id="cfg-crop-top" min="0" max="45" value="0" oninput="document.getElementById('crop-top-lbl').innerText=this.value; processAndRenderImage();">
+                        </div>
+                        <div>
+                            <label>Bottom Crop: <span id="crop-bot-lbl">0</span>%</label>
+                            <input type="range" id="cfg-crop-bot" min="0" max="45" value="0" oninput="document.getElementById('crop-bot-lbl').innerText=this.value; processAndRenderImage();">
+                        </div>
+                    </div>
+                    <div class="row-flex">
+                        <div>
+                            <label>Left Crop: <span id="crop-left-lbl">0</span>%</label>
+                            <input type="range" id="cfg-crop-left" min="0" max="45" value="0" oninput="document.getElementById('crop-left-lbl').innerText=this.value; processAndRenderImage();">
+                        </div>
+                        <div>
+                            <label>Right Crop: <span id="crop-right-lbl">0</span>%</label>
+                            <input type="range" id="cfg-crop-right" min="0" max="45" value="0" oninput="document.getElementById('crop-right-lbl').innerText=this.value; processAndRenderImage();">
+                        </div>
+                    </div>
+                    <div class="row-flex">
+                        <div>
+                            <label>Zoom: <span id="img-scale-lbl">115</span>%</label>
+                            <input type="range" id="cfg-img-scale" min="60" max="160" value="115" oninput="document.getElementById('img-scale-lbl').innerText=this.value; redrawCanvas();">
+                        </div>
+                        <div>
+                            <label>Move X: <span id="img-offx-lbl">0</span></label>
+                            <input type="range" id="cfg-img-offx" min="-150" max="150" value="0" oninput="document.getElementById('img-offx-lbl').innerText=this.value; redrawCanvas();">
+                        </div>
+                        <div>
+                            <label>Move Y: <span id="img-offy-lbl">0</span></label>
+                            <input type="range" id="cfg-img-offy" min="-150" max="150" value="0" oninput="document.getElementById('img-offy-lbl').innerText=this.value; redrawCanvas();">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- THEME & FONT SELECTION (REMOVED UNWANTED THEMES) -->
         <div class="row-flex" style="margin-top: 2px;">
             <div>
                 <label>फ़ॉन्ट स्टाइल:</label>
@@ -469,45 +543,73 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                 </select>
             </div>
             <div>
-                <label>बैकग्राउंड थीम (Multi-Color Words):</label>
+                <label>बैकग्राउंड थीम:</label>
                 <select id="cfg-bg-color" onchange="onThemeChange(); saveAllSettings(); redrawCanvas();">
                     <option value="paper_classic">📜 Classic Textured Paper (Open Look)</option>
-                    <option value="kids_paper">🎨 Kids Fun Textured Paper (Bright)</option>
-                    <option value="kids_gaming">🎮 Gaming Neon Arena (Dark)</option>
                     <option value="kids_candy">🌈 Rainbow Candy Pop (Cartoon)</option>
-                    <option value="kids_space">🚀 Space Adventure (Galaxy)</option>
-                    <option value="kids_comic">🦸 Superhero Comic Blast</option>
                     <option value="#fef9c3">Soft Warm Yellow (Plain)</option>
                     <option value="#ffffff">Pure White (Plain)</option>
                 </select>
             </div>
         </div>
 
-        <!-- BACKGROUND COLOR & WORD COLOR SHUFFLE BAR -->
+        <!-- POINT 3: BACKGROUND COLOR, CUSTOM BG IMAGE UPLOAD & WORD COLOR SHUFFLE -->
         <div class="paper-color-panel">
-            <div id="paper-color-controls" style="display:flex; gap:6px; flex:2;">
-                <div style="flex: 2;">
-                    <label>🎨 पेपर बैकग्राउंड कलर:</label>
-                    <select id="cfg-paper-preset" onchange="applyPaperPresetColor(this.value)">
-                        <option value="#e9e6df">📜 Classic Khaddar Cream</option>
-                        <option value="#ffffff">⬜ Pure White Textured</option>
-                        <option value="#fef3c7">🟨 Soft Warm Yellow</option>
-                        <option value="#dcfce7">🟩 Mint Green Paper</option>
-                        <option value="#e0f2fe">🟦 Sky Blue Paper</option>
-                        <option value="#fae8ff">🟪 Soft Lavender Paper</option>
-                        <option value="#ffedd5">🟧 Peach Cream Paper</option>
-                    </select>
+            <div style="display:flex; gap:8px; align-items:flex-end;">
+                <div id="paper-color-controls" style="display:flex; gap:6px; flex:2;">
+                    <div style="flex: 2;">
+                        <label>🎨 पेपर बैकग्राउंड कलर:</label>
+                        <select id="cfg-paper-preset" onchange="applyPaperPresetColor(this.value)">
+                            <option value="#e9e6df">📜 Classic Khaddar Cream</option>
+                            <option value="#ffffff">⬜ Pure White Textured</option>
+                            <option value="#fef3c7">🟨 Soft Warm Yellow</option>
+                            <option value="#dcfce7">🟩 Mint Green Paper</option>
+                            <option value="#e0f2fe">🟦 Sky Blue Paper</option>
+                            <option value="#fae8ff">🟪 Soft Lavender Paper</option>
+                            <option value="#ffedd5">🟧 Peach Cream Paper</option>
+                        </select>
+                    </div>
+                    <div style="flex: 0.7;">
+                        <label>Custom:</label>
+                        <input type="color" id="cfg-paper-custom" value="#e9e6df" oninput="onCustomPaperColorInput(this.value)">
+                    </div>
                 </div>
-                <div style="flex: 0.7;">
-                    <label>Custom:</label>
-                    <input type="color" id="cfg-paper-custom" value="#e9e6df" oninput="onCustomPaperColorInput(this.value)">
+                <div>
+                    <label>शब्दों के रंग:</label>
+                    <button class="btn-shuffle-colors" onclick="shuffleQuestionWordColors()" title="प्रश्न के शब्दों के रंग बदलें">
+                        🎲 Shuffle Colors
+                    </button>
                 </div>
             </div>
-            <div>
-                <label>शब्दों के रंग:</label>
-                <button class="btn-shuffle-colors" onclick="shuffleQuestionWordColors()" title="प्रश्न के शब्दों के रंग बदलें">
-                    🎲 Shuffle Colors
-                </button>
+
+            <!-- Custom Background Image Upload & Readability Sliders -->
+            <div class="sub-box" style="margin-top:2px;">
+                <div class="sub-box-title">
+                    <span>🌄 Card Background Photo (कस्टम बैकग्राउंड इमेज):</span>
+                    <span id="bg-img-status" style="color:#94a3b8;">None</span>
+                </div>
+                <div class="row-flex">
+                    <button class="btn-img-tool" onclick="document.getElementById('bg-img-input').click()">
+                        <span>📁 Upload BG Photo</span>
+                    </button>
+                    <button class="btn-img-tool" onclick="pasteBgImageFromClipboard()">
+                        <span>📋 Paste BG Photo</span>
+                    </button>
+                    <button class="btn-img-remove" id="btn-remove-bg-img" onclick="removeCustomBgImage()" style="display:none;" title="बैकग्राउंड फोटो हटाएं">
+                        ❌
+                    </button>
+                    <input type="file" id="bg-img-input" accept="image/*" style="display:none" onchange="handleBgImageUpload(event)">
+                </div>
+                <div class="row-flex" id="bg-img-sliders" style="display:none;">
+                    <div>
+                        <label>BG Blur (धुंधलापन): <span id="bg-blur-lbl">3</span>px</label>
+                        <input type="range" id="cfg-bg-blur" min="0" max="16" value="3" oninput="document.getElementById('bg-blur-lbl').innerText=this.value; redrawCanvas();">
+                    </div>
+                    <div>
+                        <label>Light Overlay (सफेद परत): <span id="bg-tint-lbl">72</span>%</label>
+                        <input type="range" id="cfg-bg-tint" min="0" max="92" value="72" oninput="document.getElementById('bg-tint-lbl').innerText=this.value; redrawCanvas();">
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -650,12 +752,13 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V13";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V13";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V14";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V14";
 
     let isAnswerRevealed = false;
     let rawUploadedImage = null;
     let processedQuizImage = null;
+    let customBgImage = null;
     let paperPatternCache = {};
     let colorSeedOffset = 0;
 
@@ -688,14 +791,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
     function onThemeChange() {
         const themeKey = document.getElementById('cfg-bg-color').value;
         const panel = document.getElementById('paper-color-controls');
-        if (themeKey === "paper_classic" || themeKey === "kids_paper") {
-            panel.style.display = "flex";
-            if (themeKey === "kids_paper" && document.getElementById('cfg-paper-custom').value === "#e9e6df") {
-                applyPaperPresetColor("#fef3c7");
-            }
-        } else {
-            panel.style.display = "none";
-        }
+        panel.style.display = (themeKey === "paper_classic") ? "flex" : "none";
     }
 
     function applyPaperPresetColor(hex) {
@@ -711,7 +807,62 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         redrawCanvas();
     }
 
-    /* ==================== TEXTURE GENERATOR (CUSTOM COLOR SUPPORT) ==================== */
+    /* ==================== POINT 3: CUSTOM BACKGROUND IMAGE UPLOAD & PASTE ==================== */
+    function setCustomBgImage(dataUrl) {
+        if (!dataUrl) {
+            removeCustomBgImage();
+            return;
+        }
+        const img = new Image();
+        img.onload = () => {
+            customBgImage = img;
+            document.getElementById('bg-img-status').innerText = "✅ Active";
+            document.getElementById('bg-img-status').style.color = "#34d399";
+            document.getElementById('btn-remove-bg-img').style.display = "inline-block";
+            document.getElementById('bg-img-sliders').style.display = "flex";
+            redrawCanvas();
+        };
+        img.src = dataUrl;
+    }
+
+    function handleBgImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => setCustomBgImage(e.target.result);
+        reader.readAsDataURL(file);
+        event.target.value = "";
+    }
+
+    async function pasteBgImageFromClipboard() {
+        try {
+            const clipboardItems = await navigator.clipboard.read();
+            for (const item of clipboardItems) {
+                const imageType = item.types.find(type => type.startsWith('image/'));
+                if (imageType) {
+                    const blob = await item.getType(imageType);
+                    const reader = new FileReader();
+                    reader.onload = (e) => setCustomBgImage(e.target.result);
+                    reader.readAsDataURL(blob);
+                    return;
+                }
+            }
+            alert("क्लिपबोर्ड में कोई इमेज नहीं मिली! पहले कोई बैकग्राउंड फोटो Copy करें।");
+        } catch (err) {
+            alert("क्लिपबोर्ड से इमेज पेस्ट नहीं हो सकी। कृपया 'Upload BG Photo' बटन दबाएं।");
+        }
+    }
+
+    function removeCustomBgImage() {
+        customBgImage = null;
+        document.getElementById('bg-img-status').innerText = "None";
+        document.getElementById('bg-img-status').style.color = "#94a3b8";
+        document.getElementById('btn-remove-bg-img').style.display = "none";
+        document.getElementById('bg-img-sliders').style.display = "none";
+        redrawCanvas();
+    }
+
+    /* ==================== TEXTURE GENERATOR ==================== */
     function getPaperTexturePattern(targetCtx, baseHexColor) {
         const key = (baseHexColor || "#e9e6df").toLowerCase();
         if (paperPatternCache[key]) return paperPatternCache[key];
@@ -742,7 +893,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         return pattern;
     }
 
-    /* ==================== IMAGE UPLOAD, PASTE, SEARCH & AUTO-BLEND ==================== */
+    /* ==================== POINT 1 & 2: SUBJECT PHOTO CROP + SMART FLOOD-FILL BG REMOVAL ==================== */
     function searchImageOnGoogle() {
         const cleanQ = (quizData.questionText || "").replace(/['"?।]/g, ' ').trim();
         const ansText = quizData.options[quizData.correctOption] || "";
@@ -750,41 +901,139 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         window.open(`https://www.google.com/search?tbm=isch&q=${query}`, '_blank');
     }
 
-    function toggleWhiteBgRemoval() {
+    function toggleSmartBgRemoval() {
         const chk = document.getElementById('chk-remove-white-bg');
         chk.checked = !chk.checked;
         processAndRenderImage();
     }
 
+    function resetCropAndPos() {
+        document.getElementById('cfg-crop-top').value = 0;
+        document.getElementById('crop-top-lbl').innerText = "0";
+        document.getElementById('cfg-crop-bot').value = 0;
+        document.getElementById('crop-bot-lbl').innerText = "0";
+        document.getElementById('cfg-crop-left').value = 0;
+        document.getElementById('crop-left-lbl').innerText = "0";
+        document.getElementById('cfg-crop-right').value = 0;
+        document.getElementById('crop-right-lbl').innerText = "0";
+        document.getElementById('cfg-img-scale').value = 115;
+        document.getElementById('img-scale-lbl').innerText = "115";
+        document.getElementById('cfg-img-offx').value = 0;
+        document.getElementById('img-offx-lbl').innerText = "0";
+        document.getElementById('cfg-img-offy').value = 0;
+        document.getElementById('img-offy-lbl').innerText = "0";
+        processAndRenderImage();
+    }
+
     function processAndRenderImage() {
         if (!rawUploadedImage) return;
-        const removeWhite = document.getElementById('chk-remove-white-bg').checked;
 
-        if (!removeWhite) {
-            processedQuizImage = rawUploadedImage;
-            redrawCanvas();
-            return;
+        const removeBg = document.getElementById('chk-remove-white-bg').checked;
+        document.getElementById('bg-tolerance-row').style.opacity = removeBg ? "1" : "0.45";
+
+        // Step 1: Apply Edge Cropping
+        const cTop = (parseInt(document.getElementById('cfg-crop-top').value) || 0) / 100;
+        const cBot = (parseInt(document.getElementById('cfg-crop-bot').value) || 0) / 100;
+        const cLeft = (parseInt(document.getElementById('cfg-crop-left').value) || 0) / 100;
+        const cRight = (parseInt(document.getElementById('cfg-crop-right').value) || 0) / 100;
+
+        const sx = Math.floor(rawUploadedImage.width * cLeft);
+        const sy = Math.floor(rawUploadedImage.height * cTop);
+        const sw = Math.max(20, Math.floor(rawUploadedImage.width * (1 - cLeft - cRight)));
+        const sh = Math.max(20, Math.floor(rawUploadedImage.height * (1 - cTop - cBot)));
+
+        // Scale down oversized photos slightly for fast pixel processing while keeping crisp HD quality
+        const maxDim = 900;
+        let outW = sw, outH = sh;
+        if (outW > maxDim || outH > maxDim) {
+            const ratio = Math.min(maxDim / outW, maxDim / outH);
+            outW = Math.round(outW * ratio);
+            outH = Math.round(outH * ratio);
         }
 
         const off = document.createElement('canvas');
-        off.width = rawUploadedImage.width;
-        off.height = rawUploadedImage.height;
+        off.width = outW;
+        off.height = outH;
         const oCtx = off.getContext('2d');
-        oCtx.drawImage(rawUploadedImage, 0, 0);
+        oCtx.drawImage(rawUploadedImage, sx, sy, sw, sh, 0, 0, outW, outH);
 
-        const imgData = oCtx.getImageData(0, 0, off.width, off.height);
+        if (!removeBg) {
+            const plainImg = new Image();
+            plainImg.onload = () => {
+                processedQuizImage = plainImg;
+                redrawCanvas();
+            };
+            plainImg.src = off.toDataURL('image/png');
+            return;
+        }
+
+        // Step 2: Smart Edge-Connected Flood-Fill Background Removal (works for white, blue, green, grey, solid backdrops)
+        const tolerance = parseInt(document.getElementById('cfg-bg-tolerance').value) || 38;
+        const tolSq = tolerance * tolerance * 3;
+        const softTolSq = (tolerance + 16) * (tolerance + 16) * 3;
+
+        const imgData = oCtx.getImageData(0, 0, outW, outH);
         const d = imgData.data;
+        const visited = new Uint8Array(outW * outH);
+        const queue = new Int32Array(outW * outH);
+        let head = 0, tail = 0;
 
-        for (let i = 0; i < d.length; i += 4) {
-            const r = d[i], g = d[i + 1], b = d[i + 2];
-            const brightness = (r + g + b) / 3;
-            if (brightness > 240 && Math.abs(r - g) < 18 && Math.abs(g - b) < 18) {
-                d[i + 3] = 0;
-            } else if (brightness > 212 && Math.abs(r - g) < 20 && Math.abs(g - b) < 20) {
-                const factor = (240 - brightness) / 28;
-                d[i + 3] = Math.round(d[i + 3] * Math.max(0, Math.min(1, factor)));
+        // Sample corner colors as background reference seeds
+        const corners = [
+            0,
+            (outW - 1) * 4,
+            ((outH - 1) * outW) * 4,
+            ((outH - 1) * outW + (outW - 1)) * 4
+        ];
+        const refColors = corners.map(idx => [d[idx], d[idx + 1], d[idx + 2]]);
+
+        function colorDistSq(r, g, b) {
+            let minD = 999999;
+            for (let c = 0; c < refColors.length; c++) {
+                const dr = r - refColors[c][0];
+                const dg = g - refColors[c][1];
+                const db = b - refColors[c][2];
+                const dist = dr * dr + dg * dg + db * db;
+                if (dist < minD) minD = dist;
+            }
+            return minD;
+        }
+
+        // Seed border pixels
+        for (let x = 0; x < outW; x++) {
+            const topIdx = x;
+            const botIdx = (outH - 1) * outW + x;
+            if (!visited[topIdx]) { visited[topIdx] = 1; queue[tail++] = topIdx; }
+            if (!visited[botIdx]) { visited[botIdx] = 1; queue[tail++] = botIdx; }
+        }
+        for (let y = 0; y < outH; y++) {
+            const leftIdx = y * outW;
+            const rightIdx = y * outW + (outW - 1);
+            if (!visited[leftIdx]) { visited[leftIdx] = 1; queue[tail++] = leftIdx; }
+            if (!visited[rightIdx]) { visited[rightIdx] = 1; queue[tail++] = rightIdx; }
+        }
+
+        while (head < tail) {
+            const pIdx = queue[head++];
+            const px = pIdx % outW;
+            const py = (pIdx - px) / outW;
+            const i4 = pIdx * 4;
+
+            const dist = colorDistSq(d[i4], d[i4 + 1], d[i4 + 2]);
+            if (dist <= tolSq) {
+                d[i4 + 3] = 0; // Transparent background
+                // Explore 4 neighbors
+                if (px > 0 && !visited[pIdx - 1]) { visited[pIdx - 1] = 1; queue[tail++] = pIdx - 1; }
+                if (px < outW - 1 && !visited[pIdx + 1]) { visited[pIdx + 1] = 1; queue[tail++] = pIdx + 1; }
+                if (py > 0 && !visited[pIdx - outW]) { visited[pIdx - outW] = 1; queue[tail++] = pIdx - outW; }
+                if (py < outH - 1 && !visited[pIdx + outW]) { visited[pIdx + outW] = 1; queue[tail++] = pIdx + outW; }
+            } else if (dist <= softTolSq) {
+                // Smooth anti-aliased edge feathering
+                const alphaRatio = (dist - tolSq) / (softTolSq - tolSq);
+                d[i4 + 3] = Math.round(d[i4 + 3] * alphaRatio);
             }
         }
+
         oCtx.putImageData(imgData, 0, 0);
 
         const blendedImg = new Image();
@@ -807,7 +1056,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
             document.getElementById('img-status-badge').style.color = "#34d399";
             document.getElementById('btn-remove-img').style.display = "inline-block";
             document.getElementById('img-options-area').style.display = "flex";
-            processAndRenderImage();
+            resetCropAndPos();
         };
         img.src = dataUrl;
     }
@@ -1085,7 +1334,6 @@ ${tagsString}`.trim();
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 34,
             imgPos: document.getElementById('cfg-img-pos').value,
-            imgScale: document.getElementById('cfg-img-scale').value,
             isAnswerMode: document.getElementById('chk-answer-mode').checked,
             rawText: document.getElementById('raw-paste-box').value,
             currentQuiz: quizData
@@ -1101,13 +1349,17 @@ ${tagsString}`.trim();
             try {
                 const p = JSON.parse(saved);
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
-                if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
+                if (p.bgColor) {
+                    const sel = document.getElementById('cfg-bg-color');
+                    if ([...sel.options].some(o => o.value === p.bgColor)) {
+                        sel.value = p.bgColor;
+                    }
+                }
                 if (p.paperColor) {
                     document.getElementById('cfg-paper-custom').value = p.paperColor;
                     document.getElementById('cfg-paper-preset').value = p.paperColor;
                 }
                 if (p.imgPos) document.getElementById('cfg-img-pos').value = p.imgPos;
-                if (p.imgScale) document.getElementById('cfg-img-scale').value = p.imgScale;
                 if (p.qSize) {
                     document.getElementById('cfg-q-size').value = p.qSize;
                     document.getElementById('q-size-lbl').innerText = p.qSize;
@@ -1341,8 +1593,8 @@ ${tagsString}`.trim();
         alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
     }
 
-    /* ==================== IMAGE RENDER HELPER ==================== */
-    function drawQuizImageBox(targetCtx, img, bx, by, bw, bh, scaleFactor, isBlended, borderColor, isKids) {
+    /* ==================== SUBJECT IMAGE RENDER HELPER (WITH ZOOM & X/Y OFFSET) ==================== */
+    function drawQuizImageBox(targetCtx, img, bx, by, bw, bh, scaleFactor, offX, offY, isBlended, borderColor, isKids) {
         targetCtx.save();
 
         const iw = img.width;
@@ -1359,8 +1611,8 @@ ${tagsString}`.trim();
             drawW = drawH * imgRatio;
         }
 
-        const drawX = bx + (bw - drawW) / 2;
-        const drawY = by + (bh - drawH) / 2;
+        const drawX = bx + (bw - drawW) / 2 + offX;
+        const drawY = by + (bh - drawH) / 2 + offY;
 
         if (isBlended) {
             targetCtx.shadowColor = "rgba(0, 0, 0, 0.24)";
@@ -1393,7 +1645,6 @@ ${tagsString}`.trim();
         const prefixWidth = ctx.measureText(fullPrefix).width;
         ctx.fillText(fullPrefix, x, y);
 
-        // Common Hindi stop-words / postpositions that look best in base dark/light color
         const stopWords = new Set(["के", "की", "का", "को", "में", "से", "पर", "और", "या", "है", "हैं", "था", "थे", "थी", "हूँ", "हो", "जाता", "जाती", "कहा", "लिए", "द्वारा", "तथा", "एवं", "इस", "उस", "एक"]);
 
         ctx.font = `800 ${fontSize}px ${fontFam}`;
@@ -1409,7 +1660,6 @@ ${tagsString}`.trim();
         words.forEach((word, idx) => {
             const cleanWord = word.replace(/[?,.!"'‘’“”।\-]/g, '').trim();
 
-            // Check if quoted phrase starts or ends
             const startsQuote = /^['"‘“]/.test(word);
             const endsQuote = /['"’”][?,.!।]*$/.test(word);
 
@@ -1424,7 +1674,6 @@ ${tagsString}`.trim();
             if (insideQuote) {
                 chosenColor = quoteColor;
             } else if (cleanWord.length > 0 && !stopWords.has(cleanWord)) {
-                // Deterministic pseudo-random highlight for content words (approx 55% of non-stop words)
                 const hashVal = (cleanWord.charCodeAt(0) + idx + colorSeedOffset) % 5;
                 if (hashVal === 0 || hashVal === 1 || hashVal === 3) {
                     chosenColor = palette[colorPickIdx % palette.length];
@@ -1451,6 +1700,44 @@ ${tagsString}`.trim();
         return curY + lineH;
     }
 
+    /* ==================== CUSTOM BACKGROUND IMAGE HELPER ==================== */
+    function drawCustomCardBackdrop(targetCtx, x, y, w, h, radius) {
+        if (!customBgImage) return false;
+        const blurPx = parseInt(document.getElementById('cfg-bg-blur').value) || 0;
+        const tintPct = (parseInt(document.getElementById('cfg-bg-tint').value) || 0) / 100;
+
+        targetCtx.save();
+        if (radius > 0) {
+            roundRect(targetCtx, x, y, w, h, radius, null, false);
+            targetCtx.clip();
+        }
+
+        if (blurPx > 0) {
+            targetCtx.filter = `blur(${blurPx}px)`;
+        }
+
+        const iw = customBgImage.width;
+        const ih = customBgImage.height;
+        const scale = Math.max(w / iw, h / ih);
+        const dw = iw * scale;
+        const dh = ih * scale;
+        const dx = x + (w - dw) / 2;
+        const dy = y + (h - dh) / 2;
+
+        // Expand slightly when blurred to avoid transparent edges
+        const pad = blurPx * 2;
+        targetCtx.drawImage(customBgImage, dx - pad, dy - pad, dw + pad * 2, dh + pad * 2);
+
+        targetCtx.filter = "none";
+        if (tintPct > 0) {
+            targetCtx.fillStyle = `rgba(255, 255, 255, ${tintPct})`;
+            targetCtx.fillRect(x, y, w, h);
+        }
+
+        targetCtx.restore();
+        return true;
+    }
+
     /* ==================== UNIFIED SINGLE CARD DRAW ENGINE ==================== */
     function renderCardToCanvas(targetCtx, data, isRevealed) {
         const themeKey = document.getElementById('cfg-bg-color').value || "paper_classic";
@@ -1459,29 +1746,30 @@ ${tagsString}`.trim();
         const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
         const baseOptSize = parseInt(document.getElementById('cfg-opt-size').value) || 34;
         const imgPos = document.getElementById('cfg-img-pos').value || "right";
-        const imgScale = parseFloat(document.getElementById('cfg-img-scale').value) || 1.15;
+        const imgScale = (parseInt(document.getElementById('cfg-img-scale').value) || 115) / 100;
+        const imgOffX = parseInt(document.getElementById('cfg-img-offx').value) || 0;
+        const imgOffY = parseInt(document.getElementById('cfg-img-offy').value) || 0;
         const isBlended = document.getElementById('chk-remove-white-bg').checked;
         const hasImage = Boolean(processedQuizImage);
 
         const lightPalette = ["#dc2626", "#1d4ed8", "#047857", "#7e22ce", "#be123c", "#b45309"];
-        const darkPalette = ["#fde047", "#38bdf8", "#f472b6", "#34d399", "#fb923c", "#c084fc"];
 
         targetCtx.clearRect(0, 0, 1080, 1350);
 
-        // ==================== MODE A: SEAMLESS OPEN TEXTURED PAPER (ATTRACTIVE MULTI-COLOR) ====================
-        if (themeKey === "paper_classic" || themeKey === "kids_paper") {
-            const isKidsPaper = (themeKey === "kids_paper");
+        // ==================== MODE A: SEAMLESS OPEN TEXTURED PAPER ====================
+        if (themeKey === "paper_classic") {
+            // 1. Background: Custom Photo OR Textured Paper Color
+            if (!drawCustomCardBackdrop(targetCtx, 0, 0, 1080, 1350, 0)) {
+                targetCtx.fillStyle = getPaperTexturePattern(targetCtx, customPaperColor);
+                targetCtx.fillRect(0, 0, 1080, 1350);
+            }
 
-            // 1. Full Seamless Textured Paper Background
-            targetCtx.fillStyle = getPaperTexturePattern(targetCtx, customPaperColor);
-            targetCtx.fillRect(0, 0, 1080, 1350);
-
-            // Double Decorative Frame Border for Magazine/Poster Polish
-            targetCtx.strokeStyle = isKidsPaper ? "#f59e0b" : "rgba(30, 41, 59, 0.25)";
-            targetCtx.lineWidth = isKidsPaper ? 10 : 4;
+            // Double Decorative Frame Border
+            targetCtx.strokeStyle = "rgba(30, 41, 59, 0.25)";
+            targetCtx.lineWidth = 4;
             roundRect(targetCtx, 18, 18, 1044, 1314, 28, null, true);
 
-            targetCtx.strokeStyle = isKidsPaper ? "#2563eb" : "rgba(217, 119, 6, 0.35)";
+            targetCtx.strokeStyle = "rgba(217, 119, 6, 0.35)";
             targetCtx.lineWidth = 2;
             roundRect(targetCtx, 28, 28, 1024, 1294, 22, null, true);
 
@@ -1497,19 +1785,19 @@ ${tagsString}`.trim();
             }
             targetCtx.restore();
 
-            // 2. TOP LINE 1: Topic Title with subtle shadow
+            // 2. TOP LINE 1: Topic Title
             targetCtx.save();
             targetCtx.textAlign = "center";
             targetCtx.textBaseline = "middle";
             targetCtx.shadowColor = "rgba(0,0,0,0.12)";
             targetCtx.shadowBlur = 6;
             targetCtx.shadowOffsetY = 3;
-            targetCtx.fillStyle = isKidsPaper ? "#e11d48" : "#dc2626";
+            targetCtx.fillStyle = "#dc2626";
             targetCtx.font = `900 54px ${fontFam}`;
             targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 92);
             targetCtx.restore();
 
-            // 3. TOP LINE 2: EXAM PREPARATION Capsule Badge with 3D Shadow
+            // 3. TOP LINE 2: EXAM PREPARATION Capsule Badge
             const badgeText = "EXAM PREPARATION";
             targetCtx.font = "900 24px 'Poppins', sans-serif";
             const badgeWidth = targetCtx.measureText(badgeText).width;
@@ -1519,8 +1807,8 @@ ${tagsString}`.trim();
             const pillY = 140;
 
             roundRect(targetCtx, pillX + 3, pillY + 4, pillW, pillH, 24, "rgba(0,0,0,0.22)", false);
-            roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, isKidsPaper ? "#7c3aed" : "#1e293b", false);
-            targetCtx.strokeStyle = isKidsPaper ? "#1e293b" : "#f59e0b";
+            roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, "#1e293b", false);
+            targetCtx.strokeStyle = "#f59e0b";
             targetCtx.lineWidth = 2.5;
             roundRect(targetCtx, pillX, pillY, pillW, pillH, 24, null, true);
 
@@ -1529,7 +1817,7 @@ ${tagsString}`.trim();
             targetCtx.textBaseline = "middle";
             targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
 
-            // 4. MULTI-COLOR HINDI QUESTION SECTION (NO BOX BORDER)
+            // 4. MULTI-COLOR HINDI QUESTION SECTION
             targetCtx.textAlign = "left";
             const qStartY = 232;
             const effectiveQSize = (hasImage && imgPos === "center") ? Math.min(qSize, 38) : qSize;
@@ -1549,12 +1837,12 @@ ${tagsString}`.trim();
 
             // Optional English Bilingual Question Line
             if (data.questionEn && data.questionEn.trim().length > 0) {
-                targetCtx.fillStyle = isKidsPaper ? "#0369a1" : "#15803d";
+                targetCtx.fillStyle = "#15803d";
                 targetCtx.font = "700 28px 'Hind', sans-serif";
                 qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 74, qEndY + 8, 932, 36);
             }
 
-            // 5. OPTIONS + CUTOUT IMAGE (DIRECTLY ON PAPER)
+            // 5. OPTIONS + CUTOUT IMAGE
             let optStartY = qEndY + 42;
             const optX = 82;
             let optGap = isRevealed ? 94 : 112;
@@ -1562,7 +1850,7 @@ ${tagsString}`.trim();
 
             if (hasImage && imgPos === "center") {
                 const bannerH = 225;
-                drawQuizImageBox(targetCtx, processedQuizImage, 82, optStartY, 916, bannerH, imgScale, isBlended, "#334155", isKidsPaper);
+                drawQuizImageBox(targetCtx, processedQuizImage, 82, optStartY, 916, bannerH, imgScale, imgOffX, imgOffY, isBlended, "#334155", false);
                 optStartY += bannerH + 26;
                 optGap = 74;
                 optSize = Math.min(baseOptSize, 28);
@@ -1571,7 +1859,7 @@ ${tagsString}`.trim();
                 const imgBoxY = optStartY - 22;
                 const imgBoxW = 515;
                 const imgBoxH = isRevealed ? 460 : 540;
-                drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, imgBoxY, imgBoxW, imgBoxH, imgScale, isBlended, "#334155", isKidsPaper);
+                drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, imgBoxY, imgBoxW, imgBoxH, imgScale, imgOffX, imgOffY, isBlended, "#334155", false);
             }
 
             const keys = ["A", "B", "C", "D"];
@@ -1581,7 +1869,6 @@ ${tagsString}`.trim();
                 const curY = optStartY + (idx * optGap);
                 const isCorrect = (data.correctOption === k);
 
-                // Highlight pill when Answer Mode is ON
                 if (isRevealed && isCorrect) {
                     const pillHighlightW = (hasImage && imgPos === "right") ? 425 : 900;
                     roundRect(targetCtx, optX - 14, curY - 14, pillHighlightW, 72, 36, "#dcfce7", false);
@@ -1590,7 +1877,6 @@ ${tagsString}`.trim();
                     roundRect(targetCtx, optX - 14, curY - 14, pillHighlightW, 72, 36, null, true);
                 }
 
-                // Vibrant Circle Badge with subtle shadow (A, B, C, D)
                 const circleR = 25;
                 const cx = optX + circleR;
                 const cy = curY + 22;
@@ -1611,7 +1897,6 @@ ${tagsString}`.trim();
                 targetCtx.textBaseline = "middle";
                 targetCtx.fillText((isRevealed && isCorrect) ? "✔" : k, cx, cy + 1);
 
-                // Bold Indigo Option Text directly on textured paper
                 targetCtx.textAlign = "left";
                 targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : "#2e1065";
                 targetCtx.font = `800 ${optSize}px ${fontFam}`;
@@ -1620,7 +1905,7 @@ ${tagsString}`.trim();
                 targetCtx.fillText(truncateCanvasText(targetCtx, optVal, maxTextW), optX + 68, cy + 2);
             });
 
-            // 6. BOTTOM 2 LINES (GLOSSY CTA PILL + SOCIAL LINE)
+            // 6. BOTTOM 2 LINES
             const footerY = Math.max(optStartY + (4 * optGap) + 18, isRevealed ? 1030 : 1125);
             if (isRevealed) {
                 roundRect(targetCtx, 65, footerY, 950, 175, 18, "rgba(255,255,255,0.94)", false);
@@ -1644,7 +1929,6 @@ ${tagsString}`.trim();
                 targetCtx.textAlign = "center";
                 targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 206);
             } else {
-                // Bottom Line 1: Glossy Gradient CTA Pill with 3D Shadow
                 roundRect(targetCtx, 69, footerY + 6, 950, 86, 43, "rgba(0,0,0,0.22)", false);
 
                 const ctaGrad = targetCtx.createLinearGradient(65, footerY, 1015, footerY + 86);
@@ -1663,7 +1947,6 @@ ${tagsString}`.trim();
                 targetCtx.font = `900 34px ${fontFam}`;
                 targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 43);
 
-                // Bottom Line 2: Social Engagement Line
                 targetCtx.fillStyle = "#0f172a";
                 targetCtx.font = `800 28px ${fontFam}`;
                 targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
@@ -1672,10 +1955,9 @@ ${tagsString}`.trim();
             return;
         }
 
-        // ==================== MODE B: COLORFUL / NEON CARD THEMES (ALSO MULTI-COLOR WORDS) ====================
+        // ==================== MODE B: REMAINING CARD THEMES (CANDY POP & PLAIN COLORS) ====================
         let cfg = {
             isKids: false,
-            isDark: false,
             bgGrad: [themeKey, themeKey],
             cardBg: "#ffffff",
             cardBorder: "#cbd5e1",
@@ -1687,7 +1969,6 @@ ${tagsString}`.trim();
             badgeText: "#ffffff",
             qDefault: "#0f172a",
             prefixColor: "#0284c7",
-            watermark: "rgba(15, 23, 42, 0.02)",
             hookBg: "#fb923c",
             hookBorder: "#1e293b",
             hookText: "#ffffff",
@@ -1701,36 +1982,7 @@ ${tagsString}`.trim();
             ]
         };
 
-        if (themeKey === "kids_gaming") {
-            cfg = {
-                ...cfg,
-                isKids: true,
-                isDark: true,
-                bgGrad: ["#2e1065", "#4c1d95", "#1e1b4b"],
-                cardBg: "#0f172a",
-                cardBorder: "#facc15",
-                cardBorderW: 8,
-                shadowColor: "#a855f7",
-                titleColor: "#fde047",
-                badgeBg: "#ec4899",
-                badgeBorder: "#fbcfe8",
-                badgeText: "#ffffff",
-                qDefault: "#ffffff",
-                prefixColor: "#facc15",
-                watermark: "rgba(255, 255, 255, 0.03)",
-                hookBg: "#facc15",
-                hookBorder: "#ffffff",
-                hookText: "#0f172a",
-                socialText: "#fde047",
-                imgBorder: "#facc15",
-                opts: [
-                    { bg: "#1d4ed8", border: "#60a5fa", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "A" },
-                    { bg: "#be185d", border: "#f472b6", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "B" },
-                    { bg: "#047857", border: "#34d399", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "C" },
-                    { bg: "#b45309", border: "#fbbf24", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "D" }
-                ]
-            };
-        } else if (themeKey === "kids_candy") {
+        if (themeKey === "kids_candy") {
             cfg = {
                 ...cfg,
                 isKids: true,
@@ -1745,7 +1997,6 @@ ${tagsString}`.trim();
                 badgeText: "#ffffff",
                 qDefault: "#1e293b",
                 prefixColor: "#2563eb",
-                watermark: "rgba(236, 72, 153, 0.04)",
                 hookBg: "#ff9f43",
                 hookBorder: "#1e293b",
                 hookText: "#ffffff",
@@ -1756,63 +2007,6 @@ ${tagsString}`.trim();
                     { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#831843", label: "B" },
                     { bg: "#fef9c3", border: "#ca8a04", badgeBg: "#eab308", text: "#713f12", label: "C" },
                     { bg: "#dcfce7", border: "#16a34a", badgeBg: "#16a34a", text: "#14532d", label: "D" }
-                ]
-            };
-        } else if (themeKey === "kids_space") {
-            cfg = {
-                ...cfg,
-                isKids: true,
-                isDark: true,
-                bgGrad: ["#020617", "#0f172a", "#1e3a8a"],
-                cardBg: "#0b1120",
-                cardBorder: "#38bdf8",
-                cardBorderW: 7,
-                shadowColor: "#0284c7",
-                titleColor: "#38bdf8",
-                badgeBg: "#f59e0b",
-                badgeBorder: "#fef3c7",
-                badgeText: "#0f172a",
-                qDefault: "#f8fafc",
-                prefixColor: "#38bdf8",
-                watermark: "rgba(56, 189, 248, 0.03)",
-                hookBg: "#38bdf8",
-                hookBorder: "#ffffff",
-                hookText: "#020617",
-                socialText: "#bae6fd",
-                imgBorder: "#38bdf8",
-                opts: [
-                    { bg: "#1e293b", border: "#38bdf8", badgeBg: "#0284c7", text: "#f8fafc", label: "A" },
-                    { bg: "#1e293b", border: "#a855f7", badgeBg: "#9333ea", text: "#f8fafc", label: "B" },
-                    { bg: "#1e293b", border: "#f59e0b", badgeBg: "#d97706", text: "#f8fafc", label: "C" },
-                    { bg: "#1e293b", border: "#10b981", badgeBg: "#059669", text: "#f8fafc", label: "D" }
-                ]
-            };
-        } else if (themeKey === "kids_comic") {
-            cfg = {
-                ...cfg,
-                isKids: true,
-                bgGrad: ["#dc2626", "#facc15"],
-                cardBg: "#fefce8",
-                cardBorder: "#000000",
-                cardBorderW: 9,
-                shadowColor: "#000000",
-                titleColor: "#dc2626",
-                badgeBg: "#2563eb",
-                badgeBorder: "#000000",
-                badgeText: "#ffffff",
-                qDefault: "#000000",
-                prefixColor: "#2563eb",
-                watermark: "rgba(220, 38, 38, 0.04)",
-                hookBg: "#facc15",
-                hookBorder: "#000000",
-                hookText: "#000000",
-                socialText: "#000000",
-                imgBorder: "#000000",
-                opts: [
-                    { bg: "#ffffff", border: "#000000", badgeBg: "#dc2626", text: "#000000", label: "A" },
-                    { bg: "#ffffff", border: "#000000", badgeBg: "#2563eb", text: "#000000", label: "B" },
-                    { bg: "#ffffff", border: "#000000", badgeBg: "#16a34a", text: "#000000", label: "C" },
-                    { bg: "#ffffff", border: "#000000", badgeBg: "#9333ea", text: "#000000", label: "D" }
                 ]
             };
         }
@@ -1834,6 +2028,10 @@ ${tagsString}`.trim();
             roundRect(targetCtx, cardX + 10, cardY + 12, cardW, cardH, cardRadius, cfg.shadowColor, false);
         }
         roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cfg.cardBg, false);
+
+        // If custom background photo is uploaded, render it inside the card frame
+        drawCustomCardBackdrop(targetCtx, cardX, cardY, cardW, cardH, cardRadius);
+
         targetCtx.strokeStyle = cfg.cardBorder;
         targetCtx.lineWidth = cfg.cardBorderW;
         roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
@@ -1876,12 +2074,12 @@ ${tagsString}`.trim();
             effectiveQSize,
             fontFam,
             cfg.qDefault,
-            cfg.isDark ? darkPalette : lightPalette,
+            lightPalette,
             cfg.prefixColor
         );
 
         if (data.questionEn && data.questionEn.trim().length > 0) {
-            targetCtx.fillStyle = cfg.isDark ? "#38bdf8" : "#15803d";
+            targetCtx.fillStyle = "#15803d";
             targetCtx.font = "700 26px 'Hind', sans-serif";
             qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 95, qEndY + 4, 890, 32);
         }
@@ -1895,7 +2093,7 @@ ${tagsString}`.trim();
 
         if (hasImage && imgPos === "center") {
             const bannerH = 225;
-            drawQuizImageBox(targetCtx, processedQuizImage, 95, optStartY, 890, bannerH, imgScale, isBlended, cfg.imgBorder, cfg.isKids);
+            drawQuizImageBox(targetCtx, processedQuizImage, 95, optStartY, 890, bannerH, imgScale, imgOffX, imgOffY, isBlended, cfg.imgBorder, cfg.isKids);
             optStartY += bannerH + 22;
             optH = 72;
             optGap = 90;
@@ -1906,14 +2104,14 @@ ${tagsString}`.trim();
             const totalOptsBlockH = (3 * optGap) + optH;
             const imgBoxX = optX + optW + 24;
             const imgBoxW = 890 - optW - 24;
-            drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, optStartY, imgBoxW, totalOptsBlockH, imgScale, isBlended, cfg.imgBorder, cfg.isKids);
+            drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, optStartY, imgBoxW, totalOptsBlockH, imgScale, imgOffX, imgOffY, isBlended, cfg.imgBorder, cfg.isKids);
         }
 
         cfg.opts.forEach((st, idx) => {
             const curY = optStartY + (idx * optGap);
             const isCorrect = (data.correctOption === st.label);
             let boxBg = st.bg, boxBorder = st.border, badgeBg = st.badgeBg, badgeText = st.label;
-            let badgeCol = st.badgeTextCol || "#ffffff";
+            let badgeCol = "#ffffff";
 
             if (isRevealed && isCorrect) {
                 boxBg = "#16a34a"; 
