@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viral Quiz Studio Pro - Framed Textured Cutout Edition</title>
+    <title>Viral Quiz Studio Pro - Seamless Textured & Custom BG Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Hind:wght@500;600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -71,6 +71,11 @@
             outline: none;
             font-family: inherit;
         }
+        input[type="color"] {
+            padding: 2px 4px;
+            height: 38px;
+            cursor: pointer;
+        }
         textarea { resize: vertical; min-height: 140px; font-family: monospace; font-size: 12px; line-height: 1.4; }
 
         .answer-toggle-card {
@@ -122,6 +127,17 @@
         .btn-clipboard {
             background: linear-gradient(135deg, #0284c7, #0369a1);
             box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+
+        /* PAPER BG COLOR PANEL */
+        .paper-color-panel {
+            background: #0f172a;
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 8px 10px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
 
         /* IMAGE CONTROLS CARD */
@@ -386,7 +402,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         <!-- IMAGE UPLOAD, SEARCH & AUTO-BLEND PANEL -->
         <div class="img-control-panel">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Cutout / Sketch Photo जोड़ें (Viral Look):</span>
+                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Cutout / Sketch Photo जोड़ें (No Box Look):</span>
                 <span id="img-status-badge" style="font-size: 10.5px; color: #94a3b8; font-weight: 700;">No Image</span>
             </div>
             <div class="img-btn-row">
@@ -441,10 +457,10 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                 </select>
             </div>
             <div>
-                <label>बैकग्राउंड थीम (All 4 Lines Included):</label>
-                <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="paper_classic">📜 Classic Canvas Box (Latest Viral)</option>
-                    <option value="kids_paper">🎨 Kids Fun Canvas Box (Bright)</option>
+                <label>बैकग्राउंड थीम (Seamless Open Look):</label>
+                <select id="cfg-bg-color" onchange="onThemeChange(); saveAllSettings(); redrawCanvas();">
+                    <option value="paper_classic">📜 Classic Textured Paper (Open Look)</option>
+                    <option value="kids_paper">🎨 Kids Fun Textured Paper (Bright)</option>
                     <option value="kids_gaming">🎮 Gaming Neon Arena (Dark)</option>
                     <option value="kids_candy">🌈 Rainbow Candy Pop (Cartoon)</option>
                     <option value="kids_space">🚀 Space Adventure (Galaxy)</option>
@@ -452,6 +468,26 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                     <option value="#fef9c3">Soft Warm Yellow (Plain)</option>
                     <option value="#ffffff">Pure White (Plain)</option>
                 </select>
+            </div>
+        </div>
+
+        <!-- BACKGROUND COLOR OPTIONS FOR TEXTURED PAPER THEMES -->
+        <div class="paper-color-panel" id="paper-color-panel">
+            <div style="flex: 2;">
+                <label>🎨 पेपर बैकग्राउंड कलर (Background Color Options):</label>
+                <select id="cfg-paper-preset" onchange="applyPaperPresetColor(this.value)">
+                    <option value="#e7e4dd">📜 Classic Khaddar Cream (Default)</option>
+                    <option value="#ffffff">⬜ Pure White Textured</option>
+                    <option value="#fef3c7">🟨 Soft Warm Yellow Paper</option>
+                    <option value="#dcfce7">🟩 Mint Green Paper</option>
+                    <option value="#e0f2fe">🟦 Sky Blue Paper</option>
+                    <option value="#fae8ff">🟪 Soft Lavender Paper</option>
+                    <option value="#ffedd5">🟧 Peach Cream Paper</option>
+                </select>
+            </div>
+            <div style="flex: 0.8;">
+                <label>Custom:</label>
+                <input type="color" id="cfg-paper-custom" value="#e7e4dd" oninput="onCustomPaperColorInput(this.value)">
             </div>
         </div>
 
@@ -594,8 +630,8 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V11";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V11";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V12";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V12";
 
     let isAnswerRevealed = false;
     let rawUploadedImage = null;
@@ -621,33 +657,63 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         caption: "'बर्डमैन ऑफ इंडिया' (Birdman of India) के नाम से किसे जाना जाता है? सही उत्तर कमेंट करें! 👇🧠\n#PolityQuiz #GKQuiz #BirdmanOfIndia #StaticGK"
     };
 
-    /* ==================== TEXTURE GENERATOR (CANVAS FABRIC/PAPER LOOK) ==================== */
-    function getPaperTexturePattern(targetCtx, variant) {
-        if (paperPatternCache[variant]) return paperPatternCache[variant];
+    /* ==================== PAPER BACKGROUND COLOR CONTROLS ==================== */
+    function onThemeChange() {
+        const themeKey = document.getElementById('cfg-bg-color').value;
+        const panel = document.getElementById('paper-color-panel');
+        if (themeKey === "paper_classic" || themeKey === "kids_paper") {
+            panel.style.display = "flex";
+            if (themeKey === "kids_paper" && document.getElementById('cfg-paper-custom').value === "#e7e4dd") {
+                applyPaperPresetColor("#fef3c7");
+            }
+        } else {
+            panel.style.display = "none";
+        }
+    }
+
+    function applyPaperPresetColor(hex) {
+        document.getElementById('cfg-paper-preset').value = hex;
+        document.getElementById('cfg-paper-custom').value = hex;
+        saveAllSettings();
+        redrawCanvas();
+    }
+
+    function onCustomPaperColorInput(hex) {
+        document.getElementById('cfg-paper-custom').value = hex;
+        saveAllSettings();
+        redrawCanvas();
+    }
+
+    /* ==================== TEXTURE GENERATOR (CUSTOM COLOR SUPPORT) ==================== */
+    function getPaperTexturePattern(targetCtx, baseHexColor) {
+        const key = (baseHexColor || "#e7e4dd").toLowerCase();
+        if (paperPatternCache[key]) return paperPatternCache[key];
 
         const pCanvas = document.createElement('canvas');
         pCanvas.width = 160;
         pCanvas.height = 160;
         const pCtx = pCanvas.getContext('2d');
 
-        pCtx.fillStyle = variant === "kids_paper" ? "#fef3c7" : "#e5e2db";
+        pCtx.fillStyle = key;
         pCtx.fillRect(0, 0, 160, 160);
 
+        // Woven canvas/linen grain lines
         for (let i = 0; i < 160; i += 3) {
-            pCtx.fillStyle = (i % 6 === 0) ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.3)";
+            pCtx.fillStyle = (i % 6 === 0) ? "rgba(0,0,0,0.036)" : "rgba(255,255,255,0.28)";
             pCtx.fillRect(0, i, 160, 1);
             pCtx.fillRect(i, 0, 1, 160);
         }
 
+        // Subtle organic paper speckles
         for (let s = 0; s < 360; s++) {
             const rx = Math.random() * 160;
             const ry = Math.random() * 160;
-            pCtx.fillStyle = Math.random() > 0.5 ? "rgba(70,60,50,0.06)" : "rgba(255,255,255,0.24)";
+            pCtx.fillStyle = Math.random() > 0.5 ? "rgba(60,50,40,0.055)" : "rgba(255,255,255,0.24)";
             pCtx.fillRect(rx, ry, 1.5, 1.5);
         }
 
         const pattern = targetCtx.createPattern(pCanvas, 'repeat');
-        paperPatternCache[variant] = pattern;
+        paperPatternCache[key] = pattern;
         return pattern;
     }
 
@@ -990,6 +1056,7 @@ ${tagsString}`.trim();
         const prefs = {
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
+            paperColor: document.getElementById('cfg-paper-custom').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
             optSize: parseInt(document.getElementById('cfg-opt-size').value) || 34,
             imgPos: document.getElementById('cfg-img-pos').value,
@@ -1010,6 +1077,10 @@ ${tagsString}`.trim();
                 const p = JSON.parse(saved);
                 if (p.fontFam) document.getElementById('cfg-font').value = p.fontFam;
                 if (p.bgColor) document.getElementById('cfg-bg-color').value = p.bgColor;
+                if (p.paperColor) {
+                    document.getElementById('cfg-paper-custom').value = p.paperColor;
+                    document.getElementById('cfg-paper-preset').value = p.paperColor;
+                }
                 if (p.imgPos) document.getElementById('cfg-img-pos').value = p.imgPos;
                 if (p.imgScale) document.getElementById('cfg-img-scale').value = p.imgScale;
                 if (p.qSize) {
@@ -1028,6 +1099,7 @@ ${tagsString}`.trim();
                 if (p.currentQuiz) quizData = p.currentQuiz;
             } catch(e) {}
         }
+        onThemeChange();
     }
 
     function exportJSONBackup() {
@@ -1266,7 +1338,6 @@ ${tagsString}`.trim();
         const drawY = by + (bh - drawH) / 2;
 
         if (isBlended) {
-            // Cutout look blending directly on textured canvas
             targetCtx.shadowColor = "rgba(0, 0, 0, 0.22)";
             targetCtx.shadowBlur = 12;
             targetCtx.shadowOffsetX = 3;
@@ -1291,6 +1362,7 @@ ${tagsString}`.trim();
     /* ==================== UNIFIED SINGLE CARD DRAW ENGINE ==================== */
     function renderCardToCanvas(targetCtx, data, isRevealed) {
         const themeKey = document.getElementById('cfg-bg-color').value || "paper_classic";
+        const customPaperColor = document.getElementById('cfg-paper-custom').value || "#e7e4dd";
         const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
         const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
         const baseOptSize = parseInt(document.getElementById('cfg-opt-size').value) || 34;
@@ -1301,20 +1373,22 @@ ${tagsString}`.trim();
 
         targetCtx.clearRect(0, 0, 1080, 1350);
 
-        // ==================== MODE A: FRAMED TEXTURED CANVAS BOX (LATEST IMAGE STYLE) ====================
+        // ==================== MODE A: SEAMLESS OPEN TEXTURED PAPER (NO MIDDLE BOX) ====================
         if (themeKey === "paper_classic" || themeKey === "kids_paper") {
             const isKidsPaper = (themeKey === "kids_paper");
 
-            // 1. Clean Off-White Outer Card Background
-            targetCtx.fillStyle = isKidsPaper ? "#fefce8" : "#f8fafc";
+            // 1. Full Seamless Textured Paper Background with Selected Color
+            targetCtx.fillStyle = getPaperTexturePattern(targetCtx, customPaperColor);
             targetCtx.fillRect(0, 0, 1080, 1350);
 
-            // Subtle outer frame border
-            targetCtx.strokeStyle = isKidsPaper ? "#f59e0b" : "#cbd5e1";
-            targetCtx.lineWidth = isKidsPaper ? 8 : 3;
-            roundRect(targetCtx, 22, 22, 1036, 1306, 32, null, true);
+            // Subtle outer frame border only for Kids Fun Paper
+            if (isKidsPaper) {
+                targetCtx.strokeStyle = "#f59e0b";
+                targetCtx.lineWidth = 10;
+                roundRect(targetCtx, 20, 20, 1040, 1310, 28, null, true);
+            }
 
-            // Subtle Watermark on outer background
+            // Subtle Watermark across page
             targetCtx.save();
             targetCtx.rotate(-28 * Math.PI / 180);
             targetCtx.fillStyle = "rgba(15, 23, 42, 0.025)";
@@ -1350,34 +1424,17 @@ ${tagsString}`.trim();
             targetCtx.fillStyle = "#ffffff";
             targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
 
-            // 4. MIDDLE TEXTURED CANVAS BOX (Exact Reference Image Layout)
-            const boxX = 48;
-            const boxY = 224;
-            const boxW = 984;
-            const boxH = isRevealed ? 740 : 795;
-
-            targetCtx.save();
-            roundRect(targetCtx, boxX, boxY, boxW, boxH, 16, null, false);
-            targetCtx.fillStyle = getPaperTexturePattern(targetCtx, themeKey);
-            targetCtx.fill();
-            targetCtx.restore();
-
-            // Crisp Dark Border around the Textured Box
-            targetCtx.strokeStyle = isKidsPaper ? "#2563eb" : "#334155";
-            targetCtx.lineWidth = isKidsPaper ? 4.5 : 3;
-            roundRect(targetCtx, boxX, boxY, boxW, boxH, 16, null, true);
-
-            // Question inside Textured Box
+            // 4. SEAMLESS QUESTION SECTION (NO BOX BORDER)
             targetCtx.textAlign = "left";
-            const qStartY = boxY + 42;
+            const qStartY = 238;
             const effectiveQSize = (hasImage && imgPos === "center") ? Math.min(qSize, 38) : qSize;
             let qEndY = drawColorfulQuestion(
                 targetCtx,
                 data.qPrefix || "Q.",
                 data.questionText || "",
-                boxX + 36,
+                76,
                 qStartY,
-                boxW - 72,
+                928,
                 effectiveQSize,
                 fontFam,
                 "#111827",
@@ -1385,35 +1442,33 @@ ${tagsString}`.trim();
                 isKidsPaper ? "#2563eb" : "#111827"
             );
 
-            // Optional English Bilingual Question Line (Green like sample image)
+            // Optional English Bilingual Question Line
             if (data.questionEn && data.questionEn.trim().length > 0) {
                 targetCtx.fillStyle = isKidsPaper ? "#0369a1" : "#166534";
                 targetCtx.font = "700 28px 'Hind', sans-serif";
-                qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, boxX + 36, qEndY + 6, boxW - 72, 36);
+                qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 76, qEndY + 8, 928, 36);
             }
 
-            // Options + Cutout Image inside Textured Box
-            let optStartY = qEndY + 34;
-            const optX = boxX + 42;
-            let optGap = isRevealed ? 86 : 98;
+            // 5. OPTIONS + CUTOUT IMAGE (DIRECTLY ON PAPER)
+            let optStartY = qEndY + 42;
+            const optX = 82;
+            let optGap = isRevealed ? 94 : 112;
             let optSize = baseOptSize + 2;
 
             if (hasImage && imgPos === "center") {
-                const bannerH = 210;
-                drawQuizImageBox(targetCtx, processedQuizImage, boxX + 42, optStartY, boxW - 84, bannerH, imgScale, isBlended, "#334155", isKidsPaper);
-                optStartY += bannerH + 22;
-                optGap = 68;
+                const bannerH = 225;
+                drawQuizImageBox(targetCtx, processedQuizImage, 82, optStartY, 916, bannerH, imgScale, isBlended, "#334155", isKidsPaper);
+                optStartY += bannerH + 26;
+                optGap = 74;
                 optSize = Math.min(baseOptSize, 28);
             } else if (hasImage && imgPos === "right") {
-                // Right side large cutout photo blending directly into textured paper
-                const imgBoxX = boxX + 445;
-                const imgBoxY = optStartY - 18;
-                const imgBoxW = boxW - 470;
-                const imgBoxH = (boxY + boxH) - imgBoxY - 16;
+                const imgBoxX = 505;
+                const imgBoxY = optStartY - 22;
+                const imgBoxW = 515;
+                const imgBoxH = isRevealed ? 460 : 540;
                 drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, imgBoxY, imgBoxW, imgBoxH, imgScale, isBlended, "#334155", isKidsPaper);
             }
 
-            // Draw Clean Circular Badges + Bold Purple/Indigo Text (No Option Boxes!)
             const keys = ["A", "B", "C", "D"];
             const kidsCircleCols = ["#dc2626", "#2563eb", "#16a34a", "#9333ea"];
 
@@ -1421,19 +1476,19 @@ ${tagsString}`.trim();
                 const curY = optStartY + (idx * optGap);
                 const isCorrect = (data.correctOption === k);
 
-                // Highlight pill only when Answer Mode is ON
+                // Highlight pill when Answer Mode is ON
                 if (isRevealed && isCorrect) {
-                    const pillHighlightW = (hasImage && imgPos === "right") ? 425 : (boxW - 84);
-                    roundRect(targetCtx, optX - 12, curY - 12, pillHighlightW, 66, 33, "#dcfce7", false);
+                    const pillHighlightW = (hasImage && imgPos === "right") ? 425 : 900;
+                    roundRect(targetCtx, optX - 14, curY - 14, pillHighlightW, 72, 36, "#dcfce7", false);
                     targetCtx.strokeStyle = "#16a34a";
                     targetCtx.lineWidth = 3.5;
-                    roundRect(targetCtx, optX - 12, curY - 12, pillHighlightW, 66, 33, null, true);
+                    roundRect(targetCtx, optX - 14, curY - 14, pillHighlightW, 72, 36, null, true);
                 }
 
                 // Black/Colored Circle Badge (A, B, C, D)
-                const circleR = 24;
+                const circleR = 25;
                 const cx = optX + circleR;
-                const cy = curY + 20;
+                const cy = curY + 22;
 
                 targetCtx.beginPath();
                 targetCtx.arc(cx, cy, circleR, 0, Math.PI * 2);
@@ -1445,7 +1500,7 @@ ${tagsString}`.trim();
                 targetCtx.fill();
 
                 targetCtx.fillStyle = "#ffffff";
-                targetCtx.font = "900 26px 'Poppins', sans-serif";
+                targetCtx.font = "900 27px 'Poppins', sans-serif";
                 targetCtx.textAlign = "center";
                 targetCtx.textBaseline = "middle";
                 targetCtx.fillText((isRevealed && isCorrect) ? "✔" : k, cx, cy + 1);
@@ -1455,28 +1510,28 @@ ${tagsString}`.trim();
                 targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : (isKidsPaper ? "#1e1b4b" : "#3b178a");
                 targetCtx.font = `800 ${optSize}px ${fontFam}`;
                 const optVal = data.options ? (data.options[k] || "") : "";
-                const maxTextW = (hasImage && imgPos === "right") ? 360 : (boxW - 140);
-                targetCtx.fillText(truncateCanvasText(targetCtx, optVal, maxTextW), optX + 64, cy + 2);
+                const maxTextW = (hasImage && imgPos === "right") ? 355 : 830;
+                targetCtx.fillText(truncateCanvasText(targetCtx, optVal, maxTextW), optX + 68, cy + 2);
             });
 
-            // 5. BOTTOM 2 LINES BELOW THE TEXTURED BOX
-            const footerY = boxY + boxH + 26;
+            // 6. BOTTOM 2 LINES (HOOK CTA + SOCIAL LINE)
+            const footerY = Math.max(optStartY + (4 * optGap) + 18, isRevealed ? 1030 : 1125);
             if (isRevealed) {
-                roundRect(targetCtx, 48, footerY, 984, 175, 18, "#ffffff", false);
+                roundRect(targetCtx, 65, footerY, 950, 175, 18, "rgba(255,255,255,0.92)", false);
                 targetCtx.strokeStyle = "#16a34a";
                 targetCtx.lineWidth = 3.5;
-                roundRect(targetCtx, 48, footerY, 984, 175, 18, null, true);
+                roundRect(targetCtx, 65, footerY, 950, 175, 18, null, true);
 
                 targetCtx.fillStyle = "#15803d";
                 targetCtx.font = `800 26px ${fontFam}`;
                 targetCtx.textAlign = "left";
                 targetCtx.textBaseline = "top";
                 const corrText = data.options ? (data.options[data.correctOption] || "") : "";
-                targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 74, footerY + 16);
+                targetCtx.fillText(`💡 सही उत्तर: [विकल्प ${data.correctOption}] ${corrText}`, 90, footerY + 16);
 
                 targetCtx.fillStyle = "#1e293b";
                 targetCtx.font = `600 23px ${fontFam}`;
-                wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 74, footerY + 56, 932, 31);
+                wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 90, footerY + 56, 900, 31);
 
                 targetCtx.fillStyle = "#0f172a";
                 targetCtx.font = `800 24px ${fontFam}`;
@@ -1484,21 +1539,21 @@ ${tagsString}`.trim();
                 targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 206);
             } else {
                 // Bottom Line 1: Orange CTA Pill Box
-                roundRect(targetCtx, 65, footerY + 12, 950, 86, 43, "#f59e0b", false);
+                roundRect(targetCtx, 65, footerY, 950, 86, 43, "#f59e0b", false);
                 targetCtx.strokeStyle = "#1e293b";
                 targetCtx.lineWidth = 3;
-                roundRect(targetCtx, 65, footerY + 12, 950, 86, 43, null, true);
+                roundRect(targetCtx, 65, footerY, 950, 86, 43, null, true);
 
                 targetCtx.textAlign = "center";
                 targetCtx.textBaseline = "middle";
                 targetCtx.fillStyle = "#ffffff";
                 targetCtx.font = `900 34px ${fontFam}`;
-                targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 55);
+                targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 43);
 
                 // Bottom Line 2: Social Engagement Line
                 targetCtx.fillStyle = "#0f172a";
                 targetCtx.font = `800 28px ${fontFam}`;
-                targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 144);
+                targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 132);
             }
 
             return;
