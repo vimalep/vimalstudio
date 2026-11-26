@@ -86,7 +86,6 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 <option value="paper_classic">📜 Classic Textured Paper</option>
 <option value="kids_candy">🌈 Rainbow Candy Pop</option>
 <option value="#fef9c3">Soft Warm Yellow (Plain)</option>
-<option value="#ffffff">Pure White (Plain)</option>
 </select>
 </div>
 </div>
@@ -125,7 +124,8 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 
 <div class="row">
 <div><label>प्रश्न साइज़: <span id="qs-lbl">44</span>px</label><input type="range" id="cfg-qs" min="30" max="60" value="44" oninput="document.getElementById('qs-lbl').innerText=this.value;savePrefs();draw()"></div>
-<div><label>ऑप्शन साइज़: <span id="os-lbl">34</span>px</label><input type="range" id="cfg-os" min="24" max="44" value="34" oninput="document.getElementById('os-lbl').innerText=this.value;savePrefs();draw()"></div>
+<div><label>ऑप्शन साइज़: <span id="os-lbl">34</span>px</label><input type="range" id="cfg-os" min="22" max="46" value="34" oninput="document.getElementById('os-lbl').innerText=this.value;savePrefs();draw()"></div>
+<div><label>CTA Position (Y): <span id="cta-lbl">0</span></label><input type="range" id="cfg-cta-y" min="-140" max="140" value="0" oninput="document.getElementById('cta-lbl').innerText=this.value;savePrefs();draw()"></div>
 </div>
 
 <div class="tog" onclick="toggleAns()">
@@ -145,7 +145,7 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 
 <!-- SUBJECT CUTOUT PHOTO PANEL (BELOW PREVIEW) -->
 <div class="img-box">
-<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Cutout Photo & Red Pointer Label:</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
+<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Cutout Photo (Crop + Auto-BG Remove):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
 <div class="img-btns">
 <button class="ibtn" onclick="document.getElementById('img-in').click()">📁 Upload</button>
 <button class="ibtn" onclick="pasteSubImg()">📋 Paste Img</button>
@@ -163,14 +163,6 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 <div class="row">
 <div><label>BG Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
 <div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Cutout</option><option value="center">⬇️ Center Banner</option></select></div>
-</div>
-</div>
-
-<div class="sub" style="border-color:#ef4444">
-<div class="sub-t" style="color:#fca5a5"><span>🏷️ Red Callout Label & Pointer Arrow:</span></div>
-<div class="row">
-<div style="flex:2"><label>लेबल टेक्स्ट:</label><input type="text" id="cfg-tag" placeholder="उदा. एंडीज पर्वत श्रृंखला" oninput="draw()"></div>
-<div style="flex:1"><label>Arrow:</label><select id="cfg-dir" onchange="draw()"><option value="down-left">↙️ नीचे-बाएं</option><option value="left">⬅️ बाएं</option><option value="down">⬇️ नीचे</option><option value="none">बिना तीर</option></select></div>
 </div>
 </div>
 
@@ -232,7 +224,7 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_FINAL",H_KEY="QUIZ_PRO_HIST_FINAL";
+const P_KEY="QUIZ_PRO_PREFS_V17",H_KEY="QUIZ_PRO_HIST_V17";
 let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
  id:"def_386",title:"🌍 WORLD GK QUIZ 🧠",qPrefix:"386.",
@@ -345,7 +337,7 @@ function parseRawText(){
 
 function toggleAns(){let c=document.getElementById('chk-ans');c.checked=!c.checked;ansMode=c.checked;savePrefs();draw();}
 function savePrefs(){
- try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ipos:document.getElementById('cfg-ipos').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
+ try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
 }
 function loadPrefs(){
  try{
@@ -356,6 +348,7 @@ function loadPrefs(){
   if(p.ipos)document.getElementById('cfg-ipos').value=p.ipos;
   if(p.qs){document.getElementById('cfg-qs').value=p.qs;document.getElementById('qs-lbl').innerText=p.qs;}
   if(p.os){document.getElementById('cfg-os').value=p.os;document.getElementById('os-lbl').innerText=p.os;}
+  if(p.ctay!==undefined){document.getElementById('cfg-cta-y').value=p.ctay;document.getElementById('cta-lbl').innerText=p.ctay;}
   if(p.ans!==undefined){document.getElementById('chk-ans').checked=p.ans;ansMode=p.ans;}
   if(p.raw)document.getElementById('raw-box').value=p.raw;
   if(p.q)qData=p.q;
@@ -446,22 +439,6 @@ function drawSubImg(c,bx,by,bw,bh,bCol){
  else{rRect(c,bx,by,bw,bh,22,"#fff",false);c.save();rRect(c,bx,by,bw,bh,22,null,false);c.clip();c.drawImage(procSub,dx,dy,dw,dh);c.restore();c.strokeStyle=bCol;c.lineWidth=3;rRect(c,bx,by,bw,bh,22,null,true);}
  c.restore();
 }
-function drawTag(c,bx,by,bw){
- let txt=cln(document.getElementById('cfg-tag').value),dir=document.getElementById('cfg-dir').value;if(!txt)return;
- c.save();let tw=225,th=78,tx=bx+bw-tw-12,ty=by+12;
- rRect(c,tx+3,ty+4,tw,th,14,"rgba(0,0,0,.26)",false);rRect(c,tx,ty,tw,th,14,"#dc2626",false);c.strokeStyle="#fff";c.lineWidth=3.5;rRect(c,tx,ty,tw,th,14,null,true);
- c.fillStyle="#fff";c.font="800 23px 'Hind',sans-serif";c.textAlign="center";c.textBaseline="middle";
- let ws=txt.split(' ');if(ws.length>=2&&c.measureText(txt).width>tw-22){let m=Math.ceil(ws.length/2);c.fillText(ws.slice(0,m).join(' '),tx+tw/2,ty+25);c.fillText(ws.slice(m).join(' '),tx+tw/2,ty+53);}else c.fillText(trunc(c,txt,tw-18),tx+tw/2,ty+th/2);
- if(dir!=="none"){
-  let sx=tx,sy=ty+th/2,ex=tx-110,ey=ty+130,cx=tx-70,cy=ty+40;
-  if(dir==="left"){ex=tx-125;ey=ty+52;cx=tx-60;cy=ty+32;}
-  else if(dir==="down"){sx=tx+tw/2;sy=ty+th;ex=sx-18;ey=sy+110;cx=sx+10;cy=sy+50;}
-  c.beginPath();c.moveTo(sx,sy);c.quadraticCurveTo(cx,cy,ex,ey);c.strokeStyle="#fff";c.lineWidth=11;c.lineCap="round";c.stroke();
-  c.beginPath();c.moveTo(sx,sy);c.quadraticCurveTo(cx,cy,ex,ey);c.strokeStyle="#dc2626";c.lineWidth=6;c.stroke();
-  let ang=Math.atan2(ey-cy,ex-cx),hl=21;c.beginPath();c.moveTo(ex,ey);c.lineTo(ex-hl*Math.cos(ang-Math.PI/6),ey-hl*Math.sin(ang-Math.PI/6));c.lineTo(ex-hl*Math.cos(ang+Math.PI/6),ey-hl*Math.sin(ang+Math.PI/6));c.closePath();c.fillStyle="#dc2626";c.fill();c.strokeStyle="#fff";c.lineWidth=2.5;c.stroke();
- }
- c.restore();
-}
 function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
  c.textBaseline="top";c.textAlign="left";c.font=`900 ${fs+4}px 'Poppins',sans-serif`;c.fillStyle=preCol;
  let fp=pre+" ",pw=c.measureText(fp).width;c.fillText(fp,x,y);
@@ -480,7 +457,7 @@ function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
 
 /* MAIN DRAW ENGINE */
 function draw(){
- const th=document.getElementById('cfg-theme').value,ff=document.getElementById('cfg-font').value,qs=parseInt(document.getElementById('cfg-qs').value)||44,bos=parseInt(document.getElementById('cfg-os').value)||34,ipos=document.getElementById('cfg-ipos').value,hasI=Boolean(procSub),pal=["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
+ const th=document.getElementById('cfg-theme').value,ff=document.getElementById('cfg-font').value,qs=parseInt(document.getElementById('cfg-qs').value)||44,bos=parseInt(document.getElementById('cfg-os').value)||34,ctaOffY=parseInt(document.getElementById('cfg-cta-y').value)||0,ipos=document.getElementById('cfg-ipos').value,hasI=Boolean(procSub),pal=["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
  ctx.clearRect(0,0,1080,1350);
 
  /* THEME 1: WORLD GK CAPSULE */
@@ -495,10 +472,10 @@ function draw(){
   rRect(ctx,54,210,980,qbh,28,"rgba(15,23,42,.14)",false);rRect(ctx,50,204,980,qbh,28,"#fff",false);ctx.strokeStyle="#1e3a8a";ctx.lineWidth=4;rRect(ctx,50,204,980,qbh,28,null,true);
   let qe=drawColorQ(ctx,qData.qPrefix||"386.",qData.questionText,84,230,912,qs+2,ff,"#0f172a",pal,"#1d4ed8");
   if(hasE){ctx.fillStyle="#15803d";ctx.font="700 25px 'Hind',sans-serif";wrapL(ctx,"- "+qData.questionEn,84,qe+2,912,30);}
-  let oy=204+qbh+38,ox=52,ow=hasI?535:976,oh=92,og=ansMode?98:114,os=hasI?Math.min(bos,30):bos;
+  let oy=204+qbh+38,ox=52,ow=hasI?535:976,oh=92,og=ansMode?98:114,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,52,oy,976,215,"#1e3a8a");drawTag(ctx,52,oy,976);oy+=237;ow=976;oh=74;og=90;os=Math.min(bos,28);}
-   else{drawSubImg(ctx,595,oy-12,445,ansMode?440:520,"#1e3a8a");drawTag(ctx,595,oy-12,445);}
+   if(ipos==="center"){drawSubImg(ctx,52,oy,976,215,"#1e3a8a");oy+=237;ow=976;oh=74;og=90;}
+   else{drawSubImg(ctx,595,oy-12,445,ansMode?440:520,"#1e3a8a");}
   }
   [{c:"#1d4ed8",k:"A"},{c:"#db2777",k:"B"},{c:"#ea580c",k:"C"},{c:"#16a34a",k:"D"}].forEach((s,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===s.k;
@@ -508,7 +485,7 @@ function draw(){
    ctx.fillStyle=(ansMode&&ic)?"#0f172a":"#fff";ctx.font="900 30px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":s.k,cx,mid+1);
    ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#fff":"#0f172a";ctx.font=`800 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[s.k]||"",ow-(cr*2+42)),cx+cr+18,mid+2);
   });
-  let fy=oy+3*og+oh+34;
+  let fy=oy+3*og+oh+34+ctaOffY;
   if(ansMode){
    rRect(ctx,52,fy,976,165,20,"#fff",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3.5;rRect(ctx,52,fy,976,165,20,null,true);
    ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,78,fy+16);
@@ -533,10 +510,10 @@ function draw(){
   rRect(ctx,px,132,pw,54,27,"#1e2433",false);ctx.fillStyle="#fff";ctx.fillText(bt,540,160);
   ctx.fillStyle="#111827";ctx.font=`900 ${qs}px ${ff}`;let qe=wrapL(ctx,`${qData.qPrefix} ${qData.questionText}`.trim(),540,245,920,Math.round(qs*1.36),true);
   if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="600 31px 'Hind',sans-serif";qe=wrapL(ctx,qData.questionEn,540,qe+12,900,42,true);}
-  let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos+2;
+  let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200,"#cbd5e1");drawTag(ctx,88,oy,904);oy+=222;oh=74;og=90;os=Math.min(bos,28);}
-   else{ow=540;os=Math.min(bos,28);drawSubImg(ctx,645,oy,365,3*og+oh,"#cbd5e1");drawTag(ctx,645,oy,365);}
+   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200,"#cbd5e1");oy+=222;oh=74;og=90;}
+   else{ow=540;drawSubImg(ctx,645,oy,365,3*og+oh,"#cbd5e1");}
   }
   ["A","B","C","D"].forEach((k,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===k;
@@ -545,7 +522,7 @@ function draw(){
    ctx.fillStyle="#fff";ctx.font="800 26px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":k,cx,mid+1);
    ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#14532d":"#111827";ctx.font=`700 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[k]||"",ow-125),ox+106,mid+2);
   });
-  let fy=oy+3*og+oh+34;
+  let fy=oy+3*og+oh+34+ctaOffY;
   if(ansMode){
    rRect(ctx,88,fy,904,165,16,"#fff",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3;rRect(ctx,88,fy,904,165,16,null,true);
    ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,114,fy+16);
@@ -568,10 +545,10 @@ function draw(){
   rRect(ctx,px+3,144,pw,48,24,"rgba(0,0,0,.22)",false);rRect(ctx,px,140,pw,48,24,"#1e293b",false);ctx.strokeStyle="#f59e0b";ctx.lineWidth=2.5;rRect(ctx,px,140,pw,48,24,null,true);ctx.fillStyle="#fff";ctx.fillText(bt,540,164);
   let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,74,232,932,hasI&&ipos==="center"?Math.min(qs,38):qs,ff,"#111827",pal,"#1d4ed8");
   if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 28px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,74,qe+8,932,36);}
-  let oy=qe+42,ox=82,og=ansMode?94:112,os=bos+2;
+  let oy=qe+42,ox=82,og=ansMode?94:112,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,82,oy,916,225,"#334155");drawTag(ctx,82,oy,916);oy+=251;og=74;os=Math.min(bos,28);}
-   else{drawSubImg(ctx,505,oy-22,515,ansMode?460:540,"#334155");drawTag(ctx,505,oy-22,515);}
+   if(ipos==="center"){drawSubImg(ctx,82,oy,916,225,"#334155");oy+=251;og=74;}
+   else{drawSubImg(ctx,505,oy-22,515,ansMode?460:540,"#334155");}
   }
   ["A","B","C","D"].forEach((k,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===k,cols=["#1d4ed8","#be185d","#b45309","#047857"];
@@ -580,7 +557,7 @@ function draw(){
    ctx.fillStyle="#fff";ctx.font="900 27px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":k,cx,mid+1);
    ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#14532d":"#2e1065";ctx.font=`800 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[k]||"",hasI&&ipos==="right"?355:830),ox+68,mid+2);
   });
-  let fy=Math.max(oy+4*og+18,ansMode?1030:1125);
+  let fy=Math.max(oy+4*og+18,ansMode?1030:1125)+ctaOffY;
   if(ansMode){
    rRect(ctx,65,fy,950,175,18,"rgba(255,255,255,.94)",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3.5;rRect(ctx,65,fy,950,175,18,null,true);
    ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,90,fy+16);
@@ -595,7 +572,7 @@ function draw(){
   return;
  }
 
- /* THEME 4: CANDY POP & PLAIN COLORS */
+ /* THEME 4: CANDY POP & SOFT WARM YELLOW */
  let isC=th==="kids_candy";
  if(isC){let g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,"#ff6b6b");g.addColorStop(.5,"#feca57");g.addColorStop(1,"#48dbfb");ctx.fillStyle=g;}else ctx.fillStyle=th;
  ctx.fillRect(0,0,1080,1350);
@@ -607,10 +584,10 @@ function draw(){
  rRect(ctx,px,156,pw,46,23,"#8b5cf6",false);ctx.strokeStyle="#1e293b";ctx.lineWidth=2.5;rRect(ctx,px,156,pw,46,23,null,true);ctx.fillStyle="#fff";ctx.fillText(bt,540,179);
  let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,95,254,890,hasI&&ipos==="center"?Math.min(qs,38):qs,ff,"#1e293b",pal,"#2563eb");
  if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 26px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,95,qe+4,890,32);}
- let oy=qe+30,ox=95,ow=890,oh=90,og=114,os=Math.min(bos,30);
+ let oy=qe+30,ox=95,ow=890,oh=90,og=114,os=bos;
  if(hasI){
-  if(ipos==="center"){drawSubImg(ctx,95,oy,890,225,"#1e293b");drawTag(ctx,95,oy,890);oy+=247;oh=72;og=90;os=Math.min(bos,27);}
-  else{ow=520;os=Math.min(bos,26);drawSubImg(ctx,639,oy,346,3*og+oh,"#1e293b");drawTag(ctx,639,oy,346);}
+  if(ipos==="center"){drawSubImg(ctx,95,oy,890,225,"#1e293b");oy+=247;oh=72;og=90;}
+  else{ow=520;drawSubImg(ctx,639,oy,346,3*og+oh,"#1e293b");}
  }
  [{bg:"#e0f2fe",bd:"#0284c7",k:"A"},{bg:"#fce7f3",bd:"#db2777",k:"B"},{bg:"#fef9c3",bd:"#ca8a04",k:"C"},{bg:"#dcfce7",bd:"#16a34a",k:"D"}].forEach((s,i)=>{
   let cy=oy+i*og,ic=qData.correctOption===s.k;
@@ -620,7 +597,7 @@ function draw(){
   ctx.fillStyle=(ansMode&&ic)?"#0f172a":"#fff";ctx.font="900 26px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":s.k,ox+14+bs/2,cy+oh/2);
   ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#fff":"#0f172a";ctx.font=`800 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[s.k]||"",ow-bs-36),ox+bs+26,cy+oh/2);
  });
- let fy=oy+3*og+oh+34;
+ let fy=oy+3*og+oh+34+ctaOffY;
  if(ansMode){
   rRect(ctx,95,fy,890,165,18,"#f8fafc",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3;rRect(ctx,95,fy,890,165,18,null,true);
   ctx.fillStyle="#15803d";ctx.font=`800 25px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,118,fy+16);
