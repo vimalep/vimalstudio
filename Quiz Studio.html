@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viral Quiz Studio Pro - Textured & Auto-Blend Edition</title>
+    <title>Viral Quiz Studio Pro - Full Layout & Auto-Blend Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Hind:wght@500;600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -360,19 +360,18 @@
     <div class="control-box">
         <div>
             <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
-            <textarea id="raw-paste-box">EXAM PREPARATION
-Q. 'बर्डमैन ऑफ इंडिया' के नाम से प्रसिद्ध पक्षी वैज्ञानिक कौन हैं?
-- Who is the ornithologist known as the 'Birdman of India'?
-A) जिम कॉर्बेट
-B) सलीम अली
-C) एम. कृष्णन
-D) कैलाश सांखला
-👇 अपना सही उत्तर Comment में लिखें! ⚡
+            <textarea id="raw-paste-box">🏛️ POLITY GK QUIZ 🧠
+Q.169 संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️
+A) डॉ. राजेंद्र प्रसाद 📜
+B) डॉ. भीमराव अंबेडकर 🇮🇳
+C) जवाहरलाल नेहरू 🏛️
+D) सरदार वल्लभभाई पटेल 🛡️
+👇 1 Second में सही उत्तर Comment करें! ⚡
 ❤️ Like | ➕ Follow 🎯
-Caption: 'बर्डमैन ऑफ इंडिया' (Birdman of India) के नाम से किसे जाना जाता है? सही उत्तर कमेंट करें! 👇🧠
-#ExamPreparation #GKQuiz #BirdmanOfIndia #StaticGK
-Answer: B) सलीम अली
-Explanation: प्रसिद्ध भारतीय पक्षी विज्ञानी और प्रकृतिवादी डॉ. सलीम अली को 'बर्डमैन ऑफ इंडिया' कहा जाता है। उन्हें 1976 में पद्म विभूषण से सम्मानित किया गया था।</textarea>
+Caption: संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀
+#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity
+Answer: B) डॉ. भीमराव अंबेडकर 🇮🇳
+Explanation: 29 अगस्त 1947 को गठित संविधान सभा की सबसे महत्वपूर्ण 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष डॉ. भीमराव अंबेडकर थे, जिसमें कुल 7 सदस्य थे।</textarea>
             <div class="btn-action-grid">
                 <button class="btn-action btn-clipboard" onclick="pasteFromClipboardAndGenerate()">
                     <span>📋 1-Click Paste & Run</span>
@@ -386,7 +385,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         <!-- IMAGE UPLOAD, SEARCH & AUTO-BLEND PANEL -->
         <div class="img-control-panel">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Cutout / Sketch Photo जोड़ें (Viral Look):</span>
+                <span style="font-size: 12px; font-weight: 800; color: #38bdf8;">🖼️ Cutout / Diagram Photo जोड़ें (Viral Look):</span>
                 <span id="img-status-badge" style="font-size: 10.5px; color: #94a3b8; font-weight: 700;">No Image</span>
             </div>
             <div class="img-btn-row">
@@ -414,15 +413,15 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                     <div>
                         <label>फोटो पोजीशन (Layout):</label>
                         <select id="cfg-img-pos" onchange="saveAllSettings(); redrawCanvas();">
-                            <option value="right">👉 Right Cutout (Pariksha Bindu Style)</option>
-                            <option value="center">⬇️ Center Banner (Question के नीचे)</option>
+                            <option value="right">👉 Right Side (Options के साथ Side-by-Side)</option>
+                            <option value="center">⬇️ Center Banner (Question के ठीक नीचे)</option>
                         </select>
                     </div>
                     <div>
                         <label>फोटो साइज़ (Scale):</label>
                         <select id="cfg-img-scale" onchange="saveAllSettings(); redrawCanvas();">
-                            <option value="1.0">Normal (100%)</option>
-                            <option value="1.15" selected>Large (115%)</option>
+                            <option value="1.0" selected>Normal (100%)</option>
+                            <option value="1.15">Large (115%)</option>
                             <option value="0.85">Compact (85%)</option>
                         </select>
                     </div>
@@ -441,10 +440,10 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                 </select>
             </div>
             <div>
-                <label>बैकग्राउंड थीम (Viral + Classic):</label>
+                <label>बैकग्राउंड थीम (All 4 Lines Included):</label>
                 <select id="cfg-bg-color" onchange="saveAllSettings(); redrawCanvas();">
-                    <option value="paper_classic">📜 Classic Canvas Paper (Viral Cutout)</option>
-                    <option value="kids_paper">🎨 Kids Fun Paper (Bright & Engaging)</option>
+                    <option value="paper_classic">📜 Classic Canvas Paper (Textured)</option>
+                    <option value="kids_paper">🎨 Kids Fun Paper (Bright Textured)</option>
                     <option value="kids_gaming">🎮 Gaming Neon Arena (Dark)</option>
                     <option value="kids_candy">🌈 Rainbow Candy Pop (Cartoon)</option>
                     <option value="kids_space">🚀 Space Adventure (Galaxy)</option>
@@ -461,8 +460,8 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                 <input type="range" id="cfg-q-size" min="30" max="60" value="42" oninput="document.getElementById('q-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
             <div>
-                <label>ऑप्शन साइज़: <span id="opt-size-lbl">32</span>px</label>
-                <input type="range" id="cfg-opt-size" min="24" max="44" value="32" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
+                <label>ऑप्शन साइज़: <span id="opt-size-lbl">30</span>px</label>
+                <input type="range" id="cfg-opt-size" min="22" max="42" value="30" oninput="document.getElementById('opt-size-lbl').innerText=this.value; saveAllSettings(); redrawCanvas();">
             </div>
         </div>
 
@@ -550,7 +549,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
             </div>
             <div>
                 <label>अंग्रेजी प्रश्न (English Question - Optional):</label>
-                <input type="text" id="edit-q-en" placeholder="e.g. Who is known as the Birdman of India?">
+                <input type="text" id="edit-q-en" placeholder="e.g. Who was the Chairman of Drafting Committee?">
             </div>
             <div class="row-flex">
                 <div>
@@ -594,8 +593,8 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
     const canvas = document.getElementById('quizCanvas');
     const ctx = canvas.getContext('2d');
 
-    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V9";
-    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V9";
+    const STORAGE_PREFS = "QUIZ_SMARTPASTE_PREFS_V10";
+    const STORAGE_HISTORY = "QUIZ_SMARTPASTE_HISTORY_V10";
 
     let isAnswerRevealed = false;
     let rawUploadedImage = null;
@@ -603,22 +602,22 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
     let paperPatternCache = {};
 
     let quizData = {
-        id: "default_birdman",
-        title: "EXAM PREPARATION",
-        qPrefix: "Q.",
-        questionText: "'बर्डमैन ऑफ इंडिया' के नाम से प्रसिद्ध पक्षी वैज्ञानिक कौन हैं?",
-        questionEn: "Who is the ornithologist known as the 'Birdman of India'?",
+        id: "default_169",
+        title: "🏛️ POLITY GK QUIZ 🧠",
+        qPrefix: "Q.169",
+        questionText: "संविधान की प्रारूप समिति (Drafting Committee) के अध्यक्ष कौन थे? ⚖️",
+        questionEn: "",
         options: {
-            A: "जिम कॉर्बेट",
-            B: "सलीम अली",
-            C: "एम. कृष्णन",
-            D: "कैलाश सांखला"
+            A: "डॉ. राजेंद्र प्रसाद 📜",
+            B: "डॉ. भीमराव अंबेडकर 🇮🇳",
+            C: "जवाहरलाल नेहरू 🏛️",
+            D: "सरदार वल्लभभाई पटेल 🛡️"
         },
-        hook: "👇 अपना सही उत्तर Comment में लिखें! ⚡",
+        hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
         social: "❤️ Like | ➕ Follow 🎯",
         correctOption: "B",
-        explanation: "प्रसिद्ध भारतीय पक्षी विज्ञानी और प्रकृतिवादी डॉ. सलीम अली को 'बर्डमैन ऑफ इंडिया' कहा जाता है। उन्हें 1976 में पद्म विभूषण से सम्मानित किया गया था।",
-        caption: "'बर्डमैन ऑफ इंडिया' (Birdman of India) के नाम से किसे जाना जाता है? सही उत्तर कमेंट करें! 👇🧠\n#ExamPreparation #GKQuiz #BirdmanOfIndia #StaticGK"
+        explanation: "29 अगस्त 1947 को गठित संविधान सभा की सबसे महत्वपूर्ण 'प्रारूप समिति' (Drafting Committee) के अध्यक्ष डॉ. भीमराव अंबेडकर थे, जिसमें कुल 7 सदस्य थे।",
+        caption: "संविधान की प्रारूप समिति के अध्यक्ष / Chairman of Drafting Committee (Dr. B. R. Ambedkar) से जुड़ा संविधान प्रश्न! कमेंट करें। 👇🚀\n#PolityQuiz #IndianConstitution #ConstituentAssembly #IndianPolity"
     };
 
     /* ==================== TEXTURE GENERATOR (CANVAS FABRIC/PAPER LOOK) ==================== */
@@ -630,22 +629,19 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         pCanvas.height = 160;
         const pCtx = pCanvas.getContext('2d');
 
-        // Base warm canvas paper color
-        pCtx.fillStyle = variant === "kids_paper" ? "#fffbeb" : "#e9e6df";
+        pCtx.fillStyle = variant === "kids_paper" ? "#fffbeb" : "#ece9e2";
         pCtx.fillRect(0, 0, 160, 160);
 
-        // Woven linen / khaddar grain lines
         for (let i = 0; i < 160; i += 3) {
-            pCtx.fillStyle = (i % 6 === 0) ? "rgba(0,0,0,0.035)" : "rgba(255,255,255,0.28)";
+            pCtx.fillStyle = (i % 6 === 0) ? "rgba(0,0,0,0.032)" : "rgba(255,255,255,0.28)";
             pCtx.fillRect(0, i, 160, 1);
             pCtx.fillRect(i, 0, 1, 160);
         }
 
-        // Subtle organic paper speckles
         for (let s = 0; s < 350; s++) {
             const rx = Math.random() * 160;
             const ry = Math.random() * 160;
-            pCtx.fillStyle = Math.random() > 0.5 ? "rgba(80,70,60,0.06)" : "rgba(255,255,255,0.22)";
+            pCtx.fillStyle = Math.random() > 0.5 ? "rgba(80,70,60,0.05)" : "rgba(255,255,255,0.22)";
             pCtx.fillRect(rx, ry, 1.5, 1.5);
         }
 
@@ -658,7 +654,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
     function searchImageOnGoogle() {
         const cleanQ = (quizData.questionText || "").replace(/['"?।]/g, ' ').trim();
         const ansText = quizData.options[quizData.correctOption] || "";
-        const query = encodeURIComponent(`${ansText} ${cleanQ.split(' ').slice(0, 4).join(' ')} sketch png`);
+        const query = encodeURIComponent(`${ansText} ${cleanQ.split(' ').slice(0, 4).join(' ')} diagram sketch png`);
         window.open(`https://www.google.com/search?tbm=isch&q=${query}`, '_blank');
     }
 
@@ -678,7 +674,6 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
             return;
         }
 
-        // Offscreen canvas to make near-white pixels transparent & enhance contrast
         const off = document.createElement('canvas');
         off.width = rawUploadedImage.width;
         off.height = rawUploadedImage.height;
@@ -690,12 +685,10 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
 
         for (let i = 0; i < d.length; i += 4) {
             const r = d[i], g = d[i + 1], b = d[i + 2];
-            // Smooth alpha fade for light/white backgrounds (threshold 215-248)
             const brightness = (r + g + b) / 3;
             if (brightness > 242 && Math.abs(r - g) < 18 && Math.abs(g - b) < 18) {
-                d[i + 3] = 0; // Fully transparent
+                d[i + 3] = 0;
             } else if (brightness > 215 && Math.abs(r - g) < 20 && Math.abs(g - b) < 20) {
-                // Feather edge smoothly
                 const factor = (242 - brightness) / 27;
                 d[i + 3] = Math.round(d[i + 3] * Math.max(0, Math.min(1, factor)));
             }
@@ -816,7 +809,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
         let parsedQText = "";
         let parsedQEn = "";
         let parsedOpts = { A: "", B: "", C: "", D: "" };
-        let parsedHook = "👇 अपना सही उत्तर Comment में लिखें! ⚡";
+        let parsedHook = "👇 1 Second में सही उत्तर Comment करें! ⚡";
         let parsedSocial = "❤️ Like | ➕ Follow 🎯";
         let parsedCaptionLines = [];
         let parsedAns = "A";
@@ -874,7 +867,6 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
                     state = "OPTIONS";
                     continue;
                 } else {
-                    // Bilingual English line right below Hindi question
                     parsedQEn = line.replace(/^[\-\–\•]\s*/, '').trim();
                     state = "OPTIONS";
                     continue;
@@ -919,7 +911,7 @@ Explanation: प्रसिद्ध भारतीय पक्षी वि�
 
         quizData = {
             id: "q_" + Date.now(),
-            title: parsedTitle || "EXAM PREPARATION",
+            title: parsedTitle || "🏛️ POLITY GK QUIZ 🧠",
             qPrefix: parsedPrefix || "Q.",
             questionText: parsedQText,
             questionEn: parsedQEn,
@@ -998,7 +990,7 @@ ${tagsString}`.trim();
             fontFam: document.getElementById('cfg-font').value,
             bgColor: document.getElementById('cfg-bg-color').value,
             qSize: parseInt(document.getElementById('cfg-q-size').value) || 42,
-            optSize: parseInt(document.getElementById('cfg-opt-size').value) || 32,
+            optSize: parseInt(document.getElementById('cfg-opt-size').value) || 30,
             imgPos: document.getElementById('cfg-img-pos').value,
             imgScale: document.getElementById('cfg-img-scale').value,
             isAnswerMode: document.getElementById('chk-answer-mode').checked,
@@ -1231,14 +1223,14 @@ ${tagsString}`.trim();
         } else {
             const newObj = {
                 id: "q_" + Date.now(),
-                title: "EXAM PREPARATION",
+                title: "🏛️ POLITY GK QUIZ 🧠",
                 qPrefix: prefix,
                 questionText: qText,
                 questionEn: qEn,
                 options: { A: optA, B: optB, C: optC, D: optD },
                 correctOption: ans,
                 explanation: exp,
-                hook: "👇 अपना सही उत्तर Comment में लिखें! ⚡",
+                hook: "👇 1 Second में सही उत्तर Comment करें! ⚡",
                 social: "❤️ Like | ➕ Follow 🎯",
                 caption: `${qText}\n#ExamPreparation #GKQuiz`
             };
@@ -1251,37 +1243,8 @@ ${tagsString}`.trim();
         alert("✅ प्रश्न सफलतापूर्वक सहेज लिया गया!");
     }
 
-    /* ==================== HAND-DRAWN "OPTION ___" VIRAL CTA GRAPHIC ==================== */
-    function drawHandwrittenOptionCTA(targetCtx, x, y, isKids) {
-        targetCtx.save();
-        targetCtx.translate(x, y);
-        targetCtx.rotate(-4 * Math.PI / 180);
-
-        // Handwritten "Option" text
-        targetCtx.font = "700 84px 'Caveat', 'Kalam', cursive";
-        targetCtx.fillStyle = isKids ? "#1e1b4b" : "#111827";
-        targetCtx.textAlign = "left";
-        targetCtx.textBaseline = "alphabetic";
-        targetCtx.fillText("Option", 10, 0);
-
-        // Bold Red Underline Stroke
-        targetCtx.beginPath();
-        targetCtx.moveTo(-10, 14);
-        targetCtx.quadraticCurveTo(165, 6, 330, 16);
-        targetCtx.strokeStyle = "#dc2626";
-        targetCtx.lineWidth = 8;
-        targetCtx.lineCap = "round";
-        targetCtx.stroke();
-
-        // Pointing Pencil / Hand Emoji Badge at the tip of the line
-        targetCtx.font = "54px sans-serif";
-        targetCtx.fillText("✍️", 315, 26);
-
-        targetCtx.restore();
-    }
-
-    /* ==================== CUTOUT IMAGE RENDER HELPER ==================== */
-    function drawCutoutImage(targetCtx, img, bx, by, bw, bh, scaleFactor, isBlended, borderColor, isKids) {
+    /* ==================== IMAGE RENDER HELPER (FRAMED + BLENDED SUPPORT) ==================== */
+    function drawQuizImageBox(targetCtx, img, bx, by, bw, bh, scaleFactor, isBlended, borderColor, isKids) {
         targetCtx.save();
 
         const iw = img.width;
@@ -1291,10 +1254,10 @@ ${tagsString}`.trim();
 
         let drawW, drawH;
         if (imgRatio > boxRatio) {
-            drawW = bw * scaleFactor;
+            drawW = (bw - 24) * scaleFactor;
             drawH = drawW / imgRatio;
         } else {
-            drawH = bh * scaleFactor;
+            drawH = (bh - 24) * scaleFactor;
             drawW = drawH * imgRatio;
         }
 
@@ -1302,14 +1265,14 @@ ${tagsString}`.trim();
         const drawY = by + (bh - drawH) / 2;
 
         if (isBlended) {
-            // Cutout look: no box, subtle drop shadow so sketch/photo pops naturally on paper
-            targetCtx.shadowColor = "rgba(0, 0, 0, 0.25)";
-            targetCtx.shadowBlur = 16;
-            targetCtx.shadowOffsetX = 4;
-            targetCtx.shadowOffsetY = 6;
+            // Blended cutout look on textured/colored background
+            targetCtx.shadowColor = "rgba(0, 0, 0, 0.22)";
+            targetCtx.shadowBlur = 14;
+            targetCtx.shadowOffsetX = 3;
+            targetCtx.shadowOffsetY = 5;
             targetCtx.drawImage(img, drawX, drawY, drawW, drawH);
         } else {
-            // Framed card look when white BG removal is off
+            // Clean white framed card (exact reference screenshot style)
             roundRect(targetCtx, bx, by, bw, bh, 22, "#ffffff", false);
             targetCtx.save();
             roundRect(targetCtx, bx, by, bw, bh, 22, null, false);
@@ -1318,212 +1281,117 @@ ${tagsString}`.trim();
             targetCtx.restore();
 
             targetCtx.strokeStyle = borderColor;
-            targetCtx.lineWidth = isKids ? 4 : 2.5;
+            targetCtx.lineWidth = isKids ? 4.5 : 3;
             roundRect(targetCtx, bx, by, bw, bh, 22, null, true);
         }
 
         targetCtx.restore();
     }
 
-    /* ==================== SINGLE CARD DRAW ENGINE ==================== */
+    /* ==================== UNIFIED SINGLE CARD DRAW ENGINE (ALL THEMES HAVE TOP 2 + BOTTOM 2 LINES) ==================== */
     function renderCardToCanvas(targetCtx, data, isRevealed) {
         const themeKey = document.getElementById('cfg-bg-color').value || "paper_classic";
         const fontFam = document.getElementById('cfg-font').value || "'Hind', sans-serif";
         const qSize = parseInt(document.getElementById('cfg-q-size').value) || 42;
-        const baseOptSize = parseInt(document.getElementById('cfg-opt-size').value) || 32;
+        const baseOptSize = parseInt(document.getElementById('cfg-opt-size').value) || 30;
         const imgPos = document.getElementById('cfg-img-pos').value || "right";
-        const imgScale = parseFloat(document.getElementById('cfg-img-scale').value) || 1.15;
+        const imgScale = parseFloat(document.getElementById('cfg-img-scale').value) || 1.0;
         const isBlended = document.getElementById('chk-remove-white-bg').checked;
         const hasImage = Boolean(processedQuizImage);
 
-        const isPaperTheme = (themeKey === "paper_classic" || themeKey === "kids_paper");
-
         targetCtx.clearRect(0, 0, 1080, 1350);
 
-        // ==================== MODE A: TEXTURED PAPER CUTOUT LAYOUT (PARIKSHA BINDU / KIDS PAPER) ====================
-        if (isPaperTheme) {
-            const isKidsPaper = (themeKey === "kids_paper");
-            const pattern = getPaperTexturePattern(targetCtx, themeKey);
-            targetCtx.fillStyle = pattern;
-            targetCtx.fillRect(0, 0, 1080, 1350);
-
-            // Subtle Decorative Border for Kids Paper
-            if (isKidsPaper) {
-                targetCtx.strokeStyle = "#f59e0b";
-                targetCtx.lineWidth = 14;
-                targetCtx.strokeRect(18, 18, 1044, 1314);
-                targetCtx.strokeStyle = "#3b82f6";
-                targetCtx.lineWidth = 4;
-                targetCtx.strokeRect(30, 30, 1020, 1290);
-            }
-
-            // Faint Top Watermark Header
-            targetCtx.textAlign = "center";
-            targetCtx.textBaseline = "middle";
-            targetCtx.fillStyle = isKidsPaper ? "rgba(37, 99, 235, 0.35)" : "rgba(15, 23, 42, 0.28)";
-            targetCtx.font = "900 32px 'Poppins', sans-serif";
-            targetCtx.fillText((data.title || "EXAM PREPARATION").toUpperCase(), 540, 74);
-
-            // Question (Hindi)
-            targetCtx.textAlign = "left";
-            const qStartY = 145;
-            const qEndY = drawColorfulQuestion(
-                targetCtx,
-                data.qPrefix || "Q.",
-                data.questionText || "",
-                76,
-                qStartY,
-                928,
-                qSize + 4,
-                fontFam,
-                "#111827",
-                isKidsPaper ? "#dc2626" : "#111827",
-                isKidsPaper ? "#2563eb" : "#111827"
-            );
-
-            // Optional English Bilingual Question Line
-            let afterQEndY = qEndY;
-            if (data.questionEn && data.questionEn.trim().length > 0) {
-                targetCtx.fillStyle = isKidsPaper ? "#0369a1" : "#166534";
-                targetCtx.font = "700 28px 'Hind', sans-serif";
-                afterQEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 76, qEndY + 8, 928, 36);
-            }
-
-            // Options + Right Cutout Image Area
-            let optStartY = afterQEndY + 46;
-            const optX = 76;
-            let optGap = 112;
-            let optSize = baseOptSize + 4;
-
-            if (hasImage && imgPos === "center") {
-                const bannerH = 260;
-                drawCutoutImage(targetCtx, processedQuizImage, 95, optStartY, 890, bannerH, imgScale, isBlended, "#334155", isKidsPaper);
-                optStartY += bannerH + 28;
-                optGap = 86;
-                optSize = Math.min(baseOptSize, 30);
-            } else if (hasImage && imgPos === "right") {
-                // Right side large cutout photo blending into background
-                const imgBoxX = 530;
-                const imgBoxY = optStartY - 15;
-                const imgBoxW = 490;
-                const imgBoxH = 540;
-                drawCutoutImage(targetCtx, processedQuizImage, imgBoxX, imgBoxY, imgBoxW, imgBoxH, imgScale, isBlended, "#334155", isKidsPaper);
-            }
-
-            // Draw Clean Circular Badge + Bold Purple/Dark Text Options (Exact Sample Style)
-            const keys = ["A", "B", "C", "D"];
-            const kidsBadgeCols = ["#dc2626", "#2563eb", "#16a34a", "#9333ea"];
-
-            keys.forEach((k, idx) => {
-                const curY = optStartY + (idx * optGap);
-                const isCorrect = (data.correctOption === k);
-
-                // Highlight Pill if Answer Mode is ON
-                if (isRevealed && isCorrect) {
-                    const pillW = (hasImage && imgPos === "right") ? 460 : 880;
-                    roundRect(targetCtx, optX - 14, curY - 14, pillW, 74, 37, "#dcfce7", false);
-                    targetCtx.strokeStyle = "#16a34a";
-                    targetCtx.lineWidth = 3.5;
-                    roundRect(targetCtx, optX - 14, curY - 14, pillW, 74, 37, null, true);
-                }
-
-                // Circular Option Letter Badge (A, B, C, D)
-                const circleR = 26;
-                const cx = optX + circleR;
-                const cy = curY + 22;
-
-                targetCtx.beginPath();
-                targetCtx.arc(cx, cy, circleR, 0, Math.PI * 2);
-                if (isRevealed && isCorrect) {
-                    targetCtx.fillStyle = "#16a34a";
-                } else {
-                    targetCtx.fillStyle = isKidsPaper ? kidsBadgeCols[idx] : "#111827";
-                }
-                targetCtx.fill();
-
-                targetCtx.fillStyle = "#ffffff";
-                targetCtx.font = "900 28px 'Poppins', sans-serif";
-                targetCtx.textAlign = "center";
-                targetCtx.textBaseline = "middle";
-                targetCtx.fillText((isRevealed && isCorrect) ? "✔" : k, cx, cy + 1);
-
-                // Option Text (Bold Indigo/Purple like sample)
-                targetCtx.textAlign = "left";
-                targetCtx.fillStyle = (isRevealed && isCorrect) ? "#14532d" : (isKidsPaper ? "#1e1b4b" : "#31107a");
-                targetCtx.font = `800 ${optSize}px ${fontFam}`;
-                const optVal = data.options ? (data.options[k] || "") : "";
-                const maxOptTextW = (hasImage && imgPos === "right") ? 420 : 820;
-                targetCtx.fillText(truncateCanvasText(targetCtx, optVal, maxOptTextW), optX + 70, cy + 2);
-            });
-
-            // Bottom Section: Either Explanation Box (Answer Mode) OR Handwritten "Option ____" CTA
-            const bottomY = optStartY + (4 * optGap) + 25;
-
-            if (isRevealed) {
-                const expY = Math.min(bottomY, 1045);
-                roundRect(targetCtx, 76, expY, 928, 175, 18, "rgba(255,255,255,0.92)", false);
-                targetCtx.strokeStyle = "#16a34a";
-                targetCtx.lineWidth = 3.5;
-                roundRect(targetCtx, 76, expY, 928, 175, 18, null, true);
-
-                targetCtx.fillStyle = "#15803d";
-                targetCtx.font = `800 27px ${fontFam}`;
-                targetCtx.textAlign = "left";
-                targetCtx.textBaseline = "top";
-                const corrText = data.options ? (data.options[data.correctOption] || "") : "";
-                targetCtx.fillText(`✅ सही उत्तर: [${data.correctOption}] ${corrText}`, 102, expY + 18);
-
-                targetCtx.fillStyle = "#1e293b";
-                targetCtx.font = `600 24px ${fontFam}`;
-                wrapTextSimple(targetCtx, data.explanation || "सटीक उत्तर पर आधारित।", 102, expY + 60, 876, 32);
-            } else {
-                // Handwritten "Option ___" CTA on bottom-left
-                const ctaY = Math.max(bottomY + 65, 1100);
-                drawHandwrittenOptionCTA(targetCtx, 95, ctaY, isKidsPaper);
-            }
-
-            // Bottom-Right Brand Badge (Exam Preparation)
-            const brandY = 1245;
-            roundRect(targetCtx, 650, brandY - 26, 355, 52, 26, "#111827", false);
-            targetCtx.fillStyle = "#ffffff";
-            targetCtx.font = "800 23px 'Poppins', sans-serif";
-            targetCtx.textAlign = "center";
-            targetCtx.textBaseline = "middle";
-            targetCtx.fillText("🎯 EXAM PREPARATION", 827, brandY);
-
-            return;
-        }
-
-        // ==================== MODE B: EXISTING COLORFUL / NEON CARD THEMES ====================
+        // Theme Configuration (Every theme shares the exact 2-line Top Header & 2-line Bottom Footer structure)
         let cfg = {
             isKids: false,
+            isPaper: false,
+            paperVariant: null,
             bgGrad: [themeKey, themeKey],
             cardBg: "#ffffff",
-            cardBorder: "#e2e8f0",
+            cardBorder: "#cbd5e1",
             cardBorderW: 3,
             shadowColor: "transparent",
-            titleColor: "#0f172a",
-            badgeBg: "#f1f5f9",
-            badgeBorder: "#cbd5e1",
-            badgeText: "#1e293b",
+            titleColor: "#dc2626",
+            badgeBg: "#7c3aed",
+            badgeBorder: "#1e293b",
+            badgeText: "#ffffff",
             qDefault: "#0f172a",
             qHighlight: "#dc2626",
             prefixColor: "#0284c7",
             watermark: "rgba(15, 23, 42, 0.02)",
-            hookBg: "#fef08a",
-            hookBorder: "#facc15",
-            hookText: "#854d0e",
+            hookBg: "#fb923c",
+            hookBorder: "#1e293b",
+            hookText: "#ffffff",
             socialText: "#0f172a",
+            imgBorder: "#1e293b",
             opts: [
-                { bg: "#eff6ff", border: "#93c5fd", badgeBg: "#2563eb", text: "#1e3a8a", label: "A" },
-                { bg: "#ecfdf5", border: "#a7f3d0", badgeBg: "#059669", text: "#064e3b", label: "B" },
-                { bg: "#fffbeb", border: "#fde68a", badgeBg: "#d97706", text: "#78350f", label: "C" },
-                { bg: "#faf5ff", border: "#e9d5ff", badgeBg: "#9333ea", text: "#581c87", label: "D" }
+                { bg: "#e0f2fe", border: "#0284c7", badgeBg: "#0284c7", text: "#0f172a", label: "A" },
+                { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#0f172a", label: "B" },
+                { bg: "#fef9c3", border: "#ca8a04", badgeBg: "#eab308", text: "#0f172a", label: "C" },
+                { bg: "#dcfce7", border: "#16a34a", badgeBg: "#16a34a", text: "#0f172a", label: "D" }
             ]
         };
 
-        if (themeKey === "kids_gaming") {
+        if (themeKey === "paper_classic") {
             cfg = {
+                ...cfg,
+                isPaper: true,
+                paperVariant: "paper_classic",
+                cardBg: null, // Uses textured paper directly
+                cardBorder: "#334155",
+                cardBorderW: 4,
+                titleColor: "#b91c1c",
+                badgeBg: "#1e293b",
+                badgeBorder: "#f59e0b",
+                badgeText: "#ffffff",
+                qDefault: "#111827",
+                qHighlight: "#b91c1c",
+                prefixColor: "#1d4ed8",
+                watermark: "rgba(15, 23, 42, 0.025)",
+                hookBg: "#f59e0b",
+                hookBorder: "#111827",
+                hookText: "#ffffff",
+                socialText: "#111827",
+                imgBorder: "#1e293b",
+                opts: [
+                    { bg: "rgba(255,255,255,0.88)", border: "#1e40af", badgeBg: "#1e40af", text: "#111827", label: "A" },
+                    { bg: "rgba(255,255,255,0.88)", border: "#9d174d", badgeBg: "#9d174d", text: "#111827", label: "B" },
+                    { bg: "rgba(255,255,255,0.88)", border: "#b45309", badgeBg: "#b45309", text: "#111827", label: "C" },
+                    { bg: "rgba(255,255,255,0.88)", border: "#15803d", badgeBg: "#15803d", text: "#111827", label: "D" }
+                ]
+            };
+        } else if (themeKey === "kids_paper") {
+            cfg = {
+                ...cfg,
+                isKids: true,
+                isPaper: true,
+                paperVariant: "kids_paper",
+                cardBg: null,
+                cardBorder: "#f59e0b",
+                cardBorderW: 8,
+                titleColor: "#e11d48",
+                badgeBg: "#7c3aed",
+                badgeBorder: "#1e293b",
+                badgeText: "#ffffff",
+                qDefault: "#1e1b4b",
+                qHighlight: "#dc2626",
+                prefixColor: "#2563eb",
+                watermark: "rgba(37, 99, 235, 0.03)",
+                hookBg: "#fb923c",
+                hookBorder: "#1e293b",
+                hookText: "#ffffff",
+                socialText: "#1e1b4b",
+                imgBorder: "#1e293b",
+                opts: [
+                    { bg: "#e0f2fe", border: "#0284c7", badgeBg: "#0284c7", text: "#0c4a6e", label: "A" },
+                    { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#831843", label: "B" },
+                    { bg: "#fef08a", border: "#ca8a04", badgeBg: "#eab308", text: "#713f12", label: "C" },
+                    { bg: "#dcfce7", border: "#16a34a", badgeBg: "#16a34a", text: "#14532d", label: "D" }
+                ]
+            };
+        } else if (themeKey === "kids_gaming") {
+            cfg = {
+                ...cfg,
                 isKids: true,
                 bgGrad: ["#2e1065", "#4c1d95", "#1e1b4b"],
                 cardBg: "#0f172a",
@@ -1542,6 +1410,7 @@ ${tagsString}`.trim();
                 hookBorder: "#ffffff",
                 hookText: "#0f172a",
                 socialText: "#fde047",
+                imgBorder: "#facc15",
                 opts: [
                     { bg: "#1d4ed8", border: "#60a5fa", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "A" },
                     { bg: "#be185d", border: "#f472b6", badgeBg: "#facc15", badgeTextCol: "#0f172a", text: "#ffffff", label: "B" },
@@ -1551,6 +1420,7 @@ ${tagsString}`.trim();
             };
         } else if (themeKey === "kids_candy") {
             cfg = {
+                ...cfg,
                 isKids: true,
                 bgGrad: ["#ff6b6b", "#feca57", "#48dbfb"],
                 cardBg: "#ffffff",
@@ -1569,6 +1439,7 @@ ${tagsString}`.trim();
                 hookBorder: "#1e293b",
                 hookText: "#ffffff",
                 socialText: "#1e293b",
+                imgBorder: "#1e293b",
                 opts: [
                     { bg: "#e0f2fe", border: "#0284c7", badgeBg: "#0284c7", text: "#0c4a6e", label: "A" },
                     { bg: "#fce7f3", border: "#db2777", badgeBg: "#db2777", text: "#831843", label: "B" },
@@ -1578,6 +1449,7 @@ ${tagsString}`.trim();
             };
         } else if (themeKey === "kids_space") {
             cfg = {
+                ...cfg,
                 isKids: true,
                 bgGrad: ["#020617", "#0f172a", "#1e3a8a"],
                 cardBg: "#0b1120",
@@ -1596,6 +1468,7 @@ ${tagsString}`.trim();
                 hookBorder: "#ffffff",
                 hookText: "#020617",
                 socialText: "#bae6fd",
+                imgBorder: "#38bdf8",
                 opts: [
                     { bg: "#1e293b", border: "#38bdf8", badgeBg: "#0284c7", text: "#f8fafc", label: "A" },
                     { bg: "#1e293b", border: "#a855f7", badgeBg: "#9333ea", text: "#f8fafc", label: "B" },
@@ -1605,6 +1478,7 @@ ${tagsString}`.trim();
             };
         } else if (themeKey === "kids_comic") {
             cfg = {
+                ...cfg,
                 isKids: true,
                 bgGrad: ["#dc2626", "#facc15"],
                 cardBg: "#fefce8",
@@ -1623,6 +1497,7 @@ ${tagsString}`.trim();
                 hookBorder: "#000000",
                 hookText: "#000000",
                 socialText: "#000000",
+                imgBorder: "#000000",
                 opts: [
                     { bg: "#ffffff", border: "#000000", badgeBg: "#dc2626", text: "#000000", label: "A" },
                     { bg: "#ffffff", border: "#000000", badgeBg: "#2563eb", text: "#000000", label: "B" },
@@ -1632,35 +1507,61 @@ ${tagsString}`.trim();
             };
         }
 
-        const grad = targetCtx.createLinearGradient(0, 0, 1080, 1350);
-        if (cfg.bgGrad.length === 3) {
-            grad.addColorStop(0, cfg.bgGrad[0]);
-            grad.addColorStop(0.5, cfg.bgGrad[1]);
-            grad.addColorStop(1, cfg.bgGrad[2]);
+        // 1. Background Fill (Textured Paper or Gradient)
+        if (cfg.isPaper) {
+            targetCtx.fillStyle = getPaperTexturePattern(targetCtx, cfg.paperVariant);
+            targetCtx.fillRect(0, 0, 1080, 1350);
+
+            // Outer Frame Border on Textured Paper
+            targetCtx.strokeStyle = cfg.cardBorder;
+            targetCtx.lineWidth = cfg.cardBorderW;
+            roundRect(targetCtx, 28, 28, 1024, 1294, 30, null, true);
         } else {
-            grad.addColorStop(0, cfg.bgGrad[0]);
-            grad.addColorStop(1, cfg.bgGrad[1]);
-        }
-        targetCtx.fillStyle = grad;
-        targetCtx.fillRect(0, 0, 1080, 1350);
+            const grad = targetCtx.createLinearGradient(0, 0, 1080, 1350);
+            if (cfg.bgGrad.length === 3) {
+                grad.addColorStop(0, cfg.bgGrad[0]);
+                grad.addColorStop(0.5, cfg.bgGrad[1]);
+                grad.addColorStop(1, cfg.bgGrad[2]);
+            } else {
+                grad.addColorStop(0, cfg.bgGrad[0]);
+                grad.addColorStop(1, cfg.bgGrad[1]);
+            }
+            targetCtx.fillStyle = grad;
+            targetCtx.fillRect(0, 0, 1080, 1350);
 
-        const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 36;
-        if (cfg.isKids) {
-            roundRect(targetCtx, cardX + 10, cardY + 12, cardW, cardH, cardRadius, cfg.shadowColor, false);
+            const cardX = 42, cardY = 42, cardW = 996, cardH = 1266, cardRadius = 36;
+            if (cfg.isKids) {
+                roundRect(targetCtx, cardX + 10, cardY + 12, cardW, cardH, cardRadius, cfg.shadowColor, false);
+            }
+            roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cfg.cardBg, false);
+            targetCtx.strokeStyle = cfg.cardBorder;
+            targetCtx.lineWidth = cfg.cardBorderW;
+            roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
         }
-        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, cfg.cardBg, false);
-        targetCtx.strokeStyle = cfg.cardBorder;
-        targetCtx.lineWidth = cfg.cardBorderW;
-        roundRect(targetCtx, cardX, cardY, cardW, cardH, cardRadius, null, true);
 
-        // Title
+        // Security Watermark
+        targetCtx.save();
+        targetCtx.beginPath();
+        roundRect(targetCtx, 35, 35, 1010, 1280, 30, null, false);
+        targetCtx.clip();
+        targetCtx.rotate(-28 * Math.PI / 180);
+        targetCtx.fillStyle = cfg.watermark;
+        targetCtx.font = "900 44px 'Poppins', sans-serif";
+        for (let x = -800; x < 1800; x += 360) {
+            for (let y = -600; y < 2000; y += 160) {
+                targetCtx.fillText("EXAM PREPARATION", x, y);
+            }
+        }
+        targetCtx.restore();
+
+        // ==================== TOP LINE 1: TOPIC TITLE ====================
         targetCtx.textAlign = "center";
         targetCtx.textBaseline = "middle";
         targetCtx.fillStyle = cfg.titleColor;
         targetCtx.font = `900 52px ${fontFam}`;
-        targetCtx.fillText(data.title || "EXAM PREPARATION", 540, 114);
+        targetCtx.fillText(data.title || "🏛️ POLITY GK QUIZ 🧠", 540, 114);
 
-        // Capsule Badge
+        // ==================== TOP LINE 2: EXAM PREPARATION CAPSULE BADGE ====================
         const badgeText = "EXAM PREPARATION";
         targetCtx.font = "900 24px 'Poppins', sans-serif";
         const badgeWidth = targetCtx.measureText(badgeText).width;
@@ -1677,7 +1578,7 @@ ${tagsString}`.trim();
         targetCtx.fillStyle = cfg.badgeText;
         targetCtx.fillText(badgeText, 540, pillY + (pillH / 2));
 
-        // Question
+        // ==================== QUESTION SECTION ====================
         targetCtx.textAlign = "left";
         const qStartY = pillY + pillH + 52;
         const effectiveQSize = (hasImage && imgPos === "center") ? Math.min(qSize, 38) : qSize;
@@ -1689,7 +1590,8 @@ ${tagsString}`.trim();
             qEndY = drawSimpleWrappedLines(targetCtx, "- " + data.questionEn, 95, qEndY + 4, 890, 32);
         }
 
-        let optStartY = qEndY + 28;
+        // ==================== OPTIONS + RIGHT/CENTER IMAGE ====================
+        let optStartY = qEndY + 30;
         let optX = 95;
         let optW = 890;
         let optH = 90;
@@ -1698,18 +1600,18 @@ ${tagsString}`.trim();
 
         if (hasImage && imgPos === "center") {
             const bannerH = 225;
-            drawCutoutImage(targetCtx, processedQuizImage, 95, optStartY, 890, bannerH, imgScale, isBlended, cfg.cardBorder, cfg.isKids);
+            drawQuizImageBox(targetCtx, processedQuizImage, 95, optStartY, 890, bannerH, imgScale, isBlended, cfg.imgBorder, cfg.isKids);
             optStartY += bannerH + 22;
             optH = 72;
             optGap = 90;
             optSize = Math.min(baseOptSize, 27);
         } else if (hasImage && imgPos === "right") {
-            optW = 540;
-            optSize = Math.min(baseOptSize, 27);
+            optW = 520;
+            optSize = Math.min(baseOptSize, 26);
             const totalOptsBlockH = (3 * optGap) + optH;
             const imgBoxX = optX + optW + 24;
             const imgBoxW = 890 - optW - 24;
-            drawCutoutImage(targetCtx, processedQuizImage, imgBoxX, optStartY, imgBoxW, totalOptsBlockH, imgScale, isBlended, cfg.cardBorder, cfg.isKids);
+            drawQuizImageBox(targetCtx, processedQuizImage, imgBoxX, optStartY, imgBoxW, totalOptsBlockH, imgScale, isBlended, cfg.imgBorder, cfg.isKids);
         }
 
         cfg.opts.forEach((st, idx) => {
@@ -1727,7 +1629,7 @@ ${tagsString}`.trim();
             }
 
             if (cfg.isKids) {
-                roundRect(targetCtx, optX + 5, curY + 6, optW, optH, 20, "rgba(0,0,0,0.45)", false);
+                roundRect(targetCtx, optX + 5, curY + 6, optW, optH, 20, "rgba(0,0,0,0.35)", false);
             }
 
             roundRect(targetCtx, optX, curY, optW, optH, 20, boxBg, false);
@@ -1753,6 +1655,7 @@ ${tagsString}`.trim();
             targetCtx.fillText(fittedText, optX + bSize + 26, curY + (optH / 2));
         });
 
+        // ==================== BOTTOM 2 LINES (FOOTER CTA + SOCIAL LINE) ====================
         const footerY = optStartY + (3 * optGap) + optH + 34;
         if (isRevealed) {
             const expBoxH = Math.min(165, 1275 - footerY - 35);
@@ -1775,10 +1678,11 @@ ${tagsString}`.trim();
             targetCtx.fillStyle = cfg.socialText;
             targetCtx.font = `800 22px ${fontFam}`;
             targetCtx.textAlign = "center";
-            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow | 🎯 Share", 540, footerY + expBoxH + 24);
+            targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + expBoxH + 24);
         } else {
+            // Bottom Line 1: Hook Pill Box
             if (cfg.isKids) {
-                roundRect(targetCtx, 114, footerY + 5, 860, 80, 40, "rgba(0,0,0,0.4)", false);
+                roundRect(targetCtx, 114, footerY + 5, 860, 80, 40, "rgba(0,0,0,0.35)", false);
             }
             roundRect(targetCtx, 110, footerY, 860, 80, 40, cfg.hookBg, false);
             targetCtx.strokeStyle = cfg.hookBorder;
@@ -1789,8 +1693,9 @@ ${tagsString}`.trim();
             targetCtx.textBaseline = "middle";
             targetCtx.fillStyle = cfg.hookText;
             targetCtx.font = `900 32px ${fontFam}`;
-            targetCtx.fillText(data.hook || "👇 अपना सही उत्तर Comment में लिखें! ⚡", 540, footerY + 40);
+            targetCtx.fillText(data.hook || "👇 1 Second में सही उत्तर Comment करें! ⚡", 540, footerY + 40);
 
+            // Bottom Line 2: Social Engagement Line
             targetCtx.fillStyle = cfg.socialText;
             targetCtx.font = `800 26px ${fontFam}`;
             targetCtx.fillText(data.social || "❤️ Like | ➕ Follow 🎯", 540, footerY + 122);
