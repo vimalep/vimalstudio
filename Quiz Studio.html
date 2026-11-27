@@ -3,33 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viral Quiz Studio Pro - AI BG & Shape Fade</title>
+<title>Viral Quiz Studio Pro - Paper Blend & Mobile Edition</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0b1329;color:#f8fafc;font-family:'Hind',sans-serif;padding:12px;display:flex;flex-direction:column;align-items:center}
-.wrap{width:100%;max-width:520px;display:flex;flex-direction:column;gap:12px}
-.hdr{text-align:center;font-size:18px;font-weight:800;color:#38bdf8;border-bottom:2px solid #1e293b;padding-bottom:6px;font-family:'Poppins',sans-serif}
-.box{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:11px;display:flex;flex-direction:column;gap:9px}
-.row{display:flex;gap:8px;align-items:center}.row>div{flex:1}
+body{background:#0b1329;color:#f8fafc;font-family:'Hind',sans-serif;padding:10px;display:flex;flex-direction:column;align-items:center}
+.wrap{width:100%;max-width:520px;display:flex;flex-direction:column;gap:10px}
+.hdr{text-align:center;font-size:17px;font-weight:800;color:#38bdf8;border-bottom:2px solid #1e293b;padding-bottom:5px;font-family:'Poppins',sans-serif}
+.box{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;gap:7px;align-items:center}.row>div{flex:1}
 label{font-size:11px;color:#94a3b8;font-weight:700;display:block;margin-bottom:2px}
 input,select,textarea{width:100%;padding:7px 9px;background:#0f172a;border:1px solid #475569;border-radius:7px;color:#fff;font-size:12.5px;font-weight:600;outline:none;font-family:inherit}
 input[type=color]{padding:2px;height:36px;cursor:pointer}
 input[type=range]{padding:0;accent-color:#38bdf8;cursor:pointer}
-textarea{resize:vertical;min-height:135px;font-family:monospace;font-size:11.5px;line-height:1.35}
+textarea{resize:vertical;min-height:120px;font-family:monospace;font-size:11.5px;line-height:1.35}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn{background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;border:none;padding:11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.btn{background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;border:none;padding:10px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .btn-b{background:linear-gradient(135deg,#0284c7,#0369a1)}
 .btn-g{background:#10b981}.btn-s{background:#334155;border:1px solid #475569;font-size:11.5px;padding:8px}
 .btn-shuf{background:linear-gradient(135deg,#ec4899,#f59e0b);color:#fff;border:none;padding:7px 10px;border-radius:7px;font-size:12px;font-weight:800;cursor:pointer;height:36px;white-space:nowrap}
-.btn-ai{background:linear-gradient(135deg,#f59e0b,#ec4899);color:#fff;border:none;padding:9px;border-radius:8px;font-size:12.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 12px rgba(236,72,153,.35)}
-.btn-ai:disabled{opacity:.6;cursor:wait}
-.tog{background:#0f172a;border:1.5px solid #10b981;border-radius:8px;padding:8px 11px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-.tog span{font-size:12.5px;font-weight:800;color:#34d399}
-.chk{width:19px;height:19px;cursor:pointer;accent-color:#10b981}
-.c-card{width:100%;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,.6)}
+.tog{background:#0f172a;border:1.5px solid #10b981;border-radius:8px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.tog span{font-size:12px;font-weight:800;color:#34d399}
+.chk{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
+
+/* COMPACT LIVE PREVIEW FOR EASY MOBILE EDITING */
+.preview-wrap{width:100%;display:flex;flex-direction:column;align-items:center;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:8px}
+.c-card{width:100%;max-width:330px;background:#000;border-radius:10px;overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,.65)}
 canvas{width:100%;height:auto;display:block}
-.img-box{background:#1e293b;border:1.5px dashed #38bdf8;border-radius:12px;padding:11px;display:flex;flex-direction:column;gap:8px}
+
+.img-box{background:#1e293b;border:1.5px dashed #38bdf8;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px}
 .img-btns{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:5px}
 .ibtn{background:#0f172a;color:#38bdf8;border:1px solid #38bdf8;padding:8px 4px;border-radius:7px;font-size:11.5px;font-weight:800;cursor:pointer}
 .ibtn-p{color:#c4b5fd;border-color:#8b5cf6;background:#1e1b4b}
@@ -37,7 +39,6 @@ canvas{width:100%;height:auto;display:block}
 .sub{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .sub-t{font-size:11px;font-weight:800;color:#7dd3fc;display:flex;justify-content:space-between;align-items:center}
 .m-rst{background:#334155;color:#e2e8f0;border:none;padding:2px 7px;border-radius:4px;font-size:10px;cursor:pointer}
-.ai-st{font-size:11px;color:#fde047;font-weight:700;text-align:center;display:none}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;padding:14px;justify-content:center;align-items:center}
 .mbox{background:#1e293b;border:1px solid #475569;border-radius:12px;width:100%;max-width:490px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
 .mhdr{padding:11px;background:#0f172a;border-bottom:1px solid #334155;display:flex;justify-content:space-between;font-weight:800;color:#38bdf8}
@@ -53,19 +54,20 @@ canvas{width:100%;height:auto;display:block}
 <div class="box">
 <div>
 <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
-<textarea id="raw-box">🌍 WORLD GK QUIZ 🧠
-386. विश्व की सबसे लंबी पर्वत श्रृंखला कौन-सी है?
-A) हिमालय (Himalaya)
-B) एंडीज (Andes) ▲
-C) रॉकी (Rockies) 🌲
-D) आल्प्स (Alps) 🏔️
-👇 अपना जवाब A, B, C या D में कमेंट करें!
-❤️ Like | ➕ Follow | 🎯 Next Quiz
-Caption: विश्व की सबसे लंबी पर्वत श्रृंखला (Andes) से जुड़ा प्रश्न! सही उत्तर कमेंट करें। 👇🌍
-#WorldGKQuiz #GeographyQuiz #AndesMountains #ExamPreparation
-Answer: B) एंडीज (Andes) ▲
-Explanation: दक्षिण अमेरिका महाद्वीप के पश्चिमी तट पर स्थित 'एंडीज पर्वत श्रृंखला' विश्व की सबसे लंबी स्थलीय पर्वत श्रृंखला है, जिसकी लंबाई लगभग 7,000 किमी है।</textarea>
-<div class="g2" style="margin-top:7px">
+<textarea id="raw-box">🧠 आज का सवाल
+27. अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है?
+Where is Adani Defence and Aerospace headquartered?
+A) अहमदाबाद
+B) कानपुर
+C) नागपुर
+D) पुणे
+👇 अपना जवाब कमेंट में लिखें!
+❤️ Like | ➕ Follow | 🔔 अगला सवाल
+Caption: अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है? सही उत्तर कमेंट करें! 👇🧠
+#CurrentAffairs #GKQuiz #ExamPreparation
+Answer: A) अहमदाबाद
+Explanation: अदानी डिफेंस एंड एयरोस्पेस (Adani Defence & Aerospace) का मुख्यालय गुजरात के अहमदाबाद में स्थित है।</textarea>
+<div class="g2" style="margin-top:6px">
 <button class="btn btn-b" onclick="pasteAndRun()">📋 1-Click Paste & Run</button>
 <button class="btn" onclick="parseRawText()">✨ Generate Card</button>
 </div>
@@ -84,8 +86,8 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 <div>
 <label>थीम (Theme):</label>
 <select id="cfg-theme" onchange="onThemeChange();savePrefs();draw()">
-<option value="world_capsule">🌍 World GK Capsule (Map Style)</option>
 <option value="aaj_ka_sawal">🧠 आज का सवाल (Clean Cream)</option>
+<option value="world_capsule">🌍 World GK Capsule (Map Style)</option>
 <option value="paper_classic">📜 Classic Textured Paper</option>
 <option value="kids_candy">🌈 Rainbow Candy Pop</option>
 <option value="#fef9c3">Soft Warm Yellow (Plain)</option>
@@ -112,7 +114,7 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 <div><label>शब्दों के रंग:</label><button class="btn-shuf" onclick="wordSeed=(wordSeed+1)%12;draw()">🎲 Shuffle Colors</button></div>
 </div>
 
-<div class="sub-t" style="margin-top:3px"><span>🌄 Card Background Photo (कस्टम बैकग्राउंड इमेज):</span><span id="bg-st" style="color:#94a3b8">None</span></div>
+<div class="sub-t" style="margin-top:2px"><span>🌄 Card Background Photo (कस्टम बैकग्राउंड इमेज):</span><span id="bg-st" style="color:#94a3b8">None</span></div>
 <div class="row">
 <button class="ibtn" onclick="document.getElementById('bg-in').click()">📁 Upload BG</button>
 <button class="ibtn" onclick="pasteBgImg()">📋 Paste BG</button>
@@ -126,7 +128,7 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 </div>
 
 <div class="row">
-<div><label>प्रश्न साइज़: <span id="qs-lbl">44</span>px</label><input type="range" id="cfg-qs" min="30" max="60" value="44" oninput="document.getElementById('qs-lbl').innerText=this.value;savePrefs();draw()"></div>
+<div><label>प्रश्न साइज़: <span id="qs-lbl">42</span>px</label><input type="range" id="cfg-qs" min="30" max="60" value="42" oninput="document.getElementById('qs-lbl').innerText=this.value;savePrefs();draw()"></div>
 <div><label>ऑप्शन साइज़: <span id="os-lbl">34</span>px</label><input type="range" id="cfg-os" min="22" max="46" value="34" oninput="document.getElementById('os-lbl').innerText=this.value;savePrefs();draw()"></div>
 <div><label>CTA Position (Y): <span id="cta-lbl">0</span></label><input type="range" id="cfg-cta-y" min="-140" max="140" value="0" oninput="document.getElementById('cta-lbl').innerText=this.value;savePrefs();draw()"></div>
 </div>
@@ -143,12 +145,14 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 </div>
 </div>
 
-<!-- CANVAS PREVIEW -->
+<!-- COMPACT CANVAS PREVIEW (FULL HD 1080x1350 EXPORT) -->
+<div class="preview-wrap">
 <div class="c-card"><canvas id="qCanvas" width="1080" height="1350"></canvas></div>
+</div>
 
-<!-- SUBJECT CUTOUT PHOTO PANEL (NO BORDER + SHAPE FADE + AI BG REMOVE) -->
+<!-- SUBJECT CUTOUT PHOTO PANEL (PAPER BLEND + SHAPE FADE + FAST BG REMOVE) -->
 <div class="img-box">
-<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Photo (No Border • Shape Fade • AI Remove):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
+<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Photo (Paper Blend • Watercolor Fade):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
 <div class="img-btns">
 <button class="ibtn" onclick="document.getElementById('img-in').click()">📁 Upload</button>
 <button class="ibtn" onclick="pasteSubImg()">📋 Paste Img</button>
@@ -159,36 +163,41 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 
 <div id="img-opts" style="display:none;flex-direction:column;gap:8px">
 <div class="sub">
-<button class="btn-ai" id="btn-ai-bg" onclick="runAiBgRemove()">✨ AI Deep Remove BG (remove.bg Style • Free)</button>
-<div class="ai-st" id="ai-status">⏳ AI मॉडल लोड हो रहा है, कृपया प्रतीक्षा करें...</div>
+<!-- PAPER BLEND (MULTIPLY MODE) TOGGLE -->
+<div class="tog" style="border-color:#f59e0b;padding:6px 9px" onclick="const c=document.getElementById('chk-mult');c.checked=!c.checked;savePrefs();draw()">
+<span style="color:#fbbf24;font-size:12px">🎨 Paper Blend (Multiply - सफ़ेद रंग कागज़ में घोलें)</span>
+<input type="checkbox" id="chk-mult" checked style="width:17px;height:17px;accent-color:#f59e0b" onclick="event.stopPropagation();savePrefs();draw()">
+</div>
 
-<div class="tog" style="border-color:#38bdf8;padding:5px 8px;margin-top:2px" onclick="const c=document.getElementById('chk-bg');c.checked=!c.checked;processImg()">
-<span style="color:#7dd3fc;font-size:12px">⚡ Fast Color BG Remove (सिंगल कलर के लिए)</span>
+<!-- FAST COLOR BG REMOVE TOGGLE -->
+<div class="tog" style="border-color:#38bdf8;padding:6px 9px" onclick="const c=document.getElementById('chk-bg');c.checked=!c.checked;processImg()">
+<span style="color:#7dd3fc;font-size:12px">⚡ Fast Color BG Remove (सिंगल कलर काटें)</span>
 <input type="checkbox" id="chk-bg" style="width:17px;height:17px;accent-color:#38bdf8" onclick="event.stopPropagation();processImg()">
 </div>
+
 <div class="row">
 <div><label>Color Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
 <div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Side</option><option value="center">⬇️ Center Banner</option></select></div>
 </div>
 </div>
 
-<!-- SHAPE & EDGE FADE CONTROLS (NO BORDER) -->
+<!-- SHAPE & EDGE FADE CONTROLS -->
 <div class="sub" style="border-color:#a855f7">
 <div class="sub-t" style="color:#e9d5ff"><span>🎭 Photo Shape & Soft Edge Fade (बॉर्डर रहित फेड):</span></div>
 <div class="row">
 <div>
 <label>Shape (आकार):</label>
 <select id="cfg-shape" onchange="savePrefs();processImg()">
-<option value="rect">⬜ Rectangle (सामान्य)</option>
-<option value="rounded">🔲 Rounded Box (गोल कोने)</option>
-<option value="circle">⭕ Circle / Oval (गोल)</option>
-<option value="diamond">💠 Diamond (डायमंड)</option>
+<option value="watercolor">🎨 Watercolor Brush Fade (ऑर्गेनिक)</option>
 <option value="cloud">☁️ Soft Vignette (चारों ओर से फेड)</option>
+<option value="circle">⭕ Circle / Oval (गोल)</option>
+<option value="rounded">🔲 Rounded Box (गोल कोने)</option>
+<option value="rect">⬜ Rectangle (सामान्य)</option>
 </select>
 </div>
 <div>
-<label>Edge Fade (किनारों का फेड): <span id="fade-lbl">25</span>%</label>
-<input type="range" id="cfg-fade" min="0" max="100" value="25" oninput="document.getElementById('fade-lbl').innerText=this.value;processImg()">
+<label>Edge Fade (किनारों का फेड): <span id="fade-lbl">45</span>%</label>
+<input type="range" id="cfg-fade" min="0" max="100" value="45" oninput="document.getElementById('fade-lbl').innerText=this.value;processImg()">
 </div>
 </div>
 </div>
@@ -237,7 +246,7 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 <div class="mhdr"><span id="e-tit">✏️ प्रश्न संपादित करें</span><button onclick="document.getElementById('e-mod').style.display='none'" style="background:none;border:none;color:#f87171;font-size:18px;cursor:pointer">✕</button></div>
 <div class="mbdy">
 <input type="hidden" id="eq-id">
-<div><label>Prefix (उदा. 386. या Q.):</label><input type="text" id="eq-pre"></div>
+<div><label>Prefix (उदा. 27. या Q.):</label><input type="text" id="eq-pre"></div>
 <div><label>Hindi Question:</label><textarea id="eq-txt" style="min-height:50px"></textarea></div>
 <div><label>English Question (Optional):</label><input type="text" id="eq-en"></div>
 <div class="row"><div><label>Option A:</label><input type="text" id="eq-a"></div><div><label>Option B:</label><input type="text" id="eq-b"></div></div>
@@ -249,22 +258,18 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 </div>
 </div>
 
-<script type="module">
-import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm';
-window.aiRemoveBackgroundFn = removeBackground;
-</script>
-
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_V19",H_KEY="QUIZ_PRO_HIST_V19";
-let ansMode=false,rawSub=null,aiCutoutSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
+const P_KEY="QUIZ_PRO_PREFS_V20",H_KEY="QUIZ_PRO_HIST_V20";
+let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
- id:"def_386",title:"🌍 WORLD GK QUIZ 🧠",qPrefix:"386.",
- questionText:"विश्व की सबसे लंबी पर्वत श्रृंखला कौन-सी है?",questionEn:"",
- options:{A:"हिमालय (Himalaya)",B:"एंडीज (Andes) ▲",C:"रॉकी (Rockies) 🌲",D:"आल्प्स (Alps) 🏔️"},
- hook:"👇 अपना जवाब A, B, C या D में कमेंट करें!",social:"❤️ Like | ➕ Follow | 🎯 Next Quiz",
- correctOption:"B",explanation:"दक्षिण अमेरिका महाद्वीप के पश्चिमी तट पर स्थित 'एंडीज पर्वत श्रृंखला' विश्व की सबसे लंबी स्थलीय पर्वत श्रृंखला है, जिसकी लंबाई लगभग 7,000 किमी है।",
- caption:"विश्व की सबसे लंबी पर्वत श्रृंखला (Andes) से जुड़ा प्रश्न! सही उत्तर कमेंट करें। 👇🌍\n#WorldGKQuiz #GeographyQuiz #AndesMountains #ExamPreparation"
+ id:"def_27",title:"🧠 आज का सवाल",qPrefix:"27.",
+ questionText:"अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है?",
+ questionEn:"Where is Adani Defence and Aerospace headquartered?",
+ options:{A:"अहमदाबाद",B:"कानपुर",C:"नागपुर",D:"पुणे"},
+ hook:"👇 अपना जवाब कमेंट में लिखें!",social:"❤️ Like | ➕ Follow | 🔔 अगला सवाल",
+ correctOption:"A",explanation:"अदानी डिफेंस एंड एयरोस्पेस (Adani Defence & Aerospace) का मुख्यालय गुजरात के अहमदाबाद में स्थित है।",
+ caption:"अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है? सही उत्तर कमेंट करें! 👇🧠\n#CurrentAffairs #GKQuiz #ExamPreparation"
 };
 
 const cln=s=>(s||"").replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g,'').trim();
@@ -300,59 +305,19 @@ function clearBgImg(){bgImg=null;document.getElementById('bg-st').innerText="Non
 
 function googleImg(){
  let q=cln(qData.questionText).replace(/['"?।]/g,' '),a=(qData.options[qData.correctOption]||"").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}▲]/gu,'');
- window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(a+" "+q.split(' ').slice(0,4).join(' ')+" png")}`,'_blank');
+ window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(a+" "+q.split(' ').slice(0,4).join(' ')+" watercolor sketch")}`,'_blank');
 }
 function resetCrop(){
  ['ct','cb','cl','cr','ox','oy'].forEach(id=>{document.getElementById(id).value=0;document.getElementById(id+'-l').innerText="0";});
  document.getElementById('sc').value=115;document.getElementById('sc-l').innerText="115";processImg();
 }
 
-/* AI DEEP BACKGROUND REMOVER */
-async function runAiBgRemove(){
- if(!rawSub)return;
- if(!window.aiRemoveBackgroundFn){
-  alert("AI इंजन अभी लोड हो रहा है, कृपया 3 सेकंड बाद पुनः दबाएं या इंटरनेट कनेक्शन जांचें।");
-  return;
- }
- const btn=document.getElementById('btn-ai-bg'),st=document.getElementById('ai-status');
- btn.disabled=true;btn.innerText="⏳ AI प्रोसेसिंग चल रही है...";
- st.style.display="block";st.innerText="⏳ पहली बार AI मॉडल (~30MB) डाउनलोड होने में 5-10 सेकंड लग सकते हैं...";
-
- try{
-  const blob=await window.aiRemoveBackgroundFn(rawSub.src,{
-   progress:(key,current,total)=>{
-    if(total>0){
-     let pct=Math.round((current/total)*100);
-     st.innerText=`⏳ AI मॉडल डाउनलोड/प्रोसेसिंग: ${pct}%`;
-    }
-   }
-  });
-  const url=URL.createObjectURL(blob);
-  const aiImg=new Image();
-  aiImg.onload=()=>{
-   aiCutoutSub=aiImg;
-   document.getElementById('chk-bg').checked=true;
-   st.innerText="✅ AI द्वारा बैकग्राउंड पूरी तरह साफ़ कर दिया गया!";
-   st.style.color="#34d399";
-   btn.disabled=false;btn.innerText="✨ AI Deep Remove BG (Done ✔)";
-   processImg();
-  };
-  aiImg.src=url;
- }catch(err){
-  console.error(err);
-  st.innerText="❌ AI प्रोसेसिंग विफल रही (नीचे दिया गया Fast Color Remove या Shape Fade उपयोग करें)";
-  st.style.color="#fca5a5";
-  btn.disabled=false;btn.innerText="✨ AI Deep Remove BG (Retry)";
- }
-}
-
-/* SHAPE MASK & SOFT EDGE FADE GENERATOR (NO BORDER) */
+/* SHAPE MASK & WATERCOLOR BRUSH FADE GENERATOR (NO BORDER) */
 function applyShapeAndFade(offCanvas, shape, fadePct){
  if(shape==="rect" && fadePct===0) return;
  const w=offCanvas.width, h=offCanvas.height;
  const oCtx=offCanvas.getContext('2d');
 
- // Create mask canvas
  const mask=document.createElement('canvas');
  mask.width=w; mask.height=h;
  const mCtx=mask.getContext('2d');
@@ -363,40 +328,58 @@ function applyShapeAndFade(offCanvas, shape, fadePct){
  const mh=Math.max(10, h - inset*2);
 
  mCtx.save();
- if(blurPx>0) mCtx.filter=`blur(${blurPx}px)`;
- mCtx.fillStyle="#000000";
+ if(shape==="watercolor"){
+  // Organic Watercolor Brush Blotches (like IIT / Science Wala illustrations)
+  const coreRx = w * Math.max(0.22, 0.44 - (fadePct/100)*0.18);
+  const coreRy = h * Math.max(0.22, 0.44 - (fadePct/100)*0.18);
+  const gCore = mCtx.createRadialGradient(w/2, h/2, Math.min(coreRx,coreRy)*0.45, w/2, h/2, Math.max(coreRx,coreRy)*1.15);
+  gCore.addColorStop(0, "rgba(0,0,0,1)");
+  gCore.addColorStop(0.75, "rgba(0,0,0,0.95)");
+  gCore.addColorStop(1, "rgba(0,0,0,0)");
+  mCtx.fillStyle = gCore;
+  mCtx.fillRect(0,0,w,h);
 
- if(shape==="circle"){
-  mCtx.beginPath();
-  mCtx.ellipse(w/2, h/2, mw/2, mh/2, 0, 0, Math.PI*2);
-  mCtx.fill();
- }else if(shape==="diamond"){
-  mCtx.beginPath();
-  mCtx.moveTo(w/2, inset);
-  mCtx.lineTo(w-inset, h/2);
-  mCtx.lineTo(w/2, h-inset);
-  mCtx.lineTo(inset, h/2);
-  mCtx.closePath();
-  mCtx.fill();
- }else if(shape==="rounded"){
-  const rad=Math.min(mw,mh)*0.24;
-  rRect(mCtx, inset, inset, mw, mh, rad, "#000000", false);
+  // Add 28 deterministic irregular watercolor brush blotches around perimeter
+  const steps = 28;
+  for(let i=0; i<steps; i++){
+   const ang = (i / steps) * Math.PI * 2;
+   const jitter = 0.72 + ((i * 37) % 10) * 0.045;
+   const bx = w/2 + Math.cos(ang) * coreRx * 0.85 * jitter;
+   const by = h/2 + Math.sin(ang) * coreRy * 0.85 * jitter;
+   const br = Math.min(w,h) * (0.14 + ((i * 19) % 7) * 0.022) * (1.15 - (fadePct/220));
+   const bg = mCtx.createRadialGradient(bx, by, br*0.15, bx, by, br);
+   bg.addColorStop(0, "rgba(0,0,0,0.92)");
+   bg.addColorStop(0.6, "rgba(0,0,0,0.55)");
+   bg.addColorStop(1, "rgba(0,0,0,0)");
+   mCtx.fillStyle = bg;
+   mCtx.beginPath();
+   mCtx.arc(bx, by, br, 0, Math.PI*2);
+   mCtx.fill();
+  }
  }else if(shape==="cloud"){
-  // Radial soft vignette fade from center
-  mCtx.filter="none";
   const grad=mCtx.createRadialGradient(w/2, h/2, Math.min(w,h)*0.15*(1 - fadePct/130), w/2, h/2, Math.max(w,h)*0.5);
   grad.addColorStop(0, "rgba(0,0,0,1)");
   grad.addColorStop(Math.max(0.2, 1 - (fadePct/100)*0.85), "rgba(0,0,0,1)");
   grad.addColorStop(1, "rgba(0,0,0,0)");
   mCtx.fillStyle=grad;
   mCtx.fillRect(0,0,w,h);
+ }else if(shape==="circle"){
+  if(blurPx>0) mCtx.filter=`blur(${blurPx}px)`;
+  mCtx.fillStyle="#000000";
+  mCtx.beginPath();
+  mCtx.ellipse(w/2, h/2, mw/2, mh/2, 0, 0, Math.PI*2);
+  mCtx.fill();
+ }else if(shape==="rounded"){
+  if(blurPx>0) mCtx.filter=`blur(${blurPx}px)`;
+  const rad=Math.min(mw,mh)*0.24;
+  rRect(mCtx, inset, inset, mw, mh, rad, "#000000", false);
  }else{
-  // Rectangle with soft faded edges
+  if(blurPx>0) mCtx.filter=`blur(${blurPx}px)`;
+  mCtx.fillStyle="#000000";
   mCtx.fillRect(inset, inset, mw, mh);
  }
  mCtx.restore();
 
- // Apply mask to image using destination-in
  oCtx.save();
  oCtx.globalCompositeOperation="destination-in";
  oCtx.drawImage(mask, 0, 0);
@@ -406,17 +389,16 @@ function applyShapeAndFade(offCanvas, shape, fadePct){
 function processImg(){
  if(!rawSub)return;
  let rm=document.getElementById('chk-bg').checked;
- let shape=document.getElementById('cfg-shape').value||"rect";
- let fadePct=parseInt(document.getElementById('cfg-fade').value)||0;
- let baseImg=(rm && aiCutoutSub) ? aiCutoutSub : rawSub;
+ let shape=document.getElementById('cfg-shape').value||"watercolor";
+ let fadePct=parseInt(document.getElementById('cfg-fade').value)||45;
 
  let ct=document.getElementById('ct').value/100,cb=document.getElementById('cb').value/100,cl=document.getElementById('cl').value/100,cr=document.getElementById('cr').value/100;
- let sx=Math.floor(baseImg.width*cl),sy=Math.floor(baseImg.height*ct),sw=Math.max(20,Math.floor(baseImg.width*(1-cl-cr))),sh=Math.max(20,Math.floor(baseImg.height*(1-ct-cb)));
+ let sx=Math.floor(rawSub.width*cl),sy=Math.floor(rawSub.height*ct),sw=Math.max(20,Math.floor(rawSub.width*(1-cl-cr))),sh=Math.max(20,Math.floor(rawSub.height*(1-ct-cb)));
  let ow=sw,oh=sh;if(ow>850||oh>850){let rt=Math.min(850/ow,850/oh);ow=Math.round(ow*rt);oh=Math.round(oh*rt);}
  let off=document.createElement('canvas');off.width=ow;off.height=oh;let oCtx=off.getContext('2d');
- oCtx.drawImage(baseImg,sx,sy,sw,sh,0,0,ow,oh);
+ oCtx.drawImage(rawSub,sx,sy,sw,sh,0,0,ow,oh);
 
- if(rm && !aiCutoutSub){
+ if(rm){
   let tol=parseInt(document.getElementById('cfg-tol').value)||38,tSq=tol*tol*3,sSq=(tol+16)*(tol+16)*3;
   let id=oCtx.getImageData(0,0,ow,oh),d=id.data,vis=new Uint8Array(ow*oh),q=new Int32Array(ow*oh),hd=0,tl=0;
   let cns=[0,(ow-1)*4,((oh-1)*ow)*4,((oh-1)*ow+ow-1)*4].map(i=>[d[i],d[i+1],d[i+2]]);
@@ -434,7 +416,6 @@ function processImg(){
   oCtx.putImageData(id,0,0);
  }
 
- // Apply selected Shape & Edge Fade (No Border!)
  applyShapeAndFade(off, shape, fadePct);
 
  let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL('image/png');
@@ -443,11 +424,9 @@ function processImg(){
 function setSub(url){
  if(!url)return clearSubImg();
  let i=new Image();i.onload=()=>{
-  rawSub=i;aiCutoutSub=null;
+  rawSub=i;
   document.getElementById('img-st').innerText="✅ Ready";document.getElementById('img-st').style.color="#34d399";
   document.getElementById('rm-img').style.display="inline-block";document.getElementById('img-opts').style.display="flex";
-  document.getElementById('ai-status').style.display="none";document.getElementById('ai-status').style.color="#fde047";
-  document.getElementById('btn-ai-bg').innerText="✨ AI Deep Remove BG (remove.bg Style • Free)";
   resetCrop();
  };i.src=url;
 }
@@ -455,7 +434,7 @@ function loadSubFile(e){let f=e.target.files[0];if(!f)return;let r=new FileReade
 async function pasteSubImg(){
  try{for(let it of await navigator.clipboard.read()){let tp=it.types.find(t=>t.startsWith('image/'));if(tp){let r=new FileReader();r.onload=e=>setSub(e.target.result);r.readAsDataURL(await it.getType(tp));return;}}alert("क्लिपबोर्ड में कोई इमेज नहीं मिली!");}catch(e){alert("Upload का उपयोग करें।");}
 }
-function clearSubImg(){rawSub=null;aiCutoutSub=null;procSub=null;document.getElementById('img-st').innerText="No Image";document.getElementById('img-st').style.color="#94a3b8";document.getElementById('rm-img').style.display="none";document.getElementById('img-opts').style.display="none";draw();}
+function clearSubImg(){rawSub=null;procSub=null;document.getElementById('img-st').innerText="No Image";document.getElementById('img-st').style.color="#94a3b8";document.getElementById('rm-img').style.display="none";document.getElementById('img-opts').style.display="none";draw();}
 
 async function pasteAndRun(){
  try{let t=await navigator.clipboard.readText();if(t&&t.trim()){document.getElementById('raw-box').value=t;parseRawText();}else alert("क्लिपबोर्ड खाली है!");}catch(e){alert("कृपया बॉक्स में पेस्ट करके Generate दबाएं।");}
@@ -463,7 +442,7 @@ async function pasteAndRun(){
 function parseRawText(){
  let raw=document.getElementById('raw-box').value,lines=raw.split(/\r?\n/).map(cln).filter(Boolean);
  if(lines.length<4)return alert("पूरा फ़ॉर्मेट पेस्ट करें!");
- let tit="",pre="Q.",qt="",qen="",opts={A:"",B:"",C:"",D:""},hk="👇 अपना जवाब A, B, C या D में कमेंट करें!",soc="❤️ Like | ➕ Follow | 🎯 Next Quiz",cap=[],ans="A",exp=[],st="TIT";
+ let tit="",pre="Q.",qt="",qen="",opts={A:"",B:"",C:"",D:""},hk="👇 अपना जवाब कमेंट में लिखें!",soc="❤️ Like | ➕ Follow | 🔔 अगला सवाल",cap=[],ans="A",exp=[],st="TIT";
  for(let l of lines){
   if(/^(?:Answer|Ans|उत्तर|सही\s*उत्तर)\s*[:\-]/i.test(l)){st="ANS";let m=l.match(/[:\-]\s*([A-Da-d])/i);if(m)ans=m[1].toUpperCase();continue;}
   if(/^(?:Explanation|व्याख्या)\s*[:\-]/i.test(l)){st="EXP";let e=l.replace(/^(?:Explanation|व्याख्या)\s*[:\-]\s*/i,'').trim();if(e)exp.push(e);continue;}
@@ -476,7 +455,7 @@ function parseRawText(){
   if(st==="CAP"){cap.push(l);continue;}
   if(st==="EXP"){exp.push(l);continue;}
  }
- qData={id:"q_"+Date.now(),title:tit||"🌍 WORLD GK QUIZ 🧠",qPrefix:pre,questionText:qt,questionEn:qen,options:opts,hook:hk,social:soc,correctOption:ans,caption:cap.join("\n"),explanation:exp.join(" ")};
+ qData={id:"q_"+Date.now(),title:tit||"🧠 आज का सवाल",qPrefix:pre,questionText:qt,questionEn:qen,options:opts,hook:hk,social:soc,correctOption:ans,caption:cap.join("\n"),explanation:exp.join(" ")};
  addHist({...qData,rawText:raw});savePrefs();draw();
  navigator.clipboard.writeText(getCap()).catch(()=>{});
  alert(`🎉 ${qData.qPrefix} तैयार! उत्तर [${qData.correctOption}] लॉक हुआ और कैप्शन कॉपी हो गया।`);
@@ -484,7 +463,7 @@ function parseRawText(){
 
 function toggleAns(){let c=document.getElementById('chk-ans');c.checked=!c.checked;ansMode=c.checked;savePrefs();draw();}
 function savePrefs(){
- try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
+ try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,mlt:document.getElementById('chk-mult').checked,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
 }
 function loadPrefs(){
  try{
@@ -495,6 +474,7 @@ function loadPrefs(){
   if(p.ipos)document.getElementById('cfg-ipos').value=p.ipos;
   if(p.shp)document.getElementById('cfg-shape').value=p.shp;
   if(p.fd!==undefined){document.getElementById('cfg-fade').value=p.fd;document.getElementById('fade-lbl').innerText=p.fd;}
+  if(p.mlt!==undefined)document.getElementById('chk-mult').checked=p.mlt;
   if(p.qs){document.getElementById('cfg-qs').value=p.qs;document.getElementById('qs-lbl').innerText=p.qs;}
   if(p.os){document.getElementById('cfg-os').value=p.os;document.getElementById('os-lbl').innerText=p.os;}
   if(p.ctay!==undefined){document.getElementById('cfg-cta-y').value=p.ctay;document.getElementById('cta-lbl').innerText=p.ctay;}
@@ -541,7 +521,7 @@ function saveEdit(){
  let obj={qPrefix:cln(document.getElementById('eq-pre').value)||"Q.",questionText:qt,questionEn:cln(document.getElementById('eq-en').value),options:{A:oa,B:ob,C:cln(document.getElementById('eq-c').value),D:cln(document.getElementById('eq-d').value)},correctOption:document.getElementById('eq-ans').value,explanation:cln(document.getElementById('eq-exp').value)};
  let l=getHist();
  if(id)l=l.map(x=>x.id===id?{...x,...obj}:x);
- else l.unshift({id:"q_"+Date.now(),title:"🌍 WORLD GK QUIZ 🧠",hook:"👇 अपना जवाब A, B, C या D में कमेंट करें!",social:"❤️ Like | ➕ Follow | 🎯 Next Quiz",caption:qt+"\n#ExamPreparation #GKQuiz",...obj});
+ else l.unshift({id:"q_"+Date.now(),title:"🧠 आज का सवाल",hook:"👇 अपना जवाब कमेंट में लिखें!",social:"❤️ Like | ➕ Follow | 🔔 अगला सवाल",caption:qt+"\n#ExamPreparation #GKQuiz",...obj});
  setHist(l);document.getElementById('e-mod').style.display='none';openHist();
 }
 function exportJson(){
@@ -579,18 +559,22 @@ function drawBgPhoto(c,x,y,w,h,r){
  if(tn>0){c.fillStyle=`rgba(255,255,255,${tn})`;c.fillRect(x,y,w,h);}c.restore();return true;
 }
 
-/* BORDERLESS SUBJECT IMAGE RENDERER (ALWAYS NO BORDER + SOFT SHADOW ONLY WHEN BG REMOVED) */
+/* BORDERLESS SUBJECT IMAGE RENDERER WITH MULTIPLY PAPER BLEND */
 function drawSubImg(c,bx,by,bw,bh){
  if(!procSub)return;
- let sc=(parseInt(document.getElementById('sc').value)||115)/100,ox=parseInt(document.getElementById('ox').value)||0,oy=parseInt(document.getElementById('oy').value)||0,rm=document.getElementById('chk-bg').checked;
- c.save();let ir=procSub.width/procSub.height,br=bw/bh,dw,dh;
+ let sc=(parseInt(document.getElementById('sc').value)||115)/100,ox=parseInt(document.getElementById('ox').value)||0,oy=parseInt(document.getElementById('oy').value)||0;
+ let rm=document.getElementById('chk-bg').checked,mult=document.getElementById('chk-mult').checked;
+ c.save();
+ if(mult) c.globalCompositeOperation="multiply";
+ let ir=procSub.width/procSub.height,br=bw/bh,dw,dh;
  if(ir>br){dw=bw*sc;dh=dw/ir;}else{dh=bh*sc;dw=dh*ir;}
  let dx=bx+(bw-dw)/2+ox,dy=by+(bh-dh)/2+oy;
- if(rm){c.shadowColor="rgba(0,0,0,.22)";c.shadowBlur=12;c.shadowOffsetX=2;c.shadowOffsetY=5;}
+ if(rm && !mult){c.shadowColor="rgba(0,0,0,.22)";c.shadowBlur=12;c.shadowOffsetX=2;c.shadowOffsetY=5;}
  c.drawImage(procSub,dx,dy,dw,dh);
  c.restore();
 }
 
+/* LEFT-ALIGNED MULTI-COLOR QUESTION */
 function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
  c.textBaseline="top";c.textAlign="left";c.font=`900 ${fs+4}px 'Poppins',sans-serif`;c.fillStyle=preCol;
  let fp=pre+" ",pw=c.measureText(fp).width;c.fillText(fp,x,y);
@@ -607,12 +591,88 @@ function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
  return cy+lh;
 }
 
+/* CENTER-ALIGNED MULTI-COLOR QUESTION (FOR 'AAJ KA SAWAL' THEME) */
+function drawCenteredColorQ(c,pre,txt,centerX,y,mw,fs,ff,defCol,pal,preCol){
+ c.textBaseline="top";c.textAlign="left";
+ let sw=new Set(["के","की","का","को","में","से","पर","और","या","है","हैं","था","थे","थी","हूँ","हो","जाता","जाती","कहा","लिए","द्वारा","तथा","एवं","इस","उस","एक"]);
+ let tokens=[];
+ if(pre){
+  c.font=`900 ${fs+4}px 'Poppins',sans-serif`;
+  tokens.push({t:pre+" ",col:preCol,font:`900 ${fs+4}px 'Poppins',sans-serif`,w:c.measureText(pre+" ").width});
+ }
+ c.font=`900 ${fs}px ${ff}`;
+ let ws=(txt||"").split(' '),inq=false,qc=pal[0],ci=wordSeed;
+ ws.forEach((w,i)=>{
+  let cw=w.replace(/[?,.!"'‘’“”।\-]/g,'').trim();
+  if(/^['"‘“]/.test(w)){inq=true;qc=pal[ci++%pal.length];}
+  let col=defCol;
+  if(inq)col=qc;else if(cw.length>0&&!sw.has(cw)){let hv=(cw.charCodeAt(0)+i+wordSeed)%5;if(hv===0||hv===1||hv===3)col=pal[ci++%pal.length];}
+  if(/['"’”][?,.!।]*$/.test(w))inq=false;
+  tokens.push({t:w+" ",col:col,font:`900 ${fs}px ${ff}`,w:c.measureText(w+" ").width});
+ });
+
+ // Group tokens into centered lines
+ let lines=[],curLine=[],curW=0;
+ tokens.forEach(tk=>{
+  if(curW+tk.w>mw && curLine.length>0){
+   lines.push({items:curLine,width:curW});
+   curLine=[tk];curW=tk.w;
+  }else{
+   curLine.push(tk);curW+=tk.w;
+  }
+ });
+ if(curLine.length>0) lines.push({items:curLine,width:curW});
+
+ let cy=y,lh=Math.round(fs*1.38);
+ lines.forEach(ln=>{
+  let sx=centerX - (ln.width/2);
+  ln.items.forEach(tk=>{
+   c.font=tk.font;c.fillStyle=tk.col;c.fillText(tk.t,sx,cy);sx+=tk.w;
+  });
+  cy+=lh;
+ });
+ return cy;
+}
+
 /* MAIN DRAW ENGINE */
 function draw(){
- const th=document.getElementById('cfg-theme').value,ff=document.getElementById('cfg-font').value,qs=parseInt(document.getElementById('cfg-qs').value)||44,bos=parseInt(document.getElementById('cfg-os').value)||34,ctaOffY=parseInt(document.getElementById('cfg-cta-y').value)||0,ipos=document.getElementById('cfg-ipos').value,hasI=Boolean(procSub),pal=["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
+ const th=document.getElementById('cfg-theme').value,ff=document.getElementById('cfg-font').value,qs=parseInt(document.getElementById('cfg-qs').value)||42,bos=parseInt(document.getElementById('cfg-os').value)||34,ctaOffY=parseInt(document.getElementById('cfg-cta-y').value)||0,ipos=document.getElementById('cfg-ipos').value,hasI=Boolean(procSub),pal=["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
  ctx.clearRect(0,0,1080,1350);
 
- /* THEME 1: WORLD GK CAPSULE */
+ /* THEME 1: AAJ KA SAWAL (NOW WITH MULTI-COLOR QUESTION WORDS) */
+ if(th==="aaj_ka_sawal"){
+  if(!drawBgPhoto(ctx,0,0,1080,1350,0)){ctx.fillStyle="#faf7f0";ctx.fillRect(0,0,1080,1350);}
+  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#dc2626";ctx.font=`900 46px ${ff}`;ctx.fillText(qData.title||"🧠 आज का सवाल",540,86);
+  let bt="EXAM PREPARATION";ctx.font="800 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+76,px=(1080-pw)/2;
+  rRect(ctx,px,132,pw,54,27,"#1e2433",false);ctx.fillStyle="#fff";ctx.fillText(bt,540,160);
+  let qe=drawCenteredColorQ(ctx,qData.qPrefix||"27.",qData.questionText,540,245,920,qs,ff,"#111827",pal,"#1d4ed8");
+  if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="600 31px 'Hind',sans-serif";qe=wrapL(ctx,qData.questionEn,540,qe+12,900,42,true);}
+  let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos;
+  if(hasI){
+   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200);oy+=222;oh=74;og=90;}
+   else{ow=540;drawSubImg(ctx,645,oy,365,3*og+oh);}
+  }
+  ["A","B","C","D"].forEach((k,i)=>{
+   let cy=oy+i*og,ic=qData.correctOption===k;
+   rRect(ctx,ox,cy,ow,oh,16,(ansMode&&ic)?"#dcfce7":"#fff",false);ctx.strokeStyle=(ansMode&&ic)?"#16a34a":"#e2e8f0";ctx.lineWidth=(ansMode&&ic)?4:2;rRect(ctx,ox,cy,ow,oh,16,null,true);
+   let cx=ox+54,mid=cy+oh/2;ctx.beginPath();ctx.arc(cx,mid,26,0,Math.PI*2);ctx.fillStyle=(ansMode&&ic)?"#16a34a":"#27303f";ctx.fill();
+   ctx.fillStyle="#fff";ctx.font="800 26px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":k,cx,mid+1);
+   ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#14532d":"#111827";ctx.font=`700 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[k]||"",ow-125),ox+106,mid+2);
+  });
+  let fy=oy+3*og+oh+34+ctaOffY;
+  if(ansMode){
+   rRect(ctx,88,fy,904,165,16,"#fff",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3;rRect(ctx,88,fy,904,165,16,null,true);
+   ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,114,fy+16);
+   ctx.fillStyle="#1e293b";ctx.font=`600 22px ${ff}`;wrapL(ctx,qData.explanation,114,fy+54,852,30);
+   ctx.fillStyle="#1e293b";ctx.font=`700 24px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,fy+195);
+  }else{
+   rRect(ctx,88,fy,904,96,18,"#f59e0b",false);ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font=`800 35px ${ff}`;ctx.fillText(qData.hook,540,fy+48);
+   ctx.fillStyle="#1e293b";ctx.font=`700 26px ${ff}`;ctx.fillText(qData.social,540,fy+144);
+  }
+  return;
+ }
+
+ /* THEME 2: WORLD GK CAPSULE */
  if(th==="world_capsule"){
   if(!drawBgPhoto(ctx,0,0,1080,1350,0)){let g=ctx.createRadialGradient(540,620,80,540,675,860);g.addColorStop(0,"#fff");g.addColorStop(.55,"#e0f2fe");g.addColorStop(1,"#bae6fd");ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);}
   ctx.strokeStyle="#3b82f6";ctx.lineWidth=6;rRect(ctx,22,22,1036,1306,34,null,true);
@@ -650,39 +710,6 @@ function draw(){
    tks.forEach(t=>{let ct=t.replace(/[,!.]/g,'');ctx.fillStyle=ct==="A"?"#dc2626":ct==="B"?"#db2777":ct==="C"?"#ea580c":ct==="D"?"#16a34a":"#0f172a";ctx.fillText(t+" ",sx,fy+43);sx+=ctx.measureText(t+" ").width;});
    let sy=fy+130;ctx.strokeStyle="#16a34a";ctx.lineWidth=5;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(85,sy);ctx.lineTo(175,sy);ctx.moveTo(905,sy);ctx.lineTo(995,sy);ctx.stroke();
    ctx.fillStyle="#0f172a";ctx.font=`800 28px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,sy);
-  }
-  return;
- }
-
- /* THEME 2: AAJ KA SAWAL */
- if(th==="aaj_ka_sawal"){
-  if(!drawBgPhoto(ctx,0,0,1080,1350,0)){ctx.fillStyle="#faf7f0";ctx.fillRect(0,0,1080,1350);}
-  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#dc2626";ctx.font=`900 46px ${ff}`;ctx.fillText(qData.title||"🧠 आज का सवाल",540,86);
-  let bt="EXAM PREPARATION";ctx.font="800 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+76,px=(1080-pw)/2;
-  rRect(ctx,px,132,pw,54,27,"#1e2433",false);ctx.fillStyle="#fff";ctx.fillText(bt,540,160);
-  ctx.fillStyle="#111827";ctx.font=`900 ${qs}px ${ff}`;let qe=wrapL(ctx,`${qData.qPrefix} ${qData.questionText}`.trim(),540,245,920,Math.round(qs*1.36),true);
-  if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="600 31px 'Hind',sans-serif";qe=wrapL(ctx,qData.questionEn,540,qe+12,900,42,true);}
-  let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos;
-  if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200);oy+=222;oh=74;og=90;}
-   else{ow=540;drawSubImg(ctx,645,oy,365,3*og+oh);}
-  }
-  ["A","B","C","D"].forEach((k,i)=>{
-   let cy=oy+i*og,ic=qData.correctOption===k;
-   rRect(ctx,ox,cy,ow,oh,16,(ansMode&&ic)?"#dcfce7":"#fff",false);ctx.strokeStyle=(ansMode&&ic)?"#16a34a":"#e2e8f0";ctx.lineWidth=(ansMode&&ic)?4:2;rRect(ctx,ox,cy,ow,oh,16,null,true);
-   let cx=ox+54,mid=cy+oh/2;ctx.beginPath();ctx.arc(cx,mid,26,0,Math.PI*2);ctx.fillStyle=(ansMode&&ic)?"#16a34a":"#27303f";ctx.fill();
-   ctx.fillStyle="#fff";ctx.font="800 26px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":k,cx,mid+1);
-   ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#14532d":"#111827";ctx.font=`700 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[k]||"",ow-125),ox+106,mid+2);
-  });
-  let fy=oy+3*og+oh+34+ctaOffY;
-  if(ansMode){
-   rRect(ctx,88,fy,904,165,16,"#fff",false);ctx.strokeStyle="#16a34a";ctx.lineWidth=3;rRect(ctx,88,fy,904,165,16,null,true);
-   ctx.fillStyle="#15803d";ctx.font=`800 26px ${ff}`;ctx.textAlign="left";ctx.textBaseline="top";ctx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption]||""}`,114,fy+16);
-   ctx.fillStyle="#1e293b";ctx.font=`600 22px ${ff}`;wrapL(ctx,qData.explanation,114,fy+54,852,30);
-   ctx.fillStyle="#1e293b";ctx.font=`700 24px ${ff}`;ctx.textAlign="center";ctx.fillText(qData.social,540,fy+195);
-  }else{
-   rRect(ctx,88,fy,904,96,18,"#f59e0b",false);ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#fff";ctx.font=`800 35px ${ff}`;ctx.fillText(qData.hook,540,fy+48);
-   ctx.fillStyle="#1e293b";ctx.font=`700 26px ${ff}`;ctx.fillText(qData.social,540,fy+144);
   }
   return;
  }
