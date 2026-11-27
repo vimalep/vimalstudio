@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viral Quiz Studio Pro - 9:16 Reel & Card Edition</title>
+<title>Viral Quiz Studio Pro - Exact Position & Human Voice</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -98,9 +98,9 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 </div>
 </div>
 
-<!-- 9:16 VIDEO PLAYER CONTROLS -->
+<!-- 9:16 VIDEO PLAYER & NATURAL HUMAN VOICE CONTROLS -->
 <div class="sub" style="border-color:#f43f5e">
-<div class="sub-t" style="color:#fda4af"><span>🎬 9:16 Reel Video Settings (Screen Recording Ready):</span></div>
+<div class="sub-t" style="color:#fda4af"><span>🎬 9:16 Reel Video & Natural Human Voice Settings:</span></div>
 <div class="row">
 <div>
 <label>⏱️ Countdown Timer:</label>
@@ -117,6 +117,14 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 <select id="cfg-vmode" onchange="savePrefs()">
 <option value="reveal">✅ उत्तर दिखाएं (Answer Reveal)</option>
 <option value="comment">💬 उत्तर पूछें (Comment Challenge)</option>
+</select>
+</div>
+<div>
+<label>🎙️ Voice Tone:</label>
+<select id="cfg-vtone" onchange="savePrefs()">
+<option value="warm" selected>🧑 Warm Male/Teacher</option>
+<option value="soft">👩 Soft Conversational</option>
+<option value="energetic">🔥 Energetic Anchor</option>
 </select>
 </div>
 </div>
@@ -202,7 +210,7 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 
 <!-- SUBJECT CUTOUT PHOTO PANEL -->
 <div class="img-box">
-<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Photo (Paper Blend • Watercolor Fade):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
+<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Photo (Exact Position • Paper Blend • Fade):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
 <div class="img-btns">
 <button class="ibtn" onclick="document.getElementById('img-in').click()">📁 Upload</button>
 <button class="ibtn" onclick="pasteSubImg()">📋 Paste Img</button>
@@ -223,7 +231,7 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 </div>
 <div class="row">
 <div><label>Color Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
-<div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Side</option><option value="center">⬇️ Center Banner</option></select></div>
+<div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Side (दाएं)</option><option value="center">⬇️ Center / Free (बीच/कहीं भी)</option></select></div>
 </div>
 </div>
 
@@ -248,7 +256,7 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 </div>
 
 <div class="sub">
-<div class="sub-t"><span>✂️ Crop Edges & Position Adjuster:</span><button class="m-rst" onclick="resetCrop()">↺ Reset</button></div>
+<div class="sub-t"><span>✂️ Crop Edges & Exact Position (जहाँ सेट करें वहीं रहेगी):</span><button class="m-rst" onclick="resetCrop()">↺ Reset</button></div>
 <div class="row">
 <div><label>Top: <span id="ct-l">0</span>%</label><input type="range" id="ct" min="0" max="45" value="0" oninput="document.getElementById('ct-l').innerText=this.value;processImg()"></div>
 <div><label>Bottom: <span id="cb-l">0</span>%</label><input type="range" id="cb" min="0" max="45" value="0" oninput="document.getElementById('cb-l').innerText=this.value;processImg()"></div>
@@ -258,9 +266,9 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 <div><label>Right: <span id="cr-l">0</span>%</label><input type="range" id="cr" min="0" max="45" value="0" oninput="document.getElementById('cr-l').innerText=this.value;processImg()"></div>
 </div>
 <div class="row">
-<div><label>Zoom: <span id="sc-l">115</span>%</label><input type="range" id="sc" min="60" max="160" value="115" oninput="document.getElementById('sc-l').innerText=this.value;draw()"></div>
-<div><label>X: <span id="ox-l">0</span></label><input type="range" id="ox" min="-150" max="150" value="0" oninput="document.getElementById('ox-l').innerText=this.value;draw()"></div>
-<div><label>Y: <span id="oy-l">0</span></label><input type="range" id="oy" min="-150" max="150" value="0" oninput="document.getElementById('oy-l').innerText=this.value;draw()"></div>
+<div><label>Zoom: <span id="sc-l">100</span>%</label><input type="range" id="sc" min="40" max="180" value="100" oninput="document.getElementById('sc-l').innerText=this.value;savePrefs();draw()"></div>
+<div><label>Move X: <span id="ox-l">0</span></label><input type="range" id="ox" min="-350" max="350" value="0" oninput="document.getElementById('ox-l').innerText=this.value;savePrefs();draw()"></div>
+<div><label>Move Y: <span id="oy-l">0</span></label><input type="range" id="oy" min="-350" max="350" value="0" oninput="document.getElementById('oy-l').innerText=this.value;savePrefs();draw()"></div>
 </div>
 </div>
 </div>
@@ -282,7 +290,7 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
  <div class="reel-bar">
   <button class="rbtn r-play" id="btn-r-play" onclick="startOrResumeReel()">▶️ Play</button>
   <button class="rbtn r-pause" id="btn-r-pause" onclick="pauseReel()">⏸️ Pause</button>
-  <button class="rbtn r-home" onclick="closeReelToHome()">🏠 Home</button>
+  <button class="rbtn r-home" id="btn-r-home" onclick="closeReelToHome()">🏠 Home</button>
  </div>
 </div>
 
@@ -318,7 +326,7 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
 const rCvs=document.getElementById('reelCanvas'),rCtx=rCvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_V21",H_KEY="QUIZ_PRO_HIST_V21";
+const P_KEY="QUIZ_PRO_PREFS_V22",H_KEY="QUIZ_PRO_HIST_V22";
 let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
  id:"def_27",title:"🧠 आज का सवाल",qPrefix:"27.",
@@ -370,7 +378,7 @@ function googleImg(){
 }
 function resetCrop(){
  ['ct','cb','cl','cr','ox','oy'].forEach(id=>{document.getElementById(id).value=0;document.getElementById(id+'-l').innerText="0";});
- document.getElementById('sc').value=115;document.getElementById('sc-l').innerText="115";processImg();
+ document.getElementById('sc').value=100;document.getElementById('sc-l').innerText="100";processImg();
 }
 
 function applyShapeAndFade(offCanvas, shape, fadePct){
@@ -518,7 +526,7 @@ function parseRawText(){
 
 function toggleAns(){let c=document.getElementById('chk-ans');c.checked=!c.checked;ansMode=c.checked;savePrefs();draw();}
 function savePrefs(){
- try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,mlt:document.getElementById('chk-mult').checked,tmr:document.getElementById('cfg-timer').value,vmd:document.getElementById('cfg-vmode').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
+ try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,mlt:document.getElementById('chk-mult').checked,tmr:document.getElementById('cfg-timer').value,vmd:document.getElementById('cfg-vmode').value,vtn:document.getElementById('cfg-vtone').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
 }
 function loadPrefs(){
  try{
@@ -532,6 +540,7 @@ function loadPrefs(){
   if(p.mlt!==undefined)document.getElementById('chk-mult').checked=p.mlt;
   if(p.tmr!==undefined)document.getElementById('cfg-timer').value=p.tmr;
   if(p.vmd)document.getElementById('cfg-vmode').value=p.vmd;
+  if(p.vtn)document.getElementById('cfg-vtone').value=p.vtn;
   if(p.qs){document.getElementById('cfg-qs').value=p.qs;document.getElementById('qs-lbl').innerText=p.qs;}
   if(p.os){document.getElementById('cfg-os').value=p.os;document.getElementById('os-lbl').innerText=p.os;}
   if(p.ctay!==undefined){document.getElementById('cfg-cta-y').value=p.ctay;document.getElementById('cta-lbl').innerText=p.ctay;}
@@ -615,19 +624,27 @@ function drawBgPhoto(c,x,y,w,h,r){
  c.drawImage(bgImg,x+(w-dw)/2-pad,y+(h-dh)/2-pad,dw+pad*2,dh+pad*2);c.filter="none";
  if(tn>0){c.fillStyle=`rgba(255,255,255,${tn})`;c.fillRect(x,y,w,h);}c.restore();return true;
 }
+
+/* EXACT POSITION SUBJECT IMAGE RENDERER (WORKS IDENTICALLY IN 4:5 & 9:16) */
 function drawSubImg(c,bx,by,bw,bh){
  if(!procSub)return;
- let sc=(parseInt(document.getElementById('sc').value)||115)/100,ox=parseInt(document.getElementById('ox').value)||0,oy=parseInt(document.getElementById('oy').value)||0;
- let rm=document.getElementById('chk-bg').checked,mult=document.getElementById('chk-mult').checked;
+ let sc=(parseInt(document.getElementById('sc').value)||100)/100;
+ let ox=parseInt(document.getElementById('ox').value)||0;
+ let oy=parseInt(document.getElementById('oy').value)||0;
+ let rm=document.getElementById('chk-bg').checked;
+ let mult=document.getElementById('chk-mult').checked;
+
  c.save();
  if(mult) c.globalCompositeOperation="multiply";
  let ir=procSub.width/procSub.height,br=bw/bh,dw,dh;
  if(ir>br){dw=bw*sc;dh=dw/ir;}else{dh=bh*sc;dw=dh*ir;}
- let dx=bx+(bw-dw)/2+ox,dy=by+(bh-dh)/2+oy;
+ let dx=bx+(bw-dw)/2+ox;
+ let dy=by+(bh-dh)/2+oy;
  if(rm && !mult){c.shadowColor="rgba(0,0,0,.22)";c.shadowBlur=12;c.shadowOffsetX=2;c.shadowOffsetY=5;}
  c.drawImage(procSub,dx,dy,dw,dh);
  c.restore();
 }
+
 function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
  c.textBaseline="top";c.textAlign="left";c.font=`900 ${fs+4}px 'Poppins',sans-serif`;c.fillStyle=preCol;
  let fp=pre+" ",pw=c.measureText(fp).width;c.fillText(fp,x,y);
@@ -676,7 +693,7 @@ function drawCenteredColorQ(c,pre,txt,centerX,y,mw,fs,ff,defCol,pal,preCol){
  return cy;
 }
 
-/* 4:5 IMAGE CARD DRAW ENGINE */
+/* ==================== 4:5 IMAGE CARD DRAW ENGINE ==================== */
 function draw(){
  const th=document.getElementById('cfg-theme').value,ff=document.getElementById('cfg-font').value,qs=parseInt(document.getElementById('cfg-qs').value)||42,bos=parseInt(document.getElementById('cfg-os').value)||34,ctaOffY=parseInt(document.getElementById('cfg-cta-y').value)||0,ipos=document.getElementById('cfg-ipos').value,hasI=Boolean(procSub),pal=["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
  ctx.clearRect(0,0,1080,1350);
@@ -690,12 +707,12 @@ function draw(){
   if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="600 31px 'Hind',sans-serif";qe=wrapL(ctx,qData.questionEn,540,qe+12,900,42,true);}
   let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200);oy+=222;oh=74;og=90;}
-   else{ow=540;drawSubImg(ctx,645,oy,365,3*og+oh);}
+   if(ipos==="right"){ow=540;drawSubImg(ctx,645,oy,365,3*og+oh);}
+   else{drawSubImg(ctx,240,oy+60,600,360);}
   }
   ["A","B","C","D"].forEach((k,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===k;
-   rRect(ctx,ox,cy,ow,oh,16,(ansMode&&ic)?"#dcfce7":"#fff",false);ctx.strokeStyle=(ansMode&&ic)?"#16a34a":"#e2e8f0";ctx.lineWidth=(ansMode&&ic)?4:2;rRect(ctx,ox,cy,ow,oh,16,null,true);
+   rRect(ctx,ox,cy,ow,oh,16,(ansMode&&ic)?"#dcfce7":"rgba(255,255,255,0.92)",false);ctx.strokeStyle=(ansMode&&ic)?"#16a34a":"#e2e8f0";ctx.lineWidth=(ansMode&&ic)?4:2;rRect(ctx,ox,cy,ow,oh,16,null,true);
    let cx=ox+54,mid=cy+oh/2;ctx.beginPath();ctx.arc(cx,mid,26,0,Math.PI*2);ctx.fillStyle=(ansMode&&ic)?"#16a34a":"#27303f";ctx.fill();
    ctx.fillStyle="#fff";ctx.font="800 26px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":k,cx,mid+1);
    ctx.textAlign="left";ctx.fillStyle=(ansMode&&ic)?"#14532d":"#111827";ctx.font=`700 ${os}px ${ff}`;ctx.fillText(trunc(ctx,qData.options[k]||"",ow-125),ox+106,mid+2);
@@ -724,14 +741,14 @@ function draw(){
   rRect(ctx,54,210,980,qbh,28,"rgba(15,23,42,.14)",false);rRect(ctx,50,204,980,qbh,28,"#fff",false);ctx.strokeStyle="#1e3a8a";ctx.lineWidth=4;rRect(ctx,50,204,980,qbh,28,null,true);
   let qe=drawColorQ(ctx,qData.qPrefix||"386.",qData.questionText,84,230,912,qs+2,ff,"#0f172a",pal,"#1d4ed8");
   if(hasE){ctx.fillStyle="#15803d";ctx.font="700 25px 'Hind',sans-serif";wrapL(ctx,"- "+qData.questionEn,84,qe+2,912,30);}
-  let oy=204+qbh+38,ox=52,ow=hasI?535:976,oh=92,og=ansMode?98:114,os=bos;
+  let oy=204+qbh+38,ox=52,ow=(hasI && ipos==="right")?535:976,oh=92,og=ansMode?98:114,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,52,oy,976,215);oy+=237;ow=976;oh=74;og=90;}
-   else{drawSubImg(ctx,595,oy-12,445,ansMode?440:520);}
+   if(ipos==="right"){drawSubImg(ctx,595,oy-12,445,ansMode?440:520);}
+   else{drawSubImg(ctx,240,oy+60,600,360);}
   }
   [{c:"#1d4ed8",k:"A"},{c:"#db2777",k:"B"},{c:"#ea580c",k:"C"},{c:"#16a34a",k:"D"}].forEach((s,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===s.k;
-   rRect(ctx,ox+3,cy+5,ow,oh,oh/2,"rgba(15,23,42,.12)",false);rRect(ctx,ox,cy,ow,oh,oh/2,(ansMode&&ic)?"#16a34a":"#fff",false);
+   rRect(ctx,ox+3,cy+5,ow,oh,oh/2,"rgba(15,23,42,.12)",false);rRect(ctx,ox,cy,ow,oh,oh/2,(ansMode&&ic)?"#16a34a":"rgba(255,255,255,0.92)",false);
    ctx.strokeStyle=(ansMode&&ic)?"#facc15":s.c;ctx.lineWidth=(ansMode&&ic)?5:3;rRect(ctx,ox,cy,ow,oh,oh/2,null,true);
    let cr=(oh-22)/2,cx=ox+14+cr,mid=cy+oh/2;ctx.beginPath();ctx.arc(cx,mid,cr,0,Math.PI*2);ctx.fillStyle=(ansMode&&ic)?"#facc15":s.c;ctx.fill();
    ctx.fillStyle=(ansMode&&ic)?"#0f172a":"#fff";ctx.font="900 30px 'Poppins',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText((ansMode&&ic)?"✔":s.k,cx,mid+1);
@@ -761,12 +778,12 @@ function draw(){
   ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#dc2626";ctx.font=`900 54px ${ff}`;ctx.fillText(qData.title,540,92);
   let bt="EXAM PREPARATION";ctx.font="900 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+62,px=(1080-pw)/2;
   rRect(ctx,px+3,144,pw,48,24,"rgba(0,0,0,.22)",false);rRect(ctx,px,140,pw,48,24,"#1e293b",false);ctx.strokeStyle="#f59e0b";ctx.lineWidth=2.5;rRect(ctx,px,140,pw,48,24,null,true);ctx.fillStyle="#fff";ctx.fillText(bt,540,164);
-  let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,74,232,932,hasI&&ipos==="center"?Math.min(qs,38):qs,ff,"#111827",pal,"#1d4ed8");
+  let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,74,232,932,qs,ff,"#111827",pal,"#1d4ed8");
   if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 28px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,74,qe+8,932,36);}
   let oy=qe+42,ox=82,og=ansMode?94:112,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,82,oy,916,225);oy+=251;og=74;}
-   else{drawSubImg(ctx,505,oy-22,515,ansMode?460:540);}
+   if(ipos==="right"){drawSubImg(ctx,505,oy-22,515,ansMode?460:540);}
+   else{drawSubImg(ctx,240,oy+60,600,360);}
   }
   ["A","B","C","D"].forEach((k,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===k,cols=["#1d4ed8","#be185d","#b45309","#047857"];
@@ -799,12 +816,12 @@ function draw(){
  ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle=isC?"#e11d48":"#dc2626";ctx.font=`900 52px ${ff}`;ctx.fillText(qData.title,540,114);
  let bt="EXAM PREPARATION";ctx.font="900 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+56,px=(1080-pw)/2;
  rRect(ctx,px,156,pw,46,23,"#8b5cf6",false);ctx.strokeStyle="#1e293b";ctx.lineWidth=2.5;rRect(ctx,px,156,pw,46,23,null,true);ctx.fillStyle="#fff";ctx.fillText(bt,540,179);
- let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,95,254,890,hasI&&ipos==="center"?Math.min(qs,38):qs,ff,"#1e293b",pal,"#2563eb");
+ let qe=drawColorQ(ctx,qData.qPrefix,qData.questionText,95,254,890,qs,ff,"#1e293b",pal,"#2563eb");
  if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 26px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,95,qe+4,890,32);}
- let oy=qe+30,ox=95,ow=890,oh=90,og=114,os=bos;
+ let oy=qe+30,ox=95,ow=(hasI && ipos==="right")?520:890,oh=90,og=114,os=bos;
  if(hasI){
-  if(ipos==="center"){drawSubImg(ctx,95,oy,890,225);oy+=247;oh=72;og=90;}
-  else{ow=520;drawSubImg(ctx,639,oy,346,3*og+oh);}
+  if(ipos==="right"){drawSubImg(ctx,639,oy,346,3*og+oh);}
+  else{drawSubImg(ctx,240,oy+60,600,360);}
  }
  [{bg:"#e0f2fe",bd:"#0284c7",k:"A"},{bg:"#fce7f3",bd:"#db2777",k:"B"},{bg:"#fef9c3",bd:"#ca8a04",k:"C"},{bg:"#dcfce7",bd:"#16a34a",k:"D"}].forEach((s,i)=>{
   let cy=oy+i*og,ic=qData.correctOption===s.k;
@@ -827,12 +844,11 @@ function draw(){
  }
 }
 
-/* ==================== 9:16 VERTICAL VIDEO PLAYER & HUMAN TTS ENGINE ==================== */
+/* ==================== 9:16 VERTICAL VIDEO PLAYER & HUMAN-LIKE TTS ENGINE ==================== */
 let reelState = "IDLE"; // IDLE, PLAYING, PAUSED, DONE
 let reelStep = 0; // 0: Ready, 1: Question, 2..5: Options A-D, 6: Countdown, 7: Final Reveal/Comment
 let reelTimerVal = 0;
 let reelTimerInterval = null;
-let reelAnimRaf = null;
 let reelAudioCtx = null;
 
 function playTickSound(freq=880, dur=0.06){
@@ -852,45 +868,72 @@ function playTickSound(freq=880, dur=0.06){
 
 function getBestHindiVoice(){
  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
- return voices.find(v => v.lang === 'hi-IN' && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Lekha') || v.name.includes('Hemant')))
+ // Prioritize natural/neural Indian Hindi voices on Android Chrome
+ return voices.find(v => v.lang === 'hi-IN' && (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Google')))
+     || voices.find(v => v.lang === 'hi-IN')
      || voices.find(v => v.lang.toLowerCase().includes('hi'))
      || null;
 }
 
-function speakHindiLine(text, onEndCallback){
- if(!window.speechSynthesis){
-  setTimeout(onEndCallback, 1600);
+/* HUMAN-LIKE PHRASE-BY-PHRASE SPEECH WITH NATURAL PAUSES & PROSODY */
+function speakHumanPhrases(phrases, onAllDone){
+ if(!window.speechSynthesis || !phrases || phrases.length === 0){
+  setTimeout(onAllDone, 1200);
   return;
  }
  window.speechSynthesis.cancel();
- const cleanTxt = stripEmojis(text).replace(/^Q\.?\s*\d*[\.\:\-\)]*/i, '').replace(/^\d+[\.\:\-\)]*/, '').trim();
- if(!cleanTxt){ onEndCallback(); return; }
 
- const utter = new SpeechSynthesisUtterance(cleanTxt);
- utter.lang = 'hi-IN';
+ const tone = document.getElementById('cfg-vtone').value || "warm";
+ let baseRate = 0.94, basePitch = 0.98;
+ if(tone === "soft"){ baseRate = 0.92; basePitch = 1.06; }
+ else if(tone === "energetic"){ baseRate = 1.01; basePitch = 1.03; }
+
  const hv = getBestHindiVoice();
- if(hv) utter.voice = hv;
- utter.rate = 0.96; // Natural human cadence
- utter.pitch = 1.02;
+ let idx = 0;
 
- let finished = false;
- const finishOnce = () => {
-  if(finished) return;
-  finished = true;
-  if(reelState === "PLAYING") onEndCallback();
- };
-
- utter.onend = finishOnce;
- utter.onerror = finishOnce;
- window.speechSynthesis.speak(utter);
-
- // Safety fallback timer in case mobile TTS hangs
- const estMs = Math.max(1800, cleanTxt.length * 95);
- setTimeout(() => {
-  if(!finished && reelState === "PLAYING" && !window.speechSynthesis.speaking){
-   finishOnce();
+ function speakNextChunk(){
+  if(reelState !== "PLAYING") return;
+  if(idx >= phrases.length){
+   onAllDone();
+   return;
   }
- }, estMs + 1500);
+
+  const item = phrases[idx++];
+  const cleanTxt = stripEmojis(item.text).replace(/^Q\.?\s*\d*[\.\:\-\)]*/i, '').replace(/^\d+[\.\:\-\)]*/, '').trim();
+  if(!cleanTxt){
+   speakNextChunk();
+   return;
+  }
+
+  const utter = new SpeechSynthesisUtterance(cleanTxt);
+  utter.lang = 'hi-IN';
+  if(hv) utter.voice = hv;
+  // Subtle natural variation per phrase so it never sounds flat or robotic
+  utter.rate = Math.max(0.82, Math.min(1.15, baseRate + (item.rateMod || 0)));
+  utter.pitch = Math.max(0.85, Math.min(1.2, basePitch + (item.pitchMod || 0)));
+
+  let doneChunk = false;
+  const proceed = () => {
+   if(doneChunk) return;
+   doneChunk = true;
+   if(reelState === "PLAYING"){
+    setTimeout(speakNextChunk, item.pauseAfter || 180);
+   }
+  };
+
+  utter.onend = proceed;
+  utter.onerror = proceed;
+  window.speechSynthesis.speak(utter);
+
+  const estMs = Math.max(1400, cleanTxt.length * 90);
+  setTimeout(() => {
+   if(!doneChunk && reelState === "PLAYING" && !window.speechSynthesis.speaking){
+    proceed();
+   }
+  }, estMs + 1200);
+ }
+
+ speakNextChunk();
 }
 
 function openReelPlayer(){
@@ -912,7 +955,6 @@ function closeReelToHome(){
 function stopAllReelProcesses(){
  if(window.speechSynthesis) window.speechSynthesis.cancel();
  if(reelTimerInterval){ clearInterval(reelTimerInterval); reelTimerInterval = null; }
- if(reelAnimRaf){ cancelAnimationFrame(reelAnimRaf); reelAnimRaf = null; }
 }
 
 function pauseReel(){
@@ -941,7 +983,6 @@ function startOrResumeReel(){
   return;
  }
 
- // Fresh start from IDLE or DONE
  stopAllReelProcesses();
  reelState = "PLAYING";
  reelStep = 1;
@@ -955,22 +996,32 @@ function executeReelStep(step){
  renderReelFrame();
 
  const optKeys = ["A", "B", "C", "D"];
- const hindiOptNames = { A: "ऑप्शन ए", B: "ऑप्शन बी", C: "ऑप्शन सी", D: "ऑप्शन डी" };
+ const humanOptLead = {
+  A: "पहला ऑप्शन ए,",
+  B: "दूसरा ऑप्शन बी,",
+  C: "तीसरा ऑप्शन सी,",
+  D: "और चौथा ऑप्शन डी,"
+ };
 
  if(step === 1){
-  // Speak Question
-  speakHindiLine(`सवाल: ${qData.questionText}`, () => {
-   setTimeout(() => executeReelStep(2), 300);
+  // Human conversational intro + question with natural breath pause
+  const qClean = stripEmojis(qData.questionText).replace(/^Q\.?\s*\d*[\.\:\-\)]*/i, '').replace(/^\d+[\.\:\-\)]*/, '').trim();
+  speakHumanPhrases([
+   { text: "दोस्तों, आज का सवाल है...", rateMod: 0.02, pitchMod: 0.03, pauseAfter: 240 },
+   { text: qClean, rateMod: -0.03, pitchMod: -0.01, pauseAfter: 320 }
+  ], () => {
+   executeReelStep(2);
   });
  }else if(step >= 2 && step <= 5){
-  // Speak Options A, B, C, D one by one
   const k = optKeys[step - 2];
   const optVal = qData.options[k] || "";
-  speakHindiLine(`${hindiOptNames[k]}: ${optVal}`, () => {
-   setTimeout(() => executeReelStep(step + 1), 220);
+  speakHumanPhrases([
+   { text: humanOptLead[k], rateMod: 0.03, pitchMod: 0.02, pauseAfter: 120 },
+   { text: optVal, rateMod: -0.02, pitchMod: 0.0, pauseAfter: 220 }
+  ], () => {
+   executeReelStep(step + 1);
   });
  }else if(step === 6){
-  // Countdown Phase
   const maxT = parseInt(document.getElementById('cfg-timer').value) || 0;
   if(maxT <= 0){
    executeReelStep(7);
@@ -978,24 +1029,32 @@ function executeReelStep(step){
   }
   reelTimerVal = maxT;
   renderReelFrame();
-  speakHindiLine("सोचिए और सही जवाब बताइए!", () => {});
+  speakHumanPhrases([
+   { text: "सोचिए, और अपना जवाब बताइए...", rateMod: -0.02, pitchMod: 0.02, pauseAfter: 100 }
+  ], () => {});
   runCountdownLoop();
  }else if(step === 7){
-  // Reveal Answer or Comment Challenge
   const vMode = document.getElementById('cfg-vmode').value;
   renderReelFrame();
   if(vMode === "reveal"){
    playTickSound(1120, 0.25);
    const corrKey = qData.correctOption || "A";
    const corrTxt = qData.options[corrKey] || "";
-   speakHindiLine(`सही जवाब है, ${hindiOptNames[corrKey]}, ${corrTxt}. वीडियो को लाइक और फॉलो ज़रूर करें।`, () => {
+   speakHumanPhrases([
+    { text: "दोस्तों, इसका बिल्कुल सही जवाब है...", rateMod: 0.0, pitchMod: 0.03, pauseAfter: 200 },
+    { text: `ऑप्शन ${corrKey}, ${corrTxt}.`, rateMod: -0.03, pitchMod: 0.01, pauseAfter: 300 },
+    { text: "वीडियो पसंद आया हो, तो लाइक और फॉलो ज़रूर करें!", rateMod: 0.02, pitchMod: 0.02, pauseAfter: 100 }
+   ], () => {
     reelState = "DONE";
     document.getElementById('btn-r-play').innerText = "🔄 Replay";
     renderReelFrame();
    });
   }else{
    playTickSound(980, 0.2);
-   speakHindiLine("अपना सही जवाब नीचे कमेंट बॉक्स में लिखें, और पेज को फॉलो ज़रूर करें!", () => {
+   speakHumanPhrases([
+    { text: "तो दोस्तों, इसका सही जवाब क्या होगा?", rateMod: 0.0, pitchMod: 0.03, pauseAfter: 180 },
+    { text: "नीचे कमेंट बॉक्स में ज़रूर लिखें, और पेज को फॉलो कर लें!", rateMod: 0.01, pitchMod: 0.01, pauseAfter: 100 }
+   ], () => {
     reelState = "DONE";
     document.getElementById('btn-r-play').innerText = "🔄 Replay";
     renderReelFrame();
@@ -1022,12 +1081,14 @@ function runCountdownLoop(){
  }, 1000);
 }
 
-/* RENDER 9:16 VERTICAL FRAME (1080 x 1920) */
+/* ==================== RENDER 9:16 VERTICAL FRAME (RESPECTS EXACT IMAGE POSITION) ==================== */
 function renderReelFrame(){
  const th = document.getElementById('cfg-theme').value;
  const ff = document.getElementById('cfg-font').value;
  const qs = parseInt(document.getElementById('cfg-qs').value) || 42;
  const bos = parseInt(document.getElementById('cfg-os').value) || 34;
+ const ctaOffY = parseInt(document.getElementById('cfg-cta-y').value) || 0;
+ const ipos = document.getElementById('cfg-ipos').value;
  const hasI = Boolean(procSub);
  const vMode = document.getElementById('cfg-vmode').value;
  const isRevealed = (reelStep === 7 && vMode === "reveal");
@@ -1060,26 +1121,26 @@ function renderReelFrame(){
  rCtx.lineWidth = 6;
  rRect(rCtx, 24, 24, 1032, 1872, 36, null, true);
 
- // 2. Top Header & Badge (Positioned safely below phone status bar)
+ // 2. Top Header & Badge
  rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
  rCtx.fillStyle = "#dc2626";
  rCtx.font = `900 54px ${ff}`;
- rCtx.fillText(qData.title || "🧠 आज का सवाल", 540, 125);
+ rCtx.fillText(qData.title || "🧠 आज का सवाल", 540, 130);
 
  const bt = "EXAM PREPARATION";
  rCtx.font = "900 26px 'Poppins', sans-serif";
  const pw = rCtx.measureText(bt).width + 76;
  const px = (1080 - pw) / 2;
- rRect(rCtx, px, 174, pw, 54, 27, "#1e2433", false);
+ rRect(rCtx, px, 180, pw, 54, 27, "#1e2433", false);
  rCtx.strokeStyle = "#f59e0b"; rCtx.lineWidth = 2.5;
- rRect(rCtx, px, 174, pw, 54, 27, null, true);
+ rRect(rCtx, px, 180, pw, 54, 27, null, true);
  rCtx.fillStyle = "#ffffff";
- rCtx.fillText(bt, 540, 202);
+ rCtx.fillText(bt, 540, 208);
 
- // 3. Question Card (Always visible from Step 0)
- const qBoxY = 268;
+ // 3. Question Card
+ const qBoxY = 278;
  const hasE = Boolean(cln(qData.questionEn));
- const qBoxH = hasE ? 290 : 230;
+ const qBoxH = hasE ? 295 : 235;
  rRect(rCtx, 58, qBoxY + 6, 972, qBoxH, 28, "rgba(15,23,42,0.12)", false);
  rRect(rCtx, 54, qBoxY, 972, qBoxH, 28, "#ffffff", false);
  rCtx.strokeStyle = (th === "world_capsule") ? "#1e3a8a" : "#cbd5e1";
@@ -1092,27 +1153,30 @@ function renderReelFrame(){
   wrapL(rCtx, "- " + qData.questionEn, 88, qe + 4, 904, 34);
  }
 
- // 4. Optional Subject Image Banner (Middle Zone)
- let curY = qBoxY + qBoxH + 34;
- if(hasI){
-  drawSubImg(rCtx, 90, curY, 900, 290);
-  curY += 314;
- }else{
-  curY += 24;
- }
-
- // 5. Animated Options (Reveal progressively in Step 2..5, all visible in Step 0, 6, 7)
+ // 4. Options & Subject Image (Uses exact same Layout + X/Y/Zoom position as 4:5 card)
  const optDefs = [
   { c: "#1d4ed8", k: "A" },
   { c: "#db2777", k: "B" },
   { c: "#ea580c", k: "C" },
   { c: "#16a34a", k: "D" }
  ];
- const optH = 108;
- const optGap = 128;
+ const curY = qBoxY + qBoxH + 54;
+ const optX = 56;
+ const optW = (hasI && ipos === "right") ? 535 : 968;
+ const optH = 112;
+ const optGap = 136;
+
+ // Draw Subject Image in the exact chosen position
+ if(hasI){
+  if(ipos === "right"){
+   drawSubImg(rCtx, 602, curY - 10, 430, 4 * optGap);
+  }else{
+   // Center / Free mode: places image in center zone & moves freely via X/Y sliders without shifting options
+   drawSubImg(rCtx, 240, curY + 80, 600, 380);
+  }
+ }
 
  optDefs.forEach((s, idx) => {
-  // Show all options in IDLE (0) or once their step has been reached
   const isVisible = (reelStep === 0 || reelStep >= idx + 2);
   if(!isVisible) return;
 
@@ -1120,7 +1184,7 @@ function renderReelFrame(){
   const isSpeakingThis = (reelState === "PLAYING" && reelStep === idx + 2);
   const isCorrect = (qData.correctOption === s.k);
 
-  let boxFill = "#ffffff";
+  let boxFill = "rgba(255,255,255,0.93)";
   let boxStroke = s.c;
   let strokeW = 3;
 
@@ -1130,13 +1194,13 @@ function renderReelFrame(){
    boxFill = "#fef9c3"; boxStroke = "#f59e0b"; strokeW = 5;
   }
 
-  rRect(rCtx, 64, oy + 5, 956, optH, 24, "rgba(15,23,42,0.12)", false);
-  rRect(rCtx, 60, oy, 956, optH, 24, boxFill, false);
+  rRect(rCtx, optX + 4, oy + 5, optW, optH, 24, "rgba(15,23,42,0.12)", false);
+  rRect(rCtx, optX, oy, optW, optH, 24, boxFill, false);
   rCtx.strokeStyle = boxStroke; rCtx.lineWidth = strokeW;
-  rRect(rCtx, 60, oy, 956, optH, 24, null, true);
+  rRect(rCtx, optX, oy, optW, optH, 24, null, true);
 
   const cr = 34;
-  const cx = 114;
+  const cx = optX + 52;
   const mid = oy + optH / 2;
   rCtx.beginPath(); rCtx.arc(cx, mid, cr, 0, Math.PI * 2);
   rCtx.fillStyle = (isRevealed && isCorrect) ? "#facc15" : s.c;
@@ -1150,17 +1214,16 @@ function renderReelFrame(){
   rCtx.textAlign = "left";
   rCtx.fillStyle = (isRevealed && isCorrect) ? "#ffffff" : "#0f172a";
   rCtx.font = `800 ${bos + 2}px ${ff}`;
-  rCtx.fillText(trunc(rCtx, qData.options[s.k] || "", 820), 168, mid + 2);
+  rCtx.fillText(trunc(rCtx, qData.options[s.k] || "", optW - 125), optX + 104, mid + 2);
  });
 
- // 6. Bottom Countdown Timer / Reveal Card / Footer
- const bottomY = curY + 4 * optGap + 24;
+ // 5. Bottom Countdown Timer / Reveal Card / Footer (Respects CTA Position Y)
+ const bottomY = curY + 4 * optGap + 44 + ctaOffY;
 
  if(reelStep === 6){
-  // Live Animated Countdown Ring
   const maxT = parseInt(document.getElementById('cfg-timer').value) || 5;
   const ratio = Math.max(0, reelTimerVal / maxT);
-  const tCx = 540, tCy = bottomY + 75, tR = 64;
+  const tCx = 540, tCy = bottomY + 85, tR = 68;
 
   rCtx.beginPath(); rCtx.arc(tCx, tCy, tR + 8, 0, Math.PI * 2);
   rCtx.fillStyle = "#ffffff"; rCtx.fill();
@@ -1172,14 +1235,13 @@ function renderReelFrame(){
   rCtx.lineWidth = 10; rCtx.lineCap = "round"; rCtx.stroke();
 
   rCtx.fillStyle = (reelTimerVal <= 2) ? "#dc2626" : "#0f172a";
-  rCtx.font = "900 54px 'Poppins', sans-serif";
+  rCtx.font = "900 56px 'Poppins', sans-serif";
   rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
   rCtx.fillText(String(reelTimerVal), tCx, tCy + 2);
  }else if(isRevealed){
-  // Answer Explanation Box
-  rRect(rCtx, 60, bottomY, 956, 185, 22, "#ffffff", false);
+  rRect(rCtx, 60, bottomY, 956, 195, 22, "#ffffff", false);
   rCtx.strokeStyle = "#16a34a"; rCtx.lineWidth = 4;
-  rRect(rCtx, 60, bottomY, 956, 185, 22, null, true);
+  rRect(rCtx, 60, bottomY, 956, 195, 22, null, true);
 
   rCtx.fillStyle = "#15803d"; rCtx.font = `800 28px ${ff}`;
   rCtx.textAlign = "left"; rCtx.textBaseline = "top";
@@ -1188,13 +1250,12 @@ function renderReelFrame(){
   rCtx.fillStyle = "#1e293b"; rCtx.font = `600 24px ${ff}`;
   wrapL(rCtx, qData.explanation, 88, bottomY + 60, 900, 32);
  }else{
-  // CTA Pill
-  rRect(rCtx, 60, bottomY + 10, 956, 88, 44, "#f59e0b", false);
+  rRect(rCtx, 60, bottomY + 10, 956, 92, 46, "#f59e0b", false);
   rCtx.strokeStyle = "#1e293b"; rCtx.lineWidth = 3;
-  rRect(rCtx, 60, bottomY + 10, 956, 88, 44, null, true);
+  rRect(rCtx, 60, bottomY + 10, 956, 92, 46, null, true);
   rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
   rCtx.fillStyle = "#ffffff"; rCtx.font = `900 34px ${ff}`;
-  rCtx.fillText(qData.hook || "👇 अपना जवाब कमेंट में लिखें!", 540, bottomY + 54);
+  rCtx.fillText(qData.hook || "👇 अपना जवाब कमेंट में लिखें!", 540, bottomY + 56);
  }
 
  // Bottom Social Line
@@ -1216,7 +1277,10 @@ function dlImg(){let a=document.createElement('a');a.download=`${ansMode?"Solved
 window.onload=()=>{
  loadPrefs();
  document.getElementById('h-cnt').innerText=getHist().length;
- if(window.speechSynthesis) window.speechSynthesis.getVoices();
+ if(window.speechSynthesis){
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+ }
  draw();
 };
 </script>
