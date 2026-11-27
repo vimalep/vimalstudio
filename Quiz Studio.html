@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viral Quiz Studio Pro - AI BG Remover</title>
+<title>Viral Quiz Studio Pro - AI BG & Shape Fade</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -146,9 +146,9 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 <!-- CANVAS PREVIEW -->
 <div class="c-card"><canvas id="qCanvas" width="1080" height="1350"></canvas></div>
 
-<!-- SUBJECT CUTOUT PHOTO PANEL (WITH FREE UNLIMITED AI BG REMOVER) -->
+<!-- SUBJECT CUTOUT PHOTO PANEL (NO BORDER + SHAPE FADE + AI BG REMOVE) -->
 <div class="img-box">
-<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Cutout Photo (AI + Fast BG Remove):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
+<div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Photo (No Border • Shape Fade • AI Remove):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
 <div class="img-btns">
 <button class="ibtn" onclick="document.getElementById('img-in').click()">📁 Upload</button>
 <button class="ibtn" onclick="pasteSubImg()">📋 Paste Img</button>
@@ -164,11 +164,32 @@ Explanation: दक्षिण अमेरिका महाद्वीप �
 
 <div class="tog" style="border-color:#38bdf8;padding:5px 8px;margin-top:2px" onclick="const c=document.getElementById('chk-bg');c.checked=!c.checked;processImg()">
 <span style="color:#7dd3fc;font-size:12px">⚡ Fast Color BG Remove (सिंगल कलर के लिए)</span>
-<input type="checkbox" id="chk-bg" checked style="width:17px;height:17px;accent-color:#38bdf8" onclick="event.stopPropagation();processImg()">
+<input type="checkbox" id="chk-bg" style="width:17px;height:17px;accent-color:#38bdf8" onclick="event.stopPropagation();processImg()">
 </div>
 <div class="row">
 <div><label>Color Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
-<div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Cutout</option><option value="center">⬇️ Center Banner</option></select></div>
+<div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Side</option><option value="center">⬇️ Center Banner</option></select></div>
+</div>
+</div>
+
+<!-- SHAPE & EDGE FADE CONTROLS (NO BORDER) -->
+<div class="sub" style="border-color:#a855f7">
+<div class="sub-t" style="color:#e9d5ff"><span>🎭 Photo Shape & Soft Edge Fade (बॉर्डर रहित फेड):</span></div>
+<div class="row">
+<div>
+<label>Shape (आकार):</label>
+<select id="cfg-shape" onchange="savePrefs();processImg()">
+<option value="rect">⬜ Rectangle (सामान्य)</option>
+<option value="rounded">🔲 Rounded Box (गोल कोने)</option>
+<option value="circle">⭕ Circle / Oval (गोल)</option>
+<option value="diamond">💠 Diamond (डायमंड)</option>
+<option value="cloud">☁️ Soft Vignette (चारों ओर से फेड)</option>
+</select>
+</div>
+<div>
+<label>Edge Fade (किनारों का फेड): <span id="fade-lbl">25</span>%</label>
+<input type="range" id="cfg-fade" min="0" max="100" value="25" oninput="document.getElementById('fade-lbl').innerText=this.value;processImg()">
+</div>
 </div>
 </div>
 
@@ -235,7 +256,7 @@ window.aiRemoveBackgroundFn = removeBackground;
 
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_V18",H_KEY="QUIZ_PRO_HIST_V18";
+const P_KEY="QUIZ_PRO_PREFS_V19",H_KEY="QUIZ_PRO_HIST_V19";
 let ansMode=false,rawSub=null,aiCutoutSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
  id:"def_386",title:"🌍 WORLD GK QUIZ 🧠",qPrefix:"386.",
@@ -286,7 +307,7 @@ function resetCrop(){
  document.getElementById('sc').value=115;document.getElementById('sc-l').innerText="115";processImg();
 }
 
-/* AI DEEP BACKGROUND REMOVER (IN-BROWSER REMOVE.BG ENGINE) */
+/* AI DEEP BACKGROUND REMOVER */
 async function runAiBgRemove(){
  if(!rawSub)return;
  if(!window.aiRemoveBackgroundFn){
@@ -319,15 +340,74 @@ async function runAiBgRemove(){
   aiImg.src=url;
  }catch(err){
   console.error(err);
-  st.innerText="❌ AI प्रोसेसिंग विफल रही (नीचे दिया गया Fast Color Remove उपयोग करें)";
+  st.innerText="❌ AI प्रोसेसिंग विफल रही (नीचे दिया गया Fast Color Remove या Shape Fade उपयोग करें)";
   st.style.color="#fca5a5";
   btn.disabled=false;btn.innerText="✨ AI Deep Remove BG (Retry)";
  }
 }
 
+/* SHAPE MASK & SOFT EDGE FADE GENERATOR (NO BORDER) */
+function applyShapeAndFade(offCanvas, shape, fadePct){
+ if(shape==="rect" && fadePct===0) return;
+ const w=offCanvas.width, h=offCanvas.height;
+ const oCtx=offCanvas.getContext('2d');
+
+ // Create mask canvas
+ const mask=document.createElement('canvas');
+ mask.width=w; mask.height=h;
+ const mCtx=mask.getContext('2d');
+
+ const blurPx=Math.round((fadePct/100)*Math.min(w,h)*0.22);
+ const inset=Math.round(blurPx*0.85);
+ const mw=Math.max(10, w - inset*2);
+ const mh=Math.max(10, h - inset*2);
+
+ mCtx.save();
+ if(blurPx>0) mCtx.filter=`blur(${blurPx}px)`;
+ mCtx.fillStyle="#000000";
+
+ if(shape==="circle"){
+  mCtx.beginPath();
+  mCtx.ellipse(w/2, h/2, mw/2, mh/2, 0, 0, Math.PI*2);
+  mCtx.fill();
+ }else if(shape==="diamond"){
+  mCtx.beginPath();
+  mCtx.moveTo(w/2, inset);
+  mCtx.lineTo(w-inset, h/2);
+  mCtx.lineTo(w/2, h-inset);
+  mCtx.lineTo(inset, h/2);
+  mCtx.closePath();
+  mCtx.fill();
+ }else if(shape==="rounded"){
+  const rad=Math.min(mw,mh)*0.24;
+  rRect(mCtx, inset, inset, mw, mh, rad, "#000000", false);
+ }else if(shape==="cloud"){
+  // Radial soft vignette fade from center
+  mCtx.filter="none";
+  const grad=mCtx.createRadialGradient(w/2, h/2, Math.min(w,h)*0.15*(1 - fadePct/130), w/2, h/2, Math.max(w,h)*0.5);
+  grad.addColorStop(0, "rgba(0,0,0,1)");
+  grad.addColorStop(Math.max(0.2, 1 - (fadePct/100)*0.85), "rgba(0,0,0,1)");
+  grad.addColorStop(1, "rgba(0,0,0,0)");
+  mCtx.fillStyle=grad;
+  mCtx.fillRect(0,0,w,h);
+ }else{
+  // Rectangle with soft faded edges
+  mCtx.fillRect(inset, inset, mw, mh);
+ }
+ mCtx.restore();
+
+ // Apply mask to image using destination-in
+ oCtx.save();
+ oCtx.globalCompositeOperation="destination-in";
+ oCtx.drawImage(mask, 0, 0);
+ oCtx.restore();
+}
+
 function processImg(){
  if(!rawSub)return;
  let rm=document.getElementById('chk-bg').checked;
+ let shape=document.getElementById('cfg-shape').value||"rect";
+ let fadePct=parseInt(document.getElementById('cfg-fade').value)||0;
  let baseImg=(rm && aiCutoutSub) ? aiCutoutSub : rawSub;
 
  let ct=document.getElementById('ct').value/100,cb=document.getElementById('cb').value/100,cl=document.getElementById('cl').value/100,cr=document.getElementById('cr').value/100;
@@ -336,27 +416,30 @@ function processImg(){
  let off=document.createElement('canvas');off.width=ow;off.height=oh;let oCtx=off.getContext('2d');
  oCtx.drawImage(baseImg,sx,sy,sw,sh,0,0,ow,oh);
 
- if(!rm || aiCutoutSub){
-  let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL();return;
+ if(rm && !aiCutoutSub){
+  let tol=parseInt(document.getElementById('cfg-tol').value)||38,tSq=tol*tol*3,sSq=(tol+16)*(tol+16)*3;
+  let id=oCtx.getImageData(0,0,ow,oh),d=id.data,vis=new Uint8Array(ow*oh),q=new Int32Array(ow*oh),hd=0,tl=0;
+  let cns=[0,(ow-1)*4,((oh-1)*ow)*4,((oh-1)*ow+ow-1)*4].map(i=>[d[i],d[i+1],d[i+2]]);
+  const dist=(r,g,b)=>{let m=9e6;for(let c of cns){let dr=r-c[0],dg=g-c[1],db=b-c[2],v=dr*dr+dg*dg+db*db;if(v<m)m=v;}return m;};
+  for(let x=0;x<ow;x++){let a=x,b=(oh-1)*ow+x;if(!vis[a]){vis[a]=1;q[tl++]=a;}if(!vis[b]){vis[b]=1;q[tl++]=b;}}
+  for(let y=0;y<oh;y++){let a=y*ow,b=y*ow+ow-1;if(!vis[a]){vis[a]=1;q[tl++]=a;}if(!vis[b]){vis[b]=1;q[tl++]=b;}}
+  while(hd<tl){
+   let p=q[hd++],px=p%ow,py=(p-px)/ow,i4=p*4,ds=dist(d[i4],d[i4+1],d[i4+2]);
+   if(ds<=tSq){
+    d[i4+3]=0;
+    if(px>0&&!vis[p-1]){vis[p-1]=1;q[tl++]=p-1;}if(px<ow-1&&!vis[p+1]){vis[p+1]=1;q[tl++]=p+1;}
+    if(py>0&&!vis[p-ow]){vis[p-ow]=1;q[tl++]=p-ow;}if(py<oh-1&&!vis[p+ow]){vis[p+ow]=1;q[tl++]=p+ow;}
+   }else if(ds<=sSq)d[i4+3]=Math.round(d[i4+3]*((ds-tSq)/(sSq-tSq)));
+  }
+  oCtx.putImageData(id,0,0);
  }
 
- let tol=parseInt(document.getElementById('cfg-tol').value)||38,tSq=tol*tol*3,sSq=(tol+16)*(tol+16)*3;
- let id=oCtx.getImageData(0,0,ow,oh),d=id.data,vis=new Uint8Array(ow*oh),q=new Int32Array(ow*oh),hd=0,tl=0;
- let cns=[0,(ow-1)*4,((oh-1)*ow)*4,((oh-1)*ow+ow-1)*4].map(i=>[d[i],d[i+1],d[i+2]]);
- const dist=(r,g,b)=>{let m=9e6;for(let c of cns){let dr=r-c[0],dg=g-c[1],db=b-c[2],v=dr*dr+dg*dg+db*db;if(v<m)m=v;}return m;};
- for(let x=0;x<ow;x++){let a=x,b=(oh-1)*ow+x;if(!vis[a]){vis[a]=1;q[tl++]=a;}if(!vis[b]){vis[b]=1;q[tl++]=b;}}
- for(let y=0;y<oh;y++){let a=y*ow,b=y*ow+ow-1;if(!vis[a]){vis[a]=1;q[tl++]=a;}if(!vis[b]){vis[b]=1;q[tl++]=b;}}
- while(hd<tl){
-  let p=q[hd++],px=p%ow,py=(p-px)/ow,i4=p*4,ds=dist(d[i4],d[i4+1],d[i4+2]);
-  if(ds<=tSq){
-   d[i4+3]=0;
-   if(px>0&&!vis[p-1]){vis[p-1]=1;q[tl++]=p-1;}if(px<ow-1&&!vis[p+1]){vis[p+1]=1;q[tl++]=p+1;}
-   if(py>0&&!vis[p-ow]){vis[p-ow]=1;q[tl++]=p-ow;}if(py<oh-1&&!vis[p+ow]){vis[p+ow]=1;q[tl++]=p+ow;}
-  }else if(ds<=sSq)d[i4+3]=Math.round(d[i4+3]*((ds-tSq)/(sSq-tSq)));
- }
- oCtx.putImageData(id,0,0);
- let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL();
+ // Apply selected Shape & Edge Fade (No Border!)
+ applyShapeAndFade(off, shape, fadePct);
+
+ let im=new Image();im.onload=()=>{procSub=im;draw();};im.src=off.toDataURL('image/png');
 }
+
 function setSub(url){
  if(!url)return clearSubImg();
  let i=new Image();i.onload=()=>{
@@ -401,7 +484,7 @@ function parseRawText(){
 
 function toggleAns(){let c=document.getElementById('chk-ans');c.checked=!c.checked;ansMode=c.checked;savePrefs();draw();}
 function savePrefs(){
- try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
+ try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
 }
 function loadPrefs(){
  try{
@@ -410,6 +493,8 @@ function loadPrefs(){
   if(p.theme&&[...document.getElementById('cfg-theme').options].some(o=>o.value===p.theme))document.getElementById('cfg-theme').value=p.theme;
   if(p.pcol){document.getElementById('cfg-paper-col').value=p.pcol;document.getElementById('cfg-paper-pre').value=p.pcol;}
   if(p.ipos)document.getElementById('cfg-ipos').value=p.ipos;
+  if(p.shp)document.getElementById('cfg-shape').value=p.shp;
+  if(p.fd!==undefined){document.getElementById('cfg-fade').value=p.fd;document.getElementById('fade-lbl').innerText=p.fd;}
   if(p.qs){document.getElementById('cfg-qs').value=p.qs;document.getElementById('qs-lbl').innerText=p.qs;}
   if(p.os){document.getElementById('cfg-os').value=p.os;document.getElementById('os-lbl').innerText=p.os;}
   if(p.ctay!==undefined){document.getElementById('cfg-cta-y').value=p.ctay;document.getElementById('cta-lbl').innerText=p.ctay;}
@@ -493,16 +578,19 @@ function drawBgPhoto(c,x,y,w,h,r){
  c.drawImage(bgImg,x+(w-dw)/2-pad,y+(h-dh)/2-pad,dw+pad*2,dh+pad*2);c.filter="none";
  if(tn>0){c.fillStyle=`rgba(255,255,255,${tn})`;c.fillRect(x,y,w,h);}c.restore();return true;
 }
-function drawSubImg(c,bx,by,bw,bh,bCol){
+
+/* BORDERLESS SUBJECT IMAGE RENDERER (ALWAYS NO BORDER + SOFT SHADOW ONLY WHEN BG REMOVED) */
+function drawSubImg(c,bx,by,bw,bh){
  if(!procSub)return;
- let sc=(parseInt(document.getElementById('sc').value)||115)/100,ox=parseInt(document.getElementById('ox').value)||0,oy=parseInt(document.getElementById('oy').value)||0,bl=document.getElementById('chk-bg').checked;
+ let sc=(parseInt(document.getElementById('sc').value)||115)/100,ox=parseInt(document.getElementById('ox').value)||0,oy=parseInt(document.getElementById('oy').value)||0,rm=document.getElementById('chk-bg').checked;
  c.save();let ir=procSub.width/procSub.height,br=bw/bh,dw,dh;
  if(ir>br){dw=bw*sc;dh=dw/ir;}else{dh=bh*sc;dw=dh*ir;}
  let dx=bx+(bw-dw)/2+ox,dy=by+(bh-dh)/2+oy;
- if(bl){c.shadowColor="rgba(0,0,0,.24)";c.shadowBlur=14;c.shadowOffsetX=3;c.shadowOffsetY=6;c.drawImage(procSub,dx,dy,dw,dh);}
- else{rRect(c,bx,by,bw,bh,22,"#fff",false);c.save();rRect(c,bx,by,bw,bh,22,null,false);c.clip();c.drawImage(procSub,dx,dy,dw,dh);c.restore();c.strokeStyle=bCol;c.lineWidth=3;rRect(c,bx,by,bw,bh,22,null,true);}
+ if(rm){c.shadowColor="rgba(0,0,0,.22)";c.shadowBlur=12;c.shadowOffsetX=2;c.shadowOffsetY=5;}
+ c.drawImage(procSub,dx,dy,dw,dh);
  c.restore();
 }
+
 function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
  c.textBaseline="top";c.textAlign="left";c.font=`900 ${fs+4}px 'Poppins',sans-serif`;c.fillStyle=preCol;
  let fp=pre+" ",pw=c.measureText(fp).width;c.fillText(fp,x,y);
@@ -538,8 +626,8 @@ function draw(){
   if(hasE){ctx.fillStyle="#15803d";ctx.font="700 25px 'Hind',sans-serif";wrapL(ctx,"- "+qData.questionEn,84,qe+2,912,30);}
   let oy=204+qbh+38,ox=52,ow=hasI?535:976,oh=92,og=ansMode?98:114,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,52,oy,976,215,"#1e3a8a");oy+=237;ow=976;oh=74;og=90;}
-   else{drawSubImg(ctx,595,oy-12,445,ansMode?440:520,"#1e3a8a");}
+   if(ipos==="center"){drawSubImg(ctx,52,oy,976,215);oy+=237;ow=976;oh=74;og=90;}
+   else{drawSubImg(ctx,595,oy-12,445,ansMode?440:520);}
   }
   [{c:"#1d4ed8",k:"A"},{c:"#db2777",k:"B"},{c:"#ea580c",k:"C"},{c:"#16a34a",k:"D"}].forEach((s,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===s.k;
@@ -576,8 +664,8 @@ function draw(){
   if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="600 31px 'Hind',sans-serif";qe=wrapL(ctx,qData.questionEn,540,qe+12,900,42,true);}
   let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200,"#cbd5e1");oy+=222;oh=74;og=90;}
-   else{ow=540;drawSubImg(ctx,645,oy,365,3*og+oh,"#cbd5e1");}
+   if(ipos==="center"){drawSubImg(ctx,88,oy,904,200);oy+=222;oh=74;og=90;}
+   else{ow=540;drawSubImg(ctx,645,oy,365,3*og+oh);}
   }
   ["A","B","C","D"].forEach((k,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===k;
@@ -611,8 +699,8 @@ function draw(){
   if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 28px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,74,qe+8,932,36);}
   let oy=qe+42,ox=82,og=ansMode?94:112,os=bos;
   if(hasI){
-   if(ipos==="center"){drawSubImg(ctx,82,oy,916,225,"#334155");oy+=251;og=74;}
-   else{drawSubImg(ctx,505,oy-22,515,ansMode?460:540,"#334155");}
+   if(ipos==="center"){drawSubImg(ctx,82,oy,916,225);oy+=251;og=74;}
+   else{drawSubImg(ctx,505,oy-22,515,ansMode?460:540);}
   }
   ["A","B","C","D"].forEach((k,i)=>{
    let cy=oy+i*og,ic=qData.correctOption===k,cols=["#1d4ed8","#be185d","#b45309","#047857"];
@@ -650,8 +738,8 @@ function draw(){
  if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="700 26px 'Hind',sans-serif";qe=wrapL(ctx,"- "+qData.questionEn,95,qe+4,890,32);}
  let oy=qe+30,ox=95,ow=890,oh=90,og=114,os=bos;
  if(hasI){
-  if(ipos==="center"){drawSubImg(ctx,95,oy,890,225,"#1e293b");oy+=247;oh=72;og=90;}
-  else{ow=520;drawSubImg(ctx,639,oy,346,3*og+oh,"#1e293b");}
+  if(ipos==="center"){drawSubImg(ctx,95,oy,890,225);oy+=247;oh=72;og=90;}
+  else{ow=520;drawSubImg(ctx,639,oy,346,3*og+oh);}
  }
  [{bg:"#e0f2fe",bd:"#0284c7",k:"A"},{bg:"#fce7f3",bd:"#db2777",k:"B"},{bg:"#fef9c3",bd:"#ca8a04",k:"C"},{bg:"#dcfce7",bd:"#16a34a",k:"D"}].forEach((s,i)=>{
   let cy=oy+i*og,ic=qData.correctOption===s.k;
