@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viral Quiz Studio Pro - Paper Blend & Mobile Edition</title>
+<title>Viral Quiz Studio Pro - 9:16 Reel & Card Edition</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -16,17 +16,18 @@ label{font-size:11px;color:#94a3b8;font-weight:700;display:block;margin-bottom:2
 input,select,textarea{width:100%;padding:7px 9px;background:#0f172a;border:1px solid #475569;border-radius:7px;color:#fff;font-size:12.5px;font-weight:600;outline:none;font-family:inherit}
 input[type=color]{padding:2px;height:36px;cursor:pointer}
 input[type=range]{padding:0;accent-color:#38bdf8;cursor:pointer}
-textarea{resize:vertical;min-height:120px;font-family:monospace;font-size:11.5px;line-height:1.35}
+textarea{resize:vertical;min-height:115px;font-family:monospace;font-size:11.5px;line-height:1.35}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .btn{background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;border:none;padding:10px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
 .btn-b{background:linear-gradient(135deg,#0284c7,#0369a1)}
 .btn-g{background:#10b981}.btn-s{background:#334155;border:1px solid #475569;font-size:11.5px;padding:8px}
+.btn-reel{background:linear-gradient(135deg,#f43f5e,#f59e0b);color:#fff;border:none;padding:12px;border-radius:9px;font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 15px rgba(244,63,94,.4)}
 .btn-shuf{background:linear-gradient(135deg,#ec4899,#f59e0b);color:#fff;border:none;padding:7px 10px;border-radius:7px;font-size:12px;font-weight:800;cursor:pointer;height:36px;white-space:nowrap}
 .tog{background:#0f172a;border:1.5px solid #10b981;border-radius:8px;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
 .tog span{font-size:12px;font-weight:800;color:#34d399}
 .chk{width:18px;height:18px;cursor:pointer;accent-color:#10b981}
 
-/* COMPACT LIVE PREVIEW FOR EASY MOBILE EDITING */
+/* COMPACT LIVE PREVIEW */
 .preview-wrap{width:100%;display:flex;flex-direction:column;align-items:center;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:8px}
 .c-card{width:100%;max-width:330px;background:#000;border-radius:10px;overflow:hidden;box-shadow:0 8px 22px rgba(0,0,0,.65)}
 canvas{width:100%;height:auto;display:block}
@@ -39,17 +40,41 @@ canvas{width:100%;height:auto;display:block}
 .sub{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px}
 .sub-t{font-size:11px;font-weight:800;color:#7dd3fc;display:flex;justify-content:space-between;align-items:center}
 .m-rst{background:#334155;color:#e2e8f0;border:none;padding:2px 7px;border-radius:4px;font-size:10px;cursor:pointer}
+
+/* MODALS */
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99;padding:14px;justify-content:center;align-items:center}
 .mbox{background:#1e293b;border:1px solid #475569;border-radius:12px;width:100%;max-width:490px;max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
 .mhdr{padding:11px;background:#0f172a;border-bottom:1px solid #334155;display:flex;justify-content:space-between;font-weight:800;color:#38bdf8}
 .mbdy{padding:11px;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
 .hi{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:9px;display:flex;flex-direction:column;gap:5px}
 .cbtn{padding:4px 8px;font-size:11px;font-weight:700;border:none;border-radius:5px;cursor:pointer;color:#fff}
+
+/* FULL-SCREEN 9:16 VERTICAL VIDEO PLAYER OVERLAY */
+#reel-overlay{
+ display:none;position:fixed;inset:0;background:#000;z-index:9999;
+ flex-direction:column;align-items:center;justify-content:space-between;
+}
+.reel-stage-wrap{
+ flex:1;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px;
+}
+#reelCanvas{
+ height:100%;max-height:calc(100vh - 58px);width:auto;max-width:100%;
+ aspect-ratio:9/16;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.9);
+}
+.reel-bar{
+ width:100%;max-width:460px;height:52px;background:rgba(15,23,42,.95);
+ border-top:1px solid #334155;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:6px 10px;
+}
+.rbtn{
+ border:none;border-radius:8px;font-size:13.5px;font-weight:800;color:#fff;cursor:pointer;
+ display:flex;align-items:center;justify-content:center;gap:5px;font-family:'Poppins',sans-serif;
+}
+.r-play{background:#16a34a}.r-pause{background:#d97706}.r-home{background:#dc2626}
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="hdr">⚡ Viral Quiz Card Studio Pro</div>
+<div class="hdr">⚡ Viral Quiz Studio Pro (4:5 Card + 9:16 Reel)</div>
 
 <div class="box">
 <div>
@@ -71,6 +96,31 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 <button class="btn btn-b" onclick="pasteAndRun()">📋 1-Click Paste & Run</button>
 <button class="btn" onclick="parseRawText()">✨ Generate Card</button>
 </div>
+</div>
+
+<!-- 9:16 VIDEO PLAYER CONTROLS -->
+<div class="sub" style="border-color:#f43f5e">
+<div class="sub-t" style="color:#fda4af"><span>🎬 9:16 Reel Video Settings (Screen Recording Ready):</span></div>
+<div class="row">
+<div>
+<label>⏱️ Countdown Timer:</label>
+<select id="cfg-timer" onchange="savePrefs()">
+<option value="3">3 Seconds</option>
+<option value="5" selected>5 Seconds</option>
+<option value="7">7 Seconds</option>
+<option value="10">10 Seconds</option>
+<option value="0">No Timer (Direct)</option>
+</select>
+</div>
+<div>
+<label>🎯 Video Ending Mode:</label>
+<select id="cfg-vmode" onchange="savePrefs()">
+<option value="reveal">✅ उत्तर दिखाएं (Answer Reveal)</option>
+<option value="comment">💬 उत्तर पूछें (Comment Challenge)</option>
+</select>
+</div>
+</div>
+<button class="btn-reel" onclick="openReelPlayer()">🎬 Open 9:16 Video Player</button>
 </div>
 
 <div class="row">
@@ -145,12 +195,12 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 </div>
 </div>
 
-<!-- COMPACT CANVAS PREVIEW (FULL HD 1080x1350 EXPORT) -->
+<!-- COMPACT CANVAS PREVIEW (4:5 IMAGE CARD) -->
 <div class="preview-wrap">
 <div class="c-card"><canvas id="qCanvas" width="1080" height="1350"></canvas></div>
 </div>
 
-<!-- SUBJECT CUTOUT PHOTO PANEL (PAPER BLEND + SHAPE FADE + FAST BG REMOVE) -->
+<!-- SUBJECT CUTOUT PHOTO PANEL -->
 <div class="img-box">
 <div class="sub-t"><span style="font-size:12px;color:#38bdf8">🖼️ Subject Photo (Paper Blend • Watercolor Fade):</span><span id="img-st" style="color:#94a3b8">No Image</span></div>
 <div class="img-btns">
@@ -163,25 +213,20 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 
 <div id="img-opts" style="display:none;flex-direction:column;gap:8px">
 <div class="sub">
-<!-- PAPER BLEND (MULTIPLY MODE) TOGGLE -->
 <div class="tog" style="border-color:#f59e0b;padding:6px 9px" onclick="const c=document.getElementById('chk-mult');c.checked=!c.checked;savePrefs();draw()">
 <span style="color:#fbbf24;font-size:12px">🎨 Paper Blend (Multiply - सफ़ेद रंग कागज़ में घोलें)</span>
 <input type="checkbox" id="chk-mult" checked style="width:17px;height:17px;accent-color:#f59e0b" onclick="event.stopPropagation();savePrefs();draw()">
 </div>
-
-<!-- FAST COLOR BG REMOVE TOGGLE -->
 <div class="tog" style="border-color:#38bdf8;padding:6px 9px" onclick="const c=document.getElementById('chk-bg');c.checked=!c.checked;processImg()">
 <span style="color:#7dd3fc;font-size:12px">⚡ Fast Color BG Remove (सिंगल कलर काटें)</span>
 <input type="checkbox" id="chk-bg" style="width:17px;height:17px;accent-color:#38bdf8" onclick="event.stopPropagation();processImg()">
 </div>
-
 <div class="row">
 <div><label>Color Tolerance: <span id="tol-lbl">38</span></label><input type="range" id="cfg-tol" min="10" max="95" value="38" oninput="document.getElementById('tol-lbl').innerText=this.value;processImg()"></div>
 <div style="flex:.85"><label>Layout:</label><select id="cfg-ipos" onchange="savePrefs();draw()"><option value="right">👉 Right Side</option><option value="center">⬇️ Center Banner</option></select></div>
 </div>
 </div>
 
-<!-- SHAPE & EDGE FADE CONTROLS -->
 <div class="sub" style="border-color:#a855f7">
 <div class="sub-t" style="color:#e9d5ff"><span>🎭 Photo Shape & Soft Edge Fade (बॉर्डर रहित फेड):</span></div>
 <div class="row">
@@ -229,6 +274,18 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 </div>
 </div>
 
+<!-- FULL-SCREEN 9:16 VERTICAL VIDEO PLAYER (MANUAL PLAY + PAUSE + HOME) -->
+<div id="reel-overlay">
+ <div class="reel-stage-wrap">
+  <canvas id="reelCanvas" width="1080" height="1920"></canvas>
+ </div>
+ <div class="reel-bar">
+  <button class="rbtn r-play" id="btn-r-play" onclick="startOrResumeReel()">▶️ Play</button>
+  <button class="rbtn r-pause" id="btn-r-pause" onclick="pauseReel()">⏸️ Pause</button>
+  <button class="rbtn r-home" onclick="closeReelToHome()">🏠 Home</button>
+ </div>
+</div>
+
 <!-- HISTORY MODAL -->
 <div class="modal" id="h-mod">
 <div class="mbox">
@@ -260,7 +317,8 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_V20",H_KEY="QUIZ_PRO_HIST_V20";
+const rCvs=document.getElementById('reelCanvas'),rCtx=rCvs.getContext('2d');
+const P_KEY="QUIZ_PRO_PREFS_V21",H_KEY="QUIZ_PRO_HIST_V21";
 let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
  id:"def_27",title:"🧠 आज का सवाल",qPrefix:"27.",
@@ -276,6 +334,9 @@ const cln=s=>(s||"").replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g,'').tri
 function moveEmoji(t){
  let c=cln(t).replace(/\s+/g,' '),rx=/([\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}▲])/gu,m=c.match(rx),w=c.replace(rx,'').replace(/\s+/g,' ').trim();
  return m?w+" "+m.join(''):w;
+}
+function stripEmojis(t){
+ return (t||"").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}▲✔]/gu,'').replace(/\s+/g,' ').trim();
 }
 function getCap(){
  let b=(qData.caption||"").replace(/#ans_[A-Da-d]/gi,'').trim();
@@ -312,16 +373,13 @@ function resetCrop(){
  document.getElementById('sc').value=115;document.getElementById('sc-l').innerText="115";processImg();
 }
 
-/* SHAPE MASK & WATERCOLOR BRUSH FADE GENERATOR (NO BORDER) */
 function applyShapeAndFade(offCanvas, shape, fadePct){
  if(shape==="rect" && fadePct===0) return;
  const w=offCanvas.width, h=offCanvas.height;
  const oCtx=offCanvas.getContext('2d');
-
  const mask=document.createElement('canvas');
  mask.width=w; mask.height=h;
  const mCtx=mask.getContext('2d');
-
  const blurPx=Math.round((fadePct/100)*Math.min(w,h)*0.22);
  const inset=Math.round(blurPx*0.85);
  const mw=Math.max(10, w - inset*2);
@@ -329,7 +387,6 @@ function applyShapeAndFade(offCanvas, shape, fadePct){
 
  mCtx.save();
  if(shape==="watercolor"){
-  // Organic Watercolor Brush Blotches (like IIT / Science Wala illustrations)
   const coreRx = w * Math.max(0.22, 0.44 - (fadePct/100)*0.18);
   const coreRy = h * Math.max(0.22, 0.44 - (fadePct/100)*0.18);
   const gCore = mCtx.createRadialGradient(w/2, h/2, Math.min(coreRx,coreRy)*0.45, w/2, h/2, Math.max(coreRx,coreRy)*1.15);
@@ -338,8 +395,6 @@ function applyShapeAndFade(offCanvas, shape, fadePct){
   gCore.addColorStop(1, "rgba(0,0,0,0)");
   mCtx.fillStyle = gCore;
   mCtx.fillRect(0,0,w,h);
-
-  // Add 28 deterministic irregular watercolor brush blotches around perimeter
   const steps = 28;
   for(let i=0; i<steps; i++){
    const ang = (i / steps) * Math.PI * 2;
@@ -463,7 +518,7 @@ function parseRawText(){
 
 function toggleAns(){let c=document.getElementById('chk-ans');c.checked=!c.checked;ansMode=c.checked;savePrefs();draw();}
 function savePrefs(){
- try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,mlt:document.getElementById('chk-mult').checked,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
+ try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,mlt:document.getElementById('chk-mult').checked,tmr:document.getElementById('cfg-timer').value,vmd:document.getElementById('cfg-vmode').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
 }
 function loadPrefs(){
  try{
@@ -475,6 +530,8 @@ function loadPrefs(){
   if(p.shp)document.getElementById('cfg-shape').value=p.shp;
   if(p.fd!==undefined){document.getElementById('cfg-fade').value=p.fd;document.getElementById('fade-lbl').innerText=p.fd;}
   if(p.mlt!==undefined)document.getElementById('chk-mult').checked=p.mlt;
+  if(p.tmr!==undefined)document.getElementById('cfg-timer').value=p.tmr;
+  if(p.vmd)document.getElementById('cfg-vmode').value=p.vmd;
   if(p.qs){document.getElementById('cfg-qs').value=p.qs;document.getElementById('qs-lbl').innerText=p.qs;}
   if(p.os){document.getElementById('cfg-os').value=p.os;document.getElementById('os-lbl').innerText=p.os;}
   if(p.ctay!==undefined){document.getElementById('cfg-cta-y').value=p.ctay;document.getElementById('cta-lbl').innerText=p.ctay;}
@@ -558,8 +615,6 @@ function drawBgPhoto(c,x,y,w,h,r){
  c.drawImage(bgImg,x+(w-dw)/2-pad,y+(h-dh)/2-pad,dw+pad*2,dh+pad*2);c.filter="none";
  if(tn>0){c.fillStyle=`rgba(255,255,255,${tn})`;c.fillRect(x,y,w,h);}c.restore();return true;
 }
-
-/* BORDERLESS SUBJECT IMAGE RENDERER WITH MULTIPLY PAPER BLEND */
 function drawSubImg(c,bx,by,bw,bh){
  if(!procSub)return;
  let sc=(parseInt(document.getElementById('sc').value)||115)/100,ox=parseInt(document.getElementById('ox').value)||0,oy=parseInt(document.getElementById('oy').value)||0;
@@ -573,8 +628,6 @@ function drawSubImg(c,bx,by,bw,bh){
  c.drawImage(procSub,dx,dy,dw,dh);
  c.restore();
 }
-
-/* LEFT-ALIGNED MULTI-COLOR QUESTION */
 function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
  c.textBaseline="top";c.textAlign="left";c.font=`900 ${fs+4}px 'Poppins',sans-serif`;c.fillStyle=preCol;
  let fp=pre+" ",pw=c.measureText(fp).width;c.fillText(fp,x,y);
@@ -590,8 +643,6 @@ function drawColorQ(c,pre,txt,x,y,mw,fs,ff,defCol,pal,preCol){
  });
  return cy+lh;
 }
-
-/* CENTER-ALIGNED MULTI-COLOR QUESTION (FOR 'AAJ KA SAWAL' THEME) */
 function drawCenteredColorQ(c,pre,txt,centerX,y,mw,fs,ff,defCol,pal,preCol){
  c.textBaseline="top";c.textAlign="left";
  let sw=new Set(["के","की","का","को","में","से","पर","और","या","है","हैं","था","थे","थी","हूँ","हो","जाता","जाती","कहा","लिए","द्वारा","तथा","एवं","इस","उस","एक"]);
@@ -610,36 +661,26 @@ function drawCenteredColorQ(c,pre,txt,centerX,y,mw,fs,ff,defCol,pal,preCol){
   if(/['"’”][?,.!।]*$/.test(w))inq=false;
   tokens.push({t:w+" ",col:col,font:`900 ${fs}px ${ff}`,w:c.measureText(w+" ").width});
  });
-
- // Group tokens into centered lines
  let lines=[],curLine=[],curW=0;
  tokens.forEach(tk=>{
-  if(curW+tk.w>mw && curLine.length>0){
-   lines.push({items:curLine,width:curW});
-   curLine=[tk];curW=tk.w;
-  }else{
-   curLine.push(tk);curW+=tk.w;
-  }
+  if(curW+tk.w>mw && curLine.length>0){lines.push({items:curLine,width:curW});curLine=[tk];curW=tk.w;}
+  else{curLine.push(tk);curW+=tk.w;}
  });
  if(curLine.length>0) lines.push({items:curLine,width:curW});
-
  let cy=y,lh=Math.round(fs*1.38);
  lines.forEach(ln=>{
   let sx=centerX - (ln.width/2);
-  ln.items.forEach(tk=>{
-   c.font=tk.font;c.fillStyle=tk.col;c.fillText(tk.t,sx,cy);sx+=tk.w;
-  });
+  ln.items.forEach(tk=>{c.font=tk.font;c.fillStyle=tk.col;c.fillText(tk.t,sx,cy);sx+=tk.w;});
   cy+=lh;
  });
  return cy;
 }
 
-/* MAIN DRAW ENGINE */
+/* 4:5 IMAGE CARD DRAW ENGINE */
 function draw(){
  const th=document.getElementById('cfg-theme').value,ff=document.getElementById('cfg-font').value,qs=parseInt(document.getElementById('cfg-qs').value)||42,bos=parseInt(document.getElementById('cfg-os').value)||34,ctaOffY=parseInt(document.getElementById('cfg-cta-y').value)||0,ipos=document.getElementById('cfg-ipos').value,hasI=Boolean(procSub),pal=["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
  ctx.clearRect(0,0,1080,1350);
 
- /* THEME 1: AAJ KA SAWAL (NOW WITH MULTI-COLOR QUESTION WORDS) */
  if(th==="aaj_ka_sawal"){
   if(!drawBgPhoto(ctx,0,0,1080,1350,0)){ctx.fillStyle="#faf7f0";ctx.fillRect(0,0,1080,1350);}
   ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#dc2626";ctx.font=`900 46px ${ff}`;ctx.fillText(qData.title||"🧠 आज का सवाल",540,86);
@@ -672,7 +713,6 @@ function draw(){
   return;
  }
 
- /* THEME 2: WORLD GK CAPSULE */
  if(th==="world_capsule"){
   if(!drawBgPhoto(ctx,0,0,1080,1350,0)){let g=ctx.createRadialGradient(540,620,80,540,675,860);g.addColorStop(0,"#fff");g.addColorStop(.55,"#e0f2fe");g.addColorStop(1,"#bae6fd");ctx.fillStyle=g;ctx.fillRect(0,0,1080,1350);}
   ctx.strokeStyle="#3b82f6";ctx.lineWidth=6;rRect(ctx,22,22,1036,1306,34,null,true);
@@ -714,7 +754,6 @@ function draw(){
   return;
  }
 
- /* THEME 3: CLASSIC TEXTURED PAPER */
  if(th==="paper_classic"){
   if(!drawBgPhoto(ctx,0,0,1080,1350,0)){ctx.fillStyle=getPat(ctx,document.getElementById('cfg-paper-col').value);ctx.fillRect(0,0,1080,1350);}
   ctx.strokeStyle="rgba(30,41,59,.25)";ctx.lineWidth=4;rRect(ctx,18,18,1044,1314,28,null,true);
@@ -751,7 +790,6 @@ function draw(){
   return;
  }
 
- /* THEME 4: CANDY POP & SOFT WARM YELLOW */
  let isC=th==="kids_candy";
  if(isC){let g=ctx.createLinearGradient(0,0,1080,1350);g.addColorStop(0,"#ff6b6b");g.addColorStop(.5,"#feca57");g.addColorStop(1,"#48dbfb");ctx.fillStyle=g;}else ctx.fillStyle=th;
  ctx.fillRect(0,0,1080,1350);
@@ -789,6 +827,382 @@ function draw(){
  }
 }
 
+/* ==================== 9:16 VERTICAL VIDEO PLAYER & HUMAN TTS ENGINE ==================== */
+let reelState = "IDLE"; // IDLE, PLAYING, PAUSED, DONE
+let reelStep = 0; // 0: Ready, 1: Question, 2..5: Options A-D, 6: Countdown, 7: Final Reveal/Comment
+let reelTimerVal = 0;
+let reelTimerInterval = null;
+let reelAnimRaf = null;
+let reelAudioCtx = null;
+
+function playTickSound(freq=880, dur=0.06){
+ try{
+  if(!reelAudioCtx) reelAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if(reelAudioCtx.state === 'suspended') reelAudioCtx.resume();
+  const osc = reelAudioCtx.createOscillator();
+  const gain = reelAudioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, reelAudioCtx.currentTime);
+  gain.gain.setValueAtTime(0.18, reelAudioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, reelAudioCtx.currentTime + dur);
+  osc.connect(gain); gain.connect(reelAudioCtx.destination);
+  osc.start(); osc.stop(reelAudioCtx.currentTime + dur);
+ }catch(e){}
+}
+
+function getBestHindiVoice(){
+ const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+ return voices.find(v => v.lang === 'hi-IN' && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Lekha') || v.name.includes('Hemant')))
+     || voices.find(v => v.lang.toLowerCase().includes('hi'))
+     || null;
+}
+
+function speakHindiLine(text, onEndCallback){
+ if(!window.speechSynthesis){
+  setTimeout(onEndCallback, 1600);
+  return;
+ }
+ window.speechSynthesis.cancel();
+ const cleanTxt = stripEmojis(text).replace(/^Q\.?\s*\d*[\.\:\-\)]*/i, '').replace(/^\d+[\.\:\-\)]*/, '').trim();
+ if(!cleanTxt){ onEndCallback(); return; }
+
+ const utter = new SpeechSynthesisUtterance(cleanTxt);
+ utter.lang = 'hi-IN';
+ const hv = getBestHindiVoice();
+ if(hv) utter.voice = hv;
+ utter.rate = 0.96; // Natural human cadence
+ utter.pitch = 1.02;
+
+ let finished = false;
+ const finishOnce = () => {
+  if(finished) return;
+  finished = true;
+  if(reelState === "PLAYING") onEndCallback();
+ };
+
+ utter.onend = finishOnce;
+ utter.onerror = finishOnce;
+ window.speechSynthesis.speak(utter);
+
+ // Safety fallback timer in case mobile TTS hangs
+ const estMs = Math.max(1800, cleanTxt.length * 95);
+ setTimeout(() => {
+  if(!finished && reelState === "PLAYING" && !window.speechSynthesis.speaking){
+   finishOnce();
+  }
+ }, estMs + 1500);
+}
+
+function openReelPlayer(){
+ stopAllReelProcesses();
+ reelState = "IDLE";
+ reelStep = 0;
+ reelTimerVal = parseInt(document.getElementById('cfg-timer').value) || 5;
+ document.getElementById('btn-r-play').innerText = "▶️ Play";
+ document.getElementById('reel-overlay').style.display = "flex";
+ renderReelFrame();
+}
+
+function closeReelToHome(){
+ stopAllReelProcesses();
+ reelState = "IDLE";
+ document.getElementById('reel-overlay').style.display = "none";
+}
+
+function stopAllReelProcesses(){
+ if(window.speechSynthesis) window.speechSynthesis.cancel();
+ if(reelTimerInterval){ clearInterval(reelTimerInterval); reelTimerInterval = null; }
+ if(reelAnimRaf){ cancelAnimationFrame(reelAnimRaf); reelAnimRaf = null; }
+}
+
+function pauseReel(){
+ if(reelState !== "PLAYING") return;
+ reelState = "PAUSED";
+ if(window.speechSynthesis) window.speechSynthesis.pause();
+ if(reelTimerInterval){ clearInterval(reelTimerInterval); reelTimerInterval = null; }
+ document.getElementById('btn-r-play').innerText = "▶️ Resume";
+ renderReelFrame();
+}
+
+function startOrResumeReel(){
+ if(reelState === "PLAYING") return;
+
+ if(reelState === "PAUSED"){
+  reelState = "PLAYING";
+  document.getElementById('btn-r-play').innerText = "▶️ Play";
+  if(window.speechSynthesis && window.speechSynthesis.paused){
+   window.speechSynthesis.resume();
+  }
+  if(reelStep === 6){
+   runCountdownLoop();
+  }else{
+   executeReelStep(reelStep);
+  }
+  return;
+ }
+
+ // Fresh start from IDLE or DONE
+ stopAllReelProcesses();
+ reelState = "PLAYING";
+ reelStep = 1;
+ document.getElementById('btn-r-play').innerText = "▶️ Play";
+ executeReelStep(1);
+}
+
+function executeReelStep(step){
+ if(reelState !== "PLAYING") return;
+ reelStep = step;
+ renderReelFrame();
+
+ const optKeys = ["A", "B", "C", "D"];
+ const hindiOptNames = { A: "ऑप्शन ए", B: "ऑप्शन बी", C: "ऑप्शन सी", D: "ऑप्शन डी" };
+
+ if(step === 1){
+  // Speak Question
+  speakHindiLine(`सवाल: ${qData.questionText}`, () => {
+   setTimeout(() => executeReelStep(2), 300);
+  });
+ }else if(step >= 2 && step <= 5){
+  // Speak Options A, B, C, D one by one
+  const k = optKeys[step - 2];
+  const optVal = qData.options[k] || "";
+  speakHindiLine(`${hindiOptNames[k]}: ${optVal}`, () => {
+   setTimeout(() => executeReelStep(step + 1), 220);
+  });
+ }else if(step === 6){
+  // Countdown Phase
+  const maxT = parseInt(document.getElementById('cfg-timer').value) || 0;
+  if(maxT <= 0){
+   executeReelStep(7);
+   return;
+  }
+  reelTimerVal = maxT;
+  renderReelFrame();
+  speakHindiLine("सोचिए और सही जवाब बताइए!", () => {});
+  runCountdownLoop();
+ }else if(step === 7){
+  // Reveal Answer or Comment Challenge
+  const vMode = document.getElementById('cfg-vmode').value;
+  renderReelFrame();
+  if(vMode === "reveal"){
+   playTickSound(1120, 0.25);
+   const corrKey = qData.correctOption || "A";
+   const corrTxt = qData.options[corrKey] || "";
+   speakHindiLine(`सही जवाब है, ${hindiOptNames[corrKey]}, ${corrTxt}. वीडियो को लाइक और फॉलो ज़रूर करें।`, () => {
+    reelState = "DONE";
+    document.getElementById('btn-r-play').innerText = "🔄 Replay";
+    renderReelFrame();
+   });
+  }else{
+   playTickSound(980, 0.2);
+   speakHindiLine("अपना सही जवाब नीचे कमेंट बॉक्स में लिखें, और पेज को फॉलो ज़रूर करें!", () => {
+    reelState = "DONE";
+    document.getElementById('btn-r-play').innerText = "🔄 Replay";
+    renderReelFrame();
+   });
+  }
+ }
+}
+
+function runCountdownLoop(){
+ if(reelTimerInterval) clearInterval(reelTimerInterval);
+ reelTimerInterval = setInterval(() => {
+  if(reelState !== "PLAYING"){
+   clearInterval(reelTimerInterval);
+   return;
+  }
+  playTickSound(reelTimerVal <= 2 ? 1050 : 780, 0.07);
+  reelTimerVal--;
+  renderReelFrame();
+  if(reelTimerVal <= 0){
+   clearInterval(reelTimerInterval);
+   reelTimerInterval = null;
+   setTimeout(() => executeReelStep(7), 250);
+  }
+ }, 1000);
+}
+
+/* RENDER 9:16 VERTICAL FRAME (1080 x 1920) */
+function renderReelFrame(){
+ const th = document.getElementById('cfg-theme').value;
+ const ff = document.getElementById('cfg-font').value;
+ const qs = parseInt(document.getElementById('cfg-qs').value) || 42;
+ const bos = parseInt(document.getElementById('cfg-os').value) || 34;
+ const hasI = Boolean(procSub);
+ const vMode = document.getElementById('cfg-vmode').value;
+ const isRevealed = (reelStep === 7 && vMode === "reveal");
+ const pal = ["#dc2626","#1d4ed8","#047857","#7e22ce","#be123c","#b45309"];
+
+ rCtx.clearRect(0, 0, 1080, 1920);
+
+ // 1. Background based on selected theme
+ if(!drawBgPhoto(rCtx, 0, 0, 1080, 1920, 0)){
+  if(th === "world_capsule"){
+   let g = rCtx.createRadialGradient(540, 900, 100, 540, 960, 1100);
+   g.addColorStop(0, "#ffffff"); g.addColorStop(0.55, "#e0f2fe"); g.addColorStop(1, "#bae6fd");
+   rCtx.fillStyle = g; rCtx.fillRect(0, 0, 1080, 1920);
+  }else if(th === "paper_classic"){
+   rCtx.fillStyle = getPat(rCtx, document.getElementById('cfg-paper-col').value);
+   rCtx.fillRect(0, 0, 1080, 1920);
+  }else if(th === "kids_candy"){
+   let g = rCtx.createLinearGradient(0, 0, 1080, 1920);
+   g.addColorStop(0, "#ff6b6b"); g.addColorStop(0.5, "#feca57"); g.addColorStop(1, "#48dbfb");
+   rCtx.fillStyle = g; rCtx.fillRect(0, 0, 1080, 1920);
+  }else if(th.startsWith("#")){
+   rCtx.fillStyle = th; rCtx.fillRect(0, 0, 1080, 1920);
+  }else{
+   rCtx.fillStyle = "#faf7f0"; rCtx.fillRect(0, 0, 1080, 1920);
+  }
+ }
+
+ // Outer Frame Border
+ rCtx.strokeStyle = (th === "world_capsule") ? "#3b82f6" : "rgba(30,41,59,0.22)";
+ rCtx.lineWidth = 6;
+ rRect(rCtx, 24, 24, 1032, 1872, 36, null, true);
+
+ // 2. Top Header & Badge (Positioned safely below phone status bar)
+ rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
+ rCtx.fillStyle = "#dc2626";
+ rCtx.font = `900 54px ${ff}`;
+ rCtx.fillText(qData.title || "🧠 आज का सवाल", 540, 125);
+
+ const bt = "EXAM PREPARATION";
+ rCtx.font = "900 26px 'Poppins', sans-serif";
+ const pw = rCtx.measureText(bt).width + 76;
+ const px = (1080 - pw) / 2;
+ rRect(rCtx, px, 174, pw, 54, 27, "#1e2433", false);
+ rCtx.strokeStyle = "#f59e0b"; rCtx.lineWidth = 2.5;
+ rRect(rCtx, px, 174, pw, 54, 27, null, true);
+ rCtx.fillStyle = "#ffffff";
+ rCtx.fillText(bt, 540, 202);
+
+ // 3. Question Card (Always visible from Step 0)
+ const qBoxY = 268;
+ const hasE = Boolean(cln(qData.questionEn));
+ const qBoxH = hasE ? 290 : 230;
+ rRect(rCtx, 58, qBoxY + 6, 972, qBoxH, 28, "rgba(15,23,42,0.12)", false);
+ rRect(rCtx, 54, qBoxY, 972, qBoxH, 28, "#ffffff", false);
+ rCtx.strokeStyle = (th === "world_capsule") ? "#1e3a8a" : "#cbd5e1";
+ rCtx.lineWidth = 3.5;
+ rRect(rCtx, 54, qBoxY, 972, qBoxH, 28, null, true);
+
+ let qe = drawColorQ(rCtx, qData.qPrefix || "Q.", qData.questionText, 88, qBoxY + 26, 904, qs + 4, ff, "#0f172a", pal, "#1d4ed8");
+ if(hasE){
+  rCtx.fillStyle = "#15803d"; rCtx.font = "700 27px 'Hind', sans-serif";
+  wrapL(rCtx, "- " + qData.questionEn, 88, qe + 4, 904, 34);
+ }
+
+ // 4. Optional Subject Image Banner (Middle Zone)
+ let curY = qBoxY + qBoxH + 34;
+ if(hasI){
+  drawSubImg(rCtx, 90, curY, 900, 290);
+  curY += 314;
+ }else{
+  curY += 24;
+ }
+
+ // 5. Animated Options (Reveal progressively in Step 2..5, all visible in Step 0, 6, 7)
+ const optDefs = [
+  { c: "#1d4ed8", k: "A" },
+  { c: "#db2777", k: "B" },
+  { c: "#ea580c", k: "C" },
+  { c: "#16a34a", k: "D" }
+ ];
+ const optH = 108;
+ const optGap = 128;
+
+ optDefs.forEach((s, idx) => {
+  // Show all options in IDLE (0) or once their step has been reached
+  const isVisible = (reelStep === 0 || reelStep >= idx + 2);
+  if(!isVisible) return;
+
+  const oy = curY + idx * optGap;
+  const isSpeakingThis = (reelState === "PLAYING" && reelStep === idx + 2);
+  const isCorrect = (qData.correctOption === s.k);
+
+  let boxFill = "#ffffff";
+  let boxStroke = s.c;
+  let strokeW = 3;
+
+  if(isRevealed && isCorrect){
+   boxFill = "#16a34a"; boxStroke = "#facc15"; strokeW = 6;
+  }else if(isSpeakingThis){
+   boxFill = "#fef9c3"; boxStroke = "#f59e0b"; strokeW = 5;
+  }
+
+  rRect(rCtx, 64, oy + 5, 956, optH, 24, "rgba(15,23,42,0.12)", false);
+  rRect(rCtx, 60, oy, 956, optH, 24, boxFill, false);
+  rCtx.strokeStyle = boxStroke; rCtx.lineWidth = strokeW;
+  rRect(rCtx, 60, oy, 956, optH, 24, null, true);
+
+  const cr = 34;
+  const cx = 114;
+  const mid = oy + optH / 2;
+  rCtx.beginPath(); rCtx.arc(cx, mid, cr, 0, Math.PI * 2);
+  rCtx.fillStyle = (isRevealed && isCorrect) ? "#facc15" : s.c;
+  rCtx.fill();
+
+  rCtx.fillStyle = (isRevealed && isCorrect) ? "#0f172a" : "#ffffff";
+  rCtx.font = "900 32px 'Poppins', sans-serif";
+  rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
+  rCtx.fillText((isRevealed && isCorrect) ? "✔" : s.k, cx, mid + 1);
+
+  rCtx.textAlign = "left";
+  rCtx.fillStyle = (isRevealed && isCorrect) ? "#ffffff" : "#0f172a";
+  rCtx.font = `800 ${bos + 2}px ${ff}`;
+  rCtx.fillText(trunc(rCtx, qData.options[s.k] || "", 820), 168, mid + 2);
+ });
+
+ // 6. Bottom Countdown Timer / Reveal Card / Footer
+ const bottomY = curY + 4 * optGap + 24;
+
+ if(reelStep === 6){
+  // Live Animated Countdown Ring
+  const maxT = parseInt(document.getElementById('cfg-timer').value) || 5;
+  const ratio = Math.max(0, reelTimerVal / maxT);
+  const tCx = 540, tCy = bottomY + 75, tR = 64;
+
+  rCtx.beginPath(); rCtx.arc(tCx, tCy, tR + 8, 0, Math.PI * 2);
+  rCtx.fillStyle = "#ffffff"; rCtx.fill();
+  rCtx.strokeStyle = "#cbd5e1"; rCtx.lineWidth = 10; rCtx.stroke();
+
+  rCtx.beginPath();
+  rCtx.arc(tCx, tCy, tR + 8, -Math.PI / 2, -Math.PI / 2 + ratio * Math.PI * 2);
+  rCtx.strokeStyle = (reelTimerVal <= 2) ? "#dc2626" : "#f59e0b";
+  rCtx.lineWidth = 10; rCtx.lineCap = "round"; rCtx.stroke();
+
+  rCtx.fillStyle = (reelTimerVal <= 2) ? "#dc2626" : "#0f172a";
+  rCtx.font = "900 54px 'Poppins', sans-serif";
+  rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
+  rCtx.fillText(String(reelTimerVal), tCx, tCy + 2);
+ }else if(isRevealed){
+  // Answer Explanation Box
+  rRect(rCtx, 60, bottomY, 956, 185, 22, "#ffffff", false);
+  rCtx.strokeStyle = "#16a34a"; rCtx.lineWidth = 4;
+  rRect(rCtx, 60, bottomY, 956, 185, 22, null, true);
+
+  rCtx.fillStyle = "#15803d"; rCtx.font = `800 28px ${ff}`;
+  rCtx.textAlign = "left"; rCtx.textBaseline = "top";
+  rCtx.fillText(`💡 सही उत्तर: [${qData.correctOption}] ${qData.options[qData.correctOption] || ""}`, 88, bottomY + 18);
+
+  rCtx.fillStyle = "#1e293b"; rCtx.font = `600 24px ${ff}`;
+  wrapL(rCtx, qData.explanation, 88, bottomY + 60, 900, 32);
+ }else{
+  // CTA Pill
+  rRect(rCtx, 60, bottomY + 10, 956, 88, 44, "#f59e0b", false);
+  rCtx.strokeStyle = "#1e293b"; rCtx.lineWidth = 3;
+  rRect(rCtx, 60, bottomY + 10, 956, 88, 44, null, true);
+  rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
+  rCtx.fillStyle = "#ffffff"; rCtx.font = `900 34px ${ff}`;
+  rCtx.fillText(qData.hook || "👇 अपना जवाब कमेंट में लिखें!", 540, bottomY + 54);
+ }
+
+ // Bottom Social Line
+ rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
+ rCtx.fillStyle = "#0f172a"; rCtx.font = `800 30px ${ff}`;
+ rCtx.fillText(qData.social || "❤️ Like | ➕ Follow | 🔔 अगला सवाल", 540, 1835);
+}
+
 async function shareImg(){
  let cap=getCap();navigator.clipboard.writeText(cap).catch(()=>{});
  cvs.toBlob(async b=>{
@@ -799,7 +1213,12 @@ async function shareImg(){
 }
 function dlImg(){let a=document.createElement('a');a.download=`${ansMode?"Solved_":""}Quiz_${qData.qPrefix.replace(/[^a-zA-Z0-9]/g,'_')}.png`;a.href=cvs.toDataURL();a.click();}
 
-window.onload=()=>{loadPrefs();document.getElementById('h-cnt').innerText=getHist().length;draw();};
+window.onload=()=>{
+ loadPrefs();
+ document.getElementById('h-cnt').innerText=getHist().length;
+ if(window.speechSynthesis) window.speechSynthesis.getVoices();
+ draw();
+};
 </script>
 </body>
 </html>
