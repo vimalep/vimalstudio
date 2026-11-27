@@ -371,6 +371,7 @@
                     <option value="fbTheme">📘 3. Facebook Royal Blue Theme</option>
                     <option value="darkTheme">🖤 4. Modern Dark Neon Theme</option>
                     <option value="navyGoldTheme">👑 5. Royal Navy & Gold Theme</option>
+                    <option value="kidsTheme">🎨 6. Kids Bright Rainbow Theme (बच्चों के लिए)</option>
                 </select>
             </div>
             <div>
@@ -393,12 +394,12 @@
 
         <div class="row" style="margin-top: 4px;">
             <div class="slider-wrap">
-                <label>📏 Question Size (4:5): <span id="qSizeVal">20px</span></label>
-                <input type="range" id="qSizeInput" min="16" max="26" value="20" oninput="document.getElementById('qSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
+                <label>📏 Question Size: <span id="qSizeVal">22px</span></label>
+                <input type="range" id="qSizeInput" min="16" max="38" value="22" oninput="document.getElementById('qSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
             </div>
             <div class="slider-wrap">
-                <label>📏 Answer Size (4:5): <span id="aSizeVal">19px</span></label>
-                <input type="range" id="aSizeInput" min="16" max="26" value="19" oninput="document.getElementById('aSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
+                <label>📏 Answer Size: <span id="aSizeVal">21px</span></label>
+                <input type="range" id="aSizeInput" min="16" max="36" value="21" oninput="document.getElementById('aSizeVal').innerText=this.value+'px'; savePrefsAndRefresh();">
             </div>
             <div class="slider-wrap">
                 <label>👁️ वॉटरमार्क डार्कनेस: <span id="wmVal">3%</span></label>
@@ -580,7 +581,7 @@ SHIELD
 </div>
 
 <script>
-    const STORAGE_PREFS = "EP_STUDIO_ULTIMATE_PREFS_V4";
+    const STORAGE_PREFS = "EP_STUDIO_ULTIMATE_PREFS_V5";
     const STORAGE_ARCHIVE = "EP_STUDIO_DAILY_ARCHIVE_V2";
 
     const STATIC_GK_BANK = [
@@ -610,6 +611,7 @@ SHIELD
         whiteTheme: {
             bg: '#fffde7',
             cardBg: 'rgba(255, 255, 255, 0.97)',
+            cardBorder: 'rgba(15, 76, 129, 0.22)',
             headerColor: '#0a1172',
             dateBg: '#b71c1c',
             badgeBg: '#b71c1c',
@@ -626,6 +628,7 @@ SHIELD
         instaTheme: {
             bg: '#fff1f2',
             cardBg: 'rgba(255, 255, 255, 0.97)',
+            cardBorder: 'rgba(225, 29, 72, 0.25)',
             headerColor: '#881337',
             dateBg: '#e11d48',
             badgeBg: '#e11d48',
@@ -642,6 +645,7 @@ SHIELD
         fbTheme: {
             bg: '#eff6ff',
             cardBg: 'rgba(255, 255, 255, 0.98)',
+            cardBorder: 'rgba(37, 99, 235, 0.25)',
             headerColor: '#1e3a8a',
             dateBg: '#1d4ed8',
             badgeBg: '#1d4ed8',
@@ -658,6 +662,7 @@ SHIELD
         darkTheme: {
             bg: '#090d16',
             cardBg: 'rgba(30, 41, 59, 0.96)',
+            cardBorder: 'rgba(56, 189, 248, 0.35)',
             headerColor: '#38bdf8',
             dateBg: '#0284c7',
             badgeBg: '#0284c7',
@@ -674,6 +679,7 @@ SHIELD
         navyGoldTheme: {
             bg: '#0a1128',
             cardBg: 'rgba(15, 23, 42, 0.97)',
+            cardBorder: 'rgba(245, 158, 11, 0.35)',
             headerColor: '#f59e0b',
             dateBg: '#d97706',
             badgeBg: '#d97706',
@@ -686,6 +692,23 @@ SHIELD
             footerBg: '#1e293b',
             footerText: '#fbbf24',
             wmColor: 'rgba(245, 158, 11, '
+        },
+        kidsTheme: {
+            bg: '#e0f7fa',
+            cardBg: '#ffffff',
+            cardBorder: '#ff6f00',
+            headerColor: '#6a1b9a',
+            dateBg: '#ff4081',
+            badgeBg: '#ff6f00',
+            qColor: '#1a237e',
+            qHighlightColor: '#e91e63',
+            pillBg: '#dcedc8',
+            pillBorder: '#43a047',
+            aColor: '#1b5e20',
+            timelineColor: '#ffab40',
+            footerBg: '#6a1b9a',
+            footerText: '#ffeb3b',
+            wmColor: 'rgba(106, 27, 154, '
         }
     };
 
@@ -1178,7 +1201,7 @@ ${hookLine}
                         document.getElementById('primaryDownloadBtn').innerHTML = '<span>📥 Download All 5 Slides (9:16 PNG)</span>';
                     }
                 }
-                if (p.theme) { document.getElementById('gridThemeSelect').value = p.theme; currentThemeKey = p.theme; }
+                if (p.theme && THEMES[p.theme]) { document.getElementById('gridThemeSelect').value = p.theme; currentThemeKey = p.theme; }
                 if (p.font) document.getElementById('hindiFontSelect').value = p.font;
                 if (p.layout) document.getElementById('gridLineLayout').value = p.layout;
                 if (p.wmOpacity) {
@@ -1207,7 +1230,7 @@ ${hookLine}
         debounceTimer = setTimeout(() => {
             generateQA(true);
             updateCaption();
-        }, 80);
+        }, 60);
     }
 
     function parseQuestionWithTag(rawQ) {
@@ -1315,15 +1338,15 @@ ${hookLine}
     function drawExamTagBadge(ctx, tag, x, y, fontSize) {
         if (!tag) return 0;
         ctx.save();
-        ctx.font = `800 ${Math.max(12, fontSize - 5)}px 'Poppins', sans-serif`;
+        ctx.font = `800 ${Math.max(12, fontSize - 6)}px 'Poppins', sans-serif`;
         const w = ctx.measureText(tag).width + 16;
-        const h = fontSize + 4;
+        const h = Math.min(34, fontSize + 2);
         ctx.fillStyle = "#f59e0b";
-        roundRect(ctx, x, y - 2, w, h, 6, true, false);
+        roundRect(ctx, x, y - 1, w, h, 6, true, false);
         ctx.fillStyle = "#0f172a";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(tag, x + w / 2, y - 2 + h / 2);
+        ctx.fillText(tag, x + w / 2, y - 1 + h / 2);
         ctx.restore();
         return w + 10;
     }
@@ -1358,8 +1381,8 @@ ${hookLine}
         ctx.font = `800 ${baseASize}px ${hindiFont}`;
         const totalText = isThinking ? ansText : ("उत्तर: " + ansText);
         const textW = ctx.measureText(totalText).width;
-        const pillHeight = baseASize + 14;
-        const pillWidth = textW + 30;
+        const pillHeight = baseASize + 12;
+        const pillWidth = textW + 28;
 
         ctx.fillStyle = isThinking ? "#f1f5f9" : (isHidden ? "#fef08a" : theme.pillBg);
         ctx.strokeStyle = isThinking ? "#94a3b8" : (isHidden ? "#eab308" : theme.pillBorder);
@@ -1369,15 +1392,16 @@ ${hookLine}
         ctx.fillStyle = isThinking ? "#475569" : (isHidden ? "#b91c1c" : theme.aColor);
         ctx.textAlign = "left";
         ctx.textBaseline = "middle";
-        ctx.fillText(totalText, textStartX + 15, pillY + (pillHeight / 2));
+        ctx.fillText(totalText, textStartX + 14, pillY + (pillHeight / 2));
         ctx.restore();
     }
 
+    // UPDATED: Honors user's exact Question & Answer slider sizes cleanly without shrinking them back down
     function renderBalancedQA(ctx, item, textStartX, currentY, actualBoxHeight, textAvailWidth, baseQSize, baseASize, hindiFont, theme) {
         ctx.font = `700 ${baseQSize}px ${hindiFont}`;
         ctx.textBaseline = "top";
         
-        let tagOffset = item.tag ? drawExamTagBadge(ctx, item.tag, textStartX, currentY + 11, baseQSize) : 0;
+        let tagOffset = item.tag ? drawExamTagBadge(ctx, item.tag, textStartX, currentY + 8, baseQSize) : 0;
         let firstLineAvail = textAvailWidth - tagOffset;
 
         const words = item.q.split(' ');
@@ -1403,19 +1427,23 @@ ${hookLine}
 
         if (lines.length <= 1) {
             ctx.font = `700 ${baseQSize}px ${hindiFont}`;
-            drawSmartHighlightedLine(ctx, item.q, textStartX + tagOffset, currentY + 13, theme, theme.qColor, true, firstLineAvail);
+            const topPad = Math.max(8, Math.floor((actualBoxHeight - baseQSize - baseASize - 18) / 2));
+            drawSmartHighlightedLine(ctx, item.q, textStartX + tagOffset, currentY + topPad, theme, theme.qColor, true, firstLineAvail);
 
-            const pillY = currentY + actualBoxHeight - baseASize - 17;
+            const pillY = currentY + actualBoxHeight - (baseASize + 12) - 5;
             drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize, hindiFont, theme, item.isHidden);
         } else {
-            const adjQSize = Math.max(17, baseQSize - 1);
-            const lineGap = adjQSize + 3;
-            ctx.font = `700 ${adjQSize}px ${hindiFont}`;
-            drawSmartHighlightedLine(ctx, lines[0], textStartX + tagOffset, currentY + 7, theme, theme.qColor, false, firstLineAvail);
-            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 7 + lineGap, theme, theme.qColor, true, textAvailWidth);
+            // Dynamically fit 2 lines + pill inside box height while keeping user's large font visible
+            const maxAllowedQ = Math.min(baseQSize, Math.floor((actualBoxHeight - baseASize - 22) / 2));
+            const finalQ = Math.max(17, maxAllowedQ);
+            const lineGap = finalQ + 3;
+            ctx.font = `700 ${finalQ}px ${hindiFont}`;
+            drawSmartHighlightedLine(ctx, lines[0], textStartX + tagOffset, currentY + 5, theme, theme.qColor, false, firstLineAvail);
+            drawSmartHighlightedLine(ctx, lines[1], textStartX, currentY + 5 + lineGap, theme, theme.qColor, true, textAvailWidth);
 
-            const pillY = currentY + actualBoxHeight - baseASize - 14;
-            drawAnswerPill(ctx, item.a, textStartX, pillY, baseASize - 1, hindiFont, theme, item.isHidden);
+            const finalA = Math.min(baseASize, Math.max(16, actualBoxHeight - (2 * lineGap) - 20));
+            const pillY = currentY + actualBoxHeight - (finalA + 12) - 4;
+            drawAnswerPill(ctx, item.a, textStartX, pillY, finalA, hindiFont, theme, item.isHidden);
         }
     }
 
@@ -1489,7 +1517,7 @@ ${hookLine}
         ctx.restore();
     }
 
-    // 9:16 VERTICAL FULL-SCREEN REEL & SLIDE RENDERER (1080 x 1920 with Safe Zones)
+    // 9:16 VERTICAL FULL-SCREEN REEL & SLIDE RENDERER (1080 x 1920 — Connected to Q & A Size Sliders!)
     function renderVertical916Slide(ctx, canvas, items, slideIndex, isReel = false, showAnswer = true) {
         canvas.width = 1080;
         canvas.height = 1920;
@@ -1497,6 +1525,12 @@ ${hookLine}
         const theme = THEMES[currentThemeKey];
         const hindiFont = document.getElementById('hindiFontSelect').value;
         const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
+
+        // Read user sliders and scale up proportionally for 1080x1920 vertical cards
+        const sliderQ = parseInt(document.getElementById('qSizeInput').value) || 22;
+        const sliderA = parseInt(document.getElementById('aSizeInput').value) || 21;
+        const bigQSize = sliderQ * 2; // e.g., 22px -> 44px, 32px -> 64px!
+        const bigASize = sliderA * 2; // e.g., 21px -> 42px, 30px -> 60px!
 
         // 1. Background
         ctx.fillStyle = theme.bg;
@@ -1511,7 +1545,7 @@ ${hookLine}
             roundRect(ctx, 60 + i * (segW + barGap), 75, segW, 10, 5, true, false);
         }
 
-        // 3. Top Header (Safe from Reels status bar: starts at Y=165)
+        // 3. Top Header
         const headerTitle = document.getElementById('gridHeaderInput').value || getAutoFormattedDate();
         ctx.save();
         ctx.fillStyle = theme.headerColor;
@@ -1544,7 +1578,7 @@ ${hookLine}
         ctx.fillText("EXAM PREPARATION • UPPSC | SSC | RAILWAY | POLICE", canvas.width / 2, 278);
         ctx.restore();
 
-        // 5. Two Large Vertical Cards (Y=315 to Y=1530 — safely above Reels bottom caption/buttons)
+        // 5. Two Large Vertical Cards
         const startIdx = slideIndex * 2;
         const slideItems = items.slice(startIdx, startIdx + 2);
         const startY = 315;
@@ -1555,13 +1589,12 @@ ${hookLine}
             const qNum = startIdx + localIdx + 1;
             const y = startY + localIdx * (cardH + gap);
 
-            // Card Box with subtle shadow
             ctx.save();
             ctx.shadowColor = "rgba(0,0,0,0.08)";
             ctx.shadowBlur = 16;
             ctx.fillStyle = theme.cardBg;
-            ctx.strokeStyle = theme.pillBorder;
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = theme.cardBorder || theme.pillBorder;
+            ctx.lineWidth = 3.5;
             roundRect(ctx, 50, y, 980, cardH, 28, true, true);
             ctx.restore();
 
@@ -1591,8 +1624,7 @@ ${hookLine}
                 ctx.restore();
             }
 
-            // Extra-Large Readable Question (46px for 9:16 mobile screen)
-            const bigQSize = 46;
+            // Question Text scaled dynamically with slider!
             ctx.font = `700 ${bigQSize}px ${hindiFont}`;
             ctx.textAlign = "left";
             ctx.textBaseline = "top";
@@ -1610,19 +1642,21 @@ ${hookLine}
             });
             if (cur.trim()) qLines.push(cur.trim());
 
+            const lineSpacing = Math.round(bigQSize * 1.32);
             qLines.slice(0, 4).forEach((line, lIdx) => {
-                drawSmartHighlightedLine(ctx, line, 90, y + 138 + (lIdx * 66), theme, theme.qColor, lIdx === qLines.length - 1, maxW);
+                drawSmartHighlightedLine(ctx, line, 90, y + 130 + (lIdx * lineSpacing), theme, theme.qColor, lIdx === qLines.length - 1, maxW);
             });
 
-            // Answer Pill OR Suspense Placeholder
+            // Answer Pill scaled dynamically with slider!
+            const pillY = y + cardH - (bigASize + 34);
             if (showAnswer) {
-                drawAnswerPill(ctx, item.a, 90, y + cardH - 102, 40, hindiFont, theme, item.isHidden, false);
+                drawAnswerPill(ctx, item.a, 90, pillY, bigASize, hindiFont, theme, item.isHidden, false);
             } else {
-                drawAnswerPill(ctx, "⏳ सही उत्तर सोचिए...", 90, y + cardH - 102, 38, hindiFont, theme, false, true);
+                drawAnswerPill(ctx, "⏳ सही उत्तर सोचिए...", 90, pillY, Math.max(34, bigASize - 4), hindiFont, theme, false, true);
             }
         });
 
-        // 6. Footer Card placed inside 9:16 Safe Zone (Y=1575, leaving bottom 250px clear for Reels/Shorts UI)
+        // 6. Footer Card placed inside 9:16 Safe Zone
         const footerQ = document.getElementById('footerQuestionInput').value;
         ctx.save();
         ctx.fillStyle = theme.footerBg;
@@ -1653,8 +1687,8 @@ ${hookLine}
         const lineLayout = document.getElementById('gridLineLayout').value;
         const wmOpacity = parseFloat(document.getElementById('watermarkOpacity').value) || 0.03;
         
-        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 20;
-        const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 19;
+        const qFontSize = parseInt(document.getElementById('qSizeInput').value) || 22;
+        const aFontSize = parseInt(document.getElementById('aSizeInput').value) || 21;
         const parsedItems = getParsedItems();
 
         const canvas = document.getElementById('canvas'); 
@@ -1677,7 +1711,7 @@ ${hookLine}
         const footerHeight = 65;
         const availableHeight = canvas.height - startY - footerHeight - 15;
         const rowHeight = Math.floor(availableHeight / 10);
-        const actualBoxHeight = rowHeight - 9;
+        const actualBoxHeight = rowHeight - 7;
 
         if (!gridImages[2]) {
             const firstBadgeCenterY = startY + (actualBoxHeight / 2) + 3;
@@ -1703,14 +1737,14 @@ ${hookLine}
 
             ctx.save(); 
             ctx.fillStyle = theme.cardBg; 
-            ctx.strokeStyle = "rgba(15, 76, 129, 0.20)";
-            ctx.lineWidth = 1.5;
+            ctx.strokeStyle = theme.cardBorder || "rgba(15, 76, 129, 0.20)";
+            ctx.lineWidth = 2;
             roundRect(ctx, boxX, currentY + 3, boxWidth, actualBoxHeight, 14, true, true);
             ctx.restore();
         });
 
         const imgWidth = 195;
-        const imgHeight = (rowHeight * 2) - 9;
+        const imgHeight = (rowHeight * 2) - 7;
         if (gridImages[1]) drawCoverImage(ctx, gridImages[1], 840, startY + 3, imgWidth, imgHeight, 14);
         if (gridImages[2]) drawCoverImage(ctx, gridImages[2], 45, startY + (4 * rowHeight) + 3, imgWidth, imgHeight, 14);
         if (gridImages[3]) drawCoverImage(ctx, gridImages[3], 840, startY + (8 * rowHeight) + 3, imgWidth, imgHeight, 14);
@@ -1755,8 +1789,8 @@ ${hookLine}
                 ctx.font = `800 ${aFontSize}px ${hindiFont}`;
                 const ansText = "उत्तर: " + item.a;
                 const textW = ctx.measureText(ansText).width;
-                const pillH = aFontSize + 10;
-                const pillW = textW + 22;
+                const pillH = aFontSize + 12;
+                const pillW = textW + 24;
                 const pillX = boxX + boxWidth - pillW - 16;
                 const pillY = currentY + (actualBoxHeight / 2) - (pillH / 2) + 2;
 
@@ -1770,7 +1804,7 @@ ${hookLine}
 
                 ctx.fillStyle = item.isHidden ? "#fef08a" : theme.pillBg;
                 ctx.strokeStyle = item.isHidden ? "#eab308" : theme.pillBorder;
-                ctx.lineWidth = 1.2;
+                ctx.lineWidth = 1.4;
                 roundRect(ctx, pillX, pillY, pillW, pillH, pillH / 2, true, true);
 
                 ctx.fillStyle = item.isHidden ? "#b91c1c" : theme.aColor;
@@ -1836,7 +1870,6 @@ ${hookLine}
         showToast("📥 इमेज डाउनलोड और आर्काइव में सेव हो गई!");
     }
 
-    // EXPORTS FULL-SCREEN 9:16 (1080x1920) 15-SECOND REEL VIDEO
     function exportAutoReelVideo() {
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
@@ -1852,7 +1885,6 @@ ${hookLine}
         btn.disabled = true;
         showToast("🎬 9:16 Full-Screen Reel रिकॉर्ड हो रही है (15 सेकंड प्रतीक्षा करें)...", 0);
 
-        // Set canvas to 9:16 BEFORE starting captureStream so video tracks 1080x1920
         renderVertical916Slide(ctx, canvas, parsedItems, 0, true, false);
 
         const stream = canvas.captureStream(30);
