@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viral Quiz Studio Pro - Speed Control & Number Fix</title>
+<title>Viral Quiz Studio Pro - 9:16 Reel & Isvi TTS Edition</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -49,20 +49,25 @@ canvas{width:100%;height:auto;display:block}
 .hi{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:9px;display:flex;flex-direction:column;gap:5px}
 .cbtn{padding:4px 8px;font-size:11px;font-weight:700;border:none;border-radius:5px;cursor:pointer;color:#fff}
 
-/* FULL-SCREEN 9:16 VERTICAL VIDEO PLAYER OVERLAY */
+/* FULL-SCREEN 9:16 VERTICAL VIDEO PLAYER OVERLAY (STRICT 9:16 STAGE ABOVE BOTTOM BAR) */
 #reel-overlay{
  display:none;position:fixed;inset:0;background:#000;z-index:9999;
  flex-direction:column;align-items:center;justify-content:space-between;
 }
 .reel-stage-wrap{
- flex:1;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px;
+ flex:1;width:100%;height:calc(100dvh - 54px);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:0;background:#000;
 }
 #reelCanvas{
- height:100%;max-height:calc(100vh - 58px);width:auto;max-width:100%;
- aspect-ratio:9/16;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.9);
+ aspect-ratio:9/16;
+ height:100%;
+ width:auto;
+ max-width:100%;
+ max-height:100%;
+ object-fit:contain;
+ display:block;
 }
 .reel-bar{
- width:100%;max-width:460px;height:52px;background:rgba(15,23,42,.95);
+ width:100%;height:54px;min-height:54px;background:#0f172a;
  border-top:1px solid #334155;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:6px 10px;
 }
 .rbtn{
@@ -79,18 +84,18 @@ canvas{width:100%;height:auto;display:block}
 <div class="box">
 <div>
 <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
-<textarea id="raw-box">🏛️ CURRENT AFFAIRS 🧠
-Q.1 शिक्षा की सुलभता और छात्र समुदाय के अधिकारों के सम्मान में 'अंतर्राष्ट्रीय छात्र दिवस' कब मनाया जाता है? 🎓
-A) 22 मार्च 🗓️
-B) 05 दिसंबर 🌿
-C) 17 नवंबर 📚
-D) 15 अक्टूबर 🌟
+<textarea id="raw-box">🏛️ HISTORY GK QUIZ 🧠
+Q.1 पानीपत का द्वितीय युद्ध कब लड़ा गया था? ⚔️
+A) 1526 ई.
+B) 1556 ई. 🛡️
+C) 1761 ई.
+D) 1576 ई.
 👇 अपना जवाब कमेंट में लिखें!
 ❤️ Like | ➕ Follow | 🔔 अगला सवाल
-Caption: 'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) कब मनाया जाता है? सही उत्तर कमेंट करें! 👇🎓
-#CurrentAffairs #GKQuiz #ExamPreparation
-Answer: C) 17 नवंबर 📚
-Explanation: हर साल 17 नवंबर को विश्व स्तर पर 'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) मनाया जाता है।</textarea>
+Caption: पानीपत का द्वितीय युद्ध (Second Battle of Panipat) कब लड़ा गया था? सही उत्तर कमेंट करें! 👇⚔️
+#HistoryGK #GKQuiz #ExamPreparation
+Answer: B) 1556 ई. 🛡️
+Explanation: पानीपत का द्वितीय युद्ध 5 नवंबर 1556 ई. को अकबर और हेमू के बीच लड़ा गया था।</textarea>
 <div class="g2" style="margin-top:6px">
 <button class="btn btn-b" onclick="pasteAndRun()">📋 1-Click Paste & Run</button>
 <button class="btn" onclick="parseRawText()">✨ Generate Card</button>
@@ -287,7 +292,7 @@ Explanation: हर साल 17 नवंबर को विश्व स्�
 </div>
 </div>
 
-<!-- FULL-SCREEN 9:16 VERTICAL VIDEO PLAYER (MANUAL PLAY + PAUSE + HOME) -->
+<!-- FULL-SCREEN 9:16 VERTICAL VIDEO PLAYER (STRICT 9:16 ABOVE BOTTOM BUTTONS) -->
 <div id="reel-overlay">
  <div class="reel-stage-wrap">
   <canvas id="reelCanvas" width="1080" height="1920"></canvas>
@@ -331,16 +336,16 @@ Explanation: हर साल 17 नवंबर को विश्व स्�
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
 const rCvs=document.getElementById('reelCanvas'),rCtx=rCvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_V23",H_KEY="QUIZ_PRO_HIST_V23";
+const P_KEY="QUIZ_PRO_PREFS_V24",H_KEY="QUIZ_PRO_HIST_V24";
 let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
- id:"def_1",title:"🏛️ CURRENT AFFAIRS 🧠",qPrefix:"Q.1",
- questionText:"शिक्षा की सुलभता और छात्र समुदाय के अधिकारों के सम्मान में 'अंतर्राष्ट्रीय छात्र दिवस' कब मनाया जाता है? 🎓",
+ id:"def_1",title:"🏛️ HISTORY GK QUIZ 🧠",qPrefix:"Q.1",
+ questionText:"पानीपत का द्वितीय युद्ध कब लड़ा गया था? ⚔️",
  questionEn:"",
- options:{A:"22 मार्च 🗓️",B:"05 दिसंबर 🌿",C:"17 नवंबर 📚",D:"15 अक्टूबर 🌟"},
+ options:{A:"1526 ई.",B:"1556 ई. 🛡️",C:"1761 ई.",D:"1576 ई."},
  hook:"👇 अपना जवाब कमेंट में लिखें!",social:"❤️ Like | ➕ Follow | 🔔 अगला सवाल",
- correctOption:"C",explanation:"हर साल 17 नवंबर को विश्व स्तर पर 'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) मनाया जाता है।",
- caption:"'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) कब मनाया जाता है? सही उत्तर कमेंट करें! 👇🎓\n#CurrentAffairs #GKQuiz #ExamPreparation"
+ correctOption:"B",explanation:"पानीपत का द्वितीय युद्ध 5 नवंबर 1556 ई. को अकबर और हेमू के बीच लड़ा गया था।",
+ caption:"पानीपत का द्वितीय युद्ध (Second Battle of Panipat) कब लड़ा गया था? सही उत्तर कमेंट करें! 👇⚔️\n#HistoryGK #GKQuiz #ExamPreparation"
 };
 
 const cln=s=>(s||"").replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g,'').trim();
@@ -350,6 +355,15 @@ function moveEmoji(t){
 }
 function stripEmojis(t){
  return (t||"").replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}▲✔]/gu,'').replace(/\s+/g,' ').trim();
+}
+/* CONVERT 'ई.' TO 'ईसवी' AND 'ई.पू.' TO 'ईसा पूर्व' FOR NATURAL SPEECH */
+function prepareSpokenHindi(t){
+ let s = stripEmojis(t);
+ // Replace ई.पू. / ई०पू० first
+ s = s.replace(/(^|[\s0-9०-९])ई[\.\।०]\s*पू[\.\।०]?/g, '$1ईसा पूर्व');
+ // Replace standalone ई. / ई० (such as "1556 ई.") with "ईसवी"
+ s = s.replace(/(^|[\s0-9०-९])ई[\.\।०](?=\s|$|[,\?!])/g, '$1ईसवी');
+ return s.replace(/\s+/g, ' ').trim();
 }
 function getCap(){
  let b=(qData.caption||"").replace(/#ans_[A-Da-d]/gi,'').trim();
@@ -880,7 +894,6 @@ function getBestHindiVoice(){
      || null;
 }
 
-/* HUMAN-LIKE PHRASE-BY-PHRASE SPEECH WITH USER SPEED CONTROL & NUMBER PRESERVATION */
 function speakHumanPhrases(phrases, onAllDone){
  if(!window.speechSynthesis || !phrases || phrases.length === 0){
   setTimeout(onAllDone, 1200);
@@ -906,8 +919,8 @@ function speakHumanPhrases(phrases, onAllDone){
   }
 
   const item = phrases[idx++];
-  // Only strip emojis; DO NOT strip leading numbers like "17 नवंबर" or "05 दिसंबर"
-  const cleanTxt = stripEmojis(item.text).trim();
+  // Convert 'ई.' to 'ईसवी' and strip emojis while keeping numbers intact
+  const cleanTxt = prepareSpokenHindi(item.text);
   if(!cleanTxt){
    speakNextChunk();
    return;
@@ -1011,7 +1024,6 @@ function executeReelStep(step){
  };
 
  if(step === 1){
-  // Strip question number prefix ONLY from the question text, never from options
   const qClean = stripEmojis(qData.questionText).replace(/^Q\.?\s*\d*[\.\:\-\)]*/i, '').replace(/^\d+[\.\:\-\)]*/, '').trim();
   speakHumanPhrases([
    { text: "दोस्तों, आज का सवाल है...", rateMod: 0.02, pitchMod: 0.03, pauseAfter: 220 },
@@ -1021,7 +1033,7 @@ function executeReelStep(step){
   });
  }else if(step >= 2 && step <= 5){
   const k = optKeys[step - 2];
-  const optVal = stripEmojis(qData.options[k] || "");
+  const optVal = qData.options[k] || "";
   speakHumanPhrases([
    { text: humanOptLead[k], rateMod: 0.02, pitchMod: 0.02, pauseAfter: 110 },
    { text: optVal, rateMod: -0.02, pitchMod: 0.0, pauseAfter: 200 }
@@ -1046,7 +1058,7 @@ function executeReelStep(step){
   if(vMode === "reveal"){
    playTickSound(1120, 0.25);
    const corrKey = qData.correctOption || "A";
-   const corrTxt = stripEmojis(qData.options[corrKey] || "");
+   const corrTxt = qData.options[corrKey] || "";
    speakHumanPhrases([
     { text: "दोस्तों, इसका बिल्कुल सही जवाब है...", rateMod: 0.0, pitchMod: 0.03, pauseAfter: 180 },
     { text: `ऑप्शन ${corrKey}, ${corrTxt}.`, rateMod: -0.02, pitchMod: 0.01, pauseAfter: 280 },
@@ -1088,7 +1100,7 @@ function runCountdownLoop(){
  }, 1000);
 }
 
-/* ==================== RENDER 9:16 VERTICAL FRAME ==================== */
+/* ==================== RENDER 9:16 VERTICAL FRAME (1080 x 1920) ==================== */
 function renderReelFrame(){
  const th = document.getElementById('cfg-theme').value;
  const ff = document.getElementById('cfg-font').value;
