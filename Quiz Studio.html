@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viral Quiz Studio Pro - Exact Position & Human Voice</title>
+<title>Viral Quiz Studio Pro - Speed Control & Number Fix</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600;700&family=Kalam:wght@700&family=Poppins:wght@700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -79,28 +79,27 @@ canvas{width:100%;height:auto;display:block}
 <div class="box">
 <div>
 <label>📝 यहाँ अपना पूरा क्विज़ टेक्स्ट पेस्ट करें (Raw Text):</label>
-<textarea id="raw-box">🧠 आज का सवाल
-27. अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है?
-Where is Adani Defence and Aerospace headquartered?
-A) अहमदाबाद
-B) कानपुर
-C) नागपुर
-D) पुणे
+<textarea id="raw-box">🏛️ CURRENT AFFAIRS 🧠
+Q.1 शिक्षा की सुलभता और छात्र समुदाय के अधिकारों के सम्मान में 'अंतर्राष्ट्रीय छात्र दिवस' कब मनाया जाता है? 🎓
+A) 22 मार्च 🗓️
+B) 05 दिसंबर 🌿
+C) 17 नवंबर 📚
+D) 15 अक्टूबर 🌟
 👇 अपना जवाब कमेंट में लिखें!
 ❤️ Like | ➕ Follow | 🔔 अगला सवाल
-Caption: अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है? सही उत्तर कमेंट करें! 👇🧠
+Caption: 'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) कब मनाया जाता है? सही उत्तर कमेंट करें! 👇🎓
 #CurrentAffairs #GKQuiz #ExamPreparation
-Answer: A) अहमदाबाद
-Explanation: अदानी डिफेंस एंड एयरोस्पेस (Adani Defence & Aerospace) का मुख्यालय गुजरात के अहमदाबाद में स्थित है।</textarea>
+Answer: C) 17 नवंबर 📚
+Explanation: हर साल 17 नवंबर को विश्व स्तर पर 'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) मनाया जाता है।</textarea>
 <div class="g2" style="margin-top:6px">
 <button class="btn btn-b" onclick="pasteAndRun()">📋 1-Click Paste & Run</button>
 <button class="btn" onclick="parseRawText()">✨ Generate Card</button>
 </div>
 </div>
 
-<!-- 9:16 VIDEO PLAYER & NATURAL HUMAN VOICE CONTROLS -->
+<!-- 9:16 VIDEO PLAYER, VOICE SPEED & HUMAN VOICE CONTROLS -->
 <div class="sub" style="border-color:#f43f5e">
-<div class="sub-t" style="color:#fda4af"><span>🎬 9:16 Reel Video & Natural Human Voice Settings:</span></div>
+<div class="sub-t" style="color:#fda4af"><span>🎬 9:16 Reel Video & Voice Speed Settings:</span></div>
 <div class="row">
 <div>
 <label>⏱️ Countdown Timer:</label>
@@ -113,19 +112,25 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 </select>
 </div>
 <div>
-<label>🎯 Video Ending Mode:</label>
+<label>🎯 Ending Mode:</label>
 <select id="cfg-vmode" onchange="savePrefs()">
-<option value="reveal">✅ उत्तर दिखाएं (Answer Reveal)</option>
-<option value="comment">💬 उत्तर पूछें (Comment Challenge)</option>
+<option value="reveal">✅ उत्तर दिखाएं (Reveal)</option>
+<option value="comment">💬 उत्तर पूछें (Comment)</option>
 </select>
 </div>
 <div>
 <label>🎙️ Voice Tone:</label>
 <select id="cfg-vtone" onchange="savePrefs()">
-<option value="warm" selected>🧑 Warm Male/Teacher</option>
-<option value="soft">👩 Soft Conversational</option>
-<option value="energetic">🔥 Energetic Anchor</option>
+<option value="warm" selected>🧑 Warm Teacher</option>
+<option value="soft">👩 Soft Tone</option>
+<option value="energetic">🔥 Energetic</option>
 </select>
+</div>
+</div>
+<div class="row">
+<div>
+<label>⚡ बोलने की स्पीड (Voice Speed): <span id="vspd-lbl">0.95</span>x</label>
+<input type="range" id="cfg-vspeed" min="0.70" max="1.30" step="0.05" value="0.95" oninput="document.getElementById('vspd-lbl').innerText=parseFloat(this.value).toFixed(2);savePrefs();">
 </div>
 </div>
 <button class="btn-reel" onclick="openReelPlayer()">🎬 Open 9:16 Video Player</button>
@@ -326,16 +331,16 @@ Explanation: अदानी डिफेंस एंड एयरोस्प�
 <script>
 const cvs=document.getElementById('qCanvas'),ctx=cvs.getContext('2d');
 const rCvs=document.getElementById('reelCanvas'),rCtx=rCvs.getContext('2d');
-const P_KEY="QUIZ_PRO_PREFS_V22",H_KEY="QUIZ_PRO_HIST_V22";
+const P_KEY="QUIZ_PRO_PREFS_V23",H_KEY="QUIZ_PRO_HIST_V23";
 let ansMode=false,rawSub=null,procSub=null,bgImg=null,patCache={},wordSeed=0;
 let qData={
- id:"def_27",title:"🧠 आज का सवाल",qPrefix:"27.",
- questionText:"अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है?",
- questionEn:"Where is Adani Defence and Aerospace headquartered?",
- options:{A:"अहमदाबाद",B:"कानपुर",C:"नागपुर",D:"पुणे"},
+ id:"def_1",title:"🏛️ CURRENT AFFAIRS 🧠",qPrefix:"Q.1",
+ questionText:"शिक्षा की सुलभता और छात्र समुदाय के अधिकारों के सम्मान में 'अंतर्राष्ट्रीय छात्र दिवस' कब मनाया जाता है? 🎓",
+ questionEn:"",
+ options:{A:"22 मार्च 🗓️",B:"05 दिसंबर 🌿",C:"17 नवंबर 📚",D:"15 अक्टूबर 🌟"},
  hook:"👇 अपना जवाब कमेंट में लिखें!",social:"❤️ Like | ➕ Follow | 🔔 अगला सवाल",
- correctOption:"A",explanation:"अदानी डिफेंस एंड एयरोस्पेस (Adani Defence & Aerospace) का मुख्यालय गुजरात के अहमदाबाद में स्थित है।",
- caption:"अदानी डिफेंस एंड एयरोस्पेस का मुख्यालय कहाँ स्थित है? सही उत्तर कमेंट करें! 👇🧠\n#CurrentAffairs #GKQuiz #ExamPreparation"
+ correctOption:"C",explanation:"हर साल 17 नवंबर को विश्व स्तर पर 'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) मनाया जाता है।",
+ caption:"'अंतर्राष्ट्रीय छात्र दिवस' (International Students' Day) कब मनाया जाता है? सही उत्तर कमेंट करें! 👇🎓\n#CurrentAffairs #GKQuiz #ExamPreparation"
 };
 
 const cln=s=>(s||"").replace(/[\u200B-\u200F\uFEFF\u00A0\u202A-\u202E]/g,'').trim();
@@ -526,7 +531,7 @@ function parseRawText(){
 
 function toggleAns(){let c=document.getElementById('chk-ans');c.checked=!c.checked;ansMode=c.checked;savePrefs();draw();}
 function savePrefs(){
- try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,mlt:document.getElementById('chk-mult').checked,tmr:document.getElementById('cfg-timer').value,vmd:document.getElementById('cfg-vmode').value,vtn:document.getElementById('cfg-vtone').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
+ try{localStorage.setItem(P_KEY,JSON.stringify({font:document.getElementById('cfg-font').value,theme:document.getElementById('cfg-theme').value,pcol:document.getElementById('cfg-paper-col').value,qs:document.getElementById('cfg-qs').value,os:document.getElementById('cfg-os').value,ctay:document.getElementById('cfg-cta-y').value,ipos:document.getElementById('cfg-ipos').value,shp:document.getElementById('cfg-shape').value,fd:document.getElementById('cfg-fade').value,mlt:document.getElementById('chk-mult').checked,tmr:document.getElementById('cfg-timer').value,vmd:document.getElementById('cfg-vmode').value,vtn:document.getElementById('cfg-vtone').value,vspd:document.getElementById('cfg-vspeed').value,ans:ansMode,raw:document.getElementById('raw-box').value,q:qData}));}catch(e){}
 }
 function loadPrefs(){
  try{
@@ -541,6 +546,7 @@ function loadPrefs(){
   if(p.tmr!==undefined)document.getElementById('cfg-timer').value=p.tmr;
   if(p.vmd)document.getElementById('cfg-vmode').value=p.vmd;
   if(p.vtn)document.getElementById('cfg-vtone').value=p.vtn;
+  if(p.vspd!==undefined){document.getElementById('cfg-vspeed').value=p.vspd;document.getElementById('vspd-lbl').innerText=parseFloat(p.vspd).toFixed(2);}
   if(p.qs){document.getElementById('cfg-qs').value=p.qs;document.getElementById('qs-lbl').innerText=p.qs;}
   if(p.os){document.getElementById('cfg-os').value=p.os;document.getElementById('os-lbl').innerText=p.os;}
   if(p.ctay!==undefined){document.getElementById('cfg-cta-y').value=p.ctay;document.getElementById('cta-lbl').innerText=p.ctay;}
@@ -625,7 +631,7 @@ function drawBgPhoto(c,x,y,w,h,r){
  if(tn>0){c.fillStyle=`rgba(255,255,255,${tn})`;c.fillRect(x,y,w,h);}c.restore();return true;
 }
 
-/* EXACT POSITION SUBJECT IMAGE RENDERER (WORKS IDENTICALLY IN 4:5 & 9:16) */
+/* EXACT POSITION SUBJECT IMAGE RENDERER */
 function drawSubImg(c,bx,by,bw,bh){
  if(!procSub)return;
  let sc=(parseInt(document.getElementById('sc').value)||100)/100;
@@ -703,7 +709,7 @@ function draw(){
   ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#dc2626";ctx.font=`900 46px ${ff}`;ctx.fillText(qData.title||"🧠 आज का सवाल",540,86);
   let bt="EXAM PREPARATION";ctx.font="800 24px 'Poppins',sans-serif";let pw=ctx.measureText(bt).width+76,px=(1080-pw)/2;
   rRect(ctx,px,132,pw,54,27,"#1e2433",false);ctx.fillStyle="#fff";ctx.fillText(bt,540,160);
-  let qe=drawCenteredColorQ(ctx,qData.qPrefix||"27.",qData.questionText,540,245,920,qs,ff,"#111827",pal,"#1d4ed8");
+  let qe=drawCenteredColorQ(ctx,qData.qPrefix||"Q.1",qData.questionText,540,245,920,qs,ff,"#111827",pal,"#1d4ed8");
   if(cln(qData.questionEn)){ctx.fillStyle="#15803d";ctx.font="600 31px 'Hind',sans-serif";qe=wrapL(ctx,qData.questionEn,540,qe+12,900,42,true);}
   let oy=qe+40,ox=88,ow=904,oh=ansMode?86:104,og=ansMode?102:124,os=bos;
   if(hasI){
@@ -739,7 +745,7 @@ function draw(){
   rRect(ctx,px,py,pw,ph,25,"#0f172a",false);ctx.strokeStyle="#eab308";ctx.lineWidth=2.5;rRect(ctx,px,py,pw,ph,25,null,true);ctx.fillStyle="#facc15";ctx.fillText(bt,540,py+ph/2+1);
   let hasE=Boolean(cln(qData.questionEn)),qbh=hasE?235:195;
   rRect(ctx,54,210,980,qbh,28,"rgba(15,23,42,.14)",false);rRect(ctx,50,204,980,qbh,28,"#fff",false);ctx.strokeStyle="#1e3a8a";ctx.lineWidth=4;rRect(ctx,50,204,980,qbh,28,null,true);
-  let qe=drawColorQ(ctx,qData.qPrefix||"386.",qData.questionText,84,230,912,qs+2,ff,"#0f172a",pal,"#1d4ed8");
+  let qe=drawColorQ(ctx,qData.qPrefix||"Q.1",qData.questionText,84,230,912,qs+2,ff,"#0f172a",pal,"#1d4ed8");
   if(hasE){ctx.fillStyle="#15803d";ctx.font="700 25px 'Hind',sans-serif";wrapL(ctx,"- "+qData.questionEn,84,qe+2,912,30);}
   let oy=204+qbh+38,ox=52,ow=(hasI && ipos==="right")?535:976,oh=92,og=ansMode?98:114,os=bos;
   if(hasI){
@@ -868,14 +874,13 @@ function playTickSound(freq=880, dur=0.06){
 
 function getBestHindiVoice(){
  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
- // Prioritize natural/neural Indian Hindi voices on Android Chrome
  return voices.find(v => v.lang === 'hi-IN' && (v.name.includes('Natural') || v.name.includes('Neural') || v.name.includes('Google')))
      || voices.find(v => v.lang === 'hi-IN')
      || voices.find(v => v.lang.toLowerCase().includes('hi'))
      || null;
 }
 
-/* HUMAN-LIKE PHRASE-BY-PHRASE SPEECH WITH NATURAL PAUSES & PROSODY */
+/* HUMAN-LIKE PHRASE-BY-PHRASE SPEECH WITH USER SPEED CONTROL & NUMBER PRESERVATION */
 function speakHumanPhrases(phrases, onAllDone){
  if(!window.speechSynthesis || !phrases || phrases.length === 0){
   setTimeout(onAllDone, 1200);
@@ -884,9 +889,11 @@ function speakHumanPhrases(phrases, onAllDone){
  window.speechSynthesis.cancel();
 
  const tone = document.getElementById('cfg-vtone').value || "warm";
- let baseRate = 0.94, basePitch = 0.98;
- if(tone === "soft"){ baseRate = 0.92; basePitch = 1.06; }
- else if(tone === "energetic"){ baseRate = 1.01; basePitch = 1.03; }
+ const userSpeed = parseFloat(document.getElementById('cfg-vspeed').value) || 0.95;
+
+ let basePitch = 0.98;
+ if(tone === "soft") basePitch = 1.06;
+ else if(tone === "energetic") basePitch = 1.03;
 
  const hv = getBestHindiVoice();
  let idx = 0;
@@ -899,7 +906,8 @@ function speakHumanPhrases(phrases, onAllDone){
   }
 
   const item = phrases[idx++];
-  const cleanTxt = stripEmojis(item.text).replace(/^Q\.?\s*\d*[\.\:\-\)]*/i, '').replace(/^\d+[\.\:\-\)]*/, '').trim();
+  // Only strip emojis; DO NOT strip leading numbers like "17 नवंबर" or "05 दिसंबर"
+  const cleanTxt = stripEmojis(item.text).trim();
   if(!cleanTxt){
    speakNextChunk();
    return;
@@ -908,8 +916,7 @@ function speakHumanPhrases(phrases, onAllDone){
   const utter = new SpeechSynthesisUtterance(cleanTxt);
   utter.lang = 'hi-IN';
   if(hv) utter.voice = hv;
-  // Subtle natural variation per phrase so it never sounds flat or robotic
-  utter.rate = Math.max(0.82, Math.min(1.15, baseRate + (item.rateMod || 0)));
+  utter.rate = Math.max(0.65, Math.min(1.45, userSpeed + (item.rateMod || 0)));
   utter.pitch = Math.max(0.85, Math.min(1.2, basePitch + (item.pitchMod || 0)));
 
   let doneChunk = false;
@@ -925,7 +932,7 @@ function speakHumanPhrases(phrases, onAllDone){
   utter.onerror = proceed;
   window.speechSynthesis.speak(utter);
 
-  const estMs = Math.max(1400, cleanTxt.length * 90);
+  const estMs = Math.max(1400, (cleanTxt.length * 90) / userSpeed);
   setTimeout(() => {
    if(!doneChunk && reelState === "PLAYING" && !window.speechSynthesis.speaking){
     proceed();
@@ -1004,20 +1011,20 @@ function executeReelStep(step){
  };
 
  if(step === 1){
-  // Human conversational intro + question with natural breath pause
+  // Strip question number prefix ONLY from the question text, never from options
   const qClean = stripEmojis(qData.questionText).replace(/^Q\.?\s*\d*[\.\:\-\)]*/i, '').replace(/^\d+[\.\:\-\)]*/, '').trim();
   speakHumanPhrases([
-   { text: "दोस्तों, आज का सवाल है...", rateMod: 0.02, pitchMod: 0.03, pauseAfter: 240 },
-   { text: qClean, rateMod: -0.03, pitchMod: -0.01, pauseAfter: 320 }
+   { text: "दोस्तों, आज का सवाल है...", rateMod: 0.02, pitchMod: 0.03, pauseAfter: 220 },
+   { text: qClean, rateMod: -0.02, pitchMod: -0.01, pauseAfter: 300 }
   ], () => {
    executeReelStep(2);
   });
  }else if(step >= 2 && step <= 5){
   const k = optKeys[step - 2];
-  const optVal = qData.options[k] || "";
+  const optVal = stripEmojis(qData.options[k] || "");
   speakHumanPhrases([
-   { text: humanOptLead[k], rateMod: 0.03, pitchMod: 0.02, pauseAfter: 120 },
-   { text: optVal, rateMod: -0.02, pitchMod: 0.0, pauseAfter: 220 }
+   { text: humanOptLead[k], rateMod: 0.02, pitchMod: 0.02, pauseAfter: 110 },
+   { text: optVal, rateMod: -0.02, pitchMod: 0.0, pauseAfter: 200 }
   ], () => {
    executeReelStep(step + 1);
   });
@@ -1039,10 +1046,10 @@ function executeReelStep(step){
   if(vMode === "reveal"){
    playTickSound(1120, 0.25);
    const corrKey = qData.correctOption || "A";
-   const corrTxt = qData.options[corrKey] || "";
+   const corrTxt = stripEmojis(qData.options[corrKey] || "");
    speakHumanPhrases([
-    { text: "दोस्तों, इसका बिल्कुल सही जवाब है...", rateMod: 0.0, pitchMod: 0.03, pauseAfter: 200 },
-    { text: `ऑप्शन ${corrKey}, ${corrTxt}.`, rateMod: -0.03, pitchMod: 0.01, pauseAfter: 300 },
+    { text: "दोस्तों, इसका बिल्कुल सही जवाब है...", rateMod: 0.0, pitchMod: 0.03, pauseAfter: 180 },
+    { text: `ऑप्शन ${corrKey}, ${corrTxt}.`, rateMod: -0.02, pitchMod: 0.01, pauseAfter: 280 },
     { text: "वीडियो पसंद आया हो, तो लाइक और फॉलो ज़रूर करें!", rateMod: 0.02, pitchMod: 0.02, pauseAfter: 100 }
    ], () => {
     reelState = "DONE";
@@ -1081,7 +1088,7 @@ function runCountdownLoop(){
  }, 1000);
 }
 
-/* ==================== RENDER 9:16 VERTICAL FRAME (RESPECTS EXACT IMAGE POSITION) ==================== */
+/* ==================== RENDER 9:16 VERTICAL FRAME ==================== */
 function renderReelFrame(){
  const th = document.getElementById('cfg-theme').value;
  const ff = document.getElementById('cfg-font').value;
@@ -1096,7 +1103,6 @@ function renderReelFrame(){
 
  rCtx.clearRect(0, 0, 1080, 1920);
 
- // 1. Background based on selected theme
  if(!drawBgPhoto(rCtx, 0, 0, 1080, 1920, 0)){
   if(th === "world_capsule"){
    let g = rCtx.createRadialGradient(540, 900, 100, 540, 960, 1100);
@@ -1116,12 +1122,10 @@ function renderReelFrame(){
   }
  }
 
- // Outer Frame Border
  rCtx.strokeStyle = (th === "world_capsule") ? "#3b82f6" : "rgba(30,41,59,0.22)";
  rCtx.lineWidth = 6;
  rRect(rCtx, 24, 24, 1032, 1872, 36, null, true);
 
- // 2. Top Header & Badge
  rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
  rCtx.fillStyle = "#dc2626";
  rCtx.font = `900 54px ${ff}`;
@@ -1137,7 +1141,6 @@ function renderReelFrame(){
  rCtx.fillStyle = "#ffffff";
  rCtx.fillText(bt, 540, 208);
 
- // 3. Question Card
  const qBoxY = 278;
  const hasE = Boolean(cln(qData.questionEn));
  const qBoxH = hasE ? 295 : 235;
@@ -1147,13 +1150,12 @@ function renderReelFrame(){
  rCtx.lineWidth = 3.5;
  rRect(rCtx, 54, qBoxY, 972, qBoxH, 28, null, true);
 
- let qe = drawColorQ(rCtx, qData.qPrefix || "Q.", qData.questionText, 88, qBoxY + 26, 904, qs + 4, ff, "#0f172a", pal, "#1d4ed8");
+ let qe = drawColorQ(rCtx, qData.qPrefix || "Q.1", qData.questionText, 88, qBoxY + 26, 904, qs + 4, ff, "#0f172a", pal, "#1d4ed8");
  if(hasE){
   rCtx.fillStyle = "#15803d"; rCtx.font = "700 27px 'Hind', sans-serif";
   wrapL(rCtx, "- " + qData.questionEn, 88, qe + 4, 904, 34);
  }
 
- // 4. Options & Subject Image (Uses exact same Layout + X/Y/Zoom position as 4:5 card)
  const optDefs = [
   { c: "#1d4ed8", k: "A" },
   { c: "#db2777", k: "B" },
@@ -1166,12 +1168,10 @@ function renderReelFrame(){
  const optH = 112;
  const optGap = 136;
 
- // Draw Subject Image in the exact chosen position
  if(hasI){
   if(ipos === "right"){
    drawSubImg(rCtx, 602, curY - 10, 430, 4 * optGap);
   }else{
-   // Center / Free mode: places image in center zone & moves freely via X/Y sliders without shifting options
    drawSubImg(rCtx, 240, curY + 80, 600, 380);
   }
  }
@@ -1217,7 +1217,6 @@ function renderReelFrame(){
   rCtx.fillText(trunc(rCtx, qData.options[s.k] || "", optW - 125), optX + 104, mid + 2);
  });
 
- // 5. Bottom Countdown Timer / Reveal Card / Footer (Respects CTA Position Y)
  const bottomY = curY + 4 * optGap + 44 + ctaOffY;
 
  if(reelStep === 6){
@@ -1258,7 +1257,6 @@ function renderReelFrame(){
   rCtx.fillText(qData.hook || "👇 अपना जवाब कमेंट में लिखें!", 540, bottomY + 56);
  }
 
- // Bottom Social Line
  rCtx.textAlign = "center"; rCtx.textBaseline = "middle";
  rCtx.fillStyle = "#0f172a"; rCtx.font = `800 30px ${ff}`;
  rCtx.fillText(qData.social || "❤️ Like | ➕ Follow | 🔔 अगला सवाल", 540, 1835);
